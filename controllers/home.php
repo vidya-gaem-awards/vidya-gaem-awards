@@ -31,4 +31,6 @@ while ($row = mysql_fetch_assoc($result)) {
 
 $tpl->set("news", $news);
 
+$tpl->set("APPLICATIONS_OPEN", $APPLICATIONS_OPEN);
+
 ?>

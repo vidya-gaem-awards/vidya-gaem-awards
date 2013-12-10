@@ -7,7 +7,9 @@ function timer($msg) {
   echo round($timeEnd - $timeStart, 2).": $msg\n";
 }
 
-$mysqli = new Mysqli("localhost", "username", "password", "database");
+require_once("../includes/config.php");
+
+$mysqli = new Mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
 
 // Remove all existing data
 $mysqli->query("TRUNCATE TABLE `winner_cache`");

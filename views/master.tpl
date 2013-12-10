@@ -17,6 +17,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
     
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36466872-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>    
+    
   </head>
   
 <if:navbar>
@@ -28,7 +42,7 @@
     <div class="navbar navbar-fixed-top navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" href="/">2012 /v/GAs</a>
+				<a class="brand" href="/">2013 /v/GAs</a>
 				<ul class="nav">
 					<tag:navbar />
 				</ul>
@@ -73,6 +87,7 @@
 					<li><a href="steam://friends/joinchat/103582791432684008">Steam Chat</a></li>
 					<li><a href="mailto:vidya@vidyagaemawards.com">Email</a></li>
 					<li><a href="http://2011.vidyagaemawards.com">2011 /v/GAs</a></li>
+					<li><a href="http://2012.vidyagaemawards.com">2012 /v/GAs</a></li>
 				</ul>
 				<ul class="nav secondary-nav">
 					<li><a href="/privacy">Privacy Policy</a></li>

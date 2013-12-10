@@ -1,6 +1,8 @@
 <?php
 
   //ob_start('ob_gzhandler');
+  
+  require_once("includes/config.php");
 
   define("EVERYONE", "*");
   define("LOGIN", "logged-in");
@@ -21,9 +23,9 @@
 
   $PAGE = $SEGMENTS[0];
 
-  // If you want to do any front page redirection, do so here.
+  // Change the default page in includes/config.php
   if (strlen($PAGE) == 0) {
-    $PAGE = "thanks";
+    $PAGE = $DEFAULT_PAGE;
   }
 
   // Special handling for logout page
@@ -33,22 +35,22 @@
     session_destroy();
     
     $return = rtrim(implode("/", array_slice($SEGMENTS, 1)), "/");
-    setcookie("token", "0", 1, "/", "vidyagaemawards.com");
+    setcookie("token", "0", 1, "/", $DOMAIN);
     header("Location: /$return");
     exit();
   }
 
   $ACCESS = array(
     "404" => EVERYONE,
-    "about" => EVERYONE,
+    //"about" => EVERYONE,
     "ajax-nominations" => "nominations-edit",
     "applications" => "applications-view",
     "categories" => EVERYONE,
     "category-feedback" => EVERYONE,
-    "credits" => EVERYONE, // Change to EVERYONE
-    "feedback" => EVERYONE,  // Change to EVERYONE
+    //"credits" => EVERYONE, // Change to EVERYONE
+    //"feedback" => EVERYONE,  // Change to EVERYONE
     "home" => EVERYONE,
-    "launcher" => EVERYONE,
+    //"launcher" => EVERYONE,
     "login" => EVERYONE,
     "news" => EVERYONE,
     "nominations" => "nominees-view",
@@ -57,19 +59,19 @@
     "privacy" => EVERYONE,
     "referrers" => "referrers-view",
     "sitemap" => EVERYONE,
-    "stream" => EVERYONE,
-    "test" => EVERYONE,
-    "thanks" => EVERYONE,
+    //"stream" => EVERYONE,
+    //"test" => EVERYONE,
+    //"thanks" => EVERYONE,
     "user-search" => "add-user",
-    "video-games" => EVERYONE,
+    //"video-games" => EVERYONE,
     "volunteer-submission" => LOGIN,
-    "videos" => EVERYONE,
-    "voting" => EVERYONE,
-    "voting-code" => EVERYONE,
-    "voting-submission" => EVERYONE,
-    "votingpu" => "voting-view",
+    //"videos" => EVERYONE,
+    //"voting" => EVERYONE,
+    //"voting-code" => EVERYONE,
+    //"voting-submission" => EVERYONE,
+    //"votingpu" => "voting-view",
     "who-am-i" => EVERYONE,
-    "winners" => EVERYONE // Change to EVERYONE
+    //"winners" => EVERYONE // Change to EVERYONE
   );
 
   // Pages that won't use the master template

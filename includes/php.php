@@ -1,9 +1,11 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 
-error_reporting(E_ALL ^ E_DEPRECATED);
+error_reporting(E_ALL);
 
-date_default_timezone_set("America/New_York");
+include("config.php");
+
+date_default_timezone_set($TIMEZONE);
 
 include("openid.php");
 include("bTemplate.php");
@@ -11,20 +13,15 @@ include("functions.php");
 $tpl = new bTemplate();
 session_start();
 
-$DB_HOST = "localhost";
-$DB_USER = "username";
-$DB_PASS = "password";
-$DB_DB = "database";
+// Constants
+$tpl->set("YEAR", $YEAR);
 
-mysql_connect("localhost", "username", "password");
-mysql_select_db("database");
+// Database connections
+mysql_connect($DB_HOST, $DB_USER, $DB_PASS);
+mysql_select_db($DB_DB);
 
 // Forward compatibility
 $mysql = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
-
-$APIkey = "steam-api-key-goes-here";
-
-$domain = "example.com";
 
 // Initialise some default template variables
 $init = array("success", "error", "formSuccess", "formError");
@@ -57,7 +54,7 @@ if (!isset($_SESSION['login']) && isset($_COOKIE['token'])) {
   }
   
   if (!$correct) {
-    //setcookie("token", "0", 1, "/", "vidyagaemawards.com");
+    //setcookie("token", "0", 1, "/", $DOMAIN);
   }
   
 }
@@ -104,7 +101,7 @@ if (isset($_SESSION['login'])) {
 	
 	$page = rtrim(implode("/", $SEGMENTS), "/");
 	
-	$tpl->set("openIDurl", SteamSignIn::genUrl("http://$domain/login/$page"));
+	$tpl->set("openIDurl", SteamSignIn::genUrl("http://$DOMAIN/login/$page"));
 	
 	$ID = $_SERVER['REMOTE_ADDR'];
 	
@@ -139,7 +136,7 @@ if (!isset($_COOKIE['access']) || strlen($_COOKIE['access']) <= 10) {
   $randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
   $randomToken .= ':'.hash_hmac('md5', $randomToken, $APIkey);
   $uniqueID = $randomToken;
-	setcookie("access", $randomToken, time()+60*60*24*90, "/", $domain);
+	setcookie("access", $randomToken, time()+60*60*24*90, "/", $DOMAIN);
 } else {
   $uniqueID = mysql_real_escape_string($_COOKIE['access']);
 }
@@ -154,27 +151,10 @@ if (isset($_SESSION['message'])) {
 	unset($_SESSION['message']);
 }
 
-// Navbar stuff
-$navbarItems["home"] = "Home";
-//$navbarItems["video-games"] = "Vidya";
-//$navbarItems["polls"] = "Polls";
-//$navbarItems["categories"] = "Categories and Nominations";
-//$navbarItems["results"] = "Results";
-$navbarItems["people"] = "People";
-//$navbarItems["launcher"] = "Stream Countdown";
-//$navbarItems["videos"] = "Video Submission";
-//$navbarItems["voting"] = "Voting";
-//$navbarItems["config"] = "Config";
-//$navbarItems["http://docs.google.com/document/d/1X0AW508HRznYLbdEHhSpOsuxlopwv9bkrKArqPHnMrY/edit"] = "FAQ";
-$navbarItems["winners"] = "Winners";
-$navbarItems["credits"] = "Credits";
-$navbarItems["feedback"] = "Give Feedback";
-$navbarItems["http://steamcommunity.com/groups/vidyagaemawards/discussions/"] = "Forum";
-$navbarItems["about"] = "About";
-//$navbarItems["sitemap"] = "Sitemap";
+// Navbar stuff (the items have been moved to config.php)
 $navbar = "";
 
-foreach ($navbarItems as $filename => $value) {
+foreach ($NAVBAR_ITEMS as $filename => $value) {
 	
 	$external = strpos($filename, "http://") === 0;
 	

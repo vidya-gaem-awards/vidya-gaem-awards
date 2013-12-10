@@ -164,7 +164,7 @@ body {
         <a href="/winners">see the winners</a><br>
         <a href="/credits">see the credits</a><br>
         <a href="https://soundcloud.com/stufff/27-minute-work">preshow music mix</a><br>
-        <span class="disabled">website source code</span> - later
+        <a href="http://github.com/clamburger/vidya-gaem-awards">website source code</a>
       </div>
       <div class="subtitle">
         <a href="/home" class="main">continue to the main site</a><br>

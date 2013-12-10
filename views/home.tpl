@@ -1,6 +1,6 @@
 <header class="jumbotron masthead">
 	<div class="inner">
-		<h1>2012 Vidya Gaem Awards</h1>
+		<h1>2013 Vidya Gaem Awards</h1>
 		<p class="implying">>implying you're opinion is worth shit</p>
 	</div>
 </header>
@@ -31,13 +31,16 @@
 				<tag:formError />
 			</div>
 			<else:formError>
+			<!if:APPLICATIONS_OPEN>
 			<div class="alert alert-info" style="margin-bottom: 0px;">
-        The 2012 /v/GAs are almost over now, so there aren't any roles left to help with. Feel free to come back when the 2013 site is online. 
+        The <tag:YEAR /> /v/GAs are almost over now, so there aren't any roles left to help with. Feel free to come back next year.
       </div>
+      </!if:APPLICATIONS_OPEN>
 			</if:formError>
 		
-			<!-- <p>Want to help out with the /v/GAs? The best thing you can is hang out in <a href="steam://friends/joinchat/103582791432684008">Steam chat</a>. If you think you're extra special, you can use this form instead.</p>
-			<p>If you want to make a video, see <a href="/videos">this page</a> instead.</p>
+      <if:APPLICATIONS_OPEN>
+			<p>Want to help out with the /v/GAs? The best thing you can is hang out in <a href="steam://friends/joinchat/103582791432684008">Steam chat</a>. If you think you're extra special, you can use this form instead.</p>
+			<!--<p>If you want to make a video, see <a href="/videos">this page</a> instead.</p>-->
 			<!if:loggedIn>
 			<p><strong>You must be logged in to submit this form.</strong></p>
 			</!if:loggedIn>
@@ -48,7 +51,10 @@
 			<input type="text" class="span5" name="email" id="email" maxlength="60" required />
 			<label for="skills">What would you be interested in doing?</label>
 			<input type="text" class="span5" name="skills" id="skills" maxlength="255" required />
-			<input type="submit" class="btn btn-primary span3" value="Submit" <!if:loggedIn>disabled</!if:loggedIn> /> -->
+			<input type="submit" class="btn btn-primary span3" value="Submit" <!if:loggedIn>disabled</!if:loggedIn> />
+			</if:APPLICATIONS_OPEN>
 		</form>
 	</div>
 </div>
+
+<a href="https://plus.google.com/111295979980964577432" rel="publisher">Google+</a>
