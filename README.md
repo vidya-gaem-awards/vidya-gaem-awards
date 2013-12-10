@@ -8,16 +8,12 @@ This repository contains all the files and database schema used to run the [2012
 
 We planned to clean up the code before open sourcing it, but that didn't happen and we figured something is better than nothing. So here it is! Much of it was hacked together quickly during late night coding binges, although some of it is actually quite presentable.
 
-There is essentially no support for this software and this page is the only documentation, so you're on your own. Don't bother submitting issues, it's unlikely they'll ever be fixed. If you want help with something, email [clamburger@vidyagaemawards.com](mailto:clamburger@vidyagaemawards.com) and you *might* get a response.
+There is essentially no support for this software and this page is the only documentation. It's currently being improved for the 2013 /v/GAs, so things may or may not get better over time.
 
 ## Things you need to change
 
- * You need to add database information in **includes/php.php** (lines 14-20). Each of the files in the **scripts** folder also requires database information (location varies, but all within lines 10-12).
- * While you're in **php.php**, you also need to add your domain to line 27 and your Steam API key to line 25.
- * You should change the email addresses in **controllers/volunteer-submission.php**.
- * If you use **scripts/numbers.php**, you'll likely want to change the domain in line 55.
- * You'll also want to change the domain in **index.php** on line 36 for cookies to work.
- * The domain is mentioned tons of times in the template files.
+ * There's a file called **config.php.example** in the **includes** directory. You'll want to copy this to **config.php** and fill it in.
+ * You'll likely want to make changes to the domains in **script/numbers.php**, since they are specific to the /v/GAs.
 
 ## Things you need to know
 
@@ -32,7 +28,7 @@ In the spirit of /v/, you can pretty much do whatever you want with what we made
 We'd appreciate it if you at least made an effort to make the frontend look a bit different, but if you don't, whatever.
 
  * All PHP and Javascript files are licensed under the [MIT License](http://opensource.org/licenses/MIT).
- * All the .tpl files and images are licensed under [Creative Commons Attribution 3.0](http://creativecommons.org/licenses/by/3.0/deed.en_GB).
+ * All the HTML and images are licensed under [Creative Commons Attribution 3.0](http://creativecommons.org/licenses/by/3.0/deed.en_GB).
 
 Because we're lazy/efficient we also used a bunch of code that other people had already written, which are listed here:
 
@@ -40,4 +36,4 @@ Because we're lazy/efficient we also used a bunch of code that other people had 
  * We use [jQuery](https://jquery.org/), [bTemplate](http://www.massassi.com/bTemplate/) and [this thing](http://forums.steampowered.com/forums/showthread.php?t=1430511) which use the [MIT License](http://opensource.org/licenses/MIT).
  * We use [Highcharts](http://www.highcharts.com/products/highcharts) which is licensed under [Creative Commons Attribution-NonCommercial 3.0](http://shop.highsoft.com/highcharts.html)
 
-There are a bunch of images and fonts with uncertain licensing lying around the directory structure. You probably shouldn't use these if you want to be totes-legit.
+There are a bunch of images and fonts with uncertain licensing lying around the directory structure. You probably shouldn't use these if you want to be fully legit.

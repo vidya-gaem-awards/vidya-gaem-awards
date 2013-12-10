@@ -11,9 +11,9 @@ function convertSteamID($communityID) {
 }
 
 function getAPIinfo($communityID) {
-	global $APIkey;
+	global $STEAM_API_KEY;
 	
-	$result = file_get_contents("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=$APIkey&steamids=$communityID");
+	$result = file_get_contents("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=$STEAM_API_KEY&steamids=$communityID");
 	$json = json_decode($result);
 	return $json->response->players[0];
 }
