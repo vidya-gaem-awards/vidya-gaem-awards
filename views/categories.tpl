@@ -6,6 +6,9 @@
 		overflow-x: hidden;
 		/* add padding to account for vertical scrollbar */
 	}
+	#video-games img:hover {
+		box-shadow: 0 0 4px black;
+	}
 
 </style>
 
@@ -48,6 +51,14 @@
 			</li>
 			</loop:categories>
 		</ul>
+	</div>
+
+	<div class="span7" id="video-games">
+
+		<a href="/video-games">
+			<img src="/public/collage.jpg">
+		</a>
+
 	</div>
 
 	<div class="span7" id="category-info" style="display: none;">
@@ -134,6 +145,8 @@ function updateNominations() {
 }
 
 $('#category-selector li').click(function(event) {
+
+	$("#video-games").hide();
 
 	var thus = this;
 
