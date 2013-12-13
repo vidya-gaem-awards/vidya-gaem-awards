@@ -2,11 +2,11 @@
 $tpl->set('title', "Vidya in 2013");
 
 $query = "SELECT * FROM `2010_releases` ORDER BY `Game` ASC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 $games = array();
 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc($result)) {
 	
 	$others = array();
 
