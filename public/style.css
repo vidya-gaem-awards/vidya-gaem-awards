@@ -216,3 +216,7 @@ ul.nav li.dropdown:hover ul.dropdown-menu {
   line-height: 1.95em;
   margin-bottom: 10px;
 }
+
+a[rel=publisher] {
+  display: none;
+}
