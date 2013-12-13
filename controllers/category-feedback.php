@@ -1,4 +1,8 @@
 <?php
+if (!$CATEGORY_VOTING_ENABLED) {
+  die("category voting is currently disabled");
+}
+
 if ($_POST['opinion'] != -1 && $_POST['opinion'] != 1 && $_POST['opinion'] != 0) {
 	die("error: invalid");
 }	

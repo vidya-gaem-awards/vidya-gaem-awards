@@ -9,9 +9,11 @@
 
 </style>
 
+<if:CATEGORY_VOTING_ENABLED>
 <header class="jumbotron subhead">
 <h1>Categories and Nominations</h1>
 </header>
+</if:CATEGORY_VOTING_ENABLED>
 
 <if:adminTools>
 <ul class="breadcrumb">
@@ -23,6 +25,15 @@
 	</li>
 </ul>
 </if:adminTools>
+
+<!if:CATEGORY_VOTING_ENABLED>
+<header class="jumbotron subhead" style="text-align: center;">
+<h1>Award Nominations</h1>
+<p>We use user nominations to decide which nominees get officially chosen for the voting stage.</p>
+<p>You can make as many nominations as you want for each category below, and unlike previous years, you don't need to log in with Steam.</p>
+</header>
+<hr>
+</!if:CATEGORY_VOTING_ENABLED>
 
 <div class="row">
 	
@@ -43,13 +54,14 @@
 		
 		<div data-spy="affix" data-offset-top="<if:adminTools>125<else:adminTools>75</if:adminTools>">
 		
+			<if:CATEGORY_VOTING_ENABLED>
 			<div class="well" style="text-align: center;">
 		
 				<div id="category-name" style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em"></div>
 				<div id="category-subtitle" style="letter-spacing: 2px; font-style: italic; margin-bottom: 20px;"></div>
 				
 				<p id="description"></p>
-				
+
 				<div style="font-size: 200%; color: grey; line-height: 39px; display: none;">
 					saving...
 				</div>
@@ -59,6 +71,13 @@
 				</div>
 				
 			</div>
+			<else:CATEGORY_VOTING_ENABLED>
+
+			<div id="category-name" class="impressive-title"></div>
+			<div id="category-subtitle" class="impressive-subtitle"></div>
+			
+			<p id="description" style="text-align: center;"></p>
+			</if:CATEGORY_VOTING_ENABLED>
 			
 			<!-- <div class="alert alert-error" style="text-align: center;">
 				<strong>Reminder:</strong> for the beta, we are using games from 2010 only. Don't nominate things from 2012.
@@ -125,7 +144,7 @@ $('#category-selector li').click(function(event) {
 		$(thus).addClass("active");
 		
 		$('#category-info #category-name').html(categories[category]['Name']);
-		$('#category-info #category-subtitle').html("~ ~ " + categories[category]['Subtitle'] + " ~ ~");
+		$('#category-info #category-subtitle').html(categories[category]['Subtitle']);
 		$('#category-info #description').html(categories[category]['Description']);
 		if (!categories[category]['Nominations']) {
 		  console.log("Nominations closed, yo");
@@ -250,6 +269,8 @@ $('#nomination-form').submit(function(event) {
 				$("#nomination-status").html("<span style='color: green;'>Success!</span>");
 				$("#nomination-status").fadeOut(3000);
 			}
+			var icon = $('[data-id="'+formCategory+'"] #opinion-icon');
+			icon.text("["+categories[formCategory]['UserNominations'].length+"]");
 		} else {
 			if (formCategory == category) {
 				if (data == "blank nomination") {

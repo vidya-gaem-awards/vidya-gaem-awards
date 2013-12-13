@@ -19,6 +19,7 @@ $YEAR = "2013";
 $DOMAIN = "$YEAR.vidyagaemawards.com";
 
 $APPLICATIONS_OPEN = true;
+$CATEGORY_VOTING_ENABLED = true;
 
 $DEFAULT_PAGE = "home";
 $AD_LANDING_PAGE = "http://$DOMAIN/voting?promo";
