@@ -32,17 +32,18 @@ if (!empty($_POST)) {
 				$tpl->set("formError", "The order must be a positive integer.");
 			} else if (intval($_POST['order']) > 32767) {
 				$tpl->set("formError", "Order is limited to 32767.");
-			} else {
-				array_map('mysql_real_escape_string', $_POST);
-				
+			} else {			
 				$category = $_POST['id'];
 				$name = mysql_real_escape_string($_POST['name']);
 				$subtitle = mysql_real_escape_string($_POST['subtitle']);
 				$order = $_POST['order'];
+
 				$enabled = intval(isset($_POST['enabled']));
+				$nominations = intval(isset($_POST['nominations']));
+				$secret = intval(isset($_POST['secret']));	
 				
-				$query = "INSERT INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Enabled`)";
-				$query .= " VALUES ('$category', '$name', '$subtitle', '$order', $enabled)";
+				$query = "INSERT INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Enabled`, `NominationsEnabled`, `Secret`)";
+				$query .= " VALUES ('$category', '$name', '$subtitle', '$order', $enabled, $nominations, $secret)";
 				
 				$result = mysql_query($query);
 				if (!$result) {
@@ -78,12 +79,18 @@ if (!empty($_POST)) {
 				$subtitle = $_POST['Subtitle'];
 				$comments = $_POST['Comments'];
 				$order = $_POST['Order'];
+				$autocomplete = $_POST['AutocompleteCategory'];
+				if ($autocomplete == $category) {
+					$autocomplete = "NULL";
+				} else {
+					$autocomplete = "\"$autocomplete\"";
+				}
 				$secret = intval(isset($_POST['Secret']));
 				$enabled = intval(isset($_POST['Enabled']));
 				$nominationsEnabled = intval(isset($_POST['NominationsEnabled']));
 				
-				$query = "REPLACE INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Comments`, `Enabled`, `NominationsEnabled`, `Secret`) ";
-				$query .= "VALUES ('$category', '$name', '$subtitle', $order, '$comments', $enabled, $nominationsEnabled, $secret)";
+				$query = "REPLACE INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Comments`, `Enabled`, `NominationsEnabled`, `Secret`, `AutocompleteCategory`) ";
+				$query .= "VALUES ('$category', '$name', '$subtitle', $order, '$comments', $enabled, $nominationsEnabled, $secret, $autocomplete)";
 				
 				$result = mysql_query($query);
 				if (!$result) {
@@ -135,16 +142,22 @@ while ($row = mysql_fetch_assoc($result)) {
 
 	$categories[$row['ID']] = $row;
 
-	if ($row['Enabled']) {
-		$enabled = '<span class="label label-success">Enabled</span>';
-		$class = "";
-	} else {
-		$enabled = '<span class="label label-important">Disabled</span>';
+	$class = "";
+	if (!$row['Enabled']) {
+		$status = '<span class="label label-important">Award Disabled</span>';
 		$class = "alert-error";
+	} else if ($row['Secret']) {
+		$status = '<span class="label label-info">Secret Award!</span>';
+		$class = "info";
+	} else if ($row['NominationsEnabled']) {
+		$status = '<span class="label label-success">Nominations Open</span>';
+	} else {
+		$status = '<span class="label">Nominations Closed</span>';
 	}
+	
 	$temp = array(
 		"Class" => $class,
-		"Enabled" => $enabled,
+		"Status" => $status,
 		"ID" => $row['ID'],
 		"Name" => $row['Name'],
 		"Subtitle" => $row['Subtitle'],
@@ -175,6 +188,23 @@ if ($SEGMENTS[2]) {
 		foreach ($category as $key => $value) {
 			$tpl->set($key, htmlspecialchars($value, ENT_QUOTES));
 		}
+
+		$autocompleters = array(
+			array("Name" => "Default", "ID" => $category['ID']),
+			array("Name" => "Video Games", "ID" => "video-game"),
+		);
+
+		$query = "SELECT `ID`, `Name` FROM `autocompleters`";
+		$result = $mysql->query($query);
+		while ($row = $result->fetch_assoc()) {
+			$autocompleters[] = array("Name" => $row['Name'], "ID" => $row['ID']);
+		}
+
+		foreach ($autocompleters as &$autocompleter) {
+			$autocompleter["Selected"] = ($autocompleter["ID"] == $category['AutocompleteCategory']) ? "selected" : "";
+		}
+
+		$tpl->set("autocompleters", $autocompleters);
 	
 	}
 	

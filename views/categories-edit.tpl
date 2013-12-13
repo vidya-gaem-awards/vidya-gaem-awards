@@ -51,6 +51,19 @@
 					<input type="text" class="input-large email" id="input05" name="Comments" value="<tag:Comments />">
 				</div>
 			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="input06"><abbr title="Determines what shows up in the autocomplete box when users are writing in nominations">Autocomplete Group</abbr></label>
+				<div class="controls">
+					<select name="AutocompleteCategory" id="input06">
+						<loop:autocompleters>
+						<option value="<tag:autocompleters[].ID />" <tag:autocompleters[].Selected />>
+							<tag:autocompleters[].Name />
+						</option>
+						</loop:autocompleters>
+					</select>
+				</div>
+			</div>
 			
 		</div>
 		
@@ -136,13 +149,36 @@
 </form>
 </if:confirmDeletion>
 
-<table class="table table-bordered table-striped form-table" id="categories">
+<style type="text/css">
+td input[type=checkbox] {
+	margin: 0;
+}
+td label {
+	display: inline;
+}
+#categories {
+	background-color: white;
+}
+.label {
+	display: block;
+	text-align: center;
+	padding: 13px 0;
+}
+#categories .aligned {
+	text-align: center;
+	vertical-align: middle;
+}
+.monospace {
+	font-family: monospace;
+}
+</style>
+
+<table class="table table-bordered form-table" id="categories">
 	<thead>
 		<tr>
-			<th class="span1">&nbsp;</th>
+			<th style="width: 120px;">Status</th>
 			<th>ID</th>
 			<th>Name</th>
-			<th>Subtitle</th>
 			<th style="width: 60px;">Order</th>
 			<th style="width: 80px;">Controls</th>
 		</tr>
@@ -152,12 +188,11 @@
 		<input type="hidden" id="delete" name="delete" value="delete" />
 		<loop:cats>
 		<tr class="<tag:cats[].Class />">
-			<td><tag:cats[].Enabled /></td>
-			<td><tag:cats[].ID /></td>
-			<td><tag:cats[].Name /></td>
-			<td><tag:cats[].Subtitle /></td>
-			<td><tag:cats[].Order /></td>
-			<td>
+			<td class="aligned"><tag:cats[].Status /></td>
+			<td class="monospace"><tag:cats[].ID /></td>
+			<td><tag:cats[].Name /><br><small><tag:cats[].Subtitle /></small></td>
+			<td class="aligned"><tag:cats[].Order /></td>
+			<td class="aligned">
 				<a class="btn" href="/categories/edit/<tag:cats[].ID />" title="Edit category"><i class="icon-pencil"></i> Edit</a>
 			</td>
 		</tr>
@@ -166,11 +201,17 @@
 		<form method="POST" action="/categories/edit">
 			<input type="hidden" name="action" value="new" />
 			<tr>
-				<td><input type="checkbox" checked name="enabled" id="enabled" /></td>
+				<td>
+					<input type="checkbox" checked name="enabled" id="enabled" /> <label for="enabled">Enabled</label><br>
+					<input type="checkbox" checked name="nominations" id="nominations" /> <label for="nominations">Nominations</label><br>
+					<input type="checkbox" name="secret" id="secret" /> <label for="secret">Secret</label>
+				</td>
 				<td><input type="text" name="id" id="id" placeholder="ID" style="width: 90%;" maxlength="30" required /></td>
-				<td><input type="text" name="name" id="name" placeholder="Name" style="width: 90%;" required /></td>
-				<td><input type="text" name="subtitle" id="subtitle" placeholder="Subtitle" style="width: 90%;" required /></td>
-				<td><input type="text" name="order" id="order" placeholder="Order" style="width: 90%;" required /></td>
+				<td>
+					<input type="text" name="name" id="name" placeholder="Name" style="width: 90%;" required />
+					<input type="text" name="subtitle" id="subtitle" placeholder="Subtitle" style="width: 90%;" required />
+				</td>
+				<td><input type="text" name="order" id="order" placeholder="Order" style="width: 50px;" required /></td>
 				<td><input type="submit" class="btn" /></div></td>
 			</tr>
 		</form>
