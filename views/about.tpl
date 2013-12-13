@@ -7,10 +7,10 @@
 			<div class="span5">
 			<p>The /v/GAs (<em>Vidya Gaem Awards</em>) were born in early December 2011 as a response to the Spike VGAs, which were widely regarded as terrible and a cancer upon the video game industry.</p>
 			<p>A small group of anons decided to make their own presentation for /v/: after a month or so of planning, categories were made, votes were tallied and the presentation was shown to over 10,000 people live. It was widely regarded as terrible and a cancer upon /v/.</p>
-			<p>Despite this, there was a lot of positive feedback, and we felt that if we took the many suggestions we got on board that we could make something that all of /v/ could enjoy.</p>
-			<h2 class="implying">>get back to reddit</h2>
-			<p>We want to make this explicitly clear: we do not want Reddit to be involved in any way, shape or form, and if you are visting this site from Reddit please fuck off and never come back. The same was true last year, we just never said it in so many words.</p>
-			<p>Everything we do is based on feedback from /v/. If you think anything we're doing is too Reddit-tier, then let us know.</p>
+			<p>Despite this, a slightly different and much larger group of anons thought they could do better next time. They were right in some ways, but mostly wrong.</p>
+			<p>It looked like common sense was going to take hold this year; nobody was working on it and there <a href="http://vidyagaemawards.com/2013_old/">weren't any plans to do so</a>. Unfortunately, there was one anon who was rather persistant, and it looks like the /v/GAs will go ahead once more, albeit with an almost completely different team.</p>
+			<h2>Why the fuck would you think this is a good idea again?</h2>
+			<p>Despite the copious amounts of self-deprecation we use and the amount of shit that gets flung at us, we did actually get a number of /v/irgins who had positive feedback; many of them are now helping the show this year happen.</p>
 			</div>
 		</div>
 	</div>
@@ -22,8 +22,7 @@
 			<div class="span6">
 				<p>The /v/GAs are run for /v/, by /v/. Despite popular belief, <a href="http://lereddit.com">le Reddit</a> is not involved at all and we go to great lengths to keep it that way.</p>
 				<p>We're always happy for people to get involved: there are only a few people really "in charge", and that's only the minimum necessary to ensure things don't fall completely to shit. Getting involved is as easy as posting in the <a href="http://steamcommunity.com/groups/vidyagaemawards/discussions">forum</a>, joining the <a href="http://steamcommunity.com/groups/vidyagaemawards">Steam group</a> or hopping into <a href="steam://friends/joinchat/103582791432684008">Steam chat</a>. Just like anybody can make a thread on /v/, anybody can participate in the /v/GAs.</p>
-				<p>If you want to see what it's like, there's nothing better than to watch last year's presentation. Hundreds of people were involved throughout the process (not including all the people who voted).</p>
-				<p>Whether you love us or hate us, we look forward to your reactions in the upcoming months.</p>
+				<p>You can see the 2011 and 2012 shows on our <a href="http://www.youtube.com/user/VidyaGaemAwards/videos">YouTube channel</a>.</p>
 			</div>
 		</div>
 	</div>

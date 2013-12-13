@@ -81,7 +81,7 @@
   );
 
   if (isset($ACCESS["nomination-submit"]) && $ACCOUNT_REQUIRED_TO_NOMINATE) {
-    $ACCESS["nomination-submit"] => LOGIN;
+    $ACCESS["nomination-submit"] = LOGIN;
   }
 
   // Pages that won't use the master template
