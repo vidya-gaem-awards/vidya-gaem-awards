@@ -48,6 +48,14 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 			$voteIcon = "";
 		}
 		$row['OpinionIcon'] = $voteIcon;
+
+		if (!$CATEGORY_VOTING_ENABLED) {
+			if (!$loggedIn || !isset($userNominations[$row['ID']])) {
+				$row['OpinionIcon'] = "[0]";
+			} else {
+				$row['OpinionIcon'] = "[".count($userNominations[$row['ID']])."]";
+			}
+		}
 	
 		$categories[] = $row;
 		
@@ -78,6 +86,10 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 			} else {
 				$javascriptVars["UserNominations"] = "[]";
 			}
+		}
+
+		if (!$CATEGORY_VOTING_ENABLED) {
+			$javascriptVars["OpinionIcon"] = "[".count(json_decode($javascriptVars["UserNominations"]))."]";
 		}
 		
 		$categoryJS .= "\"{$row['ID']}\": {";
@@ -134,6 +146,7 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 	}
 
 	$tpl->set("autocompleteJavascript", $autocompleteJS);
+	$tpl->set("CATEGORY_VOTING_ENABLED", $CATEGORY_VOTING_ENABLED);
 	
 /***** VIEW CATEGORY RESULTS *******/
 
