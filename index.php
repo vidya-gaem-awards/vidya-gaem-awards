@@ -40,6 +40,11 @@
     exit();
   }
 
+  // Special handling for ad landing page
+  if ($PAGE == "promotions") {
+    header("Location: {$AD_LANDING_PAGE}");
+  }
+
   $ACCESS = array(
     "404" => EVERYONE,
     //"about" => EVERYONE,
@@ -57,6 +62,7 @@
     "nomination-submit" => LOGIN,
     "people" => "profile-view",
     "privacy" => EVERYONE,
+    "promotions" => EVERYONE,
     "referrers" => "referrers-view",
     "sitemap" => EVERYONE,
     //"stream" => EVERYONE,
