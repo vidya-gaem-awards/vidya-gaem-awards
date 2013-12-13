@@ -37,7 +37,7 @@ $USER_GROUPS = array();
 $correct = false;
 if (!isset($_SESSION['login']) && isset($_COOKIE['token'])) {
   list($token, $hmac) = explode(':', $_COOKIE['token'], 2);
-  $tokenValid = $hmac == hash_hmac('md5', $token, $APIkey);
+  $tokenValid = $hmac == hash_hmac('md5', $token, $STEAM_API_KEY);
   if ($tokenValid) {
     $token = mysql_real_escape_string($_COOKIE['token']);
     $query = "SELECT * FROM `login_tokens` WHERE `Token` = \"$token\"";
@@ -103,7 +103,7 @@ if (isset($_SESSION['login'])) {
 	
 	$tpl->set("openIDurl", SteamSignIn::genUrl("http://$DOMAIN/login/$page"));
 	
-	$ID = $_SERVER['REMOTE_ADDR'];
+  $ID = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
 	
 	$userID = "";
 	
@@ -134,7 +134,7 @@ set_time_limit(60);
 
 if (!isset($_COOKIE['access']) || strlen($_COOKIE['access']) <= 10) {
   $randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-  $randomToken .= ':'.hash_hmac('md5', $randomToken, $APIkey);
+  $randomToken .= ':'.hash_hmac('md5', $randomToken, $STEAM_API_KEY);
   $uniqueID = $randomToken;
 	setcookie("access", $randomToken, time()+60*60*24*90, "/", $DOMAIN);
 } else {
