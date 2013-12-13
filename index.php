@@ -47,7 +47,7 @@
 
   $ACCESS = array(
     "404" => EVERYONE,
-    //"about" => EVERYONE,
+    "about" => EVERYONE,
     "ajax-nominations" => "nominations-edit",
     "applications" => "applications-view",
     "categories" => EVERYONE,
@@ -59,7 +59,7 @@
     "login" => EVERYONE,
     "news" => EVERYONE,
     "nominations" => "nominees-view",
-    "nomination-submit" => LOGIN,
+    "nomination-submit" => EVERYONE,
     "people" => "profile-view",
     "privacy" => EVERYONE,
     "promotions" => EVERYONE,
@@ -79,6 +79,10 @@
     "who-am-i" => EVERYONE,
     //"winners" => EVERYONE // Change to EVERYONE
   );
+
+  if (isset($ACCESS["nomination-submit"]) && $ACCOUNT_REQUIRED_TO_NOMINATE) {
+    $ACCESS["nomination-submit"] => LOGIN;
+  }
 
   // Pages that won't use the master template
   $noMaster = array(

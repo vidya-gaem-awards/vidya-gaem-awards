@@ -89,7 +89,7 @@
 					Your Nominations for this Category: <span id="user-nomination-count">0</span>
 				</div>
 		
-				<if:loggedIn>
+				<if:allowedToNominate>
 				<pre id="user-nomination-list"></pre>
 			
 				<form class="form-inline" style="text-align: center;" id="nomination-form">
@@ -103,9 +103,9 @@
 				
 				<p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
 				
-				<else:loggedIn>
-				<pre>You need to be logged in to nominate things.</pre>
-				</if:loggedIn>
+				<else:allowedToNominate>
+				<pre>You need to be logged in to add nominations.</pre>
+				</if:allowedToNominate>
 
 			</div>
 		
@@ -157,9 +157,9 @@ $('#category-selector li').click(function(event) {
 			$('#thumbs-down').addClass("disabled btn-danger");
 		}
 		
-		<if:loggedIn>
+		<if:allowedToNominate>
 		updateNominations(category);
-		//</if:loggedIn>
+		//</if:allowedToNominate>
 		
 		$('#category-info').fadeIn('fast');
 		$('#nomination-status').hide();

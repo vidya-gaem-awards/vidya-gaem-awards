@@ -5,6 +5,8 @@ mysql_query('SET NAMES utf8');
 
 if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 
+	$allowedToNominate = $loggedIn || !$ACCOUNT_REQUIRED_TO_NOMINATE;
+
 	##### Grab the list of category votes #####
 
 	$categoryVotes = array();
@@ -16,7 +18,7 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 	
 	##### Grab the list of user nominations (if logged in)
 	$userNominations = array();
-	if ($loggedIn) {
+	if ($allowedToNominate) {
 		$query = "SELECT `CategoryID`, `Nomination` FROM `user_nominations` WHERE `UserID` = \"$ID\" ORDER BY `CategoryID` ASC, `Nomination` ASC";
 		$result = mysql_query($query);
 		while ($row = mysql_fetch_assoc($result)) {
@@ -50,7 +52,9 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 		$row['OpinionIcon'] = $voteIcon;
 
 		if (!$CATEGORY_VOTING_ENABLED) {
-			if (!$loggedIn || !isset($userNominations[$row['ID']])) {
+			if (!$allowedToNominate) {
+				$row['OpinionIcon'] = "";
+			} else if (!isset($userNominations[$row['ID']])) {
 				$row['OpinionIcon'] = "[0]";
 			} else {
 				$row['OpinionIcon'] = "[".count($userNominations[$row['ID']])."]";
@@ -80,12 +84,10 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 			"Opinion" => $categoryVote,
 		);
 		
-		if ($loggedIn) {
-			if (isset($userNominations[$row['ID']])) {
-				$javascriptVars["UserNominations"] = json_encode($userNominations[$row['ID']]);
-			} else {
-				$javascriptVars["UserNominations"] = "[]";
-			}
+		if ($allowedToNominate && isset($userNominations[$row['ID']])) {
+			$javascriptVars["UserNominations"] = json_encode($userNominations[$row['ID']]);
+		} else {
+			$javascriptVars["UserNominations"] = "[]";
 		}
 
 		if (!$CATEGORY_VOTING_ENABLED) {
@@ -147,6 +149,7 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 
 	$tpl->set("autocompleteJavascript", $autocompleteJS);
 	$tpl->set("CATEGORY_VOTING_ENABLED", $CATEGORY_VOTING_ENABLED);
+	$tpl->set("allowedToNominate", $allowedToNominate);
 	
 /***** VIEW CATEGORY RESULTS *******/
 
