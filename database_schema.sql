@@ -7,6 +7,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `2010_releases` (
  `Game` varchar(60) NOT NULL,
+ `Notable` tinyint(1) NOT NULL DEFAULT '0',
  `PC` tinyint(1) NOT NULL,
  `PS3` tinyint(1) NOT NULL,
  `PS4` tinyint(1) NOT NULL,
