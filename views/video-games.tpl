@@ -1,6 +1,6 @@
 <header class="jumbotron subhead">
-<h1>2012 in vidya</h1>
-<p class="lead">Need a reminder of what games were released in 2012? Take a trip down memory lane with this list of vidya; everything from AAA titles to indie shovelware.</p>
+<h1>2013 in vidya</h1>
+<p class="lead">Need a reminder of what games were released in 2013? Take a trip down memory lane with this list of vidya; everything from AAA titles to indie shovelware.</p>
 </header>
 
 <div class="row">
@@ -21,6 +21,25 @@ $(document).ready(function()
 #games td {
 	text-align: center;
 }
+.c-pc {
+	background-color: black;
+	color: white;
+}
+.c-ps3, .c-ps4, .c-psv {
+	background-color: rgb(0, 64, 152);
+	color: white;
+}
+.c-360, .c-xb1 {
+	background-color: rgb(17, 125, 16);
+	color: white;
+}
+.c-wii, .c-3ds, .c-wiiu {
+	background-color: rgb(127, 127, 127);
+	color: white;
+}
+.yes {
+	display: block;
+}
 </style>
 
 <table class="table table-striped table-bordered table-condensed tablesorter" id="games">
@@ -29,26 +48,32 @@ $(document).ready(function()
 	<th>Game Title</th>
 	<th width='40px' style='border-left-width: 3px;'>PC</th>
 	<th width='40px' style='border-left-width: 3px;'>PS3</th>
-	<th width='40px'>360</th>
-	<th width='40px'>Wii</th>
-	<th width='40px' style='border-left-width: 3px;'>PSV</th>
-	<th width='40px'>3DS</th>
-	<th width='40px' style='border-left-width: 3px;'>PS2</th>
-	<th width='40px' style='border-left-width: 3px;'>iOS</th>
+	<th width='40px'>PS4</th>
+	<th width='40px'>PSV</th>
+	<th width='40px' style='border-left-width: 3px;'>360</th>
+	<th width='40px'>XB1</th>
+	<th width='50px' style='border-left-width: 3px;'>Wii</th>
+	<th width='50px'>Wii U</th>
+	<th width='50px'>3DS</th>
+	<th width='60px' style='border-left-width: 3px;'>Mobile</th>
+	<th width='60px' style='border-left-width: 3px;'>Others</th>
 </tr>
 </thead>
 <tbody>
 <loop:games>
 <tr>
 	<td style='text-align: left;'><tag:games[].Game /></td>
-	<td style='border-left-width: 3px;'><tag:games[].PC /></td>
-	<td style='border-left-width: 3px;'><tag:games[].PS3 /></td>
-	<td><tag:games[].360 /></td>
-	<td><tag:games[].Wii /></td>
-	<td style='border-left-width: 3px;'><tag:games[].PSV /></td>
-	<td><tag:games[].3DS /></td>
-	<td style='border-left-width: 3px;'><tag:games[].PS2 /></td>
-	<td style='border-left-width: 3px;'><tag:games[].iOS /></td>
+	<td width='40px' style='border-left-width: 3px;'><tag:games[].PC /></th>
+	<td width='40px' style='border-left-width: 3px;'><tag:games[].PS3 /></th>
+	<td width='40px'><tag:games[].PS4 /></th>
+	<td width='40px'><tag:games[].PSV /></th>
+	<td width='40px' style='border-left-width: 3px;'><tag:games[].360 /></th>
+	<td width='40px'><tag:games[].XB1 /></th>
+	<td width='50px' style='border-left-width: 3px;'><tag:games[].Wii /></th>
+	<td width='50px'><tag:games[].WiiU /></th>
+	<td width='50px'><tag:games[].3DS /></th>
+	<td width='60px' style='border-left-width: 3px;'><tag:games[].Mobile /></th>
+	<td width='60px' style='border-left-width: 3px;'></th>
 </tr>
 </loop:games>
 </tbody>

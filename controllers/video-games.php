@@ -1,7 +1,7 @@
 <?php
 $tpl->set('title', "2012 in vidya");
 
-$query = "SELECT * FROM `2010_releases`";
+$query = "SELECT * FROM `2010_releases` ORDER BY `Game` ASC";
 $result = mysql_query($query);
 
 $games = array();
@@ -16,7 +16,8 @@ while ($row = mysql_fetch_assoc($result)) {
 		}
 		
 		if ($value == 1) {
-			$row[$key] = "<strong>✓</strong>";
+			$class = "c-".strtolower($key);
+			$row[$key] = "<strong class='yes $class'>✓</strong>";
 		} else {
 			$row[$key] = "";
 		}
