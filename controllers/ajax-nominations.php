@@ -1,82 +1,99 @@
 <?php
-function error($msg) {
-  echo json_encode(array("result" => "error", "error" => $msg));
-  exit;
-}
-
-$details = false;
-
 $action = $_POST['Action'];
-if ($action != "edit" && $action != "delete" && $action != "new") {
-  error("Invalid action specified.");
-}
-
 $category = $_POST['Category'];
-$cat = mysql_real_escape_string($category);
-
-// Sanity checks on provided category and nominee
-if ($action == "new") {
-  $query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
-  $result = mysql_query($query);
-  if (mysql_num_rows($result) === 0) {
-    error("Category \"$category\" doesn't exist or isn't enabled.");
-  }
-}
-
 $nominee = $_POST['NomineeID'];
-$nom = mysql_real_escape_string($nominee);
 
-$query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" AND `NomineeID` = \"$nom\"";
-$result = mysql_query($query);
-
-$nomineeExists = mysql_num_rows($result);
-  
-if (($action == "edit" || $action == "delete") && !$nomineeExists) {
-  error("Couldn't find nominee \"$nominee\" in category \"$category\".");
+// Sanity checking
+if ($action != "edit" && $action != "delete" && $action != "new") {
+  return_json("error", "Invalid action specified.");
+} else if (trim($nominee) == "") {
+  return_json("error", "A nominee ID is required.");
 }
 
-// Time to do the real work
+// Check if the category exists and is enabled
+if ($action == "new") {
+  $query = "SELECT `Enabled` FROM `categories` WHERE `ID` = ?";
+  $stmt = $mysql->prepare($query);
+  $stmt->bind_param("s", $category);
+  $stmt->execute();
+  $stmt->bind_result($enabled);
+  $stmt->store_result();
+  if ($stmt->num_rows === 0) {
+    return_json("error", "The specified category doesn't exist.");
+  }
+  $stmt->fetch();
+  if ($enabled !== 1) {
+    return_json("error", "The specified category is not enabled.");
+  }
+}
+
+// Check if the nominee exists
+$query = "SELECT `NomineeID` FROM `nominees` " .
+  "WHERE `CategoryID` = ? AND `NomineeID` = ?";
+$stmt = $mysql->prepare($query);
+$stmt->bind_param("ss", $category, $nominee);
+$stmt->execute();
+$stmt->store_result();
+
+$nomineeExists = $stmt->num_rows === 1;
+  
+if ($action != "new" && !$nomineeExists) {
+  return_json("error", "Couldn't find that nominee in that category.");
+} else if ($action == "new" && $nomineeExists) {
+  return_json("error",
+    "A nominee with that ID already exists in this category.");
+}
+
+// Deleting a nominee
 if ($action == "delete") {
+  $query = "DELETE FROM `nominees` WHERE `CategoryID` = ? AND `NomineeID` = ?";
+  $stmt = $mysql->prepare($query);
+  $stmt->bind_param("ss", $category, $nominee);
+  $stmt->execute();
 
-  $query = "DELETE FROM `nominees` WHERE `CategoryID` = \"$cat\" AND `NomineeID` = \"$nom\"";
-  $result = mysql_query($query);
   action("nominee-delete", $category, $nominee);
-  
-} else {
-  if (trim($_POST['NomineeID']) == "") {
-    error("ID cannot be empty.");
-  } else if ($action == "new" && $nomineeExists) {
-    error("A nominee with that ID already exists in this category.");
-  } else if (trim($_POST['Name']) == "") {
-    error("Name cannot be empty.");
-  } else if (preg_match('/[^a-z0-9-]/', $_POST['NomineeID'])) {
-    error("ID should consist of lowercase letters, numbers and dashes only.");
-  }
-  
-  $values = array_map("mysql_real_escape_string", $_POST);
-  
-  if ($action == "edit") {
-    $query = "UPDATE `nominees` SET `Name` = \"{$values["Name"]}\", `Subtitle` = \"{$values["Subtitle"]}\", ";
-    $query .= "`Image` = \"{$values["Image"]}\" WHERE `CategoryID` = \"$cat\" AND `NomineeID` = \"$nom\"";
-  } else {
-    $query = "INSERT INTO `nominees` (`CategoryID`, `NomineeID`, `Name`, `Subtitle`, `Image`) ";
-    $query .= "VALUES (\"$cat\", \"$nom\", \"{$values['Name']}\", \"{$values['Subtitle']}\", \"{$values['Image']}\")";
-  }
-  
-  $result = mysql_query($query);
-  
-  if (!$result) {
-    error("MySQL failure.<br>".mysql_error());
-  } else {
-    $serial = mysql_real_escape_string(json_encode($_POST));
-    $query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
-    $query .= "VALUES ('$ID', 'nominees', '$cat/$nominee', '$serial', NOW())";
-    debug_query($query);
-    
-    action("nominee-$action", $category, $nominee);
-  }
-  
+
+  return_json("success");
 }
 
-echo json_encode(array("result" => "success", "details" => $details));
-?>
+// Adding or editing a nominee
+if (trim($_POST['Name']) == "") {
+  return_json("error", "The nominee must have a name.");
+} else if (preg_match('/[^a-z0-9-]/', $_POST['NomineeID'])) {
+  return_json("error", "The nominee ID should consist of lowercase letters, ".
+    "numbers and dashes only.");
+}
+
+// Perform the insertion/replacement
+$query = "REPLACE INTO `nominees` (`CategoryID`, `NomineeID`, `Name`, ".
+  "`Subtitle`, `Image`) VALUES (?, ?, ?, ?, ?)";
+$stmt = $mysql->prepare($query);
+$stmt->bind_param("sssss", $category, $nominee, $_POST['Name'],
+  $_POST['Subtitle'], $_POST['Image']);
+$result = $stmt->execute();
+
+if (!$result) {
+  error_log("MySQL error: ".$stmt->error);
+  return_json("error", "A MySQL error occurred.");
+}
+
+action("nominee-$action", $category, $nominee);
+
+// Perform a history update
+$query = "INSERT INTO `history` "
+  . "(`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`) "
+  . "VALUES(?, ?, ?, ?, NOW())";
+$stmt = $mysql->prepare($query);
+$stmt->bind_param("ssss", $ID, $table, $entryID, $values);
+
+$table = "nominees";
+$entryID = "$cat/$nominee";
+$values = json_encode($_POST);
+
+$result = $stmt->execute();
+
+if (!$result) {
+  error_log("MySQL error: ".$stmt->error);
+}
+
+return_json("success");

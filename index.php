@@ -46,25 +46,29 @@
   }
 
   $ACCESS = array(
+    // These ones should never have to change
     "404" => EVERYONE,
     "about" => EVERYONE,
+    "home" => EVERYONE,
+    "login" => EVERYONE,
+    "privacy" => EVERYONE,
+    "promotions" => EVERYONE,
+    "sitemap" => EVERYONE,
+    "who-am-i" => EVERYONE,
+    
+    // Volatile pages
     "ajax-nominations" => "nominations-edit",
     "applications" => "applications-view",
     "categories" => EVERYONE,
     "category-feedback" => EVERYONE,
     //"credits" => EVERYONE, // Change to EVERYONE
-    //"feedback" => EVERYONE,  // Change to EVERYONE
-    "home" => EVERYONE,
+    //"feedback" => "feedback-view",  // Change to EVERYONE
     //"launcher" => EVERYONE,
-    "login" => EVERYONE,
     "news" => EVERYONE,
     "nominations" => "nominees-view",
     "nomination-submit" => EVERYONE,
     "people" => "profile-view",
-    "privacy" => EVERYONE,
-    "promotions" => EVERYONE,
     "referrers" => "referrers-view",
-    "sitemap" => EVERYONE,
     //"stream" => EVERYONE,
     //"test" => EVERYONE,
     //"thanks" => EVERYONE,
@@ -76,7 +80,6 @@
     //"voting-code" => EVERYONE,
     //"voting-submission" => EVERYONE,
     //"votingpu" => "voting-view",
-    "who-am-i" => EVERYONE,
     //"winners" => EVERYONE // Change to EVERYONE
   );
 

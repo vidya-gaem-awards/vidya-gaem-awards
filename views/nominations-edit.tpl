@@ -317,14 +317,14 @@ $("#dialog-delete-nominee-confirm").click(function() {
   $.post("/ajax-nominations", { Action: "delete", NomineeID: nomineeID, Category: "<tag:category />" }, function(data) {
     currentlySubmitting = false;  
     
-    if (data.result == "success") {
+    if (data.success) {
       $( "#nominee-" + nomineeID ).slideUp(500, function() {
         $(this).remove();
         $("#official-count").text($("#official-count").text() - 1);
       });
       delete nominees[nomineeID];
     } else {
-      alert("Something went wrong! " + data.error);
+      alert("An error occurred: "+data.error);
     }
     
     // Close the dialog
