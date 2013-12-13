@@ -10,8 +10,8 @@ if (!file_exists("games.csv")) {
 
 $mysqli = new Mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
 
-$search = array(" ", "Win", "Mac", "Lin", "iOS", "Droid", "WP");
-$replace = array("", "PC", "PC", "PC", "Mobile", "Mobile", "Mobile");
+$search = array(" ", "Win", "Mac", "Lin", "iOS", "Droid", "WP", "X360", "XBO", "PSVita");
+$replace = array("", "PC", "PC", "PC", "Mobile", "Mobile", "Mobile", "360", "XB1", "PSV");
 $delete = array("PS2", "NDS");
 
 $allPlatforms = array("PC","PS3","PS4","PSV","PSN","360","XB1","XBLA","Wii",
@@ -47,7 +47,10 @@ foreach ($games as $game => $platforms) {
   $values = implode(",", $values);
   $game = $mysqli->escape_string($game);
   $query = "INSERT INTO `2010_releases` (`Game`, $keys) VALUES (\"$game\", $values)";
-  $mysqli->query($query);
+  $result = $mysqli->query($query);
+  if ($result->error) {
+    echo $result->error."<br>";
+  }
 }
 
 echo "All done.";

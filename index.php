@@ -69,7 +69,7 @@
     //"test" => EVERYONE,
     //"thanks" => EVERYONE,
     "user-search" => "add-user",
-    //"video-games" => EVERYONE,
+    "video-games" => EVERYONE,
     "volunteer-submission" => LOGIN,
     //"videos" => EVERYONE,
     //"voting" => EVERYONE,
