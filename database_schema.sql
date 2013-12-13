@@ -6,16 +6,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `2010_releases` (
-  `Game` varchar(60) NOT NULL,
-  `PC` smallint(6) NOT NULL,
-  `360` smallint(6) NOT NULL,
-  `PS3` smallint(6) NOT NULL,
-  `Wii` smallint(6) NOT NULL,
-  `3DS` smallint(6) NOT NULL,
-  `PSV` smallint(6) NOT NULL,
-  `PS2` smallint(6) NOT NULL,
-  `iOS` smallint(6) NOT NULL,
-  PRIMARY KEY (`Game`)
+ `Game` varchar(60) NOT NULL,
+ `PC` tinyint(1) NOT NULL,
+ `PS3` tinyint(1) NOT NULL,
+ `PS4` tinyint(1) NOT NULL,
+ `PSV` tinyint(1) NOT NULL,
+ `PSN` tinyint(1) NOT NULL,
+ `360` tinyint(1) NOT NULL,
+ `XB1` tinyint(1) NOT NULL,
+ `XBLA` tinyint(1) NOT NULL,
+ `Wii` tinyint(1) NOT NULL,
+ `WiiU` tinyint(1) NOT NULL,
+ `WiiWare` tinyint(1) NOT NULL,
+ `3DS` tinyint(1) NOT NULL,
+ `Ouya` tinyint(1) NOT NULL,
+ `Mobile` tinyint(1) NOT NULL,
+ PRIMARY KEY (`Game`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -79,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `applications` (
 -- Table structure for table `autocompleters`
 --
 
-CREATE TABLE `autocompleters` (
+CREATE TABLE IF NOT EXISTS `autocompleters` (
  `CategoryID` varchar(30) CHARACTER SET latin1 NOT NULL,
  `Values` text CHARACTER SET latin1 NOT NULL,
  PRIMARY KEY (`CategoryID`)
