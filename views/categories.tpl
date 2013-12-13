@@ -171,8 +171,10 @@ $('#category-selector li').click(function(event) {
 		var autocompleteCat = categories[category]['Autocomplete'];
 		if (autocompleteCat == "video-game") {
 			$('#autocomplete').html("This category provides suggestions using a list of video games");
-		} else {
+		} else if (autocompleteCat == category) {
 			$('#autocomplete').html("This category provides suggestions based on nominations from other users");
+		} else {
+			$('#autocomplete').html("This category provides suggestions from a pre-defined list");
 		}
 		
 		$( "#tags" ).autocomplete({
