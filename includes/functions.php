@@ -111,4 +111,8 @@ function generateUUID() {
         mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
     );
 }
-?>
+
+function return_json($result, $info = TRUE) {
+  echo json_encode(array($result => $info));
+  exit;
+}

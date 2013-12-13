@@ -1,22 +1,31 @@
 <?php
+// Sanity checking
 if (!$CATEGORY_VOTING_ENABLED) {
-  die("category voting is currently disabled");
-}
-
-if ($_POST['opinion'] != -1 && $_POST['opinion'] != 1 && $_POST['opinion'] != 0) {
-	die("error: invalid");
+  return_json("error", "Voting on categories is currently disabled.");
+} else if ($_POST['opinion'] != -1 && $_POST['opinion'] != 1 && $_POST['opinion'] != 0) {
+	return_json("error", "You provided an invalid opinion.");
 }	
-$category = mysql_real_escape_string($_POST['ID']);
-$query = "SELECT `ID` FROM `categories` WHERE `ID` = \"$category\"";
-$result = mysql_query($query);
-if (mysql_num_rows($result) == 0) {
-	die("error: mysql $query");
+
+$category = $_POST['ID'];
+
+// Check if the category exists
+$query = "SELECT `ID` FROM `categories` WHERE `ID` = ?";
+$stmt = $mysql->prepare($query);
+$stmt->bind_param("s", $category);
+$stmt->execute();
+$stmt->store_result();
+if ($stmt->num_rows === 0) {
+  return_json("error", "The specified category doesn't exist.");
 }
+$stmt->close();
 
-$opinion = mysql_real_escape_string($_POST['opinion']);
+// Insert the vote, overwriting the previous one if it exists
+$query = "REPLACE INTO `category_feedback` VALUES (?, ?, ?)";
+$stmt = $mysql->prepare($query);
+$stmt->bind_param("ssi", $category, $ID, $_POST['opinion']);
+$stmt->execute();
+$stmt->close();
 
-$query = "REPLACE INTO `category_feedback` VALUES (\"$category\", \"$ID\", $opinion)";
-mysql_query($query);
 action("opinion-given", $category, $opinion);
-echo "done";
-?>
+
+return_json("success");

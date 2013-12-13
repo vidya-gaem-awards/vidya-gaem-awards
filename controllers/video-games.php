@@ -6,7 +6,7 @@ $result = $mysql->query($query);
 
 $games = array();
 
-while ($row = $result->fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	
 	$others = array();
 

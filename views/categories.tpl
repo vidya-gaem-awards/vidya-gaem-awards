@@ -212,7 +212,7 @@ $('#category-voting a').click(function(event) {
 	var formCategory = category;
 	
 	$.post("/category-feedback", { ID: category, opinion: opinion }, function(data) {
-		if (data == "done") {
+		if (data.success) {
 		
 			var icon = $('[data-id="'+formCategory+'"] #opinion-icon');
 			if (opinion == -1) {
@@ -238,10 +238,13 @@ $('#category-voting a').click(function(event) {
 				$(opposite).removeClass("disabled");
 			}
 			categories[formCategory]['Opinion'] = opinion;
+
+		} else {
+			alert("An error occurred: "+data.error);
 		}
 		$(selected).parent().show();
 		$(selected).parent().prev().hide();
-	});
+	}, "json");
 });
 
 var currentlySubmitting = false;
