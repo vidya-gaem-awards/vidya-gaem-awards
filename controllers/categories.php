@@ -134,14 +134,14 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 	$games = '"video-game": ['."\n\t".implode(",\n\t", $games)."\n\t]";
 
 	##### Grab autocompleters from the database #####
-	$query = "SELECT `CategoryID`, `Values` FROM `autocompleters`";
+	$query = "SELECT `ID`, `Strings` FROM `autocompleters`";
 	$result = mysql_query($query);
 
 	while ($row = mysql_fetch_assoc($result)) {
-		$values = explode("\n", $row['Values']);
+		$values = explode("\n", $row['Strings']);
 		sort($values);
 		foreach ($values as $value) {
-			$autocompleters[$row['CategoryID']][] = json_encode($value);
+			$autocompleters[$row['ID']][] = json_encode($value);
 		}
 	}
 
