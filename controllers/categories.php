@@ -60,12 +60,13 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 		
 		$nominationsEnabled = $row['NominationsEnabled'] ? "true" : "false";
 		
+		$desc = json_encode($row['Comments']);
 		$row = array_map("htmlentities", $row);
 		
 		$javascriptVars = array(
 			"Name" => '"'.$row['Name'].'"',
 			"Subtitle" => '"'.$row['Subtitle'].'"',
-			"Description" => '"'.$row['Comments'].'"',
+			"Description" => $desc,
 			"Nominations" => $nominationsEnabled,
 			"Autocomplete" => '"'.$autocomplete.'"',
 			"Opinion" => $categoryVote,

@@ -36,8 +36,8 @@ if (!empty($_POST)) {
 				array_map('mysql_real_escape_string', $_POST);
 				
 				$category = $_POST['id'];
-				$name = $_POST['name'];
-				$subtitle = $_POST['subtitle'];
+				$name = mysql_real_escape_string($_POST['name']);
+				$subtitle = mysql_real_escape_string($_POST['subtitle']);
 				$order = $_POST['order'];
 				$enabled = intval(isset($_POST['enabled']));
 				
