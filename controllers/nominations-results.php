@@ -1,40 +1,53 @@
 <?php
 $tpl->set("title", "Nominations");
 
+// Handle invalid navigation
 if ($SEGMENTS[1] != "results") {
-
 	header("Location: /categories");
-	die();
-	
+	exit;
 }
 
+// Handle access control
 if (!canDo("nominations-view")) {
 	$PAGE = "401";
-} else {
-	$CUSTOM_TEMPLATE = "results";
-	
-	//$query = "SELECT `ID`, `Name`, `Subtitle`, `Nomination`, `AutoID`, `UserID` FROM `user_nominations`, `categories` WHERE `ID` = `CategoryID` ORDER BY `Order` ASC, `AutoID` DESC";
-	$query = "SELECT `ID`, `Name`, `Subtitle`, `Nomination`, COUNT(*) as `Count` FROM `user_nominations`, `categories` WHERE `ID` = `CategoryID` GROUP BY `ID`, `Nomination` ORDER BY `Enabled` DESC, `Order` ASC, `Count` DESC, `Nomination` ASC";
-	$result = mysql_query($query);
-	
-	$nominations = array();
-	$categories = array();
-	$category = "";
-	while ($row = mysql_fetch_array($result)) {
-		if (!isset($categories[$row['ID']])) {
-			$categories[$row['ID']] = array($row['Name'], $row['Subtitle']);
-			$nominations[$row['ID']] = array();
-		}
-		
-		$nominations[$row['ID']][] = array("Text" => "<strong>{$row['Count']} x </strong> " . str_replace("\n", "<br />", $row['Nomination']));
-	}
-
-	$templateCat = array();
-	foreach ($categories as $cat => $catInfo) {
-		$templateCat[] = array("Name" => $catInfo[0], "Subtitle" => $catInfo[1],
-			"Nominations" => $nominations[$cat]);
-	}
-	
-	$tpl->set("categories", $templateCat);
+	return;
 }
-?>
+
+$CUSTOM_TEMPLATE = "results";
+
+// A somewhat inefficient query that grabs the categories and user nominees
+// all at once
+$query = 
+  "SELECT `ID`, `Name`, `Subtitle`, `Nomination`, COUNT(*) as `Count` "
+	. "FROM `user_nominations`, `categories` WHERE `ID` = `CategoryID` "
+	. "GROUP BY `ID`, `Nomination` "
+	. "ORDER BY `Enabled` DESC, `Order` ASC, `Count` DESC, `Nomination` ASC";
+$result = $mysql->query($query);
+
+$nominations = array();
+$categories = array();
+
+// Deal out the category info and all the nominees
+while ($row = $result->fetch_assoc()) {
+	$category = $row['ID'];
+	if (!isset($categories[$row['ID']])) {
+		$categories[$category] = array($row['Name'], $row['Subtitle']);
+		$nominations[$category] = array();
+	}
+	
+	// The meat
+	$nominations[$row['ID']][] = array(
+		"Text" => "<strong>{$row['Count']} x </strong> "
+	  . str_replace("\n", "<br />", $row['Nomination']));
+}
+
+// Put the information into a form bTemplate can handle
+$templateCat = array();
+foreach ($categories as $category => $catInfo) {
+	$templateCat[] = array(
+		"Name" => $catInfo[0],
+		"Subtitle" => $catInfo[1],
+		"Nominations" => $nominations[$category]);
+}
+
+$tpl->set("categories", $templateCat);
