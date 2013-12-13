@@ -133,18 +133,31 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 
 	$games = '"video-game": ['."\n\t".implode(",\n\t", $games)."\n\t]";
 
+	##### Grab autocompleters from the database #####
+	$query = "SELECT `CategoryID`, `Values` FROM `autocompleters`";
+	$result = mysql_query($query);
+
+	while ($row = mysql_fetch_assoc($result)) {
+		$values = explode("\n", $row['Values']);
+		sort($values);
+		foreach ($values as $value) {
+			$autocompleters[$row['CategoryID']][] = json_encode($value);
+		}
+	}
+
 	##### Grab a list of entered nominations for other autocompletions #####
 	$query = "SELECT `CategoryID`, `Nomination`, COUNT(*) as `Count` FROM `user_nominations` WHERE `CategoryID` IN (SELECT `ID` FROM `categories` WHERE `categories`.`AutocompleteCategory` IS NULL) GROUP BY `CategoryID`, `Nomination` HAVING `Count` >= 2 ORDER BY `CategoryID` ASC, `Nomination` ASC";
 	$result = mysql_query($query);
 
 	while ($row = mysql_fetch_assoc($result)) {
-		$autocompleters[$row['CategoryID']][] = '"'.$row['Nomination'].'"';
+		$autocompleters[$row['CategoryID']][] = json_encode($row['Nomination']);
 	}
 
 
 	$autocompleteJS = "$games,\n";
 	foreach ($autocompleters as $category => $list) {
-		$autocompleteJS .= "\t\"$category\": [".implode(", ", $list)."],\n";
+		$cleanList = array_unique($list);
+		$autocompleteJS .= "\t\"$category\": [".implode(", ", $cleanList)."],\n";
 	}
 
 	$tpl->set("autocompleteJavascript", $autocompleteJS);
