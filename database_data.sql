@@ -356,7 +356,8 @@ INSERT INTO `user_rights` (`GroupName`, `CanDo`, `Description`) VALUES
 ('level5', 'voting-results', 'View voting results'),
 ('level1', 'nominees-view', 'View official nominees'),
 ('level4', 'feedback-view', 'View /v/GA feedback'),
-('level4', 'referrers-view', 'View where site visitors are coming from');
+('level4', 'referrers-view', 'View where site visitors are coming from'),
+('level1', 'add-video-game', 'Add a video game to the 2013 release list');
 
 --
 -- Dumping data for table `winner_cache`

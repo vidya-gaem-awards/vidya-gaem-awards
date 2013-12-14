@@ -58,6 +58,7 @@
     
     // Volatile pages
     "ajax-nominations" => "nominations-edit",
+    "ajax-videogame" => "add-video-game",
     "applications" => "applications-view",
     "categories" => EVERYONE,
     "category-feedback" => EVERYONE,
@@ -111,6 +112,7 @@
   // Pages that should only be accessed via POST requests
   $postOnly = array(
     "ajax-nominations",
+    "ajax-videogame",
     "category-feedback",
     "nomination-submit",
     "volunteer-submission",
