@@ -1,7 +1,7 @@
 <?php
 $tpl->set("confirmDeletion", false);
 $tpl->set("editFormError", false);
-if (!empty($_POST)) {
+if (!empty($_POST) && canDo("categories-edit")) {
   
 	if (isset($_POST['delete'])) {
 		$category = mysql_real_escape_string($_POST['category']);
@@ -133,15 +133,39 @@ if (!empty($_POST)) {
 	}
 }
 
-$query = "SELECT * FROM `categories` ORDER BY `Order` ASC";
-$result = mysql_query($query);
+$query = "SELECT * FROM `categories`";
+if (!canDo("categories-secret")) {
+	$query .= " WHERE `Secret` = 0";
+}
+$query .= " ORDER BY `Order` ASC";
+$result = $mysql->query($query);
 
 $cats = array();
 $categories = array(); 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
+	$categories[$row['ID']] = array_merge($row, array(
+		"Yes" => 0, "No" => 0));
+}
 
-	$categories[$row['ID']] = $row;
+// Get the feedback for each category
+$query = "SELECT `CategoryID`, `Opinion`, COUNT(*) as `Count`
+					FROM `category_feedback`
+					WHERE `Opinion` != 0
+					GROUP BY `CategoryID`, `Opinion`
+					ORDER BY `Count` DESC";
+$stmt = $mysql->prepare($query);
+$stmt->execute();
+$stmt->bind_result($categoryID, $opinion, $count);
+while ($stmt->fetch()) {
+	if (!isset($categories[$categoryID])) continue;
+	if ($opinion === 1) {
+		$categories[$categoryID]['Yes'] = $count;
+	} else {
+		$categories[$categoryID]['No'] = $count;
+	}
+}
 
+foreach ($categories as $categoryID => $row) {
 	$class = "";
 	if (!$row['Enabled']) {
 		$status = '<span class="label label-important">Award Disabled</span>';
@@ -154,6 +178,10 @@ while ($row = mysql_fetch_assoc($result)) {
 	} else {
 		$status = '<span class="label">Nominations Closed</span>';
 	}
+
+	$totalVotes = max(1, $row['Yes'] + $row['No']);
+	$yes = $row['Yes'] / $totalVotes * 100;
+	$no = $row['No'] / $totalVotes * 100;
 	
 	$temp = array(
 		"Class" => $class,
@@ -161,7 +189,10 @@ while ($row = mysql_fetch_assoc($result)) {
 		"ID" => $row['ID'],
 		"Name" => $row['Name'],
 		"Subtitle" => $row['Subtitle'],
-		"Order" => $row['Order']
+		"Order" => $row['Order'],
+		"Yes" => $yes,
+		"No" => $no,
+		"Feedback" => $row['Yes'] + $row['No']
 	);
 	
 	$cats[] = $temp;
@@ -169,10 +200,14 @@ while ($row = mysql_fetch_assoc($result)) {
 	
 $tpl->set("cats", $cats);
 $tpl->set("editing", false);
+$tpl->set("canEdit", canDo("categories-edit"));
 
 if ($SEGMENTS[2]) {
 
-	if (!isset($categories[$SEGMENTS[2]])) {
+	if (!canDo("categories-edit")) {
+		$PAGE = $loggedIn ? "401" : "403";
+		$CUSTOM_TEMPLATE = false;
+	} else if (!isset($categories[$SEGMENTS[2]])) {
 		$PAGE = "404";
 		$CUSTOM_TEMPLATE = false;
 	} else {

@@ -1,9 +1,16 @@
 <?php
 $tpl->set("title", "Categories and Nominations");
 
-mysql_query('SET NAMES utf8');
+if ($SEGMENTS[1] == "manage") {
 
-if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
+	if (!canDo("categories-feedback")) {
+		$PAGE = $loggedIn ? "403" : "401";
+	} else {
+		$CUSTOM_TEMPLATE = "edit";
+		require("categories-edit.php");
+	}
+	
+} else {
 
 	$allowedToNominate = $loggedIn || !$ACCOUNT_REQUIRED_TO_NOMINATE;
 
@@ -164,91 +171,14 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 	$tpl->set("CATEGORY_VOTING_ENABLED", $CATEGORY_VOTING_ENABLED);
 	$tpl->set("allowedToNominate", $allowedToNominate);
 	
-/***** VIEW CATEGORY RESULTS *******/
-
-} else if ($SEGMENTS[1] == "results") {
-
-	if (!canDo("categories-results")) {
-		$PAGE = "401";
-	} else {
-		$CUSTOM_TEMPLATE = "results";
-	
-		$query = "SELECT * FROM `categories` WHERE `Secret` = 0 ORDER BY `Enabled` DESC, `Order` ASC";
-		$result = mysql_query($query);
-
-		$categories = array();
-		
-		while ($row = mysql_fetch_array($result)) {
-			$categories[$row['ID']] = array("Name" => str_replace('"', "", $row['Name']) . "<br/>" . $row['Subtitle'],
-        "Disabled" => $row['Enabled'] ? "" : "backgroundColor: 'grey',",
-        "TitleColour" => $row['Enabled'] ? "black" : "white",
-        "Yes" => 0, "No" => 0);
-		}
-		
-		$query = "SELECT `CategoryID`, `Opinion`, COUNT(*) as `Count`
-					FROM `category_feedback`
-					WHERE `Opinion` != 0
-					GROUP BY `CategoryID`, `Opinion`
-					ORDER BY `Count` DESC";
-		$result = mysql_query($query);
-
-		while ($row = mysql_fetch_array($result)) {
-			if (!isset($categories[$row['CategoryID']])) {
-				$categories[$row['CategoryID']] = array("Name" => "<em>Deleted Category<br>{$row['CategoryID']}</em>",
-					"Disabled" => "backgroundColor: 'grey',", "TitleColour" => "white");
-			}
-
-			if ($row['Opinion'] == -1) {
-				$index = "No";
-			} else {
-				$index = "Yes";
-			}
-			
-			$categories[$row['CategoryID']][$index] = $row['Count'];
-		}
-
-		$categoryRows = array();
-		$rowCount = -1;
-		$colCount = -1;
-		foreach ($categories as $key => $data) {
-			if ($colCount == -1) {
-				$rowCount++;
-				$categoryRows[] = array("cols" => array());
-			}
-			$colCount++;
-			
-			$json = '[{name: "Yes", y: '.$data['Yes'].'}, {name: "No", y: '.$data['No'].'}]';
-			$categoryRows[$rowCount]["cols"][$colCount] = array("ID" => $key, "Name" => $data['Name'], "Disabled" => $data['Disabled'], "Data" => $json, "TitleColour" => $data['TitleColour']);
-			
-			if ($colCount == 2) {
-				$colCount = -1;
-			}
-		}
-		
-		$tpl->set("categoryRows", $categoryRows);
-	
-	}
-
-/***** EDIT CATEGORIES *******/
-
-} else if ($SEGMENTS[1] == "edit") {
-
-	if (!canDo("categories-edit")) {
-		$PAGE = "401";
-	} else {
-		$CUSTOM_TEMPLATE = "edit";
-		require("categories-edit.php");
-	}
-	
 }
 
 #### Admin tools #####
 $adminTools = array();
 if (canDo("categories-edit")) {
-	$adminTools[] = array("Link" => "/categories/edit", "Text" => "Edit categories");
-}
-if (canDo("categories-results")) {
-	$adminTools[] = array("Link" => "/categories/results", "Text" => "View category votes");
+	$adminTools[] = array("Link" => "/categories/manage", "Text" => "Manage awards");
+} else if (canDo("categories-feedback")) {
+	$adminTools[] = array("Link" => "/categories/manage", "Text" => "View award feedback");
 }
 if (canDo("nominations-view")) {
 	$adminTools[] = array("Link" => "/nominations/results", "Text" => "View user nominations");
@@ -262,4 +192,3 @@ if (count($adminTools) == 0) {
 	$adminTools = false;
 }
 $tpl->set("adminTools", $adminTools);
-?>

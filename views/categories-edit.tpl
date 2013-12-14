@@ -1,9 +1,13 @@
 <header class="jumbotron subhead">
-<h1>Category Editor</h1>
+<if:canEdit>
+	<h1>Award Manager</h1>
+<else:canEdit>
+	<h1>Award Information</h1>
+</if:canEdit>
 </header>
 
 <ul class="breadcrumb">
-	<li><a href="/categories">Back to main categories and nominations page</a></li>
+	<li><a href="/categories">Back to the main awards and nominations page</a></li>
 </ul>
 
 <if:editing>
@@ -17,7 +21,7 @@
 </div>
 </if:editFormError>
 
-<form method="POST" action="/categories/edit" class="form-horizontal well" id="categoryForm">
+<form method="POST" action="/categories/manage" class="form-horizontal well" id="categoryForm">
 <input type="hidden" name="action" value="edit" />
 <div class="row">
 		<div class="span6">
@@ -106,7 +110,7 @@
 			<div class="control-group">
 				<div class="controls">
 					<button type="submit" class="btn btn-primary">Save changes</button>
-					<a href="/categories/edit" class="btn">Cancel</a>
+					<a href="/categories/manage" class="btn">Cancel</a>
 				</div>
 			</div>
 		</div>
@@ -116,7 +120,7 @@
 
 </form>
 
-<form method="POST" action="/categories/edit">
+<form method="POST" action="/categories/manage">
 	<div class="alert alert-danger">
 		<input type="hidden" id="delete" name="delete" value="delete" />
 		<button class="btn btn-danger" title="Remove category" type="submit" name="category" value="<tag:ID />">Delete category</button>
@@ -138,7 +142,7 @@
 </if:formError>
 
 <if:confirmDeletion>
-<form method="POST" action="/categories/edit">
+<form method="POST" action="/categories/manage">
 <input type="hidden" name="delete" value="delete" />
 <input type="hidden" name="category" value="<tag:confirmDeletion />" />
 <input type="hidden" name="confirm" value="confirm" />
@@ -171,6 +175,24 @@ td label {
 .monospace {
 	font-family: monospace;
 }
+
+.sparkbar {
+	margin: 4px 0;
+	height: 10px;
+	overflow: hidden;
+}
+
+.sparkbar-yes {
+	float: left;
+	height: 10px;
+	background: #55A54E;
+}
+
+.sparkbar-no {
+	float: right;
+	height: 10px;
+	background: #AA4643;
+}
 </style>
 
 <table class="table table-bordered form-table" id="categories">
@@ -179,26 +201,35 @@ td label {
 			<th style="width: 120px;">Status</th>
 			<th>ID</th>
 			<th>Name</th>
+			<th style="width: 160px;">Feedback</th>
 			<th style="width: 60px;">Order</th>
-			<th style="width: 80px;">Controls</th>
+			<if:canEdit><th style="width: 80px;">Controls</th></if:canEdit>
 		</tr>
 	</thead>
 	<tbody>
-		<form method="POST" action="/categories/edit">
+		<form method="POST" action="/categories/manage">
 		<input type="hidden" id="delete" name="delete" value="delete" />
 		<loop:cats>
 		<tr class="<tag:cats[].Class />">
 			<td class="aligned"><tag:cats[].Status /></td>
 			<td class="monospace"><tag:cats[].ID /></td>
 			<td><tag:cats[].Name /><br><small><tag:cats[].Subtitle /></small></td>
-			<td class="aligned"><tag:cats[].Order /></td>
-			<td class="aligned">
-				<a class="btn" href="/categories/edit/<tag:cats[].ID />" title="Edit category"><i class="icon-pencil"></i> Edit</a>
+			<td>
+				<div class="sparkbar">
+					<div class="sparkbar-yes" style="width: <tag:cats[].Yes />%"></div>
+					<div class="sparkbar-no" style="width: <tag:cats[].No />%"></div>
+				</div>
+				<tag:cats[].Feedback /> votes
 			</td>
+			<td class="aligned"><tag:cats[].Order /></td>
+			<if:canEdit><td class="aligned">
+				<a class="btn" href="/categories/manage/<tag:cats[].ID />" title="Edit category"><i class="icon-pencil"></i> Edit</a>
+			</td></if:canEdit>
 		</tr>
 		</loop:cats>
 		</form>
-		<form method="POST" action="/categories/edit">
+		<if:canEdit>
+		<form method="POST" action="/categories/manage">
 			<input type="hidden" name="action" value="new" />
 			<tr>
 				<td>
@@ -207,7 +238,7 @@ td label {
 					<input type="checkbox" name="secret" id="secret" /> <label for="secret">Secret</label>
 				</td>
 				<td><input type="text" name="id" id="id" placeholder="ID" style="width: 90%;" maxlength="30" required /></td>
-				<td>
+				<td colspan="2">
 					<input type="text" name="name" id="name" placeholder="Name" style="width: 90%;" required />
 					<input type="text" name="subtitle" id="subtitle" placeholder="Subtitle" style="width: 90%;" required />
 				</td>
@@ -215,17 +246,20 @@ td label {
 				<td><input type="submit" class="btn" /></div></td>
 			</tr>
 		</form>
+		</if:canEdit>
 	</tbody>
 		
 </table>
 
-<form method="POST" action="/categories/edit" id="massChangeNominations">
+<if:canEdit>
+<form method="POST" action="/categories/manage" id="massChangeNominations">
 	<div class="alert alert-info">
 		<input type="hidden" id="action" name="action" value="massChangeNominations" />
 		<button class="btn" type="submit" name="todo" value="open">Open all nominations</button>
 		<button class="btn" type="submit" name="todo" value="close">Close all nominations</button>
 	</div>
 </form>
+</if:canEdit>
 
 <!-- <a class="btn" onclick="addCategory();"><i class="icon-plus-sign"></i> Add new category</a> -->
 
