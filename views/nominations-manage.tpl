@@ -9,6 +9,7 @@
 	}
 	
 	#category-name {
+    text-shadow: #000 1px 1px 2px;
     text-align: center;
     color: #789922;
     text-transform: uppercase;
@@ -23,7 +24,7 @@
     color: #1f1f1f;
     font-family: "Lucida Sans Unicode", arial, sans-serif;
     font-size: 0.95em;
-    line-height: 0.95em;
+    line-height: 1.95em;
     margin: 0;
     font-weight: bold;
   }
@@ -104,11 +105,15 @@
 </style>
 
 <header class="jumbotron subhead">
-<h1>Official Nominees</h1>
+<if:canEdit>
+  <h1>Nominee Manager</h1>
+<else:canEdit>
+  <h1>Nominee Viewer</h1>
+</if:canEdit>
 </header>
 
 <ul class="breadcrumb">
-	<li><a href="/categories">Back to main categories and nominations page</a></li>
+	<li><a href="/categories">Back to main awards and nominations page</a></li>
 </ul>
 
 <div class="row">
@@ -131,6 +136,10 @@
     
     <div id="category-name"><tag:categoryName /></div>
     <div id="category-subtitle"><tag:categorySubtitle /></div>
+
+    <if:categorySecret>
+    <p style='text-align: center; margin-top: 8px;'>This is a secret category. It won't be visible until the voting phase.</p>
+    </if:categorySecret>
 
     <div class="well" style="margin-top: 15px;">
       
@@ -165,9 +174,10 @@
     </div>
   </div>
   
+  <!if:categorySecret>
   <div class="span3">
     <div class="well">
-      
+    
       <div style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
         User Nominations: <tag:userCount />
       </div>
@@ -181,7 +191,8 @@
       </ul>
       
     </div>
-  </div>    
+  </div>   
+  </!if:categorySecret> 
 	</if:categoryName>
 
 </div>

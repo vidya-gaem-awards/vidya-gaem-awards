@@ -1,6 +1,13 @@
 <?php
 $tpl->set("confirmDeletion", false);
 $tpl->set("editFormError", false);
+
+if (canDo("categories-edit")) {
+	$tpl->set("title", "Award Manager");
+} else {
+	$tpl->set("title", "Award Information");
+}
+
 if (!empty($_POST) && canDo("categories-edit")) {
   
 	if (isset($_POST['delete'])) {

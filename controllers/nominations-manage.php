@@ -1,16 +1,21 @@
 <?php
 $tpl->set("title", "Official Nominees");
-mysql_query('SET NAMES utf8');
 
 $tpl->set("categoryName", false);
 
 $tpl->set("canEdit", canDo("nominations-edit"));
 
+if (canDo("nominations-edit")) {
+  $tpl->set("title", "Nominee Manager");
+} else {
+  $tpl->set("title", "Nominee Viewer");
+}
+
 $cat = false;
 if ($SEGMENTS[1]) {
 	$cat = mysql_real_escape_string($SEGMENTS[1]);
 	$query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
-	if (!canDo("nominations-edit")) {
+	if (!canDo("categories-secret")) {
     $query .= " AND `Secret` = 0";
   }
 	$result = mysql_query($query);
@@ -21,6 +26,7 @@ if ($SEGMENTS[1]) {
     $tpl->set("category", $cat);
     $tpl->set("categoryName", $categoryInfo['Name']);
     $tpl->set("categorySubtitle", $categoryInfo['Subtitle']);
+    $tpl->set("categorySecret", $categoryInfo['Secret']);
     if ($categoryInfo['NominationsEnabled']) {
       $tpl->set("nominationStatus", "open");
     } else {
@@ -73,7 +79,7 @@ if ($SEGMENTS[1]) {
 
 // Get a list of enabled categories
 $query = "SELECT * FROM `categories` WHERE `Enabled` = 1 ";
-if (!canDo("nominations-edit")) {
+if (!canDo("categories-secret")) {
     $query .= "AND `Secret` = 0 ";
   }
 $query .= "ORDER BY `Order` ASC";

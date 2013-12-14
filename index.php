@@ -66,7 +66,7 @@
     //"feedback" => "feedback-view",  // Change to EVERYONE
     //"launcher" => EVERYONE,
     "news" => EVERYONE,
-    "nominations" => "nominees-view",
+    "nominations" => "nominations-view",
     "nomination-submit" => EVERYONE,
     "people" => "profile-view",
     "referrers" => "referrers-view",

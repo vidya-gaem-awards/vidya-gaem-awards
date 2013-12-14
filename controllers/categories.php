@@ -178,12 +178,9 @@ if (canDo("categories-edit")) {
 } else if (canDo("categories-feedback")) {
 	$adminTools[] = array("Link" => "/categories/manage", "Text" => "View award feedback");
 }
-if (canDo("nominations-view")) {
-	$adminTools[] = array("Link" => "/nominations/results", "Text" => "View user nominations");
-}
 if (canDo("nominations-edit")) {
   $adminTools[] = array("Link" => "/nominations", "Text" => "Manage nominees");
-} else if (canDo("nominees-view")) {
+} else if (canDo("nominations-view")) {
   $adminTools[] = array("Link" => "/nominations", "Text" => "View nominees");
 }
 if (count($adminTools) == 0) {
