@@ -112,7 +112,7 @@ function generateUUID() {
     );
 }
 
-function return_json($result, $info = TRUE) {
-  echo json_encode(array($result => $info));
+function return_json($result, $info = TRUE, $extraData = array()) {
+  echo json_encode(array_merge($extraData, array($result => $info)));
   exit;
 }
