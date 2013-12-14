@@ -3,7 +3,7 @@
 
 <ul>
   <li><a href="/about"><code>/about</code> About the /v/GAs</a></li>
-  <li><a href="/categories"><code>/categories</code> Vote on categories and make nominations</a></li>
+  <li><a href="/categories"><code>/categories</code> Vote on awards and make nominations</a></li>
   <li><a href="/home"><code>/home</code> Welcome page</a></li>
   <li><a href="/news"><code>/news</code> Archived news items</a></li>
   <li><a href="/privacy"><code>/privacy</code> Our privacy policy</a></li>
@@ -19,8 +19,7 @@
   <li><a href="/applications"><code>/applications</code> View volunteer applications submitted through the front page</a></li>
   <li><a href="/categories"><code>/categories</code>
     <ul>
-      <li><a href="/categories/edit"><code>/categories/edit</code> Category editor and creator</a></li>
-      <li><a href="/categories/results"><code>/categories/results</code> Category vote feedback</a></li>
+      <li><a href="/categories/manage"><code>/categories/manage</code> Award manager</a></li>
     </ul></li>
   <li><a href="/nominations"><code>/nominations</code> Edit official nominees</a>
     <ul>
