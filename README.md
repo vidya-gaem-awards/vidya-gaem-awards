@@ -34,6 +34,5 @@ Because we're lazy/efficient we also used a bunch of code that other people had 
 
  * We use [Bootstrap](http://getbootstrap.com/) which uses the [Apache License](https://github.com/twbs/bootstrap/blob/master/LICENSE).
  * We use [jQuery](https://jquery.org/), [bTemplate](http://www.massassi.com/bTemplate/) and [this thing](http://forums.steampowered.com/forums/showthread.php?t=1430511) which use the [MIT License](http://opensource.org/licenses/MIT).
- * We use [Highcharts](http://www.highcharts.com/products/highcharts) which is licensed under [Creative Commons Attribution-NonCommercial 3.0](http://shop.highsoft.com/highcharts.html)
 
 There are a bunch of images and fonts with uncertain licensing lying around the directory structure. You probably shouldn't use these if you want to be fully legit.
