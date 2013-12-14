@@ -37,12 +37,13 @@
     $return = rtrim(implode("/", array_slice($SEGMENTS, 1)), "/");
     setcookie("token", "0", 1, "/", $DOMAIN);
     header("Location: /$return");
-    exit();
+    exit;
   }
 
   // Special handling for ad landing page
   if ($PAGE == "promotions") {
     header("Location: {$AD_LANDING_PAGE}");
+    exit;
   }
 
   $ACCESS = array(
@@ -54,7 +55,6 @@
     "privacy" => EVERYONE,
     "promotions" => EVERYONE,
     "sitemap" => EVERYONE,
-    "who-am-i" => EVERYONE,
     
     // Volatile pages
     "ajax-nominations" => "nominations-edit",

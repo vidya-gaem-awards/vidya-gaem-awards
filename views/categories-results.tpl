@@ -28,7 +28,10 @@
 				},
 				colors: ['#55A54E', '#AA4643'],
 				title: {
-					text: "<tag:categoryRows[].cols[].Name />"
+					text: "<tag:categoryRows[].cols[].Name />",
+					style: {
+						color: '<tag:categoryRows[].cols[].TitleColour />'
+					}
 				},
 				tooltip: {
 					formatter: function() {
@@ -68,3 +71,5 @@
 </loop:categoryRows[].cols>
 </div>
 </loop:categoryRows>
+
+<script src='http://code.highcharts.com/3.0.7/highcharts.js'></script>
