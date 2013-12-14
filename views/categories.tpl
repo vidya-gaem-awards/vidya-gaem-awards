@@ -14,7 +14,7 @@
 
 <if:CATEGORY_VOTING_ENABLED>
 <header class="jumbotron subhead">
-<h1>Categories and Nominations</h1>
+<h1>Awards and Nominations</h1>
 </header>
 </if:CATEGORY_VOTING_ENABLED>
 
@@ -63,7 +63,7 @@
 
 	<div class="span7" id="category-info" style="display: none;">
 		
-		<div data-spy="affix" data-offset-top="<if:adminTools>125<else:adminTools>75</if:adminTools>">
+		<div data-spy="affix" data-offset-top="<if:adminTools>130<else:adminTools>100</if:adminTools>">
 		
 			<if:CATEGORY_VOTING_ENABLED>
 			<div class="well" style="text-align: center;">
@@ -90,16 +90,13 @@
 			<p id="description" style="text-align: center;"></p>
 			</if:CATEGORY_VOTING_ENABLED>
 			
-			<!-- <div class="alert alert-error" style="text-align: center;">
-				<strong>Reminder:</strong> for the beta, we are using games from 2010 only. Don't nominate things from 2012.
-			</div> -->
-		
 			<div class="well">
 				
 				<div style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
 					Your Nominations for this Category: <span id="user-nomination-count">0</span>
 				</div>
 		
+				<div id="nomination-section">
 				<if:allowedToNominate>
 				<pre id="user-nomination-list"></pre>
 			
@@ -120,6 +117,11 @@
 				<else:allowedToNominate>
 				<pre>You need to be logged in to add nominations.</pre>
 				</if:allowedToNominate>
+				</div>
+
+				<div id="nominations-closed" style="display: none; text-align: center;">
+				Nominations for this category have been closed.
+				</div>
 
 			</div>
 		
@@ -129,12 +131,8 @@
 </div>
 
 <script>
-var categories = {
-	<tag:categoryJavascript />
-};
-var autocompleters = {
-	<tag:autocompleteJavascript />
-};
+var categories = <tag:categoryJavascript />;
+var autocompleters = <tag:autocompleteJavascript />;
 
 var category = false;
 
@@ -162,10 +160,13 @@ $('#category-selector li').click(function(event) {
 		$('#category-info #category-name').html(categories[category]['Name']);
 		$('#category-info #category-subtitle').html(categories[category]['Subtitle']);
 		$('#category-info #description').html(categories[category]['Description']);
-		if (!categories[category]['Nominations']) {
-		  console.log("Nominations closed, yo");
-			$('#category-info #nomination-form').html("Nominations for this category have been closed.");
-    }
+		if (categories[category]['Nominations']) {
+			$('#nomination-section').show();
+			$('#nominations-closed').hide();
+		} else {
+			$('#nomination-section').hide();
+			$('#nominations-closed').show();
+    	}
 		$('#category-voting a').removeClass("btn-success btn-danger disabled");
 		if (categories[category]['Opinion'] == 1) {
 			$('#thumbs-up').addClass("disabled btn-success");
@@ -282,7 +283,8 @@ $('#nomination-form').submit(function(event) {
 	
 	$.post("/nomination-submit", { "Category": category, "Nomination": value }, function(data) {
 		if (data == "success") {
-			categories[formCategory]['UserNominations'].push($.trim(value));
+			safeValue = $('<div/>').text($.trim(value)).html();
+			categories[formCategory]['UserNominations'].push(safeValue);
 			$('#tags').val("");
 			$('#tags').autocomplete("close");
 			if (formCategory == category) {
