@@ -57,11 +57,11 @@
     "sitemap" => EVERYONE,
     
     // Volatile pages
+    "ajax-category-feedback" => EVERYONE,
     "ajax-nominations" => "nominations-edit",
     "ajax-videogame" => "add-video-game",
     "applications" => "applications-view",
     "categories" => EVERYONE,
-    "category-feedback" => EVERYONE,
     //"credits" => EVERYONE, // Change to EVERYONE
     //"feedback" => "feedback-view",  // Change to EVERYONE
     //"launcher" => EVERYONE,
@@ -111,9 +111,9 @@
 
   // Pages that should only be accessed via POST requests
   $postOnly = array(
+    "ajax-category-feedback",
     "ajax-nominations",
     "ajax-videogame",
-    "category-feedback",
     "nomination-submit",
     "volunteer-submission",
     "user-search",

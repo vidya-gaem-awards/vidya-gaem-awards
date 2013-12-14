@@ -227,7 +227,7 @@ $('#category-voting a').click(function(event) {
 	
 	var formCategory = category;
 	
-	$.post("/category-feedback", { ID: category, opinion: opinion }, function(data) {
+	$.post("/ajax-category-feedback", { ID: category, opinion: opinion }, function(data) {
 		if (data.success) {
 		
 			var icon = $('[data-id="'+formCategory+'"] #opinion-icon');

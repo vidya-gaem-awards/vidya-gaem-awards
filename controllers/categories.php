@@ -6,8 +6,8 @@ if ($SEGMENTS[1] == "manage") {
 	if (!canDo("categories-feedback")) {
 		$PAGE = $loggedIn ? "403" : "401";
 	} else {
-		$CUSTOM_TEMPLATE = "edit";
-		require("categories-edit.php");
+		$CUSTOM_TEMPLATE = "manage";
+		require("categories-manage.php");
 	}
 	
 } else {
