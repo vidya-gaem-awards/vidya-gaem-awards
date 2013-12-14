@@ -39,6 +39,4 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $tpl->set('games', $games);
-	
-	
-?>
+$tpl->set('adminTools', canDo("add-video-game"));

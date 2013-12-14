@@ -1,14 +1,8 @@
 <header class="jumbotron subhead" style="text-align: center;">
 <h1>Vidya in 2013</h1>
 <p class="lead">Need a reminder of what games were released in 2013?</p>
-<p>Click on the row headers to sort by platform. List is from <a href="http://en.wikipedia.org/wiki/2013_in_video_gaming">Wikipedia</a>.</p>
+<p>Click on the row headers to sort by platform. List is from <a href="http://en.wikipedia.org/wiki/2013_in_video_gaming">Wikipedia</a> with some additions from the /v/GA team.</p>
 </header>
-
-<div class="row">
-	<div class="span12">
-		
-	</div>
-</div>
 
 <script type="text/javascript">
 $(document).ready(function() 
@@ -60,6 +54,18 @@ thead th {
 }
 </style>
 
+<if:adminTools>
+<div class="row">
+	<div class="span12" style='text-align: center; margin-bottom: 8px;'>
+		<a class="btn btn-success btn-large" id="add-a-game">Add a Game</a>
+		<div class="alert alert-warning" id="add-a-game-msg" style="display: none; margin-bottom: 0;">
+			Please make sure you spell the game correctly. You won't be able to edit it afterwards and it will show up as
+			a suggestion when users are writing their nominations.
+		</div>
+	</div>
+</div>
+</if:adminTools>
+
 <table class="table table-striped table-bordered table-condensed tablesorter" id="games">
 <thead>
 <tr>
@@ -78,20 +84,62 @@ thead th {
 </tr>
 </thead>
 <tbody>
+<if:adminTools>
+<tr id="new-game" style="display: none;">
+	<form id="new-game-form">
+	<td class='divider <tag:games[].Notable />' style='text-align: left;'>
+		<input type="text" style='width: 90%;' name="Game" id="Game">
+	</td>
+	<td class='divider'>
+		<input type="checkbox" name="PC">
+	</td>
+	<td class='divider'>
+		<input type="checkbox" name="PS3">
+	</td>
+	<td>
+		<input type="checkbox" name="PS4">
+	</td>
+	<td>
+		<input type="checkbox" name="PSV">
+	</td>
+	<td class='divider'>
+		<input type="checkbox" name="360">
+	</td>
+	<td>
+		<input type="checkbox" name="XB1">
+	</td>
+	<td class='divider'>
+		<input type="checkbox" name="Wii">
+	</td>
+	<td>
+		<input type="checkbox" name="WiiU">
+	</td>
+	<td>
+		<input type="checkbox" name="3DS">
+	</td>
+	<td class='divider'>
+		<input type="checkbox" name="Mobile">
+	</td>
+	<td class='divider'>
+		<input class="btn" type="submit" id="game-submit">
+	</td>
+	</form>
+</tr>
+</if:adminTools>
 <loop:games>
 <tr>
 	<td class='divider <tag:games[].Notable />' style='text-align: left;'><tag:games[].Game /></td>
-	<td width='40px' class='divider'><tag:games[].PC /></th>
-	<td width='40px' class='divider'><tag:games[].PS3 /></th>
-	<td width='40px'><tag:games[].PS4 /></th>
-	<td width='40px'><tag:games[].PSV /></th>
-	<td width='40px' class='divider'><tag:games[].360 /></th>
-	<td width='40px'><tag:games[].XB1 /></th>
-	<td width='50px' class='divider'><tag:games[].Wii /></th>
-	<td width='50px'><tag:games[].WiiU /></th>
-	<td width='50px'><tag:games[].3DS /></th>
-	<td width='60px' class='divider'><tag:games[].Mobile /></th>
-	<td width='120px' class='divider'><tag:games[].Others /></th>
+	<td class='divider'><tag:games[].PC /></td>
+	<td class='divider'><tag:games[].PS3 /></td>
+	<td><tag:games[].PS4 /></td>
+	<td><tag:games[].PSV /></td>
+	<td class='divider'><tag:games[].360 /></td>
+	<td><tag:games[].XB1 /></td>
+	<td class='divider'><tag:games[].Wii /></td>
+	<td><tag:games[].WiiU /></td>
+	<td><tag:games[].3DS /></td>
+	<td class='divider'><tag:games[].Mobile /></td>
+	<td class='divider'><tag:games[].Others /></td>
 </tr>
 </loop:games>
 </tbody>
@@ -104,3 +152,36 @@ $('#games').floatThead({
 	scrollingTop: 40
 });
 </script>
+
+<if:adminTools>
+<script type="text/javascript">
+$("#add-a-game").click(function(e){
+	$("#new-game").show();
+	$("#Game").focus();
+	$("#add-a-game").hide();
+	$("#add-a-game-msg").show();
+});
+$("#new-game-form").submit(function(e){
+	e.preventDefault();
+	$("#game-submit").attr("disabled", "disabled");
+
+	$.post("/ajax-videogame", $("#new-game-form").serialize(), function(data) {
+		console.log(data);
+		if (data.error) {
+			$("#add-a-game-msg").text("Error: "+data.error);
+			$("#add-a-game-msg").removeClass("alert-warning alert-success");
+			$("#add-a-game-msg").addClass("alert-error");
+		} else {
+			$("#add-a-game-msg").text('Success! "'+data.success+'" has been added. It will show up after a refresh.');
+			$("#add-a-game-msg").removeClass("alert-warning alert-error");
+			$("#add-a-game-msg").addClass("alert-success");
+			$("#Game").attr("value", "");
+			$("#new-game input[type=checkbox]").prop("checked", false);
+			$("#Game").focus();
+		}
+		$("#game-submit").removeAttr("disabled");
+    }, "json");
+
+});
+</script>
+</if:adminTools>
