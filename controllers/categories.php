@@ -180,7 +180,9 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 		
 		while ($row = mysql_fetch_array($result)) {
 			$categories[$row['ID']] = array("Name" => str_replace('"', "", $row['Name']) . "<br/>" . $row['Subtitle'],
-        "Disabled" => $row['Enabled'] ? "" : "backgroundColor: '#000000',", "Yes" => 0, "No" => 0);
+        "Disabled" => $row['Enabled'] ? "" : "backgroundColor: 'grey',",
+        "TitleColour" => $row['Enabled'] ? "black" : "white",
+        "Yes" => 0, "No" => 0);
 		}
 		
 		$query = "SELECT `CategoryID`, `Opinion`, COUNT(*) as `Count`
@@ -191,6 +193,11 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 		$result = mysql_query($query);
 
 		while ($row = mysql_fetch_array($result)) {
+			if (!isset($categories[$row['CategoryID']])) {
+				$categories[$row['CategoryID']] = array("Name" => "<em>Deleted Category<br>{$row['CategoryID']}</em>",
+					"Disabled" => "backgroundColor: 'grey',", "TitleColour" => "white");
+			}
+
 			if ($row['Opinion'] == -1) {
 				$index = "No";
 			} else {
@@ -211,7 +218,7 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 			$colCount++;
 			
 			$json = '[{name: "Yes", y: '.$data['Yes'].'}, {name: "No", y: '.$data['No'].'}]';
-			$categoryRows[$rowCount]["cols"][$colCount] = array("ID" => $key, "Name" => $data['Name'], "Disabled" => $data['Disabled'], "Data" => $json);
+			$categoryRows[$rowCount]["cols"][$colCount] = array("ID" => $key, "Name" => $data['Name'], "Disabled" => $data['Disabled'], "Data" => $json, "TitleColour" => $data['TitleColour']);
 			
 			if ($colCount == 2) {
 				$colCount = -1;
@@ -249,7 +256,7 @@ if (canDo("nominations-view")) {
 if (canDo("nominations-edit")) {
   $adminTools[] = array("Link" => "/nominations", "Text" => "Edit official nominees");
 } else if (canDo("nominees-view")) {
-  $adminTools[] = arraY("Link" => "/nominations", "Text" => "View official nominees");
+  $adminTools[] = array("Link" => "/nominations", "Text" => "View official nominees");
 }
 if (count($adminTools) == 0) {
 	$adminTools = false;

@@ -34,4 +34,6 @@ if (!$result) {
   return_json("error", "A MySQL error occurred.");
 }
 
+action("add-video-game", $game);
+
 return_json("success", $game);

@@ -104,6 +104,9 @@
 				<pre id="user-nomination-list"></pre>
 			
 				<form class="form-inline" style="text-align: center;" id="nomination-form">
+					<p>
+						You aren't just restricted to the entries in the dropdown! They are suggestions only.
+					</p>
 					<div class="input-prepend input-append">
 						<span class="add-on"><label for="tags"><strong>Add a nomination:</strong></label></span>
 						<input id="tags" name="nomination" type="text" class="span3" required />
