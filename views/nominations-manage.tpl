@@ -102,9 +102,22 @@
   #dialog-edit-form .help-block {
     width: 320px;
   }
+  ol.nominations, ul.nominations {
+    margin-right: 35px;
+  }
+  ol.nominations {
+    font-size: 120%;
+  }
+  ol.nominations li {
+    line-height: 1.2;
+  }
 </style>
 
-<header class="jumbotron subhead">
+<ul class="breadcrumb">
+  <li><a href="/categories">Back to main awards and nominations page</a></li>
+</ul>
+
+<header class="jumbotron subhead" style="text-align: center;">
 <if:canEdit>
   <h1>Nominee Manager</h1>
 <else:canEdit>
@@ -112,19 +125,17 @@
 </if:canEdit>
 </header>
 
-<ul class="breadcrumb">
-	<li><a href="/categories">Back to main awards and nominations page</a></li>
-</ul>
+<hr>
 
 <div class="row">
 	
-	<div class="span3" id="category-selector">
+	<div class="span5" id="category-selector">
 		<ul class="nav nav-list custom-navigation-pane">
 			<loop:categories> 
 			<li data-id="<tag:categories[].ID />" class="<tag:categories[].Active />">
 				<a href="/nominations/<tag:categories[].ID />">
 					<i class="icon-chevron-right"></i>
-					<tag:categories[].Name />
+					<strong><tag:categories[].Name /></strong> <tag:categories[].Subtitle />
 				</a>
 			</li>
 			</loop:categories>
@@ -138,7 +149,7 @@
     <div id="category-subtitle"><tag:categorySubtitle /></div>
 
     <if:categorySecret>
-    <p style='text-align: center; margin-top: 8px;'>This is a secret category. It won't be visible until the voting phase.</p>
+    <p style='text-align: center; margin-top: 8px;'>This is a secret award. It won't be visible until the voting phase.</p>
     </if:categorySecret>
 
     <div class="well" style="margin-top: 15px;">
@@ -172,26 +183,31 @@
       </div>
       
     </div>
-  </div>
   
   <!if:categorySecret>
-  <div class="span3">
     <div class="well">
     
       <div style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
         User Nominations: <tag:userCount />
       </div>
       
+      <if:nominationsOpen>
       <p style="font-weight: bold; text-align: center; font-size: 120%;">
-        Nominations are <tag:nominationStatus />.
+        Nominations are currently open.
       </p>
+      </if:nominationsOpen>
       
-      <ul>
+      <ol class="nominations">
+        <tag:userNominationsTop />
+      </ol>
+
+      <a href="#" id="show-more">show the rest</a>
+
+      <ul id="more-nominations" style='display: none;' class="nominations">
         <tag:userNominations />
       </ul>
       
     </div>
-  </div>   
   </!if:categorySecret> 
 	</if:categoryName>
 
@@ -262,7 +278,7 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="info-image">Image</label>
+        <label class="control-label" for="info-image">Image URL</label>
         <div class="controls">
           <input type="text" id="info-image" placeholder="" name="Image" autocomplete="off">
           <span class="help-block">If left blank, the webserver will look for the
@@ -463,7 +479,7 @@ $("#dialog-edit-submit").click(function() {
   $.post("/ajax-nominations", ajaxData, function(data) {
     currentlySubmitting = false;  
     
-    if (data.result == "success") {
+    if (data.success) {
     
       if (action == "new") {
       
@@ -474,7 +490,7 @@ $("#dialog-edit-submit").click(function() {
         clone.attr("id", "nominee"+nomineeID);
         clone.attr("data-nominee", nomineeID);
         clone.find("form").show();
-        clone.find("header p").text(nomineeID);
+        clone.find("header p").text("ID: "+nomineeID);
         
         $("#nominee-container").append(clone);
         
@@ -508,6 +524,11 @@ $("#dialog-edit-submit").click(function() {
       $("#dialog-edit-error").parent().fadeIn("fast");
     }
   }, "json");
+});
+
+$( "#show-more" ).click(function(e) {
+  $( "#show-more" ).hide();
+  $( "#more-nominations" ).show();
 });
 
 </script>
