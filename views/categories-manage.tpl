@@ -1,4 +1,8 @@
-<header class="jumbotron subhead">
+<ul class="breadcrumb">
+	<li><a href="/categories">Back to the main awards and nominations page</a></li>
+</ul>
+
+<header class="jumbotron subhead" style="text-align: center;">
 <if:canEdit>
 	<h1>Award Manager</h1>
 <else:canEdit>
@@ -6,9 +10,7 @@
 </if:canEdit>
 </header>
 
-<ul class="breadcrumb">
-	<li><a href="/categories">Back to the main awards and nominations page</a></li>
-</ul>
+<hr>
 
 <if:editing>
 <!-- <div class="page-header">
