@@ -120,8 +120,10 @@
 <header class="jumbotron subhead" style="text-align: center;">
 <if:canEdit>
   <h1>Nominee Manager</h1>
+  <p>Here's where you assign nominees to awards. Official Nominees are the ones that will show up on the <a href="/voting">voting page</a>.</p>
 <else:canEdit>
   <h1>Nominee Viewer</h1>
+  <p>Here's where you can see the user nominations for each category. These will help inform which nominees are officially chosen for the voting phase.</p>
 </if:canEdit>
 </header>
 

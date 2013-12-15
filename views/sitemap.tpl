@@ -21,10 +21,7 @@
     <ul>
       <li><a href="/categories/manage"><code>/categories/manage</code> Award manager</a></li>
     </ul></li>
-  <li><a href="/nominations"><code>/nominations</code> Edit official nominees</a>
-    <ul>
-      <li><a href="/nominations/results"><code>/nominations/results</code> List of user nominations</a></li>
-    </ul></li>
+  <li><a href="/nominations"><code>/nominations</code> Nominee manager</a></li>
   <li><a href="/people"><code>/people</code> List of important people involved with the /v/GAs</a>
     <ul>
       <li><a href="/people/permissions"><code>/people/permissions</code> Information on what access you have to the site</a></li>
