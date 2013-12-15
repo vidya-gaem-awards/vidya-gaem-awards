@@ -281,31 +281,41 @@ $('#nomination-form').submit(function(event) {
 	
 	var value = $('#tags').val();
 	
-	$.post("/nomination-submit", { "Category": category, "Nomination": value }, function(data) {
-		if (data == "success") {
-			safeValue = $('<div/>').text($.trim(value)).html();
-			categories[formCategory]['UserNominations'].push(safeValue);
-			$('#tags').val("");
-			$('#tags').autocomplete("close");
-			if (formCategory == category) {
-				updateNominations();
-				$("#nomination-status").html("<span style='color: green;'>Success!</span>");
-				$("#nomination-status").fadeOut(3000);
-			}
-			var icon = $('[data-id="'+formCategory+'"] #opinion-icon');
-			icon.text("["+categories[formCategory]['UserNominations'].length+"]");
-		} else {
-			if (formCategory == category) {
-				if (data == "blank nomination") {
-					$("#nomination-status").html("<span style='color: red;'>Nomination cannot be blank.</span>");
-				} else if (data == "already exists") {
-					$("#nomination-status").html("<span style='color: red;'>You've already nominated that.</span>");
-				} else {
-					$("#nomination-status").hide();
+	$.ajax({
+		type: "POST",
+		url: "/nomination-submit",
+		data: { "Category": category, "Nomination": value },
+		success: function(data) {
+			if (data == "success") {
+				safeValue = $('<div/>').text($.trim(value)).html();
+				categories[formCategory]['UserNominations'].push(safeValue);
+				$('#tags').val("");
+				$('#tags').autocomplete("close");
+				if (formCategory == category) {
+					updateNominations();
+					$("#nomination-status").html("<span style='color: green;'>Success!</span>");
+					$("#nomination-status").fadeOut(3000);
+				}
+				var icon = $('[data-id="'+formCategory+'"] #opinion-icon');
+				icon.text("["+categories[formCategory]['UserNominations'].length+"]");
+			} else {
+				if (formCategory == category) {
+					if (data == "blank nomination") {
+						$("#nomination-status").html("<span style='color: red;'>Nomination cannot be blank.</span>");
+					} else if (data == "already exists") {
+						$("#nomination-status").html("<span style='color: red;'>You've already nominated that.</span>");
+					} else {
+						$("#nomination-status").hide();
+					}
 				}
 			}
+			currentlySubmitting = false;
+		},
+		error: function(xhr, textStatus, error) {
+			currentlySubmitting = false;
+			$("#nomination-status").html("<span style='color: red;'>HTTP error: "+xhr.status+" "+xhr.statusText+". Try again.</span>");
+			console.log(xhr);
 		}
-		currentlySubmitting = false;
 	});
 	
 	//$('#tags').val("");
