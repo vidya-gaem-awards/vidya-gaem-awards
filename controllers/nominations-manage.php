@@ -27,11 +27,7 @@ if ($SEGMENTS[1]) {
     $tpl->set("categoryName", $categoryInfo['Name']);
     $tpl->set("categorySubtitle", $categoryInfo['Subtitle']);
     $tpl->set("categorySecret", $categoryInfo['Secret']);
-    if ($categoryInfo['NominationsEnabled']) {
-      $tpl->set("nominationStatus", "open");
-    } else {
-      $tpl->set("nominationStatus", "closed");
-    }
+    $tpl->set("nominationsOpen", $categoryInfo['NominationsEnabled']);
 
     // Get a list of all the current nominees
     $query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" ORDER BY `Name` ASC";
@@ -66,8 +62,10 @@ if ($SEGMENTS[1]) {
       }
     }
     sort($autoComplete);
+    $userNominationsTop = implode("\n", array_splice($userNominations, 0, 15));
     $userNominations = implode("\n", $userNominations);
-    
+
+    $tpl->set("userNominationsTop", $userNominationsTop);
     $tpl->set("userNominations", $userNominations);
     $tpl->set("userCount", $userCount);
     
