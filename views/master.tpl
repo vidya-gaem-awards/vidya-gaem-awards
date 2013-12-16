@@ -3,18 +3,19 @@
   <head>
     <title>/v/GAs - <tag:title /></title>
 
-    <link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/public/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/jquery/jquery-ui-1.9.2.min.css">
     <link rel="stylesheet" href="/public/style.css">
     
     <script src='/public/jquery/jquery-1.8.2.min.js'></script>
     <script src='/public/jquery/jquery-ui-1.9.2.min.js'></script>
     <script src='/public/jquery/jquery.tablesorter.min.js'></script>
-    <script src='/public/bootstrap-2.1.0/js/bootstrap.min.js'></script>
+    <!--
+    <script src='/public/bootstrap/dist/js/bootstrap.min.js'></script>
+    -->
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
     
     <script type="text/javascript">
 
@@ -38,23 +39,33 @@
     <else:noContainer>
         <body style="padding-top: 50px;">
     </if:noContainer>
-    <div class="navbar navbar-fixed-top navbar-inverse">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="brand" href="/">2013 /v/GAs</a>
-				<ul class="nav">
+    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">2013 /v/GAs</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
 					<tag:navbar />
-				</ul>
-				<ul class="nav secondary-nav">
-					<if:loggedIn>
-						<li><img src="<tag:avatarURL />" style='margin-top: 3px; width: 32px; height: 32px;' /></li>
-						<li><a href="http://steamcommunity.com/profiles/<tag:communityID />"> <tag:displayName /></a></li>
-					<else:loggedIn>
-						<li><a href="<tag:openIDurl />"><img src="http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png" /></a></li>
-					</if:loggedIn>
-				</ul>
-			</div>
-		</div>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <if:loggedIn>
+                            <li><img src="<tag:avatarURL />" style='margin-top: 3px; width: 32px; height: 32px;' /></li>
+                            <li><a href="http://steamcommunity.com/profiles/<tag:communityID />"> <tag:displayName /></a></li>
+                        <else:loggedIn>
+                            <li><a href="<tag:openIDurl />"><img src="http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png" /></a></li>
+                        </if:loggedIn>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
     </div>
     <!if:noContainer>
     <div class="container" role="main">
@@ -78,7 +89,7 @@
     <tag:content />
     </div>
     <if:navbar>
-    <div class="navbar navbar-fixed-bottom navbar-inverse">
+    <div class="navbar navbar-static-bottom navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
 				<ul class="nav">
