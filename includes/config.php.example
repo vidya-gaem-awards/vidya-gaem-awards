@@ -31,7 +31,7 @@ $NAVBAR_ITEMS = array(
   "home"  => "Home",
   "categories" => "Categories and Nominations",
   "people" => "People",
-  "http://steamcommunity.com/groups/vidyagaemawards/discussions/" = "Forum";
+  "http://steamcommunity.com/groups/vidyagaemawards/discussions/" => "Forum"
 );
   
 ?>
