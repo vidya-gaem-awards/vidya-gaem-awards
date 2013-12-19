@@ -69,30 +69,34 @@ if (isset($_SESSION['login'])) {
   // Find out which groups the user is in
   $query = "SELECT `GroupName` FROM `user_groups` WHERE `UserID` = ?";
   $stmt = $mysql->prepare($query);
-  $stmt->bind_param('s', $ID);
-  $stmt->execute();
-  $stmt->bind_result($groupName);
-  while ($stmt->fetch()) {
-    $USER_GROUPS[] = $groupName;
-    if (substr($groupName, 0, 5) != "level") {
-      $USER_RIGHTS[] = $groupName;
+  if (!$stmt) {
+    error_log("MySQL error: {$mysql->error}");
+  } else {
+    $stmt->bind_param('s', $ID);
+    $stmt->execute();
+    $stmt->bind_result($groupName);
+    while ($stmt->fetch()) {
+      $USER_GROUPS[] = $groupName;
+      if (substr($groupName, 0, 5) != "level") {
+        $USER_RIGHTS[] = $groupName;
+      }
     }
-  }
-  
-  // Level 5s are assigned to levels 1-4
-  // Level 4s are assigned to levels 1-3
-  // etc.
-  for ($i = 6; $i >= 2; $i--) {
-    if (in_array("level$i", $USER_GROUPS)) {
-      $USER_GROUPS[] = "level".($i-1);
+    
+    // Level 5s are assigned to levels 1-4
+    // Level 4s are assigned to levels 1-3
+    // etc.
+    for ($i = 6; $i >= 2; $i--) {
+      if (in_array("level$i", $USER_GROUPS)) {
+        $USER_GROUPS[] = "level".($i-1);
+      }
     }
-  }
-  
-  $query = "SELECT DISTINCT `CanDo` FROM `user_rights` WHERE `GroupName` IN ('";
-  $query .= implode("', '", $USER_GROUPS) . "')";
-  $result = $mysql->query($query);
-  while ($row = $result->fetch_assoc()) {
-    $USER_RIGHTS[] = $row['CanDo'];
+    
+    $query = "SELECT DISTINCT `CanDo` FROM `user_rights` WHERE `GroupName` IN ('";
+    $query .= implode("', '", $USER_GROUPS) . "')";
+    $result = $mysql->query($query);
+    while ($row = $result->fetch_assoc()) {
+      $USER_RIGHTS[] = $row['CanDo'];
+    }
   }
   
   $USER_RIGHTS[] = "logged-in";
