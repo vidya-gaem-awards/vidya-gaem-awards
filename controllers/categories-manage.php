@@ -16,7 +16,7 @@ if (!empty($_POST) && canDo("categories-edit")) {
 		if (isset($_POST['confirm'])) {
 		
 			$query = "DELETE FROM `categories` WHERE `ID` = '$category'";
-			$result = debug_query($query);
+			$result = mysql_query($query);
 			
 			if ($result) {
 				storeMessage("formSuccess", "Category \"$category\" successfully deleted.");
@@ -61,7 +61,7 @@ if (!empty($_POST) && canDo("categories-edit")) {
 						
 					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
 					$query .= "VALUES ('$ID', 'categories', '$category', '$serial', NOW())";
-					debug_query($query);
+					mysql_query($query);
 				
 					storeMessage("formSuccess", "Category successfully added.");
 					action("category-added", $_POST['id']);
@@ -105,7 +105,7 @@ if (!empty($_POST) && canDo("categories-edit")) {
 				} else {
 					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
 					$query .= "VALUES ('$ID', 'categories', '$category', '$serial', NOW())";
-					debug_query($query);
+					mysql_query($query);
 				
 					storeMessage("formSuccess", "Category successfully edited.");
 					action("category-edited", $_POST['ID']);

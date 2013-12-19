@@ -1,12 +1,6 @@
 <?php
 $tpl->set("title", "People");
 
-$users = array();
-
-$query = "SELECT `users`.*, GROUP_CONCAT(`GroupName` SEPARATOR '|') as `Groups` FROM `users` LEFT JOIN `user_groups` ";
-$query .= "ON `SteamID` = `UserID` WHERE `Special` = 1 GROUP BY `SteamID` ORDER BY `Name` ASC";
-$result = mysql_query($query);
-
 class User {
 
 	function __construct($row) {
@@ -38,7 +32,27 @@ class User {
 		
 		// Generic question mark avatar
 		if (!$this->Avatar) {
-			$this->Avatar = '/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAIAAgAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A/P4mW5nmllmeSR3LMzMSSc1a07R73V72KzsILi9u5TiOC2RpJHPoFGSarQ/ef6n+de4fAn9oaL4D+DfGX9i6Uf8AhO9XSKDT9eZY3WxiDZcBGByTkn0JCZBxQB41qeiX+iXslnqNtdWF3H9+3uo2jkX6q2CKpgy208MsUzxyI4ZWViCDmvsr9rrUdT1j9nb4T6h8RBbH4qXUs0zMsSxXJ04hivnKoAU5MPGBg7uM7q+NpvvJ9R/OgAh+8/1P867T4POI/iz4Mc6U+u7NZtG/suPbuu8TKfKG4hct93njnmuKIltp5opYXjkRyrKykEHNWbDVbvSr63vbKaezvLeRZYbi3ZkkidTlWVhyCCMgjpQB6l+1F411nx58dPFWpa5a3mnXaXP2ZNOvXVpLKNBhYflJUY5PB5JJ6k15LN95PqP51a1PWr7WtQnvtRuLm/vrhzJNc3TtJLIx6lmbJJ9zVQCW5nhiiheSR3CqqqSSc0Af/9k=';
+			$this->Avatar = '/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2'
+				.'MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDA'
+				.'wMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFB'
+				.'gSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQ'
+				.'UFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAIAAgAwEiAAIRAQMRAf/EAB8AAAEFAQEB'
+				.'AQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSI'
+				.'TFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERU'
+				.'ZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqe'
+				.'oqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/E'
+				.'AB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECd'
+				.'wABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKS'
+				.'o1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJW'
+				.'Wl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz'
+				.'9PX29/j5+v/aAAwDAQACEQMRAD8A/P4mW5nmllmeSR3LMzMSSc1a07R73V72KzsILi9u5'
+				.'TiOC2RpJHPoFGSarQ/ef6n+de4fAn9oaL4D+DfGX9i6Uf8AhO9XSKDT9eZY3WxiDZcBGB'
+				.'yTkn0JCZBxQB41qeiX+iXslnqNtdWF3H9+3uo2jkX6q2CKpgy208MsUzxyI4ZWViCDmvs'
+				.'r9rrUdT1j9nb4T6h8RBbH4qXUs0zMsSxXJ04hivnKoAU5MPGBg7uM7q+NpvvJ9R/OgAh+'
+				.'8/1P867T4POI/iz4Mc6U+u7NZtG/suPbuu8TKfKG4hct93njnmuKIltp5opYXjkRyrKyk'
+				.'EHNWbDVbvSr63vbKaezvLeRZYbi3ZkkidTlWVhyCCMgjpQB6l+1F411nx58dPFWpa5a3m'
+				.'nXaXP2ZNOvXVpLKNBhYflJUY5PB5JJ6k15LN95PqP51a1PWr7WtQnvtRuLm/vrhzJNc3T'
+				.'tJLIx6lmbJJ9zVQCW5nhiiheSR3CqqqSSc0Af/9k=';
 		}
 		
 		$this->FirstLogin = $row['FirstLogin'];
@@ -55,7 +69,14 @@ class User {
 	}
 }
 
-while ($row = mysql_fetch_assoc($result)) {
+$users = array();
+
+$query = "SELECT `users`.*, GROUP_CONCAT(`GroupName` SEPARATOR '|') as `Groups`
+					FROM `users` LEFT JOIN `user_groups` ON `SteamID` = `UserID`
+					WHERE `Special` = 1 GROUP BY `SteamID` ORDER BY `Name` ASC";
+$result = $mysql->query($query);
+
+while ($row = $result->fetch_assoc()) {
 	$user = new User($row);
 	$users[$user->SteamID] = get_object_vars($user);
 }
@@ -66,53 +87,58 @@ $tpl->set("userNotFound", false);
 
 if ($SEGMENTS[1] == "permissions") {
 
-    $CUSTOM_TEMPLATE = "permissions";
-    
-    for ($i = 6; $i >= 0; $i--) {
-        if (in_array("level$i", $USER_GROUPS)) {
-            break;
-        }
-    }
-    
-    $level = $i;
-    $tpl->set("level", $level);
-    
-    $query = "SELECT * FROM `user_rights` ORDER BY `GroupName` DESC, `Description` ASC";
-    $result = mysql_query($query);
-    $permissions = array();
-    while ($row = mysql_fetch_assoc($result)) {
-        if (canDo($row['CanDo'])) {
-            if (isset($row['Description'])) {
-                $desc = "<abbr title='{$row['CanDo']}'>{$row['Description']}</abbr>";
-            } else {
-                $desc = "<tt>{$row['CanDo']}</tt>";
-            }
-            $levelName = "level ".$row['GroupName'][5];
-            $permissions[] = "$desc <small class='muted'>($levelName)</small>";
-        }
-    }
-    $tpl->set("permissions", $permissions);
+		$CUSTOM_TEMPLATE = "permissions";
+		
+		for ($i = 6; $i >= 0; $i--) {
+				if (in_array("level$i", $USER_GROUPS)) {
+						break;
+				}
+		}
+		
+		$level = $i;
+		$tpl->set("level", $level);
+		
+		$query = "SELECT * FROM `user_rights`
+							ORDER BY `GroupName` DESC, `Description` ASC";
+		$result = $mysql->query($query);
+		$permissions = array();
+		while ($row = $result->fetch_assoc()) {
+				if (canDo($row['CanDo'])) {
+						if (isset($row['Description'])) {
+								$desc = "<abbr title='{$row['CanDo']}'>{$row['Description']}</abbr>";
+						} else {
+								$desc = "<tt>{$row['CanDo']}</tt>";
+						}
+						$levelName = "level ".$row['GroupName'][5];
+						$permissions[] = "$desc <small class='muted'>($levelName)</small>";
+				}
+		}
+		$tpl->set("permissions", $permissions);
 
 } else if ($SEGMENTS[1] == "add") {
-    
-    if (!canDo("add-user")) {
-        $PAGE = $loggedIn ? "403" : "401";
-    } else {
-        $CUSTOM_TEMPLATE = "add";
-        require("people-add.php");
-    }
+		
+		if (!canDo("add-user")) {
+				$PAGE = $loggedIn ? "403" : "401";
+		} else {
+				$CUSTOM_TEMPLATE = "add";
+				require("people-add.php");
+		}
 
 } else if ($SEGMENTS[1]) {
 
 	if (canDo("profile-edit-groups")) {
-		$steamID = mysql_real_escape_string($SEGMENTS[1]);
+		$steamID = $SEGMENTS[1];
+
 		if (isset($_POST['RemoveGroup'])) {
-		
-			$groupName = mysql_real_escape_string($_POST['RemoveGroup']);
-			$query = "DELETE FROM `user_groups` WHERE `UserID` = '$steamID' AND `GroupName` = '$groupName'";
-			$result = mysql_query($query);
-			if (!$result) {
-				$tpl->set("formError", "An error occurred: " . mysql_error());
+			$groupName = $_POST['RemoveGroup'];
+
+      $query = "DELETE FROM `user_groups`
+                WHERE `UserID` = ? AND `GroupName` = ?";
+      $stmt = $mysql->prepare($query);
+      $stmt->bind_param('ss', $steamID, $groupName);
+      $result = $stmt->execute();
+      if (!$result) {
+				$tpl->set("formError", "An error occurred: {$stmt->error}");
 			} else {
 				storeMessage("formSuccess", "Group successfully removed.");
 				action("profile-group-removed", $steamID, $groupName);
@@ -120,16 +146,18 @@ if ($SEGMENTS[1] == "permissions") {
 			}
 		} else if (isset($_POST['AddGroup'])) {
 		
-			$groupName = trim(strtolower(mysql_real_escape_string($_POST['GroupName'])));
+			$groupName = trim(strtolower($_POST['GroupName']));
 			if ($groupName == "level6" && !canDo("super-admin")) {
-        $tpl->set("formError", "That group can't be assigned through the web interface.");
-      } else if (strlen(trim($groupName)) == 0) {
+				$tpl->set("formError", "That group can't be assigned through the web interface.");
+			} else if (strlen(trim($groupName)) == 0) {
 				$tpl->set("formError", "Group name cannot be empty.");
 			} else {
-				$query = "REPLACE INTO `user_groups` VALUES ('$steamID', '$groupName')";
-				$result = mysql_query($query);
+        $query = "REPLACE INTO `user_groups` VALUES (?, ?)";
+        $stmt = $mysql->prepare($query);
+        $stmt->bind_param('ss', $steamID, $groupName);
+        $result = $stmt->execute();
 				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . mysql_error());
+					$tpl->set("formError", "An error occurred: {$stmt->error}");
 				} else {
 					storeMessage("formSuccess", "Group successfully added.");
 					action("profile-group-added", $steamID, $groupName);
@@ -146,12 +174,12 @@ if ($SEGMENTS[1] == "permissions") {
 		$steamID = mysql_real_escape_string($SEGMENTS[1]);
 		
 		$query = "SELECT * FROM `users` WHERE `SteamID` = '$steamID'";
-		$result = mysql_query($query);
-		if (mysql_num_rows($result) === 0) {
+		$result = $mysql->query($query);
+		if ($result->num_rows === 0) {
 			$user = false;
 			$tpl->set("userNotFound", true);
 		} else {
-			$user = new User(mysql_fetch_assoc($result));
+			$user = new User($result->fetch_assoc());
 			$user = get_object_vars($user);
 			$inList = false;
 		}
@@ -163,20 +191,23 @@ if ($SEGMENTS[1] == "permissions") {
 
 		if (isset($_POST['action'])) {
 
-			if ($_POST['action'] == "edit-details" && canDo("profile-edit-details")) {
-				$PrimaryRole = mysql_real_escape_string($_POST['PrimaryRole']);
-				$Email = mysql_real_escape_String($_POST['Email']);
-				
-				$query = "UPDATE `users` SET `PrimaryRole` = '$PrimaryRole', `Email` = '$Email' WHERE `SteamID` = '{$user['SteamID']}'";
-				$result = mysql_query($query);
+			if ($_POST['action'] == "edit-details" && canDo("profile-edit-details")) {				
+        $query = "UPDATE `users` SET `PrimaryRole` = ?, `Email` = ?
+                  WHERE `SteamID` = ?";
+        $stmt = $mysql->prepare($query);
+        $stmt->bind_param('sss', $_POST['PrimaryRole'], $_POST['Email'],
+          $user['SteamID']);
+        $result = $stmt->execute();
 				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . mysql_error());
+					$tpl->set("formError", "An error occurred: {$stmt->error}");
 				} else {
-					$serial = mysql_real_escape_string(json_encode($_POST));
+					$serial = json_encode($_POST);
 					
-					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
-					$query .= "VALUES ('$ID', 'users', '{$user['SteamID']}', '$serial', NOW())";
-					debug_query($query);
+					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`,
+                    `Values`, `Timestamp`) VALUES (?, 'users', ?, ?, NOW())";
+          $stmt = $mysql->prepare($query);
+          $stmt->bind_param('sss', $ID, $user['SteamID'], $serial);
+          $stmt->execute();
 					
 					storeMessage("formSuccess", "Details successfully updated.");
 					action("profile-details-updated", $user['SteamID']);
@@ -184,19 +215,20 @@ if ($SEGMENTS[1] == "permissions") {
 				}
 				
 			} else if ($_POST['action'] == "edit-notes" && canDo("profile-edit-notes")) {
-				
-				$Notes = mysql_real_escape_String($_POST['Notes']);
-				
-				$query = "UPDATE `users` SET `Notes` = '$Notes' WHERE `SteamID` = '{$user['SteamID']}'";
-				$result = mysql_query($query);
+				$query = "UPDATE `users` SET `Notes` = ? WHERE `SteamID` = ?";
+        $stmt = $mysql->prepare($query);
+        $stmt->bind_param('ss', $_POST['Notes'], $user['SteamID']);
+				$result = $stmt->execute();
 				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . mysql_error());
+					$tpl->set("formError", "An error occurred: {$stmt->error}");
 				} else {
-					$serial = mysql_real_escape_string(json_encode($_POST));
+					$serial = json_encode($_POST);
 					
-					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
-					$query .= "VALUES ('$ID', 'users', '{$user['SteamID']}', '$serial', NOW())";
-					debug_query($query);
+					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`,
+                    `Values`, `Timestamp`) VALUES (?, 'users', ?, ?, NOW())";
+          $stmt = $mysql->prepare($query);
+          $stmt->bind_param('sss', $ID, $user['SteamID'], $serial);
+          $stmt->execute();
 					
 					storeMessage("formSuccess", "Notes successfully updated.");
 					action("profile-notes-updated", $user['SteamID']);
