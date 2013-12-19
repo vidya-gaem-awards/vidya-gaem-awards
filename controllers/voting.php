@@ -40,9 +40,9 @@ $mp = ((int)$minutes === 1 ? "" : "s");
 $sp = ((int)$seconds === 1 ? "" : "s");
 
 if ($current > $start && $current < $finish) {
-	$votingEnabled = true;
-	
-	if ($days >= 1) {
+  $votingEnabled = true;
+  
+  if ($days >= 1) {
     $difference = number_format(round($days+($hours/24), 1), 1)." days";
   } else if ($hours >= 1) {
     $difference = round($hours+($minutes/60), 1)." hours";
@@ -53,7 +53,7 @@ if ($current > $start && $current < $finish) {
   }
     
   $voteText = "Voting is now open! You have $difference left to vote.";
-	
+  
 } else if ($current < $start) {
   $votingNotYetOpen = true;
   
@@ -89,18 +89,18 @@ $result = mysql_query($query);
 
 $categories = array();
 while ($row = mysql_fetch_array($result)) {
-	if ($SEGMENTS[1] == $row['ID']) {
-		$row['Active'] = true;
-	} else {
-		$row['Active'] = false;
-	}
-	if (isset($completedCategories[$row['ID']])) {
-		$row['Completed'] = true;
-	} else {
-		$completedCategories[$row['ID']] = array();
-		$row['Completed'] = false;
-	}
-	$categories[] = $row;
+  if ($SEGMENTS[1] == $row['ID']) {
+    $row['Active'] = true;
+  } else {
+    $row['Active'] = false;
+  }
+  if (isset($completedCategories[$row['ID']])) {
+    $row['Completed'] = true;
+  } else {
+    $completedCategories[$row['ID']] = array();
+    $row['Completed'] = false;
+  }
+  $categories[] = $row;
 }
 
 $tpl->set("categories", $categories);
@@ -108,52 +108,52 @@ $tpl->set("categories", $categories);
 $category = false;
 $nominees = array();
 if ($SEGMENTS[1]) {
-	$cat = mysql_real_escape_string($SEGMENTS[1]);
-	$query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
-	$result = mysql_query($query);
-	
-	if (mysql_num_rows($result) == 1) {
-		
-		$row = mysql_fetch_array($result);
-		$category = $row;		
-		
-		$query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" ORDER BY `Name` ASC";
-		$result = mysql_query($query);
-		$nominees = array();
-		$count = 0;
-		while ($row = mysql_fetch_array($result)) {
+  $cat = mysql_real_escape_string($SEGMENTS[1]);
+  $query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
+  $result = mysql_query($query);
+  
+  if (mysql_num_rows($result) == 1) {
+    
+    $row = mysql_fetch_array($result);
+    $category = $row;   
+    
+    $query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" ORDER BY `Name` ASC";
+    $result = mysql_query($query);
+    $nominees = array();
+    $count = 0;
+    while ($row = mysql_fetch_array($result)) {
       $count++;
-		
-			$row['Background'] = "";
-		
-			$prefixes = array(strtolower($cat)."-", "");
-			if (empty($row['Image'])) {
+    
+      $row['Background'] = "";
+    
+      $prefixes = array(strtolower($cat)."-", "");
+      if (empty($row['Image'])) {
         $row['Image'] = "/public/nominees/{$row['NomineeID']}.png";
-			} else {
-				$row['Image'] = $row['Image'];
-			}
+      } else {
+        $row['Image'] = $row['Image'];
+      }
 
       $row['Order'] = $count;
-			
-			$nominees[] = $row;
-		}
-		
-		$js = "[null";
-		foreach ($completedCategories[$cat] as $nominee) {
+      
+      $nominees[] = $row;
+    }
+    
+    $js = "[null";
+    foreach ($completedCategories[$cat] as $nominee) {
       $js .= ", \"$nominee\"";
     }
     $js .= "]";
       
-		$tpl->set("lastVotes", $js);
-		
-	} else {
+    $tpl->set("lastVotes", $js);
+    
+  } else {
     $_SESSION['votingCode'] = $SEGMENTS[1];
     $code = mysql_real_escape_string($SEGMENTS[1]);
     $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`) VALUES (\"$code\", \"$uniqueID\")";
     mysql_query($query);
     header("Location: http://$DOMAIN/voting");
-	}	
-	
+  } 
+  
 }
 
 $dumbloop = array();

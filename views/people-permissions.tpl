@@ -1,9 +1,9 @@
 <h1>Group and Permission Information</h1>
 
 <ul class="breadcrumb">
-	<li class="active">
-		<li><a href="/people">Back to people page</a>
-	</li>
+    <li class="active">
+        <li><a href="/people">Back to people page</a>
+    </li>
 </ul>
 
 <div class="row">

@@ -19,15 +19,15 @@ a:hover {
 
 body {
   background-color: black;
-	background-image: url("/public/space.png");
-	background-repeat: repeat;
-	background-attachment: fixed;
-	font-size: 16px;
-	line-height: 16px;
-	overflow-x: hidden;
-	color: silver;
-	color: white;
-	font-family: "Neon 80s";
+    background-image: url("/public/space.png");
+    background-repeat: repeat;
+    background-attachment: fixed;
+    font-size: 16px;
+    line-height: 16px;
+    overflow-x: hidden;
+    color: silver;
+    color: white;
+    font-family: "Neon 80s";
 }
 
 p {
@@ -37,22 +37,22 @@ p {
 }
 
 .category {
-	overflow: auto;
-	margin: 0 auto;
-	padding: 10px;
-	/*background: #d6daf0;*/
-	border: 5px solid aqua;
-	border-radius: 5px;
-	
-	-moz-box-shadow:    0px 0px 20px 5px aqua;
-	-webkit-box-shadow: 0px 0px 20px 5px aqua;
-	box-shadow:         0px 0px 20px 5px aqua;
+    overflow: auto;
+    margin: 0 auto;
+    padding: 10px;
+    /*background: #d6daf0;*/
+    border: 5px solid aqua;
+    border-radius: 5px;
+    
+    -moz-box-shadow:    0px 0px 20px 5px aqua;
+    -webkit-box-shadow: 0px 0px 20px 5px aqua;
+    box-shadow:         0px 0px 20px 5px aqua;
 }
 
 .navbar {
   -moz-box-shadow:    0px 0px 20px 3px lime;
-	-webkit-box-shadow: 0px 0px 20px 3px lime;
-	box-shadow:         0px 0px 20px 3px lime;
+    -webkit-box-shadow: 0px 0px 20px 3px lime;
+    box-shadow:         0px 0px 20px 3px lime;
 }
 
 .navbar .navbar-inner {
@@ -81,8 +81,8 @@ p {
   max-width: 5000px;
   
   -moz-box-shadow:    0px 0px 10px 3px yellow;
-	-webkit-box-shadow: 0px 0px 10px 3px yellow;
-	box-shadow:         0px 0px 10px 3px yellow;
+    -webkit-box-shadow: 0px 0px 10px 3px yellow;
+    box-shadow:         0px 0px 10px 3px yellow;
 }
 
 .category ul {

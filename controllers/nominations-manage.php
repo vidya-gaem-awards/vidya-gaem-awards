@@ -13,12 +13,12 @@ if (canDo("nominations-edit")) {
 
 $cat = false;
 if ($SEGMENTS[1]) {
-	$cat = mysql_real_escape_string($SEGMENTS[1]);
-	$query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
-	if (!canDo("categories-secret")) {
+  $cat = mysql_real_escape_string($SEGMENTS[1]);
+  $query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
+  if (!canDo("categories-secret")) {
     $query .= " AND `Secret` = 0";
   }
-	$result = mysql_query($query);
+  $result = mysql_query($query);
   
   if (mysql_num_rows($result) == 1) {
   
@@ -37,7 +37,7 @@ if ($SEGMENTS[1]) {
     $javascript = array();
     while ($row = mysql_fetch_assoc($result)) {
       $javascript[$row['NomineeID']] = $row;
-			if (empty($row['Image'])) {
+      if (empty($row['Image'])) {
         $row["Image"] = "/public/nominees/{$row['NomineeID']}.png";
       }
       $official[] = $row;

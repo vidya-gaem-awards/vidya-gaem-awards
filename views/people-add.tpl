@@ -1,8 +1,8 @@
 <h1>Add new user</h1>
 <ul class="breadcrumb">
-	<li class="active">
-		</li><li><a href="/people">Back to people page</a>
-	</li>
+    <li class="active">
+        </li><li><a href="/people">Back to people page</a>
+    </li>
 </ul>
 <div class="row">
     <div class="span6">

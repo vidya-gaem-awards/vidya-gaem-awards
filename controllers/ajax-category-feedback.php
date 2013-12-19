@@ -3,8 +3,8 @@
 if (!$CATEGORY_VOTING_ENABLED) {
   return_json("error", "Voting on categories is currently disabled.");
 } else if ($_POST['opinion'] != -1 && $_POST['opinion'] != 1 && $_POST['opinion'] != 0) {
-	return_json("error", "You provided an invalid opinion.");
-}	
+  return_json("error", "You provided an invalid opinion.");
+} 
 
 $category = $_POST['ID'];
 

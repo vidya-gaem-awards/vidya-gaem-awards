@@ -11,20 +11,20 @@
 
 body {
   background-color: black;
-	background-image: url("/public/space.png");
-	background-repeat: repeat;
-	background-attachment: fixed;
-	font-size: 16px;
-	line-height: 16px;
-	overflow-x: hidden;
-	color: white;
-	font-family: "Neon 80s";
+    background-image: url("/public/space.png");
+    background-repeat: repeat;
+    background-attachment: fixed;
+    font-size: 16px;
+    line-height: 16px;
+    overflow-x: hidden;
+    color: white;
+    font-family: "Neon 80s";
 }
 
 .navbar {
   -moz-box-shadow:    0px 0px 20px 3px lime;
-	-webkit-box-shadow: 0px 0px 20px 3px lime;
-	box-shadow:         0px 0px 20px 3px lime;
+    -webkit-box-shadow: 0px 0px 20px 3px lime;
+    box-shadow:         0px 0px 20px 3px lime;
 }
 
 .navbar .navbar-inner {
@@ -130,8 +130,8 @@ h2.cast {
 .cast .thumbnail {
   border: 2px solid yellow;
   -moz-box-shadow:    0px 0px 10px 2px yellow;
-	-webkit-box-shadow: 0px 0px 10px 2px yellow;
-	box-shadow:         0px 0px 10px 2px yellow;
+    -webkit-box-shadow: 0px 0px 10px 2px yellow;
+    box-shadow:         0px 0px 10px 2px yellow;
 }
 
 
@@ -152,8 +152,8 @@ h2.skits {
 .skits .thumbnail {
   border: 2px solid aqua;
   -moz-box-shadow:    0px 0px 10px 2px aqua;
-	-webkit-box-shadow: 0px 0px 10px 2px aqua;
-	box-shadow:         0px 0px 10px 2px aqua;
+    -webkit-box-shadow: 0px 0px 10px 2px aqua;
+    box-shadow:         0px 0px 10px 2px aqua;
 }
 
 
@@ -173,8 +173,8 @@ h2.crew {
 .crew .thumbnail {
   border: 2px solid lime;
   -moz-box-shadow:    0px 0px 10px 2px lime;
-	-webkit-box-shadow: 0px 0px 10px 2px lime;
-	box-shadow:         0px 0px 10px 2px lime;
+    -webkit-box-shadow: 0px 0px 10px 2px lime;
+    box-shadow:         0px 0px 10px 2px lime;
 }
 
 
@@ -194,8 +194,8 @@ h2.media {
 .media .thumbnail {
   border: 2px solid fuchsia;
   -moz-box-shadow:    0px 0px 10px 2px fuchsia;
-	-webkit-box-shadow: 0px 0px 10px 2px fuchsia;
-	box-shadow:         0px 0px 10px 2px fuchsia;
+    -webkit-box-shadow: 0px 0px 10px 2px fuchsia;
+    box-shadow:         0px 0px 10px 2px fuchsia;
 }
 
 
@@ -207,8 +207,8 @@ h2.thanks {
 .thanks .thumbnail {
   border: 2px solid white;
   -moz-box-shadow:    0px 0px 10px 2px white;
-	-webkit-box-shadow: 0px 0px 10px 2px white;
-	box-shadow:         0px 0px 10px 2px white;
+    -webkit-box-shadow: 0px 0px 10px 2px white;
+    box-shadow:         0px 0px 10px 2px white;
 }
 </style>
 

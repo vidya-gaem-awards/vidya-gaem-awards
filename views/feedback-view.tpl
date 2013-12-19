@@ -1,38 +1,38 @@
 <style type="text/css">
-	.histogram-msg {
-		padding-right: 5px;
-		text-align: right !important;
-		white-space: nowrap;
-		width: 80px;
-	}
-	.bar {
-		float: left;
-	}
-	.bar10 {
-		background-color: #88B131;
-	}
-	.bar9 {
-		background-color: #A4CC02;
-	}
-	.bar8 {
-		background-color: #FFCF02;
-	}
-	.bar7 {
-		background-color: #FF9F02;
-	}
-	.bar6 {
-		background-color: #FF6F31;
-	}
-	.bar-- {
+    .histogram-msg {
+        padding-right: 5px;
+        text-align: right !important;
+        white-space: nowrap;
+        width: 80px;
+    }
+    .bar {
+        float: left;
+    }
+    .bar10 {
+        background-color: #88B131;
+    }
+    .bar9 {
+        background-color: #A4CC02;
+    }
+    .bar8 {
+        background-color: #FFCF02;
+    }
+    .bar7 {
+        background-color: #FF9F02;
+    }
+    .bar6 {
+        background-color: #FF6F31;
+    }
+    .bar-- {
     background-color: silver;
   }
-	.bar-inline {
+    .bar-inline {
     width: 50px;
     display: inline-block;
     text-align: center;
     font-weight: bold;
   }
-	.one-button {
+    .one-button {
     float: left;
     width: 23.1%;
     margin-left: 20px;
@@ -48,44 +48,44 @@
 </style>
 
 <div class="row">
-	
-	<div class="span6">
+    
+    <div class="span6">
     <h2>General Feedback <small><tag:generalTotal /> votes</small></h2>
-		<table class="table">
-			<loop:general>
-			<tr>
-				<td class="histogram-msg"><tag:general[].rating />/10</td>
-				<td>
-					<span class="bar bar<tag:general[].bar />" style="width:<tag:general[].width />px;">&nbsp;</span>&nbsp;
-					<span><tag:general[].count /></span>
-				</td>
-			</tr>
-			</loop:general>
-		</table>
-		<div class="average-rating average-rating-panel goog-inline-block">
-			<div class="average-rating-title">Average rating: <tag:generalAverage /></div>
-		</div>
+        <table class="table">
+            <loop:general>
+            <tr>
+                <td class="histogram-msg"><tag:general[].rating />/10</td>
+                <td>
+                    <span class="bar bar<tag:general[].bar />" style="width:<tag:general[].width />px;">&nbsp;</span>&nbsp;
+                    <span><tag:general[].count /></span>
+                </td>
+            </tr>
+            </loop:general>
+        </table>
+        <div class="average-rating average-rating-panel goog-inline-block">
+            <div class="average-rating-title">Average rating: <tag:generalAverage /></div>
+        </div>
   </div>
-	
-	<div class="span6">
-		
-		<h2>Ceremony Feedback <small><tag:ceremonyTotal /> votes</small></h2>
-		<table class="table">
-			<loop:ceremony>
-			<tr>
-				<td class="histogram-msg"><tag:ceremony[].rating />/10</td>
-				<td>
-					<span class="bar bar<tag:ceremony[].bar />" style="width:<tag:ceremony[].width />px;">&nbsp;</span>&nbsp;
-					<span><tag:ceremony[].count /></span>
-				</td>
-			</tr>
-			</loop:ceremony>
-		</table>
-		<div class="average-rating average-rating-panel goog-inline-block">
-			<div class="average-rating-title">Average rating: <tag:ceremonyAverage /></div>
-		</div>
-	</div>
-	
+    
+    <div class="span6">
+        
+        <h2>Ceremony Feedback <small><tag:ceremonyTotal /> votes</small></h2>
+        <table class="table">
+            <loop:ceremony>
+            <tr>
+                <td class="histogram-msg"><tag:ceremony[].rating />/10</td>
+                <td>
+                    <span class="bar bar<tag:ceremony[].bar />" style="width:<tag:ceremony[].width />px;">&nbsp;</span>&nbsp;
+                    <span><tag:ceremony[].count /></span>
+                </td>
+            </tr>
+            </loop:ceremony>
+        </table>
+        <div class="average-rating average-rating-panel goog-inline-block">
+            <div class="average-rating-title">Average rating: <tag:ceremonyAverage /></div>
+        </div>
+    </div>
+    
 </div>
 
 <!-- <div class="page-header text-center">

@@ -1,14 +1,14 @@
 <style>
-	.ui-autocomplete {
-		max-height: 300px;
-		overflow-y: auto;
-		/* prevent horizontal scrollbar */
-		overflow-x: hidden;
-		/* add padding to account for vertical scrollbar */
-		width: 200px;
-	}
-	
-	#category-name {
+    .ui-autocomplete {
+        max-height: 300px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+        /* add padding to account for vertical scrollbar */
+        width: 200px;
+    }
+    
+    #category-name {
     text-shadow: #000 1px 1px 2px;
     text-align: center;
     color: #789922;
@@ -30,14 +30,14 @@
   }
   
   .aNominee {
-		position: relative;
-		background: lightblue;
-		border: 1px solid black;
-		width: 428px;
-		height: 100px;
-		margin-bottom: 5px;
-	}
-	.aNominee form {
+        position: relative;
+        background: lightblue;
+        border: 1px solid black;
+        width: 428px;
+        height: 100px;
+        margin-bottom: 5px;
+    }
+    .aNominee form {
     position: absolute;
     left: 435px;
     width: 90px;
@@ -46,7 +46,7 @@
     width: 100%;
     margin-bottom: 5px;
   }
-	.aNominee header {
+    .aNominee header {
     position: absolute;
     color: white;
     font-size: 12px;
@@ -58,39 +58,39 @@
     padding: 0px;
     margin: 0px;
   }
-	.aNominee footer{
-		position: absolute;
-		top: 56px;
-		left: 0;
-		height: 44px;
-		width: 428px;
-		background:	black;
-		background: rgba(0,0,0,0.5);
-	}
-	.aNominee footer h3{
-		color: white;
-		text-decoration: none;
-		text-transform: uppercase;
-		font-family: "Century Gothic",arial,sans-serif;
-		font-weight: bold;
-		font-size: 16px;
-		line-height: 1em;
-		padding: 0;
-		margin: 5px 0 0 5px;
-	}
-	.aNominee footer p{
-		text-decoration: none;
-		color: #cacaca;
-		font-family: "Lucida Sans Unicode",arial,sans-serif;
-		font-size: 13px;
-		padding: 0;
-		margin: 0 0 0 5px;
-	}
-	.aNominee img{
-		width: 428px;
-		height: 100px;
-	}
-	#dialog-edit-form input {
+    .aNominee footer{
+        position: absolute;
+        top: 56px;
+        left: 0;
+        height: 44px;
+        width: 428px;
+        background: black;
+        background: rgba(0,0,0,0.5);
+    }
+    .aNominee footer h3{
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-family: "Century Gothic",arial,sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 1em;
+        padding: 0;
+        margin: 5px 0 0 5px;
+    }
+    .aNominee footer p{
+        text-decoration: none;
+        color: #cacaca;
+        font-family: "Lucida Sans Unicode",arial,sans-serif;
+        font-size: 13px;
+        padding: 0;
+        margin: 0 0 0 5px;
+    }
+    .aNominee img{
+        width: 428px;
+        height: 100px;
+    }
+    #dialog-edit-form input {
     width: 320px;
   }
   #dialog-edit-form .control-label {
@@ -130,19 +130,19 @@
 <hr>
 
 <div class="row">
-	
-	<div class="span5" id="category-selector">
-		<ul class="nav nav-list custom-navigation-pane">
-			<loop:categories> 
-			<li data-id="<tag:categories[].ID />" class="<tag:categories[].Active />">
-				<a href="/nominations/<tag:categories[].ID />">
-					<i class="icon-chevron-right"></i>
-					<strong><tag:categories[].Name /></strong> <tag:categories[].Subtitle />
-				</a>
-			</li>
-			</loop:categories>
-		</ul>
-	</div>
+    
+    <div class="span5" id="category-selector">
+        <ul class="nav nav-list custom-navigation-pane">
+            <loop:categories> 
+            <li data-id="<tag:categories[].ID />" class="<tag:categories[].Active />">
+                <a href="/nominations/<tag:categories[].ID />">
+                    <i class="icon-chevron-right"></i>
+                    <strong><tag:categories[].Name /></strong> <tag:categories[].Subtitle />
+                </a>
+            </li>
+            </loop:categories>
+        </ul>
+    </div>
 
   <if:categoryName>
   <div class="span6">
@@ -211,7 +211,7 @@
       
     </div>
   </!if:categorySecret> 
-	</if:categoryName>
+    </if:categoryName>
 
 </div>
 
@@ -304,8 +304,8 @@ var nominees = <tag:nomineeJavascript />;
 $(document).ready(function() {
   $( "#info-name" ).autocomplete({
     source: autocompleters,
-		minLength: 2,
-		delay: 0,
+        minLength: 2,
+        delay: 0,
   });
 });
 

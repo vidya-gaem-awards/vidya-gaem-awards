@@ -27,8 +27,8 @@
   <li><a href="/voting/results">Show the top 5 positions only</a></li>
   <else:all>
   <li class="active">Currently viewing the top 5 nominees for each category only.</li>
-	<li><a href="/voting/results/all">Show complete rankings</a></li>
-	</if:all>
+    <li><a href="/voting/results/all">Show complete rankings</a></li>
+    </if:all>
 </ul>
 
 <img src="/public/illustrated-guide.png" class="img-polaroid">
@@ -41,7 +41,7 @@
   <li class="span3">
     <div class="thumbnail" style="background-color: <tag:categories[].Filters[].Colour />;">
       <strong><tag:categories[].Filters[].FilterName /></strong>
-      <span style="color: grey;"><tag:categories[].Filters[].VoteCount />	votes</span>
+      <span style="color: grey;"><tag:categories[].Filters[].VoteCount />   votes</span>
       <ol>
         <loop:categories[].Filters[].Rankings>
         <li><tag:categories[].Filters[].Rankings[] /></li>

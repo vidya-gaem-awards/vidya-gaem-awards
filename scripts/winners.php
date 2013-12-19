@@ -228,37 +228,37 @@ function runSchulze($candidates, $votes) {
   
   // create a matrix of pairwise preferences
   $pairwise = array();
-	// for every nominee
-	
-	$candidates2 = $candidates;
-	$candidates3 = $candidates2;
-	
-	foreach ($candidates as $candidateX => $xInfo) {
-		// compare it to every other nominee
-		foreach ($candidates2 as $candidateY => $yInfo) {
-			//check you aren't comparing it to itself
-			if ($candidateX != $candidateY) {
-				// set initial matrix value - not sure if this is required
-				$pairwise[$candidateX][$candidateY] = 0;
-				// now iterate through each voter
-				foreach ($votes as $key => $vote) {
-					// check each candidate was voted for and store it in 20 otherwise
-					if (array_search($candidateX, $vote) === false) {
-						$vote[20] = $candidateX;
-					}
-					if (array_search($candidateY, $vote) === false) {
-						$vote[20] = $candidateY;
-					}
-					// compare the ranks - don't know the data structure well enough to guess this
-					if ( array_search($candidateX, $vote) < array_search($candidateY, $vote)) {
-						// increase the matrix value of candidateX preferred over candidateY
-						$pairwise[$candidateX][$candidateY]++;
+  // for every nominee
+  
+  $candidates2 = $candidates;
+  $candidates3 = $candidates2;
+  
+  foreach ($candidates as $candidateX => $xInfo) {
+    // compare it to every other nominee
+    foreach ($candidates2 as $candidateY => $yInfo) {
+      //check you aren't comparing it to itself
+      if ($candidateX != $candidateY) {
+        // set initial matrix value - not sure if this is required
+        $pairwise[$candidateX][$candidateY] = 0;
+        // now iterate through each voter
+        foreach ($votes as $key => $vote) {
+          // check each candidate was voted for and store it in 20 otherwise
+          if (array_search($candidateX, $vote) === false) {
+            $vote[20] = $candidateX;
+          }
+          if (array_search($candidateY, $vote) === false) {
+            $vote[20] = $candidateY;
+          }
+          // compare the ranks - don't know the data structure well enough to guess this
+          if ( array_search($candidateX, $vote) < array_search($candidateY, $vote)) {
+            // increase the matrix value of candidateX preferred over candidateY
+            $pairwise[$candidateX][$candidateY]++;
           }
         }
       }
     }
   }
-	
+  
   // hopefully we should get a pairwise matrix that we can now compare strengths of strongest paths
   $strengths = array();
   foreach ($candidates as $i => $value) {

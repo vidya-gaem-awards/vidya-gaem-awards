@@ -11,20 +11,20 @@ $maxCount = 0;
 $total = 0;
 $average = 0;
 while ($row = mysql_fetch_assoc($result)) {
-	$general[] = array(
-		"rating" => $row['GeneralRating'] + 5,
-		"bar" => $row['GeneralRating'] + 5,
-		"count" => number_format($row['Count']),
-		"count-int" => $row['Count'],
-		"width" => 0,
-	);
-	$maxCount = max($maxCount, $row['Count']);
-	$total += $row['Count'];
-	$average += ($row['GeneralRating'] + 5) * $row['Count'];
+  $general[] = array(
+    "rating" => $row['GeneralRating'] + 5,
+    "bar" => $row['GeneralRating'] + 5,
+    "count" => number_format($row['Count']),
+    "count-int" => $row['Count'],
+    "width" => 0,
+  );
+  $maxCount = max($maxCount, $row['Count']);
+  $total += $row['Count'];
+  $average += ($row['GeneralRating'] + 5) * $row['Count'];
 }
 
 foreach ($general as $key => $values) {
-	$general[$key]["width"] = ceil(($values["count-int"] / $maxCount) * 300);
+  $general[$key]["width"] = ceil(($values["count-int"] / $maxCount) * 300);
 }
 
 $average = round($average / $total, 2);
@@ -44,20 +44,20 @@ $maxCount = 0;
 $total = 0;
 $average = 0;
 while ($row = mysql_fetch_assoc($result)) {
-	$ceremony[] = array(
-		"rating" => $row['CeremonyRating'] + 5,
-		"bar" => $row['CeremonyRating'] + 5,
-		"count" => number_format($row['Count']),
-		"count-int" => $row['Count'],
-		"width" => 0,
-	);
-	$maxCount = max($maxCount, $row['Count']);
-	$total += $row['Count'];
-	$average += ($row['CeremonyRating'] + 5) * $row['Count'];
+  $ceremony[] = array(
+    "rating" => $row['CeremonyRating'] + 5,
+    "bar" => $row['CeremonyRating'] + 5,
+    "count" => number_format($row['Count']),
+    "count-int" => $row['Count'],
+    "width" => 0,
+  );
+  $maxCount = max($maxCount, $row['Count']);
+  $total += $row['Count'];
+  $average += ($row['CeremonyRating'] + 5) * $row['Count'];
 }
 
 foreach ($ceremony as $key => $values) {
-	$ceremony[$key]["width"] = ceil(($values["count-int"] / $maxCount) * 300);
+  $ceremony[$key]["width"] = ceil(($values["count-int"] / $maxCount) * 300);
 }
 
 $average = round($average / $total, 2);
@@ -68,11 +68,11 @@ $tpl->set("ceremonyAverage", $average);
 
 
 function implying($str) {
-	if ($str[0] == ">") {
-		$str = "<span class='implying'>$str</span>";
-	}
-	$str = str_replace("\n", "<br />", $str);
-	return $str;
+  if ($str[0] == ">") {
+    $str = "<span class='implying'>$str</span>";
+  }
+  $str = str_replace("\n", "<br />", $str);
+  return $str;
 }
 
 $tpl->set("header", false);

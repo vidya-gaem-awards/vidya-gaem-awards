@@ -134,7 +134,7 @@
     $PAGE = "401";
   } else if (!canDo($ACCESS[$PAGE])) {
     header('HTTP/1.0 403 Forbidden');
-    $PAGE = "403";	
+    $PAGE = "403";  
   }
 
   // Enforce post-only pages
@@ -160,7 +160,7 @@
     $template = $CUSTOM_TEMPLATE ? $PAGE . "-" . $CUSTOM_TEMPLATE : $PAGE;
     if (!in_array($PAGE, $noMaster)) {
       $tpl->set('content', $tpl->fetch("views/$template.tpl"));
-      echo $tpl->fetch("views/master.tpl"	);
+      echo $tpl->fetch("views/master.tpl" );
     } else {
       echo $tpl->fetch("views/$template.tpl");
     }

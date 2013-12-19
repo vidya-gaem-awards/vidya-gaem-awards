@@ -1,13 +1,13 @@
 <?php
 $stats = array(
-	"category feedback" => 47663,
-	"nominations made" => 13433, 
-	"total votes" => 438545,
-	"unique users" => 30221,
-	"emails received" => 378,
-	"steam group members" => 1430,
-	"steam discussion posts" => 397,
-	"page views" => 1772723,
+  "category feedback" => 47663,
+  "nominations made" => 13433, 
+  "total votes" => 438545,
+  "unique users" => 30221,
+  "emails received" => 378,
+  "steam group members" => 1430,
+  "steam discussion posts" => 397,
+  "page views" => 1772723,
 );
 
 $tpl->set("navbar", false);
@@ -17,7 +17,7 @@ $stats2 = array();
 
 foreach ($stats as $stat => $number) {
   $stat = str_replace(" ", "&nbsp;", $stat);
-	$stats2[] = "<span class='stat'>$stat: ".number_format($number)."</span>";
+  $stats2[] = "<span class='stat'>$stat: ".number_format($number)."</span>";
 }
 
 $timezonesLeft = array(
@@ -77,9 +77,9 @@ $websiteLink = "http://timeanddate.com/worldclock/fixedtime.html?msg=2012+Vidya+
 $tpl->set("websiteLink", $websiteLink);
 
 if ($countdown > time()) {
-	$tpl->set("countdown", date("D, j M Y H:i:s \U\TCO", $countdown));
+  $tpl->set("countdown", date("D, j M Y H:i:s \U\TCO", $countdown));
 } else {
-	$tpl->set("countdown", false);
+  $tpl->set("countdown", false);
 }
 
 $tpl->set("serverDate", date("D, j M Y H:i:s \U\TCO"));

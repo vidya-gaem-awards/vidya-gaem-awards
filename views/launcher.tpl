@@ -27,14 +27,14 @@ a:hover {
 
 body {
   background-color: black;
-	background-image: url("/public/space.png");
-	background-repeat: repeat;
-	font-size: 16px;
-	line-height: 16px;
-	overflow-x: hidden;
-	color: silver;
-	color: white;
-	font-family: "Neon 80s";
+    background-image: url("/public/space.png");
+    background-repeat: repeat;
+    font-size: 16px;
+    line-height: 16px;
+    overflow-x: hidden;
+    color: silver;
+    color: white;
+    font-family: "Neon 80s";
 }
 
 .timezones {
@@ -43,33 +43,33 @@ body {
 }
 
 #wrapper {
-	overflow: auto;
-	width: 1180px;
-	margin: 0 auto;
-	padding: 10px;
-	/*background: #d6daf0;*/
-	border: 5px solid aqua;
-	border-radius: 5px;
-	
-	-moz-box-shadow:    0px 0px 20px 5px aqua;
-	-webkit-box-shadow: 0px 0px 20px 5px aqua;
-	box-shadow:         0px 0px 20px 5px aqua;
+    overflow: auto;
+    width: 1180px;
+    margin: 0 auto;
+    padding: 10px;
+    /*background: #d6daf0;*/
+    border: 5px solid aqua;
+    border-radius: 5px;
+    
+    -moz-box-shadow:    0px 0px 20px 5px aqua;
+    -webkit-box-shadow: 0px 0px 20px 5px aqua;
+    box-shadow:         0px 0px 20px 5px aqua;
 }
 
 .stats {
-	text-align: center;
-	color: #89A;
-	color: grey;
-	font-size: 9pt;
-	font-family: "Press Start 2P", monospace;
-	margin-top: -20px;
-	margin-bottom: 20px;
-	width: 1210px;
+    text-align: center;
+    color: #89A;
+    color: grey;
+    font-size: 9pt;
+    font-family: "Press Start 2P", monospace;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    width: 1210px;
 }
 .stat {
-	color: #34345C;
-	color: silver;
-	padding: 1px;
+    color: #34345C;
+    color: silver;
+    padding: 1px;
 }
 
 .logo {
@@ -77,8 +77,8 @@ body {
   height: 460px;
   
   -moz-box-shadow:    0px 0px 10px 3px aqua;
-	-webkit-box-shadow: 0px 0px 10px 3px aqua;
-	box-shadow:         0px 0px 10px 3px aqua;
+    -webkit-box-shadow: 0px 0px 10px 3px aqua;
+    box-shadow:         0px 0px 10px 3px aqua;
 }
 
 .title {

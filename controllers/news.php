@@ -9,13 +9,13 @@ $newsCount = -1;
 $currentDate = new DateTime('now');
 
 while ($row = $result->fetch_assoc()) {
-	$newsCount++;	
-	
-	$postDate = new DateTime($row['Timestamp']);
-	
-	$displayDate = $postDate->format("M j, Y \a\\t g:ia");
-	$news[] = array("Date" => $displayDate,
-		"Text" => $row['Text']);
+  $newsCount++; 
+  
+  $postDate = new DateTime($row['Timestamp']);
+  
+  $displayDate = $postDate->format("M j, Y \a\\t g:ia");
+  $news[] = array("Date" => $displayDate,
+    "Text" => $row['Text']);
 }
 
 $tpl->set("news", $news);

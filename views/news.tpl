@@ -1,5 +1,5 @@
 <header class="jumbotron subhead">
-	<h1>/v/GA News</h1>
+    <h1>/v/GA News</h1>
 </header>
 
 <div class="row">

@@ -15,11 +15,11 @@
 
 body {
   background-color: black;
-	background-image: url("/public/space.png");
-	background-repeat: repeat;
-	background-attachment: fixed;
-	color: white;
-	font-family: "Neon 80s", "Trebuchet MS", "Calibri", "Verdana", sans-serif;
+    background-image: url("/public/space.png");
+    background-repeat: repeat;
+    background-attachment: fixed;
+    color: white;
+    font-family: "Neon 80s", "Trebuchet MS", "Calibri", "Verdana", sans-serif;
 }
 
 h1 {
@@ -36,8 +36,8 @@ h1 {
 #live_player {
   border: 5px solid fuchsia;
   -moz-box-shadow:    0px 0px 10px 3px fuchsia;
-	-webkit-box-shadow: 0px 0px 10px 3px fuchsia;
-	box-shadow:         0px 0px 10px 3px fuchsia;
+    -webkit-box-shadow: 0px 0px 10px 3px fuchsia;
+    box-shadow:         0px 0px 10px 3px fuchsia;
 }
 
 * {
@@ -104,8 +104,8 @@ body, html {
   background-color: black;
   border: 3px solid yellow;
   -moz-box-shadow:    0px 0px 10px 3px yellow;
-	-webkit-box-shadow: 0px 0px 10px 3px yellow;
-	box-shadow:         0px 0px 10px 3px yellow;
+    -webkit-box-shadow: 0px 0px 10px 3px yellow;
+    box-shadow:         0px 0px 10px 3px yellow;
 }
 .scroll-content-contain {
   width: auto !important;
@@ -147,8 +147,8 @@ body, html {
   z-index: 3;
   border-left: 3px solid white;
   -moz-box-shadow:    0px 0px 10px 3px white;
-	-webkit-box-shadow: 0px 0px 10px 3px white;
-	box-shadow:         0px 0px 10px 3px white;
+    -webkit-box-shadow: 0px 0px 10px 3px white;
+    box-shadow:         0px 0px 10px 3px white;
 }
 #right_col::before {
   content: "";
