@@ -214,8 +214,9 @@
 
     #containerNominees {
       float:left;
-      width: 440px;
-      background: #1f1f1f;
+      width: 714px;
+      background-color: #1f1f1f;
+      background-image: url("/public/lines.fw.png");
       padding: 0 10px 10px 0;
       border-right: 1px dotted #494949;
     }
@@ -223,8 +224,8 @@
     .aNominee {
       position: relative;
       background: lightblue;
-      border: 1px solid #789922;
-      width: 428px;
+      border: 1px solid #31E782;
+      width: 700px;
       height: 100px;
       float: left;
       clear: both;
@@ -248,29 +249,55 @@
       left: 0;
       height: 44px;
       width: 428px;
-      background:   black;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.3);
     }
 
-    .aNominee footer h3 {
+    .nomineeBasicInfo {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 150px;
+      height: 100%;
+      padding: 4px;
+      box-sizing: border-box;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .nomineeWords {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 272px;
+      padding: 5px;
+      overflow-y: auto;
+      box-sizing: border-box;
+      background: rgba(0,0,0,0.3);
+      color: #CACACA;
+      font-size: 0.8em;
+    }
+
+    .aNominee footer h3, .nomineeBasicInfo h3 {
       color: white;
       text-decoration: none;
       text-transform: uppercase;
-      font-family: "Century Gothic",arial,sans-serif;
+      font-family: "Monofonto", "Century Gothic",arial,sans-serif;
       font-weight: bold;
       font-size: 1.1em;
       line-height: 1em;
       padding: 0;
       margin: 5px 0 0 5px;
+      text-shadow: black 1px 1px 2px;
     }
 
-    .aNominee footer p {
+    .aNominee footer p, .nomineeBasicInfo p {
       text-decoration: none;
-      color: #cacaca;
+      color: white;
       font-family: "Lucida Sans Unicode",arial,sans-serif;
       font-size: 0.8em;
       padding: 0;
       margin: 0 0 0 5px;
+      text-shadow: black 1px 1px 2px;
     }
 
     /*.aNominee footer a{
@@ -282,15 +309,16 @@
     }*/
 
     .aNominee img{
-      width: 428px;
-      height: 100px;
+      width: 100%
+      height: 100%;
     }
 
     #containerVoteBoxes {
       float:left;
       position: relative;
       width: 440px;
-      background: #1f1f1f;
+      background-color: #1f1f1f;
+      background-image: url("/public/lines.fw.png");
       padding: 0 10px 10px 0;
     }
 
@@ -869,6 +897,7 @@
         
     </header>
 
+    <!--
     <div id="containerCategories">
         <h2 id="topCategories">
             <img src="/public/some-pics/topCategories.jpg" alt="Categories">
@@ -881,6 +910,7 @@
         </a>
         </loop:categories>
     </div>
+    -->
     
 <if:category>
 <div id="limitsDrag"> 
@@ -891,12 +921,20 @@
         
         <loop:nominees>
         <div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
-            <img src="<tag:nominees[].Image />">
-            <footer>
+            <div class="nomineeBasicInfo">
+              <h3><tag:nominees[].Name /></h3>
+              <p><tag:nominees[].Subtitle /></p>
+            </div>
+            <!--<img src="<tag:nominees[].Image />">-->
+            <img src="/public/testnominee.png">
+            <div class="nomineeWords">
+              Gone Home proves that a game focused on story and exploration, starring a decidedly non-traditional cast of characters can be utterly thrilling. With excellent writing and environments that made me want to explore every nook and cranny, Gone Home simply, effectively drew me in.
+            </div>
+            <!--<footer>
                 <div class="number"></div>
                 <h3><tag:nominees[].Name /></h3>
                 <p><tag:nominees[].Subtitle /></p>
-            </footer>
+            </footer>-->
         </div>
         </loop:nominees>
         
