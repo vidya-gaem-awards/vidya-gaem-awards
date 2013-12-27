@@ -71,7 +71,7 @@
     "people" => "profile-view",
     "referrers" => "referrers-view",
     //"stream" => EVERYONE,
-    //"test" => EVERYONE,
+    "test" => EVERYONE,
     //"thanks" => EVERYONE,
     "user-search" => "add-user",
     "video-games" => EVERYONE,
@@ -79,8 +79,7 @@
     //"videos" => EVERYONE,
     "voting" => "voting-view",
     //"voting-code" => EVERYONE,
-    //"voting-submission" => EVERYONE,
-    //"votingpu" => "voting-view",
+    "voting-submission" => "voting-view",
     //"winners" => EVERYONE // Change to EVERYONE
   );
 

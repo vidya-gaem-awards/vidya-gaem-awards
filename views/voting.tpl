@@ -135,7 +135,7 @@
     }
 
     p {
-        padding: 10px;
+        padding: 10px 0;
     }
 
     h1, h2 {
@@ -191,6 +191,8 @@
     #limitsDrag {
       float: left;
       overflow:hidden;
+      border: 10px solid black;
+      border-radius: 20px;
     }
 
     .active{
@@ -214,7 +216,8 @@
 
     #containerNominees {
       float:left;
-      width: 714px;
+      position: relative;
+      width: 889px;
       background-color: #1f1f1f;
       background-image: url("/public/lines.fw.png");
       padding: 0 10px 10px 0;
@@ -223,23 +226,21 @@
 
     .aNominee {
       position: relative;
-      background: lightblue;
+      background: lightgreen;
       border: 1px solid #31E782;
-      width: 700px;
+      width: 876px;
       height: 100px;
       float: left;
       clear: both;
       margin: 10px 0 0 10px;
-      <if:votingEnabled>
-      cursor: move;
-      </if:votingEnabled>
+      
     }
 
     #containerVoteBoxes .aNominee{
       margin: 0;
     }
 
-    .aNominee.locked {
+    .aNominee.locked, .nomineeBasicInfo.locked {
       border-color: black !important;
     }
 
@@ -254,23 +255,31 @@
 
     .nomineeBasicInfo {
       position: absolute;
-      left: 0;
+      right: 0;
       top: 0;
       width: 150px;
       height: 100%;
       padding: 4px;
       box-sizing: border-box;
-      background: rgba(0,0,0,0.3);
+      background: url("/public/lines2.png");
+      border: 1px solid #31E782;
+      <if:votingEnabled>
+      cursor: move;
+      </if:votingEnabled>
+    }
+
+    .voteBox .nomineeBasicInfo {
+      background: url("/public/lines2.png");
     }
 
     .nomineeWords {
       position: absolute;
-      right: 0;
+      left: 0;
       top: 0;
       height: 100%;
       width: 272px;
-      padding: 5px;
-      overflow-y: auto;
+      padding: 2px 4px;
+      overflow-y: hidden;
       box-sizing: border-box;
       background: rgba(0,0,0,0.3);
       color: #CACACA;
@@ -316,7 +325,7 @@
     #containerVoteBoxes {
       float:left;
       position: relative;
-      width: 440px;
+      width: 250px;
       background-color: #1f1f1f;
       background-image: url("/public/lines.fw.png");
       padding: 0 10px 10px 0;
@@ -343,11 +352,27 @@
     }
 
     .voteBox {
-      clear:both;
-      float:left;
-      position: relative;
       background: url("/public/some-pics/bgVoteBox.jpg");
-      width: 430px;
+      width: 150px;
+      height: 102px;
+    }
+
+    .voteBoxHolder .number {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 90px;
+      text-align: center;
+      height: 100%;
+      line-height: 102px;
+    }
+
+
+    .voteBoxHolder {
+      /*clear: both;*/
+      float: left;
+      position: relative;
+      width: 240px;
       height: 102px;
       margin: 10px 0 0 10px;
     }
@@ -357,13 +382,7 @@
     }
 
     .number {
-      display: none;
-      position: absolute;
-      top: 5px;
-      right: 10px;
-      padding: 0;
-      margin: 0;
-      
+      display: none;      
       color: white;
       text-decoration: none;
       text-transform: uppercase;
@@ -371,7 +390,7 @@
       font-weight: bold;
       font-size: 2em;
       line-height: 1em;
-    }
+    }*/
 
     .voteBox .number {
       display: block;
@@ -479,17 +498,18 @@
 
     #startMessage {
       float: left;
-      width: 840px;
-      background-image: url("/public/terminal.gif");
-      background-size: 100% 100%;
+      width: 1100px;
+      background-image: url("/public/lines.fw.png");
       color: rgb(49,231,130);
+      border: 10px solid black;
+      border-radius: 20px;
       padding: 30px;
     }
 
     #startMessage hr {
       border-color: rgb(49,231,130);
       margin: 10px auto;
-      width: 95%;
+      width: 100%;
     }
 
     #startMessage h2 {
@@ -582,7 +602,7 @@
                 
         //be able to drag nominees
         <if:votingEnabled>
-        $( ".aNominee" ).draggable({
+        $( ".aNominee .nomineeBasicInfo" ).draggable({
             containment: "#limitsDrag",
             distance: 20,
             opacity: 0.75,
@@ -608,6 +628,9 @@
                 $( this )
                     var dropped = ui.draggable;
                     var droppedOn = $(this);
+
+                    $(droppedOn.siblings()[0]).show();
+                    $("#nominee-"+dropped.attr("data-nominee")).hide();
                     
                     //if you're dropping the nominee exactly where you took it from, it cancels the drop
                     //console.log(droppedOn.attr("id"))
@@ -620,6 +643,9 @@
                     
                     //put the content of the box you're voting over in a variable (.detach keeps the draggable)
                     var stuffDeleted = droppedOn.contents().detach();
+                    if (draggedFrom.hasClass("voteBox") && !stuffDeleted[0]) {
+                      $(draggedFrom.siblings()[0]).hide();
+                    }
                     
                     //add your dragged vote to the box
                     $(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn);
@@ -628,7 +654,7 @@
                     draggedFrom.append(stuffDeleted);
                     
                     //put their margins back to normal
-                    $(stuffDeleted).css("margin","10px 0 0 10px");
+                    //$(stuffDeleted).css("margin","10px 0 0 10px");
                     
                     updateNumbers();
             }
@@ -640,6 +666,9 @@
                 $( this )
                     var dropped = ui.draggable;
                     var droppedOn = $(this);
+                    var owner = $("#nominee-"+dropped.attr("data-nominee"));
+
+                    owner.show();
                     
                     //if you're dropping the nominee exactly where you took it from, it cancels the drop
                     //console.log(droppedOn.attr("id"))
@@ -653,12 +682,17 @@
                     }
                     
                     votesWereUnlocked();
+
+                    if (draggedFrom.hasClass("voteBox")) {
+                      $(draggedFrom.siblings()[0]).hide();
+                    }
                     
                     //add your dragged vote to the container
-                    $(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn);
+                    //$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn);
+                    $(dropped).detach().css({top: 0, left: "auto", right: 0}).appendTo(owner);
                     
                     //put their margins back to normal
-                    $(dropped).css("margin","10px 0 0 10px");
+                    //$(dropped).css("margin","10px 0 0 10px");
                     
                     //empty the number
                     //dropped.find(".number").html("");
@@ -672,9 +706,11 @@
             $( ".voteBox" ).each(function(){
                 //delete what's in every voteBox and put them back in the container on the left
                 var stuffDeleted = $(this).contents().detach();
-                $('#containerNominees').append(stuffDeleted);
+                var owner = $("#nominee-"+stuffDeleted.attr("data-nominee"));
+                stuffDeleted.css({top: 0, left: "auto", right: 0}).appendTo(owner);
+                owner.show();
+                $(".number").hide();
                 //put their margins back to normal
-                $(stuffDeleted).css("margin","10px 0 0 10px");
             });
             sortLeftSide();
             if (!previousLockExists) {
@@ -779,6 +815,7 @@
 
     function votesWereLocked() {
       $( ".aNominee" ).addClass("locked");
+      $( ".nomineeBasicInfo" ).addClass("locked");
       $( "#votesAreLocked" ).show();
       $( "#votesAreNotLocked" ).hide();
       $( "#btnCancelVotes").hide();
@@ -788,6 +825,7 @@
 
     function votesWereUnlocked() {
       $( ".aNominee" ).removeClass("locked");
+      $( ".nomineeBasicInfo" ).removeClass("locked");
       $( "#votesAreLocked" ).hide();
       $( "#votesAreNotLocked" ).show();
       $( "#btnCancelVotes").show();
@@ -916,19 +954,21 @@
 <div id="limitsDrag"> 
     <div id="containerNominees">
         <h2 id="topNominees" data-order="-1">
-            <img src="/public/some-pics/topNominees.jpg" alt="Categories">
+            <img src="/public/some-pics/topNominees.jpg" alt="Nominees">
         </h2>
+
+        <if:votingEnabled><a id="howToVote">How to vote</a></if:votingEnabled>
         
         <loop:nominees>
         <div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
-            <div class="nomineeBasicInfo">
-              <h3><tag:nominees[].Name /></h3>
-              <p><tag:nominees[].Subtitle /></p>
+            <div class="nomineeWords">
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip.
             </div>
             <!--<img src="<tag:nominees[].Image />">-->
             <img src="/public/testnominee.png">
-            <div class="nomineeWords">
-              Gone Home proves that a game focused on story and exploration, starring a decidedly non-traditional cast of characters can be utterly thrilling. With excellent writing and environments that made me want to explore every nook and cranny, Gone Home simply, effectively drew me in.
+            <div class="nomineeBasicInfo" data-nominee="<tag:nominees[].NomineeID />">
+              <h3><tag:nominees[].Name /></h3>
+              <p><tag:nominees[].Subtitle /></p>
             </div>
             <!--<footer>
                 <div class="number"></div>
@@ -943,13 +983,13 @@
     <!if:votingNotYetOpen>
     <div id="containerVoteBoxes">
         <h2 id="topVotes">
-            <img src="/public/some-pics/topVotes.jpg" alt="Categories">
+            <img src="/public/some-pics/topVotes.jpg" alt="Your Votes">
         </h2>
         
-        <if:votingEnabled><a id="howToVote">How to vote</a></if:votingEnabled>
-        
         <loop:dumbloop>
-        <div id="voteBox<tag:dumbloop[] />" class="voteBox">
+        <div class="voteBoxHolder">
+          <div id="voteBox<tag:dumbloop[] />" class="voteBox"></div>
+          <div class="number">#<tag:dumbloop[] /></div>
         </div>
         </loop:dumbloop>
         
@@ -975,18 +1015,18 @@
 <div id="startMessage">
   <hr>
   <if:votingEnabled>
-  <h2>This year, you don't need to sign in to vote.</h2>
-  <p>In fact, you don't need to do anything. Just show up and vote. <strong>Select a category on the left to begin.</strong></p>
-  <h2>The voting system has changed.</h2>
-  <p>Instead of just voting for one nominee, you can vote for many, and put them in the order you'd like to see them win.</p>
-  <p>Too much effort for you? Vote for one nominee (just like last year) and call it a day.</p>
-  <p>Still confused? We've prepared this handy <a href="/public/some-pics/howToVote.jpg">voting guide</a> for you.<br><strong>tl;dr:</strong> drag the thing you want to win from the left to the right, then click the Submit Votes button.</p>
+  <h2>Voting never changes.</h2>
+  <p>Despite the new look, voting is still the same. Drag as many nominees as you want from the left to the right in the order that you want them to win.</p>
+  <p>Too much effort? Drag over one nominee and call it a day. Make sure you submit your votes once you're happy with the order.</p>
+  <h2>Things look a bit different this time.</h2>
+  <p>To navigate through the awards, use the meme arrows at the top of the page. There's also a list of awards at the bottom of the page.</p>
+  <h2>Information about the stream</h2>
+  <p>We plan to stream at roughly the same time as last year (early March). If you'd like to submit a video for the show, see the <a href="/videos">videos</a> page for more information. We plan on having more vidya analysis instead of funny (or not-so-funny) skits this time, so keep that in mind.</p>
   
   <else:votingEnabled>
   <if:votingNotYetOpen>
-  <h2>Voting never changes.</h2>
-  <p>It's just like last year. You can put as many nominees as you want in the order you'd like them to win.</p>
-  <p>Too much effort? Just drag one nominee in and call it a day.</p>
+  <h2>Things look a bit different this time.</h2>
+  <p>To navigate through the awards, use the meme arrows at the top of the page. There's also a list of awards at the bottom of the page.</p>
   <h2>Voting will be opening soon.</h2>
   <p>In the meantime, have a look at the nominees for each award. We've given a bit of flavor text to each one this year.</p>
   <h2>Information about the stream</h2>

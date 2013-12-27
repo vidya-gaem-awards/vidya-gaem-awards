@@ -1,277 +1,242 @@
-<link rel="stylesheet" href="/resources/demos/style.css" />
-
-<style>
-*{margin:0;padding:0;}
-a, a:hover{text-decoration: none;}
-article, aside, figcaption, figure, footer, header, hgroup, nav, section {display:block;}
-
-::selection{
-    opacity:0;
-    background:rgba(0,0,0,0);
-}   
-::-moz-selection{
-    opacity:0;
-    background:rgba(0,0,0,0);
-}   
-::-webkit-selection{
-    opacity:0;
-    background:rgba(0,0,0,0);
-}
-
-html{
-}
-
-body{
-    background-color: #eef2ff;
-    background-image: url("/public/some-pics/bgTop.jpg");
-    background-repeat: repeat-x;
-    font-size: 16px;
-    line-height: 16px;
-    overflow-x: hidden;
-}
-img{
-    max-width: none;
-}
-
-#wrapper{
-    overflow: auto;
-    width: 1180px;
-    margin: 0 auto;
-    padding: 10px;
-    background: #d6daf0;
-    
-    -moz-box-shadow:    0px 0px 60px 0px rgba(0,0,0,0.4);
-    -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.4);
-    box-shadow:         0px 0px 60px 0px rgba(0,0,0,0.4);
-}
-
-header{
-    float: left;
-    margin: 10px 0;
-}
-header h1{
-    float: left;
-    width: 271px;
-}
-header .title{
-    position: relative;
-    float: left;
-    width: 909px;
-    height: 145px;
-}
-header h2{
-    text-align:center;
-    color: #789922;
-    text-transform: uppercase;
-    font-family: "Century Gothic",arial,sans-serif;
-    font-weight: bold;
-    font-size: 2.3em;
-    line-height: 1em;
-}
-header h3{
-    text-align:center;
-    color: #1f1f1f;
-    font-family: "Lucida Sans Unicode",arial,sans-serif;
-    font-size: 0.95em;
-    line-height: 0.95em;
-    margin: 0;
-}
-
-p{
-    padding: 10px;
-}
-
-h1, h2{
-    margin:0;
-    padding:0;
-}
-#containerCategories h2, #limitsDrag h2{
-    height: 52px;
-}
-
-#containerCategories {
-    clear: both;
-    float: left;
-    width: 269px;
-    background: #1f1f1f;
-    margin-right: 10px;
-}
-    
-    .category{
-        display:block;
-        padding:5px;
-        border: 1px solid #789922;
-        border-top: none;
+  <style type="text/css"> 
+    @font-face{
+      font-family:"Overseer";
+      src:url("/public/overseer.ttf");
     }
-    
-    .category h3{
-        color: #789922;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-family: "Century Gothic",arial,sans-serif;
-        font-weight: bold;
-        font-size: 0.95em;
-        line-height: 0.95em;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .category p{
-        text-decoration: none;
-        color: #cacaca;
-        font-family: "Lucida Sans Unicode",arial,sans-serif;
-        font-size: 0.8em;
-        padding: 0;
-        margin: 0;
-    }
-    
-    #limitsDrag{
-        float: left;
-        overflow:hidden;
-    }
-    
-    .active{
-        background: url("/public/some-pics/memearrow.png") 255px center no-repeat;
-    }
-    
-#containerNominees{
-    float:left;
-    width: 440px;
-    background:#1f1f1f;
-    padding: 0 10px 10px 0;
-    border-right: 1px dotted #494949;
-}
 
-    .aNominee{
+    @font-face{
+      font-family:"Monofonto";
+      src:url("/public/monofonto.ttf");
+    }
+
+    img {
+        max-width: none;
+    }
+
+    #wrapper {
+        font-size: 16px;
+        line-height: 16px;
+
+        overflow: auto;
+        width: 1180px;
+        margin: 0 auto;
+        padding: 10px;
+        background-color: rgb(211, 213, 176);
+        background-image: url("/public/falloutbackground2.jpg");
+        
+        -moz-box-shadow:    0px 0px 5px 0px rgba(0,0,0,1);
+        -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
+        box-shadow:         0px 0px 5px 0px rgba(0,0,0,1);
+    }
+
+    header {
+        margin: 10px 0;
+        width: 100%;
+    }
+
+    header .title {
         position: relative;
-        background: lightblue;
-        border: 1px solid #789922;
-        width:428px;
-        height:100px;
-        float:left;
-        clear:both;
-        margin: 10px 0 0 10px;
+        width: 100%;
+        height: 145px;
+        padding-top: 0px;
+        text-align: center;
     }
-    #containerVoteBoxes .aNominee{
-        margin: 0;
-    }
-    .aNominee footer{
-        position: absolute;
-        top: 56px;
-        left: 0;
-        height: 44px;
-        width: 428px;
-        background: black;
-        background: rgba(0,0,0,0.5);
-    }
-    .aNominee footer h3{
-        color: white;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-family: "Century Gothic",arial,sans-serif;
-        font-weight: bold;
-        font-size: 1em;
+
+    header h2 {
+        text-align:center;
+        color: rgb(97,39,15);
+        /*text-transform: uppercase;*/
+        font-family: "Overseer",arial,sans-serif;
+        font-size: 4em;
+        font-weight: normal;
         line-height: 1em;
-        padding: 0;
-        margin: 5px 0 0 5px;
+        margin-top: 20px;
+        text-shadow: black 0px 0px 1px;
     }
-    .aNominee footer p{
-        text-decoration: none;
-        color: #cacaca;
-        font-family: "Lucida Sans Unicode",arial,sans-serif;
-        font-size: 0.8em;
-        padding: 0;
-        margin: 0 0 0 5px;
+
+    header h3 {
+        text-align:center;
+        color: #1f1f1f;
+        font-family: "Monofonto",arial,sans-serif;
+        font-size: 1.5em;
+        line-height: 1.5em;
+        margin: 0;
     }
+
+    p {
+        padding: 10px 0;
+    }
+
+    h1, h2 {
+        margin:0;
+        padding:0;
+    }
+
+    #containerCategories h2, #limitsDrag h2 {
+        height: 52px;
+    }
+
+    #containerCategories {
+        clear: both;
+        float: left;
+        width: 269px;
+        background: #1f1f1f;
+        margin-right: 10px;
+    }
+        
+    .category {
+      display:block;
+      position:relative;
+      padding:5px;
+      border: 1px solid #789922;
+      border-top: none;
+    }
+
+    .category:hover {
+        background: #4d5c21;
+    }
+
+    .category h3 {
+      color: #789922;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: "Century Gothic", arial, sans-serif;
+      font-weight: bold;
+      font-size: 0.95em;
+      line-height: 0.95em;
+      padding: 0;
+      margin: 0;
+    }
+
+    .category p {
+      text-decoration: none;
+      color: #cacaca;
+      font-family: "Lucida Sans Unicode",arial,sans-serif;
+      font-size: 0.8em;
+      padding: 0;
+      margin: 0;
+    }
+
+    #limitsDrag {
+      float: left;
+      overflow:hidden;
+      border: 10px solid black;
+      border-radius: 20px;
+    }
+
+    #containerNominees {
+      float:left;
+      position: relative;
+      width: 889px;
+      background-color: #1f1f1f;
+      background-image: url("/public/lines.fw.png");
+      padding: 0 10px 10px 0;
+    }
+
+    .aNominee {
+      position: relative;
+      background: lightgreen;
+      border: 1px solid #31E782;
+      width: 876px;
+      height: 100px;
+      float: left;
+      clear: both;
+      margin: 10px 0 0 10px;
+      
+    }
+
+    #containerVoteBoxes .aNominee{
+      margin: 0;
+    }
+
+    .nomineeBasicInfo {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 150px;
+      height: 100%;
+      padding: 4px;
+      box-sizing: border-box;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid #31E782;
+    }
+
+    .voteBox .nomineeBasicInfo {
+      background: url("/public/lines2.png");
+    }
+
+    .nomineeWords {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 272px;
+      padding: 2px 4px;
+      overflow-y: hidden;
+      box-sizing: border-box;
+      background: rgba(0,0,0,0.3);
+      color: #CACACA;
+      font-size: 0.8em;
+    }
+
+    .nomineeBasicInfo h3 {
+      color: white;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: "Monofonto", "Century Gothic",arial,sans-serif;
+      font-weight: bold;
+      font-size: 1.1em;
+      line-height: 1em;
+      padding: 0;
+      margin: 5px 0 0 5px;
+      text-shadow: black 1px 1px 2px;
+    }
+
+    .nomineeBasicInfo p {
+      text-decoration: none;
+      color: white;
+      font-family: "Lucida Sans Unicode",arial,sans-serif;
+      font-size: 0.8em;
+      padding: 0;
+      margin: 0 0 0 5px;
+      text-shadow: black 1px 1px 2px;
+    }
+
     .aNominee img{
-        width: 428px;
-        height: 100px;
+      width: 100%;
+      height: 100%;
     }
-
-
-#containerVoteBoxes{
-    float:left;
-    position: relative;
-    width: 440px;
-    background:#1f1f1f;
-    padding: 0 10px 10px 0;
-}
-    .voteBox{
-        clear:both;
-        float:left;
-        position: relative;
-        background: url("/public/some-pics/bgVoteBox.jpg");
-        width:430px;
-        height:102px;
-        margin: 10px 0 0 10px;
-    }
-    .voteBoxUsed{
-        background: green;
-    }
-    #containerNominees .aNominee.locked {
-    
-  } 
-    .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
-        opacity: 1;
-        filter: Alpha(Opacity=100);
-    }
-</style>
+    </style>
 
 </head>
 <body>
 
 <div id="wrapper">
     <header>
-        <h1><img src="/public/some-pics/logo.png" alt="/v/GA 2012 logo"></h1>
-        
+       
         <div class="title">
-        
-      <div><br><br></div>
-            
-            <h2>Image Testing</h2>
-            <h3>Enter an image URL into this box to see what it will look like in a nomination rectangle<br /><br />
-            <form method="GET" class="form-inline"><input type="text" name="image" /><button type="submit" class="btn">Go</button></form>
-            </h3>
-
+      <h2 style="font-size: 54px; margin-top: 0px;">Image Testing</h2>
+      <h3 style="font-size: 20px;">Enter an image URL into this box to see what it will look like in a nomination rectangle<br>
+      <form method="GET" class="form-inline"><input type="text" name="image" /><button type="submit" class="btn">Go</button></form></h3>
         </div>
         
     </header>
-
-    <div id="containerCategories">
-        <h2 id="topCategories">
-            <img src="/public/some-pics/topCategories.jpg" alt="Categories">
-        </h2>
-        
-        <a id="<tag:categories[].ID />" class="category <if:image>active</if:image>">
-            <h3>Nomination Image Testing</h3>
-            <p>For the testing of nomination images</p>
-        </a>
-
-    </div>
     
 <if:image>
 <div id="limitsDrag"> 
     <div id="containerNominees">
-        <h2 id="topNominees">
-            <img src="/public/some-pics/topNominees.jpg" alt="Categories">
-        </h2>
-        
-        <div id="option1" class="aNominee">
-            <img src="<tag:image />" alt="If you're seeing this, you didn't specify a valid image URL.">
-            <footer>
-                <div class="number"></div>
-                <h3>Test Nominee</h3>
-                <p>Additional information about the nominee goes here</p>
-            </footer>
+
+        <div class="aNominee">
+            <div class="nomineeWords">
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip.
+                </div>
+                <img src="<tag:image />" alt="If you're seeing this, you didn't specify a valid image URL.">
+                <div class="nomineeBasicInfo">
+                  <h3>Test Nominee</h3>
+                  <p>Additional information</p>
+                </div>
+            </div>
         </div>
-        
     </div>
-    
 </div>
 </if:image>
-
-</div>
- 
- 
-</body>
-</html>
