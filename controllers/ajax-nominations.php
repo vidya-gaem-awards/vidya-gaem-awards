@@ -87,7 +87,7 @@ $stmt = $mysql->prepare($query);
 $stmt->bind_param("ssss", $ID, $table, $entryID, $values);
 
 $table = "nominees";
-$entryID = "$cat/$nominee";
+$entryID = "$category/$nominee";
 $values = json_encode($_POST);
 
 $result = $stmt->execute();

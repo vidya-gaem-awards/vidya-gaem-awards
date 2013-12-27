@@ -70,7 +70,7 @@ if (isset($_SESSION['login'])) {
   $query = "SELECT `GroupName` FROM `user_groups` WHERE `UserID` = ?";
   $stmt = $mysql->prepare($query);
   if (!$stmt) {
-    error_log("MySQL error: {$mysql->error}");
+    error_log("MySQL error: ".print_r($mysql->error_list, true));
   } else {
     $stmt->bind_param('s', $ID);
     $stmt->execute();
