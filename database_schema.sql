@@ -221,6 +221,7 @@ CREATE TABLE IF NOT EXISTS `nominees` (
   `Name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `Subtitle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Image` text COLLATE utf8_unicode_ci NOT NULL,
+  `FlavorText` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`CategoryID`,`NomineeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

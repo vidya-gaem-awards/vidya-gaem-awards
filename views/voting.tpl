@@ -233,6 +233,7 @@
       float: left;
       clear: both;
       margin: 10px 0 0 10px;
+      overflow: hidden;
       
     }
 
@@ -282,8 +283,9 @@
       overflow-y: hidden;
       box-sizing: border-box;
       background: rgba(0,0,0,0.3);
-      color: #CACACA;
+      color: white;
       font-size: 0.8em;
+      text-shadow: black 1px 1px 2px;
     }
 
     .aNominee footer h3, .nomineeBasicInfo h3 {
@@ -317,10 +319,10 @@
       color: green;
     }*/
 
-    .aNominee img{
-      width: 100%
+    /*.aNominee img{
+      width: 100%;
       height: 100%;
-    }
+    }*/
 
     #containerVoteBoxes {
       float:left;
@@ -961,9 +963,7 @@
         
         <loop:nominees>
         <div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
-            <div class="nomineeWords">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip.
-            </div>
+            <div class="nomineeWords"><tag:nominees[].FlavorText /></div>
             <img src="<tag:nominees[].Image />">
             <div class="nomineeBasicInfo" data-nominee="<tag:nominees[].NomineeID />">
               <h3><tag:nominees[].Name /></h3>

@@ -231,7 +231,7 @@
             <div class="nomineeWords">
                   (Flavor text for the nominee goes here)<br>
                   The whole image should be 876x100.<br>
-                  The primary visible part is 604x100.<br>
+                  The primary visible part is 454x100.<br>
                   272 pixels on the left and 150 pixels on the right are partially covered.<br>
                   The box on the right can be dragged away
                 </div>

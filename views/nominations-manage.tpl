@@ -287,6 +287,12 @@
           image locally at <strong>/public/nominees/<span class="dialog-edit-id"></span>.png</strong></span>
         </div>
       </div>
+      <div class="control-group">
+        <label class="control-label" for="info-flavor">Flavor Text</label>
+        <div class="controls">
+          <input type="text" id="info-flavor" placeholder="" name="FlavorText" autocomplete="off">
+        </div>
+      </div>
     </form>
   
   </div>
@@ -382,6 +388,7 @@ $("#new").click(function(){
   $( "#info-name" ).val("");
   $( "#info-subtitle" ).val("");
   $( "#info-image" ).val("");
+  $( "#info-flavor" ).val("");
   
   $( "#info-id" ).removeAttr("disabled");
   
@@ -413,6 +420,7 @@ $("button[name=edit]").click(function() {
   $( "#info-name" ).val(nominees[nomineeID].Name);
   $( "#info-subtitle" ).val(nominees[nomineeID].Subtitle);
   $( "#info-image" ).val(nominees[nomineeID].Image);
+  $( "#info-flavor" ).val(nominees[nomineeID].FlavorText);
   
   $( "#info-id").attr("disabled", "disabled");
 
@@ -473,6 +481,7 @@ $("#dialog-edit-submit").click(function() {
   
   // Send through the AJAX request to do the actual editing
   var ajaxData = $( "#dialog-edit-form" ).serializeArray();
+  console.log(ajaxData);
   ajaxData.push({ name: "Action", value: action });
   ajaxData.push({ name: "Category", value: "<tag:category />" });
   if (action == "edit") {
@@ -515,6 +524,7 @@ $("#dialog-edit-submit").click(function() {
       nominees[nomineeID].Name = $("#info-name").val();
       nominees[nomineeID].Subtitle = $("#info-subtitle").val();
       nominees[nomineeID].Image = $("#info-image").val();
+      nominees[nomineeID].FlavorText = $("#info-flavor").val();
 
       // Close the dialog
       $( "#dialog-edit" ).modal("hide");
@@ -529,6 +539,7 @@ $("#dialog-edit-submit").click(function() {
 });
 
 $( "#show-more" ).click(function(e) {
+  e.preventDefault();
   $( "#show-more" ).hide();
   $( "#more-nominations" ).show();
 });

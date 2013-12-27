@@ -66,10 +66,10 @@ if (trim($_POST['Name']) == "") {
 
 // Perform the insertion/replacement
 $query = "REPLACE INTO `nominees` (`CategoryID`, `NomineeID`, `Name`, ".
-  "`Subtitle`, `Image`) VALUES (?, ?, ?, ?, ?)";
+  "`Subtitle`, `Image`, `FlavorText`) VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = $mysql->prepare($query);
-$stmt->bind_param("sssss", $category, $nominee, $_POST['Name'],
-  $_POST['Subtitle'], $_POST['Image']);
+$stmt->bind_param("ssssss", $category, $nominee, $_POST['Name'],
+  $_POST['Subtitle'], $_POST['Image'], $_POST['FlavorText']);
 $result = $stmt->execute();
 
 if (!$result) {
