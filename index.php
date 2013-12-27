@@ -71,7 +71,7 @@
     "people" => "profile-view",
     "referrers" => "referrers-view",
     //"stream" => EVERYONE,
-    "test" => EVERYONE,
+    //"test" => EVERYONE,
     //"thanks" => EVERYONE,
     "user-search" => "add-user",
     "video-games" => EVERYONE,
@@ -91,7 +91,8 @@
   // Pages that won't use the master template
   $noMaster = array(
     "login",
-    "stream"
+    "stream",
+    "voting"
   );
 
   // Pages so basic they don't need a PHP file.
