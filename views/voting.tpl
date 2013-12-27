@@ -964,17 +964,11 @@
             <div class="nomineeWords">
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip.
             </div>
-            <!--<img src="<tag:nominees[].Image />">-->
-            <img src="/public/testnominee.png">
+            <img src="<tag:nominees[].Image />">
             <div class="nomineeBasicInfo" data-nominee="<tag:nominees[].NomineeID />">
               <h3><tag:nominees[].Name /></h3>
               <p><tag:nominees[].Subtitle /></p>
             </div>
-            <!--<footer>
-                <div class="number"></div>
-                <h3><tag:nominees[].Name /></h3>
-                <p><tag:nominees[].Subtitle /></p>
-            </footer>-->
         </div>
         </loop:nominees>
         

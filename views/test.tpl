@@ -158,6 +158,7 @@
       padding: 4px;
       box-sizing: border-box;
       background: rgba(0,0,0,0.3);
+      background: url("/public/lines2.png");
       border: 1px solid #31E782;
     }
 
@@ -228,7 +229,11 @@
 
         <div class="aNominee">
             <div class="nomineeWords">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip.
+                  (Flavor text for the nominee goes here)<br>
+                  The whole image should be 876x100.<br>
+                  The primary visible part is 604x100.<br>
+                  272 pixels on the left and 150 pixels on the right are partially covered.<br>
+                  The box on the right can be dragged away
                 </div>
                 <img src="<tag:image />" alt="                                                                    If you're seeing this, you didn't specify a valid image URL.">
                 <div class="nomineeBasicInfo"> 
@@ -239,4 +244,13 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+$( ".aNominee .nomineeBasicInfo" ).draggable({
+            distance: 20,
+            opacity: 0.75,
+            zIndex: 100,
+            revert: "invalid",
+            revertDuration: 200
+        });
+</script>
 </if:image>
