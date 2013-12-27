@@ -230,8 +230,8 @@
             <div class="nomineeWords">
                   Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip.
                 </div>
-                <img src="<tag:image />" alt="If you're seeing this, you didn't specify a valid image URL.">
-                <div class="nomineeBasicInfo">
+                <img src="<tag:image />" alt="                                                                    If you're seeing this, you didn't specify a valid image URL.">
+                <div class="nomineeBasicInfo"> 
                   <h3>Test Nominee</h3>
                   <p>Additional information</p>
                 </div>
