@@ -26,6 +26,10 @@ $ACCOUNT_REQUIRED_TO_NOMINATE = false;
 $DEFAULT_PAGE = "home";
 $AD_LANDING_PAGE = "http://$DOMAIN/voting?promo";
 
+// Must be valid strings for strtotime()
+$VOTING_START = "2013-01-01 00:00:00";
+$VOTING_END = "2013-01-15 00:00:00";
+
 // Items will only be showed if the user has access to them
 $NAVBAR_ITEMS = array(
   "home"  => "Home",

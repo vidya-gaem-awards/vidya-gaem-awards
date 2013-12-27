@@ -42,8 +42,8 @@
     }
 
     @font-face{
-      font-family:"Monofonoto";
-      src:url("/public/monofonoto.ttf");
+      font-family:"Monofonto";
+      src:url("/public/monofonto.ttf");
     }
 
     a, a:hover {
@@ -130,7 +130,7 @@
         color: #1f1f1f;
         font-family: "Monofonto",arial,sans-serif;
         font-size: 1.5em;
-        line-height: 0.95em;
+        line-height: 1.5em;
         margin: 0;
     }
 
@@ -451,11 +451,22 @@
 
     #startMessage {
       float: left;
-      width: 880px;
+      width: 840px;
+      background-image: url("/public/terminal.gif");
+      background-size: 100% 100%;
+      color: rgb(49,231,130);
+      padding: 30px;
+    }
+
+    #startMessage hr {
+      border-color: rgb(49,231,130);
+      margin: 10px auto;
+      width: 95%;
     }
 
     #startMessage h2 {
       margin-top: 20px;
+      font-family: "Monofonto",arial,sans-serif;
     }
 
     #startMessage h2:first-child {
@@ -841,17 +852,17 @@
 
 <div id="wrapper">
     <header>
-        <h1><a href="/voting"><img src="/public/some-pics/logo.png" alt="/v/GA 2012 logo"></a></h1>
+        <h1><a href="/voting"><img src="/public/some-pics/logo.png" alt="/v/GA 2013 logo"></a></h1>
         
         <div class="title">
       <if:category>
       <h2><tag:category.Name /></h2>
       <h3><tag:category.Subtitle /></h3>
       <if:votingNotYetOpen>
-      <h2 style="margin-top: 5px; color: red;"><tag:voteText />.</h2>
+      <!--<h2 style="margin-top: 5px; color: red;"><tag:voteText />.</h2>-->
       </if:votingNotYetOpen>
       <else:category>
-      <h2 style="font-size: 54px; margin-top: 30px;">The 2012 Vidya Gaem Awards</h2>
+      <h2 style="font-size: 54px; margin-top: 30px;">The 1953 Vidya Gaem Awards</h2>
       <h3 style="font-size: 25px;"><tag:voteText /></h3>
       </if:category>
         </div>
@@ -924,6 +935,7 @@
 <div id="overlay" title="Click to close"><img src="/public/some-pics/howToVote.jpg" id="closeOverlay" title="Mommy how do I vote?"></div>
 <else:category>
 <div id="startMessage">
+  <hr>
   <if:votingEnabled>
   <h2>This year, you don't need to sign in to vote.</h2>
   <p>In fact, you don't need to do anything. Just show up and vote. <strong>Select a category on the left to begin.</strong></p>
@@ -931,15 +943,23 @@
   <p>Instead of just voting for one nominee, you can vote for many, and put them in the order you'd like to see them win.</p>
   <p>Too much effort for you? Vote for one nominee (just like last year) and call it a day.</p>
   <p>Still confused? We've prepared this handy <a href="/public/some-pics/howToVote.jpg">voting guide</a> for you.<br><strong>tl;dr:</strong> drag the thing you want to win from the left to the right, then click the Submit Votes button.</p>
-  <h2>Links to other things:</h2>
-  <p>Looking for the main website? <a href="http://vidyagaemawards.com">It's right here</a>.</p>
-  <p>It's not too late to submit a video and go into the draw for $20 of Steam games. Check our <a href="/videos">video</a> page for more information.</p>
-  <p>Want to tell us how fucking retarded we are for going ahead with the show this year? Let us know <a href="http://steamcommunity.com/groups/vidyagaemawards/discussions/">here</a> or <a href="mailto:vidya@vidyagaemawards.com">email us</a>.</p>
+  
   <else:votingEnabled>
+  <if:votingNotYetOpen>
+  <h2>Voting never changes.</h2>
+  <p>It's just like last year. You can put as many nominees as you want in the order you'd like them to win.</p>
+  <p>Too much effort? Just drag one nominee in and call it a day.</p>
+  <h2>Voting will be opening soon.</h2>
+  <p>In the meantime, have a look at the nominees for each award. We've given a bit of flavor text to each one this year.</p>
+  <h2>Information about the stream</h2>
+  <p>We plan to stream at roughly the same time as last year (early March). If you'd like to submit a video for the show, see the <a href="/videos">videos</a> page for more information. We plan on having more vidya analysis instead of funny (or not-so-funny) skits this time, so keep that in mind.</p>
+  <else:votingNotYetOpen>
   <h2>Thanks to everybody who voted.</h2>
   <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>
   <p>It'll take us a few days to determine the final winners, and a few weeks before the stream will be ready. We'll announce the stream date once it's been confirmed.</p>
+  </if:votingNotYetOpen>
   </if:votingEnabled>
+  <hr>
 </div>
 </if:category>
 

@@ -9,8 +9,8 @@ if ($SEGMENTS[1] == "results") {
 
 date_default_timezone_set('America/New_York');
 $current = time();
-$start = strtotime("2013-01-01 00:00:00");
-$finish = strtotime("2013-01-15 01:00:00");
+$start = strtotime($VOTING_START);
+$finish = strtotime($VOTING_END);
 
 $voteText = "";
 
