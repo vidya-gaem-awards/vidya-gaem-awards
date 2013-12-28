@@ -165,8 +165,13 @@ $tpl->set("navbar", $navbar);
 // Page access stuff
 $page = $PAGE;
 
-$ip = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
-$country = isset($_SERVER['HTTP_CF_IPCOUNTRY']) ? $_SERVER['HTTP_CF_IPCOUNTRY'] : "";
+$IP = isset($_SERVER['HTTP_CF_CONNECTING_IP'])
+  ? $_SERVER['HTTP_CF_CONNECTING_IP']
+  : $_SERVER['REMOTE_ADDR'];
+
+$country = isset($_SERVER['HTTP_CF_IPCOUNTRY'])
+  ? $_SERVER['HTTP_CF_IPCOUNTRY']
+  : "";
 
 $tpl->set("page", $page);
 $tpl->set("logoutURL", rtrim(implode("/", $SEGMENTS), "/"));
@@ -178,7 +183,7 @@ if (substr($_SERVER['REQUEST_URI'], -11) != "autorefresh") {
             `Refer`) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = $mysql->prepare($query);
   $stmt->bind_param('sssssssss', $uniqueID, $userID, $page,
-    $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], $ip,
+    $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], $IP,
     $_SERVER['HTTP_USER_AGENT'], $_SERVER['SCRIPT_FILENAME'],
     $_SERVER['HTTP_REFERER']);
   $stmt->execute();

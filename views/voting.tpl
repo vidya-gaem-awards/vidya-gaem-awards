@@ -11,7 +11,6 @@
     <script src='/public/jquery/jquery-ui-1.9.2.min.js'></script>
     <script src='/public/jquery/jquery.tablesorter.min.js'></script>
     <script src='/public/bootstrap-2.1.0/js/bootstrap.min.js'></script>
-    <script src="http://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
@@ -233,7 +232,6 @@
       float: left;
       clear: both;
       margin: 10px 0 0 10px;
-      overflow: hidden;
       
     }
 
@@ -323,6 +321,10 @@
       width: 100%;
       height: 100%;
     }*/
+
+    .aNominee img {
+      max-height: 100%;
+    }
 
     #containerVoteBoxes {
       float:left;
@@ -705,15 +707,8 @@
         //if you click on Reset Votes
         $('#btnResetVotes').click(function(){
           votesWereUnlocked();
-            $( ".voteBox" ).each(function(){
-                //delete what's in every voteBox and put them back in the container on the left
-                var stuffDeleted = $(this).contents().detach();
-                var owner = $("#nominee-"+stuffDeleted.attr("data-nominee"));
-                stuffDeleted.css({top: 0, left: "auto", right: 0}).appendTo(owner);
-                owner.show();
-                $(".number").hide();
-                //put their margins back to normal
-            });
+          resetAllNominees();
+            
             sortLeftSide();
             if (!previousLockExists) {
           $("#btnCancelVotes").hide();
@@ -721,8 +716,9 @@
         });
         
         $('#btnCancelVotes').click(function() {
-        moveNomineesBackToLastVotes();
-        sortLeftSide();
+          resetAllNominees();
+          moveNomineesBackToLastVotes();
+          sortLeftSide();
         });
         
         //if you click on Lock Votes
@@ -752,7 +748,7 @@
             
             $( ".voteBox" ).each(function(){
           var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
-          var nomineeID = $(this).find(".aNominee").attr("data-nominee");
+          var nomineeID = $(this).find(".nomineeBasicInfo").attr("data-nominee");
        
           if (nomineeID != undefined) {
             preferences[onlyTheNumber] = nomineeID;
@@ -766,7 +762,7 @@
         
             $.post("/voting-submission", { Category: "<tag:category.ID />", Preferences: preferences }, function(data) {
             console.log(data);
-            });
+            }, "json");
             
         });
     });
@@ -806,14 +802,26 @@
 
     function updateNumbers() {
         //for every voteBox, look at its ID, keep the number and show it in the nominee div
-        $( ".voteBox" ).each(function(){
+        /*$( ".voteBox" ).each(function(){
             var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
             $(this).find(".number").html("#"+onlyTheNumber);
             
             //put their margins back to normal
             $(this).find(".aNominee").css("margin","0 0 0 0");
-        });
+        });*/
     };
+
+    function resetAllNominees() {
+      $( ".voteBox" ).each(function(){
+        //delete what's in every voteBox and put them back in the container on the left
+        var stuffDeleted = $(this).contents().detach();
+        var owner = $("#nominee-"+stuffDeleted.attr("data-nominee"));
+        stuffDeleted.css({top: 0, left: "auto", right: 0}).appendTo(owner);
+        owner.show();
+        $(".number").hide();
+        //put their margins back to normal
+      });
+    }
 
     function votesWereLocked() {
       $( ".aNominee" ).addClass("locked");
@@ -838,17 +846,23 @@
       var haveVotedFor = [];
 
       for (var i = 1; i < lastVotes.length; i++) {
-        haveVotedFor.push($("#nominee-"+lastVotes[i]).detach());
+        infoBox = $("#nominee-"+lastVotes[i]+" .nomineeBasicInfo");
+        infoBox.css("right", "auto");
+        haveVotedFor.push(infoBox.detach());
+        $("#nominee-"+lastVotes[i]).hide();
       }
       
-      var theRest = $(".aNominee").detach();
+      //var theRest = $(".aNominee").detach();
       
       for (var i = 0; i < lastVotes.length; i++) {
         $("#voteBox"+(i+1)).append(haveVotedFor[i]);
+        if (haveVotedFor[i] && haveVotedFor[i].length) {
+          $($("#voteBox"+(i+1)).siblings()[0]).show();
+        }
       }
       
-      $("#containerNominees").append(theRest);
-      $(theRest).css("margin","10px 0 0 10px");
+      //$("#containerNominees").append(theRest);
+      //$(theRest).css("margin","10px 0 0 10px");
       
       updateNumbers();
       

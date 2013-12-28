@@ -7,7 +7,6 @@ if ($SEGMENTS[1] == "results") {
   return;
 }
 
-date_default_timezone_set('America/New_York');
 $current = time();
 $start = strtotime($VOTING_START);
 $finish = strtotime($VOTING_END);
@@ -149,8 +148,11 @@ if ($SEGMENTS[1]) {
   } else {
     $_SESSION['votingCode'] = $SEGMENTS[1];
     $code = mysql_real_escape_string($SEGMENTS[1]);
-    $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`) VALUES (\"$code\", \"$uniqueID\")";
-    mysql_query($query);
+    $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`)
+              VALUES (?, ?)";
+    $stmt = $mysql->prepare($query);
+    $stmt->bind_param('ss', $code, $uniqueID);
+    $stmt->execute();
     header("Location: http://$DOMAIN/voting");
   } 
   

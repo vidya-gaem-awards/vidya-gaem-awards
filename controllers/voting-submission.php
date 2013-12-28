@@ -1,50 +1,60 @@
 <?php
-function error($msg) {
-  echo json_encode(array("result" => "error", "error" => $msg));
-  exit;
+$current = time();
+$start = strtotime($VOTING_START);
+$finish = strtotime($VOTING_END);
+
+if ($current < $start) {
+  return_json("error", "Voting hasn't opened yet.");
+} else if ($current > $finish) {
+  return_json("error", "Voting has closed.");
 }
 
-error("Voting has closed.");
-
-$cat = mysql_real_escape_string($_POST['Category']);
-$preferences = $_POST['Preferences'];
+$preferences = array_values(array_filter($_POST['Preferences']));
+array_unshift($preferences, "");
 unset($preferences[0]);
+
+print_r($preferences);
 
 // Check for duplicate nominees
 if (count($preferences) != count(array_unique($preferences))) {
-  error("Duplicate nominees are not allowed.");
+  return_json("error", "Duplicate nominees are not allowed.");
 }
 
 // Verify that all the nominees actually exist in that category
 // This has the side effect of checking that the category exists as well
-$query = "SELECT `NomineeID` FROM `nominees` WHERE `CategoryID` = \"$cat\"";
-$result = mysql_query($query);
+$query = "SELECT `NomineeID` FROM `nominees` WHERE `CategoryID` = ?";
+$stmt = $mysql->prepare($query);
+$stmt->bind_param('s', $_POST['Category']);
+$stmt->execute();
+$stmt->bind_result($nominee);
 
 $missing = array_values($preferences);
 
-while ($row = mysql_fetch_assoc($result)) {
-  $key = array_search($row['NomineeID'], $missing);
+while ($stmt->fetch()) {
+  $key = array_search($nominee, $missing);
   unset($missing[$key]);
 }
 
 if (count($missing) > 0) {
-  error("The following nominees don't exist in that category: " . implode(", ", $missing));
+  return_json("error", "The following nominees don't exist in that category: " . implode(", ", $missing));
 }
 
-$preferences = mysql_real_escape_string(json_encode($preferences));
+$preferences = json_encode($preferences);
 
 // Will be the steam ID if logged in, IP address if not. Not a great system
-$_userID = $loggedIn ? '"'.$ID.'"' : "NULL";
-$_code = isset($_SESSION['votingCode']) ? mysql_real_escape_string($_SESSION['votingCode']) : "";
-$query =  "REPLACE INTO `votes` (`UniqueID`, `CategoryID`, `Preferences`, `Timestamp`, `UserID`, `IP`, `VotingCode`) ";
-$query .= "VALUES (\"$uniqueID\", \"$cat\", \"$preferences\", NOW(), $_userID, \"{$_SERVER['REMOTE_ADDR']}\", \"$_code\")";
-$result = mysql_query($query);
-
+$_userID = $loggedIn ? $ID : NULL;
+$_code = isset($_SESSION['votingCode']) ? $_SESSION['votingCode'] : "";
+$query = "REPLACE INTO `votes` (`UniqueID`, `CategoryID`, `Preferences`,
+          `Timestamp`, `UserID`, `IP`, `VotingCode`)
+          VALUES(?, ?, ?, NOW(), ?, ?, ?)";
+$stmt = $mysql->prepare($query);
+$stmt->bind_param('ssssss', $uniqueID, $_POST['Category'], $preferences,
+  $_userID, $IP, $_code);
+$result = $stmt->execute();
 if ($result) {
-  action("voted", $cat);
+  action("voted", $_POST['Category']);
 } else {
-  error("MySQL error: " . mysql_error());
+  return_json("error", "MySQL error: ".$stmt->error);
 }
 
-echo json_encode(array("result" => "success"));
-?>
+return_json("success");
