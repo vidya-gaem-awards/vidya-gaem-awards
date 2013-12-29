@@ -13,8 +13,6 @@ $preferences = array_values(array_filter($_POST['Preferences']));
 array_unshift($preferences, "");
 unset($preferences[0]);
 
-print_r($preferences);
-
 // Check for duplicate nominees
 if (count($preferences) != count(array_unique($preferences))) {
   return_json("error", "Duplicate nominees are not allowed.");
@@ -27,7 +25,6 @@ $stmt = $mysql->prepare($query);
 $stmt->bind_param('s', $_POST['Category']);
 $stmt->execute();
 $stmt->bind_result($nominee);
-
 $missing = array_values($preferences);
 
 while ($stmt->fetch()) {

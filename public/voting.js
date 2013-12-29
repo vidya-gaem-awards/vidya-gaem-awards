@@ -60,8 +60,8 @@ $(document).ready(function() {
     var dragged;
     var draggedFrom;
     
-    //set the height/width of the containerNominees depending on how many nominees there are
-    $("#containerNominees").height($("#containerVoteBoxes").height());
+    //set the height/width of the nomineeColumn depending on how many nominees there are
+    $("#nomineeColumn").height($("#voteColumn").height());
             
     //be able to drag nominees
     if (votingEnabled) {
@@ -111,14 +111,14 @@ $(document).ready(function() {
                 draggedFrom.append(stuffDeleted);
                 
                 //put their margins back to normal
-                $(stuffDeleted).css("margin","10px 0 0 10px");
+                //$(stuffDeleted).css("margin","10px 0 0 10px");
                 
                 updateNumbers();
         }
     })
     
     //be able to drop nominees back in the original container
-    $( "#containerNominees" ).droppable({
+    $( "#nomineeColumn" ).droppable({
         drop: function( event, ui ) {         
             $( this )
                 var dropped = ui.draggable;
@@ -130,7 +130,7 @@ $(document).ready(function() {
                     $(dragged).draggable( "option", "revert", true );
                     
                     //put their margins back to normal
-                    $(dropped).css("margin","10px 0 0 10px");
+                    //$(dropped).css("margin","10px 0 0 10px");
                     
                     return
                 }
@@ -141,7 +141,7 @@ $(document).ready(function() {
                 $(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn);
                 
                 //put their margins back to normal
-                $(dropped).css("margin","10px 0 0 10px");
+                //$(dropped).css("margin","10px 0 0 10px");
                 
                 //empty the number
                 //dropped.find(".number").html("");
@@ -155,9 +155,9 @@ $(document).ready(function() {
         $( ".voteBox" ).each(function(){
             //delete what's in every voteBox and put them back in the container on the left
             var stuffDeleted = $(this).contents().detach();
-            $('#containerNominees').append(stuffDeleted);
+            $('#nomineeColumn').append(stuffDeleted);
             //put their margins back to normal
-            $(stuffDeleted).css("margin","10px 0 0 10px");
+            //$(stuffDeleted).css("margin","10px 0 0 10px");
         });
         sortLeftSide();
         if (!previousLockExists) {
@@ -209,7 +209,7 @@ $(document).ready(function() {
     
     lastVotes = preferences;
     
-        $.post("/voting-submission", { Category: "<tag:category.ID />", Preferences: preferences }, function(data) {
+        $.post("/voting-submission", { Category: currentCategory, Preferences: preferences }, function(data) {
         console.log(data);
         });
         
@@ -256,7 +256,7 @@ function updateNumbers() {
         $(this).find(".number").html("#"+onlyTheNumber);
         
         //put their margins back to normal
-        $(this).find(".aNominee").css("margin","0 0 0 0");
+        //$(this).find(".aNominee").css("margin","0 0 0 0");
     });
 };
 
@@ -290,8 +290,8 @@ function moveNomineesBackToLastVotes() {
     $("#voteBox"+(i+1)).append(haveVotedFor[i]);
   }
   
-  $("#containerNominees").append(theRest);
-  $(theRest).css("margin","10px 0 0 10px");
+  $("#nomineeColumn").append(theRest);
+  //$(theRest).css("margin","10px 0 0 10px");
   
   updateNumbers();
   
@@ -303,7 +303,7 @@ function moveNomineesBackToLastVotes() {
 }
 
 function sortLeftSide() {
-  var muhNominees = $("#containerNominees .aNominee").detach();
+  var muhNominees = $("#nomineeColumn .aNominee").detach();
   
   muhNominees = $(muhNominees).sort(function (a, b) {
     var contentA = parseInt( $(a).attr('data-order'));
@@ -311,7 +311,7 @@ function sortLeftSide() {
     return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
  });
  
- $("#containerNominees").append(muhNominees);
+ $("#nomineeColumn").append(muhNominees);
 }
 
 $(document).ready(function() { 
@@ -339,7 +339,7 @@ function randomizeNominees(){
     for(var i=0;i<currentNominee;i++){
         
         if(arrayOfNominees[i]){ //if it exists
-            arrayOfNominees[i].appendTo($( "#containerNominees" ));
+            arrayOfNominees[i].appendTo($( "#nomineeColumn" ));
         }
     }
 }

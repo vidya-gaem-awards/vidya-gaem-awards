@@ -26,6 +26,10 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section {
   background: rgba(0,0,0,0);
 }*/
 
+*, :before, :after {
+  box-sizing: border-box;
+}
+
 body {
   background-image: none;
   background-color: rgb(249, 234, 193);
@@ -38,10 +42,8 @@ img {
 }
 
 #wrapper {
-  overflow: auto;
-  width: 1180px;
+  width: 960px;
   margin: 0 auto;
-  padding: 10px;
 }
 
 /* Award Header */
@@ -98,6 +100,7 @@ img {
   position: absolute;
   top: 35px;
   cursor: pointer;
+  display: block;
 }
 
 .navigation:hover {
@@ -112,43 +115,97 @@ img {
   right: 0;
 }
 
+/* Column layout */
 
-header {
+#limitsDrag {
   float: left;
-  margin: 10px 0;
+  overflow: hidden;
 }
 
-header h1 {
-  float: left;
-  width: 271px;
-}
-
-header .title {
+.column {
   position: relative;
   float: left;
-  width: 909px;
-  height: 145px;
-  padding-top: 0px;
 }
 
-header h2 {
-  text-align:center;
-  color: #789922;
-  text-transform: uppercase;
-  font-family: "Century Gothic",arial,sans-serif;
+#nomineeColumn {
+  width: 470px;
+}
+
+#spacerColumn {
+  width: 20px;
+}
+
+#voteColumn {
+  width: 470px;
+}
+
+/* Nominee Box */
+
+.aNominee {
+  position: relative;
+  background: white;
+  width: 100%;
+  height: 124px;
+  float: left;
+  clear: both;
+  margin-bottom: 4px;
+}
+
+.nomineeImage {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.aNominee .fakeBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 41;
+}
+
+/* Nominee Box - Info Panel */
+
+.nomineeInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  /*height: 44px;*/
+  width: 100%;
+  background: -moz-linear-gradient(left, rgba(249,234,193,1) 0%, rgba(249,234,193,0) 100%);
+  background: -webkit-linear-gradient(left, rgba(249,234,193,1) 0%,rgba(249,234,193,0) 100%);
+  background: -o-linear-gradient(left, rgba(249,234,193,1) 0%,rgba(249,234,193,0) 100%);
+  background: linear-gradient(to right, rgba(249,234,193,1) 0%,rgba(249,234,193,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9eac1', endColorstr='#00f9eac1',GradientType=1 );
+  padding: 3px 3px 3px 8px;
+}
+
+.nomineeInfo .nomineeName {
+  color: rgb(85, 168, 24);
+  font-family: "ArtBrush";
   font-weight: bold;
-  font-size: 2.3em;
+  font-size: 1.3em;
   line-height: 1em;
 }
 
-header h3 {
-  text-align:center;
-  color: #1f1f1f;
-  font-family: "Lucida Sans Unicode",arial,sans-serif;
-  font-size: 0.95em;
-  line-height: 0.95em;
-  margin: 0;
+.nomineeInfo .nomineeSubtitle {
+  font-family: "Calibri",arial,sans-serif;
+  color: black;
+  font-size: 0.8em;
 }
+
+/* Vote Box */
+
+.voteBox {
+  clear:both;
+  float:left;
+  position: relative;
+  width: 100%;
+  height: 124px;
+  background: rgb(248, 234, 195) url("/public/votebox_background.png");
+  margin-bottom: 4px;
+}
+
+/**************/
 
 p {
   padding: 10px;
@@ -204,11 +261,6 @@ h1, h2 {
   margin: 0;
 }
 
-#limitsDrag {
-  float: left;
-  overflow:hidden;
-}
-
 .active {
   background: url("/public/some-pics/memearrow.png") 255px center no-repeat, url("/public/some-pics/bgCategory.jpg") left top repeat-y;
 }
@@ -226,85 +278,6 @@ h1, h2 {
   height: 100%;
   border: 1px solid #789922;
   background: url("/public/some-pics/complete.png") 1px center no-repeat, url("/public/some-pics/bgComplete.gif") left top repeat-y;
-}
-
-#containerNominees {
-  float:left;
-  width: 440px;
-  background: #1f1f1f;
-  padding: 0 10px 10px 0;
-  border-right: 1px dotted #494949;
-}
-
-.aNominee {
-  position: relative;
-  background: lightblue;
-  border: 1px solid #789922;
-  width: 428px;
-  height: 100px;
-  float: left;
-  clear: both;
-  margin: 10px 0 0 10px;
-}
-
-#containerVoteBoxes .aNominee {
-  margin: 0;
-}
-
-.aNominee.locked {
-  border-color: black !important;
-}
-
-.aNominee footer {
-  position: absolute;
-  top: 56px;
-  left: 0;
-  height: 44px;
-  width: 428px;
-  background:   black;
-  background: rgba(0,0,0,0.7);
-}
-
-.aNominee footer h3 {
-  color: white;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "Century Gothic",arial,sans-serif;
-  font-weight: bold;
-  font-size: 1.1em;
-  line-height: 1em;
-  padding: 0;
-  margin: 5px 0 0 5px;
-}
-
-.aNominee footer p {
-  text-decoration: none;
-  color: #cacaca;
-  font-family: "Lucida Sans Unicode",arial,sans-serif;
-  font-size: 0.8em;
-  padding: 0;
-  margin: 0 0 0 5px;
-}
-
-/*.aNominee footer a{
-  color: #789922;
-}
-
-.aNominee footer a:hover{
-  color: green;
-}*/
-
-.aNominee img{
-  width: 428px;
-  height: 100px;
-}
-
-#containerVoteBoxes {
-  float:left;
-  position: relative;
-  width: 440px;
-  background: #1f1f1f;
-  padding: 0 10px 10px 0;
 }
 
 #howToVote {
@@ -327,16 +300,6 @@ h1, h2 {
   text-decoration: underline;
 }
 
-.voteBox {
-  clear:both;
-  float:left;
-  position: relative;
-  background: url("/public/some-pics/bgVoteBox.jpg");
-  width: 430px;
-  height: 102px;
-  margin: 10px 0 0 10px;
-}
-
 .voteBoxUsed {
   background: green;
 }
@@ -345,14 +308,12 @@ h1, h2 {
   display: none;
   position: absolute;
   top: 5px;
-  right: 10px;
-  padding: 0;
-  margin: 0;
+  right: 25px;
   
-  color: white;
+  color: black;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: "Century Gothic",arial,sans-serif;
+  font-family: "ArtBrush";
   font-weight: bold;
   font-size: 2em;
   line-height: 1em;
@@ -360,11 +321,6 @@ h1, h2 {
 
 .voteBox .number {
   display: block;
-}
-
-.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
-  opacity: 1;
-  filter: Alpha(Opacity=100);
 }
 
 .btnSubmit {

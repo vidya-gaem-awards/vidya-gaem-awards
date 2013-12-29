@@ -28,6 +28,7 @@
       var lastVotes = <tag:lastVotes />;
       var votesChanged = false;
       var previousLockExists = lastVotes.length > 1;
+      var currentCategory = "<tag:category.ID />";
       </if:category>
     </script>
 
@@ -42,59 +43,46 @@
 </head>
 <body>
 
-<div id="wrapper">      
-    <if:category>
-    <div class="awardHeader">
-      <div class="navigation left">&lt;</div>
-      <div class="awardHeaderContainer">
-        <div class="awardName"><tag:category.Name /></div>
-        <hr>
-        <div class="awardSubtitle"><tag:category.Subtitle /></div>
-      </div>
-      <div class="navigation right">&gt;</div>
-    </div>
-    </if:category>
 
-    <div id="containerCategories">
-        <h2 id="topCategories">
-            <img src="/public/some-pics/topCategories.jpg" alt="Categories">
-        </h2>
-        
-        <loop:categories>
-        <a href="/voting/<tag:categories[].ID />" id="<tag:categories[].ID />" class="category <if:categories[].Active>active</if:categories[].Active> <if:categories[].Completed>complete</if:categories[].Completed>">
-            <h3><tag:categories[].Name /></h3>
-            <p><tag:categories[].Subtitle /></p>
-        </a>
-        </loop:categories>
+<div id="wrapper">      
+  <if:category>
+  <div class="awardHeader">
+    <a href="#" class="navigation left">&lt;</a>
+    <div class="awardHeaderContainer">
+      <div class="awardName"><tag:category.Name /></div>
+      <hr>
+      <div class="awardSubtitle"><tag:category.Subtitle /></div>
     </div>
+    <a href="#" class="navigation right">&gt;</a>
+  </div>
+  </if:category>
     
 <if:category>
 <div id="limitsDrag"> 
-    <div id="containerNominees">
-        <h2 id="topNominees" data-order="-1">
-            <img src="/public/some-pics/topNominees.jpg" alt="Categories">
-        </h2>
+    <div id="nomineeColumn" class="column">
         
         <loop:nominees>
-        <div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
-            <img src="<tag:nominees[].Image />">
-            <footer>
-                <div class="number"></div>
-                <h3><tag:nominees[].Name /></h3>
-                <p><tag:nominees[].Subtitle /></p>
-            </footer>
-        </div>
+
+          <div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
+              <img class="fakeBorder" src="/public/votebox_foreground.png">
+              <img class="nomineeImage" src="<tag:nominees[].Image />">
+              <div class="nomineeInfo">
+                  <div class="number"></div>
+                  <div class="nomineeName"><tag:nominees[].Name /></div>
+                  <div class="nomineeSubtitle"><tag:nominees[].Subtitle /></div>
+              </div>
+          </div>
+
         </loop:nominees>
-        
+
+    </div>
+
+    <div id="spacerColumn" class="column">
+      &nbsp;
     </div>
     
     <!if:votingNotYetOpen>
-    <div id="containerVoteBoxes">
-        <h2 id="topVotes">
-            <img src="/public/some-pics/topVotes.jpg" alt="Categories">
-        </h2>
-        
-        <if:votingEnabled><a id="howToVote">How to vote</a></if:votingEnabled>
+    <div id="voteColumn" class="column">
         
         <loop:dumbloop>
         <div id="voteBox<tag:dumbloop[] />" class="voteBox">
@@ -137,6 +125,19 @@
 </if:category>
 
 <img src="/public/dumb.gif" alt="" class="shit">
+</div>
+
+<div id="containerCategories">
+    <h2 id="topCategories">
+        <img src="/public/some-pics/topCategories.jpg" alt="Categories">
+    </h2>
+    
+    <loop:categories>
+    <a href="/voting/<tag:categories[].ID />" id="<tag:categories[].ID />" class="category <if:categories[].Active>active</if:categories[].Active> <if:categories[].Completed>complete</if:categories[].Completed>">
+        <h3><tag:categories[].Name /></h3>
+        <p><tag:categories[].Subtitle /></p>
+    </a>
+    </loop:categories>
 </div>
  
  
