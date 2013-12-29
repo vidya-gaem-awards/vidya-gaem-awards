@@ -27,12 +27,10 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section {
 }*/
 
 body {
-  background-color: #eef2ff;
-  background-image: url("/public/some-pics/bgTop.jpg");
-  background-repeat: repeat-x;
+  background-image: none;
+  background-color: rgb(249, 234, 193);
   font-size: 16px;
   line-height: 16px;
-  overflow-x: hidden;
 }
 
 img {
@@ -44,12 +42,76 @@ img {
   width: 1180px;
   margin: 0 auto;
   padding: 10px;
-  background: #d6daf0;
-  
-  -moz-box-shadow:    0px 0px 60px 0px rgba(0,0,0,0.4);
-  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.4);
-  box-shadow:         0px 0px 60px 0px rgba(0,0,0,0.4);
 }
+
+/* Award Header */
+
+@font-face {
+  font-family: "ArtBrush";
+  src: local("ArtBrush"), local("ArtBrush Regular"), url("/public/Artbrush.ttf");
+}
+
+@font-face {
+  font-family: "Brush Script MT";
+  src: local("Brush Script MT");
+}
+
+.awardHeader {
+  text-align: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.awardHeaderContainer {
+  margin: 0 50px;
+}
+
+.awardName {
+  font-family: "ArtBrush";
+  font-size: 4em;
+  line-height: 100%;
+  color: rgb(85, 168, 24);
+}
+
+.awardSubtitle {
+  font-family: "Brush Script MT";
+  font-size: 2.5em;
+  line-height: 100%;
+}
+
+.awardHeader hr {
+  border-color: rgb(85, 168, 24);
+  border-width: 3px;
+  width: 200px;
+  margin: 4px auto 15px auto;
+}
+
+.navigation {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  background-color: rgb(50, 60, 49);
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  top: 35px;
+  cursor: pointer;
+}
+
+.navigation:hover {
+  color: rgb(85, 168, 24);
+}
+
+.navigation.left {
+  left: 0;
+}
+
+.navigation.right {
+  right: 0;
+}
+
 
 header {
   float: left;

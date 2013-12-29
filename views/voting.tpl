@@ -42,24 +42,18 @@
 </head>
 <body>
 
-<div id="wrapper">
-    <header>
-        <h1><a href="/voting"><img src="/public/some-pics/logo.png" alt="/v/GA 2012 logo"></a></h1>
-        
-        <div class="title">
-      <if:category>
-      <h2><tag:category.Name /></h2>
-      <h3><tag:category.Subtitle /></h3>
-      <if:votingNotYetOpen>
-      <h2 style="margin-top: 5px; color: red;"><tag:voteText />.</h2>
-      </if:votingNotYetOpen>
-      <else:category>
-      <h2 style="font-size: 54px; margin-top: 30px;">The 2012 Vidya Gaem Awards</h2>
-      <h3 style="font-size: 25px;"><tag:voteText /></h3>
-      </if:category>
-        </div>
-        
-    </header>
+<div id="wrapper">      
+    <if:category>
+    <div class="awardHeader">
+      <div class="navigation left">&lt;</div>
+      <div class="awardHeaderContainer">
+        <div class="awardName"><tag:category.Name /></div>
+        <hr>
+        <div class="awardSubtitle"><tag:category.Subtitle /></div>
+      </div>
+      <div class="navigation right">&gt;</div>
+    </div>
+    </if:category>
 
     <div id="containerCategories">
         <h2 id="topCategories">
@@ -128,7 +122,7 @@
 <else:category>
 <div id="startMessage">
   <if:votingEnabled>
-  <h2>The voting system has changed.</h2>
+  <h2>.</h2>
   <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them in the order you'd like to see them win.</p>
   <p>Too much effort for you? Vote for one nominee and call it a day.</p>
   <h2>Information about the stream</h2>
