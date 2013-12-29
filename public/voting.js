@@ -52,7 +52,7 @@ $(document).ready(function() {
     });
     
     //empty voteBoxes
-    $( ".voteBox" ).each(function(){
+    $( "#voteColumn .voteBox" ).each(function(){
         $(this).html("");
     });
         
@@ -71,7 +71,13 @@ $(document).ready(function() {
           opacity: 0.75,
           zIndex: 100,
           revert: "invalid",
-          revertDuration: 200
+          revertDuration: 200,
+          start: function(event,ui) {
+            $("#voteColumn .voteBox").addClass("dragging");
+          },
+          stop: function(event,ui) {
+            $("#voteColumn .voteBox").removeClass("dragging");
+          }
       })
       
       //when you start dragging, it puts the elements in variables
@@ -86,7 +92,7 @@ $(document).ready(function() {
     }
     
     //be able to drop nominees in voteBoxes
-    $( ".voteBox" ).droppable({
+    $( "#voteColumn .voteBox" ).droppable({
         drop: function( event, ui ) {
             $( this )
                 var dropped = ui.draggable;
@@ -118,7 +124,7 @@ $(document).ready(function() {
     })
     
     //be able to drop nominees back in the original container
-    $( "#nomineeColumn" ).droppable({
+    $( "#nomineeColumn .voteBox" ).droppable({
         drop: function( event, ui ) {         
             $( this )
                 var dropped = ui.draggable;
@@ -144,7 +150,7 @@ $(document).ready(function() {
                 //$(dropped).css("margin","10px 0 0 10px");
                 
                 //empty the number
-                //dropped.find(".number").html("");
+                dropped.find(".number").html("");
                 
         }
     })
@@ -152,12 +158,12 @@ $(document).ready(function() {
     //if you click on Reset Votes
     $('#btnResetVotes').click(function(){
       votesWereUnlocked();
-        $( ".voteBox" ).each(function(){
-            //delete what's in every voteBox and put them back in the container on the left
-            var stuffDeleted = $(this).contents().detach();
-            $('#nomineeColumn').append(stuffDeleted);
-            //put their margins back to normal
-            //$(stuffDeleted).css("margin","10px 0 0 10px");
+        $( "#voteColumn .voteBox" ).each(function(){
+          //delete what's in every voteBox and put them back in the container on the left
+          var stuffDeleted = $(this).contents().detach();
+          for (i = 0; i < stuffDeleted.length; i++) {
+            $('#nomineeColumn .voteBox:empty:first').append(stuffDeleted[i]);
+          }
         });
         sortLeftSide();
         if (!previousLockExists) {
@@ -171,47 +177,33 @@ $(document).ready(function() {
     });
     
     //if you click on Lock Votes
-    $('#btnLockVotes').click(function(){
-        /*
-        var numberOfVotes = 0;
-        var numberOfBoxes = $( ".voteBox" ).length;
-        
-        //goes through every voteBox
-        $( ".voteBox" ).each(function(){
-            if($(this).contents().attr("id") != undefined){
-                //if the ID of what's in the voteBox is undefined, it means there's nothing
-                //so knowing that, every time a voteBox isn't empty, add 1 to numberOfVotes
-                numberOfVotes++;
-            }
-        });
-        
-        console.log( numberOfVotes +"/"+ numberOfBoxes);
-        */
-        
-        sortVotes();
-        updateNumbers();
-        
-        votesWereLocked();
-        
-        var preferences = [null];
-        
-        $( ".voteBox" ).each(function(){
-      var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
-      var nomineeID = $(this).find(".aNominee").attr("data-nominee");
-   
-      if (nomineeID != undefined) {
-        preferences[onlyTheNumber] = nomineeID;
-      }
+    $('#btnLockVotes').click(function(){      
+      sortVotes();
+      updateNumbers();
+      votesWereLocked();
       
-    });
+      var preferences = [null];
+      
+      $( "#voteColumn .voteBox" ).each(function(){
+        var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
+        var nomineeID = $(this).find(".aNominee").attr("data-nominee");
+     
+        if (nomineeID != undefined) {
+          preferences[onlyTheNumber] = nomineeID;
+        }
+        
+      });
     
-    console.log(preferences);
+      console.log(preferences);
     
-    lastVotes = preferences;
+      lastVotes = preferences;
     
-        $.post("/voting-submission", { Category: currentCategory, Preferences: preferences }, function(data) {
+      $.post("/voting-submission", { Category: currentCategory, Preferences: preferences }, function(data) {
         console.log(data);
-        });
+        if (data.error) {
+          alert("An error occurred:\n"+data.error+"\nYour vote has not been saved.");
+        }
+      }, "json");
         
     });
 });
@@ -224,7 +216,7 @@ function sortVotes() {
     var listVoteBox = [];
     
     //pass through every voteBox, empty them while placing the vote in the array, ignoring the empty voteBoxes
-    $( ".voteBox" ).each(function(){
+    $( "#voteColumn .voteBox" ).each(function(){
         currentVoteBox++;
         //alert("currently checking voteBox"+currentVoteBox);
         
@@ -251,7 +243,7 @@ function sortVotes() {
 
 function updateNumbers() {
     //for every voteBox, look at its ID, keep the number and show it in the nominee div
-    $( ".voteBox" ).each(function(){
+    $( "#voteColumn .voteBox" ).each(function(){
         var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
         $(this).find(".number").html("#"+onlyTheNumber);
         
@@ -261,6 +253,7 @@ function updateNumbers() {
 };
 
 function votesWereLocked() {
+  $( ".voteBox").addClass("locked");
   $( ".aNominee" ).addClass("locked");
   $( "#votesAreLocked" ).show();
   $( "#votesAreNotLocked" ).hide();
@@ -270,6 +263,7 @@ function votesWereLocked() {
 }
 
 function votesWereUnlocked() {
+  $( ".voteBox").removeClass("locked");
   $( ".aNominee" ).removeClass("locked");
   $( "#votesAreLocked" ).hide();
   $( "#votesAreNotLocked" ).show();
@@ -280,18 +274,19 @@ function votesWereUnlocked() {
 function moveNomineesBackToLastVotes() {
   var haveVotedFor = [];
 
-  for (var i = 1; i < lastVotes.length; i++) {
+  for (i = 1; i < lastVotes.length; i++) {
     haveVotedFor.push($("#nominee-"+lastVotes[i]).detach());
   }
   
   var theRest = $(".aNominee").detach();
   
-  for (var i = 0; i < lastVotes.length; i++) {
+  for (i = 0; i < lastVotes.length; i++) {
     $("#voteBox"+(i+1)).append(haveVotedFor[i]);
   }
   
-  $("#nomineeColumn").append(theRest);
-  //$(theRest).css("margin","10px 0 0 10px");
+  for (i = 0; i < theRest.length; i++) {
+    $("#nomineeColumn").find('.voteBox:empty:first').append(theRest[i]);
+  }
   
   updateNumbers();
   
@@ -311,7 +306,9 @@ function sortLeftSide() {
     return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
  });
  
- $("#nomineeColumn").append(muhNominees);
+  for (var i = 0; i < muhNominees.length; i++) {
+    $("#nomineeColumn .voteBox:empty:first").append(muhNominees[i]);
+  }
 }
 
 $(document).ready(function() { 
@@ -339,7 +336,7 @@ function randomizeNominees(){
     for(var i=0;i<currentNominee;i++){
         
         if(arrayOfNominees[i]){ //if it exists
-            arrayOfNominees[i].appendTo($( "#nomineeColumn" ));
+            arrayOfNominees[i].appendTo($( "#nomineeColumn .voteBox:empty:first" ));
         }
     }
 }

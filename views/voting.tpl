@@ -61,17 +61,20 @@
 <div id="limitsDrag"> 
     <div id="nomineeColumn" class="column">
         
+        <img src="/public/voting_left_instruction.png">
+
         <loop:nominees>
 
-          <div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
+        <div class="voteBox"><div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
               <img class="fakeBorder" src="/public/votebox_foreground.png">
+              <img class="fakeBorder locked" src="/public/votebox_foreground_locked.png">
               <img class="nomineeImage" src="<tag:nominees[].Image />">
               <div class="nomineeInfo">
                   <div class="number"></div>
                   <div class="nomineeName"><tag:nominees[].Name /></div>
                   <div class="nomineeSubtitle"><tag:nominees[].Subtitle /></div>
               </div>
-          </div>
+          </div></div>
 
         </loop:nominees>
 
@@ -83,6 +86,8 @@
     
     <!if:votingNotYetOpen>
     <div id="voteColumn" class="column">
+
+        <img src="/public/voting_right_instruction.png">
         
         <loop:dumbloop>
         <div id="voteBox<tag:dumbloop[] />" class="voteBox">

@@ -139,6 +139,14 @@ img {
   width: 470px;
 }
 
+#voteColumn > img {
+  float: right;
+}
+
+.column > img { /* Temporary! */
+  height: 100px;
+}
+
 /* Nominee Box */
 
 .aNominee {
@@ -161,6 +169,18 @@ img {
   top: 0;
   left: 0;
   z-index: 41;
+}
+
+.aNominee img.locked {
+  display: none;
+}
+
+.aNominee.locked img.locked {
+  display: block;
+}
+
+#nomineeColumn .number {
+  display: none;
 }
 
 /* Nominee Box - Info Panel */
@@ -203,6 +223,28 @@ img {
   height: 124px;
   background: rgb(248, 234, 195) url("/public/votebox_background.png");
   margin-bottom: 4px;
+}
+
+.voteBox.locked {
+  background: none;
+}
+
+.voteBox.dragging {
+  /*background-image: url("/public/votebox_background_drag.png");*/
+}
+
+.number {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "ArtBrush";
+  font-weight: bold;
+  font-size: 2em;
+  line-height: 1em;
 }
 
 /**************/
@@ -302,25 +344,6 @@ h1, h2 {
 
 .voteBoxUsed {
   background: green;
-}
-
-.number {
-  display: none;
-  position: absolute;
-  top: 5px;
-  right: 25px;
-  
-  color: black;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "ArtBrush";
-  font-weight: bold;
-  font-size: 2em;
-  line-height: 1em;
-}
-
-.voteBox .number {
-  display: block;
 }
 
 .btnSubmit {
