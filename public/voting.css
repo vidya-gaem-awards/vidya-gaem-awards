@@ -1,0 +1,424 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a, a:hover {
+  text-decoration: none;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, nav, section {
+  display: block;
+}
+
+/*::selection {
+  opacity: 0;
+  background: rgba(0,0,0,0);
+}   
+
+::-moz-selection {
+  opacity: 0;
+  background: rgba(0,0,0,0);
+}   
+
+::-webkit-selection {
+  opacity: 0;
+  background: rgba(0,0,0,0);
+}*/
+
+body {
+  background-color: #eef2ff;
+  background-image: url("/public/some-pics/bgTop.jpg");
+  background-repeat: repeat-x;
+  font-size: 16px;
+  line-height: 16px;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: none;
+}
+
+#wrapper {
+  overflow: auto;
+  width: 1180px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #d6daf0;
+  
+  -moz-box-shadow:    0px 0px 60px 0px rgba(0,0,0,0.4);
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.4);
+  box-shadow:         0px 0px 60px 0px rgba(0,0,0,0.4);
+}
+
+header {
+  float: left;
+  margin: 10px 0;
+}
+
+header h1 {
+  float: left;
+  width: 271px;
+}
+
+header .title {
+  position: relative;
+  float: left;
+  width: 909px;
+  height: 145px;
+  padding-top: 0px;
+}
+
+header h2 {
+  text-align:center;
+  color: #789922;
+  text-transform: uppercase;
+  font-family: "Century Gothic",arial,sans-serif;
+  font-weight: bold;
+  font-size: 2.3em;
+  line-height: 1em;
+}
+
+header h3 {
+  text-align:center;
+  color: #1f1f1f;
+  font-family: "Lucida Sans Unicode",arial,sans-serif;
+  font-size: 0.95em;
+  line-height: 0.95em;
+  margin: 0;
+}
+
+p {
+  padding: 10px;
+}
+
+h1, h2 {
+  margin:0;
+  padding:0;
+}
+
+#containerCategories h2, #limitsDrag h2 {
+  height: 52px;
+}
+
+#containerCategories {
+  clear: both;
+  float: left;
+  width: 269px;
+  background: #1f1f1f;
+  margin-right: 10px;
+}
+    
+.category {
+  display:block;
+  position:relative;
+  padding:5px;
+  border: 1px solid #789922;
+  border-top: none;
+}
+
+.category:hover {
+  background: #4d5c21;
+}
+
+.category h3 {
+  color: #789922;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Century Gothic", arial, sans-serif;
+  font-weight: bold;
+  font-size: 0.95em;
+  line-height: 0.95em;
+  padding: 0;
+  margin: 0;
+}
+
+.category p {
+  text-decoration: none;
+  color: #cacaca;
+  font-family: "Lucida Sans Unicode",arial,sans-serif;
+  font-size: 0.8em;
+  padding: 0;
+  margin: 0;
+}
+
+#limitsDrag {
+  float: left;
+  overflow:hidden;
+}
+
+.active {
+  background: url("/public/some-pics/memearrow.png") 255px center no-repeat, url("/public/some-pics/bgCategory.jpg") left top repeat-y;
+}
+.active:hover {
+  background: #4d5c21 url("/public/some-pics/memearrow.png") 255px center no-repeat;
+}
+
+.complete:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -1px;
+  left: -11px;
+  width: 9px;
+  height: 100%;
+  border: 1px solid #789922;
+  background: url("/public/some-pics/complete.png") 1px center no-repeat, url("/public/some-pics/bgComplete.gif") left top repeat-y;
+}
+
+#containerNominees {
+  float:left;
+  width: 440px;
+  background: #1f1f1f;
+  padding: 0 10px 10px 0;
+  border-right: 1px dotted #494949;
+}
+
+.aNominee {
+  position: relative;
+  background: lightblue;
+  border: 1px solid #789922;
+  width: 428px;
+  height: 100px;
+  float: left;
+  clear: both;
+  margin: 10px 0 0 10px;
+}
+
+#containerVoteBoxes .aNominee {
+  margin: 0;
+}
+
+.aNominee.locked {
+  border-color: black !important;
+}
+
+.aNominee footer {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  height: 44px;
+  width: 428px;
+  background:   black;
+  background: rgba(0,0,0,0.7);
+}
+
+.aNominee footer h3 {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Century Gothic",arial,sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+  line-height: 1em;
+  padding: 0;
+  margin: 5px 0 0 5px;
+}
+
+.aNominee footer p {
+  text-decoration: none;
+  color: #cacaca;
+  font-family: "Lucida Sans Unicode",arial,sans-serif;
+  font-size: 0.8em;
+  padding: 0;
+  margin: 0 0 0 5px;
+}
+
+/*.aNominee footer a{
+  color: #789922;
+}
+
+.aNominee footer a:hover{
+  color: green;
+}*/
+
+.aNominee img{
+  width: 428px;
+  height: 100px;
+}
+
+#containerVoteBoxes {
+  float:left;
+  position: relative;
+  width: 440px;
+  background: #1f1f1f;
+  padding: 0 10px 10px 0;
+}
+
+#howToVote {
+  cursor: pointer;
+  position: absolute;
+  top: 23px;
+  right: 11px;
+  color: #1f1f1f;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Century Gothic",arial,sans-serif;
+  font-weight: bold;
+  font-size: 1em;
+  line-height: 1em;
+  padding: 0;
+  margin: 0;
+}
+
+#howToVote:hover {
+  text-decoration: underline;
+}
+
+.voteBox {
+  clear:both;
+  float:left;
+  position: relative;
+  background: url("/public/some-pics/bgVoteBox.jpg");
+  width: 430px;
+  height: 102px;
+  margin: 10px 0 0 10px;
+}
+
+.voteBoxUsed {
+  background: green;
+}
+
+.number {
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  padding: 0;
+  margin: 0;
+  
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Century Gothic",arial,sans-serif;
+  font-weight: bold;
+  font-size: 2em;
+  line-height: 1em;
+}
+
+.voteBox .number {
+  display: block;
+}
+
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+  opacity: 1;
+  filter: Alpha(Opacity=100);
+}
+
+.btnSubmit {
+  cursor: pointer;
+  margin-top: 10px;
+  float:left;
+  height: 53px;
+}
+    
+#btnLockVotes {
+  clear: both;
+  margin-left: 9px;
+  width: 430px;
+  background-image: url("/public/some-pics/btnSubmit.gif");
+  background-position: 0px 0px;
+}
+
+#btnResetVotes {
+  margin-left: 9px;
+  width: 215px;
+  background-image: url("/public/some-pics/btnSubmit.gif");
+  background-position: 0px -159px;
+}
+
+#btnCancelVotes {
+  width: 215px;
+  background-image: url("/public/some-pics/btnSubmit.gif");
+  background-position: 215px -159px;
+}
+
+#btnLockVotes:hover {
+  background-position: 0px -53px
+}
+
+#btnResetVotes:hover {
+  background-position: 0px -212px;
+}
+
+#btnCancelVotes:hover {
+  background-position: 215px -212px;
+}
+
+.iVoted {
+  background-position: 0px -106px !important;
+  cursor: default;
+}
+
+#overlay {
+  cursor: pointer;
+  width: 650px;
+  height: 471px;
+  -moz-box-shadow:    0px 0px 60px 0px rgba(0,0,0,0.4);
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.4);
+  box-shadow:         0px 0px 60px 0px rgba(0,0,0,0.4);
+}
+
+.shit {
+  position:absolute;
+  z-index:999;
+  left:-100px;
+  top:82px;
+  display:none;
+  animation: dumb 8s infinite linear;
+  -moz-animation: dumb 8s infinite linear; /* Firefox */
+  -webkit-animation: dumb 8s infinite linear; /* Safari and Chrome */
+  -o-animation: dumb 8s infinite linear; /* Opera */
+}
+    
+@keyframes dumb
+{
+from {left:-10%;}
+to {left:110%;}
+}
+
+@-moz-keyframes dumb /* Firefox */
+{
+from {left:-10%;}
+to {left:110%;}
+}
+
+@-webkit-keyframes dumb /* Safari and Chrome */
+{
+from {left:-10%;}
+to {left:110%;}
+}
+
+@-o-keyframes dumb /* Opera */
+{
+from {left:-10%;}
+to {left:110%;}
+}
+
+#test {
+  color: red;
+  text-align: center;
+}
+
+.title h2 {
+ margin-top: 40px;
+ text-shadow: black 1px 1px 2px;
+}
+
+#startMessage {
+  float: left;
+  width: 880px;
+}
+
+#startMessage h2 {
+  margin-top: 20px;
+}
+
+#startMessage h2:first-child {
+  margin-top: 0px;
+}
+
+#startMessage p {
+  padding-top: 0px;
+  line-height: 1.3;
+}
