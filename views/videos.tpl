@@ -24,7 +24,7 @@
         </ul>
         
         <h2 style="margin-top: 30px;">When / where do I submit?</h2>
-        <p>Send us an email at <a href="mailto:videos@vidyagaemawards.com">vidya@vidyagaemawards.com</a>.
+        <p>Send us an email at <a href="mailto:videos@vidyagaemawards.com">videos@vidyagaemawards.com</a>.
         You can either attach the video to the email, or upload it somewhere like <a href="http://mediafire.com">MediaFire</a>
         or as an unlisted video on <a href="http://youtube.com">YouTube</a>.</p>
         <p>We're accepting videos for as long as possible, so you've got at least until the end of January.</p>

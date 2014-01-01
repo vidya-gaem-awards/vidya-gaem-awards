@@ -126,17 +126,18 @@
 
   <if:votingNotYetOpen>
   <!-- Before votes open -->
-  <h2>How to vote:</h2>
-  <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a day.</p>
-  <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
+	  <h2>How to vote:</h2>
+	  <p>Despite the new look, voting is the same as last year. Vote for as many nominees as you want, and put them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a day.</p>
+	  <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
   </if:votingNotYetOpen>
 
   <if:votingEnabled>
   <!-- While votes are open -->
-  <h2>How to vote:</h2>
-  <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a day.</p>
-  <p>You can use the award list at the bottom to navigate, as well the meme arrows that will appear while looking at an award.</p>
-  <p><a href="/voting/most-hated-game">Click here to begin!</a></p>
+	  <h2>How to vote:</h2>
+	  <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a day.</p>
+	  <p>You can use the award list at the bottom to navigate, as well the meme arrows that will appear while looking at an award.</p>
+	  
+	  <a href="/voting/most-hated-game" id="btnStart"></a>
   </if:votingEnabled>
 
   <if:votingConcluded>
