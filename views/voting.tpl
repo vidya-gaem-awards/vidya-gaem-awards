@@ -110,7 +110,7 @@
 </div>
 
  <if:votingEnabled>
-	<footer>
+	<footer style='position: relative; clear: both;'>
 		<img src="/public/50s/arrow_left.png" id="arrow_left" /><div id="btnResetVotes" class="btnSubmit" alt="Reset Votes"></div>
 		<span id="votesAreNotLocked">
 			<div id="btnLockVotes" class="btnSubmit" alt="Submit Votes"></div><img src="/public/50s/arrow_right.png" id="arrow_right" />
@@ -118,6 +118,7 @@
 		<span id="votesAreLocked" style="display: none;">
 			<div id="btnLockVotes" class="btnSubmit iVoted" alt="Saved!"></div>
 		</span>
+    <a href="/voting/<tag:nextCategory />" class="navigation right" alt="Next category"></a>
 	</footer>
 </if:votingEnabled>
 

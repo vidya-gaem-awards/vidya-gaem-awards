@@ -245,6 +245,7 @@ function votesWereLocked() {
   $( "#btnCancelVotes").hide();
   previousLockExists = true;
   votesChanged = false;
+  $( ".navigation").show();
 }
 
 function votesWereUnlocked() {
