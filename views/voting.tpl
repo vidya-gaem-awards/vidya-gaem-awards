@@ -44,30 +44,37 @@
 <body>
 
 
+<header>
+	<img src="/public/50s/why_are_you_reading_this.png" id="thelogo" alt="oh god it's happening again" />
+	<h1>The 2013 Vidya Gaem Awards</h1>
+	<h2><tag:voteText /></h2>
+</header>
+
 <div id="wrapper">      
   <if:category>
   <div class="awardHeader">
-    <a href="#" class="navigation left">&lt;</a>
+    <a href="/voting/<tag:prevCategory />" class="navigation left"></a>
     <div class="awardHeaderContainer">
       <div class="awardName"><tag:category.Name /></div>
-      <hr>
-      <div class="awardSubtitle"><tag:category.Subtitle /></div>
+      <div class="hr"></div>
+      <h2 class="awardSubtitle"><tag:category.Subtitle /></h2>
     </div>
-    <a href="#" class="navigation right">&gt;</a>
+    <a href="/voting/<tag:nextCategory />" class="navigation right"></a>
   </div>
+  <img src="/public/50s/dont_forget.png" id="dontforget" alt="Don't forget to hit submit" />
   </if:category>
     
 <if:category>
 <div id="limitsDrag"> 
     <div id="nomineeColumn" class="column">
         
-        <img src="/public/voting_left_instruction.png">
+        <img src="/public/50s/topNominees.png" width="267px" height="105px" alt="Pick your nominees" />
 
         <loop:nominees>
 
         <div class="voteBox"><div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
-              <img class="fakeBorder" src="/public/votebox_foreground.png">
-              <img class="fakeBorder locked" src="/public/votebox_foreground_locked.png">
+              <img class="fakeBorder" src="/public/50s/votebox_foreground.png">
+              <img class="fakeBorder locked" src="/public/50s/votebox_foreground_locked.png">
               <img class="nomineeImage" src="<tag:nominees[].Image />">
               <div class="nomineeInfo">
                   <div class="number"></div>
@@ -87,29 +94,30 @@
     <!if:votingNotYetOpen>
     <div id="voteColumn" class="column">
 
-        <img src="/public/voting_right_instruction.png">
+        <img src="/public/50s/topVotes.png" width="267px" height="105px" alt="Drag and drop to vote"/>
         
         <loop:dumbloop>
         <div id="voteBox<tag:dumbloop[] />" class="voteBox">
         </div>
         </loop:dumbloop>
         
-        <if:votingEnabled>
-        <footer>
-            <span id="votesAreNotLocked">
-                <div id="btnLockVotes" class="btnSubmit" alt="Submit Votes"></div>
-            </span>
-            <span id="votesAreLocked" style="display: none;">
-                <div id="btnLockVotes" class="btnSubmit iVoted" alt="Submit Votes"></div>
-            </span>
-            <div id="btnResetVotes" class="btnSubmit" alt="Reset Votes"></div>
-            <div id="btnCancelVotes" class="btnSubmit" alt="Cancel Votes" style="display: none;"></div>
-        </footer>
-        </if:votingEnabled>
+       
     </div>
     </!if:votingNotYetOpen>
 
 </div>
+
+ <if:votingEnabled>
+	<footer>
+		<img src="/public/50s/arrow_left.png" id="arrow_left" /><div id="btnResetVotes" class="btnSubmit" alt="Reset Votes"></div>
+		<span id="votesAreNotLocked">
+			<div id="btnLockVotes" class="btnSubmit" alt="Submit Votes"></div><img src="/public/50s/arrow_right.png" id="arrow_right" />
+		</span>
+		<span id="votesAreLocked" style="display: none;">
+			<div id="btnLockVotes" class="btnSubmit iVoted" alt="Saved!"></div>
+		</span>
+	</footer>
+</if:votingEnabled>
 
 <div id="overlay" title="Click to close"><img src="/public/some-pics/howToVote.jpg" id="closeOverlay" title="Mommy how do I vote?"></div>
 <else:category>
@@ -134,7 +142,7 @@
 
 <div id="containerCategories">
     <h2 id="topCategories">
-        <img src="/public/some-pics/topCategories.jpg" alt="Categories">
+        Categories
     </h2>
     
     <loop:categories>

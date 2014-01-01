@@ -87,7 +87,16 @@ $query = "SELECT * FROM `categories` WHERE `Enabled` = 1 ORDER BY `Order` ASC";
 $result = mysql_query($query);
 
 $categories = array();
+$linkedNext = $linkedPrev = array();
+$current = false;
 while ($row = mysql_fetch_array($result)) {
+  if ($current) {
+    $linkedPrev[$row['ID']] = $current;
+    $linkedNext[$current] = $row['ID'];
+  } else { 
+    $first = $row['ID'];
+  }
+  $current = $row['ID'];
   if ($SEGMENTS[1] == $row['ID']) {
     $row['Active'] = true;
   } else {
@@ -101,6 +110,9 @@ while ($row = mysql_fetch_array($result)) {
   }
   $categories[] = $row;
 }
+
+$linkedNext[$current] = $first;
+$linkedPrev[$first] = $current;
 
 $tpl->set("categories", $categories);
 
@@ -144,6 +156,8 @@ if ($SEGMENTS[1]) {
     $js .= "]";
       
     $tpl->set("lastVotes", $js);
+    $tpl->set("prevCategory", $linkedPrev[$cat]);
+    $tpl->set("nextCategory", $linkedNext[$cat]);
     
   } else {
     $_SESSION['votingCode'] = $SEGMENTS[1];

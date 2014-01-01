@@ -30,20 +30,58 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section {
   box-sizing: border-box;
 }
 
+html {
+	background-image: url("50s/bgvoting.jpg"); 
+	background-color: #f6e7be;
+}
+
 body {
-  background-image: none;
-  background-color: rgb(249, 234, 193);
+  background: none;
   font-size: 16px;
   line-height: 16px;
+  padding-top: 10px;
 }
 
 img {
   max-width: none;
 }
 
+
+header{
+	width: 960px;
+	height: 144px;
+	margin: 0 auto 30px;
+	background: url("/public/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;
+}
+
+header h1{
+	float: right;
+	width: 680px;
+	font-family: "Brush Script MT";
+	font-size: 2.5em;
+	line-height: 100%;
+	text-align:center;
+	margin-top: 28px;
+}
+
+header h2{
+	float: right;
+	width: 680px;
+	font-family: Calibri, sans-serif;
+	font-size: 1.5em;
+	line-height: 100%;
+	text-align:center;
+}
+
+#thelogo{
+	float: left;
+}
+
 #wrapper {
-  width: 960px;
+  width: 988px;
+  height: 112px;
   margin: 0 auto;
+  position: relative;
 }
 
 /* Award Header */
@@ -55,7 +93,7 @@ img {
 
 @font-face {
   font-family: "Brush Script MT";
-  src: local("Brush Script MT");
+  src: local("Brush Script MT"), local("Brush Script MT"), url("/public/BrushScriptMT.ttf");
 }
 
 .awardHeader {
@@ -67,57 +105,55 @@ img {
 .awardHeaderContainer {
   margin: 0 50px;
 }
-
 .awardName {
   font-family: "ArtBrush";
   font-size: 4em;
   line-height: 100%;
-  color: rgb(85, 168, 24);
+  color: #509e20;
 }
 
-.awardSubtitle {
-  font-family: "Brush Script MT";
-  font-size: 2.5em;
-  line-height: 100%;
-}
-
-.awardHeader hr {
-  border-color: rgb(85, 168, 24);
-  border-width: 3px;
-  width: 200px;
-  margin: 4px auto 15px auto;
+.awardHeader .hr {
+	margin: 0 auto;
+	height: 8px;
+	background: url("/public/50s/underline.png") center center no-repeat;
 }
 
 .navigation {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 50%;
-  background-color: rgb(50, 60, 49);
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
-  position: absolute;
-  top: 35px;
-  cursor: pointer;
-  display: block;
-}
-
-.navigation:hover {
-  color: rgb(85, 168, 24);
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 35px;
+	cursor: pointer;
+	display: block;
 }
 
 .navigation.left {
-  left: 0;
+	left: 0;
+	background: url("/public/50s/btnNav.png") 0px 0px;
+}
+.left:hover {
+	background-position: 0px 50px;
 }
 
 .navigation.right {
-  right: 0;
+	right: 0;
+	background: url("/public/50s/btnNav.png") 50px 0px;
 }
+.right:hover {
+	background-position: 50px 50px;
+}
+
+#dontforget{
+	position: absolute;
+	top: 236px;
+	right: -62px;
+}
+
 
 /* Column layout */
 
 #limitsDrag {
+  padding-left: 14px;
   float: left;
   overflow: hidden;
 }
@@ -128,23 +164,30 @@ img {
 }
 
 #nomineeColumn {
-  width: 470px;
+  width: 473px;
+}
+
+#nomineeColumn .voteBox:before {
+content: "";
+display: block;
+position: absolute;
+top: 17px;
+left: -8px;
+width: 8px;
+height: 100%;
+background: url("/public/50s/kill_la_kill.png") 0px center no-repeat;
 }
 
 #spacerColumn {
-  width: 20px;
+  width: 14px;
 }
 
 #voteColumn {
-  width: 470px;
+  width: 473px;
 }
 
 #voteColumn > img {
-  float: right;
-}
-
-.column > img { /* Temporary! */
-  height: 100px;
+  margin-left: 206px;
 }
 
 /* Nominee Box */
@@ -160,8 +203,21 @@ img {
 }
 
 .nomineeImage {
-  max-height: 100%;
-  max-width: 100%;
+  width: 473px;
+  height: 126px;
+}
+
+.info{
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 55;
+	background: url("/public/50s/info.png") center top no-repeat;
+}
+.info:hover{
+	background-position: center bottom;
 }
 
 .aNominee .fakeBorder {
@@ -191,16 +247,14 @@ img {
   left: 0;
   /*height: 44px;*/
   width: 100%;
-  background: -moz-linear-gradient(left, rgba(249,234,193,1) 0%, rgba(249,234,193,0) 100%);
-  background: -webkit-linear-gradient(left, rgba(249,234,193,1) 0%,rgba(249,234,193,0) 100%);
-  background: -o-linear-gradient(left, rgba(249,234,193,1) 0%,rgba(249,234,193,0) 100%);
-  background: linear-gradient(to right, rgba(249,234,193,1) 0%,rgba(249,234,193,0) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9eac1', endColorstr='#00f9eac1',GradientType=1 );
-  padding: 3px 3px 3px 8px;
+  background: url("/public/50s/gradient.png");
+  padding: 3px 3px 2px 5px;
+  margin: 0 0 1px 3px;
+  z-index: 99;
 }
 
 .nomineeInfo .nomineeName {
-  color: rgb(85, 168, 24);
+  color: #509e20;
   font-family: "ArtBrush";
   font-weight: bold;
   font-size: 1.3em;
@@ -220,14 +274,14 @@ img {
   float:left;
   position: relative;
   width: 100%;
-  height: 124px;
-  background: rgb(248, 234, 195) url("/public/votebox_background.png");
+  height: 126px;
+  background: rgba(246, 231, 190, 0.5) url("/public/50s/votebox_background.png");
   margin-bottom: 4px;
 }
 
-.voteBox.locked {
+/*.voteBox.locked {
   background: none;
-}
+}*/
 
 .voteBox.dragging {
   /*background-image: url("/public/votebox_background_drag.png");*/
@@ -235,10 +289,10 @@ img {
 
 .number {
   position: absolute;
-  top: 5px;
-  right: 15px;
+  top: 7px;
+  right: 19px;
   
-  color: rgb(85, 168, 24);
+  color: black;
   text-decoration: none;
   text-transform: uppercase;
   font-family: "ArtBrush";
@@ -256,70 +310,81 @@ p {
 h1, h2 {
   margin:0;
   padding:0;
+  color: black;
+}
+
+h2 {
+	font-family: "Brush Script MT";
+	font-size: 2.5em;
+	line-height: 100%;
+}
+
+#containerCategories {
+	clear: both;
+	width: 988px;
+	margin: 0 auto;
+	padding-top: 14px;
+	padding-bottom: 30px;
+	overflow: auto;
+	background: url("/public/50s/shadow_the_edge.png") center 14px no-repeat;
 }
 
 #containerCategories h2, #limitsDrag h2 {
   height: 52px;
 }
-
-#containerCategories {
-  clear: both;
-  float: left;
-  width: 269px;
-  background: #1f1f1f;
-  margin-right: 10px;
-}
     
 .category {
-  display:block;
-  position:relative;
-  padding:5px;
-  border: 1px solid #789922;
-  border-top: none;
+	display: block;
+	position: relative;
+	padding: 5px;
+	border-top: none;
+	width: 463px;
+	float: left;
+	margin-left: 14px;
 }
 
 .category:hover {
-  background: #4d5c21;
+  background: rgba(0,0,0,0.1);
 }
 
 .category h3 {
-  color: #789922;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "Century Gothic", arial, sans-serif;
-  font-weight: bold;
-  font-size: 0.95em;
-  line-height: 0.95em;
-  padding: 0;
-  margin: 0;
+	color: black;
+	text-decoration: none;
+	font-family: Calibri, sans-serif;
+	font-weight: bold;
+	font-size: 1em;
+	line-height: 0.95em;
+	padding: 0;
+	margin: 0 5px 0 17px;
+	display: inline;
 }
 
 .category p {
-  text-decoration: none;
-  color: #cacaca;
-  font-family: "Lucida Sans Unicode",arial,sans-serif;
-  font-size: 0.8em;
-  padding: 0;
-  margin: 0;
+	text-decoration: none;
+	color: black;
+	font-family: Calibri,sans-serif;
+	font-size: 0.9em;
+	padding: 0;
+	margin: 0;
+	display: inline;
 }
 
 .active {
-  background: url("/public/some-pics/memearrow.png") 255px center no-repeat, url("/public/some-pics/bgCategory.jpg") left top repeat-y;
+  background: rgba(0,0,0,0.1);
 }
 .active:hover {
-  background: #4d5c21 url("/public/some-pics/memearrow.png") 255px center no-repeat;
+  background: rgba(0,0,0,0.2);
 }
 
 .complete:before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: -1px;
-  left: -11px;
-  width: 9px;
-  height: 100%;
-  border: 1px solid #789922;
-  background: url("/public/some-pics/complete.png") 1px center no-repeat, url("/public/some-pics/bgComplete.gif") left top repeat-y;
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 28px;
+	height: 100%;
+	background: url("/public/50s/complete.png") 0px center no-repeat;
 }
 
 #howToVote {
@@ -350,44 +415,45 @@ h1, h2 {
   cursor: pointer;
   margin-top: 10px;
   float:left;
-  height: 53px;
+  height: 49px;
+  position: relative;
 }
     
 #btnLockVotes {
-  clear: both;
-  margin-left: 9px;
-  width: 430px;
-  background-image: url("/public/some-pics/btnSubmit.gif");
+  margin-left: 14px;
+  width: 196px;
+  background-image: url("/public/50s/btnSubmit.png");
   background-position: 0px 0px;
 }
 
 #btnResetVotes {
-  margin-left: 9px;
-  width: 215px;
-  background-image: url("/public/some-pics/btnSubmit.gif");
-  background-position: 0px -159px;
-}
-
-#btnCancelVotes {
-  width: 215px;
-  background-image: url("/public/some-pics/btnSubmit.gif");
-  background-position: 215px -159px;
+  width: 196px;
+  background-image: url("/public/50s/btnSubmit.png");
+  background-position: 0px -147px;
 }
 
 #btnLockVotes:hover {
-  background-position: 0px -53px
+  background-position: 0px -49px;
 }
 
 #btnResetVotes:hover {
-  background-position: 0px -212px;
+  background-position: 0px -196px;
 }
 
-#btnCancelVotes:hover {
-  background-position: 215px -212px;
+#arrow_left {
+	float: left;
+	margin-left: 216px;
+	margin-top: 10px;
 }
+
+#arrow_right {
+	float: left;
+	margin-top: 10px;
+}
+
 
 .iVoted {
-  background-position: 0px -106px !important;
+  background-position: 0px -98px !important;
   cursor: default;
 }
 

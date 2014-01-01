@@ -71,7 +71,7 @@
     "people" => "profile-view",
     "referrers" => "referrers-view",
     //"stream" => EVERYONE,
-    "test" => EVERYONE,
+    //"test" => EVERYONE,
     //"thanks" => EVERYONE,
     "user-search" => "add-user",
     "video-games" => EVERYONE,
