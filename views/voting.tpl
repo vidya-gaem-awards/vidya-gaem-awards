@@ -157,7 +157,7 @@
 
 <div id="containerCategories">
     <h2 id="topCategories">
-        Categories
+        The Awards
     </h2>
     
     <loop:categories>

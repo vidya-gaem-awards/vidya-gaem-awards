@@ -19,7 +19,7 @@
 </style>
 
 <h1>Detailed Voting Results</h1>
-<p>Here are the detailed results for the 2012 /v/GAs. In order to determine the winner for each category, we had to split the votes into several filter groups, depending on where the person who voted came from. We include some of the groups here for your amusement.</p>
+<p>Here are the detailed results for the 2013 /v/GAs. In order to determine the winner for each category, we had to split the votes into several filter groups, depending on where the person who voted came from. We include some of the groups here for your amusement.</p>
 <p>If all you want is the official results for each category, you can get those on the <a href="/winners">winners page</a>. If you want to see the results in even <em>more</em> detail, you can view the <a href="/voting/results/pairwise">pairwise voting results</a>.</p>
 <ul class="breadcrumb">
   <if:all>
