@@ -30,8 +30,6 @@
     <li><a href="/voting/results/all">Show complete rankings</a></li>
     </if:all>
 </ul>
-
-<img src="/public/illustrated-guide.png" class="img-polaroid">
   
 <loop:categories>
 <h2><tag:categories[].Name /> <small><tag:categories[].Subtitle /></small></h2>

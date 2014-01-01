@@ -78,7 +78,7 @@
     "volunteer-submission" => LOGIN,
     "videos" => EVERYONE,
     "voting" => "voting-view",
-    "voting-code" => EVERYONE,
+    "voting-code" => "voting-view",
     "voting-submission" => "voting-view",
     //"winners" => EVERYONE // Change to EVERYONE
   );
