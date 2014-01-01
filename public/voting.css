@@ -387,26 +387,6 @@ h2 {
 	background: url("/public/50s/complete.png") 0px center no-repeat;
 }
 
-#howToVote {
-  cursor: pointer;
-  position: absolute;
-  top: 23px;
-  right: 11px;
-  color: #1f1f1f;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "Century Gothic",arial,sans-serif;
-  font-weight: bold;
-  font-size: 1em;
-  line-height: 1em;
-  padding: 0;
-  margin: 0;
-}
-
-#howToVote:hover {
-  text-decoration: underline;
-}
-
 .voteBoxUsed {
   background: green;
 }

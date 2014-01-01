@@ -45,7 +45,7 @@
 
 
 <header>
-	<img src="/public/50s/why_are_you_reading_this.png" id="thelogo" alt="oh god it's happening again" />
+	<a href="/voting"><img src="/public/50s/why_are_you_reading_this.png" id="thelogo" alt="oh god it's happening again" /></a>
 	<h1>The 2013 Vidya Gaem Awards</h1>
 	<h2><tag:voteText /></h2>
 </header>
@@ -61,7 +61,9 @@
     </div>
     <a href="/voting/<tag:nextCategory />" class="navigation right"></a>
   </div>
+  <if:votingEnabled>
   <img src="/public/50s/dont_forget.png" id="dontforget" alt="Don't forget to hit submit" />
+  </if:votingEnabled>
   </if:category>
     
 <if:category>
@@ -119,21 +121,33 @@
 	</footer>
 </if:votingEnabled>
 
-<div id="overlay" title="Click to close"><img src="/public/some-pics/howToVote.jpg" id="closeOverlay" title="Mommy how do I vote?"></div>
 <else:category>
 <div id="startMessage">
+
+  <if:votingNotYetOpen>
+  <!-- Before votes open -->
+  <h2>How to vote:</h2>
+  <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a day.</p>
+  <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
+  </if:votingNotYetOpen>
+
   <if:votingEnabled>
-  <h2>.</h2>
-  <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them in the order you'd like to see them win.</p>
-  <p>Too much effort for you? Vote for one nominee and call it a day.</p>
-  <h2>Information about the stream</h2>
-  <p>We plan to stream at roughly the same time as last year (early March). If you'd like to submit a video for the show, see the <a href="/videos">videos</a> page for more information. We plan on having more vidya analysis instead of funny (or not-so-funny) skits this time, so keep that in mind.</p>
-  <else:votingNotYetOpen>
+  <!-- While votes are open -->
+  <h2>How to vote:</h2>
+  <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a day.</p>
+  <p>You can use the award list at the bottom to navigate, as well the meme arrows that will appear while looking at an award.</p>
+  <p><a href="/voting/most-hated-game">Click here to begin!</a></p>
+  </if:votingEnabled>
+
+  <if:votingConcluded>
+  <!-- After votes close -->
   <h2>Thanks to everybody who voted.</h2>
   <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>
-  <p>It'll take us a few days to determine the final winners, and a few weeks before the stream will be ready. We'll announce the stream date once it's been confirmed.</p>
-  </if:votingNotYetOpen>
-  </if:votingEnabled>
+  </if:votingConcluded>
+
+  <h2>Stream information:</h2>
+  <p>We plan to stream at roughly the same time as last year (early March). If you'd like to submit a video for the show, see the <a href="/videos">videos</a> page for more information. We plan on having more vidya analysis instead of funny (or not-so-funny) skits this time, so keep that in mind.</p>
+
 </div>
 </if:category>
 
@@ -151,8 +165,11 @@
         <p><tag:categories[].Subtitle /></p>
     </a>
     </loop:categories>
-</div>
- 
+
+    <if:loggedIn>
+  <h3 style='clear:both; padding-top: 20px;'><a href="/">Back to the main part of the site</a></h3>
+  </if:loggedIn>
+</div> 
  
 </body>
 </html>

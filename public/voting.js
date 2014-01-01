@@ -33,23 +33,6 @@ $(window).bind('resize',positionPopup);
         
 $(document).ready(function() {  
     randomizeNominees();
-    $("#overlay").fadeOut(0);
-    $("#overlay").css({
-        left: ($(window).width() - $('#overlay').width()) / 2,
-        top: ($(window).width() - $('#overlay').width()) / 7,
-        position:'absolute'
-    });
-    
-    //open popup
-    $("#howToVote").click(function(){
-        $("#overlay").fadeIn(300);
-        positionPopup();
-    });
-     
-    //close popup
-    $("#closeOverlay").click(function(){
-        $("#overlay").fadeOut(300);
-    });
     
     //empty voteBoxes
     $( "#voteColumn .voteBox" ).each(function(){
