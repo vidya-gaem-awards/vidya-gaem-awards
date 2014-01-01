@@ -3,6 +3,11 @@ $tpl->set("title", "Voting");
 
 if ($SEGMENTS[1] == "results") {
   $CUSTOM_TEMPLATE = "results";
+
+  // This is an absolutely disgusting workaround
+  $key = array_search("voting", $noMaster);
+  unset($noMaster[$key]);
+
   require("voting-results.php");
   return;
 }

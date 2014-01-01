@@ -185,6 +185,8 @@ $(document).ready(function() {
         console.log(data);
         if (data.error) {
           alert("An error occurred:\n"+data.error+"\nYour vote has not been saved.");
+        } else {
+          $("#"+currentCategory).addClass("complete");
         }
       }, "json");
         

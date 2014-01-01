@@ -76,9 +76,9 @@
     "user-search" => "add-user",
     "video-games" => EVERYONE,
     "volunteer-submission" => LOGIN,
-    //"videos" => EVERYONE,
+    "videos" => EVERYONE,
     "voting" => "voting-view",
-    //"voting-code" => EVERYONE,
+    "voting-code" => EVERYONE,
     "voting-submission" => "voting-view",
     //"winners" => EVERYONE // Change to EVERYONE
   );
