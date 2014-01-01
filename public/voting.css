@@ -93,7 +93,7 @@ header h2{
 
 @font-face {
   font-family: "Brush Script MT";
-  src: local("Brush Script MT"), local("Brush Script MT"), url("/public/BrushScriptMT.ttf");
+  src: local("Brush Script MT"), local("Brush Script MT Italic"), url("/public/BrushScriptMT.ttf");
 }
 
 .awardHeader {
