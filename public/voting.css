@@ -88,12 +88,18 @@ header h2{
 
 @font-face {
   font-family: "ArtBrush";
-  src: local("ArtBrush"), local("ArtBrush Regular"), url("/public/Artbrush.ttf");
+  src: local("ArtBrush"),
+       local("ArtBrush Regular"),
+       url("/public/Artbrush.woff") format("woff"),
+       url("/public/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Brush Script MT";
-  src: local("Brush Script MT"), local("Brush Script MT Italic"), url("/public/BrushScriptMT.ttf");
+  src: local("Brush Script MT"),
+       local("Brush Script MT Italic"),
+       url("/public/BrushScriptMT.woff") format("woff"),
+       url("/public/BrushScriptMT.ttf") format("truetype");
 }
 
 .awardHeader {
