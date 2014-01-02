@@ -80,7 +80,7 @@
     "voting" => EVERYONE,
     "voting-code" => "voting-view",
     "voting-submission" => EVERYONE,
-    //"winners" => EVERYONE // Change to EVERYONE
+    "winners" => "voting-results" // Change to EVERYONE
   );
 
   if (isset($ACCESS["nomination-submit"]) && $ACCOUNT_REQUIRED_TO_NOMINATE) {
