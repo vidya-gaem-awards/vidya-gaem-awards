@@ -1,4 +1,5 @@
 <?php
+chdir(dirname(__FILE__));
 function timer() {
   global $timeStart;
   

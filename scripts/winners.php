@@ -1,4 +1,5 @@
 <?php
+chdir(dirname(__FILE__));
 $timeStart = microtime(true);
 function timer($msg) {
   global $timeStart;
@@ -46,7 +47,7 @@ $filters = array(
   "05combined2" => "`Number` >= 227 OR `Number` = 101", // /v/ + null (with voting code)
   "06voting+null" => "`Number` = 227", // null (with voting code)
   "07null" => "`Number` = 25",  // null (no voting code)
-  "08facepunch" => "`Number` = -20",
+//  "08facepunch" => "`Number` = -20",
   "09neogaf" => "`Number` = -30",
   "10twitter" => "`Number` = -40",
   "11reddit" => "`Number` = -50",
