@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" style="overflow: hidden;">
 <head>
-<title>The 2012 Vidya Gaem Awards</title>
+<title>The 2013 Vidya Gaem Awards</title>
 <style type="text/css">
 @font-face {
-  font-family: "Neon 80s";
-  src: url("/public/Neon.ttf");
+  font-family: "ArtBrush";
+  src: local("ArtBrush"),
+       local("ArtBrush Regular"),
+       url("/public/Artbrush.woff") format("woff"),
+       url("/public/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Blade Runner";
-  src: url("/public/blade_runner.ttf");
+  font-family: "Brush Script MT";
+  src: local("Brush Script MT"),
+       local("Brush Script MT Italic"),
+       url("/public/BrushScriptMT.woff") format("woff"),
+       url("/public/BrushScriptMT.ttf") format("truetype");
 }
 
+
 body {
-  background-color: black;
-    background-image: url("/public/space.png");
+    background-color: #f6e7be;
+    background-image: url("/public/50s/bgvoting.jpg");
     background-repeat: repeat;
     background-attachment: fixed;
-    color: white;
-    font-family: "Neon 80s", "Trebuchet MS", "Calibri", "Verdana", sans-serif;
+    font-family: "Calibri", Arial, sans-serif;
 }
 
 h1 {
-  color: aqua;
-  font-family: "Blade Runner", "Neon 80s", Verdana, sans-serif;
+  font-family: "ArtBrush";
+  font-weight: normal;
+  color: #509e20;
   font-size: 40px;
-  text-shadow: 0px 0px 20px aqua;
   margin-bottom: 5px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -34,10 +40,9 @@ h1 {
 }
 
 #live_player {
-  border: 5px solid fuchsia;
-  -moz-box-shadow:    0px 0px 10px 3px fuchsia;
-    -webkit-box-shadow: 0px 0px 10px 3px fuchsia;
-    box-shadow:         0px 0px 10px 3px fuchsia;
+  -moz-box-shadow:    0px 0px 40px 5px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0px 0px 40px 5px rgba(0,0,0,0.5);
+  box-shadow:         0px 0px 40px 5px rgba(0,0,0,0.5);
 }
 
 * {
@@ -76,36 +81,30 @@ body, html {
   position: absolute;
   width: 100%;
 }
-#left_close, #right_close {
+#right_close {
   z-index: 10;
   display: block;
   position: absolute;
-  width: 18px;
-  height: 18px;
-  text-align: center;
-  line-height: 20px;
-  text-decoration: none;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
-  border: 1px solid rgba(0,0,0,0.25);
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.5),inset 0 1px 0 rgba(255,255,255,0.5);
-  -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5),inset 0 1px 0 rgba(255,255,255,0.5);
-  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5),inset 0 1px 0 rgba(255,255,255,0.5);
-  text-indent: -999px;
   overflow: hidden;
-  background: url("/public/arrow_collapse.png") no-repeat 0 0;
-}
-#right_close {
-  top: 10px;
+  background-image: url("/public/50s/btnNav.png");
+  background-size: 60px;
+  top: 8px;
   right: 30px;
-  background-position: 0 -19px;
-  background-color: black;
-  border: 3px solid yellow;
-  -moz-box-shadow:    0px 0px 10px 3px yellow;
-    -webkit-box-shadow: 0px 0px 10px 3px yellow;
-    box-shadow:         0px 0px 10px 3px yellow;
+}
+.right_active {
+  background-position: 30px 0;
+}
+.right_active:hover {
+  background-position: 30px 30px;
+}
+.left_active {
+  background-position: 0 0;
+}
+.left_active:hover {
+  background-position: 0 30px;
 }
 .scroll-content-contain {
   width: auto !important;
@@ -145,10 +144,6 @@ body, html {
   bottom: 0;
   width: 320px;
   z-index: 3;
-  border-left: 3px solid white;
-  -moz-box-shadow:    0px 0px 10px 3px white;
-    -webkit-box-shadow: 0px 0px 10px 3px white;
-    box-shadow:         0px 0px 10px 3px white;
 }
 #right_col::before {
   content: "";
@@ -180,15 +175,13 @@ body, html {
 }
 
 .controls a {
-  color: lime;
   text-decoration: none;
-  text-shadow: 0px 0px 10px lime;
+  color: #0069D6;
 }
 
 .controls a:hover {
   text-decoration: underline;
-  color: white;
-  text-shadow: none;
+  color: #00438A;
 }
 
 .controls .gap {
@@ -206,11 +199,11 @@ body, html {
   <div class="column" id="main_col" style="margin-left: 0px;">
     <div class="content">
       <div class="stretch scroll" style="top: 0px; bottom: 0px;">
-        <a id="right_close">Show/Hide</a>
+        <a id="right_close" class="right_active" title="Show/Hide chat"></a>
         <div class="scroll-content-contain" style="right: 0px;">
           <div class="scroll-content">
             <h1>
-              The 2012 Vidya Gaem Awards
+              The 2013 Vidya Gaem Awards
             </h1>
             <div id="live_player">
               <div class="live_site_player_container swf_container" id="standard_holder" style="width: 100%; height: 485px;">
@@ -221,12 +214,13 @@ body, html {
               <!-- <li>Change Stream: </li>
               <li style="display: none;"><a id="link-stream-twitch" href="#">Twitch</a> <span class="gap">|</span></li>
               <li><a id="link-stream-livestream" href="#">Livestream</a> <span class="gap">|</span></li> -->
-              <li>Chat Popouts: </li>
               <!-- <li style="display: none;"><a id="link-chat-twitch" href="#">Twitch</a> <span class="gap">|</span></li> -->
+              <li>Shitposting options: &nbsp;</li>
               <li><a href="http://twitch.tv/chat/embed?channel=vidyagaemawards&popout_chat=true" target="_blank">Twitch</a> <span class="gap">|</span></li>
-              <li><a href="http://vidyagaemslive.chatango.com/?js" target="_blank">Chatango</a> <span class="gap">|</span></li>
-              <li><a href="steam://friends/joinchat/103582791432684008">Steam Chat</a> <span class="gap">|</span></li>
-              <li>IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net</li>
+              <!-- <li><a href="http://vidyagaemslive.chatango.com/?js" target="_blank">Chatango</a> <span class="gap">|</span></li> -->
+              <!-- <li><a href="steam://friends/joinchat/103582791432684008">Steam Chat</a> <span class="gap">|</span></li> -->
+              <li>IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net <span class="gap">|</span></li>
+              <li><a href="/vg-redirect" target="_blank">&gt;&gt;&gt;/vg/ Thread</a></li>
             </ul>
           </div>
         </div>
@@ -252,10 +246,12 @@ $("#right_close").click(function() {
   $("#right_col").toggle();
   if ($("#right_col").is(":visible")) {
     $("#main_col").css("margin-right", 320);
-    $("#right_close").css("background-position-y", -19);
+    $("#right_close").removeClass("left_active");
+    $("#right_close").addClass("right_active");
   } else {
     $("#main_col").css("margin-right", 0);
-    $("#right_close").css("background-position-y", -1);
+    $("#right_close").removeClass("right_active");
+    $("#right_close").addClass("left_active");
   }
 });
 

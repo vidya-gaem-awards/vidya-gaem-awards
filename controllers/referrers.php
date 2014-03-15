@@ -10,7 +10,7 @@ WHERE `Refer` != \"\"
 AND `Refer` NOT LIKE \"%vidyagaemawards.com%\"
 AND `Refer` NOT LIKE \"https://%\"
 AND `Refer` != \"undefined\"
-AND `Timestamp` > DATE_SUB(NOW(), INTERVAL 5 DAY)
+AND `Timestamp` > DATE_SUB(NOW(), INTERVAL 7 DAY)
 GROUP BY `Refer`
 HAVING `Count` >= 5
 ORDER BY `Count` DESC, `Latest` DESC";

@@ -2,10 +2,10 @@
 $tpl->set("title", "Voting");
 
 if ($SEGMENTS[1] == "results") {
-  if (!canDo("voting-results")) {
+  /*if (!canDo("voting-results")) {
     $PAGE = "40X";
     return;
-  }
+  }*/
   $CUSTOM_TEMPLATE = "results";
 
   // This is an absolutely disgusting workaround
@@ -154,7 +154,7 @@ if ($SEGMENTS[1]) {
       }
 
       $row['Order'] = $count;
-      
+      $row['FlavorText'] = htmlspecialchars($row['FlavorText']);
       $nominees[] = $row;
     }
     

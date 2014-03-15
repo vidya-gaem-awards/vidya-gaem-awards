@@ -9,7 +9,7 @@ $filterNames = array(
   "02voting+v" => array("/v/ with voting code", "honeydew"),
   "03v" => array("/v/ (no voting code)", "honeydew"),
   "05combined1" => array("All of /v/ + all of NULL", "#E0FFFF"),
-  "05combined2" => array("All of /v/ + NULL with code", "#E0FFFF"),
+  "05combined2" => array("All of /v/ + NULL with code", "lightyellow"),
   "06voting+null" => array("NULL with voting code", "aliceblue"),
   "07null" => array("NULL (no voting code)", "white"),
   "08facepunch" => array("Facepunch", "mistyrose"),
@@ -57,7 +57,13 @@ while ($row = mysql_fetch_assoc($result)) {
   if ($SEGMENTS[2] != "all") {
     $rankings = array_slice($rankings, 0, 5);
   }
-  $categories[$row['CategoryID']]["Filters"][] = array("FilterName" => $filterNames[$row['Filter']][0], "Rankings" => $rankings, "VoteCount" => number_format($row['Votes']), "Colour" => $filterNames[$row['Filter']][1]);
+  $categories[$row['CategoryID']]["Filters"][] = array(
+    "FilterName" => $filterNames[$row['Filter']][0],
+    "FilterNameSafe" => preg_replace("/[^A-Za-z]/", '', strtolower($filterNames[$row['Filter']][0])),
+    "Rankings" => $rankings,
+    "VoteCount" => number_format($row['Votes']),
+    "Colour" => $filterNames[$row['Filter']][1]
+  );
 }
 
 $tpl->set("categories", array_values($categories));

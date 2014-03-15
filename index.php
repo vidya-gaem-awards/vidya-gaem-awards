@@ -62,25 +62,26 @@
     "ajax-videogame" => "add-video-game",
     "applications" => "applications-view",
     "categories" => EVERYONE,
-    //"credits" => EVERYONE, // Change to EVERYONE
+    "credits" => "voting-results", // Change to EVERYONE
     //"feedback" => "feedback-view",  // Change to EVERYONE
-    //"launcher" => EVERYONE,
+    "launcher" => EVERYONE,
     "news" => EVERYONE,
     "nominations" => "nominations-view",
     "nomination-submit" => EVERYONE,
     "people" => "profile-view",
     "referrers" => "referrers-view",
-    //"stream" => EVERYONE,
+    "stream" => EVERYONE,
     //"test" => EVERYONE,
-    //"thanks" => EVERYONE,
+    "thanks" => EVERYONE,
     "user-search" => "add-user",
     "video-games" => EVERYONE,
+    "vg-redirect" => EVERYONE,
     "volunteer-submission" => LOGIN,
     "videos" => EVERYONE,
     "voting" => EVERYONE,
     "voting-code" => "voting-view",
     "voting-submission" => EVERYONE,
-    "winners" => "voting-results" // Change to EVERYONE
+    "winners" => EVERYONE // Change to EVERYONE
   );
 
   if (isset($ACCESS["nomination-submit"]) && $ACCOUNT_REQUIRED_TO_NOMINATE) {
@@ -90,6 +91,7 @@
   // Pages that won't use the master template
   $noMaster = array(
     "login",
+    "launcher",
     "stream",
     "voting"
   );

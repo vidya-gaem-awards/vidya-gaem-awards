@@ -11,7 +11,7 @@ $stats = array(
 );
 
 $tpl->set("navbar", false);
-$tpl->set("title", "The 2012 Vidya Gaem Awards");
+$tpl->set("title", "The 2013 Vidya Gaem Awards");
 
 $stats2 = array();
 

@@ -33,7 +33,7 @@ $(window).bind('resize',positionPopup);
         
 $(document).ready(function() {  
     randomizeNominees();
-    
+	    
     //empty voteBoxes
     $( "#voteColumn .voteBox" ).each(function(){
         $(this).html("");

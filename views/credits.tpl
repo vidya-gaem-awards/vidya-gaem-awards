@@ -1,58 +1,72 @@
 <style type="text/css">
 @font-face {
-  font-family: "Neon 80s";
-  src: url("/public/Neon.ttf");
+  font-family: "ArtBrush";
+  src: local("ArtBrush"),
+       local("ArtBrush Regular"),
+       url("/public/Artbrush.woff") format("woff"),
+       url("/public/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Blade Runner";
-  src: url("/public/blade_runner.ttf");
+  font-family: "Brush Script MT";
+  src: local("Brush Script MT"),
+       local("Brush Script MT Italic"),
+       url("/public/BrushScriptMT.woff") format("woff"),
+       url("/public/BrushScriptMT.ttf") format("truetype");
 }
 
 body {
   background-color: black;
-    background-image: url("/public/space.png");
-    background-repeat: repeat;
-    background-attachment: fixed;
-    font-size: 16px;
-    line-height: 16px;
-    overflow-x: hidden;
-    color: white;
-    font-family: "Neon 80s";
+  background-image: url("/public/50s/bgvoting.jpg"); 
+  background-color: #f6e7be;
+  /*font-size: 16px;
+  line-height: 16px;*/
+  overflow-x: hidden;
+  color: black;
+  font-family: "Calibri", Arial, sans-serif;
 }
 
-.navbar {
-  -moz-box-shadow:    0px 0px 20px 3px lime;
-    -webkit-box-shadow: 0px 0px 20px 3px lime;
-    box-shadow:         0px 0px 20px 3px lime;
-}
-
-.navbar .navbar-inner {
-  background-image: none;
-  background-color: black !important;
+.navbar, .navbar .navbar-inner {
+  -moz-box-shadow:    none;
+  -webkit-box-shadow: none;
+  box-shadow:         none;
+  border:             none;
+  background-image:   url("/public/50s/bgvoting.jpg"); 
+  background-color:   #f6e7be;
 }
 
 .navbar a {
-  color: white !important;
+  color: black !important;
+  text-shadow: none !important;
+  background: none !important;
 }
 .navbar a:hover {
-  color: lime !important;
-  text-shadow: 0px 0px 5px lime;
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar .nav>.active>a {
+  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
+  -webkit-box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
 }
 
 .navbar-fixed-top {
-  border-bottom: 3px solid lime;
+  /*border-bottom: 3px solid lime;*/
+  border: none;
 }
 
 .navbar-fixed-bottom {
-  border-top: 3px solid lime;
+  /*border-top: 3px solid lime;*/
+  border: none;
+}
+
+.navbar .brand {
+  font-weight: bold;
 }
 
 h2 {
-  color: aqua;
-  font-family: "Blade Runner";
-  text-transform: lowercase;
-  text-shadow: 0px 0px 15px aqua;
+  font-family: "Brush Script MT";
+  font-size: 40px;
 }
 
 .row h1 small {
@@ -62,16 +76,22 @@ h2 {
 }
 
 .page-header h1 {
-  color: fuchsia;
-  font-family: "Blade Runner";
-  font-size: 46px;
-  text-transform: lowercase;
-  text-shadow: 0px 0px 15px fuchsia;
+  font-family: "ArtBrush";
+  color: #509e20;
+  font-size: 50px;
 }
 
 .page-header {
-  border-bottom: 3px solid fuchsia;
   text-align: center;
+  border: none;
+  background: transparent url("/public/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;
+  margin-bottom: 0px;
+  padding-bottom: 40px;
+}
+
+.page-header.the-bottom {
+  background: url("/public/50s/shadow_the_edge.png") center top no-repeat;
+  padding-top: 20px;
 }
 
 .thumbnails ul {
@@ -100,6 +120,7 @@ h2 {
 .thumbnails ul li:first-child {
   text-align: left;
   font-weight: bold;
+  font-family: "ArtBrush";
 }
 
 .thumbnails {
@@ -114,7 +135,7 @@ h2 {
 
 
 
-h2.cast {
+/*h2.cast {
   text-shadow: 0px 0px 15px yellow;
   color: yellow;
 }
@@ -198,7 +219,6 @@ h2.media {
     box-shadow:         0px 0px 10px 2px fuchsia;
 }
 
-
 h2.thanks {
   text-shadow: 0px 0px 15px white;
   color: white;
@@ -209,11 +229,32 @@ h2.thanks {
   -moz-box-shadow:    0px 0px 10px 2px white;
     -webkit-box-shadow: 0px 0px 10px 2px white;
     box-shadow:         0px 0px 10px 2px white;
+} */
+
+.thumbnail a:hover {
+  background: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: #509e20;
+}
+
+.thumbnail {
+  border: 3px dashed black;
+  
+  -moz-box-shadow:    0px 0px 30px 5px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.1);
+  box-shadow:         0px 0px 30px 5px rgba(0,0,0,0.1);
+}
+
+.hr {
+	margin: 0 auto;
+	height: 8px;
+	background: url("/public/50s/underline.png") center center no-repeat;
 }
 </style>
 
 <div class="page-header">
-  <h1>2012 Vidya Gaem Award Contributors</h1>
+  <h1>Cast and Crew of the 2013 Vidya Gaem Awards</h1>
+  <div class="hr"></div>
 </div>
 
 <h2 class="cast">Cast (in order of appearance)</h2>
@@ -322,4 +363,8 @@ h2.thanks {
       </loop:thanks>
     </ul>
   </div>
+</div>
+
+<div class="page-header the-bottom">
+  <h1>&nbsp;</h1>
 </div>

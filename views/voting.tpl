@@ -3,13 +3,14 @@
   <head>
     <title>/v/GAs - Voting</title>
 
-    <link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="/public/jquery/jquery-ui-1.9.2.min.css">
     <link rel="stylesheet" href="/public/style.css">
     <link rel="stylesheet" href="/public/voting.css">
     
     <script src='/public/jquery/jquery-1.8.2.min.js'></script>
     <script src='/public/jquery/jquery-ui-1.9.2.min.js'></script>
+	<script src="/public/jquery/jquery.ui.touch-punch.min.js"></script>
     <script src='/public/bootstrap-2.1.0/js/bootstrap.min.js'></script>
     <script src='/public/dumbshit.js'></script>
     <script src='/public/voting.js'></script>
@@ -75,15 +76,18 @@
         <loop:nominees>
 
         <div class="voteBox"><div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
-              <img class="fakeBorder" src="/public/50s/votebox_foreground.png">
-              <img class="fakeBorder locked" src="/public/50s/votebox_foreground_locked.png">
-              <img class="nomineeImage" src="<tag:nominees[].Image />">
-              <div class="nomineeInfo">
-                  <div class="number"></div>
-                  <div class="nomineeName"><tag:nominees[].Name /></div>
-                  <div class="nomineeSubtitle"><tag:nominees[].Subtitle /></div>
-              </div>
-          </div></div>
+            <img class="fakeBorder" src="/public/50s/votebox_foreground.png">
+            <img class="fakeBorder locked" src="/public/50s/votebox_foreground_locked.png">
+			<div class="info">
+				<div class="innerInfo"><tag:nominees[].FlavorText /></div>
+			</div>
+            <img class="nomineeImage" src="<tag:nominees[].Image />">
+            <div class="nomineeInfo">
+                <div class="number"></div>
+                <div class="nomineeName"><tag:nominees[].Name /></div>
+                <div class="nomineeSubtitle"><tag:nominees[].Subtitle /></div>
+            </div>
+        </div></div>
 
         </loop:nominees>
 

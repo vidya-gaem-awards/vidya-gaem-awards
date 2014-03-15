@@ -1,37 +1,40 @@
 <style type="text/css">
 @font-face {
-  font-family: "Neon 80s";
-  src: url("/public/Neon.ttf");
+  font-family: "ArtBrush";
+  src: local("ArtBrush"),
+       local("ArtBrush Regular"),
+       url("/public/Artbrush.woff") format("woff"),
+       url("/public/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Blade Runner";
-  src: url("/public/blade_runner.ttf");
-}
-
-a {
-  color: fuchsia;
+  font-family: "Brush Script MT";
+  src: local("Brush Script MT"),
+       local("Brush Script MT Italic"),
+       url("/public/BrushScriptMT.woff") format("woff"),
+       url("/public/BrushScriptMT.ttf") format("truetype");
 }
 
 a:hover {
-  color: purple;
+  color: #509e20;
+}
+
+.row a:hover, a h1:hover {
+  background: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
 }
 
 body {
-  background-color: black;
-    background-image: url("/public/space.png");
-    background-repeat: repeat;
-    background-attachment: fixed;
-    font-size: 16px;
-    line-height: 16px;
+    background-image: url("/public/50s/bgvoting.jpg"); 
+    background-color: #f6e7be;
     overflow-x: hidden;
-    color: silver;
-    color: white;
-    font-family: "Neon 80s";
+}
+
+body, p { 
+    font-family: Calibri, Arial, sans-serif !important;
 }
 
 p {
-  font-family: "Neon 80s";
   font-size: x-large;
   line-height: 1.3em;
 }
@@ -41,48 +44,63 @@ p {
     margin: 0 auto;
     padding: 10px;
     /*background: #d6daf0;*/
-    border: 5px solid aqua;
-    border-radius: 5px;
+    border: 5px dashed black;
+    font-family: "Brush Script MT";
     
-    -moz-box-shadow:    0px 0px 20px 5px aqua;
-    -webkit-box-shadow: 0px 0px 20px 5px aqua;
-    box-shadow:         0px 0px 20px 5px aqua;
+    -moz-box-shadow:    0px 0px 30px 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.2);
+    box-shadow:         0px 0px 30px 5px rgba(0,0,0,0.2);
 }
 
-.navbar {
-  -moz-box-shadow:    0px 0px 20px 3px lime;
-    -webkit-box-shadow: 0px 0px 20px 3px lime;
-    box-shadow:         0px 0px 20px 3px lime;
-}
-
-.navbar .navbar-inner {
-  background-image: none;
-  background-color: black !important;
+.navbar, .navbar .navbar-inner {
+  -moz-box-shadow:    none;
+  -webkit-box-shadow: none;
+  box-shadow:         none;
+  border:             none;
+  background-image:   url("/public/50s/bgvoting.jpg"); 
+  background-color:   #f6e7be;
 }
 
 .navbar a {
-  color: white !important;
+  color: black !important;
+  text-shadow: none !important;
+  background: none !important;
 }
 .navbar a:hover {
-  color: lime !important;
-  text-shadow: 0px 0px 5px lime;
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar .nav>.active>a {
+  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
+  -webkit-box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
 }
 
 .navbar-fixed-top {
-  border-bottom: 3px solid lime;
+  /*border-bottom: 3px solid lime;*/
+  border: none;
 }
 
 .navbar-fixed-bottom {
-  border-top: 3px solid lime;
+  /*border-top: 3px solid lime;*/
+  border: none;
+}
+
+.navbar .brand {
+  font-weight: bold;
 }
 
 .winner {
-  border: 3px solid yellow;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background: white;
+  padding: 15px;
   max-width: 5000px;
+  margin: 10px 0 0 10px;
   
-  -moz-box-shadow:    0px 0px 10px 3px yellow;
-    -webkit-box-shadow: 0px 0px 10px 3px yellow;
-    box-shadow:         0px 0px 10px 3px yellow;
+  transform: rotate(3deg);
+  -webkit-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
 }
 
 .category ul {
@@ -96,26 +114,25 @@ p {
 }
 
 .category ul li:first-child {
-  color: yellow;
+  font-weight: bold;
   font-size: 36px;
+  font-family: "Brush Script MT";
 }
 
 .category ul li:last-child {
-  color: silver;
+  color: grey;
   font-size: 18px;
+  font-family: "ArtBrush";
 }
 
 .row h1 {
-  color: aqua;
-  font-family: "Blade Runner";
-  text-transform: lowercase;
-  text-shadow: 0px 0px 15px aqua;
+  color: #509e20;
+  font-family: "ArtBrush";
 }
 
 .row h1 small {
-  color: white;
+  color: black;
   font-size: 21px;
-  text-shadow: none;
 }
 
 .category {
@@ -123,23 +140,36 @@ p {
 }
 
 .page-header h1 {
-  color: fuchsia;
-  font-family: "Blade Runner";
+  font-family: "ArtBrush";
+  color: #509e20;
   font-size: 50px;
-  text-transform: lowercase;
-  text-shadow: 0px 0px 15px fuchsia;
 }
 
 .page-header {
-  border-bottom: 3px solid fuchsia;
   text-align: center;
+  border: none;
+  background: transparent url("/public/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;
+  margin-bottom: 0px;
+  padding-bottom: 40px;
+}
+
+.page-header.the-bottom {
+  background: url("/public/50s/shadow_the_edge.png") center top no-repeat;
+  padding-top: 20px;
+}
+
+.hr {
+	margin: 0 auto;
+	height: 8px;
+	background: url("/public/50s/underline.png") center center no-repeat;
 }
 </style>
 
 <div class="container">
 
   <div class="page-header">
-    <h1>2012 Vidya Gaem Award Winners</h1>
+    <h1>Winners of the 2013 Vidya Gaem Awards</h1>
+    <div class="hr"></div>
   </div>
   
   <loop:categories>
@@ -166,8 +196,9 @@ p {
   </div>
   </loop:categories>
   
-  <div class="page-header">
+  <div class="page-header the-bottom">
     <h1>Detailed Results</h1>
+    <div class="hr"></div>
   </div>
   
   <div class="row">

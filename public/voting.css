@@ -6,6 +6,8 @@
 a, a:hover {
   text-decoration: none;
 }
+a img { border:none;}
+img {display:block;}
 
 article, aside, figcaption, figure, footer, header, hgroup, nav, section {
   display: block;
@@ -227,9 +229,26 @@ background: url("/public/50s/kill_la_kill.png") 0px center no-repeat;
 	left: 5px;
 	z-index: 55;
 	background: url("/public/50s/info.png") center top no-repeat;
+	cursor: help;
 }
 .info:hover{
 	background-position: center bottom;
+}
+.innerInfo {
+	display: none;
+	background-color: rgba(245,225,182,0.75);
+	position: relative;
+	top: 0px;
+	left: 28px;
+	padding: 3px;
+	width: 428px;
+	height: auto;
+	font-family: Calibri,sans-serif;
+	font-size: 0.8em;
+	line-height: 13px;
+}
+.info:hover .innerInfo {
+	display: block;
 }
 
 .aNominee .fakeBorder {
