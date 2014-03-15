@@ -2,6 +2,7 @@
 $tpl->set("title", "Credits");
 
 $cast = <<<CAST
+
 CAST;
 
 $skits = <<<SKITS
@@ -11,30 +12,6 @@ $vPlays = <<<VPLAYS
 VPLAYS;
 
 $crew = <<<CREW
-beatstar
-producer
-
-Clamburger
-website developer
-github/clamburger
-
-F4ceMeltor
-did a Nighthood
-
-iAxX
-streamer
-
-monoframe
-video editor
-
-PhoneEatingBear
-producer + video editor
-
-Segab
-web designer + video editor
-
-Smith
-writer
 CREW;
 
 $media = <<<MEDIA

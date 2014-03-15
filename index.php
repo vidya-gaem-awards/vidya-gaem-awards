@@ -93,6 +93,7 @@
     "login",
     "launcher",
     "stream",
+    "thanks",
     "voting"
   );
 
