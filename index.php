@@ -62,7 +62,7 @@
     "ajax-videogame" => "add-video-game",
     "applications" => "applications-view",
     "categories" => EVERYONE,
-    "credits" => "voting-results", // Change to EVERYONE
+    "credits" => EVERYONE, // Change to EVERYONE
     //"feedback" => "feedback-view",  // Change to EVERYONE
     "launcher" => EVERYONE,
     "news" => EVERYONE,

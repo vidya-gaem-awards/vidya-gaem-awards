@@ -2,7 +2,6 @@
 $tpl->set("title", "Credits");
 
 $cast = <<<CAST
-
 CAST;
 
 $skits = <<<SKITS

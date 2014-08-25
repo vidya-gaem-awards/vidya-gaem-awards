@@ -84,7 +84,7 @@ h2 {
 .page-header {
   text-align: center;
   border: none;
-  background: transparent url("/public/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;
+  /*background: transparent url("/public/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;*/
   margin-bottom: 0px;
   padding-bottom: 40px;
 }
@@ -250,6 +250,12 @@ h2.thanks {
 	height: 8px;
 	background: url("/public/50s/underline.png") center center no-repeat;
 }
+
+.credits {
+  text-align: center;
+  font-size: 20px;
+  line-height: 30px;
+}
 </style>
 
 <div class="page-header">
@@ -257,7 +263,75 @@ h2.thanks {
   <div class="hr"></div>
 </div>
 
-<h2 class="cast">Cast (in order of appearance)</h2>
+<div class="credits">
+  <div class="row">
+    <div class="span6">
+      <h2>Main Team:</h2>
+      <p>Produced, directed and edited by <strong>PhoneEatingBear</strong></p>
+      <p>Executive producer: <strong>Anonymous</strong></p>
+      <p>Voice actors: <strong>Ods</strong> &amp; <strong>Duke</strong></p>
+      <p>Best Character Award narrated by <strong>HL2014.EXE</strong></p>
+      <p>Golden Voice Award narrated by <strong>Nolan North</strong></p>
+      <p>Gone Homo skit narrated by <strong>DonnyQ</strong> &amp; <strong>SlamBliss</strong></p>
+      <p>Template Design by <strong>Segab</strong></p>
+      <p>/v/ Award Template Designed by <strong>Monoframe</strong></p>
+      <p>Logo by <strong>Anonymous</strong></p>
+      <p>Written by <strong>Whynne</strong>, <strong>Yue</strong>, <strong>Lamer Gamer</strong>,
+      <strong>Roflbeeb</strong>, <strong>Think Gibson</strong>, <strong>9kbits</strong>,
+      <strong>Cluey3</strong>, <strong>PhoneEatingBear</strong> and <strong>Drazel</strong></p>
+      <h2 style="margin-top: 50px;">Awards:</h2>
+      <p>
+        "Blunder of the Year", "IP Twist", "Eye Candy", "Plot &amp; Backstory", "Fanfiction",
+        "Challenger", "Your Waifu", "Worst Gameplay", "Best Soundtrack", "Most Hated", and
+        "Least Worst" by <strong>PhoneEatingBear</strong></p>
+      <p>
+        "/v/irgin", "Precipitation", "Golden Voice" and "Actually Kind of Fun" by <strong>Segab</strong>
+      </p>
+      <p>
+        "/v/ Grammy", "SammyClassicSegaFan", "4chan Pass", and "Shareholder" by <strong>Monoframe</strong>
+      </p>
+      <p>
+        "Hyperbole", "Reading Rainbow", and "Doomguy" by <strong>Cluey3</strong>
+      </p>
+      <p>
+        "Not in Another Castle", and "We're Sorry" by <strong>SgtScrubNoob</strong>
+      </p>
+      <p>"Pixels are Art" by <strong>Bobsled</strong></p>
+    </div>
+    <div class="span6">
+        <h2>Skits:</h2>
+        <p>
+        "DisgruntledJoseVGA" &ndash; <strong>Toady1104</strong><br>
+        "Senator Kanestrong" &ndash; <strong>Anonymous</strong><br>
+        "Katawer Tojo" &ndash; <strong>Anonymous</strong><br>
+        "Donkie Ollie Skit" &ndash; <strong>Mihmnop</strong><br>
+        "Burned Out" &ndash; <strong>Klixy</strong><br>
+        "Wake of the Redditor" &ndash; <strong>Cluey3</strong><br>
+        "Mad World" &ndash; <strong>Slamm</strong><br>
+        "Enter the /v/GAs" &ndash; <strong>PhoneEatingBear</strong><br>
+        "Intro" &ndash; <strong>PhoneEatingBear</strong><br>
+        "Half Life 3 Trailer" &ndash; <strong>ArchiveMind</strong><br>
+        "Pixels are Art Skit" &ndash; <strong>Jackaid</strong><br>
+        "/v/ Mansion &ndash;  Dark Moon" &ndash; <strong>Segab</strong><br>
+        "Innocentous Bumper" &ndash; <strong>Cluey3</strong><br>
+        "Papers Please Skit" &ndash; <strong>Lucas Pope</strong><br>
+        "Top 3 Scariest Moments in The Last of Us" &ndash; <strong>PhoneEatingBear</strong><br>
+        "Troy Baker VGA Video" &ndash; <strong>ThirdPartyController</strong><br>
+        "Video Games as Art" &ndash; <strong>Dysrexia</strong><br>
+        "Outro" &ndash; <strong>PhoneEatingBear</strong><br>
+        "Credit Skit" &ndash; <strong>Monoframe</strong><br>
+        "Next Time" &ndash; <strong>PhoneEatingBear</strong>
+        </p>
+        <h2 style="margin-top: 50px;">Pleb Patrol:</h2>
+        <p>Music by <strong><a href="http://soundcloud.com/mcmangos">McMaNGOS</a></strong> and
+        <strong><a href="http://soundcloud.com/muffswag">Muffswag</a></strong></p>
+        <p>Website by <strong><a href="http://github.com/clamburger">Clamburger</a></strong> and <strong>Segab</strong></p>
+        <p>And finally,<br><strong>F4cemelt&ouml;r</strong> as the /v/GA Fanboy</p>
+    </div>
+  </div>
+</div>
+
+<!-- <h2 class="cast">Cast (in order of appearance)</h2>
 
 <div class="row cast">
   <div class="span12">
@@ -363,7 +437,7 @@ h2.thanks {
       </loop:thanks>
     </ul>
   </div>
-</div>
+</div> -->
 
 <div class="page-header the-bottom">
   <h1>&nbsp;</h1>

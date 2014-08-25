@@ -134,8 +134,8 @@ a:hover {
       <div class="row">
         <div class="span8 offset2">
       <div class="logo">
-        <!-- <iframe width="100%" height="460" src="http://www.youtube.com/embed/6MxWMJCOKSY?rel=0" frameborder="0" allowfullscreen=""></iframe> -->
-        <img src="/public/2013_logo.png">
+        <iframe width="100%" height="460" src="http://www.youtube.com/embed/bDA_lIHkdDE?rel=0" frameborder="0" allowfullscreen=""></iframe>
+        <!-- <img src="/public/2013_logo.png"> -->
       </div>
       </div></div>
       <div class="title">
@@ -144,11 +144,11 @@ a:hover {
         <h2 id="countdown">Thanks for watching!</h2>
       </div>
       <div class="subtitle">
-        Watch it on YouTube - soon</span></a><br>
+        <a href="http://www.youtube.com/watch?v=bDA_lIHkdDE">Watch it on YouTube</a><br>
         <a href="http://www.twitch.tv/vidyagaemawards/c/3887991">Watch it on Twitch</a><br>
-        Direct download - soon<br>
+        <a href="https://archive.org/details/2013vgas">Direct download</a><br>
         <a href="/winners">See the winners</a><br>
-        See the credits - soon<br>
+        <a href="/credits">See the credits</a><br>
         <a href="http://github.com/clamburger/vidya-gaem-awards">Website source code</a>
       </div>
       <div class="subtitle">
