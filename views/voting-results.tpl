@@ -36,7 +36,7 @@
 </style>
 
 <h1>Detailed Voting Results</h1>
-<p>Here are the detailed results for the 2013 /v/GAs. In order to determine the winner for each category, we had to split the votes into several filter groups, depending on where the person who voted came from. We include some of the groups here for your amusement.</p>
+<p>Here are the detailed results for the 2014 /v/GAs. In order to determine the winner for each category, we had to split the votes into several filter groups, depending on where the person who voted came from. We include some of the groups here for your amusement.</p>
 <p>If all you want is the official results for each category, you can get those on the <a href="/winners">winners page</a>. If you want to see the results in even <em>more</em> detail, you can view the <a href="/voting/results/pairwise">pairwise voting results</a>.</p>
 <ul class="breadcrumb">
   <if:all>
@@ -50,10 +50,11 @@
 
 <div class="infobox" style="padding: 10px;">
 <h2>Which votes actually counted?</h2>
-<p>The final results are taken from the boxes labelled "<strong>All of /v/ + NULL with code</strong>". They have been highlighted below.</p>
-<p>What this means: if you clicked on a link directly from a thread on /v/, your vote counted. If you copied the link and pasted it into your address bar, your vote also counted.</p>
-<p><strong>In short: if you came directly from /v/, your vote counted. Otherwise it didn't.</strong> If you came from an external site, it <em>definitely</em> didn't.</p>
-<p style='color: maroon;'>Out of 258,213 votes, only 95,707 counted. The other 162,506 were ignored.</p>
+<p>The final results are taken from the boxes labelled "All of /v/ + NULL with code". They have been highlighted
+  below.</p>
+
+<p>What this means: if you clicked on a link directly from a thread on /v/, your vote counted. If you copied the link
+  and pasted it into your address bar, your vote also counted.</p>
 </div>
   
 <loop:categories>

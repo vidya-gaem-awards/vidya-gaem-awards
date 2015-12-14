@@ -1,33 +1,32 @@
 <style type="text/css">
 @font-face {
-  font-family: "ArtBrush";
-  src: local("ArtBrush"),
-       local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
+  font-family: "Bebas Neue";
+  src: url('/public/fonts/BebasNeue.eot');
+  src: url('/public/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
+  url("/public/fonts/BebasNeue.woff") format("woff"),
+  url("/public/fonts/BebasNeue.ttf") format("truetype");
+url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
-@font-face {
-  font-family: "Brush Script MT";
-  src: local("Brush Script MT"),
-       local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
+body {
+  background: url("/public/2014voting/bg_tile.png") #212121 repeat;
+  font-family: Calibri, Arial, sans-serif;
+  color: white;
+  overflow-x: hidden;
 }
 
+a, a:hover {
+  text-decoration: none;
+  color: #f2ff1a;
+  padding: 5px;
+}
 a:hover {
-  color: #509e20;
+  background: rgba(0,0,0,0.20)
 }
 
 .row a:hover, a h1:hover {
   background: rgba(0, 0, 0, 0.1);
   text-decoration: none;
-}
-
-body {
-    background-image: url("/public/50s/bgvoting.jpg"); 
-    background-color: #f6e7be;
-    overflow-x: hidden;
 }
 
 body, p { 
@@ -44,12 +43,14 @@ p {
     margin: 0 auto;
     padding: 10px;
     /*background: #d6daf0;*/
-    border: 5px dashed black;
-    font-family: "Brush Script MT";
+    border: 2px dashed yellow;
+    font-family: "Bebas Neue", Tahoma, sans-serif;
     
     -moz-box-shadow:    0px 0px 30px 5px rgba(0,0,0,0.2);
     -webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.2);
     box-shadow:         0px 0px 30px 5px rgba(0,0,0,0.2);
+
+    /*background: rgba(246, 231, 190, 0.5) url("/public/2014voting/votebox_background.png");*/
 }
 
 .navbar, .navbar .navbar-inner {
@@ -57,12 +58,12 @@ p {
   -webkit-box-shadow: none;
   box-shadow:         none;
   border:             none;
-  background-image:   url("/public/50s/bgvoting.jpg"); 
-  background-color:   #f6e7be;
+  background-image: url("/public/2014voting/bg_tile.png");
+  background-color: #212121;
 }
 
 .navbar a {
-  color: black !important;
+  color: white !important;
   text-shadow: none !important;
   background: none !important;
 }
@@ -71,9 +72,9 @@ p {
 }
 
 .navbar .nav>.active>a {
-  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
-  -webkit-box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
-  -moz-box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+  -webkit-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+  -moz-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
 }
 
 .navbar-fixed-top {
@@ -91,16 +92,17 @@ p {
 }
 
 .winner {
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  background: white;
-  padding: 15px;
+  border: 1px solid yellow;
+  background: rgba(20, 20, 20, 0.5);
+  padding: 10px;
+  width: 365px;
   max-width: 5000px;
-  margin: 10px 0 0 10px;
+/*  margin: 10px 0 0 10px;*/
   
-  transform: rotate(3deg);
+  /*transform: rotate(3deg);
   -webkit-transform: rotate(3deg);
   -ms-transform: rotate(3deg);
-  -o-transform: rotate(3deg);
+  -o-transform: rotate(3deg);*/
 }
 
 .category ul {
@@ -116,22 +118,22 @@ p {
 .category ul li:first-child {
   font-weight: bold;
   font-size: 36px;
-  font-family: "Brush Script MT";
+  font-family: "Bebas Neue", Tahoma, sans-serif;
 }
 
 .category ul li:last-child {
   color: grey;
   font-size: 18px;
-  font-family: "ArtBrush";
+  font-family: "Bebas Neue", Tahoma, sans-serif;
 }
 
 .row h1 {
-  color: #509e20;
-  font-family: "ArtBrush";
+  color: #f2ff1a;
+  font-family: "Bebas Neue", Tahoma, sans-serif;
 }
 
 .row h1 small {
-  color: black;
+  color: white;
   font-size: 21px;
 }
 
@@ -140,36 +142,29 @@ p {
 }
 
 .page-header h1 {
-  font-family: "ArtBrush";
-  color: #509e20;
+  font-family: "Bebas Neue", Tahoma, sans-serif;
+  color: #f2ff1a;;
   font-size: 50px;
 }
 
 .page-header {
   text-align: center;
   border: none;
-  background: transparent url("/public/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;
+  background: transparent url("/public/2014voting/shadow_top.png") bottom center no-repeat;
   margin-bottom: 0px;
-  padding-bottom: 40px;
 }
 
 .page-header.the-bottom {
-  background: url("/public/50s/shadow_the_edge.png") center top no-repeat;
+  background: url("/public/2014voting/shadow_bot.png") center 14px no-repeat;
   padding-top: 20px;
-}
-
-.hr {
-	margin: 0 auto;
-	height: 8px;
-	background: url("/public/50s/underline.png") center center no-repeat;
+  margin-bottom: 20px;
 }
 </style>
 
 <div class="container">
 
   <div class="page-header">
-    <h1>Winners of the 2013 Vidya Gaem Awards</h1>
-    <div class="hr"></div>
+    <h1>Winners of the 2014 Vidya Gaem Awards</h1>
   </div>
   
   <loop:categories>
@@ -181,7 +176,7 @@ p {
       <div class="category">
         <div class="row">
           <div class="span4">
-            <img class="winner" src="/public/winners/<tag:categories[].ID />.png">
+            <img class="winner" src="/public/winners/01189998819991197253/<tag:categories[].ID />.png">
           </div>
           <div class="span7">
             <ul>
@@ -198,7 +193,6 @@ p {
   
   <div class="page-header the-bottom">
     <h1>Detailed Results</h1>
-    <div class="hr"></div>
   </div>
   
   <div class="row">

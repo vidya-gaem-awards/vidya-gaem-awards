@@ -11,7 +11,7 @@ $stats = array(
 );
 
 $tpl->set("navbar", false);
-$tpl->set("title", "2013 Vidya Gaem Awards");
+$tpl->set("title", "2014 Vidya Gaem Awards");
 
 $stats2 = array();
 
@@ -23,10 +23,10 @@ foreach ($stats as $stat => $number) {
 $timezonesLeft = array(
   "Honolulu" => "Pacific/Honolulu",
   "Anchorage" => "America/Anchorage",
-  "Los Angeles (PDT)" => "America/Los_Angeles",
-  "Denver (MDT)" => "America/Denver",
-  "Chicago (CDT)" => "America/Chicago",
-  "4chan Time (EDT)" => "America/New_York",
+  "Los Angeles (PST)" => "America/Los_Angeles",
+  "Denver (MST)" => "America/Denver",
+  "Chicago (CST)" => "America/Chicago",
+  "4chan Time (EST)" => "America/New_York",
   "Rio de Janeiro" => "America/Sao_Paulo",
   "London (GMT)" => "Europe/London",
 );
@@ -43,8 +43,7 @@ $timezonesRight = array(
 
 $statHTML = implode(" / ", $stats2); 
 
-// In 4chan time (UTC-4, daylight savings!)
-$timeStr = "Fri, 14 Mar 2014 22:00:00 -0400";
+$timeStr = "Sat, 31 Jan 2015 17:00:00 -0500";
 
 $date = new DateTime($timeStr);
 
@@ -73,7 +72,7 @@ $tpl->set("timezonesRight", $timezonesRightTpl);
 
 $countdown = strtotime($timeStr);
 
-$websiteLink = "http://timeanddate.com/worldclock/fixedtime.html?msg=2013+Vidya+Gaem+Awards&iso=".$date->format("Ymd\THi")."&p1=179&sort=1";
+$websiteLink = "http://timeanddate.com/worldclock/fixedtime.html?msg=2014+Vidya+Gaem+Awards&iso=".$date->format("Ymd\THi")."&p1=179&sort=1";
 $tpl->set("websiteLink", $websiteLink);
 
 if ($countdown > time()) {

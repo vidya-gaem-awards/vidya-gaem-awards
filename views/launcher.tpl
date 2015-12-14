@@ -8,26 +8,20 @@
 <script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
-  font-family: "ArtBrush";
-  src: local("ArtBrush"),
-       local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Brush Script MT";
-  src: local("Brush Script MT"),
-       local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
+    font-family: "Bebas Neue";
+    src: url('/public/fonts/BebasNeue.eot');
+    src: url('/public/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
+    url("/public/fonts/BebasNeue.woff") format("woff"),
+    url("/public/fonts/BebasNeue.ttf") format("truetype");
+    url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
-    background-image: url("/public/50s/bgvoting.jpg"); 
-    background-color: #f6e7be;
+    background-image: url("/public/2014voting/bg_tile.png");
+    background-color: #212121;
     font-family: Calibri, Arial, sans-serif;
     text-align: center;
+    color: white;
 }
 .logo {
     margin-bottom: 20px;
@@ -38,19 +32,21 @@ body {
 }
 .subtitle {
     font-size: 40px;
+    line-height: 40px;
     margin: 10px;
 }
 .subsubtitle {
     font-size: 25px;
     margin: 20px;
 }
-a {
+a, a:hover {
     text-decoration: none;
-    color: #0069D6;
+    color: #f2ff1a;
+    display: block;
+    padding: 5px;
 }
 a:hover {
-    text-decoration: underline;
-    color: #00438A;
+    background: rgba(0,0,0,0.20)
 }
 .stats {
     text-align: center;
@@ -135,22 +131,19 @@ body {
   font-weight: normal;
   font-size: 72px;
   line-height: 1em;
-  font-family: "ArtBrush";
-  color: #509e20;
+  font-family: "Bebas Neue", Tahoma, sans-serif;
+  text-transform: uppercase;
+  color: #f2ff1a;
   margin-bottom: 0;
-}
-
-.title .hr {
-	margin: 0 auto;
-	height: 8px;
-	background: url("/public/50s/underline.png") center center no-repeat;
+  padding-bottom: 10px;
 }
 
 .title h2 {
   font-size: 38px;
   font-weight: normal;
   line-height: 0.95em;
-  font-family: "Brush Script MT";
+  font-family: "Bebas Neue", Tahoma, sans-serif;
+  color: #bfbfbf;
 }
 
 .subtitle {
@@ -173,28 +166,25 @@ body {
         <dt><abbr title="UTC <tag:timezonesLeft[].Offset />"><tag:timezonesLeft[].Name /></abbr></dt>
         <dd><tag:timezonesLeft[].Time /></dd>
         </loop:timezonesLeft>
-        <dd>(sorry Europe)</dd>
         <dt><a href="<tag:websiteLink />">Other Timezones</a></dt>
         </if:dateset>
       </dl>
     </div>
     <div class="span8">
       <div class="logo">
-        <iframe width="100%" height="100%" src="http://www.youtube.com/embed/sdekoPLLz6c?rel=0" frameborder="0" allowfullscreen=""></iframe>
+        <iframe width="100%" height="100%" src="http://www.youtube.com/embed/s1M9QRBS7Bg?rel=0" frameborder="0" allowfullscreen=""></iframe>
       </div>
       <div class="title">
-        <h1>Better late than never.</h1>
-        <div class="hr"></div>
+        <h1>On time. For once.</h1>
         <if:countdown>
         <h2 id="countdown">&nbsp;</h2>
         <else:countdown>
         <h2 id="countdown">Ceremony date not yet confirmed</h2>
         </if:countdown>
-	<h2>There will be a very short preshow before the main event.</h2>
       </div>
-      <div class="subtitle">
+      <!-- <div class="subtitle">
         <a href="/home">continue to the main site</a>
-      </div>
+      </div> -->
     </div>
     <div class="span2 timezones">
       <dl>

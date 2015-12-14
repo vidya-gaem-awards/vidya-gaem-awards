@@ -41,7 +41,7 @@
     <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="/">2013 /v/GAs</a>
+                <a class="brand" href="/">2014 /v/GAs</a>
                 <ul class="nav">
                     <tag:navbar />
                 </ul>
@@ -85,8 +85,7 @@
                     <li><a href="http://steamcommunity.com/groups/vidyagaemawards">Steam Group</a></li>
                     <li><a href="steam://friends/joinchat/103582791432684008">Steam Chat</a></li>
                     <li><a href="mailto:vidya@vidyagaemawards.com">Email</a></li>
-                    <li><a href="http://2011.vidyagaemawards.com">2011 /v/GAs</a></li>
-                    <li><a href="http://2012.vidyagaemawards.com">2012 /v/GAs</a></li>
+                    <li><a href="http://vidyagaemawards.com/previous-years">Previous /v/GAs</a></li>
                 </ul>
                 <ul class="nav secondary-nav">
                     <li><a href="/privacy">Privacy Policy</a></li>

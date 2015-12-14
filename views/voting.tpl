@@ -46,8 +46,8 @@
 
 
 <header>
-	<a href="/voting"><img src="/public/50s/why_are_you_reading_this.png" id="thelogo" alt="oh god it's happening again" /></a>
-	<h1>The 2013 Vidya Gaem Awards</h1>
+	<a href="/voting"><img src="/public/2014voting/2014logo.png" id="thelogo" alt="oh god it's happening again" /></a>
+	<h1>The 2014 Vidya Gaem Awards</h1>
 	<h2><tag:voteText /></h2>
 </header>
 
@@ -57,13 +57,12 @@
     <a href="/voting/<tag:prevCategory />" class="navigation left"></a>
     <div class="awardHeaderContainer">
       <div class="awardName"><tag:category.Name /></div>
-      <div class="hr"></div>
       <h2 class="awardSubtitle"><tag:category.Subtitle /></h2>
     </div>
     <a href="/voting/<tag:nextCategory />" class="navigation right"></a>
   </div>
   <if:votingEnabled>
-  <img src="/public/50s/dont_forget.png" id="dontforget" alt="Don't forget to hit submit" />
+  <img src="/public/2014voting/dont_forget.png" id="dontforget" alt="Don't forget to hit submit" />
   </if:votingEnabled>
   </if:category>
     
@@ -71,13 +70,13 @@
 <div id="limitsDrag"> 
     <div id="nomineeColumn" class="column">
         
-        <img src="/public/50s/topNominees.png" width="267px" height="105px" alt="Pick your nominees" />
+        <img src="/public/2014voting/topNominees.png" width="267px" height="105px" alt="Pick your nominees" />
 
         <loop:nominees>
 
         <div class="voteBox"><div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
-            <img class="fakeBorder" src="/public/50s/votebox_foreground.png">
-            <img class="fakeBorder locked" src="/public/50s/votebox_foreground_locked.png">
+            <img class="fakeBorder" src="/public/2014voting/votebox_foreground.png">
+            <img class="fakeBorder locked" src="/public/2014voting/votebox_foreground_locked.png">
 			<div class="info">
 				<div class="innerInfo"><tag:nominees[].FlavorText /></div>
 			</div>
@@ -100,7 +99,7 @@
     <!if:votingNotYetOpen>
     <div id="voteColumn" class="column">
 
-        <img src="/public/50s/topVotes.png" width="267px" height="105px" alt="Drag and drop to vote"/>
+        <img src="/public/2014voting/topVotes.png" width="267px" height="105px" alt="Drag and drop to vote"/>
         
         <loop:dumbloop>
         <div id="voteBox<tag:dumbloop[] />" class="voteBox">
@@ -115,9 +114,9 @@
 
  <if:votingEnabled>
 	<footer style='position: relative; clear: both;'>
-		<img src="/public/50s/arrow_left.png" id="arrow_left" /><div id="btnResetVotes" class="btnSubmit" alt="Reset Votes"></div>
+		<div id="btnResetVotes" class="btnSubmit" alt="Reset Votes"></div>
 		<span id="votesAreNotLocked">
-			<div id="btnLockVotes" class="btnSubmit" alt="Submit Votes"></div><img src="/public/50s/arrow_right.png" id="arrow_right" />
+			<div id="btnLockVotes" class="btnSubmit" alt="Submit Votes"></div>
 		</span>
 		<span id="votesAreLocked" style="display: none;">
 			<div id="btnLockVotes" class="btnSubmit iVoted" alt="Saved!"></div>
@@ -140,7 +139,7 @@
   <!-- While votes are open -->
 	  <h2>How to vote:</h2>
 	  <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a day.</p>
-	  <p>You can use the award list at the bottom to navigate, as well the meme arrows that will appear while looking at an award.</p>
+	  <p>You can use the award list at the bottom to navigate, or just use the arrows that appear after you click submit.</p>
 	  
 	  <a href="/voting/most-hated-game" id="btnStart"></a>
   </if:votingEnabled>
@@ -152,7 +151,7 @@
   </if:votingConcluded>
 
   <h2>Stream information:</h2>
-  <p>We plan to stream at roughly the same time as last year (early March). If you'd like to submit a video for the show, see the <a href="/videos">videos</a> page for more information. We plan on having more vidya analysis instead of funny (or not-so-funny) skits this time, so keep that in mind.</p>
+  <p>We plan to stream earlier than previous years (at the end of January).</p><p>Don't forget to try and enter the skit contest, winner will get $25. Check out <a href="https://www.youtube.com/watch?v=Wc0nOBMUuwQ">this video</a> for more details.</p>
 
 </div>
 </if:category>
@@ -161,9 +160,9 @@
 </div>
 
 <div id="containerCategories">
-    <h2 id="topCategories">
+    <h1 id="topCategories">
         The Awards
-    </h2>
+    </h1>
     
     <loop:categories>
     <a href="/voting/<tag:categories[].ID />" id="<tag:categories[].ID />" class="category <if:categories[].Active>active</if:categories[].Active> <if:categories[].Completed>complete</if:categories[].Completed>">
@@ -173,7 +172,7 @@
     </loop:categories>
 
     <if:loggedIn>
-  <h3 style='clear:both; padding-top: 20px;'><a href="/">Back to the main part of the site</a></h3>
+  <h3 style='clear:both; padding-top: 50px;'><a href="/home" style="color: #f2ff1a;">Back to the main part of the site</a></h3>
   </if:loggedIn>
 </div> 
  

@@ -1,7 +1,7 @@
 <header class="jumbotron subhead" style="text-align: center;">
-<h1>Vidya in 2013</h1>
-<p class="lead">Need a reminder of what games were released in 2013?</p>
-<p>Click on the row headers to sort by platform. List is from <a href="http://en.wikipedia.org/wiki/2013_in_video_gaming">Wikipedia</a> with some additions from the /v/GA team.</p>
+<h1>Vidya in 2014</h1>
+<p class="lead">Need a reminder of what games were released in 2014?</p>
+<p>Click on the row headers to sort by platform. List is from <a href="http://en.wikipedia.org/wiki/2014_in_video_gaming">Wikipedia</a> with some additions from the /v/GA team.</p>
 </header>
 
 <script type="text/javascript">

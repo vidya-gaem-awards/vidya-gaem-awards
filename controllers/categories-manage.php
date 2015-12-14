@@ -205,6 +205,15 @@ foreach ($categories as $categoryID => $row) {
   $cats[] = $temp;
 }   
   
+if (isset($_GET['sort']) && $_GET['sort'] == 'feedback') {
+  usort($cats, function ($a, $b) {
+    if ($a['Yes'] == $b['Yes']) {
+      return 0;
+    }
+    return ($a['Yes'] > $b['Yes']) ? -1 : 1;
+  });
+}
+
 $tpl->set("cats", $cats);
 $tpl->set("editing", false);
 $tpl->set("canEdit", canDo("categories-edit"));

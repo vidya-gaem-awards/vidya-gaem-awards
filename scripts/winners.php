@@ -48,9 +48,10 @@ $filters = array(
   "06voting+null" => "`Number` = 227", // null (with voting code)
   "07null" => "`Number` = 25",  // null (no voting code)
   "08facepunch" => "`Number` = -20",
-  "09neogaf" => "`Number` = -30",
+  //"09neogaf" => "`Number` = -30",
   "10twitter" => "`Number` = -40",
-  "11reddit" => "`Number` = -50",
+  //"11reddit" => "`Number` = -50",
+  "12somethingawful" => "`Number` = -60"
 );
 
 foreach ($filters as $filterName => $condition) {

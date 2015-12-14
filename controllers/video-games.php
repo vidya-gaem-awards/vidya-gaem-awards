@@ -1,5 +1,5 @@
 <?php
-$tpl->set('title', "Vidya in 2013");
+$tpl->set('title', "Vidya in 2014");
 
 $query = "SELECT * FROM `2010_releases` ORDER BY `Game` ASC";
 $result = $mysql->query($query);

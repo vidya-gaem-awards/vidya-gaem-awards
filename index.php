@@ -49,20 +49,20 @@
   $ACCESS = array(
     // These ones should never have to change
     "404" => EVERYONE,
-    "about" => EVERYONE,
+    //"about" => EVERYONE,
     "home" => EVERYONE,
     "login" => EVERYONE,
     "privacy" => EVERYONE,
     "promotions" => EVERYONE,
-    "sitemap" => EVERYONE,
-    
+    //"sitemap" => EVERYONE,
+
     // Volatile pages
     "ajax-category-feedback" => EVERYONE,
     "ajax-nominations" => "nominations-edit",
     "ajax-videogame" => "add-video-game",
-    "applications" => "applications-view",
+    //"applications" => "applications-view",
     "categories" => EVERYONE,
-    "credits" => EVERYONE, // Change to EVERYONE
+    "credits" => EVERYONE,
     //"feedback" => "feedback-view",  // Change to EVERYONE
     "launcher" => EVERYONE,
     "news" => EVERYONE,
@@ -75,9 +75,9 @@
     "thanks" => EVERYONE,
     "user-search" => "add-user",
     "video-games" => EVERYONE,
-    "vg-redirect" => EVERYONE,
-    "volunteer-submission" => LOGIN,
-    "videos" => EVERYONE,
+    //"vg-redirect" => EVERYONE,
+    //"volunteer-submission" => LOGIN,
+    //"videos" => EVERYONE,
     "voting" => EVERYONE,
     "voting-code" => "voting-view",
     "voting-submission" => EVERYONE,

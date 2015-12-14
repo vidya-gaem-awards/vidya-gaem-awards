@@ -13,9 +13,10 @@ $filterNames = array(
   "06voting+null" => array("NULL with voting code", "aliceblue"),
   "07null" => array("NULL (no voting code)", "white"),
   "08facepunch" => array("Facepunch", "mistyrose"),
-  "09neogaf" => array("NeoGAF", "mistyrose"),
+  //"09neogaf" => array("NeoGAF", "mistyrose"),
   "10twitter" => array("Twitter", "mistyrose"),
-  "11reddit" => array("Reddit", "mistyrose"),
+  //"11reddit" => array("Reddit", "mistyrose"),
+  "12somethingawful" => array("Something Awful", "mistyrose")
 );
 
 if ($SEGMENTS[2] == "pairwise") {

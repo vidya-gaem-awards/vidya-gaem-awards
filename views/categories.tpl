@@ -55,9 +55,11 @@
 
     <div class="span7" id="video-games">
 
+        <!if:CATEGORY_VOTING_ENABLED>
         <a href="/video-games">
             <img src="/public/collage.jpg">
         </a>
+        </!if:CATEGORY_VOTING_ENABLED>
 
     </div>
 

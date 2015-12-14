@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" style="overflow: hidden;">
 <head>
-<title>The 2013 Vidya Gaem Awards</title>
+<title>The 2014 Vidya Gaem Awards</title>
 <style type="text/css">
-@font-face {
-  font-family: "ArtBrush";
-  src: local("ArtBrush"),
-       local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
-}
+  @font-face {
+    font-family: "Bebas Neue";
+    src: url('/public/fonts/BebasNeue.eot');
+    src: url('/public/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
+    url("/public/fonts/BebasNeue.woff") format("woff"),
+    url("/public/fonts/BebasNeue.ttf") format("truetype");
+  url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
+  }
 
-@font-face {
-  font-family: "Brush Script MT";
-  src: local("Brush Script MT"),
-       local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
-}
-
-
-body {
-    background-color: #f6e7be;
-    background-image: url("/public/50s/bgvoting.jpg");
-    background-repeat: repeat;
-    background-attachment: fixed;
-    font-family: "Calibri", Arial, sans-serif;
-}
+  body {
+    background-image: url("/public/2014voting/bg_tile.png");
+    background-color: #212121;
+    font-family: "Bebas Neue", Tahoma, sans-serif;
+    text-align: center;
+    color: white;
+  }
 
 h1 {
-  font-family: "ArtBrush";
+  font-family: "Bebas Neue", Tahoma, sans-serif;
   font-weight: normal;
-  color: #509e20;
+  color: #f2ff1a;
   font-size: 40px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -89,7 +81,7 @@ body, html {
   height: 30px;
   cursor: pointer;
   overflow: hidden;
-  background-image: url("/public/50s/btnNav.png");
+  background-image: url("/public/2014voting/btnNav.png");
   background-size: 60px;
   top: 8px;
   right: 30px;
@@ -174,15 +166,14 @@ body, html {
   font-size: x-large;
 }
 
-.controls a {
-  text-decoration: none;
-  color: #0069D6;
-}
-
-.controls a:hover {
-  text-decoration: underline;
-  color: #00438A;
-}
+  .controls a, .controls a:hover {
+    text-decoration: none;
+    color: #f2ff1a;
+    padding: 5px;
+  }
+  .controls a:hover {
+    background: rgba(0,0,0,0.50)
+  }
 
 .controls .gap {
   margin-left: 6px;
@@ -203,7 +194,7 @@ body, html {
         <div class="scroll-content-contain" style="right: 0px;">
           <div class="scroll-content">
             <h1>
-              The 2013 Vidya Gaem Awards
+              The 2014 Vidya Gaem Awards
             </h1>
             <div id="live_player">
               <div class="live_site_player_container swf_container" id="standard_holder" style="width: 100%; height: 485px;">
@@ -211,16 +202,10 @@ body, html {
               </div>
             </div>
             <ul class="controls">
-              <!-- <li>Change Stream: </li>
-              <li style="display: none;"><a id="link-stream-twitch" href="#">Twitch</a> <span class="gap">|</span></li>
-              <li><a id="link-stream-livestream" href="#">Livestream</a> <span class="gap">|</span></li> -->
-              <!-- <li style="display: none;"><a id="link-chat-twitch" href="#">Twitch</a> <span class="gap">|</span></li> -->
               <li>Shitposting options: &nbsp;</li>
               <li><a href="http://twitch.tv/chat/embed?channel=vidyagaemawards&popout_chat=true" target="_blank">Twitch</a> <span class="gap">|</span></li>
-              <!-- <li><a href="http://vidyagaemslive.chatango.com/?js" target="_blank">Chatango</a> <span class="gap">|</span></li> -->
-              <!-- <li><a href="steam://friends/joinchat/103582791432684008">Steam Chat</a> <span class="gap">|</span></li> -->
               <li>IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net <span class="gap">|</span></li>
-              <li><a href="/vg-redirect" target="_blank">&gt;&gt;&gt;/vg/ Thread</a></li>
+              <li><a href="https://boards.4chan.org/v/catalog" target="_blank">&gt;&gt;&gt;/v/</a></li>
             </ul>
           </div>
         </div>

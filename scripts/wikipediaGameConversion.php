@@ -12,7 +12,7 @@ $mysqli = new Mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
 
 $search = array(" ", "Win", "Mac", "Lin", "iOS", "Droid", "WP", "X360", "XBO", "PSVita");
 $replace = array("", "PC", "PC", "PC", "Mobile", "Mobile", "Mobile", "360", "XB1", "PSV");
-$delete = array("PS2", "NDS");
+$delete = array("PS2", "NDS", "DC");
 
 $allPlatforms = array("PC","PS3","PS4","PSV","PSN","360","XB1","XBLA","Wii",
   "WiiU","WiiWare","3DS","Ouya","Mobile");
@@ -48,6 +48,7 @@ foreach ($games as $game => $platforms) {
   $game = $mysqli->escape_string($game);
   $query = "INSERT INTO `2010_releases` (`Game`, $keys) VALUES (\"$game\", $values)";
   $result = $mysqli->query($query);
+  echo $game . "\n";
   if ($result->error) {
     echo $result->error."<br>";
   }

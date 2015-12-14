@@ -8,26 +8,19 @@
 <script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
-  font-family: "ArtBrush";
-  src: local("ArtBrush"),
-       local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Brush Script MT";
-  src: local("Brush Script MT"),
-       local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
+  font-family: "Bebas Neue";
+  src: url('/public/fonts/BebasNeue.eot');
+  src: url('/public/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
+  url("/public/fonts/BebasNeue.woff") format("woff"),
+  url("/public/fonts/BebasNeue.ttf") format("truetype");
+  url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
-    background-image: url("/public/50s/bgvoting.jpg"); 
-    background-color: #f6e7be;
-    font-family: Calibri, Arial, sans-serif;
-    text-align: center;
+  background: #212121 url("/public/2014voting/bg_tile.png");
+  font-family: Calibri, Arial, sans-serif;
+  text-align: center;
+  color: white;
 }
 
 #wrapper {
@@ -38,36 +31,23 @@ body {
 	/*background: #d6daf0;*/
 	/*border: 5px solid aqua;
 	border-radius: 5px;
-	
+
 	-moz-box-shadow:    0px 0px 20px 5px aqua;
 	-webkit-box-shadow: 0px 0px 20px 5px aqua;
 	box-shadow:         0px 0px 20px 5px aqua;*/
 }
 
-.stats {
-	text-align: center;
-	color: #89A;
-	color: grey;
-	font-size: 9pt;
-	font-family: "Press Start 2P", monospace;
-	margin-top: -20px;
-	margin-bottom: 20px;
-	width: 1210px;
-}
-.stat {
-	color: #34345C;
-	color: silver;
-	padding: 1px;
-}
 
 .logo {
   /*border: 3px solid white;*/
   /*height: 460px; */
   margin: 10px;
-  
-  -moz-box-shadow:    0px 0px 30px 5px rgba(0,0,0,0.5);
+  /*padding: 150px;*/
+  border: 2px solid yellow;
+  background-color: rgb(20, 20, 20);
+  /*-moz-box-shadow:    0px 0px 30px 5px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.5);
-	box-shadow:         0px 0px 30px 5px rgba(0,0,0,0.5);
+	box-shadow:         0px 0px 30px 5px rgba(0,0,0,0.5);*/
 }
 
 .title {
@@ -78,28 +58,27 @@ body {
   font-weight: normal;
   font-size: 72px;
   line-height: 1em;
-  font-family: "ArtBrush";
-  color: #509e20;
+  font-family: "Bebas Neue", Tahoma, sans-serif;
+  text-transform: uppercase;
+  color: #f2ff1a;
   margin-bottom: 0;
+  padding-bottom: 10px;
 }
 
 .title h2 {
-  font-size: 48px;
+  font-size: 38px;
   font-weight: normal;
   line-height: 0.95em;
-  font-family: "Brush Script MT";
+  font-family: "Bebas Neue", Tahoma, sans-serif;
+  color: #bfbfbf;
 }
 
 .subtitle {
-  font-family: "ArtBrush";
+  font-family: "Bebas Neue", Tahoma, sans-serif;
   text-align: center;
   font-size: 30px;
   line-height: 1em;
   margin: 20px;
-}
-
-.disabled {
-  color: grey;
 }
 
 .subtitle .main {
@@ -107,58 +86,48 @@ body {
   line-height: 1em;
 }
 
-.special {
-  color: lime;
+a, a:hover {
+  text-decoration: none;
+  color: #f2ff1a;
+  padding: 3px;
+  display: inline-block;
 }
-
-.special:hover {
-  color: #1EBF15;
-}
-
-.hr {
-	margin: 0 auto;
-	height: 8px;
-	background: url("/public/50s/underline.png") center center no-repeat;
-}
-
 a:hover {
-  background:rgba(0,0,0,0.1);
-  text-decoration:none;
-  color: #509e20;
+  background: rgba(0,0,0,0.5)
 }
 </style>
-
+</head>
+<body>
 <div id="wrapper">
   <div class="row">
     <div class="span12">
       <div class="row">
         <div class="span8 offset2">
       <div class="logo">
-        <iframe width="100%" height="460" src="http://www.youtube.com/embed/bDA_lIHkdDE?rel=0" frameborder="0" allowfullscreen=""></iframe>
+        <iframe width="100%" height="460" src="http://www.youtube.com/embed/jqHdj8uVggY?rel=0" frameborder="0"
+                 allowfullscreen=""></iframe>
+        <!-- <img src="/public/2014voting/2014logo.png" alt="2014 Vidya Gaem Awards Logo"> -->
         <!-- <img src="/public/2013_logo.png"> -->
       </div>
       </div></div>
       <div class="title">
-        <h1>The 2013 Vidya Gaem Awards</h1>
-        <div class="hr"></div>
+        <h1>The 2014 Vidya Gaem Awards</h1>
         <h2 id="countdown">Thanks for watching!</h2>
       </div>
       <div class="subtitle">
-        <a href="http://www.youtube.com/watch?v=bDA_lIHkdDE">Watch it on YouTube</a><br>
-        <a href="http://www.twitch.tv/vidyagaemawards/c/3887991">Watch it on Twitch</a><br>
-        <a href="https://archive.org/details/2013vgas">Direct download</a><br>
+        <a href="https://www.youtube.com/watch?v=jqHdj8uVggY">Watch it on YouTube</a><br>
+        <a href="http://www.twitch.tv/vidyagaemawards/c/6015044">Watch it on Twitch</a><br>
+        Direct download (soon™)<br>
+        <a href="http://www.twitch.tv/vidyagaemawards/c/6014967">Watch the preshow skits</a><br>
+        <a href="http://vidyagaemawards.com/music/2014-vga-music-mix.mp3">Download the preshow music mix</a><br>
         <a href="/winners">See the winners</a><br>
         <a href="/credits">See the credits</a><br>
-        <a href="http://github.com/clamburger/vidya-gaem-awards">Website source code</a>
       </div>
       <div class="subtitle">
-        <a href="/home" class="main">Continue to the main site</a><br>
-        <a href="http://2011.vidyagaemawards.com" class="main">View the 2011 site</a><br>
-        <a href="http://2012.vidyagaemawards.com" class="main">View the 2012 site</a>
+        <a href="http://vidyagaemawards.com/previous-years" class="main">View previous years</a><br>
       </div>
     </div>
   </div>
 </div>
-
 </body>
 </html>

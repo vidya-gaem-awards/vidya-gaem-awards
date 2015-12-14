@@ -203,7 +203,7 @@ td label {
             <th style="width: 120px;">Status</th>
             <th>ID</th>
             <th>Name</th>
-            <th style="width: 160px;">Feedback</th>
+            <th style="width: 160px;">Feedback <small><a href='?sort=feedback'>sort</a></small></th>
             <th style="width: 60px;">Order</th>
             <if:canEdit><th style="width: 80px;">Controls</th></if:canEdit>
         </tr>

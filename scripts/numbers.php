@@ -84,7 +84,7 @@ flush();
 ob_flush();
 
 // Step 4. Begin the processing
-$badSites = array("reddit.com" => -50, "t.co" => -40, "neogaf.com" => -30, "facepunch.com" => -20);
+$badSites = array("forums.somethingawful.com" => -60, "reddit.com" => -50, "t.co" => -40, "neogaf.com" => -30, "facepunch.com" => -20);
 
 foreach ($voters as $ID => &$info) {
   $number = 0;
