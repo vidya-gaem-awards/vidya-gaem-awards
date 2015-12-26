@@ -33,7 +33,5 @@ if ($_POST['Add']) {
     return_json("success", true, array(
         "Name" => $name,
         "Avatar" => $avatar,
-        "SteamID" => $_POST['ID'])
-    );
+        "SteamID" => $_POST['ID']));
 }
-?>

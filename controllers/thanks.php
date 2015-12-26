@@ -1,7 +1,7 @@
 <?php
 $stats = array(
   "category feedback" => 47663,
-  "nominations made" => 13433, 
+  "nominations made" => 13433,
   "total votes" => 438545,
   "unique users" => 30221,
   "emails received" => 378,
@@ -16,8 +16,8 @@ $tpl->set("title", "The 2013 Vidya Gaem Awards");
 $stats2 = array();
 
 foreach ($stats as $stat => $number) {
-  $stat = str_replace(" ", "&nbsp;", $stat);
-  $stats2[] = "<span class='stat'>$stat: ".number_format($number)."</span>";
+    $stat = str_replace(" ", "&nbsp;", $stat);
+    $stats2[] = "<span class='stat'>$stat: ".number_format($number)."</span>";
 }
 
 $timezonesLeft = array(
@@ -41,7 +41,7 @@ $timezonesRight = array(
   "Auckland" => "Pacific/Auckland",
 );
 
-$statHTML = implode(" / ", $stats2); 
+$statHTML = implode(" / ", $stats2);
 
 // In 4chan time (UTC-5)
 $timeStr = "Sat, 2 Mar 2013 18:00:00 -0500";
@@ -51,18 +51,18 @@ $date = new DateTime($timeStr);
 $timezonesLeftTpl = array();
 $timezonesRightTpl = array();
 foreach ($timezonesLeft as $name => $timezone) {
-  $date->setTimeZone(new DateTimeZone($timezone));
-  $offset = $date->format("P");
-  $time = $date->format("l H:i");
-  $time = $date->format("D M jS, H:i");
-  $timezonesLeftTpl[] = array("Name" => $name, "Time" => $time, "Offset" => $offset);
+    $date->setTimeZone(new DateTimeZone($timezone));
+    $offset = $date->format("P");
+    $time = $date->format("l H:i");
+    $time = $date->format("D M jS, H:i");
+    $timezonesLeftTpl[] = array("Name" => $name, "Time" => $time, "Offset" => $offset);
 }
 foreach ($timezonesRight as $name => $timezone) {
-  $date->setTimeZone(new DateTimeZone($timezone));
-  $offset = $date->format("P");
-  $time = $date->format("l H:i");
-  $time = $date->format("D M jS, H:i");
-  $timezonesRightTpl[] = array("Name" => $name, "Time" => $time, "Offset" => $offset);
+    $date->setTimeZone(new DateTimeZone($timezone));
+    $offset = $date->format("P");
+    $time = $date->format("l H:i");
+    $time = $date->format("D M jS, H:i");
+    $timezonesRightTpl[] = array("Name" => $name, "Time" => $time, "Offset" => $offset);
 }
 
 // Don't forget to set the timezone back to default
@@ -77,12 +77,11 @@ $websiteLink = "http://timeanddate.com/worldclock/fixedtime.html?msg=2012+Vidya+
 $tpl->set("websiteLink", $websiteLink);
 
 if ($countdown > time()) {
-  $tpl->set("countdown", date("D, j M Y H:i:s \U\TCO", $countdown));
+    $tpl->set("countdown", date("D, j M Y H:i:s \U\TCO", $countdown));
 } else {
-  $tpl->set("countdown", false);
+    $tpl->set("countdown", false);
 }
 
 $tpl->set("serverDate", date("D, j M Y H:i:s \U\TCO"));
 $tpl->set("timezone", date("O"));
 $tpl->set("statHTML", $statHTML);
-?>

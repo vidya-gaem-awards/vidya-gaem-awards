@@ -19,9 +19,10 @@ MEDIA;
 $thanks = <<<THANKS
 THANKS;
 
-function parseCredits($input) {
+function parseCredits($input)
+{
 
-  $sites = array(
+    $sites = array(
     "youtube" => "http://www.youtube.com/",
     "twitter" => "https://twitter.com/",
     "steam" => "http://steamcommunity.com/id/",
@@ -29,28 +30,28 @@ function parseCredits($input) {
     "website" => "http://",
     "twitch" => "http://www.twitch.tv/",
     "github" => "http://github.com/"
-  );
+    );
   
-  $input = explode("\n\n", $input);
+    $input = explode("\n\n", $input);
 
-  foreach ($input as &$member) {
-    $member = explode("\n", $member);
+    foreach ($input as &$member) {
+        $member = explode("\n", $member);
     
-    $last = count($member) - 1;
+        $last = count($member) - 1;
     
-    //if (count($member) === 3) {
-    if (strpos($member[$last], "/") !== false) {
-      $site = explode("/", $member[$last]);
-      $member[$last] = "<a href=\"".($sites[$site[0]] . $site[1])."\">{$site[0]}</a>";
+      //if (count($member) === 3) {
+        if (strpos($member[$last], "/") !== false) {
+            $site = explode("/", $member[$last]);
+            $member[$last] = "<a href=\"".($sites[$site[0]] . $site[1])."\">{$site[0]}</a>";
+        }
+    
+        foreach ($member as &$item) {
+            $item = "<li>$item</li>";
+        }
+        $member = implode("\n", $member);
     }
-    
-    foreach ($member as &$item) {
-      $item = "<li>$item</li>";
-    }
-    $member = implode("\n", $member);
-  }
   
-  return $input;
+    return $input;
 }
 
 $tpl->set("cast", parseCredits($cast));
@@ -59,4 +60,3 @@ $tpl->set("vPlays", parseCredits($vPlays));
 $tpl->set("crew", parseCredits($crew));
 $tpl->set("media", parseCredits($media));
 $tpl->set("thanks", parseCredits($thanks));
-?>

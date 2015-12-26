@@ -6,14 +6,14 @@ if ($SEGMENTS[1] == "results") {
     $PAGE = "40X";
     return;
   }*/
-  $CUSTOM_TEMPLATE = "results";
+    $CUSTOM_TEMPLATE = "results";
 
   // This is an absolutely disgusting workaround
-  $key = array_search("voting", $noMaster);
-  unset($noMaster[$key]);
+    $key = array_search("voting", $noMaster);
+    unset($noMaster[$key]);
 
-  require("voting-results.php");
-  return;
+    require("voting-results.php");
+    return;
 }
 
 $current = time();
@@ -27,11 +27,11 @@ $votingEnabled = false;
 $votingConcluded = false;
 
 if ($current < $start) {
-  $seconds = $start - $current;
-} else if ($current < $finish) {
-  $seconds = $finish - $current;
+    $seconds = $start - $current;
+} elseif ($current < $finish) {
+    $seconds = $finish - $current;
 } else {
-  $seconds = 0;
+    $seconds = 0;
 }
 
 $minutes = floor($seconds / 60);
@@ -48,37 +48,37 @@ $mp = ((int)$minutes === 1 ? "" : "s");
 $sp = ((int)$seconds === 1 ? "" : "s");
 
 if ($current > $start && $current < $finish) {
-  $votingEnabled = true;
+    $votingEnabled = true;
   
-  if ($days >= 1) {
-    $difference = number_format(round($days+($hours/24), 1), 1)." days";
-  } else if ($hours >= 1) {
-    $difference = round($hours+($minutes/60), 1)." hours";
-  } else if ($minutes >= 1) {
-    $difference = "$minutes minute".$mp;
-  } else {
-    $difference = "$seconds second".$sp;
-  }
+    if ($days >= 1) {
+        $difference = number_format(round($days+($hours/24), 1), 1)." days";
+    } elseif ($hours >= 1) {
+        $difference = round($hours+($minutes/60), 1)." hours";
+    } elseif ($minutes >= 1) {
+        $difference = "$minutes minute".$mp;
+    } else {
+        $difference = "$seconds second".$sp;
+    }
     
-  $voteText = "Voting is now open! You have $difference left to vote.";
+    $voteText = "Voting is now open! You have $difference left to vote.";
   
-} else if ($current < $start) {
-  $votingNotYetOpen = true;
+} elseif ($current < $start) {
+    $votingNotYetOpen = true;
   
-  if ($days >= 1) {
-    $difference = "$days day".$dp." and $hours hour".$hp;
-  } else if ($hours >= 1) {
-    $difference = "$hours hour".$hp." and $minutes minute".$mp;
-  } else if ($minutes >= 1) {
-    $difference = "$minutes minute".$mp;
-  } else {
-    $difference = "$seconds second".$sp;
-  }
+    if ($days >= 1) {
+        $difference = "$days day".$dp." and $hours hour".$hp;
+    } elseif ($hours >= 1) {
+        $difference = "$hours hour".$hp." and $minutes minute".$mp;
+    } elseif ($minutes >= 1) {
+        $difference = "$minutes minute".$mp;
+    } else {
+        $difference = "$seconds second".$sp;
+    }
   
-  $voteText = "Voting will open in $difference";
+    $voteText = "Voting will open in $difference";
 } else {
-  $votingConcluded = true;
-  $voteText = "Voting is now closed.";
+    $votingConcluded = true;
+    $voteText = "Voting is now closed.";
 }
 $tpl->set("voteText", $voteText);
 
@@ -89,7 +89,7 @@ $completedCategories = array();
 $query = "SELECT * FROM `votes` WHERE `UniqueID` = \"$uniqueID\"";
 $result = mysql_query($query);
 while ($row = mysql_fetch_array($result)) {
-  $completedCategories[$row['CategoryID']] = json_decode($row['Preferences'], true);
+    $completedCategories[$row['CategoryID']] = json_decode($row['Preferences'], true);
 }
 
 $query = "SELECT * FROM `categories` WHERE `Enabled` = 1 ORDER BY `Order` ASC";
@@ -99,25 +99,25 @@ $categories = array();
 $linkedNext = $linkedPrev = array();
 $current = false;
 while ($row = mysql_fetch_array($result)) {
-  if ($current) {
-    $linkedPrev[$row['ID']] = $current;
-    $linkedNext[$current] = $row['ID'];
-  } else { 
-    $first = $row['ID'];
-  }
-  $current = $row['ID'];
-  if ($SEGMENTS[1] == $row['ID']) {
-    $row['Active'] = true;
-  } else {
-    $row['Active'] = false;
-  }
-  if (isset($completedCategories[$row['ID']])) {
-    $row['Completed'] = true;
-  } else {
-    $completedCategories[$row['ID']] = array();
-    $row['Completed'] = false;
-  }
-  $categories[] = $row;
+    if ($current) {
+        $linkedPrev[$row['ID']] = $current;
+        $linkedNext[$current] = $row['ID'];
+    } else {
+        $first = $row['ID'];
+    }
+    $current = $row['ID'];
+    if ($SEGMENTS[1] == $row['ID']) {
+        $row['Active'] = true;
+    } else {
+        $row['Active'] = false;
+    }
+    if (isset($completedCategories[$row['ID']])) {
+        $row['Completed'] = true;
+    } else {
+        $completedCategories[$row['ID']] = array();
+        $row['Completed'] = false;
+    }
+    $categories[] = $row;
 }
 
 $linkedNext[$current] = $first;
@@ -128,56 +128,56 @@ $tpl->set("categories", $categories);
 $category = false;
 $nominees = array();
 if ($SEGMENTS[1]) {
-  $cat = mysql_real_escape_string($SEGMENTS[1]);
-  $query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
-  $result = mysql_query($query);
-  
-  if (mysql_num_rows($result) == 1) {
-    
-    $row = mysql_fetch_array($result);
-    $category = $row;   
-    
-    $query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" ORDER BY `Name` ASC";
+    $cat = mysql_real_escape_string($SEGMENTS[1]);
+    $query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
     $result = mysql_query($query);
-    $nominees = array();
-    $count = 0;
-    while ($row = mysql_fetch_array($result)) {
-      $count++;
+  
+    if (mysql_num_rows($result) == 1) {
     
-      $row['Background'] = "";
+        $row = mysql_fetch_array($result);
+        $category = $row;
     
-      $prefixes = array(strtolower($cat)."-", "");
-      if (empty($row['Image'])) {
-        $row['Image'] = "/public/nominees/{$row['NomineeID']}.png";
-      } else {
-        $row['Image'] = $row['Image'];
-      }
+        $query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" ORDER BY `Name` ASC";
+        $result = mysql_query($query);
+        $nominees = array();
+        $count = 0;
+        while ($row = mysql_fetch_array($result)) {
+            $count++;
+    
+            $row['Background'] = "";
+    
+            $prefixes = array(strtolower($cat)."-", "");
+            if (empty($row['Image'])) {
+                $row['Image'] = "/public/nominees/{$row['NomineeID']}.png";
+            } else {
+                $row['Image'] = $row['Image'];
+            }
 
-      $row['Order'] = $count;
-      $row['FlavorText'] = htmlspecialchars($row['FlavorText']);
-      $nominees[] = $row;
-    }
+            $row['Order'] = $count;
+            $row['FlavorText'] = htmlspecialchars($row['FlavorText']);
+            $nominees[] = $row;
+        }
     
-    $js = "[null";
-    foreach ($completedCategories[$cat] as $nominee) {
-      $js .= ", \"$nominee\"";
-    }
-    $js .= "]";
+        $js = "[null";
+        foreach ($completedCategories[$cat] as $nominee) {
+            $js .= ", \"$nominee\"";
+        }
+        $js .= "]";
       
-    $tpl->set("lastVotes", $js);
-    $tpl->set("prevCategory", $linkedPrev[$cat]);
-    $tpl->set("nextCategory", $linkedNext[$cat]);
+        $tpl->set("lastVotes", $js);
+        $tpl->set("prevCategory", $linkedPrev[$cat]);
+        $tpl->set("nextCategory", $linkedNext[$cat]);
     
-  } else {
-    $_SESSION['votingCode'] = $SEGMENTS[1];
-    $code = mysql_real_escape_string($SEGMENTS[1]);
-    $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`)
+    } else {
+        $_SESSION['votingCode'] = $SEGMENTS[1];
+        $code = mysql_real_escape_string($SEGMENTS[1]);
+        $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`)
               VALUES (?, ?)";
-    $stmt = $mysql->prepare($query);
-    $stmt->bind_param('ss', $code, $uniqueID);
-    $stmt->execute();
-    header("Location: http://" . DOMAIN . "/voting");
-  } 
+        $stmt = $mysql->prepare($query);
+        $stmt->bind_param('ss', $code, $uniqueID);
+        $stmt->execute();
+        header("Location: http://" . DOMAIN . "/voting");
+    }
   
 }
 
@@ -187,7 +187,7 @@ foreach ($nominees as $key => $null) {
 }
 
 if (!$nominees) {
-  $nominees = false;
+    $nominees = false;
 }
 
 $tpl->set("dumbloop", $dumbloop);
@@ -202,5 +202,3 @@ $tpl->set("votingConcluded", $votingConcluded);
 $tpl->set("special", canDo("special"));
 
 $tpl->set("navbar", false);
-
-?>

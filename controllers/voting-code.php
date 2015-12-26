@@ -6,7 +6,8 @@ $tpl->set("title", "Voting code");
 $date = date("M d Y, g A");
 $tpl->set("currentTime", $date);
 
-function random_number($seed, $max_number = 100) {
+function random_number($seed, $max_number = 100)
+{
 
     //make sure there won't be any deadspace where random numbers will never fill
     if ($max_number > 0xFFFFFF) {
@@ -29,8 +30,7 @@ $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 $string = "";
 for ($i = 0; $i < 4; $i++) {
-  $string .= $characters[random_number($date.$i, strlen($characters) - 1)];
+    $string .= $characters[random_number($date.$i, strlen($characters) - 1)];
 }
 
 $tpl->set("votingCode", $string);
-?>
