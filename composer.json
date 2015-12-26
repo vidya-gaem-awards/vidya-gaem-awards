@@ -16,9 +16,7 @@
         },
         "files": [
             "includes/config.php",
-            "includes/bTemplate.php",
-            "includes/functions.php",
-            "includes/openid.php"
+            "includes/functions.php"
         ]
     }
 }

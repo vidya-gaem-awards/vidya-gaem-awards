@@ -1,6 +1,6 @@
 <?php
   //ob_start('ob_gzhandler');
-  require(__DIR__ . 'bootstrap.php');
+  require(__DIR__ . '/bootstrap.php');
 
   define("EVERYONE", "*");
   define("LOGIN", "logged-in");
