@@ -2,13 +2,13 @@
 error_reporting(E_ALL);
 set_time_limit(0);
 
-require_once("../includes/config.php");
+require_once("../bootstrap.php");
 
 if (!file_exists("games.csv")) {
   die("Forgetting something?");
 }
 
-$mysqli = new Mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
+$mysqli = new Mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 
 $search = array(" ", "Win", "Mac", "Lin", "iOS", "Droid", "WP", "X360", "XBO", "PSVita");
 $replace = array("", "PC", "PC", "PC", "Mobile", "Mobile", "Mobile", "360", "XB1", "PSV");

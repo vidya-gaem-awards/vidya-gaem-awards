@@ -1,0 +1,24 @@
+{
+    "name": "vidya-gaem-awards/vidya-gaem-awards",
+    "description": "Website for the Vidya Gaem Awards",
+    "license": "MIT",
+    "require": {
+        "doctrine/orm": "^2.5.3",
+        "twig/twig": "^1.23.1",
+        "twig/extensions": "^1.3.0",
+        "symfony/debug": "^3.0.0",
+        "symfony/routing": "^3.0.0",
+        "symfony/var-dumper": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        },
+        "files": [
+            "includes/config.php",
+            "includes/bTemplate.php",
+            "includes/functions.php",
+            "includes/openid.php"
+        ]
+    }
+}

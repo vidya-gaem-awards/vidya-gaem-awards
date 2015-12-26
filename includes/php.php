@@ -1,28 +1,24 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 
-error_reporting(E_ALL ^ E_DEPRECATED);
+require(__DIR__ . '/../bootstrap.php');
 
-include("config.php");
+error_reporting(E_ALL);
+date_default_timezone_set(TIMEZONE);
 
-date_default_timezone_set($TIMEZONE);
-
-include("openid.php");
-include("bTemplate.php");
-include("functions.php");
 $tpl = new bTemplate();
 session_start();
 
 // Constants
-$tpl->set("YEAR", $YEAR);
+$tpl->set("YEAR", YEAR);
 
 // Database connection
-$mysql = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
+$mysql = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 $mysql->set_charset("utf8");
 
 // Backwards compatibility
-mysql_connect($DB_HOST, $DB_USER, $DB_PASS);
-mysql_select_db($DB_DB);
+mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+mysql_select_db(DB_DATABASE);
 mysql_query("SET NAMES utf8");
 
 // Initialise some default template variables
@@ -39,7 +35,7 @@ $USER_GROUPS = array();
 $correct = false;
 if (!isset($_SESSION['login']) && isset($_COOKIE['token'])) {
   list($token, $hmac) = explode(':', $_COOKIE['token'], 2);
-  $tokenValid = $hmac == hash_hmac('md5', $token, $STEAM_API_KEY);
+  $tokenValid = $hmac == hash_hmac('md5', $token, STEAM_API_KEY);
   if ($tokenValid) {
     $query = "SELECT `UserID`, `Name`, `Avatar`, `Expires` FROM `login_tokens`
               WHERE `Token` = ?";
@@ -106,7 +102,7 @@ if (isset($_SESSION['login'])) {
   
   $page = rtrim(implode("/", $SEGMENTS), "/");
   
-  $tpl->set("openIDurl", SteamSignIn::genUrl("http://$DOMAIN/login/$page"));
+  $tpl->set("openIDurl", SteamSignIn::genUrl("http://" . DOMAIN . "/login/$page"));
   
   $ID = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
   $userID = "";
@@ -118,9 +114,9 @@ set_time_limit(60);
 
 if (!isset($_COOKIE['access']) || strlen($_COOKIE['access']) <= 10) {
   $randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-  $randomToken .= ':'.hash_hmac('md5', $randomToken, $STEAM_API_KEY);
+  $randomToken .= ':'.hash_hmac('md5', $randomToken, STEAM_API_KEY);
   $uniqueID = $randomToken;
-  setcookie("access", $randomToken, time()+60*60*24*90, "/", $DOMAIN);
+  setcookie("access", $randomToken, time()+60*60*24*90, "/", DOMAIN);
 } else {
   $uniqueID = $_COOKIE['access'];
 }
@@ -138,7 +134,7 @@ if (isset($_SESSION['message'])) {
 // Navbar stuff (the items have been moved to config.php)
 $navbar = "";
 
-foreach ($NAVBAR_ITEMS as $filename => $value) {
+foreach (NAVBAR_ITEMS as $filename => $value) {
   
   $external = strpos($filename, "http://") === 0;
   
@@ -192,4 +188,3 @@ if (substr($_SERVER['REQUEST_URI'], -11) != "autorefresh") {
 $tpl->set("true", true);
 $tpl->set("false", false);
 $tpl->set("admin", canDo("admin"));
-?>

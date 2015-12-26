@@ -39,8 +39,8 @@ if (strlen($result) > 0) {
   
   // Thanks to http://stackoverflow.com/questions/5009685/#5009903
   $randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-  $randomToken .= ':'.hash_hmac('md5', $randomToken, $STEAM_API_KEY);
-  setcookie("token", $randomToken, time()+60*60*24*30, "/", $DOMAIN);
+  $randomToken .= ':'.hash_hmac('md5', $randomToken, STEAM_API_KEY);
+  setcookie("token", $randomToken, time()+60*60*24*30, "/", DOMAIN);
   
   $query = "REPLACE INTO `login_tokens` (`UserID`, `Name`, `Avatar`, `Token`, 
             `Generated`, `Expires`) VALUES(?, ?, ?, ?, NOW(),
@@ -53,5 +53,5 @@ if (strlen($result) > 0) {
 
 // Send them back where they came from
 $return = rtrim(implode("/", array_slice($SEGMENTS, 1)), "/");
-header("Location: http://$DOMAIN/$return");
+header("Location: http://" . DOMAIN . "/$return");
 ?>

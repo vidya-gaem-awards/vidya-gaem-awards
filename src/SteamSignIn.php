@@ -87,4 +87,3 @@ class SteamSignIn
     return preg_match("#is_valid\s*:\s*true#i", $result) == 1 ? $steamID64 : '';
   }
 }
-?>

@@ -8,9 +8,9 @@ function timer($msg) {
   echo round($timeEnd - $timeStart, 2).": $msg\n";
 }
 
-require_once("../includes/config.php");
+require_once("../bootstrap.php");
 
-$mysqli = new Mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
+$mysqli = new Mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 
 // Remove all existing data
 $mysqli->query("TRUNCATE TABLE `winner_cache`");

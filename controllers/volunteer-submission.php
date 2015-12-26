@@ -1,7 +1,7 @@
 <?php
 // Check if applications are open
-if (!$APPLICATIONS_OPEN) {
-  storeMessage("formError", "Volunteer submissions for $YEAR are closed. "
+if (!APPLICATIONS_OPEN) {
+  storeMessage("formError", "Volunteer submissions for " . YEAR . " are closed. "
     . "Feel free to come back next year.");
   header("Location: /home");
   exit;
@@ -35,9 +35,9 @@ if ($result) {
   $message .= "Email: {$_POST['email']}\n";
   $message .= "Interest: {$_POST['skills']}\n";
       
-  $headers = "From: Vidya Gaem Awards <$EMAIL_FROM>\r\n";
+  $headers = "From: Vidya Gaem Awards <" . EMAIL_FROM . ">\r\n";
       
-  mail($EMAIL_TO, $subject, $message, $headers);
+  mail(EMAIL_TO, $subject, $message, $headers);
   
 } else {
   error_log("MySQL error: ".$stmt->error);

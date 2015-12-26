@@ -1,5 +1,5 @@
 <?php
-if ($CATEGORY_VOTING_ENABLED) {
+if (CATEGORY_VOTING_ENABLED) {
   $tpl->set("title", "Awards and Nominations");
 } else {
   $tpl->set("title", "Award Nominations");
@@ -15,8 +15,8 @@ if ($SEGMENTS[1] == "manage") {
   }
 } else {
 
-  $tpl->set("CATEGORY_VOTING_ENABLED", $CATEGORY_VOTING_ENABLED);
-  $allowedToNominate = $loggedIn || !$ACCOUNT_REQUIRED_TO_NOMINATE;
+  $tpl->set("CATEGORY_VOTING_ENABLED", CATEGORY_VOTING_ENABLED);
+  $allowedToNominate = $loggedIn || !ACCOUNT_REQUIRED_TO_NOMINATE;
   $tpl->set("allowedToNominate", $allowedToNominate);
   
   // Get the list of nominations the user has already made
@@ -55,7 +55,7 @@ if ($SEGMENTS[1] == "manage") {
   while ($stmt->fetch()) {
 
     // Show the appropriate icon or counter next to each category on the left
-    if ($CATEGORY_VOTING_ENABLED) {
+    if (CATEGORY_VOTING_ENABLED) {
       $voteIcon = "";
       if ($opinion === 1) {
         $voteIcon = "&#x2714;";

@@ -1,7 +1,7 @@
 <?php
 $current = time();
-$start = strtotime($VOTING_START);
-$finish = strtotime($VOTING_END);
+$start = strtotime(VOTING_START);
+$finish = strtotime(VOTING_END);
 
 if ($current < $start) {
   return_json("error", "Voting hasn't opened yet.");

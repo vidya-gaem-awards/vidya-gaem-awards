@@ -10,9 +10,9 @@ function timer() {
 error_reporting(E_ALL);
 set_time_limit(0);
 
-require_once("../includes/config.php");
+require_once("../bootstrap.php");
 
-$mysqli = new Mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
+$mysqli = new Mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 
 $timeStart = microtime(true);
 

@@ -1,8 +1,6 @@
 <?php
-
   //ob_start('ob_gzhandler');
-  
-  require_once("includes/config.php");
+  require(__DIR__ . 'bootstrap.php');
 
   define("EVERYONE", "*");
   define("LOGIN", "logged-in");
@@ -25,7 +23,7 @@
 
   // Change the default page in includes/config.php
   if (strlen($PAGE) == 0) {
-    $PAGE = $DEFAULT_PAGE;
+    $PAGE = DEFAULT_PAGE;
   }
 
   // Special handling for logout page
@@ -35,14 +33,14 @@
     session_destroy();
     
     $return = rtrim(implode("/", array_slice($SEGMENTS, 1)), "/");
-    setcookie("token", "0", 1, "/", $DOMAIN);
+    setcookie("token", "0", 1, "/", DOMAIN);
     header("Location: /$return");
     exit;
   }
 
   // Special handling for ad landing page
   if ($PAGE == "promotions") {
-    header("Location: {$AD_LANDING_PAGE}");
+    header("Location: " . AD_LANDING_PAGE);
     exit;
   }
 
@@ -84,7 +82,7 @@
     "winners" => EVERYONE // Change to EVERYONE
   );
 
-  if (isset($ACCESS["nomination-submit"]) && $ACCOUNT_REQUIRED_TO_NOMINATE) {
+  if (isset($ACCESS["nomination-submit"]) && ACCOUNT_REQUIRED_TO_NOMINATE) {
     $ACCESS["nomination-submit"] = LOGIN;
   }
 

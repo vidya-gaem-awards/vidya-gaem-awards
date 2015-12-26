@@ -31,4 +31,4 @@ while ($row = $result->fetch_assoc()) {
 
 $tpl->set("news", $news);
 
-$tpl->set("APPLICATIONS_OPEN", $APPLICATIONS_OPEN);
+$tpl->set("APPLICATIONS_OPEN", APPLICATIONS_OPEN);
