@@ -13,13 +13,19 @@ class AuthController extends BaseController
 {
     public function loginAction($return)
     {
+        $response = new RedirectResponse('https://' . DOMAIN . $return);
+
         $login = new SteamLogin();
 
         try {
             $steamID = $login->validate();
         } catch (\Exception $e) {
-            echo 'Login request timed out or was denied.';
-            exit;
+            $this->session->getFlashBag()->add(
+                'error',
+                'Login request timed out or was denied.'
+            );
+            $response->send();
+            return;
         }
 
         $steam = \SteamId::create($steamID);
@@ -60,7 +66,6 @@ class AuthController extends BaseController
 
         $this->session->set('user', $steamID);
 
-        $response = new RedirectResponse('https://' . DOMAIN . $return);
         $response->headers->setCookie(new Cookie(
             'rememberMeToken',
             $randomToken,

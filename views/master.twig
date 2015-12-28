@@ -45,16 +45,13 @@
         <div class="container">
 </if:navbar>
 
-<if:success>
-    <div class="alert alert-success">
-        <tag:success />
-    </div>
-</if:success>
-<if:error>
-    <div class="alert alert-error">
-        <tag:error />
-    </div>
-</if:error>
+{% for type, messages in flashbag %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
 
 {% block content %}{% endblock %}
 

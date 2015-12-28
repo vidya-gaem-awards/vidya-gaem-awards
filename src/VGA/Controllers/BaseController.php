@@ -35,6 +35,7 @@ abstract class BaseController
         User $user
     ) {
         $twig->addGlobal('user', $user);
+        $twig->addGlobal('flashbag', $session->getFlashBag()->all());
 
         $this->em = $em;
         $this->request = $request;

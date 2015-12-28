@@ -68,7 +68,7 @@ $routes->add('login', new Route(
     ['return' => '.*']
 ));
 $routes->add('logout', new Route(
-    '/logout',
+    '/logout/{return}',
     ['controller' => Controllers\AuthController::class, 'action' => 'logout'],
     ['return' => '.*']
 ));
