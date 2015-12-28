@@ -33,10 +33,15 @@ class LoginToken
     private $expires;
 
     /**
-     * @var \VGA\Model\User
+     * @var User
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->generated = new \DateTime();
+        $this->expires = new \DateTime('+30 days');
+    }
 
     /**
      * Set name
@@ -141,7 +146,7 @@ class LoginToken
      *
      * @return LoginToken
      */
-    public function setExpires($expires)
+    public function setExpiry($expires)
     {
         $this->expires = $expires;
 
@@ -153,7 +158,7 @@ class LoginToken
      *
      * @return \DateTime
      */
-    public function getExpires()
+    public function getExpiry()
     {
         return $this->expires;
     }
@@ -161,11 +166,11 @@ class LoginToken
     /**
      * Set user
      *
-     * @param \VGA\Model\User $user
+     * @param User $user
      *
      * @return LoginToken
      */
-    public function setUser(\VGA\Model\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 
@@ -175,7 +180,7 @@ class LoginToken
     /**
      * Get user
      *
-     * @return \VGA\Model\User
+     * @return User
      */
     public function getUser()
     {

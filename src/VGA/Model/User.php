@@ -2,9 +2,8 @@
 
 namespace VGA\Model;
 
-/**
- * User
- */
+use Doctrine\Common\Collections;
+
 class User
 {
     /**
@@ -20,7 +19,7 @@ class User
     /**
      * @var boolean
      */
-    private $special;
+    private $special = false;
 
     /**
      * @var \DateTime
@@ -58,17 +57,17 @@ class User
     private $avatar;
 
     /**
-     * @var \VGA\Model\LoginToken
+     * @var LoginToken
      */
     private $loginToken;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collections\Collection
      */
     private $votes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collections\Collection
      */
     private $permissions;
 
@@ -330,11 +329,11 @@ class User
     /**
      * Set loginToken
      *
-     * @param \VGA\Model\LoginToken $loginToken
+     * @param LoginToken $loginToken
      *
      * @return User
      */
-    public function setLoginToken(\VGA\Model\LoginToken $loginToken = null)
+    public function setLoginToken(LoginToken $loginToken = null)
     {
         $this->loginToken = $loginToken;
 
@@ -344,7 +343,7 @@ class User
     /**
      * Get loginToken
      *
-     * @return \VGA\Model\LoginToken
+     * @return LoginToken
      */
     public function getLoginToken()
     {
@@ -354,11 +353,11 @@ class User
     /**
      * Add vote
      *
-     * @param \VGA\Model\Vote $vote
+     * @param Vote $vote
      *
      * @return User
      */
-    public function addVote(\VGA\Model\Vote $vote)
+    public function addVote(Vote $vote)
     {
         $this->votes[] = $vote;
 
@@ -368,9 +367,9 @@ class User
     /**
      * Remove vote
      *
-     * @param \VGA\Model\Vote $vote
+     * @param Vote $vote
      */
-    public function removeVote(\VGA\Model\Vote $vote)
+    public function removeVote(Vote $vote)
     {
         $this->votes->removeElement($vote);
     }
@@ -378,7 +377,7 @@ class User
     /**
      * Get votes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collections\Collection
      */
     public function getVotes()
     {
@@ -388,11 +387,11 @@ class User
     /**
      * Add permission
      *
-     * @param \VGA\Model\Permission $permission
+     * @param Permission $permission
      *
      * @return User
      */
-    public function addPermission(\VGA\Model\Permission $permission)
+    public function addPermission(Permission $permission)
     {
         $this->permissions[] = $permission;
 
@@ -402,9 +401,9 @@ class User
     /**
      * Remove permission
      *
-     * @param \VGA\Model\Permission $permission
+     * @param Permission $permission
      */
-    public function removePermission(\VGA\Model\Permission $permission)
+    public function removePermission(Permission $permission)
     {
         $this->permissions->removeElement($permission);
     }
@@ -412,7 +411,7 @@ class User
     /**
      * Get permissions
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collections\Collection
      */
     public function getPermissions()
     {

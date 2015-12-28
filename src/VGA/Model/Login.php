@@ -1,10 +1,6 @@
 <?php
-
 namespace VGA\Model;
 
-/**
- * Login
- */
 class Login
 {
     /**
@@ -18,10 +14,14 @@ class Login
     private $timestamp;
 
     /**
-     * @var \VGA\Model\User
+     * @var User
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->timestamp = new \DateTime();
+    }
 
     /**
      * Get id
@@ -60,11 +60,11 @@ class Login
     /**
      * Set user
      *
-     * @param \VGA\Model\User $user
+     * @param User $user
      *
      * @return Login
      */
-    public function setUser(\VGA\Model\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 
@@ -74,7 +74,7 @@ class Login
     /**
      * Get user
      *
-     * @return \VGA\Model\User
+     * @return User
      */
     public function getUser()
     {
