@@ -1,48 +1,157 @@
 <?php
-//ob_start('ob_gzhandler');
+use Ehesp\SteamLogin\SteamLogin;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+use VGA\Controllers;
+use VGA\DependencyManager;
+use VGA\Model\AnonymousUser;
+use VGA\Model\LoginToken;
+use VGA\Model\User;
+
 require(__DIR__ . '/../bootstrap.php');
 
-define("EVERYONE", "*");
-define("LOGIN", "logged-in");
+// Basic setup
+$em = DependencyManager::getEntityManager();
+$request = Request::createFromGlobals();
+$twig = DependencyManager::getTwig();
+$session = new Session();
+$session->start();
 
-// URL rewriter
-// Courtesy of https://stackoverflow.com/questions/893218/rewrite-for-all-urls
-$_SERVER['REQUEST_URI_PATH'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-$SEGMENTS = explode('/', trim($_SERVER['REQUEST_URI_PATH'], '/'));
-$SEGMENTS = array_map("strtolower", $SEGMENTS);
-
-for ($i = 0; $i <= 9; $i++) {
-    if (!isset($SEGMENTS[$i])) {
-        $SEGMENTS[$i] = null;
+// Handle authentication
+if ($session->get('user')) {
+    $user = $em->getRepository(User::class)->find($session->get('user'));
+} elseif ($cookie = $request->cookies->get('rememberMeToken')) {
+    list($token, $hmac) = explode(':', $cookie, 2);
+    $tokenValid = ($hmac == hash_hmac('md5', $token, STEAM_API_KEY));
+    if ($tokenValid) {
+        /** @var LoginToken $token */
+        $token = $em->getRepository(LoginToken::class)->findBy(['token' => $token]);
+        if ($token) {
+            $user = $token->getUser();
+        }
     }
 }
 
+if (!isset($user)) {
+    $user = new AnonymousUser();
+}
 
-$PAGE = $SEGMENTS[0];
+// Generate a random ID to keep in the cookie if one doesn't already exist.
+// We use this cookie as part of the voting identification process
+// (although it's similar to the remember me token, they serve different purposes)
+$randomID = $request->cookies->get('access');
+if ($randomID === null) {
+    $factory = new \RandomLib\Factory;
+    $generator = $factory->getLowStrengthGenerator();
+    $randomToken = hash('sha256', $generator->generate(64));
+    $randomToken .= ':' . hash_hmac('md5', $randomToken, STEAM_API_KEY);
+}
+
+// Update the user object with information that doesn't come from the database.
+$user
+    ->setIP($request->server->get('HTTP_CF_CONNECTING_IP', $request->server->get('REMOVE_ATTR')))
+    ->setRandomID($randomID);
+
+// Define the routes
+$routes = new RouteCollection();
+
+$routes->add('index', new Route('/', ['controller' => Controllers\IndexController::class]));
+$routes->add('login', new Route(
+    '/login/{return}',
+    ['controller' => Controllers\AuthController::class, 'action' => 'login'],
+    ['return' => '.*']
+));
+$routes->add('logout', new Route(
+    '/logout',
+    ['controller' => Controllers\AuthController::class, 'action' => 'logout'],
+    ['return' => '.*']
+));
+
+$context = new RequestContext();
+$context->fromRequest($request);
+// Due to the way that Cloudflare is set up, the user sees HTTPS but our server only sees HTTP.
+// We manually update some values to pretend we have full HTTPS, else generated links will have the wrong protocol.
+$_SERVER['HTTPS'] = 'on';
+$context->setScheme('https');
+
+// Steam login link
+if ($user instanceof AnonymousUser) {
+    $generator = new UrlGenerator($routes, $context);
+    $returnLink = $generator->generate(
+        'login',
+        ['return' => $request->getPathInfo()],
+        UrlGenerator::ABSOLUTE_URL
+    );
+
+    $steam = new SteamLogin();
+    $twig->addGlobal('steamLoginLink', $steam->url($returnLink));
+}
+
+$matcher = new UrlMatcher($routes, $context);
+
+// Call the correct controller and method
+try {
+    $match = $matcher->match($request->getPathInfo());
+
+    if (!class_exists($match['controller'])) {
+        http_response_code(500);
+        echo '500 &ndash; controller does not exist';
+        exit;
+    }
+
+    /** @var Controllers\BaseController $controller */
+    $controller = new $match['controller']();
+    $controller->initialize(
+        $em,
+        $request,
+        DependencyManager::getDatabaseHandle(),
+        $twig,
+        $session,
+        $user
+    );
+
+    if (isset($match['action'])) {
+        $action = $match['action'] . 'Action';
+    } else {
+        $action = 'indexAction';
+    }
+
+    if (!method_exists($controller, $action)) {
+        http_response_code(500);
+        echo '500 &ndash; action does not exist';
+        exit;
+    }
+
+    unset($match['controller']);
+    unset($match['action']);
+    call_user_func_array([$controller, $action], $match);
+
+} catch (ResourceNotFoundException $e) {
+    echo '404 &ndash; page not found';
+}
+
+exit;
+
+// Abandon hope all who go below this point
+//define("EVERYONE", "*");
+//define("LOGIN", "logged-in");
 
 // Change the default page in includes/config.php
-if (strlen($PAGE) == 0) {
-    $PAGE = DEFAULT_PAGE;
-}
-
-// Special handling for logout page
-if ($PAGE == "logout") {
-    session_start();
-    $_SESSION = array();
-    session_destroy();
-
-    $return = rtrim(implode("/", array_slice($SEGMENTS, 1)), "/");
-    setcookie("token", "0", 1, "/", DOMAIN);
-    header("Location: /$return");
-    exit;
-}
+//if (strlen($PAGE) == 0) {
+//    $PAGE = DEFAULT_PAGE;
+//}
 
 // Special handling for ad landing page
-if ($PAGE == "promotions") {
-    header("Location: " . AD_LANDING_PAGE);
-    exit;
-}
+//if ($PAGE == "promotions") {
+//    header("Location: " . AD_LANDING_PAGE);
+//    exit;
+//}
 
 $ACCESS = array(
     // These ones should never have to change
@@ -127,11 +236,6 @@ header("Content-type: text/html; charset=utf-8");
 
 require(__DIR__ . '/../bootstrap.php');
 
-use VGA\Utils;
-
-error_reporting(E_ALL);
-date_default_timezone_set(TIMEZONE);
-
 function canDo($privilege)
 {
     global $USER_RIGHTS, $USER_GROUPS;
@@ -149,15 +253,6 @@ session_start();
 // Constants
 $tpl->set("YEAR", YEAR);
 
-// Database connection
-$mysql = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
-$mysql->set_charset("utf8");
-
-// Backwards compatibility
-mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
-mysql_select_db(DB_DATABASE);
-mysql_query("SET NAMES utf8");
-
 // Initialise some default template variables
 $init = array("success", "error", "formSuccess", "formError");
 foreach ($init as $item) {
@@ -167,97 +262,6 @@ foreach ($init as $item) {
 // Login stuff
 $USER_RIGHTS = array("*");
 $USER_GROUPS = array();
-
-// Check for a valid login token
-$correct = false;
-if (!isset($_SESSION['login']) && isset($_COOKIE['token'])) {
-    list($token, $hmac) = explode(':', $_COOKIE['token'], 2);
-    $tokenValid = $hmac == hash_hmac('md5', $token, STEAM_API_KEY);
-    if ($tokenValid) {
-        $query = "SELECT `UserID`, `Name`, `Avatar`, `Expires` FROM `login_tokens`
-              WHERE `Token` = ?";
-        $stmt = $mysql->prepare($query);
-        $stmt->bind_param('s', $_COOKIE['token']);
-        $stmt->execute();
-        $stmt->bind_result($userID, $name, $avatar, $expires);
-        if ($stmt->fetch() && strtotime($expires) > time()) {
-            $_SESSION['login'] = $userID;
-            $_SESSION['name'] = $name;
-            $_SESSION['avatar'] = $avatar;
-            $correct = true;
-        }
-    }
-
-}
-
-if (isset($_SESSION['login'])) {
-    $loggedIn = true;
-    $ID = $userID = $_SESSION['login'];
-    $tpl->set("communityID", $userID);
-    $displayName = $_SESSION['name'];
-    $tpl->set("displayName", $displayName);
-    $tpl->set("avatarURL", $_SESSION['avatar']);
-    $tpl->set("steamID", Utils::convertSteamID($ID));
-
-    // Find out which groups the user is in
-    $query = "SELECT `GroupName` FROM `user_groups` WHERE `UserID` = ?";
-    $stmt = $mysql->prepare($query);
-    if (!$stmt) {
-        error_log("MySQL error: ".$mysql->error);
-    } else {
-        $stmt->bind_param('s', $ID);
-        $stmt->execute();
-        $stmt->bind_result($groupName);
-        while ($stmt->fetch()) {
-            $USER_GROUPS[] = $groupName;
-            if (substr($groupName, 0, 5) != "level") {
-                $USER_RIGHTS[] = $groupName;
-            }
-        }
-
-        // Level 5s are assigned to levels 1-4
-        // Level 4s are assigned to levels 1-3
-        // etc.
-        for ($i = 6; $i >= 2; $i--) {
-            if (in_array("level$i", $USER_GROUPS)) {
-                $USER_GROUPS[] = "level".($i-1);
-            }
-        }
-
-        $query = "SELECT DISTINCT `CanDo` FROM `user_rights` WHERE `GroupName` IN ('";
-        $query .= implode("', '", $USER_GROUPS) . "')";
-        $result = $mysql->query($query);
-        while ($row = $result->fetch_assoc()) {
-            $USER_RIGHTS[] = $row['CanDo'];
-        }
-    }
-
-    $USER_RIGHTS[] = "logged-in";
-
-} else {
-    $loggedIn = false;
-
-    $page = rtrim(implode("/", $SEGMENTS), "/");
-
-    $tpl->set("openIDurl", SteamSignIn::genUrl("https://" . DOMAIN . "/login/$page"));
-
-    $ID = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
-    $userID = "";
-
-}
-$tpl->set("loggedIn", $loggedIn);
-
-set_time_limit(60);
-
-if (!isset($_COOKIE['access']) || strlen($_COOKIE['access']) <= 10) {
-    $randomToken = hash('sha256', uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-    $randomToken .= ':'.hash_hmac('md5', $randomToken, STEAM_API_KEY);
-    $uniqueID = $randomToken;
-    setcookie("access", $randomToken, time()+60*60*24*90, "/", DOMAIN);
-} else {
-    $uniqueID = $_COOKIE['access'];
-}
-
 
 // Message stuff
 if (isset($_SESSION['message'])) {
