@@ -21,7 +21,7 @@
         <div class="row">
             <div class="span6">
                 <p>The /v/GAs are run for /v/, by /v/. Despite popular belief, le Reddit is not involved at all and we go to great lengths to keep it that way.</p>
-                <p>We're always happy for people to get involved: there are only a few people really "in charge", and that's only the minimum necessary to ensure things don't fall completely to shit. Getting involved is as easy as posting in the <a href="https://steamcommunity.com/groups/thevidyagaemawards/discussions">forum</a>, joining the <a href="http://steamcommunity.com/groups/vidyagaemawards">Steam group</a> or hopping into <a href="steam://friends/joinchat/103582791432684008">Steam chat</a>. Just like anybody can make a thread on /v/, anybody can participate in the /v/GAs.</p>
+                <p>We're always happy for people to get involved: there are only a few people really "in charge", and that's only the minimum necessary to ensure things don't fall completely to shit. Getting involved is as easy as posting in the <a href="https://steamcommunity.com/groups/thevidyagaemawards/discussions">forum</a>, joining the <a href="https://steamcommunity.com/groups/vidyagaemawards">Steam group</a> or hopping into <a href="steam://friends/joinchat/103582791440677461">Steam chat</a>. Just like anybody can make a thread on /v/, anybody can participate in the /v/GAs.</p>
                 <p>You can see the 2011 and 2012 shows on our <a href="https://www.youtube.com/user/VidyaGaemAwards/videos">YouTube channel</a>.</p>
             </div>
         </div>
