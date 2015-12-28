@@ -77,6 +77,16 @@ class User
     private $logins;
 
     /**
+     * @var string
+     */
+    private $ipAddress;
+
+    /**
+     * @var string
+     */
+    private $randomID;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -416,6 +426,50 @@ class User
     public function getPermissions()
     {
         return $this->permissions;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoggedIn()
+    {
+        return true;
+    }
+
+    /**
+     * @param string $ipAddress
+     * @return User
+     */
+    public function setIP($ipAddress)
+    {
+        $this->ipAddress = $ipAddress;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIP()
+    {
+        return $this->ipAddress;
+    }
+
+    /**
+     * @param string $randomID
+     * @return User
+     */
+    public function setRandomID($randomID)
+    {
+        $this->randomID = $randomID;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRandomID()
+    {
+        return $this->randomID;
     }
 
     /**
