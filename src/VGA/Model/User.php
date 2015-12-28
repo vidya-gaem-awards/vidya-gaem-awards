@@ -73,12 +73,18 @@ class User
     private $permissions;
 
     /**
+     * @var Collections\Collection
+     */
+    private $logins;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->votes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->votes = new Collections\ArrayCollection();
+        $this->permissions = new Collections\ArrayCollection();
+        $this->logins = new Collections\ArrayCollection();
     }
 
     /**
@@ -411,6 +417,41 @@ class User
     public function getPermissions()
     {
         return $this->permissions;
+    }
+
+    /**
+     * Add login
+     *
+     * @param Login $login
+     *
+     * @return User
+     */
+    public function addLogin(Login $login)
+    {
+        $login->setUser($this);
+        $this->logins[] = $login;
+
+        return $this;
+    }
+
+    /**
+     * Remove login
+     *
+     * @param Login $login
+     */
+    public function removeLogin(Login $login)
+    {
+        $this->logins->removeElement($login);
+    }
+
+    /**
+     * Get logins
+     *
+     * @return Collections\Collection
+     */
+    public function getLogins()
+    {
+        return $this->logins;
     }
 }
 

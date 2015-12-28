@@ -41,6 +41,9 @@ VGA\Model\User:
     votes:
       targetEntity: Vote
       mappedBy: user
+    logins:
+      targetEntity: Login
+      mappedBy: user
   oneToOne:
     loginToken:
       targetEntity: LoginToken

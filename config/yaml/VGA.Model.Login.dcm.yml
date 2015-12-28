@@ -14,6 +14,7 @@ VGA\Model\Login:
   manyToOne:
     user:
       targetEntity: User
+      inversedBy: logins
       joinColumn:
         name: userID
         referencedColumnName: steamID
