@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title title %} &ndash; Vidya Gaem Awards</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
+</head>
+
+<if:navbar>
+    <if:noContainer>
+        <body>
+        <else:noContainer>
+            <body style="padding-top: 50px;">
+    </if:noContainer>
+    <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/">2015 /v/GAs</a>
+                <ul class="nav">
+                    <tag:navbar />
+                </ul>
+                <ul class="nav secondary-nav">
+                    {% if user.loggedIn %}
+                        <li><img src="data:image/png;base64,{{ user.avatar }}" style='margin-top: 3px; width: 32px; height: 32px;' /></li>
+                        <li><a href="https://steamcommunity.com/profiles/{{ user.steamID }}">{{ user.name }}</a></li>
+                    {% else %}
+                        <li><a href="{{ steamLoginLink }}"><img src="/img/sign_in_with_steam.png"></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!if:noContainer>
+    <div class="container" role="main">
+    </!if:noContainer>
+    <else:navbar>
+        <body style="padding-top: 30px;">
+        <div class="container">
+</if:navbar>
+
+<if:success>
+    <div class="alert alert-success">
+        <tag:success />
+    </div>
+</if:success>
+<if:error>
+    <div class="alert alert-error">
+        <tag:error />
+    </div>
+</if:error>
+
+{% block content %}{% endblock %}
+
+</div>
+<if:navbar>
+    <div class="navbar navbar-fixed-bottom navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container">
+                <ul class="nav">
+                    <li><a href="https://steamcommunity.com/groups/thevidyagaemawards">Steam Group</a></li>
+                    <li><a href="steam://friends/joinchat/103582791440677461">Steam Chat</a></li>
+                    <li><a href="mailto:vidya@vidyagaemawards.com">Email</a></li>
+                    <li><a href="https://vidyagaemawards.com/previous-years">Previous /v/GAs</a></li>
+                </ul>
+                <ul class="nav secondary-nav">
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <if:loggedIn>
+                        <li><a href="/logout/<tag:logoutURL />">Logout</a></li>
+                    </if:loggedIn>
+                </ul>
+            </div>
+        </div>
+    </div>
+</if:navbar>
+
+</body>
+
+</html>
