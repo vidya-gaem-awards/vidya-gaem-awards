@@ -1,0 +1,35 @@
+VGA\Model\Nominee:
+  type: entity
+  table: nominees
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    nomineeID:
+      type: string
+      nullable: false
+      length: 45
+    shortName:
+      type: string
+      nullable: false
+      length: 100
+    subtitle:
+      type: string
+      nullable: false
+      length: 255
+    image:
+      type: string
+      nullable: false
+      length: 255
+    flavorText:
+      type: text
+      nullable: false
+  manyToOne:
+    category:
+      targetEntity: Category
+      inversedBy: nominees
+      joinColumn:
+        name: categoryID
+        referencedColumnName: id

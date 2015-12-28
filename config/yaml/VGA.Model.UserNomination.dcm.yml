@@ -1,0 +1,28 @@
+VGA\Model\UserNomination:
+  type: entity
+  table: user_nominations
+  id:
+    id:
+      type: integer
+      nullable: false
+      generator:
+        strategy: AUTO
+  fields:
+    user:
+      type: string
+      nullable: false
+      length: 45
+    nomination:
+      type: string
+      nullable: false
+      length: 255
+    timestamp:
+      type: datetime
+      nullable: false
+  manyToOne:
+    category:
+      targetEntity: Category
+      inversedBy: userNominations
+      joinColumn:
+        name: categoryID
+        referencedColumnName: id

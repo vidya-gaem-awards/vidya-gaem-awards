@@ -1,0 +1,27 @@
+VGA\Model\Permission:
+  type: entity
+  table: permissions
+  id:
+    id:
+      type: string
+      nullable: false
+      length: 40
+  fields:
+    description:
+      type: string
+      nullable: false
+      length: 255
+  manyToMany:
+    children:
+      targetEntity: Permission
+      joinTable:
+        name: permission_children
+        joinColumns:
+          parentID:
+            referencedColumnName: id
+        inverseJoinColumns:
+          childID:
+            referencedColumnName: id
+    users:
+      targetEntity: User
+      mappedBy: permissions

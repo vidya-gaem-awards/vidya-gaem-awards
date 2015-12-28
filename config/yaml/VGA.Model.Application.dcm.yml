@@ -1,0 +1,32 @@
+VGA\Model\Application:
+  type: entity
+  table: applications
+  id:
+    id:
+      type: integer
+      nullable: false
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      nullable: false
+      length: 60
+    email:
+      type: string
+      nullable: false
+      length: 60
+    interest:
+      type: string
+      nullable: false
+      length: 255
+    timestamp:
+      type: datetime
+      nullable: false
+  manyToOne:
+    user:
+      targetEntity: VGA\Model\User
+      joinColumn:
+        name: userID
+        referencedColumnName: steamID
+        nullable: false

@@ -1,0 +1,34 @@
+VGA\Model\ResultCache:
+  type: entity
+  table: result_cache
+  id:
+    category:
+      associationKey: true
+    filter:
+      associationKey: true
+  fields:
+    results:
+      type: json_array
+      nullable: false
+    steps:
+      type: json_array
+      nullable: false
+    warnings:
+      type: json_array
+      nullable: false
+    votes:
+      type: integer
+      nullable: false
+  manyToOne:
+    category:
+      targetEntity: Category
+      inversedBy: resultCache
+      joinColumn:
+        name: categoryID
+        referencedColumnName: id
+    filter:
+      targetEntity: Filter
+      inversedBy: resultCache
+      joinColumn:
+        name: filterID
+        referencedColumnName: id

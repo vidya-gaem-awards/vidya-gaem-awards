@@ -1,0 +1,29 @@
+VGA\Model\News:
+  type: entity
+  table: news
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    headline:
+      type: string
+      nullable: true
+      length: 255
+    text:
+      type: text
+      nullable: false
+    timestamp:
+      type: datetime
+      nullable: false
+    visible:
+      type: boolean
+      nullable: false
+  manyToOne:
+    user:
+      targetEntity: VGA\Model\User
+      joinColumn:
+        name: userID
+        referencedColumnName: steamID
+        nullable: false

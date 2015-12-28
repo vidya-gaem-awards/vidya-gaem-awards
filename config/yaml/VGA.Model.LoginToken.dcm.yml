@@ -1,0 +1,32 @@
+VGA\Model\LoginToken:
+  type: entity
+  table: login_tokens
+  id:
+    user:
+      associationKey: true
+  fields:
+    name:
+      type: string
+      nullable: false
+      length: 255
+    avatar:
+      type: string
+      nullable: false
+      length: 255
+    token:
+      type: string
+      nullable: false
+      length: 255
+    generated:
+      type: datetime
+      nullable: false
+    expires:
+      type: datetime
+      nullable: false
+  oneToOne:
+    user:
+      targetEntity: User
+      inversedBy: loginToken
+      joinColumn:
+        name: userID
+        referencedColumnName: steamID

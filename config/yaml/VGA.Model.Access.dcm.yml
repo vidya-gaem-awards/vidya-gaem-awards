@@ -1,0 +1,52 @@
+VGA\Model\Access:
+  type: entity
+  table: access
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    cookieID:
+      type: string
+      nullable: false
+      length: 255
+    timestamp:
+      type: datetime
+      nullable: false
+    page:
+      type: string
+      nullable: false
+      length: 30
+    requestString:
+      type: string
+      nullable: false
+      length: 255
+    requestMethod:
+      type: string
+      nullable: false
+      length: 4
+    ip:
+      type: string
+      nullable: false
+      length: 15
+    userAgent:
+      type: string
+      nullable: false
+      length: 255
+    filename:
+      type: string
+      nullable: false
+      length: 255
+    referer:
+      type: string
+      nullable: true
+      length: 255
+  manyToOne:
+    user:
+      targetEntity: VGA\Model\User
+      nullable: true
+      joinColumn:
+        name: userID
+        referencedColumnName: steamID
+        nullable: true

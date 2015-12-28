@@ -1,0 +1,57 @@
+VGA\Model\Category:
+  type: entity
+  table: categories
+  id:
+    id:
+      type: string
+      nullable: false
+      length: 30
+  fields:
+    name:
+      type: string
+      nullable: false
+      length: 100
+    subtitle:
+      type: string
+      nullable: false
+      length: 200
+    order:
+      type: integer
+      nullable: false
+    comments:
+      type: text
+      nullable: true
+    enabled:
+      type: boolean
+      nullable: false
+    nominationsEnabled:
+      type: boolean
+      nullable: false
+    secret:
+      type: boolean
+      nullable: false
+      options:
+        comment: 'Secret categories only show up during voting'
+  manyToOne:
+    autocompleter:
+      targetEntity: Autocompleter
+      joinColumn:
+        name: autocompleteID
+        referencedColumnName: id
+        nullable: true
+  oneToMany:
+    feedback:
+      targetEntity: CategoryFeedback
+      mappedBy: category
+    nominees:
+      targetEntity: Nominee
+      mappedBy: category
+    userNominations:
+      targetEntity: UserNomination
+      mappedBy: category
+    votes:
+      targetEntity: Vote
+      mappedBy: category
+    resultCache:
+      targetEntity: ResultCache
+      mappedBy: category

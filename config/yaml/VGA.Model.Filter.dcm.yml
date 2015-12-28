@@ -1,0 +1,20 @@
+VGA\Model\Filter:
+  type: entity
+  table: filters
+  id:
+    id:
+      type: string
+      length: 40
+      nullable: false
+  fields:
+    regex:
+      type: string
+      length: 255
+      nullable: false
+    value:
+      type: integer
+      nullable: false
+  oneToMany:
+    resultCache:
+      targetEntity: ResultCache
+      mappedBy: filter

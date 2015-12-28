@@ -1,0 +1,20 @@
+VGA\Model\Login:
+  type: entity
+  table: logins
+  id:
+    id:
+      type: integer
+      nullable: false
+      generator:
+        strategy: AUTO
+  fields:
+    timestamp:
+      type: datetime
+      nullable: false
+  manyToOne:
+    user:
+      targetEntity: User
+      joinColumn:
+        name: userID
+        referencedColumnName: steamID
+        nullable: false

@@ -1,0 +1,21 @@
+VGA\Model\CategoryFeedback:
+  type: entity
+  table: category_feedback
+  id:
+    category:
+      associationKey: true
+    user:
+      type: string
+      nullable: false
+      length: 45
+  fields:
+    opinion:
+      type: smallint
+      nullable: false
+  manyToOne:
+    category:
+      targetEntity: Category
+      inversedBy: feedback
+      joinColumn:
+        name: categoryID
+        referencedColumnName: id

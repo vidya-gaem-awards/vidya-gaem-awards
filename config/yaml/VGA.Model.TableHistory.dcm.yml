@@ -1,0 +1,31 @@
+VGA\Model\TableHistory:
+  type: entity
+  table: table_history
+  id:
+    id:
+      type: integer
+      nullable: false
+      generator:
+        strategy: AUTO
+  fields:
+    table:
+      type: string
+      nullable: false
+      length: 30
+    entry:
+      type: string
+      nullable: false
+      length: 255
+    values:
+      type: json_array
+      nullable: false
+    timestamp:
+      type: datetime
+      nullable: false
+  manyToOne:
+    user:
+      targetEntity: VGA\Model\User
+      joinColumn:
+        name: userID
+        referencedColumnName: steamID
+        nullable: false

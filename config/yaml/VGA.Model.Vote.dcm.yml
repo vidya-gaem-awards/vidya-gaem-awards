@@ -1,0 +1,43 @@
+VGA\Model\Vote:
+  type: entity
+  table: votes
+  id:
+    cookieID:
+      type: string
+      nullable: false
+      length: 255
+    category:
+      associationKey: true
+  fields:
+    preferences:
+      type: json_array
+      nullable: false
+    timestamp:
+      type: datetime
+      nullable: false
+    ip:
+      type: string
+      nullable: false
+      length: 45
+    votingCode:
+      type: string
+      nullable: true
+      length: 20
+    number:
+      type: integer
+      nullable: false
+  manyToOne:
+    category:
+      targetEntity: Category
+      nullable: false
+      inversedBy: votes
+      joinColumn:
+        name: categoryID
+        referencedColumnName: id
+    user:
+      targetEntity: User
+      nullable: true
+      inversedBy: votes
+      joinColumn:
+        name: userID
+        referencedColumnName: steamID

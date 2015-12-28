@@ -1,0 +1,59 @@
+VGA\Model\User:
+  type: entity
+  table: users
+  id:
+    steamID:
+      type: string
+      length: 17
+  fields:
+    name:
+      type: string
+      nullable: false
+      length: 255
+    special:
+      type: boolean
+      nullable: false
+    firstLogin:
+      type: datetime
+      nullable: true
+    lastLogin:
+      type: datetime
+      nullable: true
+    primaryRole:
+      type: string
+      nullable: true
+      length: 255
+    email:
+      type: string
+      nullable: true
+      length: 255
+    notes:
+      type: text
+      nullable: true
+    website:
+      type: string
+      nullable: true
+      length: 40
+    avatar:
+      type: blob
+      nullable: true
+  oneToMany:
+    votes:
+      targetEntity: Vote
+      mappedBy: user
+  oneToOne:
+    loginToken:
+      targetEntity: LoginToken
+      mappedBy: user
+  manyToMany:
+    permissions:
+      targetEntity: Permission
+      inversedBy: users
+      joinTable:
+        name: user_permissions
+        joinColumns:
+          userID:
+            referencedColumnName: steamID
+        inverseJoinColumns:
+          permissionID:
+            referencedColumnName: id
