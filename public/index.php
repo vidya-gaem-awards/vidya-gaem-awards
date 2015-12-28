@@ -20,7 +20,6 @@ require(__DIR__ . '/../bootstrap.php');
 // Basic setup
 $em = DependencyManager::getEntityManager();
 $request = Request::createFromGlobals();
-$twig = DependencyManager::getTwig();
 $session = new Session();
 $session->start();
 
@@ -81,9 +80,13 @@ $context->fromRequest($request);
 $_SERVER['HTTPS'] = 'on';
 $context->setScheme('https');
 
+$generator = new UrlGenerator($routes, $context);
+
+// We can't instantiate Twig object any earlier as we need the UrlGenerator
+$twig = DependencyManager::getTwig($generator);
+
 // Steam login link
 if ($user instanceof AnonymousUser) {
-    $generator = new UrlGenerator($routes, $context);
     $returnLink = $generator->generate(
         'login',
         ['return' => $request->getPathInfo()],

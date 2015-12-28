@@ -2,6 +2,8 @@
 namespace VGA;
 
 use Doctrine\ORM;
+use Symfony\Bridge\Twig\Extension\RoutingExtension;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DependencyManager
 {
@@ -64,7 +66,7 @@ class DependencyManager
         return $dbh;
     }
 
-    public static function getTwig()
+    public static function getTwig(UrlGeneratorInterface $urlGenerator)
     {
         if (self::$twig) {
             return self::$twig;
@@ -72,6 +74,7 @@ class DependencyManager
 
         $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../views');
         $twig = new \Twig_Environment($loader);
+        $twig->addExtension(new RoutingExtension($urlGenerator));
 
         self::$twig = $twig;
         return $twig;
