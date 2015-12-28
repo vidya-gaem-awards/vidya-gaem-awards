@@ -58,4 +58,4 @@ if (strlen($result) > 0) {
 
 // Send them back where they came from
 $return = rtrim(implode("/", array_slice($SEGMENTS, 1)), "/");
-header("Location: http://" . DOMAIN . "/$return");
+header("Location: https://" . DOMAIN . "/$return");

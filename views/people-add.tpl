@@ -9,7 +9,7 @@
         <p>You can use this page to add a new user to the user list. They will start with <a href="/people/permissions">level 1 permissions</a> by default. 
         Note that they will have had to have logged into the /v/GA site at least once before they can be added.</p>
         <p>This search field expects the <strong>steam community ID</strong> of the user, which is a 17 digit string of numbers. This is yours, for example: <tag:communityID /></p>
-        <p>If you don't know their community ID, look it up using <a href="http://steamidconverter.com">this website</a>. You want the field called <tt>steamID64</tt>.</p>
+        <p>If you don't know their community ID, look it up using <a href="https://steamid.io/">this website</a>. You want the field called <tt>steamID64</tt>.</p>
     </div>
     <div class="span6">
         <div class="well well-small">
@@ -67,7 +67,7 @@ $('#search-form').submit(function(event) {
         } else {
             var name = $('<div/>').text(data.Name).html();
             msg = "<img src='data:image/png;base64," + data.Avatar + "' />";
-            msg += "&nbsp;&nbsp;<a href='http://steamcommunity.com/profiles/" + data.SteamID + "'>";
+            msg += "&nbsp;&nbsp;<a href='https://steamcommunity.com/profiles/" + data.SteamID + "'>";
             msg += name + "</a>";
             $("#btn-add").attr("data-id", data.SteamID);
             $("#result-msg").html(msg);

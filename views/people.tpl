@@ -44,7 +44,7 @@ $(document).ready(function()
     <tbody>
         <loop:users>
         <tr class="<tag:users[].Class />">
-            <td style='padding: 0px; width: 32px; height: 32px; margin: 0px;'><a href="http://steamcommunity.com/profiles/<tag:users[].SteamID />"><img src="data:image/png;base64,<tag:users[].Avatar />" /></a></td>
+            <td style='padding: 0px; width: 32px; height: 32px; margin: 0px;'><a href="https://steamcommunity.com/profiles/<tag:users[].SteamID />"><img src="data:image/png;base64,<tag:users[].Avatar />" /></a></td>
             <td style='white-space: nowrap;"'><a href="/people/<tag:users[].SteamID />"><tag:users[].Name /></a></td>
             <td><tag:users[].DisplayGroups /></a></td>  
             <td><tag:users[].PrimaryRole /></td>

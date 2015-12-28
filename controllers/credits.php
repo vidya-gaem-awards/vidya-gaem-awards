@@ -23,13 +23,13 @@ function parseCredits($input)
 {
 
     $sites = array(
-    "youtube" => "http://www.youtube.com/",
+    "youtube" => "https://www.youtube.com/",
     "twitter" => "https://twitter.com/",
-    "steam" => "http://steamcommunity.com/id/",
-    "audioboo.fm" => "http://audioboo.fm/",
-    "website" => "http://",
-    "twitch" => "http://www.twitch.tv/",
-    "github" => "http://github.com/"
+    "steam" => "https://steamcommunity.com/id/",
+    "audioboo.fm" => "https://audioboo.fm/",
+    "website" => "",
+    "twitch" => "https://www.twitch.tv/",
+    "github" => "https://github.com/"
     );
   
     $input = explode("\n\n", $input);

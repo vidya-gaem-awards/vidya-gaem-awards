@@ -85,7 +85,7 @@
         <ul>
             
             <if:SteamAccount>
-                <li>Steam profile: <a href="http://steamcommunity.com/profiles/<tag:SteamID />"><tag:SteamID /></a></li>
+                <li>Steam profile: <a href="https://steamcommunity.com/profiles/<tag:SteamID />"><tag:SteamID /></a></li>
                 <li>Groups:
                 
                     <if:Groups>

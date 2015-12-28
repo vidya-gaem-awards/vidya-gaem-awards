@@ -14,7 +14,7 @@
         <loop:applications>
         <tr>
             <td><tag:applications[].ID /></td>
-            <td><a href="http://steamcommunity.com/profiles/<tag:applications[].UserID />"><tag:applications[].Name /></a></td>
+            <td><a href="https://steamcommunity.com/profiles/<tag:applications[].UserID />"><tag:applications[].Name /></a></td>
             <td><tag:applications[].Email /></a></td>   
             <td><tag:applications[].Interest /></td>
             <td><tag:applications[].Timestamp />

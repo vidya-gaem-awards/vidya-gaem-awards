@@ -23,7 +23,7 @@ color: white;
     /*border: 1px solid #34345C;*/
     width: 958px;
     height: 420px;
-    background: url('http://i.imgur.com/0g30jh0.gif');
+    background: url('https://i.imgur.com/0g30jh0.gif');
     background-position: center;
     margin-left: auto;
     margin-right: auto;
@@ -59,7 +59,7 @@ a:hover {
 }
 .timezones{font-size:17px;}.timezones dl{margin-top:0px;}.timezones dt{margin-top:20px;}.timezones dt:first-child{margin-top:0px;}
 </style>
-<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 <if:countdown>
 <script type="text/javascript">
 var serverLoad = Date.parse("<tag:serverDate />");

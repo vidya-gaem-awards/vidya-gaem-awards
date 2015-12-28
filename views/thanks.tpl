@@ -3,9 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
-<link rel="stylesheet" href="http://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
-<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
+<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+<script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
   font-family: "Bebas Neue";
@@ -104,7 +104,7 @@ a:hover {
       <div class="row">
         <div class="span8 offset2">
       <div class="logo">
-        <iframe width="100%" height="460" src="http://www.youtube.com/embed/jqHdj8uVggY?rel=0" frameborder="0"
+        <iframe width="100%" height="460" src="https://www.youtube.com/embed/jqHdj8uVggY?rel=0" frameborder="0"
                  allowfullscreen=""></iframe>
         <!-- <img src="/public/2014voting/2014logo.png" alt="2014 Vidya Gaem Awards Logo"> -->
         <!-- <img src="/public/2013_logo.png"> -->
@@ -116,15 +116,15 @@ a:hover {
       </div>
       <div class="subtitle">
         <a href="https://www.youtube.com/watch?v=jqHdj8uVggY">Watch it on YouTube</a><br>
-        <a href="http://www.twitch.tv/vidyagaemawards/c/6015044">Watch it on Twitch</a><br>
+        <a href="https://www.twitch.tv/vidyagaemawards/c/6015044">Watch it on Twitch</a><br>
         Direct download (soon™)<br>
-        <a href="http://www.twitch.tv/vidyagaemawards/c/6014967">Watch the preshow skits</a><br>
-        <a href="http://vidyagaemawards.com/music/2014-vga-music-mix.mp3">Download the preshow music mix</a><br>
+        <a href="https://www.twitch.tv/vidyagaemawards/c/6014967">Watch the preshow skits</a><br>
+        <a href="https://vidyagaemawards.com/music/2014-vga-music-mix.mp3">Download the preshow music mix</a><br>
         <a href="/winners">See the winners</a><br>
         <a href="/credits">See the credits</a><br>
       </div>
       <div class="subtitle">
-        <a href="http://vidyagaemawards.com/previous-years" class="main">View previous years</a><br>
+        <a href="https://vidyagaemawards.com/previous-years" class="main">View previous years</a><br>
       </div>
     </div>
   </div>

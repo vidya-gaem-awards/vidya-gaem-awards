@@ -58,7 +58,7 @@ function startsWith($haystack, $needle)
     return substr($haystack, 0, strlen($needle)) == $needle;
 }
 
-$query = "SELECT `UniqueID`, `Timestamp`, `Refer` FROM `access` WHERE (`Refer` NOT LIKE \"http://%vidyagaemawards.com%\" OR `Refer` IS NULL) AND `UniqueID` != \"\"";
+$query = "SELECT `UniqueID`, `Timestamp`, `Refer` FROM `access` WHERE (`Refer` NOT LIKE \"https://%vidyagaemawards.com%\" OR `Refer` IS NULL) AND `UniqueID` != \"\"";
 $query .= " ORDER BY `UniqueID` ASC, `Timestamp` ASC";
 $result = $mysqli->query($query);
 
