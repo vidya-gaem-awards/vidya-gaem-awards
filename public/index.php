@@ -110,9 +110,9 @@ try {
     $match = $matcher->match($request->getPathInfo());
 
     if (!class_exists($match['controller'])) {
-        http_response_code(500);
-        echo '500 &ndash; controller does not exist';
-        exit;
+        $controller = new Controllers\ErrorController($container);
+        $controller->internalErrorAction();
+        return;
     }
 
     /** @var Controllers\BaseController $controller */
@@ -125,9 +125,10 @@ try {
     }
 
     if (!method_exists($controller, $action)) {
-        http_response_code(500);
-        echo '500 &ndash; action does not exist';
-        exit;
+        /** @var Controllers\ErrorController $controller */
+        $controller = new Controllers\ErrorController($container);
+        $controller->internalErrorAction();
+        return;
     }
 
     unset($match['controller']);
@@ -135,7 +136,9 @@ try {
     call_user_func_array([$controller, $action], $match);
 
 } catch (ResourceNotFoundException $e) {
-    echo '404 &ndash; page not found';
+    $controller = new Controllers\ErrorController($container);
+    $controller->notFoundAction();
+    return;
 }
 
 exit;
