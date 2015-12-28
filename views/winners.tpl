@@ -1,15 +1,15 @@
 <style type="text/css">
 @font-face {
   font-family: "Bebas Neue";
-  src: url('/public/fonts/BebasNeue.eot');
-  src: url('/public/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
-  url("/public/fonts/BebasNeue.woff") format("woff"),
-  url("/public/fonts/BebasNeue.ttf") format("truetype");
-url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
+  src: url('/fonts/BebasNeue.eot');
+  src: url('/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
+  url("/fonts/BebasNeue.woff") format("woff"),
+  url("/fonts/BebasNeue.ttf") format("truetype");
+url("/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
-  background: url("/public/2014voting/bg_tile.png") #212121 repeat;
+  background: url("/2014voting/bg_tile.png") #212121 repeat;
   font-family: Calibri, Arial, sans-serif;
   color: white;
   overflow-x: hidden;
@@ -50,7 +50,7 @@ p {
     -webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.2);
     box-shadow:         0px 0px 30px 5px rgba(0,0,0,0.2);
 
-    /*background: rgba(246, 231, 190, 0.5) url("/public/2014voting/votebox_background.png");*/
+    /*background: rgba(246, 231, 190, 0.5) url("/2014voting/votebox_background.png");*/
 }
 
 .navbar, .navbar .navbar-inner {
@@ -58,7 +58,7 @@ p {
   -webkit-box-shadow: none;
   box-shadow:         none;
   border:             none;
-  background-image: url("/public/2014voting/bg_tile.png");
+  background-image: url("/2014voting/bg_tile.png");
   background-color: #212121;
 }
 
@@ -150,12 +150,12 @@ p {
 .page-header {
   text-align: center;
   border: none;
-  background: transparent url("/public/2014voting/shadow_top.png") bottom center no-repeat;
+  background: transparent url("/2014voting/shadow_top.png") bottom center no-repeat;
   margin-bottom: 0px;
 }
 
 .page-header.the-bottom {
-  background: url("/public/2014voting/shadow_bot.png") center 14px no-repeat;
+  background: url("/2014voting/shadow_bot.png") center 14px no-repeat;
   padding-top: 20px;
   margin-bottom: 20px;
 }
@@ -176,7 +176,7 @@ p {
       <div class="category">
         <div class="row">
           <div class="span4">
-            <img class="winner" src="/public/winners/01189998819991197253/<tag:categories[].ID />.png">
+            <img class="winner" src="/winners/01189998819991197253/<tag:categories[].ID />.png">
           </div>
           <div class="span7">
             <ul>

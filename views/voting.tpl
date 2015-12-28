@@ -4,16 +4,16 @@
     <title>/v/GAs - Voting</title>
 
     
-    <link rel="stylesheet" href="/public/jquery/jquery-ui-1.9.2.min.css">
-    <link rel="stylesheet" href="/public/style.css">
-    <link rel="stylesheet" href="/public/voting.css">
+    <link rel="stylesheet" href="/jquery/jquery-ui-1.9.2.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/voting.css">
     
-    <script src='/public/jquery/jquery-1.8.2.min.js'></script>
-    <script src='/public/jquery/jquery-ui-1.9.2.min.js'></script>
-	<script src="/public/jquery/jquery.ui.touch-punch.min.js"></script>
-    <script src='/public/bootstrap-2.1.0/js/bootstrap.min.js'></script>
-    <script src='/public/dumbshit.js'></script>
-    <script src='/public/voting.js'></script>
+    <script src='/jquery/jquery-1.8.2.min.js'></script>
+    <script src='/jquery/jquery-ui-1.9.2.min.js'></script>
+	<script src="/jquery/jquery.ui.touch-punch.min.js"></script>
+    <script src='/bootstrap-2.1.0/js/bootstrap.min.js'></script>
+    <script src='/dumbshit.js'></script>
+    <script src='/voting.js'></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
@@ -46,7 +46,7 @@
 
 
 <header>
-	<a href="/voting"><img src="/public/2014voting/2014logo.png" id="thelogo" alt="oh god it's happening again" /></a>
+	<a href="/voting"><img src="/2014voting/2014logo.png" id="thelogo" alt="oh god it's happening again" /></a>
 	<h1>The 2014 Vidya Gaem Awards</h1>
 	<h2><tag:voteText /></h2>
 </header>
@@ -62,7 +62,7 @@
     <a href="/voting/<tag:nextCategory />" class="navigation right"></a>
   </div>
   <if:votingEnabled>
-  <img src="/public/2014voting/dont_forget.png" id="dontforget" alt="Don't forget to hit submit" />
+  <img src="/2014voting/dont_forget.png" id="dontforget" alt="Don't forget to hit submit" />
   </if:votingEnabled>
   </if:category>
     
@@ -70,13 +70,13 @@
 <div id="limitsDrag"> 
     <div id="nomineeColumn" class="column">
         
-        <img src="/public/2014voting/topNominees.png" width="267px" height="105px" alt="Pick your nominees" />
+        <img src="/2014voting/topNominees.png" width="267px" height="105px" alt="Pick your nominees" />
 
         <loop:nominees>
 
         <div class="voteBox"><div id="nominee-<tag:nominees[].NomineeID />" class="aNominee" data-order="<tag:nominees[].Order />" data-nominee="<tag:nominees[].NomineeID />">
-            <img class="fakeBorder" src="/public/2014voting/votebox_foreground.png">
-            <img class="fakeBorder locked" src="/public/2014voting/votebox_foreground_locked.png">
+            <img class="fakeBorder" src="/2014voting/votebox_foreground.png">
+            <img class="fakeBorder locked" src="/2014voting/votebox_foreground_locked.png">
 			<div class="info">
 				<div class="innerInfo"><tag:nominees[].FlavorText /></div>
 			</div>
@@ -99,7 +99,7 @@
     <!if:votingNotYetOpen>
     <div id="voteColumn" class="column">
 
-        <img src="/public/2014voting/topVotes.png" width="267px" height="105px" alt="Drag and drop to vote"/>
+        <img src="/2014voting/topVotes.png" width="267px" height="105px" alt="Drag and drop to vote"/>
         
         <loop:dumbloop>
         <div id="voteBox<tag:dumbloop[] />" class="voteBox">
@@ -156,7 +156,7 @@
 </div>
 </if:category>
 
-<img src="/public/dumb.gif" alt="" class="shit">
+<img src="/dumb.gif" alt="" class="shit">
 </div>
 
 <div id="containerCategories">

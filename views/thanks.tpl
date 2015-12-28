@@ -3,21 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="https://2012.vidyagaemawards.com/bootstrap-2.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://2012.vidyagaemawards.com/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
 <script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
   font-family: "Bebas Neue";
-  src: url('/public/fonts/BebasNeue.eot');
-  src: url('/public/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
-  url("/public/fonts/BebasNeue.woff") format("woff"),
-  url("/public/fonts/BebasNeue.ttf") format("truetype");
-  url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
+  src: url('/fonts/BebasNeue.eot');
+  src: url('/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
+  url("/fonts/BebasNeue.woff") format("woff"),
+  url("/fonts/BebasNeue.ttf") format("truetype");
+  url("/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
-  background: #212121 url("/public/2014voting/bg_tile.png");
+  background: #212121 url("/2014voting/bg_tile.png");
   font-family: Calibri, Arial, sans-serif;
   text-align: center;
   color: white;
@@ -106,8 +106,8 @@ a:hover {
       <div class="logo">
         <iframe width="100%" height="460" src="https://www.youtube.com/embed/jqHdj8uVggY?rel=0" frameborder="0"
                  allowfullscreen=""></iframe>
-        <!-- <img src="/public/2014voting/2014logo.png" alt="2014 Vidya Gaem Awards Logo"> -->
-        <!-- <img src="/public/2013_logo.png"> -->
+        <!-- <img src="/2014voting/2014logo.png" alt="2014 Vidya Gaem Awards Logo"> -->
+        <!-- <img src="/2013_logo.png"> -->
       </div>
       </div></div>
       <div class="title">
