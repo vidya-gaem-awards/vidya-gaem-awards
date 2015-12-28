@@ -1,6 +1,4 @@
 <?php
-define('TIMEZONE', 'America/New_York');
-
 // Database connection information
 define('DB_HOST', 'localhost');
 define('DB_USER', '');
