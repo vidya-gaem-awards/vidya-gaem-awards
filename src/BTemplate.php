@@ -53,7 +53,7 @@ class BTemplate
     Method: bTemplate()
     Simply sets the base path (if you don't set the default).
   \*--------------------------------------------------------------*/
-    public function bTemplate($base_path = null, $reset_vars = true)
+    public function __construct($base_path = null, $reset_vars = true)
     {
         if ($base_path) {
             $this->base_path = $base_path;
