@@ -37,7 +37,7 @@ class AuthController extends BaseController
 
         $login = new Login();
 
-        $avatar = base64_encode(file_get_contents($steam->getIconAvatarUrl()));
+        $avatar = base64_encode(file_get_contents($steam->getMediumAvatarUrl()));
 
         $user
             ->setName($steam->getNickname())
@@ -64,6 +64,8 @@ class AuthController extends BaseController
             ->setAvatar($avatar)
             ->setToken($randomToken);
 
+        $this->em->flush();
+
         $this->session->set('user', $steamID);
 
         $response->headers->setCookie(new Cookie(
@@ -76,12 +78,12 @@ class AuthController extends BaseController
         $response->send();
     }
 
-    public function logoutAction($return)
+    public function logoutAction()
     {
         $this->session->invalidate();
 
-        // We remove the rememberMeToken, but not the other random cookie.
-        $response = new RedirectResponse('https://' . DOMAIN . $return);
+        // We remove the rememberMeToken, but not the other randomly generated cookie.
+        $response = new RedirectResponse($this->request->server->get('HTTP_REFERER'));
         $response->headers->removeCookie('rememberMeToken');
         $response->send();
     }

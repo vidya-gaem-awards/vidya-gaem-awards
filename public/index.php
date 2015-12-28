@@ -23,7 +23,10 @@ $request = Request::createFromGlobals();
 $session = new Session();
 $session->start();
 
-// Handle authentication
+// TODO: unsure if this is needed when using the Response class
+header("Content-type: text/html; charset=utf-8");
+
+// Check if the user is currently logged in
 if ($session->get('user')) {
     $user = $em->getRepository(User::class)->find($session->get('user'));
 } elseif ($cookie = $request->cookies->get('rememberMeToken')) {
@@ -242,10 +245,6 @@ $postOnly = array(
 
 // Pages have the option of specifying this variable to load a different template
 $CUSTOM_TEMPLATE = false;
-
-header("Content-type: text/html; charset=utf-8");
-
-require(__DIR__ . '/../bootstrap.php');
 
 function canDo($privilege)
 {
