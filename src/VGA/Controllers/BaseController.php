@@ -4,6 +4,7 @@ namespace VGA\Controllers;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use VGA\DependencyContainer;
 use VGA\Model\User;
 
 abstract class BaseController
@@ -26,22 +27,12 @@ abstract class BaseController
     /** @var User */
     protected $user;
 
-    public function initialize(
-        EntityManager $em,
-        Request $request,
-        \PDO $dbh,
-        \Twig_Environment $twig,
-        Session $session,
-        User $user
-    ) {
-        $twig->addGlobal('user', $user);
-        $twig->addGlobal('flashbag', $session->getFlashBag()->all());
-
-        $this->em = $em;
-        $this->request = $request;
-        $this->dbh = $dbh;
-        $this->twig = $twig;
-        $this->session = $session;
-        $this->user = $user;
+    public function __construct(DependencyContainer $container) {
+        $this->em = $container->em;
+        $this->request = $container->request;
+        $this->dbh = $container->dbh;
+        $this->twig = $container->twig;
+        $this->session = $container->session;
+        $this->user = $container->user;
     }
 }

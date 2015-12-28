@@ -9,6 +9,7 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use VGA\Controllers;
+use VGA\DependencyContainer;
 use VGA\DependencyManager;
 use VGA\Model\AnonymousUser;
 use VGA\Model\LoginToken;
@@ -95,6 +96,15 @@ if ($user instanceof AnonymousUser) {
 
 $matcher = new UrlMatcher($routes, $context);
 
+$container = new DependencyContainer(
+    $em,
+    $request,
+    DependencyManager::getDatabaseHandle(),
+    $twig,
+    $session,
+    $user
+);
+
 // Call the correct controller and method
 try {
     $match = $matcher->match($request->getPathInfo());
@@ -106,15 +116,7 @@ try {
     }
 
     /** @var Controllers\BaseController $controller */
-    $controller = new $match['controller']();
-    $controller->initialize(
-        $em,
-        $request,
-        DependencyManager::getDatabaseHandle(),
-        $twig,
-        $session,
-        $user
-    );
+    $controller = new $match['controller']($container);
 
     if (isset($match['action'])) {
         $action = $match['action'] . 'Action';
