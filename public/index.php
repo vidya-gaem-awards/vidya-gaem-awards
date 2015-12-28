@@ -68,9 +68,12 @@ $routes->add('login', new Route(
     ['return' => '.*']
 ));
 $routes->add('logout', new Route(
-    '/logout/{return}',
-    ['controller' => Controllers\AuthController::class, 'action' => 'logout'],
-    ['return' => '.*']
+    '/logout',
+    ['controller' => Controllers\AuthController::class, 'action' => 'logout']
+));
+$routes->add('privacy', new Route(
+    '/privacy',
+    ['controller' => Controllers\StaticController::class, 'action' => 'privacy']
 ));
 
 $context = new RequestContext();
