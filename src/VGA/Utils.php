@@ -15,13 +15,6 @@ class Utils
         return $steamID;
     }
 
-    public static function getAPIinfo($communityID)
-    {
-        $result = file_get_contents("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=".STEAM_API_KEY."&steamids=$communityID");
-        $json = json_decode($result);
-        return $json->response->players[0];
-    }
-
     public static function storeMessage($type, $string, $value = null)
     {
         $_SESSION['message'] = array($type, $string);
