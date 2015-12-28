@@ -1,12 +1,14 @@
 <?php
+use VGA\Utils;
+
 $current = time();
 $start = strtotime(VOTING_START);
 $finish = strtotime(VOTING_END);
 
 if ($current < $start) {
-    return_json("error", "Voting hasn't opened yet.");
+    Utils::returnJSON("error", "Voting hasn't opened yet.");
 } elseif ($current > $finish) {
-    return_json("error", "Voting has closed.");
+    Utils::returnJSON("error", "Voting has closed.");
 }
 
 $preferences = array_values(array_filter($_POST['Preferences']));
@@ -15,7 +17,7 @@ unset($preferences[0]);
 
 // Check for duplicate nominees
 if (count($preferences) != count(array_unique($preferences))) {
-    return_json("error", "Duplicate nominees are not allowed.");
+    Utils::returnJSON("error", "Duplicate nominees are not allowed.");
 }
 
 // Verify that all the nominees actually exist in that category
@@ -33,7 +35,7 @@ while ($stmt->fetch()) {
 }
 
 if (count($missing) > 0) {
-    return_json("error", "The following nominees don't exist in that category: " . implode(", ", $missing));
+    Utils::returnJSON("error", "The following nominees don't exist in that category: " . implode(", ", $missing));
 }
 
 $preferences = json_encode($preferences);
@@ -56,9 +58,9 @@ $stmt->bind_param(
 );
 $result = $stmt->execute();
 if ($result) {
-    action("voted", $_POST['Category']);
+    Utils::action("voted", $_POST['Category']);
 } else {
-    return_json("error", "MySQL error: ".$stmt->error);
+    Utils::returnJSON("error", "MySQL error: ".$stmt->error);
 }
 
-return_json("success");
+Utils::returnJSON("success");

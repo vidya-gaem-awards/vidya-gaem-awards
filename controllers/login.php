@@ -1,11 +1,13 @@
 <?php
+use VGA\Utils;
+
 // TODO: replace the current library with something less hacked together
 // http://stackoverflow.com/questions/18674042/steam-api-authentication/18680478
 $result = SteamSignIn::validate();
 if (strlen($result) > 0) {
     $_SESSION['login'] = $result;
   
-    $info = getAPIinfo($result);
+    $info = Utils::getAPIinfo($result);
     $_SESSION['name'] = $info->personaname;
     $_SESSION['avatar'] = $info->avatar;
 

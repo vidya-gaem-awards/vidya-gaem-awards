@@ -1,4 +1,6 @@
 <?php
+use VGA\Utils;
+
 // Get basic information about the user
 $query = "SELECT `Name`, `Special`, `Avatar` FROM `users` WHERE `SteamID` = ?";
 $stmt = $mysql->prepare($query);
@@ -8,11 +10,11 @@ $stmt->bind_result($name, $special, $avatar);
 $stmt->store_result();
 
 if ($stmt->num_rows === 0) {
-    return_json("error", "no matches");
+    Utils::returnJSON("error", "no matches");
 }
 $stmt->fetch();
 if ($special === 1) {
-    return_json("error", "already special", array("name" => $name));
+    Utils::returnJSON("error", "already special", array("name" => $name));
 }
 
 if ($_POST['Add']) {
@@ -27,10 +29,10 @@ if ($_POST['Add']) {
     $stmt->bind_param('s', $_POST['ID']);
     $stmt->execute();
 
-    return_json("success");
+    Utils::returnJSON("success");
 } else {
     // Return the information so you know you've got the right person
-    return_json("success", true, array(
+    Utils::returnJSON("success", true, array(
         "Name" => $name,
         "Avatar" => $avatar,
         "SteamID" => $_POST['ID']));

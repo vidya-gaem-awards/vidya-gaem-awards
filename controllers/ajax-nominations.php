@@ -1,13 +1,15 @@
 <?php
+use VGA\Utils;
+
 $action = $_POST['Action'];
 $category = $_POST['Category'];
 $nominee = $_POST['NomineeID'];
 
 // Sanity checking
 if ($action != "edit" && $action != "delete" && $action != "new") {
-    return_json("error", "Invalid action specified.");
+    Utils::returnJSON("error", "Invalid action specified.");
 } elseif (trim($nominee) == "") {
-    return_json("error", "A nominee ID is required.");
+    Utils::returnJSON("error", "A nominee ID is required.");
 }
 
 // Check if the category exists and is enabled
@@ -19,11 +21,11 @@ if ($action == "new") {
     $stmt->bind_result($enabled);
     $stmt->store_result();
     if ($stmt->num_rows === 0) {
-        return_json("error", "The specified category doesn't exist.");
+        Utils::returnJSON("error", "The specified category doesn't exist.");
     }
     $stmt->fetch();
     if ($enabled !== 1) {
-        return_json("error", "The specified category is not enabled.");
+        Utils::returnJSON("error", "The specified category is not enabled.");
     }
 }
 
@@ -38,9 +40,9 @@ $stmt->store_result();
 $nomineeExists = $stmt->num_rows === 1;
   
 if ($action != "new" && !$nomineeExists) {
-    return_json("error", "Couldn't find that nominee in that category.");
+    Utils::returnJSON("error", "Couldn't find that nominee in that category.");
 } elseif ($action == "new" && $nomineeExists) {
-    return_json(
+    Utils::returnJSON(
         "error",
         "A nominee with that ID already exists in this category."
     );
@@ -53,16 +55,16 @@ if ($action == "delete") {
     $stmt->bind_param("ss", $category, $nominee);
     $stmt->execute();
 
-    action("nominee-delete", $category, $nominee);
+    Utils::action("nominee-delete", $category, $nominee);
 
-    return_json("success");
+    Utils::returnJSON("success");
 }
 
 // Adding or editing a nominee
 if (trim($_POST['Name']) == "") {
-    return_json("error", "The nominee must have a name.");
+    Utils::returnJSON("error", "The nominee must have a name.");
 } elseif (preg_match('/[^a-z0-9-]/', $_POST['NomineeID'])) {
-    return_json("error", "The nominee ID should consist of lowercase letters, ".
+    Utils::returnJSON("error", "The nominee ID should consist of lowercase letters, ".
     "numbers and dashes only.");
 }
 
@@ -83,10 +85,10 @@ $result = $stmt->execute();
 
 if (!$result) {
     error_log("MySQL error: ".$stmt->error);
-    return_json("error", "A MySQL error occurred.");
+    Utils::returnJSON("error", "A MySQL error occurred.");
 }
 
-action("nominee-$action", $category, $nominee);
+Utils::action("nominee-$action", $category, $nominee);
 
 // Perform a history update
 $query = "INSERT INTO `history` "
@@ -105,4 +107,4 @@ if (!$result) {
     error_log("MySQL error: ".$stmt->error);
 }
 
-return_json("success");
+Utils::returnJSON("success");

@@ -1,4 +1,6 @@
 <?php
+use VGA\Utils;
+
 $tpl->set("confirmDeletion", false);
 $tpl->set("editFormError", false);
 
@@ -19,9 +21,9 @@ if (!empty($_POST) && canDo("categories-edit")) {
             $result = mysql_query($query);
       
             if ($result) {
-                storeMessage("formSuccess", "Category \"$category\" successfully deleted.");
-                action("category-delete", $_POST['category']);
-                refresh();
+                Utils::storeMessage("formSuccess", "Category \"$category\" successfully deleted.");
+                Utils::action("category-delete", $_POST['category']);
+                Utils::refresh();
             } else {
                 $tpl->set("formError", "An error occurred: " . mysql_error());
             }
@@ -63,10 +65,10 @@ if (!empty($_POST) && canDo("categories-edit")) {
                     $query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
                     $query .= "VALUES ('$ID', 'categories', '$category', '$serial', NOW())";
                     mysql_query($query);
-        
-                    storeMessage("formSuccess", "Category successfully added.");
-                    action("category-added", $_POST['id']);
-                    refresh();
+
+                    Utils::storeMessage("formSuccess", "Category successfully added.");
+                    Utils::action("category-added", $_POST['id']);
+                    Utils::refresh();
                 }
             }
         } elseif ($_POST['action'] == "edit") {
@@ -107,10 +109,10 @@ if (!empty($_POST) && canDo("categories-edit")) {
                     $query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
                     $query .= "VALUES ('$ID', 'categories', '$category', '$serial', NOW())";
                     mysql_query($query);
-        
-                    storeMessage("formSuccess", "Category successfully edited.");
-                    action("category-edited", $_POST['ID']);
-                    refresh();
+
+                    Utils::storeMessage("formSuccess", "Category successfully edited.");
+                    Utils::action("category-edited", $_POST['ID']);
+                    Utils::refresh();
                 }
             }
         } elseif ($_POST['action'] == "massChangeNominations") {
@@ -120,9 +122,9 @@ if (!empty($_POST) && canDo("categories-edit")) {
                 if (!$result) {
                     $tpl->set("formError", "An error ocurred: " . mysql_error());
                 } else {
-                    storeMessage("formSuccess", "Nominations for all categories are now <strong>open</strong>.");
-                    action("mass-nomination-change", "open");
-                    refresh();
+                    Utils::storeMessage("formSuccess", "Nominations for all categories are now <strong>open</strong>.");
+                    Utils::action("mass-nomination-change", "open");
+                    Utils::refresh();
                 }
             } elseif ($_POST['todo'] == "close") {
                 $query = "UPDATE `categories` SET `NominationsEnabled` = 0";
@@ -130,9 +132,9 @@ if (!empty($_POST) && canDo("categories-edit")) {
                 if (!$result) {
                     $tpl->set("formError", "An error ocurred: " . mysql_error());
                 } else {
-                    storeMessage("formSuccess", "Nominations for all categories are now <strong>closed</strong>.");
-                    action("mass-nomination-change", "close");
-                    refresh();
+                    Utils::storeMessage("formSuccess", "Nominations for all categories are now <strong>closed</strong>.");
+                    Utils::action("mass-nomination-change", "close");
+                    Utils::refresh();
                 }
             }
         } else {

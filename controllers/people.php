@@ -1,4 +1,6 @@
 <?php
+use VGA\Utils;
+
 $tpl->set("title", "People");
 
 class User
@@ -142,9 +144,9 @@ if ($SEGMENTS[1] == "permissions") {
             if (!$result) {
                 $tpl->set("formError", "An error occurred: {$stmt->error}");
             } else {
-                storeMessage("formSuccess", "Group successfully removed.");
-                action("profile-group-removed", $steamID, $groupName);
-                refresh();
+                Utils::storeMessage("formSuccess", "Group successfully removed.");
+                Utils::action("profile-group-removed", $steamID, $groupName);
+                Utils::refresh();
             }
         } elseif (isset($_POST['AddGroup'])) {
     
@@ -161,9 +163,9 @@ if ($SEGMENTS[1] == "permissions") {
                 if (!$result) {
                     $tpl->set("formError", "An error occurred: {$stmt->error}");
                 } else {
-                    storeMessage("formSuccess", "Group successfully added.");
-                    action("profile-group-added", $steamID, $groupName);
-                    refresh();
+                    Utils::storeMessage("formSuccess", "Group successfully added.");
+                    Utils::action("profile-group-added", $steamID, $groupName);
+                    Utils::refresh();
                 }
             }
         }
@@ -215,9 +217,9 @@ if ($SEGMENTS[1] == "permissions") {
                     $stmt->bind_param('sss', $ID, $user['SteamID'], $serial);
                     $stmt->execute();
           
-                    storeMessage("formSuccess", "Details successfully updated.");
-                    action("profile-details-updated", $user['SteamID']);
-                    refresh();
+                    Utils::storeMessage("formSuccess", "Details successfully updated.");
+                    Utils::action("profile-details-updated", $user['SteamID']);
+                    Utils::refresh();
                 }
         
             } elseif ($_POST['action'] == "edit-notes" && canDo("profile-edit-notes")) {
@@ -236,9 +238,9 @@ if ($SEGMENTS[1] == "permissions") {
                     $stmt->bind_param('sss', $ID, $user['SteamID'], $serial);
                     $stmt->execute();
           
-                    storeMessage("formSuccess", "Notes successfully updated.");
-                    action("profile-notes-updated", $user['SteamID']);
-                    refresh();
+                    Utils::storeMessage("formSuccess", "Notes successfully updated.");
+                    Utils::action("profile-notes-updated", $user['SteamID']);
+                    Utils::refresh();
                 }
       
             }

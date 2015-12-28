@@ -1,4 +1,6 @@
 <?php
+use VGA\Utils;
+
 $cat = mysql_real_escape_string($_POST['Category']);
 $query = "SELECT `ID` FROM `categories` WHERE `ID` = \"$cat\"";
 $result = mysql_query($query);
@@ -24,5 +26,5 @@ if (mysql_num_rows($result) > 0) {
 
 $query = "INSERT INTO `user_nominations` (`CategoryID`, `UserID`, `Nomination`, `Timestamp`) VALUES (\"$cat\", \"$ID\", \"$nomination\", NOW())";
 mysql_query($query);
-action("nomination-made", $cat);
+Utils::action("nomination-made", $cat);
 echo "success";

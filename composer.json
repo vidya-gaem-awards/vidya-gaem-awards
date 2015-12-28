@@ -16,8 +16,7 @@
             "": "src/"
         },
         "files": [
-            "includes/config.php",
-            "includes/functions.php"
+            "includes/config.php"
         ]
     }
 }

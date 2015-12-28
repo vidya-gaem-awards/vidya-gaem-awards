@@ -1,7 +1,9 @@
 <?php
+use VGA\Utils;
+
 // Check if applications are open
 if (!APPLICATIONS_OPEN) {
-    storeMessage("formError", "Volunteer submissions for " . YEAR . " are closed. "
+    Utils::storeMessage("formError", "Volunteer submissions for " . YEAR . " are closed. "
     . "Feel free to come back next year.");
     header("Location: /home");
     exit;
@@ -10,7 +12,7 @@ if (!APPLICATIONS_OPEN) {
 // Check if all the fields were filled in
 if (strlen($_POST['name']) == 0 || strlen($_POST['email']) == 0
   || strlen($_POST['skills']) == 0) {
-    storeMessage("formError", "You must fill in all the fields.");
+    Utils::storeMessage("formError", "You must fill in all the fields.");
     header("Location: /home");
     exit;
 }
@@ -29,11 +31,11 @@ $stmt->bind_param(
 $result = $stmt->execute();
 
 if ($result) {
-    storeMessage(
+    Utils::storeMessage(
         "formSuccess",
         "Your interest has been successfully registered."
     );
-    action("application", $userID);
+    Utils::action("application", $userID);
   
   // Send out an email
     $subject = "New application";
@@ -48,7 +50,7 @@ if ($result) {
   
 } else {
     error_log("MySQL error: ".$stmt->error);
-    storeMessage("formError", "An error has occurred. "
+    Utils::storeMessage("formError", "An error has occurred. "
     . "The form has not been saved. Try sending us an email instead.");
     ;
 }

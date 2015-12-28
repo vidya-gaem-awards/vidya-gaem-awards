@@ -1,11 +1,13 @@
 <?php
+use VGA\Utils;
+
 // Sanity checking
 if (!canDo("add-video-game")) {
-    return_json("error", "You don't have access to this feature.");
+    Utils::returnJSON("error", "You don't have access to this feature.");
 } elseif (trim($_POST['Game']) == "") {
-    return_json("error", "You forgot the actual name of the game");
+    Utils::returnJSON("error", "You forgot the actual name of the game");
 } elseif (count($_POST) === 1) {
-    return_json("error", "You must select at least one platform.");
+    Utils::returnJSON("error", "You must select at least one platform.");
 }
 
 $allPlatforms = array("PC","PS3","PS4","PSV","PSN","360","XB1","XBLA","Wii",
@@ -31,9 +33,9 @@ $result = $stmt->execute();
 
 if (!$result) {
     error_log("MySQL error: ".$stmt->error);
-    return_json("error", "A MySQL error occurred.");
+    Utils::returnJSON("error", "A MySQL error occurred.");
 }
 
-action("add-video-game", $game);
+Utils::action("add-video-game", $game);
 
-return_json("success", $game);
+Utils::returnJSON("success", $game);

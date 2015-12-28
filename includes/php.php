@@ -3,8 +3,21 @@ header("Content-type: text/html; charset=utf-8");
 
 require(__DIR__ . '/../bootstrap.php');
 
+use VGA\Utils;
+
 error_reporting(E_ALL);
 date_default_timezone_set(TIMEZONE);
+
+function canDo($privilege)
+{
+    global $USER_RIGHTS, $USER_GROUPS;
+
+    if (in_array("admin", $USER_GROUPS)) {
+        return true;
+    }
+
+    return in_array($privilege, $USER_RIGHTS);
+}
 
 $tpl = new BTemplate();
 session_start();
@@ -60,7 +73,7 @@ if (isset($_SESSION['login'])) {
     $displayName = $_SESSION['name'];
     $tpl->set("displayName", $displayName);
     $tpl->set("avatarURL", $_SESSION['avatar']);
-    $tpl->set("steamID", convertSteamID($ID));
+    $tpl->set("steamID", Utils::convertSteamID($ID));
   
   // Find out which groups the user is in
     $query = "SELECT `GroupName` FROM `user_groups` WHERE `UserID` = ?";
