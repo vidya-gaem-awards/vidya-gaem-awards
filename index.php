@@ -61,7 +61,6 @@ $ACCESS = array(
     //"applications" => "applications-view",
     "categories" => EVERYONE,
     "credits" => EVERYONE,
-    //"feedback" => "feedback-view",  // Change to EVERYONE
     "launcher" => EVERYONE,
     "news" => EVERYONE,
     "nominations" => "nominations-view",
