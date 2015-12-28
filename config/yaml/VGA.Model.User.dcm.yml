@@ -35,7 +35,7 @@ VGA\Model\User:
       nullable: true
       length: 40
     avatar:
-      type: blob
+      type: text
       nullable: true
   oneToMany:
     votes:
