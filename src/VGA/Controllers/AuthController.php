@@ -9,9 +9,9 @@ use VGA\Model\Login;
 use VGA\Model\LoginToken;
 use VGA\Model\User;
 
-class LoginController extends BaseController
+class AuthController extends BaseController
 {
-    public function indexAction($return)
+    public function loginAction($return)
     {
         $login = new SteamLogin();
 
@@ -68,6 +68,16 @@ class LoginController extends BaseController
             '/',
             DOMAIN
         ));
+        $response->send();
+    }
+
+    public function logoutAction($return)
+    {
+        $this->session->invalidate();
+
+        // We remove the rememberMeToken, but not the other random cookie.
+        $response = new RedirectResponse('https://' . DOMAIN . $return);
+        $response->headers->removeCookie('rememberMeToken');
         $response->send();
     }
 }
