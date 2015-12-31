@@ -13,7 +13,7 @@ class AuthController extends BaseController
 {
     public function loginAction($return)
     {
-        $response = new RedirectResponse('https://' . DOMAIN . $return);
+        $response = new RedirectResponse('https://' . $this->request->getHost() . $return);
 
         $login = new SteamLogin();
 
@@ -73,7 +73,7 @@ class AuthController extends BaseController
             $randomToken,
             new \DateTime('+30 days'),
             '/',
-            DOMAIN
+            $this->request->getHost()
         ));
         $response->send();
     }
