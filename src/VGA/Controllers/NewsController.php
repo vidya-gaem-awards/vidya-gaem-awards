@@ -4,7 +4,7 @@ namespace VGA\Controllers;
 use Symfony\Component\HttpFoundation\Response;
 use VGA\Model\News;
 
-class IndexController extends BaseController
+class NewsController extends BaseController
 {
     public function indexAction()
     {
@@ -12,16 +12,14 @@ class IndexController extends BaseController
         $query = $repo->createQueryBuilder('n');
         $query->select('n')
             ->where('n.visible = true')
-            ->andWhere('n.timestamp < CURRENT_TIMESTAMP()')
-            ->setMaxResults(5)
             ->orderBy('n.timestamp', 'DESC');
 
         $news = $query->getQuery()->getResult();
 
-        $tpl = $this->twig->loadTemplate('index.twig');
+        $tpl = $this->twig->loadTemplate('news.twig');
 
         $response = new Response($tpl->render([
-            'title' => 'Home',
+            'title' => 'News',
             'news' => $news
         ]));
         $response->send();

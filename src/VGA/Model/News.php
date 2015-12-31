@@ -167,5 +167,23 @@ class News
     {
         return $this->user;
     }
+
+    /**
+     * Returns true if the post was created in the past two days
+     * @return bool
+     */
+    public function isNew()
+    {
+        return $this->getTimestamp() > new \DateTime('-2 days');
+    }
+
+    /**
+     * Returns true if the post was created more than a week ago
+     * @return bool
+     */
+    public function isOld()
+    {
+        return $this->getTimestamp() < new \DateTime('-7 days');
+    }
 }
 

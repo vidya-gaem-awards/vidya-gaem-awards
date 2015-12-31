@@ -65,6 +65,7 @@ $user
 $routes = new RouteCollection();
 
 $routes->add('index', new Route('/', ['controller' => Controllers\IndexController::class]));
+$routes->add('news', new Route('/news', ['controller' => Controllers\NewsController::class]));
 $routes->add('login', new Route(
     '/login/{return}',
     ['controller' => Controllers\AuthController::class, 'action' => 'login'],

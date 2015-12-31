@@ -2,6 +2,8 @@
 
 namespace VGA\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Permission
  */
@@ -116,6 +118,23 @@ class Permission
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * @return ArrayCollection|Permission
+     */
+    public function getChildrenRecurvise()
+    {
+        $permissions = new ArrayCollection();
+
+        foreach ($this->getChildren() as $child) {
+            foreach ($child->getChildrenRecurvise() as $grandchild) {
+                $permissions->add($grandchild);
+            }
+            $permissions->add($child);
+        }
+
+        return $permissions;
     }
 
     /**

@@ -1,0 +1,19 @@
+{% extends 'master.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Recent Updates</h1>
+            <p class="lead">All times are in 4chan time ({{ 'now' | date('T: P') }} UTC). It is currently {{ 'now' | date('g:i A \\o\\n F jS') }}.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            {% for item in news %}
+                <h3>{{ item.timestamp | date('M j, Y \\a\\t g:ia') }}</h3>
+                <p>{{ item.text }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

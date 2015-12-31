@@ -87,6 +87,11 @@ class User
     private $randomID;
 
     /**
+     * @var Collections\Collection
+     */
+    private $permissionCache;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -421,11 +426,32 @@ class User
     /**
      * Get permissions
      *
-     * @return Collections\Collection
+     * @return Collections\Collection|Permission[]
      */
     public function getPermissions()
     {
         return $this->permissions;
+    }
+
+    public function canDo($permission)
+    {
+        if ($this->permissionCache === null) {
+            $permissions = new Collections\ArrayCollection();
+            foreach ($this->getPermissions() as $permission) {
+                $permissions->add($permission->getId());
+                foreach ($permission->getChildrenRecurvise() as $child) {
+                    $permissions->add($child->getId());
+                }
+            }
+
+            if ($this->isLoggedIn()) {
+                $permissions->add('logged-in');
+            }
+            $permissions->add('*');
+            $this->permissionCache = $permissions;
+        }
+
+        return $this->permissionCache->contains($permission);
     }
 
     /**
