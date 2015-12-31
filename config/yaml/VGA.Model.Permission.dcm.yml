@@ -14,6 +14,7 @@ VGA\Model\Permission:
   manyToMany:
     children:
       targetEntity: Permission
+      inversedBy: parents
       joinTable:
         name: permission_children
         joinColumns:
@@ -22,6 +23,9 @@ VGA\Model\Permission:
         inverseJoinColumns:
           childID:
             referencedColumnName: id
+    parents:
+      targetEntity: Permission
+      mappedBy: children
     users:
       targetEntity: User
       mappedBy: permissions

@@ -33,7 +33,8 @@ class DependencyManager
             'host' => DB_HOST,
             'user' => DB_USER,
             'password' => DB_PASSWORD,
-            'dbname' => DB_DATABASE
+            'dbname' => DB_DATABASE,
+            'charset' => 'UTF8'
         ];
 
         self::$entity_manager = ORM\EntityManager::create($conn, $config);

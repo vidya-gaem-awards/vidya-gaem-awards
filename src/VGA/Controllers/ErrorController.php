@@ -32,4 +32,11 @@ class ErrorController extends BaseController
         $response->send();
         exit;
     }
+
+    public function wrongMethodAction()
+    {
+        $response = new Response($this->twig->render('405.twig'), 403);
+        $response->send();
+        exit;
+    }
 }

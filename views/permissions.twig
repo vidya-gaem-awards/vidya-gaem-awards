@@ -1,0 +1,32 @@
+{% extends 'master.twig' %}
+
+{% block content %}
+    <h1>Group and Permission Information</h1>
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('people') }}">Back to people page</a></li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>There are five main levels of access, from level 1 (the lowest) to level 5 (the highest). Every user gets the permissions from their level and every level below. There are also a few specific groups that only provide access to one or two things which can be assigned if needed.</p>
+        </div>
+    </div>
+
+    <h2>This is what you can do:</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+                {% for permission in user.allPermissions %}
+                <li>
+                    <abbr title='{{ permission.id }}'>{{ permission.description ?: permission.id }}</abbr>
+                    {% if permission.parents | length > 0 %}
+                        <small class='text-muted'>({{ permission.parents | join(', ') }})</small>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -6,6 +6,9 @@ use Doctrine\Common\Collections;
 
 class User
 {
+    const EVERYONE = '*';
+    const LOGGED_IN = 'logged-in';
+
     /**
      * @var string
      */
@@ -87,7 +90,7 @@ class User
     private $randomID;
 
     /**
-     * @var Collections\Collection
+     * @var Collections\Collection|Permission[]
      */
     private $permissionCache;
 
@@ -168,7 +171,7 @@ class User
      *
      * @return boolean
      */
-    public function getSpecial()
+    public function isSpecial()
     {
         return $this->special;
     }
@@ -433,25 +436,53 @@ class User
         return $this->permissions;
     }
 
-    public function canDo($permission)
+    private function populatePermissionCache()
     {
-        if ($this->permissionCache === null) {
-            $permissions = new Collections\ArrayCollection();
-            foreach ($this->getPermissions() as $permission) {
-                $permissions->add($permission->getId());
-                foreach ($permission->getChildrenRecurvise() as $child) {
-                    $permissions->add($child->getId());
+        $permissions = new Collections\ArrayCollection();
+        foreach ($this->getPermissions() as $permission) {
+            if (substr($permission->getId(), 0, 5) !== 'level') {
+                $permissions->add($permission);
+            }
+            foreach ($permission->getChildrenRecurvise() as $child) {
+                if (substr($child->getId(), 0, 5) !== 'level') {
+                    $permissions->add($child);
                 }
             }
-
-            if ($this->isLoggedIn()) {
-                $permissions->add('logged-in');
-            }
-            $permissions->add('*');
-            $this->permissionCache = $permissions;
         }
 
-        return $this->permissionCache->contains($permission);
+        $this->permissionCache = $permissions;
+    }
+
+    public function getAllPermissions()
+    {
+        if ($this->permissionCache === null) {
+            $this->populatePermissionCache();
+        }
+
+        return $this->permissionCache;
+    }
+
+    public function canDo($permissionCheck)
+    {
+        if ($permissionCheck === self::EVERYONE) {
+            return true;
+        }
+
+        if ($permissionCheck === self::LOGGED_IN) {
+            return $this->isLoggedIn();
+        }
+
+        if ($this->permissionCache === null) {
+            $this->populatePermissionCache();
+        }
+
+        foreach ($this->permissionCache as $permission) {
+            if ($permission->getId() === $permissionCheck) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

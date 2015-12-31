@@ -4,6 +4,7 @@ namespace VGA;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use VGA\Model\User;
 
 class DependencyContainer
@@ -26,16 +27,20 @@ class DependencyContainer
     /** @var User */
     public $user;
 
+    /** @var UrlGenerator */
+    public $generator;
+
     public function __construct(
         EntityManager $em,
         Request $request,
         \PDO $dbh,
         \Twig_Environment $twig,
         Session $session,
-        User $user
+        User $user,
+        UrlGenerator $generator
     ) {
         $twig->addGlobal('user', $user);
-        $twig->addGlobal('flashbag', $session->getFlashBag()->all());
+        $twig->addGlobal('flashbag', $session->getFlashBag());
 
         $this->em = $em;
         $this->request = $request;
@@ -43,5 +48,6 @@ class DependencyContainer
         $this->twig = $twig;
         $this->session = $session;
         $this->user = $user;
+        $this->generator = $generator;
     }
 }

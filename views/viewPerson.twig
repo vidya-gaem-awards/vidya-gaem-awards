@@ -1,0 +1,91 @@
+{% extends 'viewPersonBase.twig' %}
+
+{% block subContent %}
+    <div class="col-md-5">
+        <h2>User Information:</h2>
+        
+        <ul>
+            <li>Steam profile: <a href="https://steamcommunity.com/profiles/{{ _user.steamID }}">{{ _user.steamID }}</a></li>
+            <li>Groups:
+                {% if _user.permissions | length > 0 %}
+                    {{ _user.permissions | join(', ') }}
+                {% else %}
+                    <span class="label label-default">None</span>
+                {% endif %}
+            </li>
+            
+            <li>Email address: <span id="email">
+                {% if _user.email %}
+                    <a href="mailto:{{ _user.email }}">{{ _user.email }}</a>
+                {% else %}
+                    <span class="label label-default">Unavailable</span>
+                {% endif %}
+            </span></li>
+
+            <li>
+                {% if _user.lastLogin %}
+                    Last logged in on {{ _user.lastLogin | date('F jS, Y') }}
+                {% else %}
+                    Never logged in
+                {% endif %}
+            </li>
+        </ul>
+
+        {% if user.canDo('profile-edit-groups') %}
+        <div id="groups" style="display: none;">
+            <h2>Groups: </h2>
+            <p>Click on a group name to remove that group.</p>
+            <ul>
+            
+                {% if _user.permissions | length > 0 %}
+                <form method="POST" action="{{ path('editPerson', {'steamID': _user.steamID}) }}" style="margin-bottom: 10px;">
+                    <li>
+                        {% for permission in _user.permissions %}
+                            <button class="btn btn-danger" name="RemoveGroup" value="{{ permission }}">
+                            {{ permission }}
+                            </button>&nbsp;
+                        {% endfor %}
+                    </li>
+                </form>
+                {% endif %}
+
+                <form method="POST" action="{{ path('editPerson', {'steamID': _user.steamID}) }}">
+                    <li>
+                        <input type="text" class="input-small" style='margin-bottom: 0px;' name="GroupName">
+                        <input type="submit" class="btn btn-success" name="AddGroup" value="Add">
+                    </li>
+                </form>
+            </ul>
+        </div>
+        {% endif %}
+        
+        {% if user.canDo('profile-edit-details') %}
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-primary" href="{{ path('editPerson', {'steamID': _user.steamID}) }}">Edit user information</a>
+                {% if user.canDo('profile-edit-groups') %}
+                    <a class="btn btn-primary" href="#" onclick="$('#groups').toggle('slow', null);">Edit groups</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+
+    <div class="col-md-7">
+        {% if user.canDo('profile-edit-notes') %}
+            <h2>Notes: <small><a href="#" id="notes-edit" onclick="$('#notes-button').show();$('#notes').removeAttr('readonly');var teeext = $('#notes').val();$(this).hide();">edit</a></small></h2>
+            <form method="POST" action="{{ path('editPerson', {'steamID': _user.steamID}) }}">
+                <input type="hidden" name="action" value="edit-notes" />
+                <textarea rows="10" style="width: 100%" id="notes" readonly name="Notes">{{ _user.notes }}</textarea>
+                <div id="notes-button" style='display: none;'>
+                    <input type="submit" class="btn btn-success" value="Save notes"  />
+                    <a href="{{ path('viewPerson', {'steamID': _user.steamID}) }}" class="btn">Cancel</a>
+                </div>
+            </form>
+        {% else %}
+            <h2>Notes:</h2>
+            <textarea rows="10" style="width: 100%;" readonly>{{ _user.notes }}</textarea>
+        {% endif %}
+    </div>
+{% endblock %}

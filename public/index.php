@@ -2,6 +2,7 @@
 use Ehesp\SteamLogin\SteamLogin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -64,7 +65,10 @@ $user
 // Define the routes
 $routes = new RouteCollection();
 
+// Change this to change the default route
 $routes->add('index', new Route('/', ['controller' => Controllers\IndexController::class]));
+
+$routes->add('home', new Route('/home', ['controller' => Controllers\IndexController::class]));
 $routes->add('news', new Route('/news', ['controller' => Controllers\NewsController::class]));
 $routes->add('login', new Route(
     '/login/{return}',
@@ -75,6 +79,58 @@ $routes->add('logout', new Route(
     '/logout',
     ['controller' => Controllers\AuthController::class, 'action' => 'logout']
 ));
+
+$routes->add('people', new Route(
+    '/people',
+    ['controller' => Controllers\PeopleController::class, 'permission' => 'profile-view']
+));
+
+$peopleCollection = new RouteCollection();
+$peopleCollection->add('permissions', new Route(
+    '/permissions',
+    ['action' => 'permissions', 'permission' => 'profile-view']
+));
+$peopleCollection->add('addPerson', new Route(
+    '/new',
+    ['action' => 'new', 'permission' => 'add-user']
+));
+$peopleCollection->add('userSearch', new Route(
+    '/search',
+    ['action' => 'search', 'permission' => 'add-user'],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
+));
+$peopleCollection->add('viewPerson', new Route(
+    '/{steamID}',
+    ['action' => 'view', 'permission' => 'profile-view'],
+    ['steamID' => '\d+']
+));
+$peopleCollection->add('editPerson', new Route(
+    '/{steamID}/edit',
+    ['action' => 'edit', 'permission' => 'profile-edit-details'],
+    ['steamID' => '\d+'],
+    [],
+    '',
+    [],
+    ['GET']
+));
+$peopleCollection->add('editPersonPost', new Route(
+    '/{steamID}/edit',
+    ['action' => 'post', 'permission' => 'profile-view'],
+    ['steamID' => '\d+'],
+    [],
+    '',
+    [],
+    ['POST']
+));
+$peopleCollection->addPrefix('/people');
+$peopleCollection->addDefaults([
+    'controller' => Controllers\PeopleController::class
+]);
+$routes->addCollection($peopleCollection);
 $routes->add('privacy', new Route(
     '/privacy',
     ['controller' => Controllers\StaticController::class, 'action' => 'privacy']
@@ -104,6 +160,15 @@ if ($user instanceof AnonymousUser) {
     $twig->addGlobal('steamLoginLink', $steam->url($returnLink));
 }
 
+$navbar = [];
+foreach (NAVBAR_ITEMS as $routeName => $title) {
+    if ($routes->get($routeName)) {
+        $navbar[$routeName] = $title;
+    }
+}
+
+$twig->addGlobal('navbarItems', $navbar);
+
 $matcher = new UrlMatcher($routes, $context);
 
 $container = new DependencyContainer(
@@ -112,7 +177,8 @@ $container = new DependencyContainer(
     DependencyManager::getDatabaseHandle(),
     $twig,
     $session,
-    $user
+    $user,
+    $generator
 );
 
 // Call the correct controller and method
@@ -134,6 +200,13 @@ try {
         $action = 'indexAction';
     }
 
+    if (isset($match['permission']) && !$user->canDo($match['permission'])) {
+        /** @var Controllers\ErrorController $controller */
+        $controller = new Controllers\ErrorController($container);
+        $controller->noAccessAction();
+        return;
+    }
+
     if (!method_exists($controller, $action)) {
         /** @var Controllers\ErrorController $controller */
         $controller = new Controllers\ErrorController($container);
@@ -143,41 +216,30 @@ try {
 
     unset($match['controller']);
     unset($match['action']);
+    unset($match['permission']);
     call_user_func_array([$controller, $action], $match);
 
 } catch (ResourceNotFoundException $e) {
     $controller = new Controllers\ErrorController($container);
     $controller->notFoundAction();
     return;
+} catch (MethodNotAllowedException $e) {
+    $controller = new Controllers\ErrorController($container);
+    $controller->wrongMethodAction();
+    return;
 }
 
 exit;
 
 // Abandon hope all who go below this point
-//define("EVERYONE", "*");
-//define("LOGIN", "logged-in");
-
-// Change the default page in includes/config.php
-//if (strlen($PAGE) == 0) {
-//    $PAGE = DEFAULT_PAGE;
-//}
 
 // Special handling for ad landing page
-//if ($PAGE == "promotions") {
-//    header("Location: " . AD_LANDING_PAGE);
-//    exit;
-//}
+if ($PAGE == "promotions") {
+    header("Location: " . AD_LANDING_PAGE);
+    exit;
+}
 
 $ACCESS = array(
-    // These ones should never have to change
-    "404" => EVERYONE,
-    //"about" => EVERYONE,
-    "home" => EVERYONE,
-    "login" => EVERYONE,
-    "privacy" => EVERYONE,
-    "promotions" => EVERYONE,
-    //"sitemap" => EVERYONE,
-
     // Volatile pages
     "ajax-category-feedback" => EVERYONE,
     "ajax-nominations" => "nominations-edit",
@@ -186,7 +248,6 @@ $ACCESS = array(
     "categories" => EVERYONE,
     "credits" => EVERYONE,
     "launcher" => EVERYONE,
-    "news" => EVERYONE,
     "nominations" => "nominations-view",
     "nomination-submit" => EVERYONE,
     "people" => "profile-view",
@@ -194,7 +255,6 @@ $ACCESS = array(
     "stream" => EVERYONE,
     //"test" => EVERYONE,
     "thanks" => EVERYONE,
-    "user-search" => "add-user",
     "video-games" => EVERYONE,
     //"vg-redirect" => EVERYONE,
     //"volunteer-submission" => LOGIN,
@@ -220,12 +280,7 @@ $noMaster = array(
 
 // Pages so basic they don't need a PHP file.
 $noPHP = array(
-    "405" => "405 Method Not Allowed",
-    "404" => "404 Not Found",
-    "403" => "403 Forbidden",
-    "401" => "401 Unauthorized",
     "about" => "About",
-    "privacy" => "Privacy Policy",
     "sitemap" => "Sitemap",
     "stream" => "",
     "videos" => "Video Submission",
@@ -240,47 +295,16 @@ $postOnly = array(
     "ajax-videogame",
     "nomination-submit",
     "volunteer-submission",
-    "user-search",
     "voting-submission",
 );
 
 // Pages have the option of specifying this variable to load a different template
 $CUSTOM_TEMPLATE = false;
 
-function canDo($privilege)
-{
-    global $USER_RIGHTS, $USER_GROUPS;
-
-    if (in_array("admin", $USER_GROUPS)) {
-        return true;
-    }
-
-    return in_array($privilege, $USER_RIGHTS);
-}
-
-$tpl = new BTemplate();
-session_start();
-
-// Constants
-$tpl->set("YEAR", YEAR);
-
 // Initialise some default template variables
 $init = array("success", "error", "formSuccess", "formError");
 foreach ($init as $item) {
     $tpl->set($item, false);
-}
-
-// Login stuff
-$USER_RIGHTS = array("*");
-$USER_GROUPS = array();
-
-// Message stuff
-if (isset($_SESSION['message'])) {
-    $tpl->set($_SESSION['message'][0], $_SESSION['message'][1]);
-    if (isset($_SESSION['message'][2])) {
-        $storedValue = $_SESSION['message'][2];
-    }
-    unset($_SESSION['message']);
 }
 
 // Navbar stuff (the items have been moved to config.php)
@@ -308,11 +332,6 @@ foreach (NAVBAR_ITEMS as $filename => $value) {
 
 }
 
-$tpl->set("navbar", $navbar);
-
-// Page access stuff
-$page = $PAGE;
-
 $IP = isset($_SERVER['HTTP_CF_CONNECTING_IP'])
     ? $_SERVER['HTTP_CF_CONNECTING_IP']
     : $_SERVER['REMOTE_ADDR'];
@@ -320,9 +339,6 @@ $IP = isset($_SERVER['HTTP_CF_CONNECTING_IP'])
 $country = isset($_SERVER['HTTP_CF_IPCOUNTRY'])
     ? $_SERVER['HTTP_CF_IPCOUNTRY']
     : "";
-
-$tpl->set("page", $page);
-$tpl->set("logoutURL", rtrim(implode("/", $SEGMENTS), "/"));
 
 # Don't bother recording automatic page refreshes.
 if (substr($_SERVER['REQUEST_URI'], -11) != "autorefresh") {
@@ -343,39 +359,6 @@ if (substr($_SERVER['REQUEST_URI'], -11) != "autorefresh") {
         $_SERVER['HTTP_REFERER']
     );
     $stmt->execute();
-}
-
-$tpl->set("true", true);
-$tpl->set("false", false);
-$tpl->set("admin", canDo("admin"));
-
-// Enforce access control
-if (!isset($ACCESS[$PAGE])) {
-    header('HTTP/1.0 404 Not Found');
-    $PAGE = "404";
-} else {
-    if ($ACCESS[$PAGE] != EVERYONE && !$loggedIn) {
-        header('HTTP/1.0 401 Unauthorized');
-        $PAGE = "401";
-    } else {
-        if (!canDo($ACCESS[$PAGE])) {
-            header('HTTP/1.0 403 Forbidden');
-            $PAGE = "403";
-        }
-    }
-}
-
-// Enforce post-only pages
-if (in_array($PAGE, $postOnly) && $_SERVER['REQUEST_METHOD'] != "POST") {
-    header('HTTP/1.0 405 Method Not Allowed');
-    $PAGE = "405";
-}
-
-// Run the page-specific code
-if (!isset($noPHP[$PAGE])) {
-    require("controllers/$PAGE.php");
-} else {
-    $tpl->set('title', $noPHP[$PAGE]);
 }
 
 // Post-only pages have no view at all

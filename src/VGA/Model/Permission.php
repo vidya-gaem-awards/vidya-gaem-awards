@@ -20,12 +20,17 @@ class Permission
     private $description;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var ArrayCollection|Permission[]
      */
     private $children;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var ArrayCollection|Permission[]
+     */
+    private $parents;
+
+    /**
+     * @var ArrayCollection|User[]
      */
     private $users;
 
@@ -34,8 +39,9 @@ class Permission
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->parents = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -169,6 +175,19 @@ class Permission
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @return ArrayCollection|Permission[]
+     */
+    public function getParents()
+    {
+        return $this->parents;
+    }
+
+    public function __toString()
+    {
+        return $this->getId();
     }
 }
 
