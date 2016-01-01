@@ -250,7 +250,6 @@ $ACCESS = array(
     "launcher" => EVERYONE,
     "nominations" => "nominations-view",
     "nomination-submit" => EVERYONE,
-    "people" => "profile-view",
     "referrers" => "referrers-view",
     "stream" => EVERYONE,
     //"test" => EVERYONE,

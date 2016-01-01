@@ -4,7 +4,10 @@ namespace VGA\Controllers;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use VGA\Model\Action;
 use VGA\Model\Permission;
+use VGA\Model\TableHistory;
 use VGA\Model\User;
 use VGA\Utils;
 
@@ -32,7 +35,7 @@ class PeopleController extends BaseController
 
         if (!$user || !$user->isSpecial()) {
             $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
-            $response = new RedirectResponse($this->generator->generate('people'));
+            $response = new RedirectResponse($this->generator->generate('people'), [], UrlGenerator::ABSOLUTE_URL);
             $response->send();
             return;
         }
@@ -52,7 +55,7 @@ class PeopleController extends BaseController
 
         if (!$user || !$user->isSpecial()) {
             $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
-            $response = new RedirectResponse($this->generator->generate('people'));
+            $response = new RedirectResponse($this->generator->generate('people'), [], UrlGenerator::ABSOLUTE_URL);
             $response->send();
             return;
         }
@@ -72,10 +75,110 @@ class PeopleController extends BaseController
 
         if (!$user || !$user->isSpecial()) {
             $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
-            $response = new RedirectResponse($this->generator->generate('people'));
+            $response = new RedirectResponse($this->generator->generate('people'), [], UrlGenerator::ABSOLUTE_URL);
             $response->send();
             return;
         }
+        
+        $post = $this->request->request;
+
+        // Remove group
+        if ($post->get('RemoveGroup') && $this->user->canDo('profile-edit-groups')) {
+            $groupName = $post->get('RemoveGroup');
+
+            /** @var Permission $group */
+            $group = $this->em->getRepository(Permission::class)->find($groupName);
+            $user->removePermission($group);
+            $this->em->persist($user);
+
+            $this->session->getFlashBag()->add('formSuccess', 'Group successfully removed.');
+
+            $action = new Action('profile-group-removed');
+            $action->setUser($this->user)
+                ->setPage(__CLASS__)
+                ->setData1($steamID)
+                ->setData2($groupName);
+
+            $this->em->persist($action);
+            $this->em->flush();
+        }
+
+        // Add group
+        if ($post->get('AddGroup') && $this->user->canDo('profile-edit-groups')) {
+            $groupName = trim(strtolower($post->get('GroupName')));
+
+            /** @var Permission $group */
+            $group = $this->em->getRepository(Permission::class)->find($groupName);
+            if (!$group) {
+                $this->session->getFlashBag()->add('formError', 'Invalid group name.');
+            } elseif ($user->getPermissions()->contains($group)) {
+                $this->session->getFlashBag()->add('formError', 'User already has that group.');
+            } else {
+                $user->addPermission($group);
+
+                $action = new Action('profile-group-added');
+                $action->setUser($this->user)
+                    ->setPage(__CLASS__)
+                    ->setData1($steamID)
+                    ->setData2($groupName);
+
+                $this->em->persist($action);
+                $this->em->flush();
+
+                $this->session->getFlashBag()->add('formSuccess', 'Group successfully added.');
+            }
+        }
+
+        // Edit details (primary role and email)
+        if ($post->get('action') === 'edit-details' && $this->user->canDo('profile-edit-details')) {
+            $user->setPrimaryRole($post->get('PrimaryRole'));
+            $user->setEmail($post->get('Email'));
+            $this->em->persist($user);
+
+            $action = new Action('profile-details-updated');
+            $action->setUser($this->user)
+                ->setPage(__CLASS__)
+                ->setData1($steamID);
+            $this->em->persist($action);
+
+            $history = new TableHistory();
+            $history->setUser($this->user)
+                ->setTable('User')
+                ->setEntry($steamID)
+                ->setValues($post->all());
+            $this->em->persist($history);
+
+            $this->em->flush();
+
+            $this->session->getFlashBag()->add('formSuccess', 'Details successfully updated.');
+        }
+
+        if ($post->get('action') === 'edit-notes' && $this->user->canDo('profile-edit-notes')) {
+            $user->setNotes($post->get('Notes'));
+            $this->em->persist($user);
+
+            $action = new Action('profile-notes-updated');
+            $action->setUser($this->user)
+                ->setPage(__CLASS__)
+                ->setData1($steamID);
+            $this->em->persist($action);
+
+            $history = new TableHistory();
+            $history->setUser($this->user)
+                ->setTable('User')
+                ->setEntry($steamID)
+                ->setValues($post->all());
+            $this->em->persist($history);
+
+            $this->em->flush();
+
+            $this->session->getFlashBag()->add('formSuccess', 'Notes successfully updated.');
+        }
+
+        $response = new RedirectResponse(
+            $this->generator->generate('viewPerson', ['steamID' => $steamID], UrlGenerator::ABSOLUTE_URL)
+        );
+        $response->send();
     }
 
     public function permissionsAction()
@@ -100,7 +203,7 @@ class PeopleController extends BaseController
     {
         $repo = $this->em->getRepository(User::class);
         /** @var User $user */
-        $user = $repo->find($this->request->request->get('ID'));
+        $user = $repo->find($post->get('ID'));
 
         $response = new JsonResponse();
         if (!$user) {
@@ -118,7 +221,7 @@ class PeopleController extends BaseController
             return;
         }
 
-        if ($this->request->request->getBoolean('Add')) {
+        if ($post->getBoolean('Add')) {
             // Make the user special and give them level 1 access
             $user->setSpecial(true);
             /** @var Permission $permission */

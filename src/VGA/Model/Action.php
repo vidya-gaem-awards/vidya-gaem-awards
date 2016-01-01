@@ -42,6 +42,11 @@ class Action
      */
     private $data2;
 
+    public function __construct($action)
+    {
+        $this->setAction($action);
+        $this->setTimestamp(new \DateTime());
+    }
 
     /**
      * Get id
@@ -56,13 +61,17 @@ class Action
     /**
      * Set user
      *
-     * @param string $user
+     * @param User $user
      *
      * @return Action
      */
     public function setUser($user)
     {
-        $this->user = $user;
+        if ($user instanceof AnonymousUser) {
+            $this->user = $user->getIP();
+        } else {
+            $this->user = $user->getSteamID();
+        }
 
         return $this;
     }

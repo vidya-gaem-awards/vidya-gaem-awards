@@ -12,6 +12,7 @@ VGA\Model\TableHistory:
       type: string
       nullable: false
       length: 30
+      column: '`table`'
     entry:
       type: string
       nullable: false
@@ -19,6 +20,7 @@ VGA\Model\TableHistory:
     values:
       type: json_array
       nullable: false
+      column: '`values`'
     timestamp:
       type: datetime
       nullable: false

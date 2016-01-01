@@ -37,6 +37,10 @@ class TableHistory
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->setTimestamp(new \DateTime());
+    }
 
     /**
      * Get id
