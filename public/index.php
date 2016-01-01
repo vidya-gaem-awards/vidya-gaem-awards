@@ -12,6 +12,7 @@ use Symfony\Component\Routing\RouteCollection;
 use VGA\Controllers;
 use VGA\DependencyContainer;
 use VGA\DependencyManager;
+use VGA\Model\Access;
 use VGA\Model\AnonymousUser;
 use VGA\Model\LoginToken;
 use VGA\Model\User;
@@ -214,6 +215,25 @@ try {
         return;
     }
 
+    // Log the page access
+    $access = new Access();
+    if (!($user instanceof AnonymousUser)) {
+        $access->setUser($user);
+    }
+    $page = (new ReflectionClass($controller))->getShortName() . '/' . $action;
+
+    $access
+        ->setCookieID($user->getRandomID())
+        ->setPage($page)
+        ->setRequestMethod($request->server->get('REQUEST_METHOD'))
+        ->setRequestString($request->server->get('REQUEST_URI'))
+        ->setIp($user->getIP())
+        ->setUserAgent($request->server->get('HTTP_USER_AGENT'))
+        ->setFilename($request->server->get('SCRIPT_FILENAME'))
+        ->setReferer($request->server->get('HTTP_REFERER'));
+    $em->persist($access);
+    $em->flush();
+
     unset($match['controller']);
     unset($match['action']);
     unset($match['permission']);
@@ -255,7 +275,6 @@ $ACCESS = array(
     //"test" => EVERYONE,
     "thanks" => EVERYONE,
     "video-games" => EVERYONE,
-    //"vg-redirect" => EVERYONE,
     //"volunteer-submission" => LOGIN,
     //"videos" => EVERYONE,
     "voting" => EVERYONE,
@@ -329,35 +348,6 @@ foreach (NAVBAR_ITEMS as $filename => $value) {
     }
     $navbar .= "</li>\n";
 
-}
-
-$IP = isset($_SERVER['HTTP_CF_CONNECTING_IP'])
-    ? $_SERVER['HTTP_CF_CONNECTING_IP']
-    : $_SERVER['REMOTE_ADDR'];
-
-$country = isset($_SERVER['HTTP_CF_IPCOUNTRY'])
-    ? $_SERVER['HTTP_CF_IPCOUNTRY']
-    : "";
-
-# Don't bother recording automatic page refreshes.
-if (substr($_SERVER['REQUEST_URI'], -11) != "autorefresh") {
-    $query = "INSERT INTO `access` (`Timestamp`, `UniqueID`, `UserID`, `Page`,
-            `RequestString`, `RequestMethod`, `IP`, `UserAgent`, `Filename`,
-            `Refer`) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $mysql->prepare($query);
-    $stmt->bind_param(
-        'sssssssss',
-        $uniqueID,
-        $userID,
-        $page,
-        $_SERVER['REQUEST_URI'],
-        $_SERVER['REQUEST_METHOD'],
-        $IP,
-        $_SERVER['HTTP_USER_AGENT'],
-        $_SERVER['SCRIPT_FILENAME'],
-        $_SERVER['HTTP_REFERER']
-    );
-    $stmt->execute();
 }
 
 // Post-only pages have no view at all
