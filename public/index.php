@@ -142,11 +142,11 @@ $routes->add('privacy', new Route(
     ['controller' => Controllers\StaticController::class, 'action' => 'privacy']
 ));
 $routes->add('categories', new Route(
-    '/categories',
-    ['controller' => Controllers\CategoryAdminController::class]
+    '/awards',
+    ['controller' => Controllers\CategoryController::class]
 ));
 $routes->add('categoryManager', new Route(
-    '/categories/manage',
+    '/awards/manage',
     [
         'controller' => Controllers\CategoryAdminController::class,
         'action' => 'managerList',
@@ -159,7 +159,7 @@ $routes->add('categoryManager', new Route(
     ['GET']
 ));
 $routes->add('categoryManagerPost', new Route(
-    '/categories/manage',
+    '/awards/manage',
     [
         'controller' => Controllers\CategoryAdminController::class,
         'action' => 'managerPost',
@@ -172,7 +172,7 @@ $routes->add('categoryManagerPost', new Route(
     ['POST']
 ));
 $routes->add('editCategory', new Route(
-    '/categories/manage/{category}',
+    '/awards/manage/{category}',
     [
         'controller' => Controllers\CategoryAdminController::class,
         'action' => 'editCategory',
@@ -185,7 +185,7 @@ $routes->add('editCategory', new Route(
     ['GET']
 ));
 $routes->add('editCategoryPost', new Route(
-    '/categories/manage/{category}',
+    '/awards/manage/{category}',
     [
         'controller' => Controllers\CategoryAdminController::class,
         'action' => 'editCategoryPost',
