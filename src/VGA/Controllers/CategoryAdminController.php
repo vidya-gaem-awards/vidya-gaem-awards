@@ -25,6 +25,14 @@ class CategoryAdminController extends BaseController
         $condition = $this->user->canDo('categories-secret') ? [] : ['secret' => false];
         $categories = $repo->findBy($condition, ['order' => 'ASC']);
 
+        if ($this->request->get('sort') === 'feedback') {
+            usort($categories, function ($a, $b) {
+                /** @var Category $a */
+                /** @var Category $b */
+                return $b->getFeedbackPercent()['positive'] <=> $a->getFeedbackPercent()['positive'];
+            });
+        }
+
         $tpl = $this->twig->loadTemplate('categoryManager.twig');
 
         $variables = [
