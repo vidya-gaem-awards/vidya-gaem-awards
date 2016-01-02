@@ -1,0 +1,14 @@
+{% extends 'master.twig' %}
+
+{% block content %}
+    <h1 class="page-header">Awards and Nominations</h1>
+
+    <ul class="breadcrumb">
+        <li class="active">Admin tools:</li>
+        {% if user.canDo("categories-edit") %}
+            <li>
+                <a href="{{ path('categoryManager') }}">Manage awards</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}

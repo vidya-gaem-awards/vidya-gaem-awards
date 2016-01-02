@@ -11,11 +11,6 @@ use VGA\Model\TableHistory;
 
 class CategoryAdminController extends BaseController
 {
-    public function indexAction()
-    {
-
-    }
-
     /**
      * @param Category $categoryEditing
      */
