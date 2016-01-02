@@ -1,0 +1,296 @@
+{% extends 'master.twig' %}
+
+{% block content %}
+    <h1 class="page-header">Manage Awards</h1>
+
+    <ul class="breadcrumb">
+        <li><a href="{{ path('categories') }}">Back to the main awards and nominations page</a></li>
+    </ul>
+
+    {% if editing %}
+        {% for message in flashbag.get('editFormError') %}
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in flashbag.get('editFormSuccess') %}
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h2>{{ category.name }}</h2>
+
+        <form method="POST" action="{{ path('editCategoryPost', {'category': category.id}) }}" class="form-horizontal well" id="categoryForm">
+            <input type="hidden" name="action" value="edit">
+            <div class="row">
+            <div class="col-sm-6 form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input01">ID</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="input01" disabled value="{{ category.id | e('html_attr') }}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input02">Name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="input02" required name="name" value="{{ category.name | e('html_attr') }}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input03">Subtitle</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="input03" required name="subtitle" value="{{ category.subtitle | e('html_attr') }}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input05">Extra Comments</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="input05" name="comments" value="{{ category.comments | e('html_attr') }}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input06">
+                        <abbr title="Determines what shows up in the autocomplete box when users are writing in nominations">Autocomplete Group</abbr>
+                    </label>
+                    <div class="col-sm-8">
+                        <select name="autocompleter" id="input06" class="form-control">
+                            <option></option>
+                            {% for autocompleter in autocompleters %}
+                                <option value="{{ autocompleter.id }}" {{ autocompleter == category.autocompleter ? 'selected' : '' }}>
+                                    {{ autocompleter.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input04"><abbr title="Categories with a lower position will be sorted first">Position number</abbr></label>
+                    <div class="col-sm-8">
+                        <input type="number" min="0" max="10000" class="form-control" id="input04" required name="order" value="{{ category.order | e('html_attr') }}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="enabled">Category enabled?</label>
+                    <div class="col-sm-8 checkbox">
+                        <label>
+                            <input type="checkbox" id="enabled" value="true" name="enabled" {{ category.enabled ? 'checked' : '' }}>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="nominationsEnabled">Nominations enabled?</label>
+                    <div class="col-sm-8 checkbox">
+                        <label>
+                            <input type="checkbox" id="nominationsEnabled" value="true" name="nominationsEnabled" {{ category.nominationsEnabled ? 'checked' : '' }}>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="secret"><abbr title="Secret categories will only show up during the voting stage">Secret category?</abbr></label>
+                    <div class="col-sm-8 checkbox">
+                        <label>
+                            <input type="checkbox" id="secret" value="true" name="secret" {{ category.secret ? 'checked' : '' }}>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <a href="{{ path('categoryManager') }}" class="btn">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </form>
+
+        {% if user.canDo('categories-delete') %}
+            <form method="POST" action="{{ path('editCategoryPost', {'category': category.id}) }}" id="deleteCategory">
+                <div class="alert alert-danger">
+                    <input type="hidden" name="delete" value="delete">
+                    <button class="btn btn-danger" title="Remove category" type="submit" name="category">Delete category ({{ category.name }})</button>
+                </div>
+            </form>
+        {% endif %}
+    {% endif %}
+
+    {% for message in flashbag.get('formError') %}
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in flashbag.get('formSuccess') %}
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <style type="text/css">
+        #categories, #addCategory {
+            background-color: white;
+        }
+        .label {
+            display: block;
+            text-align: center;
+            padding: 13px 0;
+        }
+        #categories .aligned {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .monospace {
+            font-family: monospace;
+        }
+
+        .sparkbar {
+            margin: 4px 0;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .sparkbar-yes {
+            float: left;
+            height: 10px;
+            background: #55A54E;
+        }
+
+        .sparkbar-no {
+            float: right;
+            height: 10px;
+            background: #AA4643;
+        }
+    </style>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover form-table" id="categories">
+            <thead>
+                <tr>
+                    <th style="width: 130px;">Status</th>
+                    <th class="col-sm-2">ID</th>
+                    <th>Name</th>
+                    <th style="width: 160px;">
+                        Feedback <small><a href='?sort=feedback'>sort</a></small>
+                    </th>
+                    <th style="width: 60px;">Order</th>
+                    {% if user.canDo('categories-edit') %}
+                        <th style="width: 80px;">Controls</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr class="{{ not category.enabled ? 'warning' : category.secret ? 'info' : '' }}">
+                    <td class="aligned">
+                        {% if not category.enabled %}
+                        <span class="label label-warning">Award Disabled</span>
+                        {% elseif category.secret %}
+                        <span class="label label-info">Secret Award!</span>
+                        {% elseif category.nominationsEnabled %}
+                        <span class="label label-success">Nominations Open</span>
+                        {% else %}
+                        <span class="label label-default">Nominations Closed</span>
+                        {% endif %}
+                    </td>
+                    <td class="monospace">{{ category.id }}</td>
+                    <td>{{ category.name }}<br><small>{{ category.subtitle }}</small></td>
+                    <td>
+                        <div class="sparkbar">
+                            <div class="sparkbar-yes" style="width: {{ category.feedbackPercent.positive }}%"></div>
+                            <div class="sparkbar-no" style="width: {{ category.feedbackPercent.negative }}%"></div>
+                        </div>
+                        {{ category.feedback | length }} votes
+                    </td>
+                    <td class="aligned">{{ category.order }}</td>
+                    {% if user.canDo('categories-edit') %}
+                    <td class="aligned">
+                        <a class="btn btn-primary" href="{{ path('editCategory', {'category': category.id}) }}" title="Edit category">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> &nbsp;Edit
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if user.canDo('categories-edit') %}
+            <form method="POST" action="{{ path('categoryManagerPost') }}">
+                <input type="hidden" name="action" value="new">
+                <table class="table table-bordered" id="addCategory">
+                    <tr>
+                        <th colspan="6">Add a new category</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="enabled"> Enabled </label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="nominations"> Nominations </label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="secret"> Secret </label>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" name="id" id="id" placeholder="ID" style="width: 90%;" maxlength="30" required class="form-control">
+                        </td>
+                        <td colspan="2">
+                            <input type="text" name="name" id="name" placeholder="Name" style="width: 90%;" required class="form-control">
+                            <input type="text" name="subtitle" id="subtitle" placeholder="Subtitle" style="width: 90%;" required class="form-control">
+                        </td>
+                        <td>
+                            <input type="number" min="0" max="10000" name="order" id="order" placeholder="Order" required class="form-control">
+                        </td>
+                        <td>
+                            <input type="submit" class="btn btn-primary" value="Create">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        {% endif %}
+    </div>
+
+    {% if user.canDo('categories-edit') %}
+        <form method="POST" action="{{ path('categoryManagerPost') }}" id="massChangeNominations">
+            <div class="alert alert-info">
+                <input type="hidden" id="action" name="action" value="massChangeNominations" />
+                <button class="btn btn-success" type="submit" name="todo" value="open">Open all nominations</button>
+                <button class="btn btn-danger" type="submit" name="todo" value="close">Close all nominations</button>
+            </div>
+        </form>
+    {% endif %}
+
+    <script type="text/javascript">
+        $("#massChangeNominations").submit(function() {
+            event.preventDefault();
+            if(confirm("Are you sure you want to just fuck this shit up?")) {
+                $(this).unbind("submit").submit();
+            }
+        });
+
+        $("#deleteCategory").submit(function() {
+            event.preventDefault();
+            if(confirm("Are you sure you want to just fuck this category up?")) {
+                $(this).unbind("submit").submit();
+            }
+        });
+    </script>
+{% endblock %}

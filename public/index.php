@@ -1,5 +1,6 @@
 <?php
 use Ehesp\SteamLogin\SteamLogin;
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
@@ -24,6 +25,10 @@ $em = DependencyManager::getEntityManager();
 $request = Request::createFromGlobals();
 $session = new Session();
 $session->start();
+
+// TODO: delete this in production
+Debug::enable();
+
 
 // TODO: unsure if this is needed when using the Response class
 header("Content-type: text/html; charset=utf-8");
@@ -136,6 +141,62 @@ $routes->add('privacy', new Route(
     '/privacy',
     ['controller' => Controllers\StaticController::class, 'action' => 'privacy']
 ));
+$routes->add('categories', new Route(
+    '/categories',
+    ['controller' => Controllers\CategoryAdminController::class]
+));
+$routes->add('categoryManager', new Route(
+    '/categories/manage',
+    [
+        'controller' => Controllers\CategoryAdminController::class,
+        'action' => 'managerList',
+        'permission' => 'categories-feedback'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['GET']
+));
+$routes->add('categoryManagerPost', new Route(
+    '/categories/manage',
+    [
+        'controller' => Controllers\CategoryAdminController::class,
+        'action' => 'managerPost',
+        'permission' => 'categories-edit'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
+));
+$routes->add('editCategory', new Route(
+    '/categories/manage/{category}',
+    [
+        'controller' => Controllers\CategoryAdminController::class,
+        'action' => 'editCategory',
+        'permission' => 'categories-edit'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['GET']
+));
+$routes->add('editCategoryPost', new Route(
+    '/categories/manage/{category}',
+    [
+        'controller' => Controllers\CategoryAdminController::class,
+        'action' => 'editCategoryPost',
+        'permission' => 'categories-edit'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
+));
 
 $context = new RequestContext();
 $context->fromRequest($request);
@@ -204,7 +265,11 @@ try {
     if (isset($match['permission']) && !$user->canDo($match['permission'])) {
         /** @var Controllers\ErrorController $controller */
         $controller = new Controllers\ErrorController($container);
-        $controller->noAccessAction();
+        if ($user->isLoggedIn()) {
+            $controller->noAccessAction();
+        } else {
+            $controller->needLoginAction();
+        }
         return;
     }
 
@@ -220,11 +285,10 @@ try {
     if (!($user instanceof AnonymousUser)) {
         $access->setUser($user);
     }
-    $page = (new ReflectionClass($controller))->getShortName() . '/' . $action;
 
     $access
         ->setCookieID($user->getRandomID())
-        ->setPage($page)
+        ->setPage($match['_route'])
         ->setRequestMethod($request->server->get('REQUEST_METHOD'))
         ->setRequestString($request->server->get('REQUEST_URI'))
         ->setIp($user->getIP())
@@ -237,6 +301,7 @@ try {
     unset($match['controller']);
     unset($match['action']);
     unset($match['permission']);
+    unset($match['_route']);
     call_user_func_array([$controller, $action], $match);
 
 } catch (ResourceNotFoundException $e) {

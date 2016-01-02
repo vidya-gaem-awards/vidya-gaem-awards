@@ -18,6 +18,7 @@ VGA\Model\Category:
     order:
       type: integer
       nullable: false
+      column: '`order`'
     comments:
       type: text
       nullable: true
@@ -43,15 +44,20 @@ VGA\Model\Category:
     feedback:
       targetEntity: CategoryFeedback
       mappedBy: category
+      cascade: ['remove']
     nominees:
       targetEntity: Nominee
       mappedBy: category
+      cascade: ['remove']
     userNominations:
       targetEntity: UserNomination
       mappedBy: category
+      cascade: ['remove']
     votes:
       targetEntity: Vote
       mappedBy: category
+      cascade: ['remove']
     resultCache:
       targetEntity: ResultCache
       mappedBy: category
+      cascade: ['remove']

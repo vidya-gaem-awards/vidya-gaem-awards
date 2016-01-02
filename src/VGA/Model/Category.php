@@ -2,6 +2,9 @@
 
 namespace VGA\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
+
 /**
  * Category
  */
@@ -48,32 +51,32 @@ class Category
     private $secret;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var arrayCollection
      */
     private $feedback;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var arrayCollection
      */
     private $nominees;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var arrayCollection
      */
     private $userNominations;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var arrayCollection
      */
     private $votes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var arrayCollection
      */
     private $resultCache;
 
     /**
-     * @var \VGA\Model\Autocompleter
+     * @var Autocompleter
      */
     private $autocompleter;
 
@@ -276,7 +279,7 @@ class Category
      *
      * @return boolean
      */
-    public function getSecret()
+    public function isSecret()
     {
         return $this->secret;
     }
@@ -284,11 +287,11 @@ class Category
     /**
      * Add feedback
      *
-     * @param \VGA\Model\CategoryFeedback $feedback
+     * @param CategoryFeedback $feedback
      *
      * @return Category
      */
-    public function addFeedback(\VGA\Model\CategoryFeedback $feedback)
+    public function addFeedback(CategoryFeedback $feedback)
     {
         $this->feedback[] = $feedback;
 
@@ -298,9 +301,9 @@ class Category
     /**
      * Remove feedback
      *
-     * @param \VGA\Model\CategoryFeedback $feedback
+     * @param CategoryFeedback $feedback
      */
-    public function removeFeedback(\VGA\Model\CategoryFeedback $feedback)
+    public function removeFeedback(CategoryFeedback $feedback)
     {
         $this->feedback->removeElement($feedback);
     }
@@ -308,7 +311,7 @@ class Category
     /**
      * Get feedback
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getFeedback()
     {
@@ -318,11 +321,11 @@ class Category
     /**
      * Add nominee
      *
-     * @param \VGA\Model\Nominee $nominee
+     * @param Nominee $nominee
      *
      * @return Category
      */
-    public function addNominee(\VGA\Model\Nominee $nominee)
+    public function addNominee(Nominee $nominee)
     {
         $this->nominees[] = $nominee;
 
@@ -332,9 +335,9 @@ class Category
     /**
      * Remove nominee
      *
-     * @param \VGA\Model\Nominee $nominee
+     * @param Nominee $nominee
      */
-    public function removeNominee(\VGA\Model\Nominee $nominee)
+    public function removeNominee(Nominee $nominee)
     {
         $this->nominees->removeElement($nominee);
     }
@@ -342,7 +345,7 @@ class Category
     /**
      * Get nominees
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return arrayCollection
      */
     public function getNominees()
     {
@@ -352,11 +355,11 @@ class Category
     /**
      * Add userNomination
      *
-     * @param \VGA\Model\UserNomination $userNomination
+     * @param UserNomination $userNomination
      *
      * @return Category
      */
-    public function addUserNomination(\VGA\Model\UserNomination $userNomination)
+    public function addUserNomination(UserNomination $userNomination)
     {
         $this->userNominations[] = $userNomination;
 
@@ -366,9 +369,9 @@ class Category
     /**
      * Remove userNomination
      *
-     * @param \VGA\Model\UserNomination $userNomination
+     * @param UserNomination $userNomination
      */
-    public function removeUserNomination(\VGA\Model\UserNomination $userNomination)
+    public function removeUserNomination(UserNomination $userNomination)
     {
         $this->userNominations->removeElement($userNomination);
     }
@@ -376,7 +379,7 @@ class Category
     /**
      * Get userNominations
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return arrayCollection
      */
     public function getUserNominations()
     {
@@ -386,11 +389,11 @@ class Category
     /**
      * Add vote
      *
-     * @param \VGA\Model\Vote $vote
+     * @param Vote $vote
      *
      * @return Category
      */
-    public function addVote(\VGA\Model\Vote $vote)
+    public function addVote(Vote $vote)
     {
         $this->votes[] = $vote;
 
@@ -400,9 +403,9 @@ class Category
     /**
      * Remove vote
      *
-     * @param \VGA\Model\Vote $vote
+     * @param Vote $vote
      */
-    public function removeVote(\VGA\Model\Vote $vote)
+    public function removeVote(Vote $vote)
     {
         $this->votes->removeElement($vote);
     }
@@ -410,7 +413,7 @@ class Category
     /**
      * Get votes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return arrayCollection
      */
     public function getVotes()
     {
@@ -420,11 +423,11 @@ class Category
     /**
      * Add resultCache
      *
-     * @param \VGA\Model\ResultCache $resultCache
+     * @param ResultCache $resultCache
      *
      * @return Category
      */
-    public function addResultCache(\VGA\Model\ResultCache $resultCache)
+    public function addResultCache(ResultCache $resultCache)
     {
         $this->resultCache[] = $resultCache;
 
@@ -434,9 +437,9 @@ class Category
     /**
      * Remove resultCache
      *
-     * @param \VGA\Model\ResultCache $resultCache
+     * @param ResultCache $resultCache
      */
-    public function removeResultCache(\VGA\Model\ResultCache $resultCache)
+    public function removeResultCache(ResultCache $resultCache)
     {
         $this->resultCache->removeElement($resultCache);
     }
@@ -444,7 +447,7 @@ class Category
     /**
      * Get resultCache
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return arrayCollection
      */
     public function getResultCache()
     {
@@ -454,11 +457,11 @@ class Category
     /**
      * Set autocompleter
      *
-     * @param \VGA\Model\Autocompleter $autocompleter
+     * @param Autocompleter $autocompleter
      *
      * @return Category
      */
-    public function setAutocompleter(\VGA\Model\Autocompleter $autocompleter = null)
+    public function setAutocompleter(Autocompleter $autocompleter = null)
     {
         $this->autocompleter = $autocompleter;
 
@@ -468,11 +471,36 @@ class Category
     /**
      * Get autocompleter
      *
-     * @return \VGA\Model\Autocompleter
+     * @return Autocompleter
      */
     public function getAutocompleter()
     {
         return $this->autocompleter;
+    }
+
+    public function getFeedbackPercent()
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('opinion', 1));
+        $positive = count($this->getFeedback()->matching($criteria));
+
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('opinion', -1));
+        $negative = count($this->getFeedback()->matching($criteria));
+
+        $total = $positive + $negative;
+
+        if ($total === 0) {
+            return [
+                'positive' => 0,
+                'negative' => 0
+            ];
+        }
+
+        return [
+            'positive' => $positive / $total * 100,
+            'negative' => $negative / $total * 100
+        ];
     }
 }
 
