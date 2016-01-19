@@ -54,6 +54,8 @@ class CategoryAdminController extends BaseController
             if (strlen($post->get('id')) == 0 || strlen($post->get('name')) == 0 ||
                 strlen($post->get('subtitle')) == 0 || strlen($post->get('order')) == 0) {
                 $flashbag->add('formError', 'You need to fill in all of the fields.');
+            } elseif (!preg_match('/^[0-9a-zA-Z-]+$/', $post->get('id'))) {
+                $flashbag->add('formError', 'ID can only contain letters, numbers and dashes.');
             } elseif (!ctype_digit($post->get('order'))) {
                 $flashbag->add('formError', 'The order must be a positive integer.');
             } elseif (intval($_POST['order']) > 10000) {
@@ -61,7 +63,7 @@ class CategoryAdminController extends BaseController
             } else {
                 $category = new Category();
                 $category
-                    ->setId($post->get('id'))
+                    ->setId(strtolower($post->get('id')))
                     ->setName($post->get('name'))
                     ->setSubtitle($post->get('subtitle'))
                     ->setOrder($post->getInt('order'))

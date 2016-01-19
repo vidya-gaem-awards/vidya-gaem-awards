@@ -250,7 +250,11 @@
                             </div>
                         </td>
                         <td>
-                            <input type="text" name="id" id="id" placeholder="ID" style="width: 90%;" maxlength="30" required class="form-control">
+                            <input type="text" name="id" id="id" placeholder="ID" style="width: 90%;" maxlength="30" pattern="[0-9a-zA-Z-]+"
+                                   required class="form-control">
+                            <p class="help-block">
+                                ID can only contain letters, numbers and dashes.
+                            </p>
                         </td>
                         <td colspan="2">
                             <input type="text" name="name" id="name" placeholder="Name" style="width: 90%;" required class="form-control">
