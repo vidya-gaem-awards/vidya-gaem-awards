@@ -486,5 +486,28 @@ class GameRelease
     {
         return $this->mobile;
     }
+
+    public function getOthers()
+    {
+        $others = [];
+        if ($this->wiiware) {
+            $others[] = 'WiiWare';
+        }
+        if ($this->psn) {
+            $others[] = 'PSN';
+        }
+        if ($this->xbla) {
+            $others[] = 'XBLA';
+        }
+        if ($this->ouya) {
+            $others[] = 'Ouya';
+        }
+        return $others;
+    }
+
+    public function getURL()
+    {
+        return 'https://en.wikipedia.org/wiki/' . urlencode(str_replace(' ', '_', $this->getName()));
+    }
 }
 

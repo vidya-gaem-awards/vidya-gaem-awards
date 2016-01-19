@@ -358,7 +358,6 @@ $ACCESS = array(
     "stream" => EVERYONE,
     //"test" => EVERYONE,
     "thanks" => EVERYONE,
-    "video-games" => EVERYONE,
     //"volunteer-submission" => LOGIN,
     //"videos" => EVERYONE,
     "voting" => EVERYONE,

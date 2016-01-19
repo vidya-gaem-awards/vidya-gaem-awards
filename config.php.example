@@ -32,5 +32,5 @@ define('NAVBAR_ITEMS', [
     "home"  => "Home",
     "categories" => "Categories and Nominations",
     "people" => "People",
-    "https://steamcommunity.com/groups/vidyagaemawards/discussions/" = "Forum",
+    "https://steamcommunity.com/groups/vidyagaemawards/discussions/" => "Forum",
 ]);
