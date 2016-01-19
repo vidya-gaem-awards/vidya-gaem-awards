@@ -75,7 +75,7 @@ $user
 $routes = new RouteCollection();
 
 // Change this to change the default route
-$routes->add('index', new Route('/', ['controller' => Controllers\IndexController::class]));
+$routes->add('index', new Route('/', ['controller' => Controllers\CategoryController::class]));
 
 $routes->add('home', new Route('/home', ['controller' => Controllers\IndexController::class]));
 $routes->add('news', new Route('/news', ['controller' => Controllers\NewsController::class]));
