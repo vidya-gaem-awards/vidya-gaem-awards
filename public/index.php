@@ -59,8 +59,11 @@ $randomID = $request->cookies->get('access');
 if ($randomID === null) {
     $factory = new \RandomLib\Factory;
     $generator = $factory->getLowStrengthGenerator();
-    $randomToken = hash('sha256', $generator->generate(64));
-    $randomToken .= ':' . hash_hmac('md5', $randomToken, STEAM_API_KEY);
+    $randomID = hash('sha256', $generator->generate(64));
+    $randomID .= ':' . hash_hmac('md5', $randomID, STEAM_API_KEY);
+
+    // Bad practice, should be using Symfony's request class
+    setcookie('access', $randomID, strtotime('+90 days'), '/', DOMAIN);
 }
 
 // Update the user object with information that doesn't come from the database.
