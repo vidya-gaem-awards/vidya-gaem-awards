@@ -1,57 +1,52 @@
 <?php
-error_reporting(E_ALL);
-set_time_limit(0);
+use VGA\DependencyManager;
+use VGA\Model\GameRelease;
 
-require_once("../bootstrap.php");
+require_once('../bootstrap.php');
 
-if (!file_exists("games.csv")) {
-    die("Forgetting something?");
+if (!file_exists('games.csv')) {
+    echo "Please create games.csv first.\n";
+    exit(1);
 }
 
-$mysqli = new Mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+$em = DependencyManager::getEntityManager();
 
-$search = array(" ", "Win", "Mac", "Lin", "iOS", "Droid", "WP", "X360", "XBO", "PSVita");
-$replace = array("", "PC", "PC", "PC", "Mobile", "Mobile", "Mobile", "360", "XB1", "PSV");
-$delete = array("PS2", "NDS", "DC");
+$search = [' ', 'Win', 'Mac', 'Lin', 'iOS', 'Droid', 'Android', 'WP', 'X360', 'XBO', 'PSVita', '3DS'];
+$replace = ['', 'pc', 'pc', 'pc', 'mobile', 'mobile', 'mobile', 'mobile', 'x360', 'xb1', 'vita', 'n3ds'];
+$delete = ['PS2', 'NDS', 'DC', 'PSP', 'Fire'];
 
-$allPlatforms = array("PC","PS3","PS4","PSV","PSN","360","XB1","XBLA","Wii",
-  "WiiU","WiiWare","3DS","Ouya","Mobile");
+$allPlatforms = [
+    'pc', 'ps3', 'ps4', 'vita', 'psn', 'x360', 'xb1', 'xbla', 'wii', 'wiiu', 'wiiware', 'n3ds', 'ouya', 'mobile'
+];
 
 $games = array();
 
-$csv = file("games.csv");
+$csv = file('games.csv');
 foreach ($csv as $line) {
     $array = str_getcsv($line);
     $game = $array[0];
     if (!isset($games[$game])) {
-        $games[$game] = array_fill_keys($allPlatforms, 0);
+        $games[$game] = array_fill_keys($allPlatforms, false);
     }
 
     $platforms = explode(",", str_replace($search, $replace, $array[1]));
     $platforms = array_diff($platforms, $delete);
     foreach ($platforms as $platform) {
-        $games[$game][$platform] = 1;
+        $platform = ucfirst(strtolower($platform));
+        $games[$game][$platform] = true;
     }
 }
 
-$keys = array();
-foreach ($allPlatforms as $platform) {
-    $keys[] = "`$platform`";
-}
-$keys = implode(",", $keys);
-foreach ($games as $game => $platforms) {
-    $values = array();
-    foreach ($platforms as $bool) {
-        $values[] = $bool;
+foreach ($games as $name => $platforms) {
+    $release = new GameRelease($name);
+    $platforms = array_keys(array_filter($platforms));
+    foreach ($platforms as $platform) {
+        $release->{'set'.$platform}(true);
     }
-    $values = implode(",", $values);
-    $game = $mysqli->escape_string($game);
-    $query = "INSERT INTO `2010_releases` (`Game`, $keys) VALUES (\"$game\", $values)";
-    $result = $mysqli->query($query);
-    echo $game . "\n";
-    if ($result->error) {
-        echo $result->error."<br>";
-    }
+    echo "$name\n";
+    $em->persist($release);
 }
 
-echo "All done.";
+$em->flush();
+
+echo "All done.\n";

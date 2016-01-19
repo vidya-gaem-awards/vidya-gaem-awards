@@ -2,100 +2,68 @@
 
 namespace VGA\Model;
 
-/**
- * GameRelease
- */
 class GameRelease
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
+    /** @var boolean */
+    private $notable = false;
+
+    /** @var boolean */
+    private $pc = false;
+
+    /** @var boolean */
+    private $ps3 = false;
+
+    /** @var boolean */
+    private $ps4 = false;
+
+    /** @var boolean */
+    private $vita = false;
+
+    /** @var boolean */
+    private $psn = false;
+
+    /** @var boolean */
+    private $x360 = false;
+
+    /** @var boolean */
+    private $xb1 = false;
+
+    /** @var boolean */
+    private $xbla = false;
+
+    /** @var boolean */
+    private $wii = false;
+
+    /** @var boolean */
+    private $wiiu = false;
+
+    /** @var boolean */
+    private $wiiware = false;
+
+    /** @var boolean */
+    private $n3ds = false;
+
+    /** @var boolean */
+    private $ouya = false;
+
+    /** @var boolean */
+    private $mobile = false;
+
     /**
-     * @var boolean
+     * @param string $name
      */
-    private $notable;
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
 
     /**
-     * @var boolean
-     */
-    private $pc;
-
-    /**
-     * @var boolean
-     */
-    private $ps3;
-
-    /**
-     * @var boolean
-     */
-    private $ps4;
-
-    /**
-     * @var boolean
-     */
-    private $vita;
-
-    /**
-     * @var boolean
-     */
-    private $psn;
-
-    /**
-     * @var boolean
-     */
-    private $x360;
-
-    /**
-     * @var boolean
-     */
-    private $xb1;
-
-    /**
-     * @var boolean
-     */
-    private $xbla;
-
-    /**
-     * @var boolean
-     */
-    private $wii;
-
-    /**
-     * @var boolean
-     */
-    private $wiiu;
-
-    /**
-     * @var boolean
-     */
-    private $wiiware;
-
-    /**
-     * @var boolean
-     */
-    private $n3ds;
-
-    /**
-     * @var boolean
-     */
-    private $ouya;
-
-    /**
-     * @var boolean
-     */
-    private $mobile;
-
-
-    /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -104,10 +72,7 @@ class GameRelease
     }
 
     /**
-     * Set name
-     *
      * @param string $name
-     *
      * @return GameRelease
      */
     public function setName($name)
@@ -118,8 +83,6 @@ class GameRelease
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -128,10 +91,7 @@ class GameRelease
     }
 
     /**
-     * Set notable
-     *
      * @param boolean $notable
-     *
      * @return GameRelease
      */
     public function setNotable($notable)
@@ -142,8 +102,6 @@ class GameRelease
     }
 
     /**
-     * Get notable
-     *
      * @return boolean
      */
     public function getNotable()
@@ -152,10 +110,7 @@ class GameRelease
     }
 
     /**
-     * Set pc
-     *
      * @param boolean $pc
-     *
      * @return GameRelease
      */
     public function setPc($pc)
@@ -166,8 +121,6 @@ class GameRelease
     }
 
     /**
-     * Get pc
-     *
      * @return boolean
      */
     public function getPc()
@@ -176,10 +129,7 @@ class GameRelease
     }
 
     /**
-     * Set ps3
-     *
      * @param boolean $ps3
-     *
      * @return GameRelease
      */
     public function setPs3($ps3)
@@ -190,8 +140,6 @@ class GameRelease
     }
 
     /**
-     * Get ps3
-     *
      * @return boolean
      */
     public function getPs3()
@@ -200,10 +148,7 @@ class GameRelease
     }
 
     /**
-     * Set ps4
-     *
      * @param boolean $ps4
-     *
      * @return GameRelease
      */
     public function setPs4($ps4)
@@ -214,8 +159,6 @@ class GameRelease
     }
 
     /**
-     * Get ps4
-     *
      * @return boolean
      */
     public function getPs4()
@@ -224,10 +167,7 @@ class GameRelease
     }
 
     /**
-     * Set vita
-     *
      * @param boolean $vita
-     *
      * @return GameRelease
      */
     public function setVita($vita)
@@ -238,8 +178,6 @@ class GameRelease
     }
 
     /**
-     * Get vita
-     *
      * @return boolean
      */
     public function getVita()
@@ -248,10 +186,7 @@ class GameRelease
     }
 
     /**
-     * Set psn
-     *
      * @param boolean $psn
-     *
      * @return GameRelease
      */
     public function setPsn($psn)
@@ -262,8 +197,6 @@ class GameRelease
     }
 
     /**
-     * Get psn
-     *
      * @return boolean
      */
     public function getPsn()
@@ -272,10 +205,7 @@ class GameRelease
     }
 
     /**
-     * Set x360
-     *
      * @param boolean $x360
-     *
      * @return GameRelease
      */
     public function setX360($x360)
@@ -286,8 +216,6 @@ class GameRelease
     }
 
     /**
-     * Get x360
-     *
      * @return boolean
      */
     public function getX360()
@@ -296,10 +224,7 @@ class GameRelease
     }
 
     /**
-     * Set xb1
-     *
      * @param boolean $xb1
-     *
      * @return GameRelease
      */
     public function setXb1($xb1)
@@ -310,8 +235,6 @@ class GameRelease
     }
 
     /**
-     * Get xb1
-     *
      * @return boolean
      */
     public function getXb1()
@@ -320,10 +243,7 @@ class GameRelease
     }
 
     /**
-     * Set xbla
-     *
      * @param boolean $xbla
-     *
      * @return GameRelease
      */
     public function setXbla($xbla)
@@ -334,8 +254,6 @@ class GameRelease
     }
 
     /**
-     * Get xbla
-     *
      * @return boolean
      */
     public function getXbla()
@@ -344,10 +262,7 @@ class GameRelease
     }
 
     /**
-     * Set wii
-     *
      * @param boolean $wii
-     *
      * @return GameRelease
      */
     public function setWii($wii)
@@ -358,8 +273,6 @@ class GameRelease
     }
 
     /**
-     * Get wii
-     *
      * @return boolean
      */
     public function getWii()
@@ -368,10 +281,7 @@ class GameRelease
     }
 
     /**
-     * Set wiiu
-     *
      * @param boolean $wiiu
-     *
      * @return GameRelease
      */
     public function setWiiu($wiiu)
@@ -382,8 +292,6 @@ class GameRelease
     }
 
     /**
-     * Get wiiu
-     *
      * @return boolean
      */
     public function getWiiu()
@@ -392,10 +300,7 @@ class GameRelease
     }
 
     /**
-     * Set wiiware
-     *
      * @param boolean $wiiware
-     *
      * @return GameRelease
      */
     public function setWiiware($wiiware)
@@ -406,8 +311,6 @@ class GameRelease
     }
 
     /**
-     * Get wiiware
-     *
      * @return boolean
      */
     public function getWiiware()
@@ -416,10 +319,7 @@ class GameRelease
     }
 
     /**
-     * Set n3ds
-     *
      * @param boolean $n3ds
-     *
      * @return GameRelease
      */
     public function setN3ds($n3ds)
@@ -430,8 +330,6 @@ class GameRelease
     }
 
     /**
-     * Get n3ds
-     *
      * @return boolean
      */
     public function getN3ds()
@@ -440,10 +338,7 @@ class GameRelease
     }
 
     /**
-     * Set ouya
-     *
      * @param boolean $ouya
-     *
      * @return GameRelease
      */
     public function setOuya($ouya)
@@ -454,8 +349,6 @@ class GameRelease
     }
 
     /**
-     * Get ouya
-     *
      * @return boolean
      */
     public function getOuya()
@@ -464,10 +357,7 @@ class GameRelease
     }
 
     /**
-     * Set mobile
-     *
      * @param boolean $mobile
-     *
      * @return GameRelease
      */
     public function setMobile($mobile)
@@ -478,8 +368,6 @@ class GameRelease
     }
 
     /**
-     * Get mobile
-     *
      * @return boolean
      */
     public function getMobile()
