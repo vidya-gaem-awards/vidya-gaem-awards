@@ -32,6 +32,18 @@ class UserNomination
      */
     private $category;
 
+    /**
+     * @param Category $category
+     * @param User $user
+     * @param string $nomination
+     */
+    public function __construct(Category $category, User $user, string $nomination)
+    {
+        $this->category = $category;
+        $this->user = $user->getFuzzyID();
+        $this->nomination = $nomination;
+        $this->timestamp = new \DateTime();
+    }
 
     /**
      * Get id

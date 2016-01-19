@@ -143,7 +143,12 @@ $routes->add('privacy', new Route(
 ));
 $routes->add('categories', new Route(
     '/awards',
-    ['controller' => Controllers\CategoryController::class]
+    ['controller' => Controllers\CategoryController::class],
+    [],
+    [],
+    '',
+    [],
+    ['GET']
 ));
 $routes->add('categoryManager', new Route(
     '/awards/manage',
@@ -200,6 +205,18 @@ $routes->add('editCategoryPost', new Route(
 $routes->add('videoGames', new Route(
     '/vidya-in-2015',
     ['controller' => Controllers\VideoGamesController::class]
+));
+$routes->add('awardFrontendPost', new Route(
+    '/awards',
+    [
+        'controller' => Controllers\CategoryController::class,
+        'action' => 'post'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
 ));
 
 $context = new RequestContext();
@@ -330,7 +347,6 @@ if ($PAGE == "promotions") {
 
 $ACCESS = array(
     // Volatile pages
-    "ajax-category-feedback" => EVERYONE,
     "ajax-nominations" => "nominations-edit",
     "ajax-videogame" => "add-video-game",
     //"applications" => "applications-view",
@@ -338,7 +354,6 @@ $ACCESS = array(
     "credits" => EVERYONE,
     "launcher" => EVERYONE,
     "nominations" => "nominations-view",
-    "nomination-submit" => EVERYONE,
     "referrers" => "referrers-view",
     "stream" => EVERYONE,
     //"test" => EVERYONE,
@@ -351,10 +366,6 @@ $ACCESS = array(
     "voting-submission" => EVERYONE,
     "winners" => EVERYONE // Change to EVERYONE
 );
-
-if (isset($ACCESS["nomination-submit"]) && ACCOUNT_REQUIRED_TO_NOMINATE) {
-    $ACCESS["nomination-submit"] = LOGIN;
-}
 
 // Pages that won't use the master template
 $noMaster = array(
@@ -377,10 +388,8 @@ $noContainer = array("videos");
 
 // Pages that should only be accessed via POST requests
 $postOnly = array(
-    "ajax-category-feedback",
     "ajax-nominations",
     "ajax-videogame",
-    "nomination-submit",
     "volunteer-submission",
     "voting-submission",
 );

@@ -30,12 +30,12 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-5" id="category-selector">
+        <div class="col-md-6" id="category-selector">
             <ul class="nav nav-list custom-navigation-pane">
                 {% for category in categories %}
                     <li data-id="{{ category.id }}">
                         <a href="#{{ category.id }}">
-                            <span id="opinion-icon"><tag:categories[].OpinionIcon /></span>
+                            <span id="opinion-icon">[{{ userNominations[category.id] | length }}]</span>
                             <strong>{{ category.name }}</strong> {{ category.subtitle }}
                             <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
                         </a>
@@ -44,26 +44,23 @@
             </ul>
         </div>
 
-        <div class="col-md-7" id="video-games">
+        <div class="col-md-6" id="video-games">
             <a href="{{ path('videoGames') }}">
-                <img src="/collage.jpg">
+                <img class="img-responsive" src="/collage.jpg?v=2">
             </a>
         </div>
 
-        <div class="col-md-7" id="category-info" style="display: none;">
+        <div class="col-md-6" id="category-info" style="display: none;">
             <div data-spy="affix" data-offset-top="230">
                 <div id="category-name" class="impressive-title"></div>
                 <div id="category-subtitle" class="impressive-subtitle"></div>
 
                 <p id="description" style="text-align: center;"></p>
 
-                <div class="well" style="text-align: center;">
+                <div style="text-align: center; margin-bottom: 10px;">
                     <div class="btn-group" id="category-voting">
-                        <button class="btn btn-lg btn-default" id="thumbs-up">This award is good</button>
-                        <button class="btn btn-lg btn-default" id="thumbs-down">This award is shit</button>
-                    </div>
-                    <div style="font-size: 200%; color: grey; line-height: 39px; display: none;">
-                        saving...
+                        <button class="btn btn-default" id="thumbs-up">This award is good</button>
+                        <button class="btn btn-default" id="thumbs-down">This award is shit</button>
                     </div>
                 </div>
 
@@ -74,18 +71,21 @@
                     </div>
 
                     <div id="nomination-section">
-                        <pre id="user-nomination-list"></pre>
+                        <div class="well" style="background-color: #fafafa;" id="user-nomination-list"></div>
 
                         <form class="form-inline" style="text-align: center;" id="nomination-form">
-                            <p>
-                                You aren't just restricted to the entries in the dropdown! They are suggestions only.
-                            </p>
-                            <div class="input-prepend input-append">
-                                <span class="add-on"><label for="tags"><strong>Add a nomination:</strong></label></span>
-                                <input id="tags" name="nomination" type="text" class="span3" required />
-                                <button class="btn" type="submit">Submit</button>
+                            <div class="form-group">
+                                <label class="sr-only" for="tags">Add a nomination:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Add a nomination:</div>
+                                    <input class="form-control" id="tags" name="nomination" type="text" required>
+                                </div>
                             </div>
-                            <span class="help-block" style="font-style: italic;" id="autocomplete"></span>
+                            <button class="btn" type="submit">Submit</button>
+                            <p class="help-block" style="font-style: italic;">
+                                <span id="autocomplete"></span><br>
+                                You can make nominations for things that aren't in the dropdown.
+                            </p>
                         </form>
 
                         <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
@@ -140,11 +140,11 @@
                     $('#nomination-section').hide();
                     $('#nominations-closed').show();
                 }
-                $('#category-voting button').removeClass("btn-success btn-danger disabled");
-                if (categories[category]['Opinion'] == 1) {
-                    $('#thumbs-up').addClass("disabled btn-success");
-                } else if (categories[category]['Opinion'] == -1) {
-                    $('#thumbs-down').addClass("disabled btn-danger");
+                $('#category-voting button').removeClass("btn-success btn-danger selected");
+                if (opinions[category] == 1) {
+                    $('#thumbs-up').addClass("selected btn-success");
+                } else if (opinions[category] == -1) {
+                    $('#thumbs-down').addClass("selected btn-danger");
                 }
 
                 {#<if:allowedToNominate>#}
@@ -160,11 +160,11 @@
 
                 var autocompleteCat = categories[category]['autocompleter'];
                 if (autocompleteCat == "video-game") {
-                    $('#autocomplete').html("This category provides suggestions using a list of video games");
+                    $('#autocomplete').html("This category provides suggestions using a list of video games.");
                 } else if (autocompleteCat == category) {
-                    $('#autocomplete').html("This category provides suggestions based on nominations from other users");
+                    $('#autocomplete').html("This category provides suggestions based on nominations from other users.");
                 } else {
-                    $('#autocomplete').html("This category provides suggestions from a pre-defined list");
+                    $('#autocomplete').html("This category provides suggestions from a pre-defined list.");
                 }
 
                 $( "#tags" ).autocomplete({
@@ -185,7 +185,7 @@
             var opinion;
             var opposite;
 
-            if ($(selected).hasClass("disabled")) {
+            if ($(selected).hasClass("selected")) {
                 opinion = 0;
                 opposite = selected;
             } else if (selected.id == "thumbs-down") {
@@ -201,7 +201,7 @@
 
             var formCategory = category;
 
-            $.post("/ajax-category-feedback", { ID: category, opinion: opinion }, function(data) {
+            $.post("{{ path('awardFrontendPost') }}", { id: category, opinion: opinion }, function(data) {
                 if (data.success) {
 
                     var icon = $('[data-id="'+formCategory+'"] #opinion-icon');
@@ -210,24 +210,24 @@
                             $(selected).addClass("btn-danger");
                             $(opposite).removeClass("btn-success");
                         }
-                        $(icon).html("&#x2718;");
+//                        $(icon).html("&#x2718;");
                     } else if (opinion == 1) {
                         if (formCategory == category) {
                             $(selected).addClass("btn-success");
                             $(opposite).removeClass("btn-danger");
                         }
-                        $(icon).html("&#x2714;");
+//                        $(icon).html("&#x2714;");
                     } else {
                         if (formCategory == category) {
                             $(selected).removeClass("btn-success btn-danger");
                         }
-                        $(icon).html("");
+//                        $(icon).html("");
                     }
                     if (formCategory == category) {
-                        $(selected).addClass("disabled");
-                        $(opposite).removeClass("disabled");
+                        $(selected).addClass("selected");
+                        $(opposite).removeClass("selected");
                     }
-                    categories[formCategory]['Opinion'] = opinion;
+                    opinions[formCategory] = opinion;
                     $('#category-voting button').removeAttr('disabled');
                     $('#thumbs-up').text('This award is good');
                     $('#thumbs-down').text('This award is shit');
@@ -254,12 +254,9 @@
 
             var value = $('#tags').val();
 
-            $.ajax({
-                type: "POST",
-                url: "/nomination-submit",
-                data: { "Category": category, "Nomination": value },
-                success: function(data) {
-                    if (data == "success") {
+            $.post("{{ path('awardFrontendPost') }}", { id: category, nomination: value }, null, 'json')
+                .done(function(data) {
+                    if (data.success) {
                         var safeValue = $('<div/>').text($.trim(value)).html();
                         userNominations[formCategory].push(safeValue);
                         $('#tags').val("");
@@ -273,30 +270,21 @@
                         icon.text("["+userNominations[formCategory].length+"]");
                     } else {
                         if (formCategory == category) {
-                            if (data == "blank nomination") {
-                                $("#nomination-status").html("<span style='color: red;'>Nomination cannot be blank.</span>");
-                            } else if (data == "already exists") {
-                                $("#nomination-status").html("<span style='color: red;'>You've already nominated that.</span>");
-                            } else {
-                                $("#nomination-status").hide();
-                            }
+                            $("#nomination-status").html("<span style='color: red;'>" + data.error + "</span>");
                         }
                     }
                     currentlySubmitting = false;
-                },
-                error: function(xhr, textStatus, error) {
+                })
+                .fail(function (xhr, textStatus, error) {
                     currentlySubmitting = false;
-                    $("#nomination-status").html("<span style='color: red;'>HTTP error: "+xhr.status+" "+xhr.statusText+". Try again.</span>");
+                    $("#nomination-status").html("<span style='color: red;'>HTTP error: " + xhr.status + " " + xhr.statusText+". Try again.</span>");
                     console.log(xhr);
-                }
-            });
+                });
         });
 
         if (window.location.hash) {
             var selected = window.location.hash.slice(1);
             $('[data-id="'+selected+'"]').click();
         }
-
-
     </script>
 {% endblock %}

@@ -2,32 +2,29 @@
 
 namespace VGA\Model;
 
-/**
- * CategoryFeedback
- */
 class CategoryFeedback
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $user;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $opinion;
 
-    /**
-     * @var \VGA\Model\Category
-     */
+    /** @var Category */
     private $category;
 
+    /**
+     * @param Category $category
+     * @param User $user
+     */
+    public function __construct(Category $category, User $user)
+    {
+        $this->category = $category;
+        $this->user = $user->getFuzzyID();
+    }
 
     /**
-     * Set user
-     *
      * @param string $user
-     *
      * @return CategoryFeedback
      */
     public function setUser($user)
@@ -38,8 +35,6 @@ class CategoryFeedback
     }
 
     /**
-     * Get user
-     *
      * @return string
      */
     public function getUser()
@@ -48,10 +43,7 @@ class CategoryFeedback
     }
 
     /**
-     * Set opinion
-     *
      * @param integer $opinion
-     *
      * @return CategoryFeedback
      */
     public function setOpinion($opinion)
@@ -62,8 +54,6 @@ class CategoryFeedback
     }
 
     /**
-     * Get opinion
-     *
      * @return integer
      */
     public function getOpinion()
@@ -72,13 +62,10 @@ class CategoryFeedback
     }
 
     /**
-     * Set category
-     *
-     * @param \VGA\Model\Category $category
-     *
+     * @param Category $category
      * @return CategoryFeedback
      */
-    public function setCategory(\VGA\Model\Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
 
@@ -86,9 +73,7 @@ class CategoryFeedback
     }
 
     /**
-     * Get category
-     *
-     * @return \VGA\Model\Category
+     * @return Category
      */
     public function getCategory()
     {

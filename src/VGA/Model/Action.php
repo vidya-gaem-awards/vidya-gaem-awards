@@ -67,12 +67,7 @@ class Action
      */
     public function setUser($user)
     {
-        if ($user instanceof AnonymousUser) {
-            $this->user = $user->getIP();
-        } else {
-            $this->user = $user->getSteamID();
-        }
-
+        $this->user = $user->getFuzzyID();
         return $this;
     }
 

@@ -201,6 +201,7 @@ class PeopleController extends BaseController
 
     public function searchAction()
     {
+        $post = $this->request->request;
         $repo = $this->em->getRepository(User::class);
         /** @var User $user */
         $user = $repo->find($post->get('ID'));
