@@ -397,5 +397,33 @@ class GameRelease
     {
         return 'https://en.wikipedia.org/wiki/' . urlencode(str_replace(' ', '_', $this->getName()));
     }
+
+    public function getPlatforms()
+    {
+        $allPlatforms = [
+            'pc' => 'PC',
+            'ps3' => 'PS3',
+            'ps4' => 'PS4',
+            'vita' => 'Vita',
+            'psn' => 'PSN',
+            'x360' => '360',
+            'xb1' => 'XB1',
+            'xbla' => 'XBLA',
+            'wii' => 'Wii',
+            'wiiu' => 'Wii U',
+            'wiiware' => 'WiiWare',
+            'n3ds' => '3DS',
+            'ouya' => 'Ouya',
+            'mobile' => 'Mobile'
+        ];
+
+        $platforms = [];
+        foreach ($allPlatforms as $platformFunction => $platform) {
+            if ($this->{'get'.$platformFunction}()) {
+                $platforms[] = $platform;
+            }
+        }
+        return $platforms;
+    }
 }
 

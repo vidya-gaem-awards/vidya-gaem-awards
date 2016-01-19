@@ -4,11 +4,11 @@ namespace VGA\Controllers;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use VGA\Model\Action;
+use VGA\Model\Autocompleter;
 use VGA\Model\Category;
 use VGA\Model\CategoryFeedback;
-use VGA\Model\News;
+use VGA\Model\GameRelease;
 use VGA\Model\UserNomination;
-use VGA\Proxies\__CG__\VGA\Model\User;
 
 class CategoryController extends BaseController
 {
@@ -22,8 +22,8 @@ class CategoryController extends BaseController
             ->orderBy('c.order', 'ASC');
         $categories = $query->getQuery()->getResult();
 
-        $repo = $this->em->getRepository(UserNomination::class);
-        $query = $repo->createQueryBuilder('un');
+        $nominationRepo = $this->em->getRepository(UserNomination::class);
+        $query = $nominationRepo->createQueryBuilder('un');
         $query->select('un')
             ->where('un.user = :user')
             ->setParameter('user', $this->user->getFuzzyID());
@@ -36,8 +36,8 @@ class CategoryController extends BaseController
             $nominations[$un->getCategory()->getId()][] = $un->getNomination();
         }
 
-        $repo = $this->em->getRepository(CategoryFeedback::class);
-        $query = $repo->createQueryBuilder('cf')
+        $feedbackRepo = $this->em->getRepository(CategoryFeedback::class);
+        $query = $feedbackRepo->createQueryBuilder('cf')
             ->where('cf.user = :user')
             ->setParameter('user', $this->user->getFuzzyID());
         $result = $query->getQuery()->getResult();
@@ -49,13 +49,58 @@ class CategoryController extends BaseController
             $opinions[$cf->getCategory()->getId()] = $cf->getOpinion();
         }
 
+        $autocompleterRepo = $this->em->getRepository(Autocompleter::class);
+        $result = $autocompleterRepo->findAll();
+
+        $autocompleters = array_fill_keys(array_keys($categories), []);
+
+        /** @var Autocompleter $autocompleter */
+        foreach ($result as $autocompleter) {
+            $strings = $autocompleter->getStrings();
+            // The video-game autocompleter is a special case: its values are stored in another table
+            if ($autocompleter->getId() === 'video-game') {
+                $gameRepo = $this->em->getRepository(GameRelease::class);
+                $games = $gameRepo->findAll();
+                /** @var GameRelease $game */
+                foreach ($games as $game) {
+                    $strings[] = $game->getName() . ' (' . implode(', ', $game->getPlatforms()) . ')';
+                }
+            }
+            $autocompleters[$autocompleter->getId()] = $strings;
+        }
+
+        /** @var Category $category */
+        foreach ($categories as $category) {
+            // Don't bother populating the autocompleter for this category if it already has a different one defined
+            if ($category->getAutocompleter()) {
+                continue;
+            }
+
+            $allNominations = array_map(function ($un) {
+                /** @var UserNomination $un */
+                return $un->getNomination();
+            }, $category->getUserNominations()->toArray());
+
+            $nominationCount = array_fill_keys(array_values($allNominations), 0);
+            foreach ($allNominations as $nomination) {
+                $nominationCount[$nomination]++;
+            }
+
+            $nominationCount = array_filter($nominationCount, function ($count) {
+                return $count >= 2;
+            }, ARRAY_FILTER_USE_BOTH);
+
+            $autocompleters[$category->getId()] = array_keys($nominationCount);
+        }
+
         $tpl = $this->twig->loadTemplate('categories.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Awards and Nominations',
             'categories' => $categories,
             'userNominations' => $nominations,
-            'userOpinions' => $opinions
+            'userOpinions' => $opinions,
+            'autocompleters' => $autocompleters
         ]));
         $response->send();
     }

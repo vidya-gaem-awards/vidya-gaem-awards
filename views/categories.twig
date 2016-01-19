@@ -105,7 +105,7 @@
         var categories = {{ categories | json_encode() | raw }};
         var userNominations = {{ userNominations | json_encode() | raw }};
         var opinions = {{ userOpinions | json_encode() | raw }};
-        var autocompleters = {};
+        var autocompleters = {{ autocompleters | json_encode() | raw }};
 
         var category = false;
 
