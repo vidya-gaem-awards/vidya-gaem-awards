@@ -26,10 +26,6 @@ $request = Request::createFromGlobals();
 $session = new Session();
 $session->start();
 
-// TODO: delete this in production
-Debug::enable();
-
-
 // TODO: unsure if this is needed when using the Response class
 header("Content-type: text/html; charset=utf-8");
 
@@ -50,6 +46,10 @@ if ($session->get('user')) {
 
 if (!isset($user)) {
     $user = new AnonymousUser();
+}
+
+if ($user->canDo('view-debug-output')) {
+    Debug::enable();
 }
 
 // Generate a random ID to keep in the cookie if one doesn't already exist.
