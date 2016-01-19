@@ -563,5 +563,14 @@ class User
     {
         return $this->logins;
     }
+
+    /**
+     * A fuzzy ID will be either a user ID (for logged in users) or an IP address (for anonymous users).
+     * @return string
+     */
+    public function getFuzzyID()
+    {
+        return $this->isLoggedIn() ? $this->getSteamID() : $this->getIP();
+    }
 }
 

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Criteria;
 /**
  * Category
  */
-class Category
+class Category implements \JsonSerializable
 {
     /**
      * @var string
@@ -500,6 +500,17 @@ class Category
         return [
             'positive' => $positive / $total * 100,
             'negative' => $negative / $total * 100
+        ];
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->getName(),
+            'subtitle' => $this->getSubtitle(),
+            'autocompleter' => $this->getAutocompleter() ? $this->getAutocompleter()->getId() : $this->getId(),
+            'comments' => $this->getComments() ?: '',
+            'nominationsEnabled' => $this->getNominationsEnabled()
         ];
     }
 }

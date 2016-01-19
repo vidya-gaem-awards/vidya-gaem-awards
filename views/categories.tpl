@@ -14,7 +14,7 @@
 
 <if:CATEGORY_VOTING_ENABLED>
 <header class="jumbotron subhead">
-<h1>Awards and Nominations</h1>
+<h1>Get your nominations in for the 2015 Vidya Gaem Awards</h1>
 </header>
 </if:CATEGORY_VOTING_ENABLED>
 

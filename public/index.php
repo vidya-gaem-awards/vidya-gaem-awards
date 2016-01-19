@@ -197,6 +197,10 @@ $routes->add('editCategoryPost', new Route(
     [],
     ['POST']
 ));
+$routes->add('videoGames', new Route(
+    '/vidya-in-2015',
+    ['controller' => Controllers\VideoGamesController::class]
+));
 
 $context = new RequestContext();
 $context->fromRequest($request);
