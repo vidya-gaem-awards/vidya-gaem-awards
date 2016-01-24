@@ -42,6 +42,15 @@ class ReferrerController extends BaseController
                 $key = preg_replace('{/[0-9]+$}', '', $key);
             }
 
+            if (substr($key, 0, 16) === 'boards.4chan.org') {
+                $class = 'success';
+            } elseif (substr($key, 0, 10) === 'reddit.com') {
+                $class = 'danger';
+            } else {
+                $class = 'warning';
+            }
+            $referer['class'] = $class;
+
             if (!isset($referrers[$key])) {
                 $referrers[$key] = $referer;
             } else {

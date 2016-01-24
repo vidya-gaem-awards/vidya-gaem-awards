@@ -11,7 +11,7 @@
     <th>Referrer</th>
   </tr>
   {% for referrer in referrers %}
-  <tr>
+  <tr class="{{ referrer.class }}">
     <td><strong>{{ referrer.total }}</strong></td>
     <td><abbr title="{{ referrer.latest | date('D d/m/Y - H:i:s') }}">{{ referrer.latest | time_diff }}</abbr></td>
     <td><a href="{{ referrer.referer | escape('html_attr') }}">Follow link</a></td>
