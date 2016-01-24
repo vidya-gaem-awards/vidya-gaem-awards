@@ -316,7 +316,7 @@ try {
         ->setRequestMethod($request->server->get('REQUEST_METHOD'))
         ->setRequestString($request->server->get('REQUEST_URI'))
         ->setIp($user->getIP())
-        ->setUserAgent($request->server->get('HTTP_USER_AGENT'))
+        ->setUserAgent($request->server->get('HTTP_USER_AGENT', ''))
         ->setFilename($request->server->get('SCRIPT_FILENAME'))
         ->setReferer($request->server->get('HTTP_REFERER'));
     $em->persist($access);
