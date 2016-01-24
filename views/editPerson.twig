@@ -7,28 +7,28 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="input01">Steam ID</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" id="input01" disabled value="{{ user.steamID }}">
+                    <input type="text" class="form-control" id="input01" disabled value="{{ _user.steamID }}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label" for="input02">Last Known Name</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" id="input02" disabled value="{{ user.name|e('html_attr') }}">
+                    <input type="text" class="form-control" id="input02" disabled value="{{ _user.name|e('html_attr') }}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label" for="input03">Primary Role</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" id="input03" name="PrimaryRole" value="{{ user.primaryRole|e('html_attr') }}">
+                    <input type="text" class="form-control" id="input03" name="PrimaryRole" value="{{ _user.primaryRole|e('html_attr') }}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label" for="input05">Email Address</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" id="input05" name="Email" value="{{ user.email|e('html_attr') }}">
+                    <input type="text" class="form-control" id="input05" name="Email" value="{{ _user.email|e('html_attr') }}">
                 </div>
             </div>
 
