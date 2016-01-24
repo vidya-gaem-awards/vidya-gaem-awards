@@ -33,6 +33,7 @@ class AuthController extends BaseController
         $user = $this->em->getRepository(User::class)->find($steamID);
         if (!$user) {
             $user = new User();
+            $user->setSteamID($steamID);
         }
 
         $login = new Login();
