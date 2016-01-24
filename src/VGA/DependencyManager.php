@@ -76,6 +76,7 @@ class DependencyManager
         $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../views');
         $twig = new \Twig_Environment($loader);
         $twig->addExtension(new RoutingExtension($urlGenerator));
+        $twig->addExtension(new \Twig_Extensions_Extension_Date());
 
         self::$twig = $twig;
         return $twig;

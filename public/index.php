@@ -221,6 +221,10 @@ $routes->add('awardFrontendPost', new Route(
     [],
     ['POST']
 ));
+$routes->add('referrers', new Route(
+    '/referrers',
+    ['controller' => Controllers\ReferrerController::class, 'permission' => 'referrers-view']
+));
 
 $context = new RequestContext();
 $context->fromRequest($request);
@@ -357,7 +361,6 @@ $ACCESS = array(
     "credits" => EVERYONE,
     "launcher" => EVERYONE,
     "nominations" => "nominations-view",
-    "referrers" => "referrers-view",
     "stream" => EVERYONE,
     //"test" => EVERYONE,
     "thanks" => EVERYONE,
