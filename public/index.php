@@ -225,6 +225,10 @@ $routes->add('referrers', new Route(
     '/referrers',
     ['controller' => Controllers\ReferrerController::class, 'permission' => 'referrers-view']
 ));
+$routes->add('nominees', new Route(
+    '/nominees',
+    ['controller' => Controllers\NomineeController::class, 'permission' => 'nominations-view']
+));
 
 $context = new RequestContext();
 $context->fromRequest($request);

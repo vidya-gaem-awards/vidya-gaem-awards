@@ -1,0 +1,18 @@
+{% extends 'master.twig' %}
+
+{% block content %}
+  <h1 class="page-header">User nominations</h1>
+
+  <table class="table table-bordered" style="background-color: white;">
+    <tr>
+      <th class="col-md-3">Category</th>
+      <th>Nominations</th>
+    </tr>
+    {% for nominee in nominees %}
+      <tr>
+        <td><strong>{{ nominee.name }}</strong></td>
+        <td><strong>{{ nominee.total }} x</strong> {{ nominee.nomination }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
