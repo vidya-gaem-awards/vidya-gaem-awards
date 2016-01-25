@@ -256,8 +256,12 @@ if ($user instanceof AnonymousUser) {
 
 $navbar = [];
 foreach (NAVBAR_ITEMS as $routeName => $title) {
-    if ($routes->get($routeName)) {
-        $navbar[$routeName] = $title;
+    if ($route = $routes->get($routeName)) {
+        // Only show items in the menu if the user has access to them
+        $permission = $route->getDefault('permission');
+        if (!$permission || $user->canDo($permission)) {
+            $navbar[$routeName] = $title;
+        }
     }
 }
 
