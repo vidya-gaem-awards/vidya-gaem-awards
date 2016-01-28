@@ -112,19 +112,19 @@ table.tablesorter thead tr .headerSortUp {
 	float: right;
 }
 
-@media (min-width: 768px) and (max-width: 979px) {
+@media (min-width: 992px) {
 	#category-info .affix {
 		top: 85px;
-		width: 500px;
 	}
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 991px) {
 	#category-info .affix {
-		top: 85px;
-		width: 670px;
+		padding-top: 10px;
+		position: static;
 	}
 }
+
 
 /* Sidenav for Docs
 -------------------------------------------------- */
