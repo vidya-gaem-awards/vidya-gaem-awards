@@ -95,10 +95,11 @@ class User
     private $permissionCache;
 
     /**
-     * Constructor
+     * @param string $steamID
      */
-    public function __construct()
+    public function __construct(string $steamID)
     {
+        $this->steamID = $steamID;
         $this->votes = new Collections\ArrayCollection();
         $this->permissions = new Collections\ArrayCollection();
         $this->logins = new Collections\ArrayCollection();

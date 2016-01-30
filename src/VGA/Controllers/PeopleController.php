@@ -9,7 +9,6 @@ use VGA\Model\Action;
 use VGA\Model\Permission;
 use VGA\Model\TableHistory;
 use VGA\Model\User;
-use VGA\Utils;
 
 class PeopleController extends BaseController
 {
@@ -202,15 +201,26 @@ class PeopleController extends BaseController
     public function searchAction()
     {
         $post = $this->request->request;
-        $repo = $this->em->getRepository(User::class);
-        /** @var User $user */
-        $user = $repo->find($post->get('ID'));
-
         $response = new JsonResponse();
-        if (!$user) {
+
+        try {
+            $steam = \SteamId::create($post->get('id'));
+        } catch (\SteamCondenserException $e) {
             $response->setData(['error' => 'no matches']);
             $response->send();
             return;
+        }
+
+        $repo = $this->em->getRepository(User::class);
+
+        /** @var User $user */
+        $user = $repo->find($steam->getSteamId64());
+        if (!$user) {
+            $user = new User($steam->getSteamId64());
+            $avatar = base64_encode(file_get_contents($steam->getMediumAvatarUrl()));
+            $user
+                ->setName($steam->getNickname())
+                ->setAvatar($avatar);
         }
 
         if ($user->isSpecial()) {
@@ -222,7 +232,7 @@ class PeopleController extends BaseController
             return;
         }
 
-        if ($post->getBoolean('Add')) {
+        if ($post->getBoolean('add')) {
             // Make the user special and give them level 1 access
             $user->setSpecial(true);
             /** @var Permission $permission */
@@ -238,9 +248,9 @@ class PeopleController extends BaseController
 
         $response->setData([
             'success' => true,
-            'Name' => $user->getName(),
-            'Avatar' => $user->getAvatar(),
-            'SteamID' => $user->getSteamID()
+            'name' => $user->getName(),
+            'avatar' => $user->getAvatar(),
+            'steamID' => $user->getSteamID()
         ]);
         $response->send();
     }
