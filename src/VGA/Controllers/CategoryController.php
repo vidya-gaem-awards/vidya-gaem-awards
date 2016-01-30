@@ -117,7 +117,7 @@ class CategoryController extends BaseController
         /** @var Category $category */
         $category = $repo->find($post->get('id'));
 
-        if (!$category || $category->isSecret()) {
+        if (!$category || $category->isSecret() || $category->isEnabled()) {
             $response->setData(['error' => 'Invalid category provided.']);
             $response->send();
             return;
@@ -151,6 +151,13 @@ class CategoryController extends BaseController
 
         $nomination = $post->get('nomination');
         if ($nomination !== null) {
+
+            if (!$category->areNominationsEnabled()) {
+                $response->setData(['error' => 'Nominations have been closed for this award.']);
+                $response->send();
+                return;
+            }
+
             $nomination = trim($nomination);
             if ($nomination === '') {
                 $response->setData(['error' => 'Nomination cannot be blank.']);
