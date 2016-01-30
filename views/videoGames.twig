@@ -57,6 +57,14 @@
     .notable {
         font-weight: bold;
     }
+    #new-game input[type=checkbox] {
+        width: 100%;
+        height: 25px;
+    }
+
+    #new-game td {
+        vertical-align: middle;
+    }
     </style>
 
     {% if user.canDo('add-video-game') %}
@@ -64,9 +72,8 @@
         <div class="span12" style='text-align: center; margin-bottom: 8px;'>
             <a class="btn btn-success btn-large" id="add-a-game">Add a Game</a>
             <div class="alert alert-warning" id="add-a-game-msg" style="display: none; margin-bottom: 0;">
-                {#Please make sure you spell the game correctly. You won't be able to edit it afterwards and it will show up as#}
-                {#a suggestion when users are writing their nominations.#}
-                This functionality is not currently available. Contact Clamburger if you desparately need to add something.
+                Please make sure you spell the game correctly. You won't be able to edit it afterwards and it will show up as
+                a suggestion when users are writing their nominations.
             </div>
         </div>
     </div>
@@ -94,40 +101,40 @@
     <tr id="new-game" style="display: none;">
         <form id="new-game-form">
         <td class='divider' style='text-align: left;'>
-            <input type="text" style='width: 90%;' name="Game" id="Game">
+            <input type="text" class="form-control" required name="name" id="Game">
         </td>
         <td class='divider'>
-            <input type="checkbox" name="PC">
+            <input type="checkbox" name="pc">
         </td>
         <td class='divider'>
-            <input type="checkbox" name="PS3">
+            <input type="checkbox" name="ps3">
         </td>
         <td>
-            <input type="checkbox" name="PS4">
+            <input type="checkbox" name="ps4">
         </td>
         <td>
-            <input type="checkbox" name="Vita">
+            <input type="checkbox" name="vita">
         </td>
         <td class='divider'>
-            <input type="checkbox" name="360">
+            <input type="checkbox" name="x360">
         </td>
         <td>
-            <input type="checkbox" name="XB1">
+            <input type="checkbox" name="xb1">
         </td>
         <td class='divider'>
-            <input type="checkbox" name="Wii">
+            <input type="checkbox" name="wii">
         </td>
         <td>
-            <input type="checkbox" name="WiiU">
+            <input type="checkbox" name="wiiu">
         </td>
         <td>
-            <input type="checkbox" name="3DS">
+            <input type="checkbox" name="n3ds">
         </td>
         <td class='divider'>
-            <input type="checkbox" name="Mobile">
+            <input type="checkbox" name="mobile">
         </td>
         <td class='divider'>
-            <input class="btn" type="submit" id="game-submit">
+            <input class="btn btn-default" type="submit" id="game-submit">
         </td>
         </form>
     </tr>
@@ -195,44 +202,35 @@
     </tbody>
     </table>
 
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
-    <script type="text/javascript" src="/jquery/jquery.floatThead.min.js"></script>
-    <script type="text/javascript">
-    $('#games').floatThead({
-        scrollingTop: 40
-    });
-    </script>
-
     {% if user.canDo('add-video-game') %}
     <script type="text/javascript">
     $("#add-a-game").click(function(e){
-//        $("#new-game").show();
-//        $("#Game").focus();
+        $("#new-game").show();
+        $("#Game").focus();
         $("#add-a-game").hide();
         $("#add-a-game-msg").show();
     });
-//    $("#new-game-form").submit(function(e){
-//        e.preventDefault();
-//        $("#game-submit").attr("disabled", "disabled");
-//
-//        $.post("/ajax-videogame", $("#new-game-form").serialize(), function(data) {
-//            console.log(data);
-//            if (data.error) {
-//                $("#add-a-game-msg").text("Error: "+data.error);
-//                $("#add-a-game-msg").removeClass("alert-warning alert-success");
-//                $("#add-a-game-msg").addClass("alert-error");
-//            } else {
-//                $("#add-a-game-msg").text('Success! "'+data.success+'" has been added. It will show up after a refresh.');
-//                $("#add-a-game-msg").removeClass("alert-warning alert-error");
-//                $("#add-a-game-msg").addClass("alert-success");
-//                $("#Game").attr("value", "");
-//                $("#new-game input[type=checkbox]").prop("checked", false);
-//                $("#Game").focus();
-//            }
-//            $("#game-submit").removeAttr("disabled");
-//        }, "json");
-//
-//    });
+    $("#new-game-form").submit(function(e){
+        e.preventDefault();
+        $("#game-submit").attr("disabled", "disabled");
+
+        $.post("{{ path('addVideoGame') }}", $("#new-game-form").serialize(), function(data) {
+            if (data.error) {
+                $("#add-a-game-msg").html("<strong>Error:</strong> "+data.error);
+                $("#add-a-game-msg").removeClass("alert-warning alert-success");
+                $("#add-a-game-msg").addClass("alert-danger");
+            } else {
+                $("#add-a-game-msg").text('Success! '+data.success+' has been added. It will show up after a refresh.');
+                $("#add-a-game-msg").removeClass("alert-warning alert-danger");
+                $("#add-a-game-msg").addClass("alert-success");
+                $("#Game").attr("value", "");
+                $("#new-game input[type=checkbox]").prop("checked", false);
+                $("#Game").focus();
+            }
+            $("#game-submit").removeAttr("disabled");
+        }, "json");
+
+    });
     </script>
     {% endif %}
 {% endblock %}

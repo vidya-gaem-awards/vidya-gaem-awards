@@ -254,7 +254,25 @@ $routes->add('videoGames', new Route(
     '/vidya-in-2015',
     [
         'controller' => Controllers\VideoGamesController::class
-    ]
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['GET']
+));
+$routes->add('addVideoGame', new Route(
+    '/vidya-in-2015',
+    [
+        'controller' => Controllers\VideoGamesController::class,
+        'action' => 'add',
+        'permission' => 'add-video-game'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
 ));
 $routes->add('awardFrontendPost', new Route(
     '/awards',
@@ -447,7 +465,6 @@ if ($PAGE == "promotions") {
 
 $ACCESS = array(
     // Volatile pages
-    "ajax-videogame" => "add-video-game",
     //"applications" => "applications-view",
     "credits" => EVERYONE,
     "launcher" => EVERYONE,
@@ -464,7 +481,6 @@ $ACCESS = array(
 
 // Pages that won't use the master template
 $noMaster = array(
-    "login",
     "launcher",
     "stream",
     "thanks",
@@ -483,7 +499,6 @@ $noContainer = array("videos");
 
 // Pages that should only be accessed via POST requests
 $postOnly = array(
-    "ajax-videogame",
     "volunteer-submission",
     "voting-submission",
 );
