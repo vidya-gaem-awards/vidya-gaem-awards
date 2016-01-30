@@ -3,6 +3,8 @@ namespace VGA\Model;
 
 class Nominee implements \JsonSerializable
 {
+    const DEFAULT_IMAGE_DIRECTORY = '/img/nominees/';
+
     /** @var integer */
     private $id;
 
@@ -103,7 +105,7 @@ class Nominee implements \JsonSerializable
      */
     public function getImage()
     {
-        return $this->image;
+        return $this->image ?: (self::DEFAULT_IMAGE_DIRECTORY . $this->getShortName() . '.png');
     }
 
     /**
