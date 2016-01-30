@@ -441,7 +441,7 @@
 
 
       // When the dialog is opened, start the monitor
-      $("#dialog-edit").on("show", function() {
+      $("#dialog-edit").on("show.bs.modal", function() {
         $( "#dialog-edit-status" ).hide();
         $( "#dialog-edit-submit" ).removeAttr("disabled");
         $( "#dialog-edit-error" ).parent().hide();
@@ -452,7 +452,7 @@
       });
 
       // When the dialog is closed, clear it
-      $("#dialog-edit").on("hide", function() {
+      $("#dialog-edit").on("hide.bs.modal", function() {
         clearInterval(editDialogInterval);
       });
 
@@ -517,7 +517,7 @@
               $("#nominee-container").append(clone);
 
               nominees[nomineeID] = {};
-              nominees[nomineeID].id = nomineeID;
+              nominees[nomineeID].nomineeID = nomineeID;
 
               $("#official-count").text(parseInt($("#official-count").text()) + 1);
 
