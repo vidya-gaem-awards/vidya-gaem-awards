@@ -148,6 +148,12 @@ class NomineeController extends BaseController
             return;
         }
 
+        if (substr($post->get('image', ''), 0, 7) === 'http://') {
+            $response->setData(['error' => 'Because this website now uses https, all images now have to start with https:// as well.']);
+            $response->send();
+            return;
+        }
+
         $nominee
             ->setName($post->get('name'))
             ->setSubtitle($post->get('subtitle'))

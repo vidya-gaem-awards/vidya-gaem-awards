@@ -176,8 +176,8 @@
     </h1>
 
     {% for _category in categories %}
-        <a href="{{ path('voting', {'category': _category.id}) }}>" id="{{ category.id }}"
-           class="category {{ category == _category ? 'active' : '' }} {{ true ? 'complete' : '' }}">
+        <a href="{{ path('voting', {'category': _category.id}) }}" id="{{ _category.id }}"
+           class="category {{ category == _category ? 'active' : '' }} {{ false ? 'complete' : '' }}">
             <h3>{{ _category.name }}</h3>
             <p>{{ _category.subtitle }}</p>
         </a>
