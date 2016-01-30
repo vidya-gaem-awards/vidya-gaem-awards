@@ -10,13 +10,12 @@
 <div class="row">
     <div class="col-md-6">
         <p>You can use this page to add a new user to the user list. They'll start with <a href="{{ path('permissions') }}">level 1 permissions</a> by default.</p>
-        <p>You can add a person by entering their <strong>steam community ID</strong> (which looks something like {{ user.steamID }}) or their <strong>custom profile ID</strong>.</p>
-        <p>If you don't know either of those, you can look them up using <a href="https://steamid.io/">this website</a>. You want the field called <tt>steamID64</tt>.</p>
+        <p>You can add a person by entering their <strong>steam community ID</strong> (which looks something like {{ user.steamID }}) or their <strong>profile URL</strong>.</p>
     </div>
     <div class="col-md-6">
         <div class="well well-small">
             <form class="form-inline" id="search-form" style="margin-bottom: 5px;">
-                <input class="form-control" type="text" placeholder="Steam Community ID" style="font-size: 20px;" id="search-id" required>
+                <input class="form-control" type="text" placeholder="Community ID or Profile URL" style="min-width: 220px;" id="search-id" required>
                 <input type="submit" class="btn btn-default" value="Search">
             </form>
             <p id="searching" style="display: none;">Processing... <img src="/loading.gif" style="height: 16px; width: 16px;" /></p>

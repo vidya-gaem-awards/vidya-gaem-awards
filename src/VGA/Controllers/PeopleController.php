@@ -203,8 +203,14 @@ class PeopleController extends BaseController
         $post = $this->request->request;
         $response = new JsonResponse();
 
+        // Perform basic profile URL parsing by only keeping the characters after the last slash.
+        $id = trim($post->get('id'), '/ ');
+        if (strpos($id, '/') !== false) {
+            $id = substr($id, strrpos($id, '/') + 1);
+        }
+
         try {
-            $steam = \SteamId::create($post->get('id'));
+            $steam = \SteamId::create($id);
         } catch (\SteamCondenserException $e) {
             $response->setData(['error' => 'no matches']);
             $response->send();
