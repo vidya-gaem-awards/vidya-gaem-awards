@@ -79,7 +79,7 @@ class CategoryController extends BaseController
             $allNominations = array_map(function ($un) {
                 /** @var UserNomination $un */
                 return $un->getNomination();
-            }, $category->getUserNominations()->toArray());
+            }, $category->getRawUserNominations()->toArray());
 
             $nominationCount = array_fill_keys(array_values($allNominations), 0);
             foreach ($allNominations as $nomination) {

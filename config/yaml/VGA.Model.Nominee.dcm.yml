@@ -7,11 +7,11 @@ VGA\Model\Nominee:
       generator:
         strategy: AUTO
   fields:
-    nomineeID:
+    shortName:
       type: string
       nullable: false
       length: 45
-    shortName:
+    name:
       type: string
       nullable: false
       length: 100

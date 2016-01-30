@@ -15,12 +15,12 @@ class Nominee
     /**
      * @var string
      */
-    private $nomineeID;
+    private $shortName;
 
     /**
      * @var string
      */
-    private $shortName;
+    private $name;
 
     /**
      * @var string
@@ -54,30 +54,6 @@ class Nominee
     }
 
     /**
-     * Set nomineeID
-     *
-     * @param string $nomineeID
-     *
-     * @return Nominee
-     */
-    public function setNomineeID($nomineeID)
-    {
-        $this->nomineeID = $nomineeID;
-
-        return $this;
-    }
-
-    /**
-     * Get nomineeID
-     *
-     * @return string
-     */
-    public function getNomineeID()
-    {
-        return $this->nomineeID;
-    }
-
-    /**
      * Set shortName
      *
      * @param string $shortName
@@ -99,6 +75,25 @@ class Nominee
     public function getShortName()
     {
         return $this->shortName;
+    }
+
+    /**
+     * @param string $name
+     * @return Nominee
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

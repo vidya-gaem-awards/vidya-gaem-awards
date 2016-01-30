@@ -1,41 +1,49 @@
 <?php
 namespace VGA\Controllers;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use VGA\Model\Category;
-use VGA\Model\News;
-use VGA\Model\UserNomination;
 
 class NomineeController extends BaseController
 {
-    public function indexAction()
+    public function indexAction($category = null)
     {
-        $query = $this->em->createQueryBuilder();
-        $query
-            ->addSelect('c.id')
-            ->addSelect('c.name')
-            ->addSelect('un.nomination')
-            ->addSelect('COUNT(un.id) as total')
-            ->from(Category::class, 'c')
-            ->join('c.userNominations', 'un')
+        $repo = $this->em->getRepository(Category::class);
+        $query = $repo->createQueryBuilder('c', 'c.id');
+        $query->select('c')
             ->where('c.enabled = true')
-            ->groupBy('un.nomination')
-            ->addGroupBy('c.id')
-            ->orderBy('c.order', 'ASC')
-            ->addOrderBy('total', 'DESC')
-            ->addOrderBy('un.nomination', 'ASC');
+            ->orderBy('c.order', 'ASC');
 
         if (!$this->user->canDo('categories-secret')) {
             $query->andWhere('c.secret = false');
         }
+        $categories = $query->getQuery()->getResult();
 
-        $nominees = $query->getQuery()->getResult();
+        if ($category) {
+            /** @var Category $category */
+            $category = $this->em->getRepository(Category::class)->find($category);
+
+            if (!$category || ($category->isSecret() && !$this->user->canDo('categories-secret'))) {
+                $this->session->getFlashBag()->add('error', 'Invalid category ID specified.');
+                $response = new RedirectResponse(
+                    $this->generator->generate('nomineeManager', [] , UrlGenerator::ABSOLUTE_URL)
+                );
+                $response->send();
+                return;
+            }
+        }
+
+        $alphabeticalSort = $this->request->get('sort') === 'alphabetical';
 
         $tpl = $this->twig->loadTemplate('nominees.twig');
 
         $response = new Response($tpl->render([
-            'title' => 'Nominees',
-            'nominees' => $nominees
+            'title' => 'Nominee Manager',
+            'categories' => $categories,
+            'category' => $category,
+            'alphabeticalSort' => $alphabeticalSort
         ]));
         $response->send();
     }

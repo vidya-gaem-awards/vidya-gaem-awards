@@ -377,13 +377,47 @@ class Category implements \JsonSerializable
     }
 
     /**
-     * Get userNominations
-     *
-     * @return arrayCollection
+     * @return ArrayCollection
      */
-    public function getUserNominations()
+    public function getRawUserNominations()
     {
         return $this->userNominations;
+    }
+
+    /**
+     * @param bool $sortAlphabetically
+     * @return array
+     */
+    public function getUserNominations($sortAlphabetically = false)
+    {
+        $nominations = [];
+
+        /** @var UserNomination $nomination */
+        foreach ($this->userNominations as $nomination) {
+            $normalised = trim(strtolower($nomination->getNomination()));
+            if (!isset($nominations[$normalised])) {
+                $nominations[$normalised] = [
+                    'count' => 0,
+                    'title' => $nomination->getNomination()
+                ];
+            }
+            $nominations[$normalised]['count']++;
+        }
+
+        if ($sortAlphabetically) {
+            usort($nominations, function ($a, $b) {
+                return strtolower($a['title']) <=> strtolower($b['title']);
+            });
+        } else {
+            usort($nominations, function ($a, $b) {
+                if ($b['count'] === $a['count']) {
+                    return strtolower($a['title']) <=> strtolower($b['title']);
+                }
+                return $b['count'] <=> $a['count'];
+            });
+        }
+
+        return $nominations;
     }
 
     /**

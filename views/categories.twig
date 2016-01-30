@@ -14,12 +14,17 @@
         }
     </style>
 
-    {% if user.canDo('categories-edit') %}
+    {% if user.canDo('categories-edit') or user.canDo('nominations-view') %}
         <ul class="breadcrumb">
             <li class="active">Admin tools:</li>
             {% if user.canDo('categories-edit') %}
                 <li>
                     <a href="{{ path('categoryManager') }}">Manage awards</a>
+                </li>
+            {% endif %}
+            {% if user.canDo('nominations-view') %}
+                <li>
+                    <a href="{{ path('nomineeManager') }}">Manage nominees</a>
                 </li>
             {% endif %}
         </ul>
