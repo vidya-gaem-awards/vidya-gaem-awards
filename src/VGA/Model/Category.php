@@ -227,11 +227,9 @@ class Category implements \JsonSerializable
     }
 
     /**
-     * Get enabled
-     *
      * @return boolean
      */
-    public function getEnabled()
+    public function isEnabled()
     {
         return $this->enabled;
     }
@@ -251,11 +249,9 @@ class Category implements \JsonSerializable
     }
 
     /**
-     * Get nominationsEnabled
-     *
      * @return boolean
      */
-    public function getNominationsEnabled()
+    public function areNominationsEnabled()
     {
         return $this->nominationsEnabled;
     }
@@ -350,6 +346,23 @@ class Category implements \JsonSerializable
     public function getNominees()
     {
         return $this->nominees;
+    }
+
+    /**
+     * @param string $shortName
+     * @return Nominee
+     */
+    public function getNominee($shortName)
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('shortName', $shortName));
+
+        $nominees = $this->getNominees()->matching($criteria);
+        if (count($nominees) === 0) {
+            return null;
+        } else {
+            return $nominees[0];
+        }
     }
 
     /**
@@ -544,7 +557,7 @@ class Category implements \JsonSerializable
             'subtitle' => $this->getSubtitle(),
             'autocompleter' => $this->getAutocompleter() ? $this->getAutocompleter()->getId() : $this->getId(),
             'comments' => $this->getComments() ?: '',
-            'nominationsEnabled' => $this->getNominationsEnabled()
+            'nominationsEnabled' => $this->areNominationsEnabled()
         ];
     }
 }

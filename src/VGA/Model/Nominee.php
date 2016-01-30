@@ -58,7 +58,7 @@ class Nominee implements \JsonSerializable
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = trim($name);
         return $this;
     }
 
@@ -76,7 +76,7 @@ class Nominee implements \JsonSerializable
      */
     public function setSubtitle($subtitle)
     {
-        $this->subtitle = $subtitle;
+        $this->subtitle = trim($subtitle);
         return $this;
     }
 
@@ -96,7 +96,7 @@ class Nominee implements \JsonSerializable
      */
     public function setImage($image)
     {
-        $this->image = $image;
+        $this->image = trim($image);
         return $this;
     }
 
@@ -114,7 +114,7 @@ class Nominee implements \JsonSerializable
      */
     public function setFlavorText($flavorText)
     {
-        $this->flavorText = $flavorText;
+        $this->flavorText = trim($flavorText);
         return $this;
     }
 

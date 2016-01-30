@@ -237,7 +237,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="alert alert-error" style="display: none;">
+            <div class="alert alert-danger" style="display: none;">
               <span id="dialog-edit-error"></span>
               <a class="close" href="#">&times;</a>
             </div>
@@ -270,27 +270,27 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-id">ID</label>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" id="info-id" placeholder="monster-girl-quest" required name="NomineeID"
+                  <input class="form-control" type="text" id="info-id" placeholder="monster-girl-quest" required name="id"
                          autocomplete="off">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-name">Name</label>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" id="info-name" placeholder="Monster Girl Quest" required name="Name">
+                  <input class="form-control" type="text" id="info-name" placeholder="Monster Girl Quest" required name="name">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-subtitle">Subtitle</label>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" id="info-subtitle" placeholder="Toro Toro Resistance" name="Subtitle"
+                  <input class="form-control" type="text" id="info-subtitle" placeholder="Toro Toro Resistance" name="subtitle"
                          autocomplete="off">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-image">Image URL</label>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" id="info-image" name="Image" autocomplete="off">
+                  <input class="form-control" type="text" id="info-image" name="image" autocomplete="off">
                   <span class="help-block">If left blank, the webserver will look for the
                   image locally at <strong>/img/nominees/<span class="dialog-edit-id"></span>.png</strong></span>
                 </div>
@@ -298,7 +298,7 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-flavor">Flavor Text</label>
                 <div class="col-sm-8">
-                  <textarea class="form-control" id="info-flavor" name="FlavorText"></textarea>
+                  <textarea class="form-control" id="info-flavor" name="flavorText"></textarea>
                 </div>
               </div>
             </form>
@@ -361,7 +361,7 @@
         var nomineeID = $("#dialog-delete").attr("data-nominee");
 
         // Send through the AJAX request to do the actual deleting
-        $.post("/ajax-nominations", { Action: "delete", NomineeID: nomineeID, Category: "{{ category.id }}" }, function(data) {
+        $.post("{{ path('nomineePost', {'category': category.id}) }}", { action: "delete", id: nomineeID }, function(data) {
           currentlySubmitting = false;
 
           if (data.success) {
@@ -494,12 +494,11 @@
         // Send through the AJAX request to do the actual editing
         var ajaxData = $( "#dialog-edit-form" ).serializeArray();
         console.log(ajaxData);
-        ajaxData.push({ name: "Action", value: action });
-        ajaxData.push({ name: "Category", value: "{{ category.id }}" });
+        ajaxData.push({ name: "action", value: action });
         if (action == "edit") {
-          ajaxData.push({ name: "NomineeID", value: nomineeID });
+          ajaxData.push({ name: "id", value: nomineeID });
         }
-        $.post("/ajax-nominations", ajaxData, function(data) {
+        $.post("{{ path('nomineePost', {'category': category.id}) }}", ajaxData, function(data) {
           currentlySubmitting = false;
 
           if (data.success) {

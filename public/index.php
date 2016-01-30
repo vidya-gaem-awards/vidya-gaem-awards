@@ -434,13 +434,10 @@ if ($PAGE == "promotions") {
 
 $ACCESS = array(
     // Volatile pages
-    "ajax-nominations" => "nominations-edit",
     "ajax-videogame" => "add-video-game",
     //"applications" => "applications-view",
-    "categories" => EVERYONE,
     "credits" => EVERYONE,
     "launcher" => EVERYONE,
-    "nominations" => "nominations-view",
     "stream" => EVERYONE,
     //"test" => EVERYONE,
     "thanks" => EVERYONE,
@@ -473,7 +470,6 @@ $noContainer = array("videos");
 
 // Pages that should only be accessed via POST requests
 $postOnly = array(
-    "ajax-nominations",
     "ajax-videogame",
     "volunteer-submission",
     "voting-submission",
