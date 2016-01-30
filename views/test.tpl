@@ -1,12 +1,12 @@
   <style type="text/css"> 
     @font-face{
       font-family:"Overseer";
-      src:url("/overseer.ttf");
+      src:url("/fonts/overseer.ttf");
     }
 
     @font-face{
       font-family:"Monofonto";
-      src:url("/monofonto.ttf");
+      src:url("/fonts/monofonto.ttf");
     }
 
     img {
