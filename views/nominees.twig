@@ -172,7 +172,7 @@
           <img src="{{ nominee.image | escape('html_attr') }}">
           <footer>
             <h3>{{ nominee.name }}</h3>
-            <p>{{ nominee.subtitle }}</p>
+            <p>{{ nominee.subtitle | raw }}</p>
           </footer>
         </div>
         {% endfor %}
