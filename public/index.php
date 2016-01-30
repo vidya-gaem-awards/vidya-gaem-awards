@@ -74,38 +74,71 @@ $user
 // Define the routes
 $routes = new RouteCollection();
 
-// Change this to change the default route
-$routes->add('index', new Route('/', ['controller' => Controllers\CategoryController::class]));
+$routes->add('index', new Route(
+    '/',
+    [
+        // Change this to change the default route
+        'controller' => Controllers\CategoryController::class
+    ]
+));
 
-$routes->add('home', new Route('/home', ['controller' => Controllers\IndexController::class]));
-$routes->add('news', new Route('/news', ['controller' => Controllers\NewsController::class]));
+$routes->add('home', new Route(
+    '/home',
+    [
+        'controller' => Controllers\IndexController::class
+    ]
+));
+$routes->add('news', new Route(
+    '/news',
+    [
+        'controller' => Controllers\NewsController::class
+    ]
+));
 $routes->add('login', new Route(
     '/login/{return}',
-    ['controller' => Controllers\AuthController::class, 'action' => 'login'],
+    [
+        'controller' => Controllers\AuthController::class,
+        'action' => 'login'
+    ],
     ['return' => '.*']
 ));
 $routes->add('logout', new Route(
     '/logout',
-    ['controller' => Controllers\AuthController::class, 'action' => 'logout']
+    [
+        'controller' => Controllers\AuthController::class,
+        'action' => 'logout'
+    ]
 ));
 
 $routes->add('people', new Route(
     '/people',
-    ['controller' => Controllers\PeopleController::class, 'permission' => 'profile-view']
+    [
+        'controller' => Controllers\PeopleController::class,
+        'permission' => 'profile-view'
+    ]
 ));
 
 $peopleCollection = new RouteCollection();
 $peopleCollection->add('permissions', new Route(
     '/permissions',
-    ['action' => 'permissions', 'permission' => 'profile-view']
+    [
+        'action' => 'permissions',
+        'permission' => 'profile-view'
+    ]
 ));
 $peopleCollection->add('addPerson', new Route(
     '/new',
-    ['action' => 'new', 'permission' => 'add-user']
+    [
+        'action' => 'new',
+        'permission' => 'add-user'
+    ]
 ));
 $peopleCollection->add('userSearch', new Route(
     '/search',
-    ['action' => 'search', 'permission' => 'add-user'],
+    [
+        'action' => 'search',
+        'permission' => 'add-user'
+    ],
     [],
     [],
     '',
@@ -114,12 +147,18 @@ $peopleCollection->add('userSearch', new Route(
 ));
 $peopleCollection->add('viewPerson', new Route(
     '/{steamID}',
-    ['action' => 'view', 'permission' => 'profile-view'],
+    [
+        'action' => 'view',
+        'permission' => 'profile-view'
+    ],
     ['steamID' => '\d+']
 ));
 $peopleCollection->add('editPerson', new Route(
     '/{steamID}/edit',
-    ['action' => 'edit', 'permission' => 'profile-edit-details'],
+    [
+        'action' => 'edit',
+        'permission' => 'profile-edit-details'
+    ],
     ['steamID' => '\d+'],
     [],
     '',
@@ -128,7 +167,10 @@ $peopleCollection->add('editPerson', new Route(
 ));
 $peopleCollection->add('editPersonPost', new Route(
     '/{steamID}/edit',
-    ['action' => 'post', 'permission' => 'profile-view'],
+    [
+        'action' => 'post',
+        'permission' => 'profile-view'
+    ],
     ['steamID' => '\d+'],
     [],
     '',
@@ -142,7 +184,10 @@ $peopleCollection->addDefaults([
 $routes->addCollection($peopleCollection);
 $routes->add('privacy', new Route(
     '/privacy',
-    ['controller' => Controllers\StaticController::class, 'action' => 'privacy']
+    [
+        'controller' => Controllers\StaticController::class,
+        'action' => 'privacy'
+    ]
 ));
 $routes->add('categories', new Route(
     '/awards',
@@ -207,7 +252,9 @@ $routes->add('editCategoryPost', new Route(
 ));
 $routes->add('videoGames', new Route(
     '/vidya-in-2015',
-    ['controller' => Controllers\VideoGamesController::class]
+    [
+        'controller' => Controllers\VideoGamesController::class
+    ]
 ));
 $routes->add('awardFrontendPost', new Route(
     '/awards',
@@ -223,7 +270,10 @@ $routes->add('awardFrontendPost', new Route(
 ));
 $routes->add('referrers', new Route(
     '/referrers',
-    ['controller' => Controllers\ReferrerController::class, 'permission' => 'referrers-view']
+    [
+        'controller' => Controllers\ReferrerController::class,
+        'permission' => 'referrers-view'
+    ]
 ));
 $routes->add('nomineeManager', new Route(
     '/nominees/{category}',
@@ -231,7 +281,25 @@ $routes->add('nomineeManager', new Route(
         'controller' => Controllers\NomineeController::class,
         'permission' => 'nominations-view',
         'category' => null
-    ]
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['GET']
+));
+$routes->add('nomineePost', new Route(
+    '/nominees/{category}',
+    [
+        'controller' => Controllers\NomineeController::class,
+        'action' => 'post',
+        'permission' => 'nominations-edit'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
 ));
 
 $context = new RequestContext();
