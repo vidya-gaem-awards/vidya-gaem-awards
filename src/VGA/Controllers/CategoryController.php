@@ -63,7 +63,10 @@ class CategoryController extends BaseController
                 $games = $gameRepo->findAll();
                 /** @var GameRelease $game */
                 foreach ($games as $game) {
-                    $strings[] = $game->getName() . ' (' . implode(', ', $game->getPlatforms()) . ')';
+                    $strings[] = [
+                        'value' => $game->getName(),
+                        'label' => $game->getName() . ' (' . implode(', ', $game->getPlatforms()) . ')'
+                    ];
                 }
             }
             $autocompleters[$autocompleter->getId()] = $strings;
