@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>/v/GAs - Voting</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/voting.css">
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    <script src='/dumbshit.js'></script>
+    <script src='/voting.js'></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
+
+    <script type="text/javascript">
+        var votingEnabled = {{ votingEnabled ? 'true' : 'false' }};
+
+        {% if category %}
+        //      var lastVotes = <tag:lastVotes />;
+        var lastVotes = [null];
+        var votesChanged = false;
+        var previousLockExists = lastVotes.length > 1;
+        var currentCategory = "{{ category.id }}";
+        {% else %}
+        var lastVotes = [null];
+        {% endif %}
+    </script>
+
+    {% if votingEnabled %}
+        <style type="text/css">
+            .aNominee {
+                cursor: move;
+            }
+        </style>
+    {% endif %}
+
+</head>
+<body>
+
+
+<header>
+    <a href="{{ path('voting') }}"><img src="/2014voting/2014logo.png" id="thelogo" alt="oh god it's happening again"/></a>
+    <h1>The 2015 Vidya Gaem Awards</h1>
+    <h2>{{ voteText }}</h2>
+    <div style="float: right; width: 550px; text-align: center; color: white; font-size: small;">
+        <strong>Testing:</strong>
+        <a href="?time=before" style="color: #f2ff1a">Votes not yet open</a> &ndash;
+        <a href="?time=during" style="color: #f2ff1a">Voting active</a> &ndash;
+        <a href="?time=after" style="color: #f2ff1a">Votes have closed</a>
+    </div>
+</header>
+
+<div id="wrapper">
+    {% if category %}
+        <div class="awardHeader">
+            <a href="{{ path('voting', {'category': prevCategory}) }}" class="navigation left"></a>
+            <div class="awardHeaderContainer">
+                <div class="awardName">{{ category.name }}</div>
+                <h2 class="awardSubtitle">{{ category.subtitle }}</h2>
+            </div>
+            <a href="{{ path('voting', {'category': nextCategory}) }}" class="navigation right"></a>
+        </div>
+        {% if votingEnabled %}
+            <img src="/2014voting/dont_forget.png" id="dontforget" alt="Don't forget to hit submit"/>
+        {% endif %}
+    {% endif %}
+
+    {% if category %}
+        <div id="limitsDrag">
+            <div id="nomineeColumn" class="column">
+
+                <img src="/2014voting/topNominees.png" width="267px" height="105px" alt="Pick your nominees"/>
+
+                {% for nominee in category.nominees %}
+
+                    <div class="voteBox">
+                        <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
+                             data-nominee="{{ nominee.shortName }}">
+                            <img class="fakeBorder" src="/2014voting/votebox_foreground.png">
+                            <img class="fakeBorder locked" src="/2014voting/votebox_foreground_locked.png">
+                            <div class="info">
+                                <div class="innerInfo">{{ nominee.flavorText }}</div>
+                            </div>
+                            <img class="nomineeImage" src="{{ nominee.image }}">
+                            <div class="nomineeInfo">
+                                <div class="number"></div>
+                                <div class="nomineeName">{{ nominee.name }}</div>
+                                <div class="nomineeSubtitle">{{ nominee.subtitle }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div id="spacerColumn" class="column">
+                &nbsp;
+            </div>
+
+            {% if votingEnabled or votingConcluded %}
+                <div id="voteColumn" class="column">
+                    <img src="/2014voting/topVotes.png" width="267px" height="105px" alt="Drag and drop to vote"/>
+                    {% for nominee in category.nominees %}
+                        <div id="voteBox{{ loop.index }}" class="voteBox">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </div>
+
+        {% if votingEnabled %}
+            <footer style='position: relative; clear: both;'>
+                <div id="btnResetVotes" class="btnSubmit" alt="Reset Votes"></div>
+        <span id="votesAreNotLocked">
+            <div id="btnLockVotes" class="btnSubmit" alt="Submit Votes"></div>
+        </span>
+        <span id="votesAreLocked" style="display: none;">
+            <div id="btnLockVotes" class="btnSubmit iVoted" alt="Saved!"></div>
+        </span>
+                <a href="{{ path('voting', {'category': nextCategory}) }}" class="navigation right" alt="Next category"></a>
+            </footer>
+        {% endif %}
+
+    {% else %}
+        <div id="startMessage">
+
+            {% if votingNotYetOpen %}
+                <!-- Before votes open -->
+                <h2>How to vote:</h2>
+                <p>Despite the new look, voting is the same as last year. Vote for as many nominees as you want, and put
+                    them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call
+                    it a day.</p>
+                <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can
+                    use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
+            {% endif %}
+
+            {% if votingEnabled %}
+                <!-- While votes are open -->
+                <h2>How to vote:</h2>
+                <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them
+                    in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a
+                    day.</p>
+                <p>You can use the award list at the bottom to navigate, or just use the arrows that appear after you
+                    click submit.</p>
+
+                <a href="{{ path('voting', {'category': 'most-hated-game'}) }}" id="btnStart"></a>
+            {% endif %}
+
+            {% if votingConcluded %}
+                <!-- After votes close -->
+                <h2>Thanks to everybody who voted.</h2>
+                <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>
+            {% endif %}
+
+            <h2>Stream information:</h2>
+            <p>We plan to stream earlier than previous years (at the end of January).</p>
+            <p>Don't forget to try and enter the skit contest, winner will get $25. Check out <a
+                        href="https://www.youtube.com/watch?v=Wc0nOBMUuwQ">this video</a> for more details.</p>
+
+        </div>
+    {% endif %}
+
+    <img src="/dumb.gif" alt="" class="shit">
+</div>
+
+<div id="containerCategories">
+    <h1 id="topCategories">
+        The Awards
+    </h1>
+
+    {% for _category in categories %}
+        <a href="{{ path('voting', {'category': _category.id}) }}>" id="{{ category.id }}"
+           class="category {{ category == _category ? 'active' : '' }} {{ true ? 'complete' : '' }}">
+            <h3>{{ _category.name }}</h3>
+            <p>{{ _category.subtitle }}</p>
+        </a>
+    {% endfor %}
+
+    {% if user.loggedIn %}
+        <h3 style='clear:both; padding-top: 50px;'><a href="{{ path('home') }}" style="color: #f2ff1a;">Back to the main part of the
+                site</a></h3>
+    {% endif %}
+</div>
+
+</body>
+</html>

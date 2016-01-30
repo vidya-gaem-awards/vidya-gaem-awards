@@ -301,6 +301,19 @@ $routes->add('nomineePost', new Route(
     [],
     ['POST']
 ));
+$routes->add('voting', new Route(
+    '/vote/{category}',
+    [
+        'controller' => Controllers\VotingController::class,
+        'permission' => 'voting-view',
+        'category' => null
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['GET']
+));
 
 $context = new RequestContext();
 $context->fromRequest($request);
