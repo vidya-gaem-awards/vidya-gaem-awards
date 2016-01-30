@@ -9,6 +9,7 @@
         overflow-x: hidden;
         /* add padding to account for vertical scrollbar */
         width: 200px;
+        z-index: 100000;
     }
     
     #category-name {
@@ -321,8 +322,8 @@
       $(document).ready(function() {
         $( "#info-name" ).autocomplete({
           source: autocompleters,
-              minLength: 2,
-              delay: 0
+          minLength: 2,
+          delay: 0
         });
       });
 
