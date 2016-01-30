@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use VGA\Model\Category;
+use VGA\Model\Nominee;
 
 class NomineeController extends BaseController
 {
@@ -21,6 +22,8 @@ class NomineeController extends BaseController
         }
         $categories = $query->getQuery()->getResult();
 
+        $categoryVariables = [];
+
         if ($category) {
             /** @var Category $category */
             $category = $this->em->getRepository(Category::class)->find($category);
@@ -33,18 +36,37 @@ class NomineeController extends BaseController
                 $response->send();
                 return;
             }
-        }
 
-        $alphabeticalSort = $this->request->get('sort') === 'alphabetical';
+            $alphabeticalSort = $this->request->get('sort') === 'alphabetical';
+
+            $autocompleters = array_filter($category->getUserNominations(), function ($un) {
+                return $un['count'] >= 3;
+            });
+            $autocompleters = array_map(function ($un) {
+                return $un['title'];
+            }, $autocompleters);
+            sort($autocompleters);
+
+            $nomineesArray = [];
+            /** @var Nominee $nominee */
+            foreach ($category->getNominees() as $nominee) {
+                $nomineesArray[$nominee->getShortName()] = $nominee;
+            }
+
+            $categoryVariables = [
+                'alphabeticalSort' => $alphabeticalSort,
+                'autocompleters' => $autocompleters,
+                'nominees' => $nomineesArray
+            ];
+        }
 
         $tpl = $this->twig->loadTemplate('nominees.twig');
 
-        $response = new Response($tpl->render([
+        $response = new Response($tpl->render(array_merge([
             'title' => 'Nominee Manager',
             'categories' => $categories,
             'category' => $category,
-            'alphabeticalSort' => $alphabeticalSort
-        ]));
+        ], $categoryVariables)));
         $response->send();
     }
 }

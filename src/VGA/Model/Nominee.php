@@ -1,51 +1,30 @@
 <?php
-
 namespace VGA\Model;
 
-/**
- * Nominee
- */
-class Nominee
+class Nominee implements \JsonSerializable
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $shortName;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $subtitle;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $image;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $flavorText;
 
-    /**
-     * @var \VGA\Model\Category
-     */
+    /** @var Category */
     private $category;
 
-
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -54,22 +33,16 @@ class Nominee
     }
 
     /**
-     * Set shortName
-     *
      * @param string $shortName
-     *
      * @return Nominee
      */
     public function setShortName($shortName)
     {
         $this->shortName = $shortName;
-
         return $this;
     }
 
     /**
-     * Get shortName
-     *
      * @return string
      */
     public function getShortName()
@@ -84,7 +57,6 @@ class Nominee
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -97,16 +69,12 @@ class Nominee
     }
 
     /**
-     * Set subtitle
-     *
      * @param string $subtitle
-     *
      * @return Nominee
      */
     public function setSubtitle($subtitle)
     {
         $this->subtitle = $subtitle;
-
         return $this;
     }
 
@@ -121,22 +89,16 @@ class Nominee
     }
 
     /**
-     * Set image
-     *
      * @param string $image
-     *
      * @return Nominee
      */
     public function setImage($image)
     {
         $this->image = $image;
-
         return $this;
     }
 
     /**
-     * Get image
-     *
      * @return string
      */
     public function getImage()
@@ -145,22 +107,16 @@ class Nominee
     }
 
     /**
-     * Set flavorText
-     *
      * @param string $flavorText
-     *
      * @return Nominee
      */
     public function setFlavorText($flavorText)
     {
         $this->flavorText = $flavorText;
-
         return $this;
     }
 
     /**
-     * Get flavorText
-     *
      * @return string
      */
     public function getFlavorText()
@@ -169,27 +125,33 @@ class Nominee
     }
 
     /**
-     * Set category
-     *
-     * @param \VGA\Model\Category $category
-     *
+     * @param Category $category
      * @return Nominee
      */
-    public function setCategory(\VGA\Model\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
-
         return $this;
     }
 
     /**
-     * Get category
-     *
-     * @return \VGA\Model\Category
+     * @return Category
      */
     public function getCategory()
     {
         return $this->category;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'shortName' => $this->getShortName(),
+            'name' => $this->getName(),
+            'subtitle' => $this->getSubtitle(),
+            'flavorText' => $this->getFlavorText(),
+            'image' => $this->getImage()
+        ];
     }
 }
 
