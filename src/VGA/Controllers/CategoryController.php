@@ -117,7 +117,7 @@ class CategoryController extends BaseController
         /** @var Category $category */
         $category = $repo->find($post->get('id'));
 
-        if (!$category || $category->isSecret() || $category->isEnabled()) {
+        if (!$category || $category->isSecret() || !$category->isEnabled()) {
             $response->setData(['error' => 'Invalid category provided.']);
             $response->send();
             return;
