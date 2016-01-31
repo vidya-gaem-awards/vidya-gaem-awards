@@ -44,7 +44,7 @@
 
 
 <header>
-    <a href="{{ path('voting') }}"><img src="/2014voting/2014logo.png" id="thelogo" alt="oh god it's happening again"/></a>
+    <a href="{{ path('voting') }}"><img src="/2015voting/logo.gif" id="thelogo" alt="oh god it's happening again"/></a>
     <h1>The 2015 Vidya Gaem Awards</h1>
     <h2>{{ voteText }}</h2>
     <div style="float: right; width: 550px; text-align: center; color: white; font-size: small;">
@@ -54,6 +54,8 @@
         <a href="?time=after" style="color: #f2ff1a">Votes have closed</a>
     </div>
 </header>
+
+<div class="zig"></div>
 
 <div id="wrapper">
     {% if category %}
@@ -66,7 +68,7 @@
             <a href="{{ path('voting', {'category': nextCategory}) }}" class="navigation right"></a>
         </div>
         {% if votingEnabled %}
-            <img src="/2014voting/dont_forget.png" id="dontforget" alt="Don't forget to hit submit"/>
+            <img src="/2015voting/dont_forget.gif" id="dontforget" alt="Don't forget to hit submit"/>
         {% endif %}
     {% endif %}
 
@@ -74,15 +76,15 @@
         <div id="limitsDrag">
             <div id="nomineeColumn" class="column">
 
-                <img src="/2014voting/topNominees.png" width="267px" height="105px" alt="Pick your nominees"/>
+                <img src="/2015voting/instruc_pick.gif" width="172px" height="97px" alt="Pick your nominees"/>
 
                 {% for nominee in category.nominees %}
 
                     <div class="voteBox">
                         <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
                              data-nominee="{{ nominee.shortName }}">
-                            <img class="fakeBorder" src="/2014voting/votebox_foreground.png">
-                            <img class="fakeBorder locked" src="/2014voting/votebox_foreground_locked.png">
+                            <img class="fakeBorder" src="/2015voting/votebox_foreground.png">
+                            <img class="fakeBorder locked" src="/2015voting/votebox_foreground_locked.png">
                             <div class="info">
                                 <div class="innerInfo">{{ nominee.flavorText }}</div>
                             </div>
@@ -105,7 +107,7 @@
 
             {% if votingEnabled or votingConcluded %}
                 <div id="voteColumn" class="column">
-                    <img src="/2014voting/topVotes.png" width="267px" height="105px" alt="Drag and drop to vote"/>
+                    <img src="/2015voting/instruc_drag.gif" width="234px" height="97px" alt="Drag and drop to vote"/>
                     {% for nominee in category.nominees %}
                         <div id="voteBox{{ loop.index }}" class="voteBox">
                         </div>
@@ -170,6 +172,8 @@
     <img src="/dumb.gif" alt="" class="shit">
 </div>
 
+<div class="zig"></div>
+
 <div id="containerCategories">
     <h1 id="topCategories">
         The Awards
@@ -184,7 +188,7 @@
     {% endfor %}
 
     {% if user.loggedIn %}
-        <h3 style='clear:both; padding-top: 50px;'><a href="{{ path('home') }}" style="color: #f2ff1a;">Back to the main part of the
+        <h3 style='clear:both; padding-top: 50px;'><a href="{{ path('home') }}" style="color: #80d7d1;">Back to the main part of the
                 site</a></h3>
     {% endif %}
 </div>

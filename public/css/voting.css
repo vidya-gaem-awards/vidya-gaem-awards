@@ -32,9 +32,28 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section {
   box-sizing: border-box;
 }
 
+
+
+
+@font-face {
+	font-family: 'modern typewriter';
+	src: url('/fonts/modern typewriter.eot');
+	src: local('☺'), url('/fonts/modern typewriter.woff') format('woff'), url('/fonts/modern typewriter.ttf') format('truetype'), url('/fonts/modern typewriter.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'yoster';
+	src: url('/fonts/yoster.eot');
+	src: local('☺'), url('/fonts/yoster.woff') format('woff'), url('/fonts/yoster.ttf') format('truetype'), url('/fonts/yoster.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
 html {
-	background-image: url("2014voting/bg_tile.png"); 
-	background-color: #212121;
+	background-image: url("/2015voting/bg.gif"); 
+	background-color: black;
 }
 
 body {
@@ -51,9 +70,15 @@ img {
 
 header{
 	width: 960px;
-	height: 144px;
+	height: 160px;
 	margin: 0 auto 30px;
-	background: url("/2014voting/shadow_top.png") bottom center no-repeat;
+}
+
+.zig{
+	clear: both;
+	height: 20px;
+	margin: 50px 0;
+	background-image: url("/2015voting/zig_horizontal.gif"); 
 }
 
 
@@ -64,26 +89,28 @@ p {
 h1, h2 {
   margin:0;
   padding:0;
-  color: #f2ff1a;
+  color: #f85898;
 }
 
 h1{
-	font-family: "Bebas Neue", Tahoma, sans-serif;
+	font-family: "modern typewriter", Tahoma, sans-serif;
 	text-transform: uppercase;
-	font-size: 4em;
+	font-size: 3em;
 	line-height: 100%;
 }
 h2 {
-	font-family: Calibri, sans-serif;
-	font-size: 1.5em;
+	font-family: "yoster", Calibri, sans-serif;
+	font-size: 1em;
 	line-height: 100%;
 	color: #bfbfbf;
+	font-smooth: never;
+	-webkit-font-smoothing : none;
 }
 
 header h1{
 	float: right;
 	width: 550px;
-	font-size: 2.5em;
+	font-size: 2em;
 	text-align:center;
 	margin-top: 28px;
 	font-weight: normal;
@@ -101,21 +128,13 @@ header h2{
 
 #wrapper {
   width: 988px;
-  height: 112px;
   margin: 0 auto;
   position: relative;
+  margin-bottom: 90px;
 }
 
 /* Award Header */
 
-@font-face {
-  font-family: "Bebas Neue";
-  src: url('/fonts/BebasNeue.eot');
-  src: url('/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
-       url("/fonts/BebasNeue.woff") format("woff"),
-       url("/fonts/BebasNeue.ttf") format("truetype");
-       url("/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
-}
 
 .awardHeader {
   text-align: center;
@@ -127,21 +146,21 @@ header h2{
   margin: 0 50px;
 }
 .awardName {
-  font-family: "Bebas Neue", Tahoma, sans-serif;
+  font-family: "modern typewriter", Tahoma, sans-serif;
   text-transform: uppercase;
-  font-size: 4em;
-  line-height: 44px;
-  color: #f2ff1a;
+  font-size: 3em;
+  line-height: 50px;
+  color: #00ebdb;
 }
 .awardSubtitle {
-	color: #bfbfbf;
+	color: #00ebdb;
 	width: 888px;
 }
 
 
 .navigation {
 	width: 50px;
-	height: 50px;
+	height:  66px;
 	position: absolute;
 	top: 0px;
 	cursor: pointer;
@@ -150,15 +169,15 @@ header h2{
 
 .navigation.left {
 	left: 0;
-	background: url("/2014voting/btnNav.png") 0px 0px;
+	background: url("/2015voting/btnNav_left.gif") 0px 0px;
 }
 .left:hover {
-	background-position: 0px 50px;
+	background-position: 0px 66px;
 }
 
 .navigation.right {
 	right: 0;
-	background: url("/2014voting/btnNav.png") 50px 0px;
+	background: url("/2015voting/btnNav_right.gif") 0px 0px;
 }
 
 footer .navigation {
@@ -167,7 +186,7 @@ footer .navigation {
 }
 
 .right:hover {
-	background-position: 50px 50px;
+	background-position: 0px 66px;
 }
 
 #dontforget{
@@ -203,7 +222,7 @@ footer .navigation {
 }
 
 #voteColumn > img {
-  margin-left: 206px;
+  margin-left: 239px;
 }
 
 /* Nominee Box */
@@ -272,19 +291,19 @@ footer .navigation {
 
 .nomineeInfo {
   position: absolute;
-  bottom: 1px;
-  left: 1px;
-  width: 471px;
+  bottom: 2px;
+  left: 2px;
+  width: 469px;
   background: url("/2014voting/blackbar.png");
   z-index: 99;
 }
 
 .nomineeInfo .nomineeName {
 	color: #f2ff1a;
-	font-family: "Bebas Neue", Tahoma, sans-serif;
+	font-family: "modern typewriter", Tahoma, sans-serif;
 	text-transform: uppercase;
-	font-size: 1.5em;
-	padding: 7px 0 0 5px;
+	font-size: 1em;
+	padding: 4px 0 0 5px;
 }
 
 .nomineeInfo .nomineeSubtitle {
@@ -310,7 +329,7 @@ footer .navigation {
   position: relative;
   width: 100%;
   height: 126px;
-  background: rgba(246, 231, 190, 0.5) url("/2014voting/votebox_background.png");
+  background: rgba(246, 231, 190, 0.5) url("/2015voting/votebox_background.png");
   margin-bottom: 4px;
 }
 
@@ -329,9 +348,9 @@ footer .navigation {
 	color: #f2ff1a;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-family: "Bebas Neue", Tahoma, sans-serif;
+	font-family: "modern typewriter", Tahoma, sans-serif;
 	text-transform: uppercase;
-	font-size: 2em;
+	font-size: 1.6em;
 	line-height: 1em;
 }
 
@@ -342,10 +361,8 @@ footer .navigation {
 	clear: both;
 	width: 988px;
 	margin: 0 auto;
-	padding-top: 14px;
 	padding-bottom: 30px;
 	overflow: auto;
-	background: url("/2014voting/shadow_bot.png") center 14px no-repeat;
 }
 
 #containerCategories h2, #limitsDrag h2 {
@@ -367,7 +384,7 @@ footer .navigation {
 }
 
 .category h3 {
-	color: #b2b2b2;
+	color: #80d7d1;
 	text-decoration: none;
 	font-family: Calibri, sans-serif;
 	font-weight: bold;
@@ -380,7 +397,7 @@ footer .navigation {
 
 .category p {
 	text-decoration: none;
-	color: #b2b2b2;
+	color: #80d7d1;
 	font-family: Calibri,sans-serif;
 	font-size: 0.9em;
 	padding: 0;
@@ -401,9 +418,9 @@ footer .navigation {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: 28px;
+	width: 26px;
 	height: 100%;
-	background: url("/2014voting/complete.png") 0px center no-repeat;
+	background: url("/2015voting/check.gif") 0px center no-repeat;
 }
 
 .voteBoxUsed {
@@ -420,24 +437,26 @@ footer .navigation {
     
 #btnLockVotes {
   margin-left: 14px;
-  width: 271px;
-  background-image: url("/2014voting/btnSubmit.png");
+  height: 58px;
+  width: 149px;
+  background-image: url("/2015voting/btn_submit.gif");
   background-position: 0px 0px;
 }
 
 #btnResetVotes {
-  width: 271px;
-  background-image: url("/2014voting/btnSubmit.png");
-  background-position: 0px -147px;
-  margin-left: 216px;
+  width: 138px;
+  height: 58px;
+  background-image: url("/2015voting/btn_reset.gif");
+  background-position: 0px 0px;
+  margin-left: 348px;
 }
 
 #btnLockVotes:hover {
-  background-position: 0px -49px;
+  background-position: 0px -58px;
 }
 
 #btnResetVotes:hover {
-  background-position: 0px -196px;
+  background-position: 0px -58px;
 }
 
 #arrow_left {
@@ -452,7 +471,7 @@ footer .navigation {
 }
 
 #topCategories {
-	padding-top: 20px;
+	color: #00ebdb;
 }
 
 
@@ -519,6 +538,7 @@ to {left:110%;}
 #startMessage {
   float: left;
   width: 880px;
+  margin-bottom: 25px;
 }
 
 #startMessage h2 {
