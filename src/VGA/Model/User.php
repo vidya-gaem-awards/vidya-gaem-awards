@@ -97,7 +97,7 @@ class User
     /**
      * @param string $steamID
      */
-    public function __construct(string $steamID)
+    public function __construct($steamID)
     {
         $this->steamID = $steamID;
         $this->votes = new Collections\ArrayCollection();
