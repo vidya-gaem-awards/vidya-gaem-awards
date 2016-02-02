@@ -17,8 +17,10 @@ var votesChanged;
 dumbshit = new Dumbshit();
 dumbshit.code = function () {
     $(".shit").show();
-    $("body").css("background-image", "url(/stars.gif)");
+    $("body").css("background-image", "url(/2015voting/bg2.gif)");
     $("body").css("background-repeat", "repeat");
+	var audio = new Audio('/2015voting/woah.mp3');
+	audio.play();
 };
 dumbshit.load();
 
@@ -39,7 +41,7 @@ function positionPopup() {
 // Keep the popup in the center when the browser is resized
 $(window).bind('resize', positionPopup);
 
-$(document).ready(function () {
+$(document).ready(function () {		
     var resetButton = $('#btnResetVotes');
     var cancelButton = $('#btnCancelVotes');
     var submitButton = $('#btnLockVotes');

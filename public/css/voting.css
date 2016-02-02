@@ -70,7 +70,7 @@ img {
 
 header{
 	width: 960px;
-	height: 160px;
+	height: 150px;
 	margin: 0 auto 30px;
 }
 
@@ -90,6 +90,7 @@ h1, h2 {
   margin:0;
   padding:0;
   color: #f85898;
+  font-weight: normal;
 }
 
 h1{
@@ -144,6 +145,9 @@ header h2{
 
 .awardHeaderContainer {
   margin: 0 50px;
+  padding-top: 24px;
+  height: 106px;
+  background: url(/2015voting/title_bg.gif) top center no-repeat;
 }
 .awardName {
   font-family: "modern typewriter", Tahoma, sans-serif;
@@ -159,10 +163,10 @@ header h2{
 
 
 .navigation {
-	width: 50px;
-	height:  66px;
+	width: 34px;
+	height:  42px;
 	position: absolute;
-	top: 0px;
+	top: 36px;
 	cursor: pointer;
 	display: block;
 }
@@ -172,12 +176,15 @@ header h2{
 	background: url("/2015voting/btnNav_left.gif") 0px 0px;
 }
 .left:hover {
-	background-position: 0px 66px;
+	background-position: 0px bottom;
 }
 
 .navigation.right {
 	right: 0;
 	background: url("/2015voting/btnNav_right.gif") 0px 0px;
+}
+.right:hover {
+	background-position: 0px bottom;
 }
 
 footer .navigation {
@@ -185,14 +192,10 @@ footer .navigation {
   display: none;
 }
 
-.right:hover {
-	background-position: 0px 66px;
-}
-
 #dontforget{
 	position: absolute;
 	top: 218px;
-	right: -62px;
+	right: -40px;
 }
 
 
@@ -238,13 +241,13 @@ footer .navigation {
 }
 
 .info{
-	width: 27px;
+	width: 26px;
 	height: 26px;
 	position: absolute;
-	top: 5px;
-	left: 5px;
+	top: 4px;
+	left: 4px;
 	z-index: 55;
-	background: url("/2014voting/info.png") center top no-repeat;
+	background: url("/2015voting/info.png") center top no-repeat;
 	cursor: help;
 }
 .info:hover{
@@ -299,7 +302,7 @@ footer .navigation {
 }
 
 .nomineeInfo .nomineeName {
-	color: #f2ff1a;
+	color: #f85898;
 	font-family: "modern typewriter", Tahoma, sans-serif;
 	text-transform: uppercase;
 	font-size: 1em;
@@ -308,7 +311,7 @@ footer .navigation {
 
 .nomineeInfo .nomineeSubtitle {
   font-family: "Calibri",arial,sans-serif;
-  color: white;
+  color: #80d7d1;
   font-size: 0.85em;
   padding: 0 0 0 4px;
 }
@@ -345,7 +348,7 @@ footer .navigation {
   position: absolute;
 	top: 7px;
 	right: 7px;
-	color: #f2ff1a;
+	color: #f85898;
 	text-decoration: none;
 	text-transform: uppercase;
 	font-family: "modern typewriter", Tahoma, sans-serif;
@@ -382,6 +385,22 @@ footer .navigation {
 .category:hover {
   background: rgba(0,0,0,0.20);
 }
+
+/** extra categories **/
+#containerCategories .category:nth-child(27){
+	margin-top: 20px;
+    width: 500px;
+}
+#containerCategories .category:nth-child(28){
+    width: 500px;
+}
+#containerCategories .category:nth-child(29){
+    width: 500px;
+}
+#containerCategories .category:nth-child(30){
+    width: 500px;
+}
+
 
 .category h3 {
 	color: #80d7d1;
@@ -452,11 +471,17 @@ footer .navigation {
 }
 
 #btnLockVotes:hover {
-  background-position: 0px -58px;
+  background-position: 0px center;
 }
 
 #btnResetVotes:hover {
   background-position: 0px -58px;
+}
+
+
+.iVoted {
+  background-position: 0px bottom !important;
+  cursor: default;
 }
 
 #arrow_left {
@@ -474,12 +499,6 @@ footer .navigation {
 	color: #00ebdb;
 }
 
-
-.iVoted {
-  background-position: 0px -98px !important;
-  cursor: default;
-}
-
 #overlay {
   cursor: pointer;
   width: 650px;
@@ -492,37 +511,42 @@ footer .navigation {
 .shit {
   position:absolute;
   z-index:999;
-  left:-100px;
-  top:82px;
+  left:0px;
+  top:-200px;
   display:none;
-  animation: dumb 8s infinite linear;
-  -moz-animation: dumb 8s infinite linear; /* Firefox */
-  -webkit-animation: dumb 8s infinite linear; /* Safari and Chrome */
-  -o-animation: dumb 8s infinite linear; /* Opera */
+  color: white;
+  font-size: 4em;
+  width: 100%;
+  text-align: center;
+  line-height: 85px;
+  animation: dumb 9s infinite linear;
+  -moz-animation: dumb 9s infinite linear; /* Firefox */
+  -webkit-animation: dumb 9s infinite linear; /* Safari and Chrome */
+  -o-animation: dumb 9s infinite linear; /* Opera */
 }
     
 @keyframes dumb
 {
-from {left:-10%;}
-to {left:110%;}
+    0%{top:1500px;}
+    100%{top:-200px;}
 }
 
 @-moz-keyframes dumb /* Firefox */
 {
-from {left:-10%;}
-to {left:110%;}
+    0%{top:1500px;}
+    100%{top:-200px;}
 }
 
 @-webkit-keyframes dumb /* Safari and Chrome */
 {
-from {left:-10%;}
-to {left:110%;}
+    0%{top:1500px;}
+    100%{top:-200px;}
 }
 
 @-o-keyframes dumb /* Opera */
 {
-from {left:-10%;}
-to {left:110%;}
+    0%{top:1500px;}
+    100%{top:-200px;}
 }
 
 #test {
@@ -555,16 +579,32 @@ to {left:110%;}
   color: white;
 }
 #startMessage a{
-	color: #f2ff1a;
+	color: #f85898;
 }
 
 #btnStart{
-	width: 196px;
-	height: 84px;
+	width: 233px;
+	height: 63px;
 	margin: 0 auto;
 	display: block;
-	background: url("/2014voting/btnStart.png") top center no-repeat;
+	background: url("/2015voting/btnStart.gif") top center no-repeat;
 }
 #btnStart:hover{
 	background-position: bottom center;
+}
+
+/**************/
+
+@media screen and (max-width: 1090px){
+	#dontforget{
+		display: none;
+	}
+}
+
+@media only screen and (max-device-width: 1080px) {
+	.category {
+		float: none;
+		width: 600px;
+		font-size: 1em;
+	}
 }
