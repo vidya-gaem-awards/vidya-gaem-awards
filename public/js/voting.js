@@ -9,10 +9,10 @@
 //})();
 
 var votingEnabled;
-var previousLockExists;
+var previousLockExists = false;
 var currentCategory;
-var lastVotes;
-var votesChanged;
+var lastVotes = [null];
+var votesChanged = false;
 
 dumbshit = new Dumbshit();
 dumbshit.code = function () {
@@ -46,10 +46,14 @@ $(document).ready(function () {
     var cancelButton = $('#btnCancelVotes');
     var submitButton = $('#btnLockVotes');
 
+    var voteColumnBoxes = $('#voteColumn').find('.voteBox');
+
+    previousLockExists = lastVotes.length > 1;
+
     randomizeNominees();
 
     //empty voteBoxes
-    $("#voteColumn .voteBox").each(function () {
+    voteColumnBoxes.each(function () {
         $(this).html("");
     });
 
@@ -70,10 +74,10 @@ $(document).ready(function () {
             revert: "invalid",
             revertDuration: 200,
             start: function (event, ui) {
-                $("#voteColumn .voteBox").addClass("dragging");
+                voteColumnBoxes.addClass("dragging");
             },
             stop: function (event, ui) {
-                $("#voteColumn .voteBox").removeClass("dragging");
+                voteColumnBoxes.removeClass("dragging");
             }
         })
         //when you start dragging, it puts the elements in variables
@@ -87,7 +91,7 @@ $(document).ready(function () {
     }
 
     //be able to drop nominees in voteBoxes
-    $("#voteColumn .voteBox").droppable({
+    voteColumnBoxes.droppable({
         drop: function (event, ui) {
             var dropped = ui.draggable;
             var droppedOn = $(this);
@@ -117,7 +121,7 @@ $(document).ready(function () {
     });
 
     //be able to drop nominees back in the original container
-    $("#nomineeColumn .voteBox").droppable({
+    $("#nomineeColumn").find(".voteBox").droppable({
         drop: function (event, ui) {
             var dropped = ui.draggable;
             var droppedOn = $(this);
@@ -148,11 +152,11 @@ $(document).ready(function () {
     //if you click on Reset Votes
     resetButton.click(function () {
         votesWereUnlocked();
-        $("#voteColumn .voteBox").each(function () {
+        voteColumnBoxes.each(function () {
             //delete what's in every voteBox and put them back in the container on the left
             var stuffDeleted = $(this).contents().detach();
             for (var i = 0; i < stuffDeleted.length; i++) {
-                $('#nomineeColumn .voteBox:empty:first').append(stuffDeleted[i]);
+                $('#nomineeColumn').find('.voteBox:empty:first').append(stuffDeleted[i]);
             }
         });
         sortLeftSide();
@@ -174,7 +178,7 @@ $(document).ready(function () {
 
         var preferences = [null];
 
-        $("#voteColumn .voteBox").each(function () {
+        voteColumnBoxes.each(function () {
             var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
             var nomineeID = $(this).find(".aNominee").attr("data-nominee");
 
@@ -205,7 +209,7 @@ function sortVotes() {
     var listVoteBox = [];
 
     //pass through every voteBox, empty them while placing the vote in the array, ignoring the empty voteBoxes
-    $("#voteColumn .voteBox").each(function () {
+    $("#voteColumn").find(".voteBox").each(function () {
         currentVoteBox++;
 
         if ($(this).contents().attr("id") != undefined) {
@@ -223,7 +227,7 @@ function sortVotes() {
 
 function updateNumbers() {
     //for every voteBox, look at its ID, keep the number and show it in the nominee div
-    $("#voteColumn .voteBox").each(function () {
+    $("#voteColumn").find(".voteBox").each(function () {
         var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
         $(this).find(".number").html("#" + onlyTheNumber);
 
@@ -265,7 +269,7 @@ function moveNomineesBackToLastVotes() {
         $("#voteBox" + (i + 1)).append(haveVotedFor[i]);
     }
 
-    var voteBoxes = $("#nomineeColumn .voteBox");
+    var voteBoxes = $("#nomineeColumn").find(".voteBox");
 
     console.log(voteBoxes);
 
@@ -283,7 +287,7 @@ function moveNomineesBackToLastVotes() {
 }
 
 function sortLeftSide() {
-    var muhNominees = $("#nomineeColumn .aNominee").detach();
+    var muhNominees = $("#nomineeColumn").find(".aNominee").detach();
 
     muhNominees = $(muhNominees).sort(function (a, b) {
         var contentA = parseInt($(a).attr('data-order'));
@@ -291,7 +295,7 @@ function sortLeftSide() {
         return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
     });
 
-    var voteBoxes = $('#nomineeColumn .voteBox');
+    var voteBoxes = $('#nomineeColumn').find('.voteBox');
 
     for (var i = 0; i < muhNominees.length; i++) {
         $(voteBoxes[i]).append(muhNominees[i]);
@@ -315,7 +319,7 @@ function randomizeNominees() {
     //randomize the array
     random(arrayOfNominees);
 
-    var voteBoxes = $("#nomineeColumn .voteBox");
+    var voteBoxes = $("#nomineeColumn").find(".voteBox");
 
     //put the nominees back
     for (var i = 0; i < currentNominee; i++) {
@@ -331,9 +335,8 @@ function random(myArray) {
     if (i == 0) return false;
     while (--i) {
         var j = Math.floor(Math.random() * ( i + 1 ));
-        var tempi = myArray[i];
-        var tempj = myArray[j];
-        myArray[i] = tempj;
-        myArray[j] = tempi;
+        var temp = myArray[i];
+        myArray[i] = myArray[j];
+        myArray[j] = temp;
     }
 }
