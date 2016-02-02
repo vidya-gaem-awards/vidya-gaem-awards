@@ -62,12 +62,12 @@
 <div id="wrapper">
     {% if category %}
         <div class="awardHeader">
-            <a href="{{ path('voting', {'category': prevCategory}) }}" class="navigation left"></a>
+            <a href="{{ path('voting', {'category': prevCategory.id}) }}" class="navigation left"></a>
             <div class="awardHeaderContainer">
                 <div class="awardName">{{ category.name }}</div>
                 <h2 class="awardSubtitle">{{ category.subtitle }}</h2>
             </div>
-            <a href="{{ path('voting', {'category': nextCategory}) }}" class="navigation right"></a>
+            <a href="{{ path('voting', {'category': nextCategory.id}) }}" class="navigation right"></a>
         </div>
         {% if votingOpen %}
             <img src="/2015voting/dont_forget.gif" id="dontforget" alt="Don't forget to hit submit"/>
@@ -128,7 +128,7 @@
         <span id="votesAreLocked" style="display: none;">
             <div id="btnLockVotes" class="btnSubmit iVoted" alt="Saved!"></div>
         </span>
-                <a href="{{ path('voting', {'category': nextCategory}) }}" class="navigation right" alt="Next category"></a>
+                <a href="{{ path('voting', {'category': nextCategory.id}) }}" class="navigation right" alt="Next category"></a>
             </footer>
         {% endif %}
 
@@ -154,7 +154,7 @@
                 <p>You can use the award list at the bottom to navigate, or just use the arrows that appear after you
                     click submit.</p>
 
-                <a href="{{ path('voting', {'category': 'most-hated-game'}) }}" id="btnStart"></a>
+                <a href="{{ path('voting', {'category': (categories|first).id}) }}" id="btnStart"></a>
             {% endif %}
 
             {% if votingClosed %}

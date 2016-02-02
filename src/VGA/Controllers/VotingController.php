@@ -22,10 +22,15 @@ class VotingController extends BaseController
             ->orderBy('c.order', 'ASC');
         $categories = $query->getQuery()->getResult();
 
+        $prevCategory = null;
+        $nextCategory = null;
+
         // Fetch the active category (if given)
         if ($category) {
+            $repo = $this->em->getRepository(Category::class);
+
             /** @var Category $category */
-            $category = $this->em->getRepository(Category::class)->find($category);
+            $category = $repo->find($category);
 
             if (!$category || !$category->isEnabled()) {
                 $this->session->getFlashBag()->add('error', 'Invalid award specified.');
@@ -34,6 +39,22 @@ class VotingController extends BaseController
                 );
                 $response->send();
                 return;
+            }
+
+            // Iterate through the categories list to get the previous and next categories
+            $iterCategory = reset($categories);
+            while ($iterCategory !== $category) {
+                $prevCategory = $iterCategory;
+                $iterCategory = next($categories);
+            }
+
+            $nextCategory = next($categories);
+            if (!$nextCategory) {
+                $nextCategory = reset($categories);
+            }
+
+            if (!$prevCategory) {
+                $prevCategory = end($categories);
             }
         }
 
@@ -88,6 +109,8 @@ class VotingController extends BaseController
             'votingClosed' => $votingClosed,
             'votingOpen' => $votingOpen,
             'voteText' => $voteText,
+            'prevCategory' => $prevCategory,
+            'nextCategory' => $nextCategory
         ]));
         $response->send();
     }
