@@ -357,6 +357,19 @@ $routes->add('voting', new Route(
     [],
     ['GET']
 ));
+$routes->add('votingSubmission', new Route(
+    '/vote/{category}',
+    [
+        'controller' => Controllers\VotingController::class,
+        'action' => 'post',
+        'permission' => 'voting-view'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
+));
 
 $context = new RequestContext();
 $context->fromRequest($request);

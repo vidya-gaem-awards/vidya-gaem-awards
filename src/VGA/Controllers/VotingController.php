@@ -1,11 +1,14 @@
 <?php
 namespace VGA\Controllers;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use VGA\Model\Action;
 use VGA\Model\Category;
 use VGA\Model\Config;
+use VGA\Model\Nominee;
 
 class VotingController extends BaseController
 {
@@ -111,6 +114,73 @@ class VotingController extends BaseController
             'prevCategory' => $prevCategory,
             'nextCategory' => $nextCategory
         ]));
+        $response->send();
+    }
+
+    public function postAction($category)
+    {
+        $response = new JsonResponse();
+
+        /** @var Config $config */
+        $config = $this->em->getRepository(Config::class)->findOneBy([]);
+
+//        if ($config->isVotingNotYetOpen()) {
+//            $response->setData(['error' => 'Voting hasn\'t started yet.']);
+//            $response->send();
+//            return;
+//        } elseif ($config->hasVotingClosed()) {
+//            $response->setData(['error' => 'Voting has closed.']);
+//            $response->send();
+//            return;
+//        }
+
+        /** @var Category $category */
+        $category = $this->em->getRepository(Category::class)->find($category);
+
+        if (!$category || !$category->isEnabled()) {
+            $response->setData(['error' => 'Invalid award specified.']);
+            $response->send();
+            return;
+        }
+
+        $preferences = $this->request->request->get('preferences', ['']);
+
+        // Remove blank preferences and recreate the key ordering.
+        $preferences = array_values(array_filter($preferences));
+        // By adding an element to the front and then removing it, we shift the keys from 0 to n to 1 to n+1.
+        array_unshift($preferences, '');
+        unset($preferences[0]);
+
+        if (count($preferences) != count(array_unique($preferences))) {
+            $response->setData(['error' => 'Duplicate nominees are not allowed.']);
+            $response->send();
+            return;
+        }
+
+        $nomineeIDs = $category->getNominees()->map(function (Nominee $n) {
+            return $n->getShortName();
+        });
+        $invalidNominees = array_diff($preferences, $nomineeIDs->toArray());
+
+        if (count($invalidNominees) > 0) {
+            $response->setData(
+                ['error' => 'Some of the nominees you\'ve voted for are invalid: ' . implode(', ', $invalidNominees)]
+            );
+            $response->send();
+            return;
+        }
+
+        // add logic to actually save the vote here
+
+        $action = new Action('voted');
+        $action->setUser($this->user)
+            ->setPage(__CLASS__)
+            ->setData1($category->getId());
+        $this->em->persist($action);
+
+//        $this->em->flush();
+
+        $response->setData(['success' => true]);
         $response->send();
     }
 }

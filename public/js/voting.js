@@ -13,6 +13,7 @@ var previousLockExists = false;
 var currentCategory;
 var lastVotes = [null];
 var votesChanged = false;
+var postURL;
 
 dumbshit = new Dumbshit();
 dumbshit.code = function () {
@@ -147,6 +148,8 @@ $(document).ready(function () {
         }
     });
 
+    moveNomineesBackToLastVotes();
+
     //if you click on Reset Votes
     resetButton.click(function () {
         votesWereUnlocked();
@@ -186,11 +189,9 @@ $(document).ready(function () {
 
         });
 
-        console.log(preferences);
-
         lastVotes = preferences;
 
-        $.post("/voting-submission", {Category: currentCategory, Preferences: preferences}, function (data) {
+        $.post(postURL, {preferences: preferences}, function (data) {
             console.log(data);
             if (data.error) {
                 alert("An error occurred:\n" + data.error + "\nYour vote has not been saved.");
@@ -269,8 +270,6 @@ function moveNomineesBackToLastVotes() {
 
     var voteBoxes = $("#nomineeColumn").find(".voteBox");
 
-    console.log(voteBoxes);
-
     for (i = 0; i < theRest.length; i++) {
         $(voteBoxes[i + lastVotes.length - 1]).append(theRest[i]);
     }
@@ -299,7 +298,3 @@ function sortLeftSide() {
         $(voteBoxes[i]).append(muhNominees[i]);
     }
 }
-
-$(document).ready(function () {
-    moveNomineesBackToLastVotes();
-});

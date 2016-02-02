@@ -19,14 +19,14 @@
     <meta name="viewport" content="width=1100, maximum-scale=1.0, user-scalable=no" />
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
 
+    {% if category %}
     <script type="text/javascript">
         var votingEnabled = {{ votingOpen ? 'true' : 'false' }};
-
-        {% if category %}
         var lastVotes = [null];
         var currentCategory = "{{ category.id }}";
-        {% endif %}
+        var postURL = "{{ path('votingSubmission', {'category': category.id}) }}";
     </script>
+    {% endif %}
 
     {% if votingOpen %}
         <style type="text/css">
