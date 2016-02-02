@@ -1,4 +1,4 @@
-config.php
-.idea
-vendor
-src/VGA/Proxies
+/config.php
+/.idea
+/vendor
+/src/VGA/Proxies
