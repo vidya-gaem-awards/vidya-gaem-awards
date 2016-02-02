@@ -20,7 +20,7 @@
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
 
     <script type="text/javascript">
-        var votingEnabled = {{ votingEnabled ? 'true' : 'false' }};
+        var votingOpen = {{ votingOpen ? 'true' : 'false' }};
 
         {% if category %}
         //      var lastVotes = <tag:lastVotes />;
@@ -33,7 +33,7 @@
         {% endif %}
     </script>
 
-    {% if votingEnabled %}
+    {% if votingOpen %}
         <style type="text/css">
             .aNominee {
                 cursor: move;
@@ -69,7 +69,7 @@
             </div>
             <a href="{{ path('voting', {'category': nextCategory}) }}" class="navigation right"></a>
         </div>
-        {% if votingEnabled %}
+        {% if votingOpen %}
             <img src="/2015voting/dont_forget.gif" id="dontforget" alt="Don't forget to hit submit"/>
         {% endif %}
     {% endif %}
@@ -107,7 +107,7 @@
                 &nbsp;
             </div>
 
-            {% if votingEnabled or votingConcluded %}
+            {% if votingOpen or votingClosed %}
                 <div id="voteColumn" class="column">
                     <img src="/2015voting/instruc_drag.gif" width="234px" height="97px" alt="Drag and drop to vote"/>
                     {% for nominee in category.nominees %}
@@ -119,7 +119,7 @@
 
         </div>
 
-        {% if votingEnabled %}
+        {% if votingOpen %}
             <footer style='position: relative; clear: both;'>
                 <div id="btnResetVotes" class="btnSubmit" alt="Reset Votes"></div>
         <span id="votesAreNotLocked">
@@ -145,7 +145,7 @@
                     use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
             {% endif %}
 
-            {% if votingEnabled %}
+            {% if votingOpen %}
                 <!-- While votes are open -->
                 <h2>How to vote:</h2>
                 <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them
@@ -157,7 +157,7 @@
                 <a href="{{ path('voting', {'category': 'most-hated-game'}) }}" id="btnStart"></a>
             {% endif %}
 
-            {% if votingConcluded %}
+            {% if votingClosed %}
                 <!-- After votes close -->
                 <h2>Thanks to everybody who voted.</h2>
                 <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>

@@ -1,6 +1,8 @@
 <?php
 namespace VGA\Model;
 
+use Moment\Moment;
+
 class Config
 {
     /** @var string */
@@ -92,6 +94,22 @@ class Config
         }
 
         return false;
+    }
+
+    public static function getRelativeTimeString(\DateTime $date)
+    {
+        $moment = new Moment($date->format('c'));
+        $diff = $moment->fromNow()->setDirection('+');
+
+        if ($diff->getSeconds() <= 120) {
+            return (int)$diff->getSeconds() . ' second' . ((int)$diff->getSeconds() === 1 ? '' : 's');
+        } elseif ($diff->getMinutes() <= 120) {
+            return (int)$diff->getMinutes() . ' minutes';
+        } elseif ($diff->getHours() <= 48) {
+            return (int)$diff->getHours() . ' hours';
+        } else {
+            return (int)$diff->getDays() . ' days';
+        }
     }
 
 }

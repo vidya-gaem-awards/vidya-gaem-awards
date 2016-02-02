@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "53b56951ac8fc814fbbbc912bf685c55",
-    "content-hash": "7b7cf7399abbd7b3490574f3a40babba",
+    "hash": "1477c4b629bdcb9563af86fea75c083b",
+    "content-hash": "fabc696be8e7f4e8e76e00eb8e58fc26",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -648,6 +648,69 @@
                 "steam"
             ],
             "time": "2015-05-18 13:22:42"
+        },
+        {
+            "name": "fightbulc/moment",
+            "version": "1.17.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fightbulc/moment.php.git",
+                "reference": "13b600b9e919ffd3eb72764947cfb9bb8d95d8d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/13b600b9e919ffd3eb72764947cfb9bb8d95d8d2",
+                "reference": "13b600b9e919ffd3eb72764947cfb9bb8d95d8d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Moment\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ashish Tilara",
+                    "email": "ashish@itcutives.com",
+                    "role": "developer"
+                },
+                {
+                    "name": "Jaroslaw Kozak",
+                    "email": "jaroslaw.kozak68@gmail.com",
+                    "role": "developer"
+                },
+                {
+                    "name": "Tino Ehrich",
+                    "email": "tino@bigpun.me",
+                    "role": "developer"
+                }
+            ],
+            "description": "Parse, validate, manipulate, and display dates in PHP w/ i18n support. Inspired by moment.js",
+            "keywords": [
+                "date",
+                "display",
+                "format",
+                "i18n",
+                "locale",
+                "manipulate",
+                "moment",
+                "parse",
+                "time",
+                "translation",
+                "validate"
+            ],
+            "time": "2016-01-29 11:01:11"
         },
         {
             "name": "ircmaxell/random-lib",

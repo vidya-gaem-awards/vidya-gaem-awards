@@ -1,10 +1,12 @@
 <?php
 namespace VGA\Controllers;
 
+use Moment\Moment;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use VGA\Model\Category;
+use VGA\Model\Config;
 
 class VotingController extends BaseController
 {
@@ -35,19 +37,46 @@ class VotingController extends BaseController
             }
         }
 
-        //////// TESTING ////////
-        $votingNotYetOpen = $votingEnabled = $votingConcluded = false;
+        /** @var Config $config */
+        $config = $this->em->getRepository(Config::class)->findOneBy([]);
 
-        $time = $this->request->get('time', 'during');
+        $start = $config->getVotingStart();
+        $end = $config->getVotingEnd();
+
+        $votingNotYetOpen = $config->isVotingNotYetOpen();
+        $votingClosed = $config->hasVotingClosed();
+        $votingOpen = $config->isVotingOpen();
+
+        if ($votingNotYetOpen) {
+            if (!$start) {
+                $voteText = 'Voting will open soon.';
+            } else {
+                $voteText = 'Voting will open in ' . Config::getRelativeTimeString($start) . '.';
+            }
+        } elseif ($votingOpen) {
+            if ($end) {
+                $voteText = 'Voting is now open!';
+            } else {
+                $voteText = ' You have ' . Config::getRelativeTimeString($end) . ' left to vote.';
+            }
+        } else {
+            $voteText = 'Voting is now closed.';
+        }
+
+        //////// TESTING ////////
+        $time = $this->request->get('time');
         if ($time === 'before') {
             $votingNotYetOpen = true;
-            $voteText = 'Voting will open in 18 hours and 45 minutes.';
+            $votingOpen = $votingClosed = false;
+            $voteText = 'Voting will open soon.';
         } elseif ($time === 'after') {
-            $votingConcluded = true;
+            $votingClosed = true;
+            $votingNotYetOpen = $votingOpen = false;
             $voteText = 'Voting is now closed.';
-        } else {
-            $votingEnabled = true;
-            $voteText = 'Voting is now open! You have 18 hours and 45 minutes left to vote.';
+        } elseif ($time === 'during') {
+            $votingOpen = true;
+            $votingNotYetOpen = $votingClosed = false;
+            $voteText = 'Voting is now open!';
         }
         //////// TESTING ////////
 
@@ -56,9 +85,9 @@ class VotingController extends BaseController
             'categories' => $categories,
             'category' => $category,
             'votingNotYetOpen' => $votingNotYetOpen,
-            'votingConcluded' => $votingConcluded,
-            'votingEnabled' => $votingEnabled,
-            'voteText' => $voteText
+            'votingClosed' => $votingClosed,
+            'votingOpen' => $votingOpen,
+            'voteText' => $voteText,
         ]));
         $response->send();
     }
