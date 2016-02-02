@@ -319,6 +319,31 @@ $routes->add('nomineePost', new Route(
     [],
     ['POST']
 ));
+$routes->add('config', new Route(
+    '/config',
+    [
+        'controller' => Controllers\ConfigController::class,
+        'permission' => 'edit-config'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['GET']
+));
+$routes->add('configPost', new Route(
+    '/config',
+    [
+        'controller' => Controllers\ConfigController::class,
+        'action' => 'post',
+        'permission' => 'edit-config'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
+));
 $routes->add('voting', new Route(
     '/vote/{category}',
     [

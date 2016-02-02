@@ -1,0 +1,15 @@
+VGA\Model\Config:
+  type: entity
+  table: config
+  id:
+    id:
+      type: string
+      nullable: false
+      length: 30
+  fields:
+    votingStart:
+      type: datetime
+      nullable: true
+    votingEnd:
+      type: datetime
+      nullable: true
