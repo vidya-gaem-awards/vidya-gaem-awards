@@ -75,7 +75,7 @@
 
                 <img src="/2015voting/instruc_pick.gif" width="172px" height="97px" alt="Pick your nominees"/>
 
-                {% for nominee in category.nominees %}
+                {% for nominee in category.nominees | shuffle %}
 
                     {% spaceless %}
                     <div class="voteBox">

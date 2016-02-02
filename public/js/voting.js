@@ -50,8 +50,6 @@ $(document).ready(function () {
 
     previousLockExists = lastVotes.length > 1;
 
-    randomizeNominees();
-
     //empty voteBoxes
     voteColumnBoxes.each(function () {
         $(this).html("");
@@ -305,38 +303,3 @@ function sortLeftSide() {
 $(document).ready(function () {
     moveNomineesBackToLastVotes();
 });
-
-function randomizeNominees() {
-    var currentNominee = 0;
-    var arrayOfNominees = [];
-
-    //pass through every nominee, remove them while placing the vote in the array
-    $(".aNominee").each(function () {
-        currentNominee++;
-        arrayOfNominees.push($(this).detach());
-    });
-
-    //randomize the array
-    random(arrayOfNominees);
-
-    var voteBoxes = $("#nomineeColumn").find(".voteBox");
-
-    //put the nominees back
-    for (var i = 0; i < currentNominee; i++) {
-
-        if (arrayOfNominees[i]) { //if it exists
-            arrayOfNominees[i].appendTo(voteBoxes[i]);
-        }
-    }
-}
-
-function random(myArray) {
-    var i = myArray.length;
-    if (i == 0) return false;
-    while (--i) {
-        var j = Math.floor(Math.random() * ( i + 1 ));
-        var temp = myArray[i];
-        myArray[i] = myArray[j];
-        myArray[j] = temp;
-    }
-}

@@ -77,6 +77,7 @@ class DependencyManager
         $twig = new \Twig_Environment($loader);
         $twig->addExtension(new RoutingExtension($urlGenerator));
         $twig->addExtension(new \Twig_Extensions_Extension_Date());
+        $twig->addExtension(new \Twig_Extensions_Extension_Array());
 
         self::$twig = $twig;
         return $twig;
