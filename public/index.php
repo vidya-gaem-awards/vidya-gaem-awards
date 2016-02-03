@@ -101,7 +101,7 @@ $routes->add('index', new Route(
     '/',
     [
         // Change this to change the default route
-        'controller' => Controllers\CategoryController::class
+        'controller' => Controllers\VotingController::class
     ]
 ));
 
