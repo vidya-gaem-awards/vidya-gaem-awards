@@ -95,6 +95,11 @@ class User
     private $permissionCache;
 
     /**
+     * @var string
+     */
+    private $votingCode;
+
+    /**
      * @param string $steamID
      */
     public function __construct($steamID)
@@ -572,6 +577,24 @@ class User
     public function getFuzzyID()
     {
         return $this->isLoggedIn() ? $this->getSteamID() : $this->getIP();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVotingCode()
+    {
+        return $this->votingCode;
+    }
+
+    /**
+     * @param mixed $votingCode
+     * @return User
+     */
+    public function setVotingCode($votingCode)
+    {
+        $this->votingCode = $votingCode;
+        return $this;
     }
 }
 

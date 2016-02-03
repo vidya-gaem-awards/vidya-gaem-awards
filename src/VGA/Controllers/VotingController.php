@@ -55,22 +55,23 @@ class VotingController extends BaseController
             $voteText = 'Voting is now closed.';
         }
 
-        //////// TESTING ////////
-        $time = $this->request->get('time');
-        if ($time === 'before') {
-            $votingNotYetOpen = true;
-            $votingOpen = $votingClosed = false;
-            $voteText = 'Voting will open soon.';
-        } elseif ($time === 'after') {
-            $votingClosed = true;
-            $votingNotYetOpen = $votingOpen = false;
-            $voteText = 'Voting is now closed.';
-        } elseif ($time === 'during') {
-            $votingOpen = true;
-            $votingNotYetOpen = $votingClosed = false;
-            $voteText = 'Voting is now open!';
+        // Users with special access to the voting page can change the current vote status for testing purposes
+        if ($this->user->canDo('voting-view')) {
+            $time = $this->request->get('time');
+            if ($time === 'before') {
+                $votingNotYetOpen = true;
+                $votingOpen = $votingClosed = false;
+                $voteText = 'Voting will open soon.';
+            } elseif ($time === 'after') {
+                $votingClosed = true;
+                $votingNotYetOpen = $votingOpen = false;
+                $voteText = 'Voting is now closed.';
+            } elseif ($time === 'during') {
+                $votingOpen = true;
+                $votingNotYetOpen = $votingClosed = false;
+                $voteText = 'Voting is now open!';
+            }
         }
-        //////// TESTING ////////
 
         $query = $this->em->getRepository(Vote::class)->createQueryBuilder('v');
         /** @var Vote[] $votes */
@@ -148,15 +149,17 @@ class VotingController extends BaseController
         /** @var Config $config */
         $config = $this->em->getRepository(Config::class)->findOneBy([]);
 
-//        if ($config->isVotingNotYetOpen()) {
-//            $response->setData(['error' => 'Voting hasn\'t started yet.']);
-//            $response->send();
-//            return;
-//        } elseif ($config->hasVotingClosed()) {
-//            $response->setData(['error' => 'Voting has closed.']);
-//            $response->send();
-//            return;
-//        }
+        if (!$this->user->canDo('voting-view')) {
+            if ($config->isVotingNotYetOpen()) {
+                $response->setData(['error' => 'Voting hasn\'t started yet.']);
+                $response->send();
+                return;
+            } elseif ($config->hasVotingClosed()) {
+                $response->setData(['error' => 'Voting has closed.']);
+                $response->send();
+                return;
+            }
+        }
 
         /** @var Category $category */
         $category = $this->em->getRepository(Category::class)->find($category);
@@ -226,8 +229,8 @@ class VotingController extends BaseController
             ->setPreferences($preferences)
             ->setTimestamp(new \DateTime())
             ->setUser($this->user)
-            ->setIp($this->user->getIP());
-//            ->setVotingCode(null);
+            ->setIp($this->user->getIP())
+            ->setVotingCode($this->user->getVotingCode());
         $this->em->persist($vote);
 
         $action = new Action('voted');
@@ -239,6 +242,15 @@ class VotingController extends BaseController
         $this->em->flush();
 
         $response->setData(['success' => true]);
+        $response->send();
+    }
+
+    public function codeEntryAction($code) {
+        // Bad practice, should be using Symfony's request class
+        setcookie('votingCode', $code, strtotime('+90 days'), '/', DOMAIN);
+        $this->session->set('votingCode', $code);
+
+        $response = new RedirectResponse($this->generator->generate('voting'));
         $response->send();
     }
 }

@@ -66,10 +66,21 @@ if ($randomID === null) {
     setcookie('access', $randomID, strtotime('+90 days'), '/', DOMAIN);
 }
 
+$votingCodeSession = $session->get('votingCode');
+$votingCodeCookie = $request->cookies->get('votingCode');
+
+if ($votingCodeCookie) {
+    $session->set('votingCode', $votingCodeCookie);
+    $votingCode = $votingCodeCookie;
+} else {
+    $votingCode = $votingCodeSession;
+}
+
 // Update the user object with information that doesn't come from the database.
 $user
     ->setIP($request->server->get('HTTP_CF_CONNECTING_IP', $request->server->get('REMOVE_ATTR')))
-    ->setRandomID($randomID);
+    ->setRandomID($randomID)
+    ->setVotingCode($votingCode);
 
 // Define the routes
 $routes = new RouteCollection();
@@ -369,6 +380,13 @@ $routes->add('votingSubmission', new Route(
     '',
     [],
     ['POST']
+));
+$routes->add('voteWithCode', new Route(
+    '/vote/v/{code}',
+    [
+        'controller' => Controllers\VotingController::class,
+        'action' => 'codeEntry'
+    ]
 ));
 
 $context = new RequestContext();
