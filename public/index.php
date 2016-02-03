@@ -379,8 +379,8 @@ $routes->add('voting', new Route(
     '/vote/{category}',
     [
         'controller' => Controllers\VotingController::class,
-        'permission' => 'voting-view',
         'category' => null
+//        'permission' => 'voting-view',
     ],
     [],
     [],
@@ -393,7 +393,7 @@ $routes->add('votingSubmission', new Route(
     [
         'controller' => Controllers\VotingController::class,
         'action' => 'post',
-        'permission' => 'voting-view'
+//        'permission' => 'voting-view'
     ],
     [],
     [],
