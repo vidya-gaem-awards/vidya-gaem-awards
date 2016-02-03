@@ -33,9 +33,7 @@ class NomineeController extends BaseController
 
             if (!$category || ($category->isSecret() && !$this->user->canDo('categories-secret'))) {
                 $this->session->getFlashBag()->add('error', 'Invalid category ID specified.');
-                $response = new RedirectResponse(
-                    $this->generator->generate('nomineeManager', [] , UrlGenerator::ABSOLUTE_URL)
-                );
+                $response = new RedirectResponse($this->generator->generate('nomineeManager'));
                 $response->send();
                 return;
             }

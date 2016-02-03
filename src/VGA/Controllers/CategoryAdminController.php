@@ -120,9 +120,7 @@ class CategoryAdminController extends BaseController
             $this->em->flush();
         }
 
-        $response = new RedirectResponse(
-            $this->generator->generate('categoryManager', [], UrlGenerator::ABSOLUTE_URL)
-        );
+        $response = new RedirectResponse($this->generator->generate('categoryManager'));
         $response->send();
     }
 
@@ -133,9 +131,7 @@ class CategoryAdminController extends BaseController
 
         if (!$category || ($category->isSecret() && !$this->user->canDo('categories-secret'))) {
             $this->session->getFlashBag()->add('error', 'Invalid category ID specified.');
-            $response = new RedirectResponse(
-                $this->generator->generate('categoryManager', [] , UrlGenerator::ABSOLUTE_URL)
-            );
+            $response = new RedirectResponse($this->generator->generate('categoryManager'));
             $response->send();
             return;
         }
@@ -153,9 +149,7 @@ class CategoryAdminController extends BaseController
 
         if (!$category || ($category->isSecret() && !$this->user->canDo('categories-secret'))) {
             $this->session->getFlashBag()->add('error', 'Invalid category ID specified.');
-            $response = new RedirectResponse(
-                $this->generator->generate('categoryManager', [] , UrlGenerator::ABSOLUTE_URL)
-            );
+            $response = new RedirectResponse($this->generator->generate('categoryManager'));
             $response->send();
             return;
         }
@@ -179,9 +173,7 @@ class CategoryAdminController extends BaseController
             } else {
                 $flashbag->add('formSuccess', 'You aren\'t allowed to delete categories.');
             }
-            $response = new RedirectResponse(
-                $this->generator->generate('categoryManager', [] , UrlGenerator::ABSOLUTE_URL)
-            );
+            $response = new RedirectResponse($this->generator->generate('categoryManager'));
             $response->send();
         } else {
             if (strlen($post->get('name')) == 0 || strlen($post->get('subtitle')) == 0
@@ -230,7 +222,7 @@ class CategoryAdminController extends BaseController
             }
 
             $response = new RedirectResponse(
-                $this->generator->generate('editCategory', ['category' => $category->getId()] , UrlGenerator::ABSOLUTE_URL)
+                $this->generator->generate('editCategory', ['category' => $category->getId()])
             );
             $response->send();
         }

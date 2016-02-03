@@ -34,7 +34,7 @@ class PeopleController extends BaseController
 
         if (!$user || !$user->isSpecial()) {
             $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
-            $response = new RedirectResponse($this->generator->generate('people'), [], UrlGenerator::ABSOLUTE_URL);
+            $response = new RedirectResponse($this->generator->generate('people'));
             $response->send();
             return;
         }
@@ -54,7 +54,7 @@ class PeopleController extends BaseController
 
         if (!$user || !$user->isSpecial()) {
             $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
-            $response = new RedirectResponse($this->generator->generate('people'), [], UrlGenerator::ABSOLUTE_URL);
+            $response = new RedirectResponse($this->generator->generate('people'));
             $response->send();
             return;
         }
@@ -74,7 +74,7 @@ class PeopleController extends BaseController
 
         if (!$user || !$user->isSpecial()) {
             $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
-            $response = new RedirectResponse($this->generator->generate('people'), [], UrlGenerator::ABSOLUTE_URL);
+            $response = new RedirectResponse($this->generator->generate('people'));
             $response->send();
             return;
         }
@@ -175,7 +175,7 @@ class PeopleController extends BaseController
         }
 
         $response = new RedirectResponse(
-            $this->generator->generate('viewPerson', ['steamID' => $steamID], UrlGenerator::ABSOLUTE_URL)
+            $this->generator->generate('viewPerson', ['steamID' => $steamID])
         );
         $response->send();
     }

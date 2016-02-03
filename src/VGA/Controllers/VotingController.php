@@ -101,9 +101,7 @@ class VotingController extends BaseController
 
             if (!$category || !$category->isEnabled()) {
                 $this->session->getFlashBag()->add('error', 'Invalid award specified.');
-                $response = new RedirectResponse(
-                    $this->generator->generate('voting', [], UrlGenerator::ABSOLUTE_URL)
-                );
+                $response = new RedirectResponse($this->generator->generate('voting'));
                 $response->send();
                 return;
             }
