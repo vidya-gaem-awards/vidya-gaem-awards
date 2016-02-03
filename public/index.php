@@ -529,98 +529,35 @@ try {
     return;
 }
 
-exit;
-
-// Abandon hope all who go below this point
-
-// Special handling for ad landing page
-if ($PAGE == "promotions") {
-    header("Location: " . AD_LANDING_PAGE);
-    exit;
-}
-
-$ACCESS = array(
-    // Volatile pages
-    //"applications" => "applications-view",
-    "credits" => EVERYONE,
-    "launcher" => EVERYONE,
-    "stream" => EVERYONE,
-    //"test" => EVERYONE,
-    "thanks" => EVERYONE,
-    //"volunteer-submission" => LOGIN,
-    //"videos" => EVERYONE,
-    "winners" => EVERYONE // Change to EVERYONE
-);
-
-// Pages that won't use the master template
-$noMaster = array(
-    "launcher",
-    "stream",
-    "thanks",
-    "voting"
-);
-
-// Pages so basic they don't need a PHP file.
-$noPHP = array(
-    "about" => "About",
-    "sitemap" => "Sitemap",
-    "stream" => "",
-    "videos" => "Video Submission",
-);
-
-$noContainer = array("videos");
-
-// Pages that should only be accessed via POST requests
-$postOnly = array(
-    "volunteer-submission",
-);
-
-// Pages have the option of specifying this variable to load a different template
-$CUSTOM_TEMPLATE = false;
-
-// Initialise some default template variables
-$init = array("success", "error", "formSuccess", "formError");
-foreach ($init as $item) {
-    $tpl->set($item, false);
-}
-
-// Navbar stuff (the items have been moved to config.php)
-$navbar = "";
-
-foreach (NAVBAR_ITEMS as $filename => $value) {
-
-    $external = strpos($filename, "://") === 0;
-
-    if (!$external && !canDo($ACCESS[$filename])) {
-        continue;
-    }
-
-    if ($PAGE == $filename) {
-        $navbar .= "<li class='active'>";
-    } else {
-        $navbar .= "<li>";
-    }
-    if ($external) {
-        $navbar .= "<a href='$filename'>$value</a>";
-    } else {
-        $navbar .= "<a href='/$filename'>$value</a>";
-    }
-    $navbar .= "</li>\n";
-
-}
-
-// Post-only pages have no view at all
-if (!in_array($PAGE, $postOnly)) {
-
-    // Special variable if we don't need the container
-    $tpl->set('noContainer', in_array($PAGE, $noContainer));
-
-    // Render the required templates
-    $template = $CUSTOM_TEMPLATE ? $PAGE . "-" . $CUSTOM_TEMPLATE : $PAGE;
-    if (!in_array($PAGE, $noMaster)) {
-        $tpl->set('content', $tpl->fetch("views/$template.tpl"));
-        echo $tpl->fetch("views/master.tpl");
-    } else {
-        echo $tpl->fetch("views/$template.tpl");
-    }
-}
+//$ACCESS = array(
+//    // Volatile pages
+//    "applications" => "applications-view",
+//    "credits" => EVERYONE,
+//    "launcher" => EVERYONE,
+//    "stream" => EVERYONE,
+//    "test" => EVERYONE,
+//    "thanks" => EVERYONE,
+//    "volunteer-submission" => LOGIN,
+//    "videos" => EVERYONE,
+//    "winners" => EVERYONE
+//);
+//
+//// Pages that won't use the master template
+//$noMaster = array(
+//    "launcher",
+//    "stream",
+//    "thanks",
+//    "voting"
+//);
+//
+//// Pages so basic they don't need a PHP file.
+//$noPHP = array(
+//    "about" => "About",
+//    "sitemap" => "Sitemap",
+//    "stream" => "",
+//    "videos" => "Video Submission",
+//);
+//
+//$noContainer = array(
+//    "videos"
+//);
