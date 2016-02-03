@@ -22,7 +22,7 @@
     {% if category %}
     <script type="text/javascript">
         var votingEnabled = {{ votingOpen ? 'true' : 'false' }};
-        var lastVotes = [null];
+        var lastVotes = {{ votes | json_encode | raw }};
         var currentCategory = "{{ category.id }}";
         var postURL = "{{ path('votingSubmission', {'category': category.id}) }}";
     </script>
@@ -176,7 +176,7 @@
 
     {% for _category in categories %}
         <a href="{{ path('voting', {'category': _category.id}) }}" id="{{ _category.id }}"
-           class="category {{ category == _category ? 'active' : '' }} {{ false ? 'complete' : '' }}">
+           class="category {{ category == _category ? 'active' : '' }} {{ allVotes[_category.id] ? 'complete' : '' }}">
             <h3>{{ _category.name }}</h3>
             <p>{{ _category.subtitle }}</p>
         </a>

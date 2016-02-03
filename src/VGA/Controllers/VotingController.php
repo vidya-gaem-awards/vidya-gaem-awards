@@ -9,6 +9,7 @@ use VGA\Model\Action;
 use VGA\Model\Category;
 use VGA\Model\Config;
 use VGA\Model\Nominee;
+use VGA\Model\Vote;
 
 class VotingController extends BaseController
 {
@@ -26,39 +27,7 @@ class VotingController extends BaseController
 
         $prevCategory = null;
         $nextCategory = null;
-
-        // Fetch the active category (if given)
-        if ($category) {
-            $repo = $this->em->getRepository(Category::class);
-
-            /** @var Category $category */
-            $category = $repo->find($category);
-
-            if (!$category || !$category->isEnabled()) {
-                $this->session->getFlashBag()->add('error', 'Invalid award specified.');
-                $response = new RedirectResponse(
-                    $this->generator->generate('voting', [], UrlGenerator::ABSOLUTE_URL)
-                );
-                $response->send();
-                return;
-            }
-
-            // Iterate through the categories list to get the previous and next categories
-            $iterCategory = reset($categories);
-            while ($iterCategory !== $category) {
-                $prevCategory = $iterCategory;
-                $iterCategory = next($categories);
-            }
-
-            $nextCategory = next($categories);
-            if (!$nextCategory) {
-                $nextCategory = reset($categories);
-            }
-
-            if (!$prevCategory) {
-                $prevCategory = end($categories);
-            }
-        }
+        $voteJSON = [null];
 
         /** @var Config $config */
         $config = $this->em->getRepository(Config::class)->findOneBy([]);
@@ -103,6 +72,59 @@ class VotingController extends BaseController
         }
         //////// TESTING ////////
 
+        $query = $this->em->getRepository(Vote::class)->createQueryBuilder('v');
+        /** @var Vote[] $votes */
+        $votes = $query
+            ->select('v')
+            ->where('v.cookieID = :cookie')
+            ->setParameter('cookie', $this->user->getRandomID())
+            ->getQuery()
+            ->getResult();
+
+        $simpleVotes = [];
+        foreach ($votes as $vote) {
+            $preferences = $vote->getPreferences();
+            array_unshift($preferences, null);
+            $simpleVotes[$vote->getCategory()->getId()] = $preferences;
+        }
+
+        // Fetch the active category (if given)
+        if ($category) {
+            $repo = $this->em->getRepository(Category::class);
+
+            /** @var Category $category */
+            $category = $repo->find($category);
+
+            if (!$category || !$category->isEnabled()) {
+                $this->session->getFlashBag()->add('error', 'Invalid award specified.');
+                $response = new RedirectResponse(
+                    $this->generator->generate('voting', [], UrlGenerator::ABSOLUTE_URL)
+                );
+                $response->send();
+                return;
+            }
+
+            // Iterate through the categories list to get the previous and next categories
+            $iterCategory = reset($categories);
+            while ($iterCategory !== $category) {
+                $prevCategory = $iterCategory;
+                $iterCategory = next($categories);
+            }
+
+            $nextCategory = next($categories);
+            if (!$nextCategory) {
+                $nextCategory = reset($categories);
+            }
+
+            if (!$prevCategory) {
+                $prevCategory = end($categories);
+            }
+
+            if (isset($simpleVotes[$category->getId()])) {
+                $voteJSON = $simpleVotes[$category->getId()];
+            }
+        }
+
         $response = new Response($tpl->render([
             'title' => 'Voting',
             'categories' => $categories,
@@ -112,7 +134,9 @@ class VotingController extends BaseController
             'votingOpen' => $votingOpen,
             'voteText' => $voteText,
             'prevCategory' => $prevCategory,
-            'nextCategory' => $nextCategory
+            'nextCategory' => $nextCategory,
+            'votes' => $voteJSON,
+            'allVotes' => $simpleVotes
         ]));
         $response->send();
     }
@@ -170,7 +194,41 @@ class VotingController extends BaseController
             return;
         }
 
-        // add logic to actually save the vote here
+        $query = $this->em->getRepository(Vote::class)->createQueryBuilder('v');
+        $query
+            ->select('v')
+            ->join('v.category', 'c')
+            ->where('c.id = :category')
+            ->setParameter('category', $category->getId())
+            ->andWhere('v.cookieID = :cookie')
+            ->setParameter('cookie', $this->user->getRandomID());
+
+        $vote = $query->getQuery()->getOneOrNullResult();
+
+        if (count($preferences) === 0) {
+            if ($vote) {
+                $this->em->remove($vote);
+                $this->em->flush();
+            }
+            $response->setData(['success' => true]);
+            $response->send();
+            return;
+        }
+
+        if (!$vote) {
+            $vote = new Vote();
+            $vote
+                ->setCategory($category)
+                ->setCookieID($this->user->getRandomID());
+        }
+
+        $vote
+            ->setPreferences($preferences)
+            ->setTimestamp(new \DateTime())
+            ->setUser($this->user)
+            ->setIp($this->user->getIP());
+//            ->setVotingCode(null);
+        $this->em->persist($vote);
 
         $action = new Action('voted');
         $action->setUser($this->user)
@@ -178,7 +236,7 @@ class VotingController extends BaseController
             ->setData1($category->getId());
         $this->em->persist($action);
 
-//        $this->em->flush();
+        $this->em->flush();
 
         $response->setData(['success' => true]);
         $response->send();
