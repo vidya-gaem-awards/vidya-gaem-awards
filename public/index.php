@@ -367,6 +367,14 @@ $routes->add('configPost', new Route(
     [],
     ['POST']
 ));
+$routes->add('viewVotingCode', new Route(
+    '/vote/code',
+    [
+        'controller' => Controllers\VotingController::class,
+        'action' => 'codeViewer',
+        'permission' => 'voting-view'
+    ]
+));
 $routes->add('voting', new Route(
     '/vote/{category}',
     [
@@ -541,7 +549,6 @@ $ACCESS = array(
     "thanks" => EVERYONE,
     //"volunteer-submission" => LOGIN,
     //"videos" => EVERYONE,
-    "voting-code" => "voting-view",
     "winners" => EVERYONE // Change to EVERYONE
 );
 

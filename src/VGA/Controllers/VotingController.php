@@ -1,6 +1,7 @@
 <?php
 namespace VGA\Controllers;
 
+use RandomLib;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,7 @@ use VGA\Model\Config;
 use VGA\Model\Nominee;
 use VGA\Model\Vote;
 use VGA\Model\VotingCodeLog;
+use VGA\Utils;
 
 class VotingController extends BaseController
 {
@@ -246,7 +248,8 @@ class VotingController extends BaseController
         $response->send();
     }
 
-    public function codeEntryAction($code) {
+    public function codeEntryAction($code)
+    {
         // Bad practice, should be using Symfony's request class
         setcookie('votingCode', $code, strtotime('+90 days'), '/', DOMAIN);
         $this->session->set('votingCode', $code);
@@ -262,6 +265,29 @@ class VotingController extends BaseController
         $this->em->flush();
 
         $response = new RedirectResponse($this->generator->generate('voting'));
+        $response->send();
+    }
+
+    public function codeViewerAction()
+    {
+        $tpl = $this->twig->loadTemplate('votingCode.twig');
+
+        $date = new \DateTime();
+        $dateString = $date->format('M d Y, g A');
+
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+        // This is an awful implementation, but will do for now
+        $code = '';
+        for ($i = 0; $i < 4; $i++) {
+            $code .= $characters[Utils::randomNumber($dateString . $i, strlen($characters) - 1)];
+        }
+
+        $response = new Response($tpl->render([
+            'title' => 'Voting Code',
+            'date' => $dateString,
+            'code' => $code
+        ]));
         $response->send();
     }
 }
