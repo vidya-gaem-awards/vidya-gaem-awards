@@ -283,9 +283,13 @@ class VotingController extends BaseController
             $code .= $characters[Utils::randomNumber($dateString . $i, strlen($characters) - 1)];
         }
 
+        $url = $this->generator->generate('voteWithCode', ['code' => $code] , UrlGenerator::ABSOLUTE_URL);
+        $url = substr($url, 0, strrpos($url, '/') + 1);
+
         $response = new Response($tpl->render([
             'title' => 'Voting Code',
             'date' => $dateString,
+            'url' => $url,
             'code' => $code
         ]));
         $response->send();
