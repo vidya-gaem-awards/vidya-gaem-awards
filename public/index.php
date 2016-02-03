@@ -541,9 +541,7 @@ $ACCESS = array(
     "thanks" => EVERYONE,
     //"volunteer-submission" => LOGIN,
     //"videos" => EVERYONE,
-    "voting" => EVERYONE,
     "voting-code" => "voting-view",
-    "voting-submission" => EVERYONE,
     "winners" => EVERYONE // Change to EVERYONE
 );
 
@@ -568,7 +566,6 @@ $noContainer = array("videos");
 // Pages that should only be accessed via POST requests
 $postOnly = array(
     "volunteer-submission",
-    "voting-submission",
 );
 
 // Pages have the option of specifying this variable to load a different template
