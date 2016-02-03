@@ -10,6 +10,7 @@ use VGA\Model\Category;
 use VGA\Model\Config;
 use VGA\Model\Nominee;
 use VGA\Model\Vote;
+use VGA\Model\VotingCodeLog;
 
 class VotingController extends BaseController
 {
@@ -46,10 +47,10 @@ class VotingController extends BaseController
                 $voteText = 'Voting will open in ' . Config::getRelativeTimeString($start) . '.';
             }
         } elseif ($votingOpen) {
-            if ($end) {
+            if (!$end) {
                 $voteText = 'Voting is now open!';
             } else {
-                $voteText = ' You have ' . Config::getRelativeTimeString($end) . ' left to vote.';
+                $voteText = 'You have ' . Config::getRelativeTimeString($end) . ' left to vote.';
             }
         } else {
             $voteText = 'Voting is now closed.';
@@ -249,6 +250,16 @@ class VotingController extends BaseController
         // Bad practice, should be using Symfony's request class
         setcookie('votingCode', $code, strtotime('+90 days'), '/', DOMAIN);
         $this->session->set('votingCode', $code);
+
+        $log = new VotingCodeLog();
+        $log
+            ->setUser($this->user)
+            ->setCode($code)
+            ->setReferer($this->request->server->get('HTTP_REFERER'))
+            ->setTimestamp(new \DateTime());
+
+        $this->em->persist($log);
+        $this->em->flush();
 
         $response = new RedirectResponse($this->generator->generate('voting'));
         $response->send();

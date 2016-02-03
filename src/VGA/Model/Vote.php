@@ -219,14 +219,16 @@ class Vote
     /**
      * Set user
      *
-     * @param \VGA\Model\User $user
+     * @param User $user
+     *
      *
      * @return Vote
      */
-    public function setUser(\VGA\Model\User $user = null)
+    public function setUser(User $user = null)
     {
-        $this->user = $user;
-
+        if ($user->isLoggedIn()) {
+            $this->user = $user;
+        }
         return $this;
     }
 
