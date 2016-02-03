@@ -2,6 +2,7 @@
 namespace VGA\Controllers;
 
 use RandomLib;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -248,8 +249,6 @@ class VotingController extends BaseController
 
     public function codeEntryAction($code)
     {
-        // Bad practice, should be using Symfony's request class
-        setcookie('votingCode', $code, strtotime('+90 days'), '/', DOMAIN);
         $this->session->set('votingCode', $code);
 
         $log = new VotingCodeLog();
@@ -263,6 +262,13 @@ class VotingController extends BaseController
         $this->em->flush();
 
         $response = new RedirectResponse($this->generator->generate('voting'));
+        $response->headers->setCookie(new Cookie(
+            'votingCode',
+            $code,
+            new \DateTime('+90 days'),
+            '/',
+            $this->request->getHost()
+        ));
         $response->send();
     }
 

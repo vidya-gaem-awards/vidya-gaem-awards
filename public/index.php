@@ -62,7 +62,7 @@ if ($randomIDCookie && $randomIDSession) {
     $randomID = $randomIDCookie;
 } elseif ($randomIDSession && !$randomIDCookie) {
     // Bad practice, should be using Symfony's request class
-    setcookie('access', $randomIDSession, strtotime('+90 days'), '/', DOMAIN);
+    setcookie('access', $randomIDSession, strtotime('+90 days'), '/', $request->getHost());
     $randomID = $randomIDSession;
 } elseif ($randomIDCookie && !$randomIDSession) {
     $session->set('access', $randomIDCookie);
@@ -74,7 +74,7 @@ if ($randomIDCookie && $randomIDSession) {
     $randomID .= ':' . hash_hmac('md5', $randomID, STEAM_API_KEY);
 
     // Bad practice, should be using Symfony's request class
-    setcookie('access', $randomID, strtotime('+90 days'), '/', DOMAIN);
+    setcookie('access', $randomID, strtotime('+90 days'), '/', $request->getHost());
     $session->set('access', $randomID);
 }
 
