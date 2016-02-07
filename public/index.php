@@ -451,7 +451,6 @@ $matcher = new UrlMatcher($routes, $context);
 $container = new DependencyContainer(
     $em,
     $request,
-    DependencyManager::getDatabaseHandle(),
     $twig,
     $session,
     $user,

@@ -15,9 +15,6 @@ class DependencyContainer
     /** @var Request */
     public $request;
 
-    /** @var \PDO */
-    public $dbh;
-
     /** @var \Twig_Environment */
     public $twig;
 
@@ -33,7 +30,6 @@ class DependencyContainer
     public function __construct(
         EntityManager $em,
         Request $request,
-        \PDO $dbh,
         \Twig_Environment $twig,
         Session $session,
         User $user,
@@ -44,7 +40,6 @@ class DependencyContainer
 
         $this->em = $em;
         $this->request = $request;
-        $this->dbh = $dbh;
         $this->twig = $twig;
         $this->session = $session;
         $this->user = $user;

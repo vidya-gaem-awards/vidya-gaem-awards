@@ -41,32 +41,6 @@ class DependencyManager
         return self::$entity_manager;
     }
 
-    public static function getDatabaseHandle()
-    {
-        if (self::$database_handle) {
-            return self::$database_handle;
-        }
-
-        $server = DB_HOST;
-        $username = DB_USER;
-        $password = DB_PASSWORD;
-        $database = DB_DATABASE;
-
-        $dbh = new \PDO(
-            "mysql:host=$server;
-            dbname=$database;
-            charset=UTF8",
-            $username,
-            $password
-        );
-        $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, true);
-        $dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-
-        self::$database_handle = $dbh;
-        return $dbh;
-    }
-
     public static function getTwig(UrlGeneratorInterface $urlGenerator)
     {
         if (self::$twig) {

@@ -17,9 +17,6 @@ abstract class BaseController
     /** @var Request */
     protected $request;
 
-    /** @var \PDO */
-    protected $dbh;
-
     /** @var \Twig_Environment */
     protected $twig;
 
@@ -35,7 +32,6 @@ abstract class BaseController
     public function __construct(DependencyContainer $container) {
         $this->em = $container->em;
         $this->request = $container->request;
-        $this->dbh = $container->dbh;
         $this->twig = $container->twig;
         $this->session = $container->session;
         $this->user = $container->user;
