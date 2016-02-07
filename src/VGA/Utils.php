@@ -3,35 +3,12 @@ namespace VGA;
 
 class Utils
 {
-    public static function convertSteamID($communityID)
-    {
-        $steamID = bcsub((string)$communityID, "76561197960265728");
-        $steamID = $steamID / 2;
-        if ($steamID == round($steamID)) {
-            $steamID = "STEAM_0:0:".$steamID;
-        } else {
-            $steamID = "STEAM_0:1:".floor($steamID);
-        }
-        return $steamID;
-    }
-
     public static function storeMessage($type, $string, $value = null)
     {
         $_SESSION['message'] = array($type, $string);
         if ($value !== null) {
             $_SESSION['message'][2] = $value;
         }
-    }
-
-    public static function refresh()
-    {
-        header("Location: https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
-    }
-
-    public static function returnJSON($result, $info = true, $extraData = [])
-    {
-        echo json_encode(array_merge($extraData, [$result => $info]));
-        exit;
     }
 
     public static function action($action, $firstID = null, $secondID = null)
