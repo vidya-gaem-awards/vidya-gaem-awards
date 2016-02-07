@@ -1,187 +1,145 @@
+#!/usr/bin/env php
 <?php
-chdir(dirname(__FILE__));
-function timer()
-{
-    global $timeStart;
-  
-    $timeEnd = microtime(true);
-    return round($timeEnd - $timeStart, 2);
-}
+use VGA\DependencyManager;
+use VGA\Model\Access;
+use VGA\Model\Vote;
+use VGA\Model\VotingCodeLog;
+use VGA\Timer;
+use VGA\Utils;
 
-error_reporting(E_ALL);
-set_time_limit(0);
+require(__DIR__ . '/../vendor/autoload.php');
 
-require_once("../bootstrap.php");
-
-$mysqli = new Mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
-
-$timeStart = microtime(true);
+$timer = new Timer();
+$em = DependencyManager::getEntityManager();
+$voteRepo = $em->getRepository(Vote::class);
 
 // Step 1. Get a list of voters
-$query = "SELECT DISTINCT `UniqueID` FROM `votes` LIMIT 100000";
-$result = $mysqli->query($query);
+$result = $voteRepo->createQueryBuilder('v')
+    ->select('DISTINCT (v.cookieID) as id')
+    ->getQuery()
+    ->getResult();
 
-$voters = array();
+$voters = [];
 
-while ($row = $result->fetch_assoc()) {
-    $voters[$row['UniqueID']] = array(
-    "Codes" => array(),
-    "Notes" => array(),
-    "Referrers" => array());
+foreach ($result as $row) {
+    $voters[$row['id']] = [
+        'codes' => [],
+        'notes' => [],
+        'referrers' => []
+    ];
 }
 
-$result->free();
-
-echo "Step 1 passed: ".timer()."\n";
+echo "Step 1 (create array) complete: " . $timer->time() . "\n";
 
 // Step 2. Check voting codes
-$query = "SELECT * FROM `voting_codes`";
-$result = $mysqli->query($query);
+$codeLogRepo = $em->getRepository(VotingCodeLog::class);
 
-while ($row = $result->fetch_assoc()) {
-    if (!isset($voters[$row['UserID']])) {
-        continue;
+$result = $codeLogRepo->findAll();
+
+/** @var VotingCodeLog $row */
+foreach ($result as $row) {
+    if (isset($voters[$row->getCookieID()])) {
+        $voters[$row->getCookieID()]['codes'][] = $row->getCode();
     }
-    $voters[$row['UserID']]['Codes'][] = $row['Code'];
 }
 
-echo "Step 2 passed: ".timer()."\n";
-
-$result->free();
-
-flush();
-ob_flush();
+echo "Step 2 (get voting codes) complete: " . $timer->time() . "\n";
 
 // Step 3. Check referrers
-function startsWith($haystack, $needle)
-{
-    return substr($haystack, 0, strlen($needle)) == $needle;
-}
+$accessRepo = $em->getRepository(Access::class);
+$result = $accessRepo->createQueryBuilder('a')
+    ->select('a')
+    ->where("a.referer NOT LIKE 'https://%vidyagaemawards.com%'")
+    ->orWhere('a.referer IS NULL')
+    ->orderBy('a.timestamp', 'ASC')
+    ->getQuery()
+    ->getResult();
 
-$query = "SELECT `UniqueID`, `Timestamp`, `Refer` FROM `access` WHERE (`Refer` NOT LIKE \"https://%vidyagaemawards.com%\" OR `Refer` IS NULL) AND `UniqueID` != \"\"";
-$query .= " ORDER BY `UniqueID` ASC, `Timestamp` ASC";
-$result = $mysqli->query($query);
-
-while ($row = $result->fetch_assoc()) {
-    if (!isset($voters[$row['UniqueID']])) {
+/** @var Access $access */
+foreach ($result as $access) {
+    if (!isset($voters[$access->getCookieID()])) {
         continue;
     }
-    $refer = $row['Refer'];
-    if (startsWith($refer, "http:")) {
-        $refer = substr($refer, 7);
-    } elseif (startsWith($refer, "https:")) {
-        $refer = substr($refer, 8);
-    }
-  
-    if (startsWith($refer, "www.")) {
-        $refer = substr($refer, 4);
-    }
-    $voters[$row['UniqueID']]['Referrers'][] = $refer;
+
+    $referer = preg_replace('{https?://(www\.)?}', '', $access->getReferer());
+    $voters[$access->getCookieID()]['referrers'][] = $referer;
 }
 
-$result->free();
-
-echo "Step 3 passed: ".timer()."\n";
-flush();
-ob_flush();
+echo "Step 3 (get referrers) complete: " . $timer->time() . "\n";
 
 // Step 4. Begin the processing
-$badSites = array("forums.somethingawful.com" => -60, "reddit.com" => -50, "t.co" => -40, "neogaf.com" => -30, "facepunch.com" => -20);
 
-foreach ($voters as $ID => &$info) {
+$sites = [
+    'reddit.com' => 2 ** 0,
+    't.co' => 2 ** 1,
+    'boards.4chan.org' => 2 ** 2,
+    'sys.4chan.org' => 2 ** 2,
+    'forums.somethingawful.com' => 2 ** 3,
+    'neogaf.com' => 2 ** 4,
+    'facepunch.com' => 2 ** 5,
+    '8ch.net' => 2 ** 6,
+    'twitch.tv' => 2 ** 7,
+    'facebook.com' => 2 ** 8,
+    'google.' => 2 ** 9,
+    // voting code: 2 ** 10
+    // no referer: 2 ** 11
+];
+
+foreach ($voters as $id => &$info) {
     $number = 0;
   
-  // If user has a voting code
-    if (count($info['Codes']) > 0) {
-        $number += 202;
-        $info['Notes'][] = "Has voting code";
+    // If user has a voting code
+    if (count($info['codes']) > 0) {
+        $number += 2 ** 10;
+        $info['notes'][] = "Has voting code";
     }
-  
-    $shitSite = false;
-    $shitSiteValue = 0;
-    $fromChan = false;
-    $null = false;
-    $otherSite = false;
-    $google = false;
-  
-    foreach ($info['Referrers'] as $refer) {
-        if (empty($refer)) {
-            $null = true;
-        } elseif (startsWith($refer, "boards.4chan.org/v/")) {
-            $fromChan = true;
-        } elseif (startsWith($refer, "google.")) {
-            $google = true;
-        } else {
-            foreach ($badSites as $site => $value) {
-                if (startsWith($refer, $site)) {
-                    $shitSiteValue = min($shitSiteValue, $value);
-                    $shitSite = $site;
-                }
+
+    $referers = array_unique($info['referrers']);
+
+    foreach ($referers as $referer) {
+        foreach ($sites as $site => $value) {
+            if (Utils::startsWith($referer, $site)) {
+                $number += $value;
             }
-            $otherSite = true;
+        }
+
+        if ($referer == '') {
+            $number += 2 ** 11;
         }
     }
-  
-    if (count($info['Referrers']) === 0) {
-        $number += 5;
-        $info['Notes'][] = "No referrers recorded";
-    } elseif ($fromChan && !$otherSite) {
-        $number += 101;
-        $info['Notes'][] = "From /v/ only";
-    } elseif ($null && !$otherSite) {
-        $number += 25;
-        $info['Notes'][] = "Null referrer only";
-    } elseif ($shitSite) {
-        $number += $shitSiteValue;
-        $info['Notes'][] = "Site blacklist: $shitSite";
-    } elseif (!$null && $otherSite) {
-        $number += -10;
-        $info['Notes'][] = "Other site only";
-    } elseif (!$null && $google) {
-        $number += -5;
-        $info['Notes'][] = "Google search only";
-    }
-  
-    if ($number == 0) {
-        $number = 1;
-    }
-    $info['Number'] = $number;
+
+    $info['number'] = $number;
 }
 
-$numberTotals = array();
+$numberTotals = [];
 foreach ($voters as $info) {
-    if (!isset($numberTotals[$info['Number']])) {
-        $numberTotals[$info['Number']] = 0;
+    if (!isset($numberTotals[$info['number']])) {
+        $numberTotals[$info['number']] = 0;
     }
-    $numberTotals[$info['Number']]++;
+    $numberTotals[$info['number']]++;
 }
 
-echo "Step 4 passed: ".timer()."\n";
-flush();
-ob_flush();
+echo "Step 4 (assign numbers) complete: " . $timer->time() . "\n";
 
 // Step 5. Update the values in the database
-$query = "UPDATE `votes` SET `Number` = ? WHERE `UniqueID` = ?";
-$stmt = $mysqli->prepare($query);
-if (!$stmt) {
-    die($mysqli->error);
-}
-$stmt->bind_param('ds', $_number, $_id);
+$baseQuery = $em->createQueryBuilder()
+    ->update(Vote::class, 'v')
+    ->where('v.cookieID = :id');
 
 $count = 0;
-foreach ($voters as $ID => $info) {
+foreach ($voters as $id => $info) {
     $count++;
-    $_id = $ID;
-    $_number = $info['Number'];
-    $stmt->execute();
+
+    $query = clone $baseQuery;
+    $query
+        ->set('v.number', $info['number'])
+        ->setParameter('id', $id)
+        ->getQuery()
+        ->execute();
+
     if ($count % 1000 == 0) {
-        echo "Processing record $count... ".timer()."\n";
-        flush();
-        ob_flush();
+        echo "Processing record $count... " . $timer->time() . "\n";
     }
 }
-$stmt->close();
 
-echo "Step 5 passed: ".timer()."\n\n";
-
-file_put_contents("voters.json", json_encode($voters));
+echo "Step 5 (update database) complete: " . $timer->time() . "\n\n";

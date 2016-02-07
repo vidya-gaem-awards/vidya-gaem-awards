@@ -38,5 +38,10 @@ class Utils
         //as a decimal percentage (ensures between 0 and max number)
         return (int)round($rand / 0xFFFFFF * $max_number);
     }
+
+    public static function startsWith($haystack, $needle)
+    {
+        return substr($haystack, 0, strlen($needle)) === $needle;
+    }
 }
 

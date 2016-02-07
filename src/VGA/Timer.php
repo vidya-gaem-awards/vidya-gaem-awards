@@ -1,15 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: samh
- * Date: 7/02/16
- * Time: 1:55 PM
- */
-
 namespace VGA;
-
 
 class Timer
 {
+    private $startTime;
 
+    public function __construct()
+    {
+        $this->startTime = microtime(true);
+    }
+
+    /**
+     * @return float
+     */
+    public function time()
+    {
+        $time = microtime(true);
+        return round($time - $this->startTime, 2);
+    }
 }
