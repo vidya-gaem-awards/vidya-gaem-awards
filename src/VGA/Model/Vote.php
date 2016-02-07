@@ -35,7 +35,7 @@ class Vote
     /**
      * @var integer
      */
-    private $number = 0;
+    private $number;
 
     /**
      * @var \VGA\Model\Category

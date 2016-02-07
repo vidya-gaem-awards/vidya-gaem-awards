@@ -25,7 +25,7 @@ VGA\Model\Vote:
       length: 20
     number:
       type: integer
-      nullable: false
+      nullable: true
   manyToOne:
     category:
       targetEntity: Category
