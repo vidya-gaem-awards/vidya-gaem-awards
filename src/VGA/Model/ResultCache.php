@@ -33,7 +33,7 @@ class ResultCache
     private $category;
 
     /**
-     * @var \VGA\Model\Filter
+     * @var string
      */
     private $filter;
 
@@ -161,11 +161,11 @@ class ResultCache
     /**
      * Set filter
      *
-     * @param \VGA\Model\Filter $filter
+     * @param string $filter
      *
      * @return ResultCache
      */
-    public function setFilter(\VGA\Model\Filter $filter)
+    public function setFilter(string $filter)
     {
         $this->filter = $filter;
 
@@ -175,7 +175,7 @@ class ResultCache
     /**
      * Get filter
      *
-     * @return \VGA\Model\Filter
+     * @return string
      */
     public function getFilter()
     {

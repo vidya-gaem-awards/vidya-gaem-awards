@@ -5,7 +5,9 @@ VGA\Model\ResultCache:
     category:
       associationKey: true
     filter:
-      associationKey: true
+      type: string
+      length: 40
+      nullable: false
   fields:
     results:
       type: json_array
@@ -25,10 +27,4 @@ VGA\Model\ResultCache:
       inversedBy: resultCache
       joinColumn:
         name: categoryID
-        referencedColumnName: id
-    filter:
-      targetEntity: Filter
-      inversedBy: resultCache
-      joinColumn:
-        name: filterID
         referencedColumnName: id

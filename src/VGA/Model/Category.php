@@ -341,7 +341,7 @@ class Category implements \JsonSerializable
     /**
      * Get nominees
      *
-     * @return arrayCollection
+     * @return arrayCollection|Nominee[]
      */
     public function getNominees()
     {
