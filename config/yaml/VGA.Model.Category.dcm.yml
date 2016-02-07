@@ -22,6 +22,10 @@ VGA\Model\Category:
     comments:
       type: text
       nullable: true
+    winnerImage:
+      type: string
+      nullable: true
+      length: 255
     enabled:
       type: boolean
       nullable: false

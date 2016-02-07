@@ -200,7 +200,9 @@
         <div class="category">
           <div class="row">
             <div class="col-md-4">
-              <img class="winner img-responsive center-block" src="/img/winners/01189998819991197253/{{ category.id }}.png">
+              {% if category.winnerImage %}
+                <img class="winner img-responsive center-block" src="{{ category.winnerImage | e('html_attr') }}">
+              {% endif %}
             </div>
             <div class="col-md-8">
               <ul>

@@ -8,6 +8,7 @@ use VGA\Model\Action;
 use VGA\Model\Autocompleter;
 use VGA\Model\Category;
 use VGA\Model\TableHistory;
+use VGA\Utils;
 
 class CategoryAdminController extends BaseController
 {
@@ -202,6 +203,15 @@ class CategoryAdminController extends BaseController
                     ->setEnabled((bool)$post->get('enabled'))
                     ->setNominationsEnabled((bool)$post->get('nominationsEnabled'))
                     ->setSecret((bool)$post->get('secret'));
+
+                if ($this->user->canDo('voting-results')) {
+                    if ($post->get('winnerImage') && !Utils::startsWith($post->get('winnerImage'), 'https://')) {
+                        $flashbag->add('editFormError', 'Winner image must start with https://');
+                    } else {
+                        $category->setWinnerImage($post->get('winnerImage'));
+                    }
+                }
+
                 $this->em->persist($category);
 
                 $action = new Action('category-edited');

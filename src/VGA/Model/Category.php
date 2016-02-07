@@ -80,6 +80,9 @@ class Category implements \JsonSerializable
      */
     private $autocompleter;
 
+    /** @var string */
+    private $winnerImage;
+
     /**
      * Constructor
      */
@@ -575,6 +578,24 @@ class Category implements \JsonSerializable
             'comments' => $this->getComments() ?: '',
             'nominationsEnabled' => $this->areNominationsEnabled()
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getWinnerImage()
+    {
+        return $this->winnerImage;
+    }
+
+    /**
+     * @param string $winnerImage
+     * @return Category
+     */
+    public function setWinnerImage($winnerImage)
+    {
+        $this->winnerImage = $winnerImage ?: null;
+        return $this;
     }
 }
 
