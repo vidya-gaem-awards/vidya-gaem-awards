@@ -1,0 +1,54 @@
+{% extends 'master.twig' %}
+
+{% block title %}Pairwise voting results{% endblock %}
+
+{% block content %}
+  <style type="text/css">
+    .rotate th {
+      font-size: 10px;
+    }
+
+    .pairwise th {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .pairwise td {
+      text-align: center;
+    }
+  </style>
+
+  <h1 class="page-header">Pairwise Voting Results</h1>
+
+  <p>The /v/GAs use a preferential voting system (specifically, the <a href="https://en.wikipedia.org/wiki/Schulze_method">Schulze method</a>) to calculate results. This allows us to more accurately determine the winner and runner-ups.</p>
+
+  <p>Below is the data we used to calculate the rankings. Each row contains the number of people who preferred that nominee to the nominee in each column. The winner is the nominee that was preferred more than any other nominee.</p>
+
+  {% for category in categories %}
+  <h2>{{ category.name }} <small>{{ category.subtitle }}</small></h2>
+
+  {% set width = 120 + (15 - category.nominees | length) * 20 %}
+
+  <table class="table table-bordered table-hover table-condensed pairwise" style="table-layout: fixed;">
+    <tr class='rotate'>
+      <th style='width: {{ width }}px;'>&nbsp;</th>
+      {% for nominee in category.nominees %}
+        <th title="{{ nominee.name | e('html_attr') }}">{{ nominee.name }}</th>
+      {% endfor %}
+    </tr>
+    {% for nominee1 in category.nominees %}
+    <tr>
+      <th title="{{ nominee1.name | e('html_attr') }}">{{ nominee1.name }}</th>
+      {% for nominee2 in category.nominees %}
+        {% if nominee1 == nominee2 %}
+          <td>---</td>
+        {% else %}
+          <td>{{ pairwise[category.id][nominee1.shortName][nominee2.shortName] }}</td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'master.twig' %}
+
+{% block content %}
+  <style type="text/css">
+    .thumbnail {
+      background-color: white;
+    }
+    .filter-08-4chan-or-null-with-voting-code {
+      border: 2px solid black;
+      background-color: #FFFFE0;
+    }
+    .infobox {
+      border: 3px solid lightblue;
+    }
+    #results .thumbnail {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow-x: hidden;
+    }
+    #results ol {
+      padding-left: 35px;
+    }
+    #results li:first-child {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+
+  <h1 class="page-header">Detailed Voting Results</h1>
+  <p>Here are the detailed results for the 2015 /v/GAs. In order to determine the winner for each category, we had to split the votes into several filter groups, depending on where the person who voted came from. We include some of the groups here for your amusement.</p>
+  <p>If all you want is the official results for each category, you can get those on the <a href="/winners">winners page</a>. If you want to see the results in even <em>more</em> detail, you can view the <a href="{{ path('pairwiseResults') }}">pairwise voting results</a>.</p>
+  <ul class="breadcrumb">
+    {% if all %}
+      <li class="active">Currently viewing the complete rankings.</li>
+      <li><a href="{{ path('detailedResults') }}">Show the top 5 positions only</a></li>
+    {% else %}
+      <li class="active">Currently viewing the top 5 nominees for each category only.</li>
+      <li><a href="{{ path('detailedResults', {all: 'all'}) }}">Show complete rankings</a></li>
+    {% endif %}
+  </ul>
+
+  <div class="infobox" style="padding: 10px;">
+  <h2>Which votes actually counted?</h2>
+  <p>The final results are taken from the boxes labelled "All of /v/ + NULL with code". They have been highlighted
+    below.</p>
+
+  <p>What this means: if you clicked on a link directly from a thread on /v/, your vote counted. If you copied the link
+    and pasted it into your address bar, your vote also counted.</p>
+  </div>
+
+  {% for category in categories %}
+  <h2>{{ category.name }} <small>{{ category.subtitle }}</small></h2>
+
+  {% set limit = (all ? 100 : 5) %}
+
+  <div class="row" id="results">
+    {% for result in category.resultCache %}
+      {% if result.votes > 0 %}
+        <div class="col-xs-6 col-sm-4 col-md-3">
+          <div class="thumbnail filter-{{ result.filter }}">
+            <strong>{{ filters[result.filter] }}</strong>
+            <span style="color: grey;">{{ result.votes }} votes</span>
+            <ol>
+              {% for item in result.results[:limit] %}
+              <li>{{ nominees[category.id][item].name }}</li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% endfor %}
+{% endblock %}

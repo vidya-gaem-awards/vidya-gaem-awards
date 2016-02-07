@@ -408,6 +408,25 @@ $routes->add('voteWithCode', new Route(
         'action' => 'codeEntry'
     ]
 ));
+$routes->add('detailedResults', new Route(
+    '/results/{all}',
+    [
+        'controller' => Controllers\ResultController::class,
+        'permission' => 'voting-results',
+        'all' => null
+    ],
+    [
+        'all' => '(all)?'
+    ]
+));
+$routes->add('pairwiseResults', new Route(
+    '/results/pairwise',
+    [
+        'controller' => Controllers\ResultController::class,
+        'permission' => 'voting-results',
+        'action' => 'pairwise'
+    ]
+));
 
 $context = new RequestContext();
 $context->fromRequest($request);

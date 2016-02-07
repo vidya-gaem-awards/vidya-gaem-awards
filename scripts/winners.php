@@ -27,26 +27,26 @@ $categories = $em->getRepository(Category::class)
 echo $timer->time() . ": categories loaded.\n";
 
 $filters = [
-    '00none' => false, // no filtering
-    '01allofv' => 'BIT_AND(v.number, 4) > 0',  // 4chan
-    '02voting+v' => 'BIT_AND(v.number, 4) > 0 AND BIT_AND(v.number, 1024) > 0', // 4chan AND voting code
-    '03v' => 'BIT_AND(v.number, 4) > 0 AND NOT BIT_AND(v.number, 1024) > 0', // 4chan AND NOT voting code
-    '04combined1' => 'BIT_AND(v.number, 4) > 0 OR BIT_AND(v.number, 2048) > 0', // 4chan OR null
-    '05combined2' => 'BIT_AND(v.number, 4) > 0 OR (BIT_AND(v.number, 2048) > 0 AND BIT_AND(v.number, 1024) > 0)', // 4chan OR (null AND voting code)
-    '06voting+null' => 'BIT_AND(v.number, 2048) > 0 AND BIT_AND(v.number, 1024) > 0', // null AND voting code
-    '07null' => 'BIT_AND(v.number, 2048) > 0 AND NOT BIT_AND(v.number, 1024) > 0',  // null AND NOT voting code
-    '08reddit' => 'BIT_AND(v.number, 1) > 0',
-    '09tumblr' => 'BIT_AND(v.number, 2) > 0',
+    '01-all' => false, // no filtering
+    '04-4chan' => 'BIT_AND(v.number, 4) > 0',  // 4chan
+    '05-4chan-and-voting-code' => 'BIT_AND(v.number, 4) > 0 AND BIT_AND(v.number, 1024) > 0', // 4chan AND voting code
+    '06-4chan-without-voting-code' => 'BIT_AND(v.number, 4) > 0 AND NOT BIT_AND(v.number, 1024) > 0', // 4chan AND NOT voting code
+    '07-4chan-or-null' => 'BIT_AND(v.number, 4) > 0 OR BIT_AND(v.number, 2048) > 0', // 4chan OR null
+    '08-4chan-or-null-with-voting-code' => 'BIT_AND(v.number, 4) > 0 OR (BIT_AND(v.number, 2048) > 0 AND BIT_AND(v.number, 1024) > 0)', // 4chan OR (null AND voting code)
+    '09-null-and-voting-code' => 'BIT_AND(v.number, 2048) > 0 AND BIT_AND(v.number, 1024) > 0', // null AND voting code
+    '10-null-without-voting-code' => 'BIT_AND(v.number, 2048) > 0 AND NOT BIT_AND(v.number, 1024) > 0',  // null AND NOT voting code
+    '11-reddit' => 'BIT_AND(v.number, 1) > 0',
+    '12-twitter' => 'BIT_AND(v.number, 2) > 0',
     // 4chan: 4
-    '10sa' => 'BIT_AND(v.number, 8) > 0',
-    '11neogaf' => 'BIT_AND(v.number, 16) > 0',
-    '12facepunch' => 'BIT_AND(v.number, 32) > 0',
-    '13infchan' => 'BIT_AND(v.number, 64) > 0',
-    '14twitch' => 'BIT_AND(v.number, 128) > 0',
-    '15facebook' => 'BIT_AND(v.number, 256) > 0',
-    '16google' => 'BIT_AND(v.number, 512) > 0',
-    '17code' => 'BIT_AND(v.number, 1024) > 0',
-    '18null' => 'BIT_AND(v.number, 2048) > 0'
+    '13-something-awful' => 'BIT_AND(v.number, 8) > 0',
+    '14-neogaf' => 'BIT_AND(v.number, 16) > 0',
+    '15-facepunch' => 'BIT_AND(v.number, 32) > 0',
+    '16-8chan' => 'BIT_AND(v.number, 64) > 0',
+    '17-twitch' => 'BIT_AND(v.number, 128) > 0',
+    '18-facebook' => 'BIT_AND(v.number, 256) > 0',
+    '19-google' => 'BIT_AND(v.number, 512) > 0',
+    '02-voting-code' => 'BIT_AND(v.number, 1024) > 0',
+    '03-null' => 'BIT_AND(v.number, 2048) > 0'
 ];
 
 // Now we can start grabbing votes.
