@@ -408,12 +408,21 @@ $routes->add('voteWithCode', new Route(
         'action' => 'codeEntry'
     ]
 ));
+$routes->add('simpleResults', new Route(
+    '/winners',
+    [
+        'controller' => Controllers\ResultController::class,
+        'action' => 'simple',
+        'permission' => 'voting-results'
+    ]
+));
 $routes->add('detailedResults', new Route(
     '/results/{all}',
     [
         'controller' => Controllers\ResultController::class,
+        'action' => 'detailed',
+        'all' => null,
         'permission' => 'voting-results',
-        'all' => null
     ],
     [
         'all' => '(all)?'
@@ -423,8 +432,8 @@ $routes->add('pairwiseResults', new Route(
     '/results/pairwise',
     [
         'controller' => Controllers\ResultController::class,
+        'action' => 'pairwise',
         'permission' => 'voting-results',
-        'action' => 'pairwise'
     ]
 ));
 
@@ -557,7 +566,6 @@ try {
 //    "thanks" => EVERYONE,
 //    "volunteer-submission" => LOGIN,
 //    "videos" => EVERYONE,
-//    "winners" => EVERYONE
 //);
 //
 //// Pages that won't use the master template

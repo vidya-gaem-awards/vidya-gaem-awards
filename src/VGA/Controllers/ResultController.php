@@ -3,11 +3,48 @@ namespace VGA\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
 use VGA\Model\Category;
-use VGA\Model\ResultCache;
 
 class ResultController extends BaseController
 {
-    public function indexAction($all = null)
+    public function simpleAction()
+    {
+        /** @var Category[] $categories */
+        $categories = $this->em->getRepository(Category::class)
+            ->createQueryBuilder('c')
+            ->where('c.enabled = true')
+            ->orderBy('c.order', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $results = [];
+
+        $ranks = [
+            '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th',
+            '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'
+        ];
+
+        foreach ($categories as $category) {
+            $rankings = array_values($category->getOfficialResults()->getResults());
+
+            foreach ($rankings as $key => &$value) {
+                $value = $ranks[$key] . '. ' . $category->getNominee($value)->getName();
+            }
+            $theOthers = implode(', ', array_slice($rankings, 5));
+            $rankings = array_slice($rankings, 0, 5);
+            $rankings[] = $theOthers;
+
+            $results[$category->getId()] = $rankings;
+        }
+
+        $tpl = $this->twig->loadTemplate('winners.twig');
+        $response = new Response($tpl->render([
+            'categories' => $categories,
+            'results' => $results
+        ]));
+        $response->send();
+    }
+
+    public function detailedAction($all = null)
     {
         /** @var Category[] $categories */
         $categories = $this->em->getRepository(Category::class)
@@ -61,23 +98,18 @@ class ResultController extends BaseController
 
     public function pairwiseAction()
     {
-        /** @var ResultCache[] $results */
-        $results = $this->em->getRepository(ResultCache::class)
-            ->createQueryBuilder('rc')
-            ->join('rc.category', 'c')
+        /** @var Category[] $categories */
+        $categories = $this->em->getRepository(Category::class)
+            ->createQueryBuilder('c')
             ->where('c.enabled = true')
-            ->andWhere("rc.filter = '08-4chan-or-null-with-voting-code'")
             ->orderBy('c.order', 'ASC')
             ->getQuery()
             ->getResult();
 
-        $categories = [];
         $pairwise = [];
 
-        foreach ($results as $result) {
-            $category = $result->getCategory();
-            $categories[] = $category;
-            $pairwise[$category->getId()] = $result->getSteps()['pairwise'];
+        foreach ($categories as $category) {
+            $pairwise[$category->getId()] = $category->getOfficialResults()->getSteps()['pairwise'];
         }
 
         $tpl = $this->twig->loadTemplate('resultsPairwise.twig');

@@ -502,6 +502,22 @@ class Category implements \JsonSerializable
     }
 
     /**
+     * @return ResultCache|null
+     */
+    public function getOfficialResults()
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('filter', ResultCache::OFFICIAL_FILTER));
+
+        $cache = $this->getResultCache()->matching($criteria);
+        if (count($cache) === 0) {
+            return null;
+        } else {
+            return $cache[0];
+        }
+    }
+
+    /**
      * Set autocompleter
      *
      * @param Autocompleter $autocompleter

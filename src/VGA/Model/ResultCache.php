@@ -7,6 +7,8 @@ namespace VGA\Model;
  */
 class ResultCache
 {
+    const OFFICIAL_FILTER = '08-4chan-or-null-with-voting-code';
+
     /**
      * @var array
      */
