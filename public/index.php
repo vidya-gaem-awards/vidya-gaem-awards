@@ -579,7 +579,6 @@ try {
 //// Pages so basic they don't need a PHP file.
 //$noPHP = array(
 //    "about" => "About",
-//    "sitemap" => "Sitemap",
 //    "stream" => "",
 //    "videos" => "Video Submission",
 //);
