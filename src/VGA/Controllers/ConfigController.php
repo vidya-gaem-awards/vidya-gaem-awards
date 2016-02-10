@@ -43,7 +43,7 @@ class ConfigController extends BaseController
             $config->setVotingEnd(null);
         } else {
             try {
-                $config->setVotingStart(new \DateTime($post->get('votingStart')));
+                $config->setVotingEnd(new \DateTime($post->get('votingEnd')));
             } catch (\Exception $e) {
                 $this->session->getFlashBag()->add('error', 'Invalid date provided for voting end.');
                 $error = true;
