@@ -31,12 +31,12 @@ class Schulze extends AbstractResultCalculator
                     $pairwise[$candidateX][$candidateY] = 0;
                     // now iterate through each voter
                     foreach ($votes as $key => $vote) {
-                        // check each candidate was voted for and store it in 20 otherwise
+                        // check each candidate was voted for and store it in 1000 otherwise
                         if (array_search($candidateX, $vote) === false) {
-                            $vote[20] = $candidateX;
+                            $vote[1000] = $candidateX;
                         }
                         if (array_search($candidateY, $vote) === false) {
-                            $vote[20] = $candidateY;
+                            $vote[1000] = $candidateY;
                         }
                         // compare the ranks - don't know the data structure well enough to guess this
                         if (array_search($candidateX, $vote) < array_search($candidateY, $vote)) {
