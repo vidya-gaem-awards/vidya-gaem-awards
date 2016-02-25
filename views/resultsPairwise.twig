@@ -12,10 +12,20 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      background-color: white;
     }
 
     .pairwise td {
       text-align: center;
+      background-color: white;
+    }
+
+    .pairwise td.better {
+      background-color: #4CAF50;
+    }
+
+    .pairwise td.worse {
+      background-color: #ef5350;
     }
   </style>
 
@@ -44,7 +54,7 @@
         {% if nominee1 == nominee2 %}
           <td>---</td>
         {% else %}
-          <td>{{ pairwise[category.id][nominee1.shortName][nominee2.shortName] }}</td>
+          <td class="{{ pairwise[category.id][nominee1.shortName][nominee2.shortName] > pairwise[category.id][nominee2.shortName][nominee1.shortName] ? 'better' : 'worse' }}">{{ pairwise[category.id][nominee1.shortName][nominee2.shortName] }}</td>
         {% endif %}
       {% endfor %}
     </tr>
