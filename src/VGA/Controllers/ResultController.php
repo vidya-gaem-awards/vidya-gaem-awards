@@ -54,26 +54,34 @@ class ResultController extends BaseController
             ->getQuery()
             ->getResult();
 
+        $results = [];
+
         $filters = [
-            '01-all' => 'No filtering',
-            '02-voting-code' => 'Voting code',
-            '03-null' => 'NULL',
-            '04-4chan' => '4chan',
-            '05-4chan-and-voting-code' => '4chan with code',
-            '06-4chan-without-voting-code' => '4chan without code',
-            '07-4chan-or-null' => '4chan + NULL',
-            '08-4chan-or-null-with-voting-code' => '4chan + NULL with code',
-            '09-null-and-voting-code' => 'NULL with code',
-            '10-null-without-voting-code' => 'NULL without code',
-            '11-reddit' => 'Reddit',
-            '12-twitter' => 'Twitter',
-            '13-something-awful' => 'Something Awful',
-            '14-neogaf' => 'NeoGAF',
-            '15-facepunch' => 'Facepunch',
-            '16-8chan' => '8chan',
-            '17-twitch' => 'Twitch',
-            '18-facebook' => 'Facebook',
-            '19-google' => 'Google',
+            [
+                '01-all' => 'No filtering',
+                '02-voting-code' => 'Voting code',
+                '04-4chan' => '4chan',
+                '08-4chan-or-null-with-voting-code' => '4chan + NULL with code',
+            ],
+            [
+                '05-4chan-and-voting-code' => '4chan with code',
+                '06-4chan-without-voting-code' => '4chan without code',
+                '03-null' => 'NULL',
+                '07-4chan-or-null' => '4chan + NULL',
+            ],
+            [
+                '09-null-and-voting-code' => 'NULL with code',
+                '10-null-without-voting-code' => 'NULL without code',
+            ],
+            [
+                '17-twitch' => 'Twitch',
+                '11-reddit' => 'Reddit',
+                '18-facebook' => 'Facebook',
+                '19-google' => 'Google',
+            ],
+            [
+                '16-8chan' => '8chan',
+            ],
         ];
 
         $nominees = [];
@@ -81,6 +89,9 @@ class ResultController extends BaseController
         foreach ($categories as $category) {
             foreach ($category->getNominees() as $nominee) {
                 $nominees[$category->getId()][$nominee->getShortName()] = $nominee;
+            }
+            foreach ($category->getResultCache() as $result) {
+                $results[$category->getId()][$result->getFilter()] = $result;
             }
         }
 
@@ -91,6 +102,7 @@ class ResultController extends BaseController
             'categories' => $categories,
             'nominees' => $nominees,
             'all' => (bool)$all,
+            'results' => $results,
             'filters' => $filters
         ]));
         $response->send();

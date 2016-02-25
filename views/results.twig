@@ -5,22 +5,34 @@
     .thumbnail {
       background-color: white;
     }
+    .filter-02-voting-code {
+      background-color: #FFF9C4;
+    }
+    .filter-04-4chan {
+      background-color: #C8E6C9;
+    }
     .filter-08-4chan-or-null-with-voting-code {
       border: 2px solid black;
-      background-color: #FFFFE0;
+      background-color: #A5D6A7;
+    }
+    .filter-17-twitch, .filter-11-reddit, .filter-18-facebook, .filter-19-google {
+      background-color: #ffcdd2; 
+    }
+    .filter-16-8chan {
+      background-color: #EEEEEE;
     }
     .infobox {
       border: 3px solid lightblue;
     }
-    #results .thumbnail {
+    .results .thumbnail {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow-x: hidden;
     }
-    #results ol {
+    .results ol {
       padding-left: 35px;
     }
-    #results li:first-child {
+    .results li:first-child {
       color: green;
       font-weight: bold;
     }
@@ -41,7 +53,7 @@
 
   <div class="infobox" style="padding: 10px;">
   <h2>Which votes actually counted?</h2>
-  <p>The final results are taken from the boxes labelled "All of /v/ + NULL with code". They have been highlighted
+  <p>The final results are taken from the boxes labelled "4chan + NULL with code". They have been highlighted
     below.</p>
 
   <p>What this means: if you clicked on a link directly from a thread on /v/, your vote counted. If you copied the link
@@ -49,27 +61,29 @@
   </div>
 
   {% for category in categories %}
-  <h2>{{ category.name }} <small>{{ category.subtitle }}</small></h2>
+    <h2 id="{{ category.id }}"><a href="#{{ category.id }}">{{ category.name }}</a> <small>{{ category.subtitle }}</small></h2>
 
-  {% set limit = (all ? 100 : 5) %}
+    {% set limit = (all ? 100 : 5) %}
 
-  <div class="row" id="results">
-    {% for result in category.resultCache %}
-      {% if result.votes > 0 %}
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail filter-{{ result.filter }}">
-            <strong>{{ filters[result.filter] }}</strong>
-            <span style="color: grey;">{{ result.votes }} votes</span>
-            <ol>
-              {% for item in result.results[:limit] %}
-              <li>{{ nominees[category.id][item].name }}</li>
-              {% endfor %}
-            </ol>
+    {% for filterCollection in filters %}
+    <div class="row results">
+      {% for filter, filterName in filterCollection %}
+        {% set result = results[category.id][filter] %}
+        {% if result.votes > 0 %}
+          <div class="col-xs-6 col-sm-4 col-md-3">
+            <div class="thumbnail filter-{{ filter }}">
+              <strong>{{ filterName }}</strong>
+              <span style="color: grey;">{{ result.votes }} votes</span>
+              <ol>
+                {% for item in result.results[:limit] %}
+                <li>{{ nominees[category.id][item].name }}</li>
+                {% endfor %}
+              </ol>
+            </div>
           </div>
-        </div>
-      {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
     {% endfor %}
-  </div>
-
   {% endfor %}
 {% endblock %}

@@ -497,7 +497,7 @@ class Category implements \JsonSerializable
     /**
      * Get resultCache
      *
-     * @return arrayCollection
+     * @return arrayCollection|ResultCache[]
      */
     public function getResultCache()
     {
