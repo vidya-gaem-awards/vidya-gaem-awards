@@ -19,67 +19,88 @@ class Schulze extends AbstractResultCalculator
         $pairwise = [];
         // for every nominee
 
-        $candidates2 = $candidates;
-        $candidates3 = $candidates2;
+        echo "Number of candidates: " . count($candidates) . "\n";
+        echo "Number of votes: " . count($votes) . "\n";
 
-        foreach ($candidates as $candidateX => $xInfo) {
+        $candidateKeys = array_keys($candidates);
+
+        foreach ($candidateKeys as $candidateX) {
             // compare it to every other nominee
-            foreach ($candidates2 as $candidateY => $yInfo) {
-                //check you aren't comparing it to itself
-                if ($candidateX != $candidateY) {
-                    // set initial matrix value - not sure if this is required
-                    $pairwise[$candidateX][$candidateY] = 0;
-                    // now iterate through each voter
-                    foreach ($votes as $key => $vote) {
-                        // check each candidate was voted for and store it in 1000 otherwise
-                        if (array_search($candidateX, $vote) === false) {
-                            $vote[1000] = $candidateX;
-                        }
-                        if (array_search($candidateY, $vote) === false) {
-                            $vote[1000] = $candidateY;
-                        }
-                        // compare the ranks - don't know the data structure well enough to guess this
-                        if (array_search($candidateX, $vote) < array_search($candidateY, $vote)) {
-                            // increase the matrix value of candidateX preferred over candidateY
-                            $pairwise[$candidateX][$candidateY]++;
-                        }
+            foreach ($candidateKeys as $candidateY) {
+                // Check you aren't comparing the candidate to itself
+                if ($candidateX == $candidateY) {
+                    continue;
+                }
+
+                // Set initial matrix value
+                $pairwise[$candidateX][$candidateY] = 0;
+
+                // Iterate through iterate through each voter
+                foreach ($votes as $key => $vote) {
+                    // Check if the user voted for the candidates we're comparing
+                    $noVoteForX = (array_search($candidateX, $vote) === false);
+                    $noVoteForY = (array_search($candidateY, $vote) === false);
+
+                    /*
+                     * If the user didn't vote for either of the candidates we are comparing, we can assume that they
+                     * dislike them equally. As such, we don't make any change to the pairwise matrix.
+                     *
+                     * If the user only voted for one of the candidates, we put the other one at index 1000 to indicate
+                     * that they liked them less than all of the other candidates they voted for.
+                     */
+                    if ($noVoteForX && $noVoteForY) {
+                        continue;
+                    } elseif ($noVoteForX) {
+                        $vote[1000] = $candidateX;
+                    } elseif ($noVoteForY) {
+                        $vote[1000] = $candidateY;
+                    }
+
+                    // Check if the user prefers candidateX to candidateY, and incremenet the pairwise value if so.
+                    if (array_search($candidateX, $vote) < array_search($candidateY, $vote)) {
+                        $pairwise[$candidateX][$candidateY]++;
                     }
                 }
             }
         }
 
-        // hopefully we should get a pairwise matrix that we can now compare strengths of strongest paths
-        $strengths = array();
-        foreach ($candidates as $i => $value) {
-            foreach ($candidates2 as $j => $value2) {
-                if ($i != $j) {
-                    if ($pairwise[$i][$j] > $pairwise[$j][$i]) {
-                        $strengths[$i][$j] = $pairwise[$i][$j];
-                    } else {
-                        $strengths[$i][$j] = 0;
-                    }
+        // These next two blocks are a PHP implementation of this psuedocode
+        // https://en.wikipedia.org/wiki/Schulze_method#Implementation
+
+        $strengths = [];
+
+        foreach ($candidateKeys as $i) {
+            foreach ($candidateKeys as $j) {
+                if ($i == $j) {
+                    continue;
                 }
-            }
-        }
-        foreach ($candidates as $i => $value) {
-            foreach ($candidates2 as $j => $value2) {
-                if ($i != $j) {
-                    foreach ($candidates3 as $k => $value3) {
-                        if (($i != $k) && ($j != $k)) {
-                            $strengths[$j][$k] = max($strengths[$j][$k], min($strengths[$j][$i], $strengths[$i][$k]));
-                        }
-                    }
+
+                if ($pairwise[$i][$j] > $pairwise[$j][$i]) {
+                    $strengths[$i][$j] = $pairwise[$i][$j];
+                } else {
+                    $strengths[$i][$j] = 0;
                 }
             }
         }
 
-        $result = $strengths;
+        foreach ($candidateKeys as $i) {
+            foreach ($candidateKeys as $j) {
+                if ($i == $j) {
+                    continue;
+                }
 
-        $rankings = array_fill(1, count($candidates), array());
+                foreach ($candidateKeys as $k) {
+                    if (($i != $k) && ($j != $k)) {
+                        $strengths[$j][$k] = max($strengths[$j][$k], min($strengths[$j][$i], $strengths[$i][$k]));
+                    }
+                }
+            }
+        }
 
-        foreach ($result as $nominee => $row) {
-            $counts = array_count_values($row);
-            $position = (int)($counts[0] + 1);
+        $rankings = array_fill(1, count($candidates), []);
+
+        foreach ($strengths as $nominee => $row) {
+            $position = count($candidates) - count(array_filter($row));
             $rankings[$position][] = $nominee;
         }
 
