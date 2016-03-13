@@ -101,7 +101,8 @@ $routes->add('index', new Route(
     '/',
     [
         // Change this to change the default route
-        'controller' => Controllers\VotingController::class
+        'controller' => Controllers\LauncherController::class,
+        'action' => 'countdown'
     ]
 ));
 
@@ -436,6 +437,13 @@ $routes->add('pairwiseResults', new Route(
         'permission' => 'voting-results',
     ]
 ));
+$routes->add('countdown', new Route(
+    '/countdown',
+    [
+        'controller' => Controllers\LauncherController::class,
+        'action' => 'countdown'
+    ]
+));
 
 $context = new RequestContext();
 $context->fromRequest($request);
@@ -560,7 +568,6 @@ try {
 //    // Volatile pages
 //    "applications" => "applications-view",
 //    "credits" => EVERYONE,
-//    "launcher" => EVERYONE,
 //    "stream" => EVERYONE,
 //    "test" => EVERYONE,
 //    "thanks" => EVERYONE,
@@ -570,7 +577,6 @@ try {
 //
 //// Pages that won't use the master template
 //$noMaster = array(
-//    "launcher",
 //    "stream",
 //    "thanks",
 //    "voting"

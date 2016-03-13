@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The Vidya Gaem Awards</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/voting.css">
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
+  <script src='/js/dumbshit.js'></script>
+
+  <meta name="viewport" content="width=1100, maximum-scale=1.0, user-scalable=no" />
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
+
+  <style type="text/css">
+    a, a:hover {
+      text-decoration: none;
+      color: #f85898;
+      font-family: "yoster", Calibri, sans-serif;
+    }
+
+    a:hover {
+      color: white;
+    }
+
+    .stats {
+      text-align: center;
+      color: #89A;
+      font-size: 9pt;
+      font-family: arial, helvetica, sans-serif;
+    }
+    .stat {
+      color: #34345C;
+      padding: 1px;
+    }
+
+    .timezones {
+      font-size: 17px;
+      font-family: "yoster", Calibri, sans-serif;
+    }
+
+    .timezones dl {
+      margin-top: 0;
+      color: white;
+      text-align: center;
+    }
+
+    .timezones dd {
+      margin-bottom: 20px;
+      margin-left: 0;
+    }
+
+    .logo {
+      background-color: black;
+      border: 4px solid #970087;
+      margin-bottom: 30px;
+      height: 462px;
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .title h1 {
+      color: #f7d059;
+      font-size: 44px;
+    }
+
+    .title h2 {
+      font-family: "modern typewriter", Tahoma, sans-serif;
+      color: #00ebdb;
+      font-size: 26px;
+      margin-top: 15px;
+    }
+
+    .container-fluid {
+      max-width: 1400px;
+    }
+
+    .zig {
+      margin: 30px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div style="text-align: center;">
+  <img src="/2015voting/logo.gif" alt="Logo of the 2015 Vidya Gaem Awards" style="display: inline;">
+</div>
+
+<div class="zig"></div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 timezones hidden-xs hidden-sm">
+      <dl>
+        {% for friendlyTimezone, timezone in timezones[:(timezones|length)/2] %}
+          <dt><abbr title="UTC {{ streamDate | date('P', timezone) }}">{{ friendlyTimezone }}</abbr></dt>
+          <dd>{{ streamDate | date('D M jS, H:i', timezone) }}</dd>
+        {% endfor %}
+        <dt><a href="{{ otherTimezonesLink }}">Other Timezones</a></dt>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <div class="logo">
+        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/bblwSeHoIsg" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="title">
+        <h1>More vidya. More waifus.</h1>
+        <h2 id="countdown">&nbsp;</h2>
+        <div class="visible-xs-block visible-sm-block" style="margin-top: 15px;">
+          <a href="{{ otherTimezonesLink }}">View the stream date in your timezone</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 timezones hidden-x hidden-sm">
+      <dl>
+        {% for friendlyTimezone, timezone in timezones[(timezones|length)/2:] %}
+          <dt><abbr title="UTC {{ streamDate | date('P', timezone) }}">{{ friendlyTimezone }}</abbr></dt>
+          <dd>{{ streamDate | date('D M jS, H:i', timezone) }}</dd>
+        {% endfor %}
+        <dt><a href="{{ otherTimezonesLink }}">Other Timezones</a></dt>
+      </dl>
+    </div>
+  </div>
+</div>
+<div class="zig"></div>
+
+<script type="text/javascript">
+  var serverLoad = Date.parse("{{ 'now' | date('c') }}");
+  var clientLoad = Date.now();
+
+  // This could probably be replaced by moment.js
+  function updateWCTime() {
+    var clientNow = Date.now();
+    var serverNow = clientNow - clientLoad + serverLoad - 1;
+    
+    var kickoff = Date.parse("{{ streamDate | date('c') }}");
+    var diff = kickoff - serverNow;
+    diff = Math.max(diff, 0);
+
+    var days = Math.floor( diff / (1000*60*60*24) );
+    var hours = Math.floor( diff / (1000*60*60) );
+    var mins = Math.floor( diff / (1000*60) );
+    var secs = Math.floor( diff / 1000 );
+
+    var dd = days;
+    var hh = hours - days * 24;
+    var mm = mins - hours * 60;
+    var ss = secs - mins * 60;
+      
+    document.getElementById("countdown").innerHTML = dd + ' day' + (dd == 1 ? ', ' : 's, ') + hh + ' hour' +
+        (hh == 1 ? ', ' : 's, ') + mm + ' minute' + (mm == 1 ? ', ' : 's, ') +
+        ss + ' second' + (ss == 1 ? '' : 's');
+  }
+  window.onload = updateWCTime;
+  setInterval('updateWCTime()', 1000 ); 
+</script>
+
+</body>
+</html>
