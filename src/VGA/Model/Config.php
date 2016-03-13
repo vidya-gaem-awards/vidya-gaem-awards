@@ -14,6 +14,9 @@ class Config
     /** @var \DateTime */
     private $votingEnd;
 
+    /** @var \DateTime */
+    private $streamTime;
+
     /**
      * @return \DateTime
      */
@@ -110,6 +113,24 @@ class Config
         } else {
             return (int)$diff->getDays() . ' days';
         }
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStreamTime()
+    {
+        return $this->streamTime;
+    }
+
+    /**
+     * @param \DateTime $streamTime
+     * @return Config
+     */
+    public function setStreamTime($streamTime)
+    {
+        $this->streamTime = $streamTime;
+        return $this;
     }
 
 }

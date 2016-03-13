@@ -13,3 +13,6 @@ VGA\Model\Config:
     votingEnd:
       type: datetime
       nullable: true
+    streamTime:
+      type: datetime
+      nullable: true

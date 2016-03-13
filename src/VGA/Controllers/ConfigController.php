@@ -50,6 +50,17 @@ class ConfigController extends BaseController
             }
         }
 
+        if (!$post->get('streamTime')) {
+            $config->setStreamTime(null);
+        } else {
+            try {
+                $config->setStreamTime(new \DateTime($post->get('streamTime')));
+            } catch (\Exception $e) {
+                $this->session->getFlashBag()->add('error', 'Invalid date provided for stream time.');
+                $error = true;
+            }
+        }
+
         $this->em->persist($config);
         $this->em->flush();
 

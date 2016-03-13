@@ -2,12 +2,15 @@
 namespace VGA\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
+use VGA\Model\Config;
 
 class LauncherController extends BaseController
 {
     public function countdownAction()
     {
-        $streamDate = new \DateTime('2016-03-26T16:00:00-04:00');
+        /** @var Config $config */
+        $config = $this->em->getRepository(Config::class)->findOneBy([]);
+        $streamDate = $config->getStreamTime();
 
         $timezones = [
             'Honolulu' => 'Pacific/Honolulu',
@@ -27,15 +30,6 @@ class LauncherController extends BaseController
             'Sydney (AEDT)' => 'Australia/Sydney',
             'Auckland' => 'Pacific/Auckland',
         ];
-
-//        foreach ($timezones as $name => $timezone) {
-//            $date = clone $streamDate;
-//            $date->setTimeZone(new \DateTimeZone($timezone));
-//            dump($date->format('r'));
-////            $offset = $date->format('P');
-////            $time = $date->format('D M jS, H:i');
-//            $timezones[$name] = $date;
-//        }
 
         $otherTimezonesLink = sprintf(
             'https://www.timeanddate.com/worldclock/fixedtime.html?msg=2015+Vidya+Gaem+Awards&iso=%s&p1=179',
