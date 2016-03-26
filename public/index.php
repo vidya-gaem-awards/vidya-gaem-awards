@@ -406,7 +406,7 @@ $routes->add('simpleResults', new Route(
     [
         'controller' => Controllers\ResultController::class,
         'action' => 'simple',
-        'permission' => 'voting-results'
+//        'permission' => 'voting-results'
     ]
 ));
 $routes->add('detailedResults', new Route(
@@ -415,7 +415,7 @@ $routes->add('detailedResults', new Route(
         'controller' => Controllers\ResultController::class,
         'action' => 'detailed',
         'all' => null,
-        'permission' => 'voting-results',
+//        'permission' => 'voting-results',
     ],
     [
         'all' => '(all)?'
@@ -426,7 +426,7 @@ $routes->add('pairwiseResults', new Route(
     [
         'controller' => Controllers\ResultController::class,
         'action' => 'pairwise',
-        'permission' => 'voting-results',
+//        'permission' => 'voting-results',
     ]
 ));
 $routes->add('countdown', new Route(
