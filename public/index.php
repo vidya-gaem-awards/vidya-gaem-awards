@@ -97,15 +97,6 @@ $user
 // Define the routes
 $routes = new RouteCollection();
 
-$routes->add('index', new Route(
-    '/',
-    [
-        // Change this to change the default route
-        'controller' => Controllers\LauncherController::class,
-        'action' => 'countdown'
-    ]
-));
-
 $routes->add('home', new Route(
     '/home',
     [
@@ -444,6 +435,19 @@ $routes->add('countdown', new Route(
         'action' => 'countdown'
     ]
 ));
+$routes->add('stream', new Route(
+    '/stream',
+    [
+        'controller' => Controllers\LauncherController::class,
+        'action' => 'stream',
+        'permission' => 'voting-results'
+    ]
+));
+
+$index = clone $routes->get('countdown');
+$index->setPath('/');
+
+$routes->add('index', $index);
 
 $context = new RequestContext();
 $context->fromRequest($request);
@@ -568,7 +572,6 @@ try {
 //    // Volatile pages
 //    "applications" => "applications-view",
 //    "credits" => EVERYONE,
-//    "stream" => EVERYONE,
 //    "test" => EVERYONE,
 //    "thanks" => EVERYONE,
 //    "volunteer-submission" => LOGIN,
@@ -577,7 +580,6 @@ try {
 //
 //// Pages that won't use the master template
 //$noMaster = array(
-//    "stream",
 //    "thanks",
 //    "voting"
 //);
@@ -585,7 +587,6 @@ try {
 //// Pages so basic they don't need a PHP file.
 //$noPHP = array(
 //    "about" => "About",
-//    "stream" => "",
 //    "videos" => "Video Submission",
 //);
 //

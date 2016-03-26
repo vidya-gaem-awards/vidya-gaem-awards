@@ -44,4 +44,11 @@ class LauncherController extends BaseController
         ]));
         $response->send();
     }
+
+    public function streamAction()
+    {
+        $tpl = $this->twig->loadTemplate('stream.twig');
+        $response = new Response($tpl->render([]));
+        $response->send();
+    }
 }
