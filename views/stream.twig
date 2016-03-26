@@ -171,7 +171,7 @@
         <a id="right_close" class="right_active" title="Show/Hide chat"></a>
         <div class="scroll-content-contain" style="right: 0px;">
           <div class="scroll-content">
-            <h1>
+            <h1 id="title">
               The 2015 Vidya Gaem Awards
             </h1>
             <div id="live_player">
@@ -226,6 +226,47 @@ $("#link-chat-twitch").click(function() {
   $("#link-chat-twitch").parent().hide();
 });
 </script>
+
+{% if countdown %}
+<script type="text/javascript">
+    var serverLoad = Date.parse("{{ 'now' | date('c') }}");
+    var clientLoad = Date.now();
+
+    // This could probably be replaced by moment.js
+    function updateWCTime() {
+        var clientNow = Date.now();
+        var serverNow = clientNow - clientLoad + serverLoad - 1;
+
+        var kickoff = Date.parse("{{ streamDate | date('c') }}");
+        var diff = kickoff - serverNow;
+        diff = Math.max(diff, 0);
+
+        var hours = Math.floor( diff / (1000*60*60) );
+        var mins = Math.floor( diff / (1000*60) );
+        var secs = Math.floor( diff / 1000 );
+
+        var hh = hours;
+        var mm = mins - hours * 60;
+        var ss = secs - mins * 60;
+
+        if (diff == 0) {
+            document.getElementById("title").innerHTML = 'The 2015 Vidya Gaem Awards';
+        } else {
+            var string = '';
+            if (hh > 0) {
+                string = string.concat(hh + ' hour' + (hh == 1 ? ', ' : 's, '));
+            }
+            if (mm > 0) {
+                string = string.concat(mm + ' minute' + (mm == 1 ? ', ' : 's, '));
+            }
+            string = string.concat(ss + ' second' + (ss == 1 ? '' : 's'));
+            document.getElementById('title').innerHTML = string;
+        }
+    }
+    window.onload = updateWCTime;
+    setInterval('updateWCTime()', 1000 );
+</script>
+{% endif %}
 
 </body>
 </html>

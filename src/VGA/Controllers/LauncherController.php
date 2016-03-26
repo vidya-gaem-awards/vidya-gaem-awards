@@ -48,7 +48,17 @@ class LauncherController extends BaseController
     public function streamAction()
     {
         $tpl = $this->twig->loadTemplate('stream.twig');
-        $response = new Response($tpl->render([]));
+
+        /** @var Config $config */
+        $config = $this->em->getRepository(Config::class)->findOneBy([]);
+        $streamDate = $config->getStreamTime();
+
+        $showCountdown = ($streamDate > new \DateTime());
+        
+        $response = new Response($tpl->render([
+            'streamDate' => $streamDate,
+            'countdown' => $showCountdown
+        ]));
         $response->send();
     }
 
