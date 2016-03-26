@@ -61,6 +61,8 @@ class ConfigController extends BaseController
             }
         }
 
+        $config->setDefaultPage($post->get('defaultPage'));
+
         $this->em->persist($config);
         $this->em->flush();
 

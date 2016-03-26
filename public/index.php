@@ -15,6 +15,7 @@ use VGA\DependencyContainer;
 use VGA\DependencyManager;
 use VGA\Model\Access;
 use VGA\Model\AnonymousUser;
+use VGA\Model\Config;
 use VGA\Model\LoginToken;
 use VGA\Model\User;
 
@@ -444,10 +445,15 @@ $routes->add('stream', new Route(
     ]
 ));
 
-$index = clone $routes->get('countdown');
-$index->setPath('/');
+/** @var Config $config */
+$config = $em->getRepository(Config::class)->findOneBy([]);
+$defaultRoute = $routes->get($config->getDefaultPage());
 
-$routes->add('index', $index);
+if ($defaultRoute) {
+    $index = clone $defaultRoute;
+    $index->setPath('/');
+    $routes->add('index', $index);
+}
 
 $context = new RequestContext();
 $context->fromRequest($request);

@@ -16,3 +16,7 @@ VGA\Model\Config:
     streamTime:
       type: datetime
       nullable: true
+    defaultPage:
+      type: string
+      nullable: false
+      length: 30

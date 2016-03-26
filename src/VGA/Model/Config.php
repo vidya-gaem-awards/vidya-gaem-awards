@@ -5,6 +5,8 @@ use Moment\Moment;
 
 class Config
 {
+    const ALLOWED_DEFAULT_PAGES = ['home', 'categories', 'voting', 'countdown', 'stream'];
+
     /** @var string */
     private $id;
 
@@ -16,6 +18,9 @@ class Config
 
     /** @var \DateTime */
     private $streamTime;
+
+    /** @var string */
+    private $defaultPage;
 
     /**
      * @return \DateTime
@@ -131,6 +136,34 @@ class Config
     {
         $this->streamTime = $streamTime;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultPage()
+    {
+        return $this->defaultPage;
+    }
+
+    /**
+     * @param string $defaultPage
+     * @return Config
+     */
+    public function setDefaultPage($defaultPage)
+    {
+        if (in_array($defaultPage, self::ALLOWED_DEFAULT_PAGES, true)) {
+            $this->defaultPage = $defaultPage;
+        }
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedDefaultPages()
+    {
+        return self::ALLOWED_DEFAULT_PAGES;
     }
 
 }
