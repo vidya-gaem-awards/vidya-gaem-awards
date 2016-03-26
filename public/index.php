@@ -441,7 +441,13 @@ $routes->add('stream', new Route(
     [
         'controller' => Controllers\LauncherController::class,
         'action' => 'stream',
-        'permission' => 'voting-results'
+    ]
+));
+$routes->add('finished', new Route(
+    '/finished',
+    [
+        'controller' => Controllers\LauncherController::class,
+        'action' => 'finished'
     ]
 ));
 
@@ -579,15 +585,8 @@ try {
 //    "applications" => "applications-view",
 //    "credits" => EVERYONE,
 //    "test" => EVERYONE,
-//    "thanks" => EVERYONE,
 //    "volunteer-submission" => LOGIN,
 //    "videos" => EVERYONE,
-//);
-//
-//// Pages that won't use the master template
-//$noMaster = array(
-//    "thanks",
-//    "voting"
 //);
 //
 //// Pages so basic they don't need a PHP file.

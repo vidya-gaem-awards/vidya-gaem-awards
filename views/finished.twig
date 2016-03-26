@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The Vidya Gaem Awards</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/voting.css">
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
+  <script src='/js/dumbshit.js'></script>
+
+  <meta name="viewport" content="width=1100, maximum-scale=1.0, user-scalable=no" />
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
+
+  <style type="text/css">
+    .logo {
+      margin: 10px;
+      border: 4px solid #970087;
+      background: black;
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .title h1 {
+      font-weight: normal;
+      font-size: 55px;
+      line-height: 1em;
+      color: #00ebdb;
+      background: url(/2015voting/title_bg.gif) center center no-repeat;
+      margin-bottom: 0;
+      padding: 20px 0;
+    }
+
+    .title h2 {
+      font-family: "modern typewriter", Tahoma, sans-serif;
+      color: #f7d059;
+      font-size: 38px;
+      font-weight: normal;
+      line-height: 0.95em;
+      margin-top: 20px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 30px;
+      line-height: 1em;
+      margin: 20px;
+      font-family: "modern typewriter", Tahoma, sans-serif;
+    }
+
+    .subtitle .main {
+      font-size: 40px;
+      line-height: 1em;
+    }
+
+    a, a:hover {
+      text-decoration: none;
+      color: #f85898;
+      padding: 3px;
+      display: inline-block;
+    }
+    a:hover {
+      color: white;
+    }
+    .zig {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-xs-12">
+        <div class="logo">
+          <iframe width="100%" height="460" src="https://www.youtube.com/embed/8GIS7JBur0s" frameborder="0"
+                  allowfullscreen=""></iframe>
+        </div>
+        <div class="title">
+          <h1>The 2015 Vidya Gaem Awards</h1>
+          <h2 id="countdown">Thanks for watching!</h2>
+        </div>
+        <div class="subtitle">
+          <a href="https://www.youtube.com/watch?v=8GIS7JBur0s">Watch it on YouTube</a><br>
+          <a href="{{ path('simpleResults') }}">See the winners</a><br>
+          <a href="https://vidyagaemawards.com/previous-years">View previous years</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

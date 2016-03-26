@@ -51,4 +51,11 @@ class LauncherController extends BaseController
         $response = new Response($tpl->render([]));
         $response->send();
     }
+
+    public function finishedAction()
+    {
+        $tpl = $this->twig->loadTemplate('finished.twig');
+        $response = new Response($tpl->render([]));
+        $response->send();
+    }
 }
