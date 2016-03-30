@@ -421,6 +421,13 @@ $routes->add('detailedResults', new Route(
         'all' => '(all)?'
     ]
 ));
+$routes->add('resultRedirect', new Route(
+    '/voting/results',
+    [
+        'controller' => Controllers\StaticController::class,
+        'action' => 'votingRedirect'
+    ]
+));
 $routes->add('pairwiseResults', new Route(
     '/results/pairwise',
     [
