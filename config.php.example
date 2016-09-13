@@ -12,6 +12,9 @@ define('EMAIL_FROM', '');
 // steamcommunity.com/dev/apikey
 define('STEAM_API_KEY', '');
 
+// Timezone for the site
+define('TIMEZONE', 'America/New_York');
+
 // Items will only be showed if the user has access to them
 define('NAVBAR_ITEMS', [
     "home"  => "Home",
