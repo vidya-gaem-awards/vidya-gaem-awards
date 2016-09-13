@@ -207,7 +207,10 @@ $routes->add('privacy', new Route(
 ));
 $routes->add('categories', new Route(
     '/awards',
-    ['controller' => Controllers\CategoryController::class],
+    [
+        'controller' => Controllers\CategoryController::class,
+        'permission' => 'categories-edit' // normally public, update when ready
+    ],
     [],
     [],
     '',
@@ -269,7 +272,8 @@ $routes->add('editCategoryPost', new Route(
 $routes->add('videoGames', new Route(
     '/vidya-in-2016',
     [
-        'controller' => Controllers\VideoGamesController::class
+        'controller' => Controllers\VideoGamesController::class,
+        'permission' => 'add-video-game' // normally public, update when ready
     ],
     [],
     [],
@@ -294,7 +298,8 @@ $routes->add('awardFrontendPost', new Route(
     '/awards',
     [
         'controller' => Controllers\CategoryController::class,
-        'action' => 'post'
+        'action' => 'post',
+        'permission' => 'categories-edit' // normally public, update when ready
     ],
     [],
     [],
@@ -372,8 +377,8 @@ $routes->add('voting', new Route(
     '/vote/{category}',
     [
         'controller' => Controllers\VotingController::class,
-        'category' => null
-//        'permission' => 'voting-view',
+        'category' => null,
+        'permission' => 'voting-view', // normally public, update when ready
     ],
     [],
     [],
@@ -386,7 +391,7 @@ $routes->add('votingSubmission', new Route(
     [
         'controller' => Controllers\VotingController::class,
         'action' => 'post',
-//        'permission' => 'voting-view'
+        'permission' => 'voting-view' // normally public, update when ready
     ],
     [],
     [],
@@ -406,7 +411,7 @@ $routes->add('simpleResults', new Route(
     [
         'controller' => Controllers\ResultController::class,
         'action' => 'simple',
-//        'permission' => 'voting-results'
+        'permission' => 'voting-results' // disable when results are public
     ]
 ));
 $routes->add('detailedResults', new Route(
@@ -415,7 +420,7 @@ $routes->add('detailedResults', new Route(
         'controller' => Controllers\ResultController::class,
         'action' => 'detailed',
         'all' => null,
-//        'permission' => 'voting-results',
+        'permission' => 'voting-results', // disable when results are public
     ],
     [
         'all' => '(all)?'
@@ -433,14 +438,15 @@ $routes->add('pairwiseResults', new Route(
     [
         'controller' => Controllers\ResultController::class,
         'action' => 'pairwise',
-//        'permission' => 'voting-results',
+        'permission' => 'voting-results', // disable when results are public
     ]
 ));
 $routes->add('countdown', new Route(
     '/countdown',
     [
         'controller' => Controllers\LauncherController::class,
-        'action' => 'countdown'
+        'action' => 'countdown',
+        'permission' => 'view-unfinished-pages', // normally public, disable when ready
     ]
 ));
 $routes->add('stream', new Route(
@@ -448,13 +454,15 @@ $routes->add('stream', new Route(
     [
         'controller' => Controllers\LauncherController::class,
         'action' => 'stream',
+        'permission' => 'view-unfinished-pages', // normally public, disable when ready
     ]
 ));
 $routes->add('finished', new Route(
     '/finished',
     [
         'controller' => Controllers\LauncherController::class,
-        'action' => 'finished'
+        'action' => 'finished',
+        'permission' => 'view-unfinished-pages', // normally public, disable when ready
     ]
 ));
 
