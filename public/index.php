@@ -267,7 +267,7 @@ $routes->add('editCategoryPost', new Route(
     ['POST']
 ));
 $routes->add('videoGames', new Route(
-    '/vidya-in-2015',
+    '/vidya-in-2016',
     [
         'controller' => Controllers\VideoGamesController::class
     ],
@@ -278,7 +278,7 @@ $routes->add('videoGames', new Route(
     ['GET']
 ));
 $routes->add('addVideoGame', new Route(
-    '/vidya-in-2015',
+    '/vidya-in-2016',
     [
         'controller' => Controllers\VideoGamesController::class,
         'action' => 'add',
