@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>/v/GAs - <tag:title /></title>
 
     <link rel="stylesheet" href="/includes/bootstrap-1.4.0.css">
     <link rel="stylesheet" href="/templates/style.css">
     
-	<script src='http://code.jquery.com/jquery-1.7.1.min.js'></script>
+	<script src='https://code.jquery.com/jquery-1.7.1.min.js'></script>
 	<!-- <script src='external/bootstrap-tabs.js'></script> -->
 	<script src="/includes/jquery.tablesorter.min.js"></script>
 	<script src='/includes/highcharts.js'></script>
@@ -34,7 +34,7 @@
 						</if:pretend>
 						<li><a href="http://steamcommunity.com/profiles/<tag:communityID />"> <tag:displayName /></a></li>
 					<else:loggedIn>
-						<li><a href="<tag:openIDurl />"><img src="http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png" /></a></li>
+						<li><a href="<tag:openIDurl />"><img src="https://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png" /></a></li>
 					</if:loggedIn>
 				</ul>
 			</div>
@@ -66,7 +66,7 @@
 		<div class="bottombar-inner">
 			<div class="container">
 				<ul class="nav">
-					<li><a href="http://boards.4chan.org/v/">/v/ - The Vidya</a></li>
+					<li><a href="https://boards.4chan.org/v/">/v/ - The Vidya</a></li>
 					<li><a href="http://steamcommunity.com/groups/vidyagaemawards">Steam Group</a></li>
 					<li><a href="mailto:vidyagaemawards@gmail.com">Email</a></li>
 				</ul>

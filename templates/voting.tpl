@@ -29,7 +29,7 @@ a,a:hover{text-decoration:none;}
 	height: 53px;
 	background-color:#789922;
 	border-bottom: 1px solid #000;
-	background-image: url('http://i.imgur.com/XWjZl.gif');
+	background-image: url('https://i.imgur.com/XWjZl.gif');
 }
 .aCategory{
 	width:261px;
@@ -48,7 +48,7 @@ a,a:hover{text-decoration:none;}
 	cursor:pointer;
 }
 .aCategory.active {
-	background-image: url('http://i.imgur.com/QwguU.gif');
+	background-image: url('https://i.imgur.com/QwguU.gif');
 	background-repeat: no-repeat;
 	background-position: right center;
 }
@@ -88,7 +88,7 @@ a,a:hover{text-decoration:none;}
 	background-color:#789922;
 	border-bottom: 1px solid #000;
 	padding: 45px 0 0 8px;
-	background-image: url('http://i.imgur.com/utxwt.gif');
+	background-image: url('https://i.imgur.com/utxwt.gif');
 }
 .headNominees h2{
 	color: #060606;
@@ -142,7 +142,7 @@ a,a:hover{text-decoration:none;}
 	height: 27px;
 	width: 74px;
 	background-color: #789922;
-	background-image: url('http://i.imgur.com/SORDQ.gif');
+	background-image: url('https://i.imgur.com/SORDQ.gif');
 	border: 1px solid black;
 	color: #060606;
 	font-size: 1.4em;
@@ -189,8 +189,8 @@ a,a:hover{text-decoration:none;}
 
 <div class="row">
 	<div class="span5">
-		<a href="http://vidyagameawards.com">
-			<img src="http://i.imgur.com/e83zv.png" class="logo" />
+		<a href="https://vidyagameawards.com">
+			<img src="https://i.imgur.com/e83zv.png" class="logo" />
 		</a>
 	</div>
 	
@@ -203,7 +203,7 @@ a,a:hover{text-decoration:none;}
 		<else:loggedIn>
 			<br />
 			<div>
-				<a href="<tag:openIDurl />"><img src="http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png" /></a>
+				<a href="<tag:openIDurl />"><img src="https://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png" /></a>
 				<div style="font-size: 50%;">
 					<!-- To prevent ballot stuffing, you must sign in with Steam before voting. See our <a href="privacy.php">Privacy Policy</a> -->
 					<br />If you have already voted, you can sign in to see your votes.

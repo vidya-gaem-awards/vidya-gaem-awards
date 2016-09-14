@@ -23,8 +23,8 @@ $statHTML = implode(" / ", $stats2);
 
 date_default_timezone_set("Australia/Brisbane");
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
 <style type="text/css">
@@ -37,7 +37,7 @@ body, html {
 	text-align: center;
 }
 body {
-	background: #EEF2FF url('http://i.imgur.com/vhP2J.png') top center repeat-x;
+	background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;
 }
 .container {
 	margin: 20px;
@@ -116,7 +116,7 @@ a:hover {
 	padding: 3px;
 }
 </style>
-<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 <script type="text/javascript">
 var serverLoad = Date.parse("<?php echo date("D, j M Y H:i:s \U\TCO"); ?>");
 var clientLoad = Date.now();
@@ -162,8 +162,8 @@ function switchChat() {
 	$('#chatango').toggle();
 }
 </script>
-<script src="http://www-cdn.justin.tv/javascripts/jtv_api.js"></script>
-<script src="http://vidyagaemawards.com/includes/jquery-1.7.1.min.js"></script>
+<script src="https://www-cdn.justin.tv/javascripts/jtv_api.js"></script>
+<script src="https://vidyagaemawards.com/includes/jquery-1.7.1.min.js"></script>
 </head>
 <body>
 
@@ -171,7 +171,7 @@ function switchChat() {
 	[<?php echo $statHTML; ?>]
 </div> -->
 
-<img src="http://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" height="200px" />
+<img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" height="200px" />
 
 <div class="container">
 
@@ -180,12 +180,12 @@ function switchChat() {
 		<object type="application/x-shockwave-flash"
 			height="480" width="800"
 			id="live_embed_player_flash"
-			data="http://www.justin.tv/widgets/live_embed_player.swf?channel=vidyagaemawards"
+			data="https://www.justin.tv/widgets/live_embed_player.swf?channel=vidyagaemawards"
 			bgcolor="#000000">
 			<param name="allowFullScreen" value="true" />
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
-			<param name="movie" value="http://www.justin.tv/widgets/live_embed_player.swf" />
+			<param name="movie" value="https://www.justin.tv/widgets/live_embed_player.swf" />
 			<param name="flashvars" value="hostname=www.justin.tv&channel=vidyagaemawards&auto_play=true&start_volume=25&consumer_key=ZvBaRzHpjrpVwIBwax9vOw" />
 		</object>
 	

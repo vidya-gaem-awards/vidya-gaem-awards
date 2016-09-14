@@ -30,5 +30,5 @@ if (strlen($result) > 0) {
 	}
 }
 
-header("Location: http://2011.vidyagaemawards.com/{$_GET['return']}");
+header("Location: https://2011.vidyagaemawards.com/{$_GET['return']}");
 ?>

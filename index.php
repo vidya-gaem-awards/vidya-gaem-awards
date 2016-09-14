@@ -1,5 +1,5 @@
 <?php
 #session_start();
-#header("Location: http://vidyagaemawards.com/home.php");
+#header("Location: https://vidyagaemawards.com/home.php");
 include("thanks.php");
 ?>

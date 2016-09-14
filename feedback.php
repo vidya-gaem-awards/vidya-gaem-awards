@@ -20,7 +20,7 @@ if (isset($_POST["general"])) {
 	} else {
 		storeMessage("success", "Your feedback has been successfully submitted.");
 		action("feedback-made");
-		header("Location: http://vidyagaemawards.com/feedback.php");
+		header("Location: https://vidyagaemawards.com/feedback.php");
 	}
 }
 

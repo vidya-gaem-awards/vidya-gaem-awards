@@ -4,7 +4,7 @@
 <p>Alternatively, you can post on the <a href="/forum">forum</a> or email <a href="mailto:vidyagaemawards@gmail.com">vidyagaemawards@gmail.com</a></p>
 <p>You can also use the suggestion box below, but we only read it occasionally.</p> -->
 <p>It's over! Thanks to everybody who nominated, voted, watched and helped make this happen.</p>
-<p>You can view final ceremony on <a href="http://www.youtube.com/watch?v=mOGRDuY0DFI">YouTube</a> or the full, uncensored version via <a href="https://rapidshare.com/files/2299693433/2011_Vidya_Gaem_Awards.mp4">direct download</a>.</p>
+<p>You can view final ceremony on <a href="https://www.youtube.com/watch?v=mOGRDuY0DFI">YouTube</a> or the full, uncensored version via <a href="https://rapidshare.com/files/2299693433/2011_Vidya_Gaem_Awards.mp4">direct download</a>.</p>
 <p>You can also <a href="feedback.php">give us feedback</a>, <a href="results.php">see the results</a> or <a href="https://docs.google.com/document/d/1_9F5oA7cfbSPdv08cEBAgYuhds78CjtcjOB2OoiY4gc/edit">view the Q&amp;A</a>. See you next time! <small>(maybe)</small></p>
 </div>
 <div class="row">

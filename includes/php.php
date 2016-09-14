@@ -41,7 +41,7 @@ if (isset($_SESSION['login'])) {
 	$page = explode("/", $_SERVER['SCRIPT_NAME']);
 	$page = substr($page[count($page) - 1], 0, -4);    
 	
-	$tpl->set("openIDurl", SteamSignIn::genUrl("http://2011.vidyagaemawards.com/login.php?return={$page}.php"));
+	$tpl->set("openIDurl", SteamSignIn::genUrl("https://2011.vidyagaemawards.com/login.php?return={$page}.php"));
 }
 $tpl->set("loggedIn", $loggedIn);
 if (canDo("admin")) {

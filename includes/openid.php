@@ -3,7 +3,7 @@
 *
 * @package Steam Community API
 * @copyright (c) 2010 ichimonai.com
-* @license http://opensource.org/licenses/mit-license.php The MIT License
+* @license https://opensource.org/licenses/mit-license.php The MIT License
 *
 */
 

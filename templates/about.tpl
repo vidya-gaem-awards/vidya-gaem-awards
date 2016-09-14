@@ -25,6 +25,6 @@
 
 <div class="row" style="margin-top: 20px;">
 <div class="span12 offset2">
-<iframe class="span12" height="300" src="http://www.youtube.com/embed/5Lj7kR_HFV4?rel=0" frameborder="0" allowfullscreen="0"></iframe>
+<iframe class="span12" height="300" src="https://www.youtube.com/embed/5Lj7kR_HFV4?rel=0" frameborder="0" allowfullscreen="0"></iframe>
 </div>
 </div>

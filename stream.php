@@ -23,8 +23,8 @@ $statHTML = implode(" / ", $stats2);
 
 date_default_timezone_set("Australia/Brisbane");
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
 <style type="text/css">
@@ -37,7 +37,7 @@ body, html {
 	text-align: center;
 }
 body {
-	background: #EEF2FF url('http://i.imgur.com/vhP2J.png') top center repeat-x;
+	background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;
 }
 .container {
 	margin: 20px;
@@ -111,7 +111,7 @@ a:hover {
 	padding: 3px;
 }
 </style>
-<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 <script type="text/javascript">
 var serverLoad = Date.parse("<?php echo date("D, j M Y H:i:s \U\TCO"); ?>");
 var clientLoad = Date.now();
@@ -152,7 +152,7 @@ function showTimezones() {
 	document.getElementById("timezones").style.display = "";
 }
 </script>
-<script src="http://www-cdn.justin.tv/javascripts/jtv_api.js"></script>
+<script src="https://www-cdn.justin.tv/javascripts/jtv_api.js"></script>
 </head>
 <body>
 
@@ -160,7 +160,7 @@ function showTimezones() {
 	[<?php echo $statHTML; ?>]
 </div> -->
 
-<img src="http://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" height="200px" />
+<img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" height="200px" />
 
 <div class="container">
 
@@ -169,27 +169,27 @@ function showTimezones() {
 		<object type="application/x-shockwave-flash"
 			height="480" width="800"
 			id="live_embed_player_flash"
-			data="http://www.justin.tv/widgets/live_embed_player.swf?channel=vidyagaemawards"
+			data="https://www.justin.tv/widgets/live_embed_player.swf?channel=vidyagaemawards"
 			bgcolor="#000000">
 			<param name="allowFullScreen" value="true" />
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowNetworking" value="all" />
-			<param name="movie" value="http://www.justin.tv/widgets/live_embed_player.swf" />
+			<param name="movie" value="https://www.justin.tv/widgets/live_embed_player.swf" />
 			<param name="flashvars" value="hostname=www.justin.tv&channel=vidyagaemawards&auto_play=true&start_volume=25&consumer_key=ZvBaRzHpjrpVwIBwax9vOw" />
 		</object>
 	
 	</div>
 	
 	<div class="chat">
-		<!-- <iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=clamburger_&amp;popout_chat=true" height="480" width="300"></iframe> -->
+		<!-- <iframe frameborder="0" scrolling="no" id="chat_embed" src="https://twitch.tv/chat/embed?channel=clamburger_&amp;popout_chat=true" height="480" width="300"></iframe> -->
 		<object width="340" height="460" id="obj_1328891570920">
-		<param name="movie" value="http://vidyagaemslive.chatango.com/group"/>
+		<param name="movie" value="https://vidyagaemslive.chatango.com/group"/>
 		<param name="wmode" value="transparent"/>
 		<param name="AllowScriptAccess" VALUE="always"/>
 		<param name="AllowNetworking" VALUE="all"/>
 		<param name="AllowFullScreen" VALUE="true"/>
 		<param name="flashvars" value="cid=1328891570920&b=1&d=666666&f=50&l=999999&q=999999&w=0&t=0"/>
-		<embed id="emb_1328891570920" src="http://vidyagaemslive.chatango.com/group" width="340" height="460" wmode="transparent" allowScriptAccess="always" allowNetworking="all"
+		<embed id="emb_1328891570920" src="https://vidyagaemslive.chatango.com/group" width="340" height="460" wmode="transparent" allowScriptAccess="always" allowNetworking="all"
 		type="application/x-shockwave-flash" allowFullScreen="true" flashvars="cid=1328891570920&b=1&d=666666&f=50&l=999999&q=999999&w=0&t=0"></embed></object>
 		
 		<div class="chatSwitcher">

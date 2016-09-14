@@ -24,8 +24,8 @@ $statHTML = implode(" / ", $stats2);
 date_default_timezone_set("Australia/Brisbane");
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta name="google-site-verification" content="sarD3HFFz6T0U-KpnyD_rty-z8QwgKiV94LffWwJblc" />
 <title>The Vidya Gaem Awards</title>
@@ -39,7 +39,7 @@ body, html {
 	text-align: center;
 }
 body {
-	background: #EEF2FF url('http://i.imgur.com/vhP2J.png') top center repeat-x;
+	background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;
 }
 .logo {
 	margin: 20px;
@@ -92,7 +92,7 @@ a:hover {
 	color: #789922;
 }
 </style>
-<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -100,9 +100,9 @@ a:hover {
 	[<?php echo $statHTML; ?>]
 </div>
 
-<!-- <img src="http://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
+<!-- <img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
 <div class="logo">
-	<iframe width="853" height="480" src="http://www.youtube.com/embed/mOGRDuY0DFI?rel=0" frameborder="0" allowfullscreen></iframe>
+	<iframe width="853" height="480" src="https://www.youtube.com/embed/mOGRDuY0DFI?rel=0" frameborder="0" allowfullscreen></iframe>
 	<!-- <div class="subsubtitle">The video was taken down by YouTube, and we are currently working on getting it back online. Here are some alternate downloads you can use in the meantime.<br /><br />
 	<a href="magnet:?xt=urn:btih:4DF4AB729CD26C12D8F9029DFB9A8077EC34E86E&dn=2011%20Vidya%20Gaem%20Awards.mp4
 &tr=udp%3a//tracker.openbittorrent.com%3a80">Torrent (magnet link)</a><br />
@@ -117,8 +117,8 @@ a:hover {
 </div>
 
 <div class="subsubtitle">
-	<a href="http://www.youtube.com/watch?v=mOGRDuY0DFI">view on YouTube</a><br />
-	<a href="http://archive.org/download/The2011VidyaGaemAwardsvgas/2011VidyaGaemAwardsHq.wmv">direct download</a> (3.0 GB)<br />
+	<a href="https://www.youtube.com/watch?v=mOGRDuY0DFI">view on YouTube</a><br />
+	<a href="https://archive.org/download/The2011VidyaGaemAwardsvgas/2011VidyaGaemAwardsHq.wmv">direct download</a> (3.0 GB)<br />
 	<!-- <a href="feedback.php">give feedback on the VGAs</a><br /> -->
 	<a href="https://docs.google.com/document/d/1_9F5oA7cfbSPdv08cEBAgYuhds78CjtcjOB2OoiY4gc/edit">view the Q&amp;A</a><br />
 	<a href="results.php">see the detailed results</a><br />

@@ -24,8 +24,8 @@ $statHTML = implode(" / ", $stats2);
 date_default_timezone_set("Australia/Brisbane");
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
 <style type="text/css">
@@ -38,7 +38,7 @@ body, html {
 	text-align: center;
 }
 body {
-	background: #EEF2FF url('http://i.imgur.com/vhP2J.png') top center repeat-x;
+	background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;
 }
 .logo {
 	margin: 20px;
@@ -87,7 +87,7 @@ a:hover {
 	padding: 3px;
 }
 </style>
-<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 <script type="text/javascript">
 var serverLoad = Date.parse("<?php echo date("D, j M Y H:i:s \U\TCO"); ?>");
 var clientLoad = Date.now();
@@ -135,9 +135,9 @@ function showTimezones() {
 	[<?php echo $statHTML; ?>]
 </div>
 
-<!-- <img src="http://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
+<!-- <img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
 <div class="logo">
-	<iframe width="800" height="480" src="http://www.youtube.com/embed/3I-Kb4yVWsQ?rel=0" frameborder="0" allowfullscreen></iframe>
+	<iframe width="800" height="480" src="https://www.youtube.com/embed/3I-Kb4yVWsQ?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <div class="subtitle">February 11th - is your body ready?
