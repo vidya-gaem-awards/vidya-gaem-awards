@@ -9,5 +9,5 @@ if ($result) {
 	storeMessage("success", "Your suggestion has been submitted. If you have anything important to say, I still recommend going on the forums or visiting our Steam group chat though.");
 	action("suggestion-made");
 }
-header("Location: https://vidyagaemawards.com");
+header("Location: https://2011.vidyagaemawards.com");
 ?>

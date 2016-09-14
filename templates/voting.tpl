@@ -189,7 +189,7 @@ a,a:hover{text-decoration:none;}
 
 <div class="row">
 	<div class="span5">
-		<a href="https://vidyagameawards.com">
+		<a href="https://2011.vidyagameawards.com">
 			<img src="https://i.imgur.com/e83zv.png" class="logo" />
 		</a>
 	</div>
