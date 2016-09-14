@@ -37,7 +37,7 @@
 						<li><img src="<tag:avatarURL />" style='margin-top: 3px; width: 32px; height: 32px;' /></li>
 						<li><a href="http://steamcommunity.com/profiles/<tag:communityID />"> <tag:displayName /></a></li>
 					<else:loggedIn>
-						<li><a href="<tag:openIDurl />"><img src="https://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png" /></a></li>
+						<li><a href="<tag:openIDurl />"><img src="/public/sits_small.png" /></a></li>
 					</if:loggedIn>
 				</ul>
 			</div>
