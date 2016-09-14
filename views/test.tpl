@@ -220,6 +220,8 @@ h1, h2{
 </head>
 <body>
 
+<div style='color: red; font-weight: bold; text-align: center; margin-bottom: 20px; font-size: 16px;'>Don't use this for 2013 tiles; the image dimensions may be different.</div>
+
 <div id="wrapper">
 	<header>
 		<h1><img src="/public/some-pics/logo.png" alt="/v/GA 2012 logo"></h1>

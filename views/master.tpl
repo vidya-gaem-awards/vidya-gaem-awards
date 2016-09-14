@@ -11,7 +11,7 @@
     <script src='/public/jquery/jquery-1.8.2.min.js'></script>
     <script src='/public/jquery/jquery-ui-1.9.2.min.js'></script>
     <script src='/public/jquery/jquery.tablesorter.min.js'></script>
-    <script src='/public/highcharts.js'></script>
+    <script src='https://code.highcharts.com/3.0.7/highcharts.js'></script>
     <script src='/public/bootstrap-2.1.0/js/bootstrap.min.js'></script>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

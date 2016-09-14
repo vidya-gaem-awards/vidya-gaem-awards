@@ -1,3 +1,7 @@
+<h1>Feedback is now closed.</h1>
+<p>Thanks for your input. You can still email us at <a href="mailto:vidya@vidyagaemawards.com">vidya@vidyagaemawards.com</a>.</p>
+<if:false>
+
 <h1>Your feedback is important to us.</h1>
 <div class="row">
 	<div class="span12">
