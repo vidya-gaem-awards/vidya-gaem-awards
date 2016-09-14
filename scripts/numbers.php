@@ -6,9 +6,11 @@ function timer() {
   return round($timeEnd - $timeStart, 2);
 }
 
+include("../includes/config.php");
+
 error_reporting(E_ALL);
 set_time_limit(0);
-$mysqli = new Mysqli("localhost", "username", "password", "database");
+$mysqli = new Mysqli(DB_HOST, DB_USER, DB_PASS, DB_DATABASE);
 
 $timeStart = microtime(true);
 

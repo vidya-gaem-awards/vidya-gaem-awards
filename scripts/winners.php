@@ -6,8 +6,8 @@ function timer($msg) {
   $timeEnd = microtime(true);
   echo round($timeEnd - $timeStart, 2).": $msg\n";
 }
-
-$mysqli = new Mysqli("localhost", "username", "password", "database");
+include("../includes/config.php");
+$mysqli = new Mysqli(DB_HOST, DB_USER, DB_PASS, DB_DATABASE);
 
 // Remove all existing data
 $mysqli->query("TRUNCATE TABLE `winner_cache`");

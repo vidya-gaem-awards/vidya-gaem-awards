@@ -5,26 +5,22 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 
 date_default_timezone_set("America/New_York");
 
+include("config.php");
 include("openid.php");
 include("bTemplate.php");
 include("functions.php");
 $tpl = new bTemplate();
 session_start();
 
-$DB_HOST = "localhost";
-$DB_USER = "username";
-$DB_PASS = "password";
-$DB_DB = "database";
-
-mysql_connect("localhost", "username", "password");
-mysql_select_db("database");
+mysql_connect(DB_HOST, DB_USER, DB_PASS);
+mysql_select_db(DB_DATABASE);
 
 // Forward compatibility
-$mysql = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
+$mysql = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_DATABASE);
 
-$APIkey = "steam-api-key-goes-here";
+$APIkey = STEAM_API_KEY;
 
-$domain = "example.com";
+$domain = DOMAIN;
 
 // Initialise some default template variables
 $init = array("success", "error", "formSuccess", "formError");
