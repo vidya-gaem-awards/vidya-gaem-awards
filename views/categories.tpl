@@ -306,6 +306,8 @@ $('#nomination-form').submit(function(event) {
                         $("#nomination-status").html("<span style='color: red;'>Nomination cannot be blank.</span>");
                     } else if (data == "already exists") {
                         $("#nomination-status").html("<span style='color: red;'>You've already nominated that.</span>");
+                    } else if (data == "2013") {
+                        $("#nomination-status").html("<span style='color: red;'>Depression Quest was released in 2013.</span>");
                     } else {
                         $("#nomination-status").hide();
                     }

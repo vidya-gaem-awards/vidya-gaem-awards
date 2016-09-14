@@ -117,7 +117,7 @@ a:hover {
       <div class="subtitle">
         <a href="https://www.youtube.com/watch?v=jqHdj8uVggY">Watch it on YouTube</a><br>
         <a href="http://www.twitch.tv/vidyagaemawards/c/6015044">Watch it on Twitch</a><br>
-        Direct download (soon™)<br>
+        <a href="https://archive.org/details/2014vgas">Direct download</a><br>
         <a href="http://www.twitch.tv/vidyagaemawards/c/6014967">Watch the preshow skits</a><br>
         <a href="http://vidyagaemawards.com/music/2014-vga-music-mix.mp3">Download the preshow music mix</a><br>
         <a href="/winners">See the winners</a><br>

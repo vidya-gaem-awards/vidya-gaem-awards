@@ -10,6 +10,11 @@ $nomination = trim($_POST['Nomination']);
 if (empty($nomination)) {
   die("blank nomination");
 }
+
+$notAllowed = array("depression quest", "gone home");
+if (in_array(strtolower($nomination), $notAllowed)) {
+  die("2013");
+}
 $nomination = mysql_real_escape_string($nomination);
 
 $query = "SELECT `Nomination` FROM `user_nominations` WHERE `CategoryID` = \"$cat\" AND `UserID` = \"$ID\"";
