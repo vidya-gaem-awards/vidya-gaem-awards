@@ -176,7 +176,7 @@ if ($SEGMENTS[1]) {
     $stmt = $mysql->prepare($query);
     $stmt->bind_param('ss', $code, $uniqueID);
     $stmt->execute();
-    header("Location: http://$DOMAIN/voting");
+    header("Location: https://$DOMAIN/voting");
   } 
   
 }

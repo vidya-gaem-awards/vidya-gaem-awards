@@ -24,7 +24,7 @@ $CATEGORY_VOTING_ENABLED = true;
 $ACCOUNT_REQUIRED_TO_NOMINATE = false;
 
 $DEFAULT_PAGE = "home";
-$AD_LANDING_PAGE = "http://$DOMAIN/voting?promo";
+$AD_LANDING_PAGE = "https://$DOMAIN/voting?promo";
 
 // Must be valid strings for strtotime()
 $VOTING_START = "2013-01-01 00:00:00";

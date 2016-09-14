@@ -1,6 +1,6 @@
 <?php
 // TODO: replace the current library with something less hacked together
-// http://stackoverflow.com/questions/18674042/steam-api-authentication/18680478
+// https://stackoverflow.com/questions/18674042/steam-api-authentication/18680478
 $result = SteamSignIn::validate();
 if (strlen($result) > 0) {
   $_SESSION['login'] = $result;
@@ -37,7 +37,7 @@ if (strlen($result) > 0) {
   }
   $stmt->execute();
   
-  // Thanks to http://stackoverflow.com/questions/5009685/#5009903
+  // Thanks to https://stackoverflow.com/questions/5009685/#5009903
   $randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
   $randomToken .= ':'.hash_hmac('md5', $randomToken, $STEAM_API_KEY);
   setcookie("token", $randomToken, time()+60*60*24*30, "/", $DOMAIN);
@@ -53,5 +53,5 @@ if (strlen($result) > 0) {
 
 // Send them back where they came from
 $return = rtrim(implode("/", array_slice($SEGMENTS, 1)), "/");
-header("Location: http://$DOMAIN/$return");
+header("Location: https://$DOMAIN/$return");
 ?>

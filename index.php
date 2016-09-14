@@ -8,7 +8,7 @@
   define("LOGIN", "logged-in");
 
   // URL rewriter
-  // Courtesy of http://stackoverflow.com/questions/893218/rewrite-for-all-urls
+  // Courtesy of https://stackoverflow.com/questions/893218/rewrite-for-all-urls
   $_SERVER['REQUEST_URI_PATH'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
   $SEGMENTS = explode('/', trim($_SERVER['REQUEST_URI_PATH'], '/'));

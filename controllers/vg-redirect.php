@@ -3,9 +3,9 @@ $board = "v";
 $thread = "235575315";
 
 if (!$thread) {
-  header("Location: http://boards.4chan.org/$board/");
+  header("Location: https://boards.4chan.org/$board/");
 } else {
-  header("Location: http://boards.4chan.org/$board/res/$thread");
+  header("Location: https://boards.4chan.org/$board/res/$thread");
 }
 
 exit;
