@@ -40,5 +40,5 @@ if (strlen($result) > 0) {
 
 $return = rtrim(implode("/", array_slice($SEGMENTS, 1)), "/");
 
-header("Location: http://$domain/$return");
+header("Location: https://$domain/$return");
 ?>

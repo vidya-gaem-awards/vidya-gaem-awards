@@ -151,7 +151,7 @@ if ($SEGMENTS[1]) {
     $code = mysql_real_escape_string($SEGMENTS[1]);
     $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`) VALUES (\"$code\", \"$uniqueID\")";
     mysql_query($query);
-    header("Location: http://$domain/voting");
+    header("Location: https://$domain/voting");
 	}	
 	
 }

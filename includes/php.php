@@ -100,7 +100,7 @@ if (isset($_SESSION['login'])) {
 	
 	$page = rtrim(implode("/", $SEGMENTS), "/");
 	
-	$tpl->set("openIDurl", SteamSignIn::genUrl("http://$domain/login/$page"));
+	$tpl->set("openIDurl", SteamSignIn::genUrl("https://$domain/login/$page"));
 	
 	$ID = $_SERVER['REMOTE_ADDR'];
 	
@@ -172,7 +172,7 @@ $navbar = "";
 
 foreach ($navbarItems as $filename => $value) {
 	
-	$external = strpos($filename, "http://") === 0;
+	$external = strpos($filename, "http") === 0;
 	
 	if (!$external && !canDo($ACCESS[$filename])) {
 		continue;

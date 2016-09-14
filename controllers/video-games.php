@@ -11,7 +11,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	foreach ($row as $key => $value) {
 		if ($key == "Game") {
 			$wp = urlencode(str_replace(" ", "_", $value));
-			$row[$key] = "<a href='http://en.wikipedia.org/wiki/$wp'>$value</a>";
+			$row[$key] = "<a href='https://en.wikipedia.org/wiki/$wp'>$value</a>";
 			continue;
 		}
 		

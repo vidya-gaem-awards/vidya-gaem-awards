@@ -31,6 +31,6 @@
 
 <!--<div class="row" style="margin-top: 20px;">
 <div class="span8 offset2">
-<iframe width="640" height="360" src="http://www.youtube.com/embed/mOGRDuY0DFI?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/mOGRDuY0DFI?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>-->

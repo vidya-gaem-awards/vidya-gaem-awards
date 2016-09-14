@@ -37,7 +37,7 @@
 						<li><img src="<tag:avatarURL />" style='margin-top: 3px; width: 32px; height: 32px;' /></li>
 						<li><a href="http://steamcommunity.com/profiles/<tag:communityID />"> <tag:displayName /></a></li>
 					<else:loggedIn>
-						<li><a href="<tag:openIDurl />"><img src="http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png" /></a></li>
+						<li><a href="<tag:openIDurl />"><img src="https://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png" /></a></li>
 					</if:loggedIn>
 				</ul>
 			</div>
@@ -72,7 +72,7 @@
 					<li><a href="http://steamcommunity.com/groups/vidyagaemawards">Steam Group</a></li>
 					<li><a href="steam://friends/joinchat/103582791432684008">Steam Chat</a></li>
 					<li><a href="mailto:vidya@vidyagaemawards.com">Email</a></li>
-					<li><a href="http://2011.vidyagaemawards.com">2011 /v/GAs</a></li>
+					<li><a href="https://2011.vidyagaemawards.com">2011 /v/GAs</a></li>
 				</ul>
 				<ul class="nav secondary-nav">
 					<li><a href="/privacy">Privacy Policy</a></li>

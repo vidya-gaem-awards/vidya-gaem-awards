@@ -214,7 +214,7 @@ body, html {
             </h1>
             <div id="live_player">
               <div class="live_site_player_container swf_container" id="standard_holder" style="width: 100%; height: 485px;">
-                <object type="application/x-shockwave-flash" height="100%" width="100%" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=vidyagaemawards" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=vidyagaemawards&auto_play=true&start_volume=25" /></object>
+                <object type="application/x-shockwave-flash" height="100%" width="100%" id="live_embed_player_flash" data="https://www.twitch.tv/widgets/live_embed_player.swf?channel=vidyagaemawards" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="https://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=vidyagaemawards&auto_play=true&start_volume=25" /></object>
               </div>
             </div>
             <ul class="controls">
@@ -223,8 +223,8 @@ body, html {
               <li><a id="link-stream-livestream" href="#">Livestream</a> <span class="gap">|</span></li> -->
               <li>Chat Popouts: </li>
               <!-- <li style="display: none;"><a id="link-chat-twitch" href="#">Twitch</a> <span class="gap">|</span></li> -->
-              <li><a href="http://twitch.tv/chat/embed?channel=vidyagaemawards&popout_chat=true" target="_blank">Twitch</a> <span class="gap">|</span></li>
-              <li><a href="http://vidyagaemslive.chatango.com/?js" target="_blank">Chatango</a> <span class="gap">|</span></li>
+              <li><a href="https://twitch.tv/chat/embed?channel=vidyagaemawards&popout_chat=true" target="_blank">Twitch</a> <span class="gap">|</span></li>
+              <li><a href="https://vidyagaemslive.chatango.com/?js" target="_blank">Chatango</a> <span class="gap">|</span></li>
               <li><a href="steam://friends/joinchat/103582791432684008">Steam Chat</a> <span class="gap">|</span></li>
               <li>IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net</li>
             </ul>
@@ -235,7 +235,7 @@ body, html {
   </div>
   <div class="column fixed" id="right_col">
     <div class="content" id="chat_container">
-      <iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=vidyagaemawards&popout_chat=true" height="100%" width="320"></iframe>
+      <iframe frameborder="0" scrolling="no" id="chat_embed" src="https://twitch.tv/chat/embed?channel=vidyagaemawards&popout_chat=true" height="100%" width="320"></iframe>
     </div>
   </div>
 </div>
@@ -262,7 +262,7 @@ $("#right_close").click(function() {
 $("#link-stream-twitch").click(function() {
   event.preventDefault();
   $("#standard_holder").empty();
-  $("#standard_holder").append('<object type="application/x-shockwave-flash" height="100%" width="100%" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=vidyagaemawards" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=vidyagaemawards&auto_play=true&start_volume=25" /></object>');
+  $("#standard_holder").append('<object type="application/x-shockwave-flash" height="100%" width="100%" id="live_embed_player_flash" data="https://www.twitch.tv/widgets/live_embed_player.swf?channel=vidyagaemawards" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="https://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=vidyagaemawards&auto_play=true&start_volume=25" /></object>');
   $("#link-stream-livestream").parent().show();
   $("#link-stream-twitch").parent().hide();
 });
@@ -270,7 +270,7 @@ $("#link-stream-twitch").click(function() {
 $("#link-stream-livestream").click(function() {
   event.preventDefault();
   $("#standard_holder").empty();
-  $("#standard_holder").append('<iframe width="100%" height="100%" src="http://cdn.livestream.com/embed/vidyagaemawards?layout=4&color=0xff00ff&autoPlay=true&mute=false&iconColorOver=0xcccccc&iconColor=0xffffff&allowchat=false&height=100%25&width=100%25" style="border:0;outline:0" frameborder="0" scrolling="no"></iframe>');
+  $("#standard_holder").append('<iframe width="100%" height="100%" src="https://cdn.livestream.com/embed/vidyagaemawards?layout=4&color=0xff00ff&autoPlay=true&mute=false&iconColorOver=0xcccccc&iconColor=0xffffff&allowchat=false&height=100%25&width=100%25" style="border:0;outline:0" frameborder="0" scrolling="no"></iframe>');
   $("#link-stream-twitch").parent().show();
   $("#link-stream-livestream").parent().hide();
 });
@@ -278,7 +278,7 @@ $("#link-stream-livestream").click(function() {
 $("#link-chat-twitch").click(function() {
   event.preventDefault();
   $("#chat_container").empty();
-  $("#chat_container").append('<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=vidyagaemawards&amp;" height="100%" width="320"></iframe>');
+  $("#chat_container").append('<iframe frameborder="0" scrolling="no" id="chat_embed" src="https://twitch.tv/chat/embed?channel=vidyagaemawards&amp;" height="100%" width="320"></iframe>');
   $("#link-chat-chatango").parent().show();
   $("#link-chat-twitch").parent().hide();
 });
@@ -286,7 +286,7 @@ $("#link-chat-twitch").click(function() {
 $("#link-chat-chatango").click(function() {
   event.preventDefault();
   $("#chat_container").empty();
-  $("#chat_container").append('<object width="100%" height="100%" id="obj_1328891570920"><param name="movie" value="http://vidyagaemslive.chatango.com/group"/><param name="AllowScriptAccess" VALUE="always"/><param name="AllowNetworking" VALUE="all"/><param name="AllowFullScreen" VALUE="true"/><param name="flashvars" value="cid=1328891570920&b=1&d=666666&f=50&l=999999&q=999999&w=0&t=0"/><embed id="emb_1328891570920" src="http://vidyagaemslive.chatango.com/group" width="100%" height="100%" allowScriptAccess="always" allowNetworking="all" type="application/x-shockwave-flash" allowFullScreen="true" flashvars="cid=1328891570920&b=1&d=666666&f=50&l=999999&q=999999&w=0&t=0"></embed></object>');
+  $("#chat_container").append('<object width="100%" height="100%" id="obj_1328891570920"><param name="movie" value="https://vidyagaemslive.chatango.com/group"/><param name="AllowScriptAccess" VALUE="always"/><param name="AllowNetworking" VALUE="all"/><param name="AllowFullScreen" VALUE="true"/><param name="flashvars" value="cid=1328891570920&b=1&d=666666&f=50&l=999999&q=999999&w=0&t=0"/><embed id="emb_1328891570920" src="https://vidyagaemslive.chatango.com/group" width="100%" height="100%" allowScriptAccess="always" allowNetworking="all" type="application/x-shockwave-flash" allowFullScreen="true" flashvars="cid=1328891570920&b=1&d=666666&f=50&l=999999&q=999999&w=0&t=0"></embed></object>');
   $("#link-chat-twitch").parent().show();
   $("#link-chat-chatango").parent().hide();
 });

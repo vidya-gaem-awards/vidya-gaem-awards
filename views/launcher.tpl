@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
+<script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <script type="text/javascript" src="/public/jquery/jquery.marquee.js"></script>
 
 <!-- <audio autoplay loop>
@@ -148,7 +148,7 @@ body {
     </div>
     <div class="span8">
       <div class="logo">
-        <iframe width="100%" height="460" src="http://www.youtube.com/embed/MvTt8g4gaHY?rel=0" frameborder="0" allowfullscreen=""></iframe>
+        <iframe width="100%" height="460" src="https://www.youtube.com/embed/MvTt8g4gaHY?rel=0" frameborder="0" allowfullscreen=""></iframe>
       </div>
       <div class="title">
         <h1>It's happening. Finally.</h1>

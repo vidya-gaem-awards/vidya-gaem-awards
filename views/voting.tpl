@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
+<script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 
 <style type="text/css">
 * {
@@ -896,7 +896,7 @@ function random ( myArray ) {
   <p>Too much effort for you? Vote for one nominee (just like last year) and call it a day.</p>
   <p>Still confused? We've prepared this handy <a href="/public/some-pics/howToVote.jpg">voting guide</a> for you.<br><strong>tl;dr:</strong> drag the thing you want to win from the left to the right, then click the Submit Votes button.</p>
   <h2>Links to other things:</h2>
-  <p>Looking for the main website? <a href="http://vidyagaemawards.com">It's right here</a>.</p>
+  <p>Looking for the main website? <a href="https://vidyagaemawards.com">It's right here</a>.</p>
   <p>It's not too late to submit a video and go into the draw for $20 of Steam games. Check our <a href="/videos">video</a> page for more information.</p>
   <p>Want to tell us how fucking retarded we are for going ahead with the show this year? Let us know <a href="http://steamcommunity.com/groups/vidyagaemawards/discussions/">here</a> or <a href="mailto:vidya@vidyagaemawards.com">email us</a>.</p>
   <else:votingEnabled>

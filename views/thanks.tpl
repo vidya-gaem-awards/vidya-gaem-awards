@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
+<script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <script type="text/javascript" src="/public/jquery/jquery.marquee.js"></script>
 
 <!-- <audio autoplay loop>
@@ -148,7 +148,7 @@ body {
   <div class="row">
     <div class="span8 offset2">
       <div class="logo">
-        <iframe width="100%" height="460" src="http://www.youtube.com/embed/6MxWMJCOKSY?rel=0" frameborder="0" allowfullscreen=""></iframe>
+        <iframe width="100%" height="460" src="https://www.youtube.com/embed/6MxWMJCOKSY?rel=0" frameborder="0" allowfullscreen=""></iframe>
         <!-- <img src="/public/80s_vsync.png"> -->
       </div>
       <div class="title">
@@ -156,19 +156,19 @@ body {
         <h2 id="countdown">Thanks for watching!</h2>
       </div>
       <div class="subtitle">
-        <a href="http://www.youtube.com/watch?v=6MxWMJCOKSY" class="special">watch it on youtube</span></a><br>
-        <a href="http://www.youtube.com/watch?v=cRVOMHFBEjA">watch the director's cut</a><br>
+        <a href="https://www.youtube.com/watch?v=6MxWMJCOKSY" class="special">watch it on youtube</span></a><br>
+        <a href="https://www.youtube.com/watch?v=cRVOMHFBEjA">watch the director's cut</a><br>
         <a href="https://mega.co.nz/#!kwwCxJpJ!QRS-ii80ti2n3KDDYKacImO0ggwoneB78mikvjqUYDw" class="special">direct download</a> - includes preshow<br>
         <a href="http://vga.rbt.asia/">download mirror</a><br>
-        <a href="http://www.twitch.tv/vidyagaemawards/b/373126916">watch it on twitch</a> - includes preshow<br>
+        <a href="https://www.twitch.tv/vidyagaemawards/b/373126916">watch it on twitch</a> - includes preshow<br>
         <a href="/winners">see the winners</a><br>
         <a href="/credits">see the credits</a><br>
-        <a href="http://vidyagaemawards.com/music/2012-vga-music-mix.mp3">preshow music mix</a><br>
-        <a href="http://github.com/clamburger/vidya-gaem-awards">website source code</a>
+        <a href="https://vidyagaemawards.com/music/2012-vga-music-mix.mp3">preshow music mix</a><br>
+        <a href="https://github.com/clamburger/vidya-gaem-awards">website source code</a>
       </div>
       <div class="subtitle">
         <a href="/home" class="main">continue to the main site</a><br>
-        <a href="http://2011.vidyagaemawards.com" class="main">view the 2011 site</a>
+        <a href="https://2011.vidyagaemawards.com" class="main">view the 2011 site</a>
       </div>
     </div>
   </div>
