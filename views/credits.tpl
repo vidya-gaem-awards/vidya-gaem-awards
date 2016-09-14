@@ -325,7 +325,7 @@ h2.thanks {
         <h2 style="margin-top: 50px;">Pleb Patrol:</h2>
         <p>Music by <strong><a href="http://soundcloud.com/mcmangos">McMaNGOS</a></strong> and
         <strong><a href="http://soundcloud.com/muffswag">Muffswag</a></strong></p>
-        <p>Website by <strong><a href="http://github.com/clamburger">Clamburger</a></strong> and <strong>Segab</strong></p>
+        <p>Website by <strong><a href="https://github.com/clamburger">Clamburger</a></strong> and <strong>Segab</strong></p>
         <p>And finally,<br><strong>F4cemelt&ouml;r</strong> as the /v/GA Fanboy</p>
     </div>
   </div>

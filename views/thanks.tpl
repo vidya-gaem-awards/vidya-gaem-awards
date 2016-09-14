@@ -1,11 +1,11 @@
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
-<link rel="stylesheet" href="http://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
-<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
+<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+<script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
   font-family: "ArtBrush";
@@ -134,7 +134,7 @@ a:hover {
       <div class="row">
         <div class="span8 offset2">
       <div class="logo">
-        <iframe width="100%" height="460" src="http://www.youtube.com/embed/bDA_lIHkdDE?rel=0" frameborder="0" allowfullscreen=""></iframe>
+        <iframe width="100%" height="460" src="https://www.youtube.com/embed/bDA_lIHkdDE?rel=0" frameborder="0" allowfullscreen=""></iframe>
         <!-- <img src="/public/2013_logo.png"> -->
       </div>
       </div></div>
@@ -144,17 +144,17 @@ a:hover {
         <h2 id="countdown">Thanks for watching!</h2>
       </div>
       <div class="subtitle">
-        <a href="http://www.youtube.com/watch?v=bDA_lIHkdDE">Watch it on YouTube</a><br>
-        <a href="http://www.twitch.tv/vidyagaemawards/c/3887991">Watch it on Twitch</a><br>
+        <a href="https://www.youtube.com/watch?v=bDA_lIHkdDE">Watch it on YouTube</a><br>
+        <a href="https://www.twitch.tv/vidyagaemawards/c/3887991">Watch it on Twitch</a><br>
         <a href="https://archive.org/details/2013vgas">Direct download</a><br>
         <a href="/winners">See the winners</a><br>
         <a href="/credits">See the credits</a><br>
-        <a href="http://github.com/clamburger/vidya-gaem-awards">Website source code</a>
+        <a href="https://github.com/clamburger/vidya-gaem-awards">Website source code</a>
       </div>
       <div class="subtitle">
         <a href="/home" class="main">Continue to the main site</a><br>
-        <a href="http://2011.vidyagaemawards.com" class="main">View the 2011 site</a><br>
-        <a href="http://2012.vidyagaemawards.com" class="main">View the 2012 site</a>
+        <a href="https://2011.vidyagaemawards.com" class="main">View the 2011 site</a><br>
+        <a href="https://2012.vidyagaemawards.com" class="main">View the 2012 site</a>
       </div>
     </div>
   </div>

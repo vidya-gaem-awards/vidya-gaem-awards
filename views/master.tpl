@@ -85,8 +85,8 @@
                     <li><a href="http://steamcommunity.com/groups/vidyagaemawards">Steam Group</a></li>
                     <li><a href="steam://friends/joinchat/103582791432684008">Steam Chat</a></li>
                     <li><a href="mailto:vidya@vidyagaemawards.com">Email</a></li>
-                    <li><a href="http://2011.vidyagaemawards.com">2011 /v/GAs</a></li>
-                    <li><a href="http://2012.vidyagaemawards.com">2012 /v/GAs</a></li>
+                    <li><a href="https://2011.vidyagaemawards.com">2011 /v/GAs</a></li>
+                    <li><a href="https://2012.vidyagaemawards.com">2012 /v/GAs</a></li>
                 </ul>
                 <ul class="nav secondary-nav">
                     <li><a href="/privacy">Privacy Policy</a></li>

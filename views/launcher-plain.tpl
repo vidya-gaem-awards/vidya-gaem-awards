@@ -1,6 +1,6 @@
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
 <link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap.min.css">
@@ -14,7 +14,7 @@ body, html {
     text-align: center;
 }
 body {
-    /*background: #EEF2FF url('http://i.imgur.com/vhP2J.png') top center repeat-x;*/
+    /*background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;*/
     background: black;
 color: white;
 }
@@ -23,7 +23,7 @@ color: white;
     /*border: 1px solid #34345C;*/
     width: 958px;
     height: 420px;
-    background: url('http://i.imgur.com/0g30jh0.gif');
+    background: url('https://i.imgur.com/0g30jh0.gif');
     background-position: center;
     margin-left: auto;
     margin-right: auto;
@@ -59,7 +59,7 @@ a:hover {
 }
 .timezones{font-size:17px;}.timezones dl{margin-top:0px;}.timezones dt{margin-top:20px;}.timezones dt:first-child{margin-top:0px;}
 </style>
-<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 <if:countdown>
 <script type="text/javascript">
 var serverLoad = Date.parse("<tag:serverDate />");
@@ -136,7 +136,7 @@ function showTimezones() {
 </div>
 <div class="span8">
 <div class="logo">
-<iframe width="100%" height="460" src="http://www.youtube.com/embed/MvTt8g4gaHY?rel=0" frameborder="0" allowfullscreen=""></iframe>
+<iframe width="100%" height="460" src="https://www.youtube.com/embed/MvTt8g4gaHY?rel=0" frameborder="0" allowfullscreen=""></iframe>
 </div>
 <div class="title">
 <h1>Streaming live for the third year!</h1>
