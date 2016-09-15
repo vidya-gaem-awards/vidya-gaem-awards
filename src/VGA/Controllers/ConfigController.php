@@ -10,29 +10,26 @@ class ConfigController extends BaseController
 {
     public function indexAction()
     {
-        $config = $this->em->getRepository(Config::class)->findOneBy([]);
         $tpl = $this->twig->loadTemplate('config.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Config',
-            'config' => $config
+            'config' => $this->config
         ]));
         $response->send();
     }
 
     public function postAction()
     {
-        /** @var Config $config */
-        $config = $this->em->getRepository(Config::class)->findOneBy([]);
         $post = $this->request->request;
 
         $error = false;
 
         if (!$post->get('votingStart')) {
-            $config->setVotingStart(null);
+            $this->config->setVotingStart(null);
         } else {
             try {
-                $config->setVotingStart(new \DateTime($post->get('votingStart')));
+                $this->config->setVotingStart(new \DateTime($post->get('votingStart')));
             } catch (\Exception $e) {
                 $this->session->getFlashBag()->add('error', 'Invalid date provided for voting start.');
                 $error = true;
@@ -40,10 +37,10 @@ class ConfigController extends BaseController
         }
 
         if (!$post->get('votingEnd')) {
-            $config->setVotingEnd(null);
+            $this->config->setVotingEnd(null);
         } else {
             try {
-                $config->setVotingEnd(new \DateTime($post->get('votingEnd')));
+                $this->config->setVotingEnd(new \DateTime($post->get('votingEnd')));
             } catch (\Exception $e) {
                 $this->session->getFlashBag()->add('error', 'Invalid date provided for voting end.');
                 $error = true;
@@ -51,19 +48,19 @@ class ConfigController extends BaseController
         }
 
         if (!$post->get('streamTime')) {
-            $config->setStreamTime(null);
+            $this->config->setStreamTime(null);
         } else {
             try {
-                $config->setStreamTime(new \DateTime($post->get('streamTime')));
+                $this->config->setStreamTime(new \DateTime($post->get('streamTime')));
             } catch (\Exception $e) {
                 $this->session->getFlashBag()->add('error', 'Invalid date provided for stream time.');
                 $error = true;
             }
         }
 
-        $config->setDefaultPage($post->get('defaultPage'));
+        $this->config->setDefaultPage($post->get('defaultPage'));
 
-        $this->em->persist($config);
+        $this->em->persist($this->config);
         $this->em->flush();
 
         if (!$error) {

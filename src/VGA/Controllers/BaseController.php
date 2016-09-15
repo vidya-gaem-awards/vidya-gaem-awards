@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use VGA\DependencyContainer;
 
+use VGA\Model\Config;
 use VGA\Model\User;
 
 abstract class BaseController
@@ -29,6 +30,9 @@ abstract class BaseController
     /** @var UrlGenerator */
     protected $generator;
 
+    /** @var Config */
+    protected $config;
+
     public function __construct(DependencyContainer $container) {
         $this->em = $container->em;
         $this->request = $container->request;
@@ -36,5 +40,6 @@ abstract class BaseController
         $this->session = $container->session;
         $this->user = $container->user;
         $this->generator = $container->generator;
+        $this->config = $container->config;
     }
 }

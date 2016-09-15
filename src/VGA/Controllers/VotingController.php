@@ -33,15 +33,12 @@ class VotingController extends BaseController
         $nextCategory = null;
         $voteJSON = [null];
 
-        /** @var Config $config */
-        $config = $this->em->getRepository(Config::class)->findOneBy([]);
+        $start = $this->config->getVotingStart();
+        $end = $this->config->getVotingEnd();
 
-        $start = $config->getVotingStart();
-        $end = $config->getVotingEnd();
-
-        $votingNotYetOpen = $config->isVotingNotYetOpen();
-        $votingClosed = $config->hasVotingClosed();
-        $votingOpen = $config->isVotingOpen();
+        $votingNotYetOpen = $this->config->isVotingNotYetOpen();
+        $votingClosed = $this->config->hasVotingClosed();
+        $votingOpen = $this->config->isVotingOpen();
 
         if ($votingNotYetOpen) {
             if (!$start) {
@@ -148,15 +145,12 @@ class VotingController extends BaseController
     {
         $response = new JsonResponse();
 
-        /** @var Config $config */
-        $config = $this->em->getRepository(Config::class)->findOneBy([]);
-
         if (!$this->user->canDo('voting-view')) {
-            if ($config->isVotingNotYetOpen()) {
+            if ($this->config->isVotingNotYetOpen()) {
                 $response->setData(['error' => 'Voting hasn\'t started yet.']);
                 $response->send();
                 return;
-            } elseif ($config->hasVotingClosed()) {
+            } elseif ($this->config->hasVotingClosed()) {
                 $response->setData(['error' => 'Voting has closed.']);
                 $response->send();
                 return;

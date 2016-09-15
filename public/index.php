@@ -513,7 +513,8 @@ $container = new DependencyContainer(
     $twig,
     $session,
     $user,
-    $generator
+    $generator,
+    $config
 );
 
 // Call the correct controller and method

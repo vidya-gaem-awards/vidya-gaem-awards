@@ -8,9 +8,7 @@ class LauncherController extends BaseController
 {
     public function countdownAction()
     {
-        /** @var Config $config */
-        $config = $this->em->getRepository(Config::class)->findOneBy([]);
-        $streamDate = $config->getStreamTime();
+        $streamDate = $this->config->getStreamTime();
 
         $timezones = [
             'Honolulu' => 'Pacific/Honolulu',
@@ -49,10 +47,7 @@ class LauncherController extends BaseController
     {
         $tpl = $this->twig->loadTemplate('stream.twig');
 
-        /** @var Config $config */
-        $config = $this->em->getRepository(Config::class)->findOneBy([]);
-        $streamDate = $config->getStreamTime();
-
+        $streamDate = $this->config->getStreamTime();
         $showCountdown = ($streamDate > new \DateTime());
         
         $response = new Response($tpl->render([
