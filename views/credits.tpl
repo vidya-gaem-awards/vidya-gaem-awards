@@ -20,8 +20,7 @@
     -webkit-box-shadow: none;
     box-shadow:         none;
     border:             none;
-    background-image: url("/2014voting/bg_tile.png");
-    background-color: #212121;
+    background: #212121 url("/2014voting/bg_tile.png");
   }
 
   .navbar a {

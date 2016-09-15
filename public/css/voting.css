@@ -9,7 +9,7 @@ a, a:hover {
 a img { border:none;}
 img {display:block;}
 
-article, aside, figcaption, figure, footer, header, hgroup, nav, section {
+article, aside, figcaption, figure, footer, header, nav, section {
   display: block;
 }
 
@@ -52,8 +52,7 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section {
 
 
 html {
-	background-image: url("/2015voting/bg.gif"); 
-	background-color: black;
+	background: black url("/2015voting/bg.gif");
 }
 
 body {
@@ -129,9 +128,8 @@ header h2{
 
 #wrapper {
   width: 988px;
-  margin: 0 auto;
-  position: relative;
-  margin-bottom: 90px;
+	position: relative;
+	margin: 0 auto 90px;
 }
 
 /* Award Header */
@@ -352,7 +350,6 @@ footer .navigation {
 	text-decoration: none;
 	text-transform: uppercase;
 	font-family: "modern typewriter", Tahoma, sans-serif;
-	text-transform: uppercase;
 	font-size: 1.6em;
 	line-height: 1em;
 }
@@ -458,16 +455,14 @@ footer .navigation {
   margin-left: 14px;
   height: 58px;
   width: 149px;
-  background-image: url("/2015voting/btn_submit.gif");
-  background-position: 0px 0px;
+	background: url("/2015voting/btn_submit.gif") 0px 0px;
 }
 
 #btnResetVotes {
   width: 138px;
   height: 58px;
-  background-image: url("/2015voting/btn_reset.gif");
-  background-position: 0px 0px;
-  margin-left: 348px;
+	background: url("/2015voting/btn_reset.gif") 0px 0px;
+	margin-left: 348px;
 }
 
 #btnLockVotes:hover {

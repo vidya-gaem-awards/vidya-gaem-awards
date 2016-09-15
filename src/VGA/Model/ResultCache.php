@@ -30,7 +30,7 @@ class ResultCache
     private $votes;
 
     /**
-     * @var \VGA\Model\Category
+     * @var Category
      */
     private $category;
 
@@ -139,11 +139,11 @@ class ResultCache
     /**
      * Set category
      *
-     * @param \VGA\Model\Category $category
+     * @param Category $category
      *
      * @return ResultCache
      */
-    public function setCategory(\VGA\Model\Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
 
@@ -153,7 +153,7 @@ class ResultCache
     /**
      * Get category
      *
-     * @return \VGA\Model\Category
+     * @return Category
      */
     public function getCategory()
     {

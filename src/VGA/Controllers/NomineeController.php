@@ -4,7 +4,7 @@ namespace VGA\Controllers;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGenerator;
+
 use VGA\Model\Action;
 use VGA\Model\Category;
 use VGA\Model\Nominee;
@@ -130,7 +130,7 @@ class NomineeController extends BaseController
             $action->setUser($this->user)
                 ->setPage(__CLASS__)
                 ->setData1($category->getId())
-                ->SetData2($nominee->getShortName());
+                ->setData2($nominee->getShortName());
             $this->em->persist($action);
 
             $this->em->flush();
@@ -163,7 +163,7 @@ class NomineeController extends BaseController
         $action->setUser($this->user)
             ->setPage(__CLASS__)
             ->setData1($category->getId())
-            ->SetData2($nominee->getShortName());
+            ->setData2($nominee->getShortName());
         $this->em->persist($action);
 
         $history = new TableHistory();

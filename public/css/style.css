@@ -21,11 +21,6 @@ body, label, input, select, textarea, p {
 	color: white;
 }
 
-.4chan {
-	color: #117743;
-	font-weight: 800;
-}
-
 .news {
 	font-size: 120%;
 }
@@ -94,9 +89,7 @@ section {
 
 
 table.tablesorter thead tr th {
-	background-image: url("/sort.gif");
-	background-repeat: no-repeat;
-	background-position: center right;
+	background: url("/sort.gif") no-repeat center right;
 	cursor: pointer;
 }
 
@@ -156,10 +149,8 @@ table.tablesorter thead tr .headerSortUp {
 /* Chevrons */
 
 .filmstrip {
-  background-image: url('/filmstrip.png');
-  background-repeat: repeat-x;
-  background-position: bottom;
-  height: 42px;
+	background: url('/filmstrip.png') repeat-x bottom;
+	height: 42px;
 }
 
 ul.nav li.dropdown:hover ul.dropdown-menu {

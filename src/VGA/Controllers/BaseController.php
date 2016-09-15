@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use VGA\DependencyContainer;
-use VGA\Model\Config;
+
 use VGA\Model\User;
 
 abstract class BaseController

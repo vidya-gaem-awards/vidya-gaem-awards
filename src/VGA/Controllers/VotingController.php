@@ -1,7 +1,7 @@
 <?php
 namespace VGA\Controllers;
 
-use RandomLib;
+
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;

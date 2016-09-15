@@ -1,65 +1,39 @@
 <?php
-
 namespace VGA\Model;
 
-/**
- * Access
- */
 class Access
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $cookieID;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     private $timestamp;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $page;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $requestString;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $requestMethod;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $ip;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $userAgent;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $filename;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $referer;
 
-    /**
-     * @var \VGA\Model\User
-     */
+    /** @var User */
     private $user;
 
     public function __construct()
@@ -68,8 +42,6 @@ class Access
     }
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -78,10 +50,7 @@ class Access
     }
 
     /**
-     * Set cookieID
-     *
      * @param string $cookieID
-     *
      * @return Access
      */
     public function setCookieID($cookieID)
@@ -92,8 +61,6 @@ class Access
     }
 
     /**
-     * Get cookieID
-     *
      * @return string
      */
     public function getCookieID()
@@ -102,10 +69,7 @@ class Access
     }
 
     /**
-     * Set timestamp
-     *
      * @param \DateTime $timestamp
-     *
      * @return Access
      */
     public function setTimestamp($timestamp)
@@ -116,8 +80,6 @@ class Access
     }
 
     /**
-     * Get timestamp
-     *
      * @return \DateTime
      */
     public function getTimestamp()
@@ -126,10 +88,7 @@ class Access
     }
 
     /**
-     * Set page
-     *
      * @param string $page
-     *
      * @return Access
      */
     public function setPage($page)
@@ -140,8 +99,6 @@ class Access
     }
 
     /**
-     * Get page
-     *
      * @return string
      */
     public function getPage()
@@ -150,22 +107,16 @@ class Access
     }
 
     /**
-     * Set requestString
-     *
      * @param string $requestString
-     *
      * @return Access
      */
     public function setRequestString($requestString)
     {
         $this->requestString = $requestString;
-
         return $this;
     }
 
     /**
-     * Get requestString
-     *
      * @return string
      */
     public function getRequestString()
@@ -174,10 +125,7 @@ class Access
     }
 
     /**
-     * Set requestMethod
-     *
      * @param string $requestMethod
-     *
      * @return Access
      */
     public function setRequestMethod($requestMethod)
@@ -188,8 +136,6 @@ class Access
     }
 
     /**
-     * Get requestMethod
-     *
      * @return string
      */
     public function getRequestMethod()
@@ -198,22 +144,16 @@ class Access
     }
 
     /**
-     * Set ip
-     *
      * @param string $ip
-     *
      * @return Access
      */
     public function setIp($ip)
     {
         $this->ip = $ip;
-
         return $this;
     }
 
     /**
-     * Get ip
-     *
      * @return string
      */
     public function getIp()
@@ -222,22 +162,16 @@ class Access
     }
 
     /**
-     * Set userAgent
-     *
      * @param string $userAgent
-     *
      * @return Access
      */
     public function setUserAgent($userAgent)
     {
         $this->userAgent = $userAgent;
-
         return $this;
     }
 
     /**
-     * Get userAgent
-     *
      * @return string
      */
     public function getUserAgent()
@@ -246,22 +180,16 @@ class Access
     }
 
     /**
-     * Set filename
-     *
      * @param string $filename
-     *
      * @return Access
      */
     public function setFilename($filename)
     {
         $this->filename = $filename;
-
         return $this;
     }
 
     /**
-     * Get filename
-     *
      * @return string
      */
     public function getFilename()
@@ -270,22 +198,16 @@ class Access
     }
 
     /**
-     * Set referer
-     *
      * @param string $referer
-     *
      * @return Access
      */
     public function setReferer($referer)
     {
         $this->referer = $referer;
-
         return $this;
     }
 
     /**
-     * Get referer
-     *
      * @return string
      */
     public function getReferer()
@@ -294,23 +216,17 @@ class Access
     }
 
     /**
-     * Set user
-     *
-     * @param \VGA\Model\User $user
-     *
+     * @param User $user
      * @return Access
      */
-    public function setUser(\VGA\Model\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
-
         return $this;
     }
 
     /**
-     * Get user
-     *
-     * @return \VGA\Model\User
+     * @return User
      */
     public function getUser()
     {
