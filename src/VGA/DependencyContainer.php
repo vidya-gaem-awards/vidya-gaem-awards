@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use VGA\Model\Config;
 use VGA\Model\User;
 
 class DependencyContainer
@@ -27,13 +28,17 @@ class DependencyContainer
     /** @var UrlGenerator */
     public $generator;
 
+    /** @var Config */
+    public $config;
+
     public function __construct(
         EntityManager $em,
         Request $request,
         \Twig_Environment $twig,
         Session $session,
         User $user,
-        UrlGenerator $generator
+        UrlGenerator $generator,
+        Config $config
     ) {
         $twig->addGlobal('user', $user);
         $twig->addGlobal('flashbag', $session->getFlashBag());
@@ -44,5 +49,6 @@ class DependencyContainer
         $this->session = $session;
         $this->user = $user;
         $this->generator = $generator;
+        $this->config = $config;
     }
 }

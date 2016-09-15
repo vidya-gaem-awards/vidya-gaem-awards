@@ -465,6 +465,12 @@ $routes->add('finished', new Route(
         'permission' => 'view-unfinished-pages', // normally public, disable when ready
     ]
 ));
+$routes->add('credits', new Route(
+    '/credits',
+    [
+        'controller' => Controllers\CreditsController::class,
+    ]
+));
 
 /** @var Config $config */
 $config = $em->getRepository(Config::class)->findOneBy([]);
@@ -521,7 +527,8 @@ $container = new DependencyContainer(
     $twig,
     $session,
     $user,
-    $generator
+    $generator,
+    $config
 );
 
 // Call the correct controller and method
@@ -598,7 +605,6 @@ try {
 //$ACCESS = array(
 //    // Volatile pages
 //    "applications" => "applications-view",
-//    "credits" => EVERYONE,
 //    "test" => EVERYONE,
 //    "volunteer-submission" => LOGIN,
 //    "videos" => EVERYONE,

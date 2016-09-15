@@ -2,6 +2,9 @@
 
 namespace VGA\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 /**
  * Filter
  */
@@ -23,7 +26,7 @@ class Filter
     private $value;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      */
     private $resultCache;
 
@@ -32,7 +35,7 @@ class Filter
      */
     public function __construct()
     {
-        $this->resultCache = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->resultCache = new ArrayCollection();
     }
 
     /**
@@ -110,11 +113,11 @@ class Filter
     /**
      * Add resultCache
      *
-     * @param \VGA\Model\ResultCache $resultCache
+     * @param ResultCache $resultCache
      *
      * @return Filter
      */
-    public function addResultCache(\VGA\Model\ResultCache $resultCache)
+    public function addResultCache(ResultCache $resultCache)
     {
         $this->resultCache[] = $resultCache;
 
@@ -124,9 +127,9 @@ class Filter
     /**
      * Remove resultCache
      *
-     * @param \VGA\Model\ResultCache $resultCache
+     * @param ResultCache $resultCache
      */
-    public function removeResultCache(\VGA\Model\ResultCache $resultCache)
+    public function removeResultCache(ResultCache $resultCache)
     {
         $this->resultCache->removeElement($resultCache);
     }
@@ -134,7 +137,7 @@ class Filter
     /**
      * Get resultCache
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getResultCache()
     {

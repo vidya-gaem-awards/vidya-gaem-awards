@@ -20,3 +20,6 @@ VGA\Model\Config:
       type: string
       nullable: false
       length: 30
+    readOnly:
+      type: boolean
+      nullable: false

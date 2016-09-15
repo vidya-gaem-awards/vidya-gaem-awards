@@ -3,6 +3,7 @@
 namespace VGA\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Permission
@@ -95,11 +96,11 @@ class Permission
     /**
      * Add child
      *
-     * @param \VGA\Model\Permission $child
+     * @param Permission $child
      *
      * @return Permission
      */
-    public function addChild(\VGA\Model\Permission $child)
+    public function addChild(Permission $child)
     {
         $this->children[] = $child;
 
@@ -109,9 +110,9 @@ class Permission
     /**
      * Remove child
      *
-     * @param \VGA\Model\Permission $child
+     * @param Permission $child
      */
-    public function removeChild(\VGA\Model\Permission $child)
+    public function removeChild(Permission $child)
     {
         $this->children->removeElement($child);
     }
@@ -119,7 +120,7 @@ class Permission
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getChildren()
     {
@@ -146,11 +147,11 @@ class Permission
     /**
      * Add user
      *
-     * @param \VGA\Model\User $user
+     * @param User $user
      *
      * @return Permission
      */
-    public function addUser(\VGA\Model\User $user)
+    public function addUser(User $user)
     {
         $this->users[] = $user;
 
@@ -160,9 +161,9 @@ class Permission
     /**
      * Remove user
      *
-     * @param \VGA\Model\User $user
+     * @param User $user
      */
-    public function removeUser(\VGA\Model\User $user)
+    public function removeUser(User $user)
     {
         $this->users->removeElement($user);
     }
@@ -170,7 +171,7 @@ class Permission
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getUsers()
     {

@@ -4,7 +4,7 @@ namespace VGA\Controllers;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGenerator;
+
 use VGA\Model\Action;
 use VGA\Model\Permission;
 use VGA\Model\TableHistory;

@@ -33,7 +33,7 @@ class TableHistory
     private $timestamp;
 
     /**
-     * @var \VGA\Model\User
+     * @var User
      */
     private $user;
 
@@ -151,11 +151,11 @@ class TableHistory
     /**
      * Set user
      *
-     * @param \VGA\Model\User $user
+     * @param User $user
      *
      * @return TableHistory
      */
-    public function setUser(\VGA\Model\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 
@@ -165,7 +165,7 @@ class TableHistory
     /**
      * Get user
      *
-     * @return \VGA\Model\User
+     * @return User
      */
     public function getUser()
     {

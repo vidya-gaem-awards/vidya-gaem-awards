@@ -21,10 +21,9 @@
         width: 1180px;
         margin: 0 auto;
         padding: 10px;
-        background-color: rgb(211, 213, 176);
-        background-image: url("/falloutbackground2.jpg");
-        
-        -moz-box-shadow:    0px 0px 5px 0px rgba(0,0,0,1);
+      background: rgb(211, 213, 176) url("/falloutbackground2.jpg");
+
+      -moz-box-shadow:    0px 0px 5px 0px rgba(0,0,0,1);
         -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
         box-shadow:         0px 0px 5px 0px rgba(0,0,0,1);
     }
@@ -128,8 +127,7 @@
       float:left;
       position: relative;
       width: 889px;
-      background-color: #1f1f1f;
-      background-image: url("/lines.fw.png");
+      background: #1f1f1f url("/lines.fw.png");
       padding: 0 10px 10px 0;
     }
 

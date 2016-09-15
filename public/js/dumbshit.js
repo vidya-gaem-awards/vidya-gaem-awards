@@ -13,7 +13,7 @@ var Dumbshit = function() {
 				{
 					// IE
 					obj["e"+type+fn] = fn;
-					obj[type+fn] = function() { obj["e"+type+fn]( window.event,ref_obj ); }
+					obj[type+fn] = function() { obj["e"+type+fn]( window.event,ref_obj ); };
 	
 					obj.attachEvent( "on"+type, obj[type+fn] );
 				}
@@ -29,13 +29,12 @@ var Dumbshit = function() {
 					if (dumbshit.input == dumbshit.pattern) {
                     dumbshit.code(link);
 					dumbshit.input="";
-                   	return;
                     }
             	},this);
                       
 				},
-	        code: function(link) { window.location=link},
+	        code: function(link) { window.location=link}
 	        
-	}
+	};
 	return dumbshit;
-}
+};

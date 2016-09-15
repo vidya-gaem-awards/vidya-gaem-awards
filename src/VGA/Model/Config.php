@@ -22,6 +22,9 @@ class Config
     /** @var string */
     private $defaultPage;
 
+    /** @var boolean */
+    private $readOnly;
+
     /**
      * @return \DateTime
      */
@@ -166,4 +169,21 @@ class Config
         return self::ALLOWED_DEFAULT_PAGES;
     }
 
+    /**
+     * @param boolean $readOnly
+     * @return Config
+     */
+    public function setReadOnly(bool $readOnly): Config
+    {
+        $this->readOnly = $readOnly;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isReadOnly(): bool
+    {
+        return $this->readOnly;
+    }
 }

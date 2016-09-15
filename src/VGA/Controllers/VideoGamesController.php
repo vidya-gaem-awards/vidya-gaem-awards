@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use VGA\Model\Action;
 use VGA\Model\GameRelease;
-use VGA\Model\News;
+
 
 class VideoGamesController extends BaseController
 {

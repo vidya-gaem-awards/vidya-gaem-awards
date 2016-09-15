@@ -1,10 +1,6 @@
 <?php
-
 namespace VGA\Model;
 
-/**
- * UserNomination
- */
 class UserNomination
 {
     /**
@@ -28,7 +24,7 @@ class UserNomination
     private $timestamp;
 
     /**
-     * @var \VGA\Model\Category
+     * @var Category
      */
     private $category;
 
@@ -130,11 +126,11 @@ class UserNomination
     /**
      * Set category
      *
-     * @param \VGA\Model\Category $category
+     * @param Category $category
      *
      * @return UserNomination
      */
-    public function setCategory(\VGA\Model\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
 
@@ -144,7 +140,7 @@ class UserNomination
     /**
      * Get category
      *
-     * @return \VGA\Model\Category
+     * @return Category
      */
     public function getCategory()
     {

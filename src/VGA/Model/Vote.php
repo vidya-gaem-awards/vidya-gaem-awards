@@ -38,12 +38,12 @@ class Vote
     private $number;
 
     /**
-     * @var \VGA\Model\Category
+     * @var Category
      */
     private $category;
 
     /**
-     * @var \VGA\Model\User
+     * @var User
      */
     private $user;
 
@@ -195,11 +195,11 @@ class Vote
     /**
      * Set category
      *
-     * @param \VGA\Model\Category $category
+     * @param Category $category
      *
      * @return Vote
      */
-    public function setCategory(\VGA\Model\Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
 
@@ -209,7 +209,7 @@ class Vote
     /**
      * Get category
      *
-     * @return \VGA\Model\Category
+     * @return Category
      */
     public function getCategory()
     {

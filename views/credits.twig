@@ -1,0 +1,313 @@
+{% extends 'master.twig' %}
+
+{% block title %}Credits{% endblock %}
+
+{% block content %}
+<style type="text/css">
+  @font-face {
+    font-family: 'modern typewriter';
+    src: url('/fonts/modern typewriter.eot');
+    src: local('☺'), url('/fonts/modern typewriter.woff') format('woff'), url('/fonts/modern typewriter.ttf') format('truetype'), url('/fonts/modern typewriter.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'yoster';
+    src: url('/fonts/yoster.eot');
+    src: local('☺'), url('/fonts/yoster.woff') format('woff'), url('/fonts/yoster.ttf') format('truetype'), url('/fonts/yoster.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  html {
+    background: black url("/2015voting/bg.gif");
+  }
+
+  body {
+    background: none;
+  }
+
+  h1, h2 {
+    margin:0;
+    padding:0;
+    color: #f85898;
+    font-weight: normal;
+  }
+
+  h1 {
+    font-family: "modern typewriter", Tahoma, sans-serif;
+    text-transform: uppercase;
+    font-size: 3em;
+    line-height: 100%;
+  }
+  h2 {
+    font-family: "yoster", Calibri, sans-serif;
+    font-size: 1.3em;
+    line-height: 100%;
+    color: #bfbfbf;
+    -webkit-font-smoothing: none;
+  }
+
+  p {
+    font-family: "modern typewriter", Tahoma, sans-serif;
+    font-size: 20px;
+    line-height: 1.3em;
+    color: #f85898;
+    margin-bottom: 10px;
+  }
+
+  .category ul {
+    list-style-type: none;
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .category ul li {
+    line-height: 1.5em;
+    font-family: "modern typewriter", Calibri, sans-serif;
+    color: #00ebdb;
+  }
+
+  .category ul li:first-child {
+    font-weight: bold;
+    font-size: 36px;
+    font-family: "modern typewriter", Tahoma, sans-serif;
+    color: #f7d059;
+  }
+
+  .category ul li:last-child {
+    color: #f85898;
+    font-size: 18px;
+    font-family: "modern typewriter", Tahoma, sans-serif;
+  }
+
+  .zig {
+    clear: both;
+    height: 20px;
+    margin: 30px 0;
+    background-image: url("/2015voting/zig_horizontal.gif");
+  }
+
+  .awardHeaderContainer:first-child {
+    margin-top: 0;
+  }
+
+  .awardHeaderContainer {
+    margin-top: 45px;
+    padding-top: 24px;
+    height: 90px;
+    background: url(/2015voting/title_bg.gif) top center no-repeat;
+    background-size: 100%;
+    text-align: center;
+  }
+  .awardName {
+    font-family: "modern typewriter", Tahoma, sans-serif;
+    text-transform: uppercase;
+    font-size: 2em;
+    line-height: 35px;
+    color: #00ebdb;
+  }
+
+  a, a:visited {
+    color: #00ebdb;
+  }
+
+  a:hover, a:active {
+    color: #f85898;
+  }
+
+  .awardSubtitle {
+    color: #00ebdb;
+  }
+
+  .navbar, .navbar .navbar-inner {
+    -moz-box-shadow:    none;
+    -webkit-box-shadow: none;
+    box-shadow:         none;
+    border:             none;
+    background: black;
+  }
+
+  .navbar a {
+    font-family: "modern typewriter", Tahoma, sans-serif !important;
+    color: white !important;
+    text-shadow: none !important;
+    background: none !important;
+  }
+
+  .navbar a:hover {
+    color: #f85898 !important;
+  }
+
+  .navbar .nav>.active>a {
+    box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+    -webkit-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+    -moz-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+  }
+
+  .navbar-fixed-top {
+    border-bottom: 1px solid #f7d059;
+  }
+
+  .navbar-fixed-bottom {
+    border-top: 1px solid #f7d059;
+  }
+
+  .navbar-brand {
+    font-weight: bold;
+  }
+
+  .credits {
+    text-align: center;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .credits strong {
+    color: #f7d059;
+    font-size: 22px;
+  }
+
+  .FLAOT {
+    display: inline-block;
+    margin: 0 30px;
+  }
+
+  .specialThanks {
+    background-size: auto;
+    height: 100px;
+    padding-top: 38px;
+    font-size: x-large;
+    margin-bottom: 20px;
+  }
+</style>
+
+<div class="zig"></div>
+
+<div class="row">
+  <div class="col-md-5" style="text-align: center;">
+    <img src="/2015voting/logo.gif" alt="Logo of the 2015 Vidya Gaem Awards">
+  </div>
+  <div class="col-md-7" style="text-align: center; padding-top: 30px;">
+    <h1>Cast and Crew of the 2015 Vidya&nbsp;Gaem&nbsp;Awards</h1>
+  </div>
+</div>
+
+<div class="zig"></div>
+
+<div class="credits">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="awardHeaderContainer">
+        <div class="awardName">Production Team:</div>
+      </div>
+      <p>Directed by <strong>PhoneEatingBear</strong></p>
+      <p>Produced by <strong>Anonymous</strong> &amp; <strong>PhoneEatingBear</strong></p>
+      <p>Template by <strong>Segab</strong> & <strong>Monoframe</strong></p>
+      <p>Award templates edited by <strong>Segab</strong></p>
+      <p>Main show edited by <strong>PhoneEatingBear</strong></p>
+      <p>Preshow edited by <strong>Anonymous</strong></p>
+      <p>Voiced by <strong>Ahch117</strong>, <strong>CounterTunes</strong>, <strong>Duke</strong>, <strong>Jackald</strong>, <strong>SlamBliss</strong>, <strong>TheVoiceGuy</strong> & <strong>Yue</strong></p>
+      <p>Logo by <strong>Monoframe</strong></p>
+      <p>Preshow Music Mix by <strong>Jab50Yen</strong></p>
+
+      <div class="awardHeaderContainer">
+        <div class="awardName">Writing Team:</div>
+      </div>
+
+      <p>
+        <strong>9Kbits</strong>, <strong>Beatstar</strong>, <strong>Dr. J</strong>, <strong>Duke</strong>, <strong>HL2.EXE</strong>,
+        <strong>Importuno</strong>, <strong>Kurushi</strong>, <strong>Lamer Gamer</strong>, <strong>LennyReviews</strong>,
+        <strong>PhoneEatingBear</strong>, <strong>Tess</strong> & <strong>Yue</strong>
+      </p>
+
+      <div class="awardHeaderContainer">
+        <div class="awardName">Awards:</div>
+      </div>
+
+      <p>
+        Most awards by <strong>Anonymous</strong>, <strong>CounterTunes</strong>, <strong>Cluey</strong>, <strong>Monoframe</strong>,
+        <strong>PhoneEatingBear</strong> & <strong>Segab</strong>
+      </p>
+
+      <p>
+        "Jet Set Award Future", "A E S T H E T I C S Award" & "Silent&nbsp;Protagonist Award" by <strong>Segab</strong>
+      </p>
+
+      <p>
+        "Hyperbole Award" by <strong>Cluey3</strong>
+      </p>
+
+      <p>
+        ">>> /a/ Award" by <strong>PhoneEatingBear</strong>
+      </p>
+
+      <p>
+        "Press X To Win The Award" by <strong>Anonymous</strong>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <div class="awardHeaderContainer">
+        <div class="awardName">Skits:</div>
+      </div>
+      <p>
+        &ldquo;Five Nights at Undertale&rdquo; &ndash; <strong>Rucdose</strong><br>
+        &ldquo;FUNNYKAT2016 THE MOVIE&rdquo; &ndash; <strong>Klixy</strong><br>
+        &ldquo;My Waifu&rdquo; &ndash; <strong>Beatstar</strong> & <strong>UnusualCharacters</strong><br>
+        &ldquo;Nintendo's Dead&rdquo; &ndash; <strong>Stuff3</strong><br>
+        &ldquo;A Weapon&rdquo; &ndash; <strong>Jetstorm John</strong><br>
+        &ldquo;He will be remembered&rdquo; &ndash; <strong>CounterTunes</strong><br>
+        &ldquo;Press F to Pay Respects&rdquo; &ndash; <strong>Segab</strong><br>
+        &ldquo;vidya skit&rdquo; &ndash; <strong>Rucdose</strong><br>
+        &ldquo;Metal Gear Profit&rdquo; &ndash; <strong>Whomobile</strong><br>
+        &ldquo;Ending Skit&rdquo; &ndash; <strong>PhoneEatingBear</strong><br>
+      </p>
+
+      <p style="margin-top: 30px;">
+        &ldquo;AAAAWWWWWOOOOOOOOOOOOOO&rdquo; &ndash; <strong>Jetstorm John</strong><br>
+        &ldquo;Bring Moon To Life&rdquo; &ndash; <strong>Most</strong><br>
+        &ldquo;EVEangelion&rdquo; &ndash; <strong>MandaloreGaming</strong><br>
+        &ldquo;Shadow of the Pearl&rdquo; &ndash; <strong>Cave Game Troll</strong><br>
+        &ldquo;Snake Eater Tribute&rdquo; &ndash; <strong>Marty MacFLAC</strong><br>
+        &ldquo;TECHYON MASHUP&rdquo; &ndash; <strong>Beatstar</strong><br>
+        &ldquo;TWIN SNAEKS&rdquo; &ndash; <strong>Chris Huddleston</strong><br>
+        &ldquo;Very Good Game Show Yes!&rdquo; &ndash; <strong>Ehmaysi</strong><br>
+        &ldquo;Nintendont&rdquo; &ndash; <strong>Anony Mous</strong><br>
+      </p>
+
+      <div class="awardHeaderContainer">
+        <div class="awardName">Pleb Patrol:</div>
+      </div>
+      <p>Website by <strong>Clamburger</strong> and <strong>Segab</strong></p>
+      <p>Logistics by <strong>iAxX</strong></p>
+      <p>Japanese translation by <strong>Ahch117</strong></p>
+    </div>
+  </div>
+
+  <div class="zig" style="margin-top: 100px;"></div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="awardHeaderContainer specialThanks">
+        <div class="awardName">Special Thanks:</div>
+      </div>
+      <p class="FLAOT"><strong>Atlus USA</strong></p>
+      <p class="FLAOT"><strong>Destructive Creations</strong></p>
+      <p class="FLAOT"><strong>Toby Fox</strong></p>
+      <p style="margin-top: 20px;">And most importantly, <strong style="font-size: x-large;">you!</strong></p>
+    </div>
+  </div>
+
+  <div class="zig"></div>
+
+  <div class="row" style="margin-top: 200px;">
+    <div class="col-xs-12">
+      <p class="implying">&gt;they contribute to a shitty online video game award show</p>
+      <p class="implying">&gt;they take their jobs very seriously</p>
+      <p class="implying">&gt;they do it for free</p>
+      <img src="/for-free.jpg" width="200px">
+    </div>
+  </div>
+</div>
+
+{% endblock %}

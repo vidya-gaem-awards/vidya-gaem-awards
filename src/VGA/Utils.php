@@ -15,6 +15,8 @@ class Utils
     {
         global $ID, $PAGE, $mysql;
 
+        /** @var \Mysqli $mysql */
+        
         $query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`,
             `SpecificID1`, `SpecificID2`) VALUES(?, NOW(), ?, ?, ?, ?)";
         $stmt = $mysql->prepare($query);

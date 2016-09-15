@@ -88,11 +88,11 @@ class Category implements \JsonSerializable
      */
     public function __construct()
     {
-        $this->feedback = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->nominees = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->userNominations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->votes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->resultCache = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->feedback = new ArrayCollection();
+        $this->nominees = new ArrayCollection();
+        $this->userNominations = new ArrayCollection();
+        $this->votes = new ArrayCollection();
+        $this->resultCache = new ArrayCollection();
     }
 
     /**

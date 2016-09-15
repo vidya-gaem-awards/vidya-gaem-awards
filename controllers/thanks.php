@@ -51,14 +51,14 @@ $date = new DateTime($timeStr);
 $timezonesLeftTpl = array();
 $timezonesRightTpl = array();
 foreach ($timezonesLeft as $name => $timezone) {
-    $date->setTimeZone(new DateTimeZone($timezone));
+    $date->setTimezone(new DateTimeZone($timezone));
     $offset = $date->format("P");
     $time = $date->format("l H:i");
     $time = $date->format("D M jS, H:i");
     $timezonesLeftTpl[] = array("Name" => $name, "Time" => $time, "Offset" => $offset);
 }
 foreach ($timezonesRight as $name => $timezone) {
-    $date->setTimeZone(new DateTimeZone($timezone));
+    $date->setTimezone(new DateTimeZone($timezone));
     $offset = $date->format("P");
     $time = $date->format("l H:i");
     $time = $date->format("D M jS, H:i");
@@ -66,7 +66,7 @@ foreach ($timezonesRight as $name => $timezone) {
 }
 
 // Don't forget to set the timezone back to default
-$date->setTimeZone(new DateTimeZone("America/New_York"));
+$date->setTimezone(new DateTimeZone(TIMEZONE));
 
 $tpl->set("timezonesLeft", $timezonesLeftTpl);
 $tpl->set("timezonesRight", $timezonesRightTpl);

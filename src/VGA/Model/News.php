@@ -147,11 +147,11 @@ class News
     /**
      * Set user
      *
-     * @param \VGA\Model\User $user
+     * @param User $user
      *
      * @return News
      */
-    public function setUser(\VGA\Model\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 

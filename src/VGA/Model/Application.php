@@ -147,11 +147,11 @@ class Application
     /**
      * Set user
      *
-     * @param \VGA\Model\User $user
+     * @param User $user
      *
      * @return Application
      */
-    public function setUser(\VGA\Model\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 
@@ -161,7 +161,7 @@ class Application
     /**
      * Get user
      *
-     * @return \VGA\Model\User
+     * @return User
      */
     public function getUser()
     {
