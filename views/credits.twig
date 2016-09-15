@@ -1,3 +1,8 @@
+{% extends 'master.twig' %}
+
+{% block title %}Credits{% endblock %}
+
+{% block content %}
 <style type="text/css">
   @font-face {
     font-family: "Bebas Neue";
@@ -248,76 +253,113 @@ h2.thanks {
   font-size: 20px;
   line-height: 30px;
 }
+
+.FLAOT {
+  display: inline-block;
+  margin: 0 20px;
+}
 </style>
 
 <div class="page-header">
-  <h1>Cast and Crew of the 2014 Vidya Gaem Awards</h1>
+  <h1>Cast and Crew of the 2015 Vidya Gaem Awards</h1>
   <div class="hr"></div>
 </div>
 
 <div class="credits">
   <div class="row">
-    <div class="span6">
-      <h2>Main Team:</h2>
+    <div class="col-md-6">
+      <h2>Production Team:</h2>
       <p>Directed by <strong>PhoneEatingBear</strong></p>
-      <p>Produced by <strong>PhoneEatingBear</strong> &amp; <strong>Anonymous</strong></p>
-      <p>Edited by <strong>PhoneEatingBear</strong></p>
-      <p>Sound mixing by <strong>PhoneEatingBear</strong></p>
-      <p>Voice actors: <strong>Duke</strong>, <strong>Hara O'Bablyon</strong> &amp; <strong>CounterTunes</strong></p>
-      <p>Template Design by <strong>Segab</strong> &amp; <strong>PhoneEatingBear</strong></p>
-      <p>Logo by <strong>Ryan Dell</strong></p>
-      <p>Preshow Mix by <strong>Stuff3</strong></p>
-      <p>Written by <strong>Lamer Gamer</strong>, <strong>Tess</strong>, <strong>Yue</strong>,
-      <strong>Beatstar</strong>, <strong>Importuno</strong>, <strong>MrTurtle66</strong>,
-      <strong>SlamBliss</strong>, <strong>Kurushi</strong>, <strong>Jackald</strong>, <strong>LennyReviews</strong> and
-      <strong>PhoneEatingBear</strong></p>
+      <p>Produced by <strong>Anonymous</strong> &amp; <strong>PhoneEatingBear</strong></p>
+      <p>Template by <strong>Segab</strong> & <strong>Monoframe</strong></p>
+      <p>Edited by <strong>Segab</strong> <small>(award template)</small>,<br><strong>PhoneEatingBear</strong> <small>(main show)</small> & <strong>Anonymous</strong> <small>(preshow)</small></p>
+      <p>Voiced by <strong>Ahch117</strong>, <strong>CounterTunes</strong>, <strong>Duke</strong>, <strong>Jackald</strong>, <strong>SlamBliss</strong>, <strong>TheVoiceGuy</strong> & <strong>Yue</strong></p>
+      <p>Logo by <strong>Monoframe</strong></p>
+      <p>Preshow Music Mix by <strong>Jab50Yen</strong></p>
+
+      <h2 style="margin-top: 50px;">Writing Team:</h2>
+
+      <p>
+        <strong>9Kbits</strong>, <strong>Beatstar</strong>, <strong>Dr. J</strong>, <strong>Duke</strong>, <strong>HL2.EXE</strong>,
+        <strong>Importuno</strong>, <strong>Kurushi</strong>, <strong>Lamer Gamer</strong>, <strong>LennyReviews</strong>,
+        <strong>PhoneEatingBear</strong>, <strong>Tess</strong> & <strong>Yue</strong>
+      </p>
+
       <h2 style="margin-top: 50px;">Awards:</h2>
       <p>
-        Intro, "Seal of Quality", "Not Important", "IP Twist", "Beta's Alpha", "Press X to Win",
-        "Actually Kind of Fun", "Citizen Kane of Gaming", "Plot and Backstory", "Eye Candy", "Journal Update"
-        "New Challenger", "Pixels are Art 2", "Most Hated" and "Least Worst" by <strong>PhoneEatingBear</strong></p>
-      <p>
-        "Silent Protagonist", "Shareholders", Intermission and "Deja Vu" by <strong>CounterTunes</strong>
+        Most awards by <strong>Anonymous</strong>, <strong>CounterTunes</strong>, <strong>Cluey</strong>, <strong>Monoframe</strong>,
+        <strong>PhoneEatingBear</strong> & <strong>Segab</strong>
       </p>
+
       <p>
-        "Not Another Rehash", "Niche", "Eyesore" and "Jet Set" by <strong>Segab</strong>
+        "Jet Set Award Future", "A E S T H E T I C S Award" & "Silent&nbsp;Protagonist Award" by <strong>Segab</strong>
       </p>
+
       <p>
-        "Hyperbole" by <strong>Cluey3</strong>
+        "Hyperbole Award" by <strong>Cluey3</strong>
+      </p>
+
+      <p>
+        ">>> /a/ Award" by <strong>PhoneEatingBear</strong>
+      </p>
+
+      <p>
+        "Press X To Win The Award" by <strong>Anonymous</strong>
       </p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
         <h2>Skits:</h2>
         <p>
-          "TF2 Fedora Skit" &ndash; <strong>Anonymous</strong><br>
-          "I love the /v/GAs" &ndash; <strong>Anonymous</strong><br>
-          "Dynasty Police Force" &ndash; <strong>Anonymous</strong><br>
-          "Drunken Chronicles" &ndash; <strong>Anonymous</strong><br>
-          "Serious Sam of Arabia" &ndash; <strong>Anonymous</strong><br>
-          "Just Another Vidya Day" &ndash; <strong>Anonymous</strong><br>
-          "24: The Phantom Pain" &ndash; <strong>Jackald</strong><br>
-          "Nolan North Award" &ndash; <strong>Segab</strong><br>
-          "Cat Skit 2" &ndash; <strong>Klixy</strong><br>
-          "What if Real Life was like Video Games" &ndash; <strong>Dysrexia</strong><br>
-          "Life is Hatred" &ndash; <strong>PhoneEatingBear</strong><br>
-          "Five Nights at Sonic's" &ndash; <strong>PhoneEatingBear</strong><br>
-          "Binding of Mad Men" &ndash; <strong>PhoneEatingBear</strong><br>
-          "Preview" &ndash; <strong>Segab</strong><br>
+          &ldquo;Five Nights at Undertale&rdquo; &ndash; <strong>Rucdose</strong><br>
+          &ldquo;FUNNYKAT2016 THE MOVIE&rdquo; &ndash; <strong>Klixy</strong><br>
+          &ldquo;My Waifu&rdquo; &ndash; <strong>Beatstar</strong> & <strong>UnusualCharacters</strong><br>
+          &ldquo;Nintendo's Dead&rdquo; &ndash; <strong>Stuff3</strong><br>
+          &ldquo;A Weapon&rdquo; &ndash; <strong>Jetstorm John</strong><br>
+          &ldquo;He will be remembered&rdquo; &ndash; <strong>CounterTunes</strong><br>
+          &ldquo;Press F to Pay Respects&rdquo; &ndash; <strong>Segab</strong><br>
+          &ldquo;vidya skit&rdquo; &ndash; <strong>Rucdose</strong><br>
+          &ldquo;Metal Gear Profit&rdquo; &ndash; <strong>Whomobile</strong><br>
+          &ldquo;Ending Skit&rdquo; &ndash; <strong>PhoneEatingBear</strong><br>
         </p>
-        <h2 style="margin-top: 50px;">Pleb Patrol:</h2>
-        <p>Website by <strong>Clamburger</strong> and <strong>Segab</strong></p>
-        <p>And finally,<br><strong>you!</strong></p>
+
+      <p style="margin-top: 30px;">
+        &ldquo;AAAAWWWWWOOOOOOOOOOOOOO&rdquo; &ndash; <strong>Jetstorm John</strong><br>
+        &ldquo;Bring Moon To Life&rdquo; &ndash; <strong>Most</strong><br>
+        &ldquo;EVEangelion&rdquo; &ndash; <strong>MandaloreGaming</strong><br>
+        &ldquo;Shadow of the Pearl&rdquo; &ndash; <strong>Cave Game Troll</strong><br>
+        &ldquo;Snake Eater Tribute&rdquo; &ndash; <strong>Marty MacFLAC</strong><br>
+        &ldquo;TECHYON MASHUP&rdquo; &ndash; <strong>Beatstar</strong><br>
+        &ldquo;TWIN SNAEKS&rdquo; &ndash; <strong>Chris Huddleston</strong><br>
+        &ldquo;Very Good Game Show Yes!&rdquo; &ndash; <strong>Ehmaysi</strong><br>
+        &ldquo;Nintendont&rdquo; &ndash; <strong>Anony Mous</strong><br>
+      </p>
+
+      <h2 style="margin-top: 50px;">Pleb Patrol:</h2>
+      <p>Website by <strong>Clamburger</strong> and <strong>Segab</strong></p>
+      <p>Logistics by <strong>iAxX</strong></p>
+      <p>Japanese translation by <strong>Ahch117</strong></p>
     </div>
   </div>
   <div class="row" style="margin-top: 60px;">
-    <div class="span12">
+    <div class="col-md-12">
+      <h2 style="margin-top: 50px; margin-bottom: 20px;">Special Thanks:</h2>
+      <p class="FLAOT"><strong>Atlus USA</strong></p>
+      <p class="FLAOT"><strong>Destructive Creations</strong></p>
+      <p class="FLAOT"><strong>Toby Fox</strong></p>
+      <p style="margin-top: 20px;">And most importantly, <strong style="font-size: x-large;">you!</strong></p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 60px;">
+    <div class="col-xs-12">
       <h2 class="implying">&gt;they're contributors to a shitty online video game award show</h2>
       <h2 class="implying">&gt;they take their jobs very seriously</h2>
       <h2 class="implying">&gt;they do it for free</h2>
       <img src="/for-free.jpg" width="200px">
     </div>
+  </div>
 </div>
 
 <div class="page-header the-bottom">
   <h1>&nbsp;</h1>
 </div>
+{% endblock %}

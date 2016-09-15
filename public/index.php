@@ -457,6 +457,12 @@ $routes->add('finished', new Route(
         'action' => 'finished'
     ]
 ));
+$routes->add('credits', new Route(
+    '/credits',
+    [
+        'controller' => Controllers\CreditsController::class,
+    ]
+));
 
 /** @var Config $config */
 $config = $em->getRepository(Config::class)->findOneBy([]);
@@ -591,7 +597,6 @@ try {
 //$ACCESS = array(
 //    // Volatile pages
 //    "applications" => "applications-view",
-//    "credits" => EVERYONE,
 //    "test" => EVERYONE,
 //    "volunteer-submission" => LOGIN,
 //    "videos" => EVERYONE,
