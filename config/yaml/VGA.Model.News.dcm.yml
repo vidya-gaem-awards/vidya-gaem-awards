@@ -27,3 +27,9 @@ VGA\Model\News:
         name: userID
         referencedColumnName: steamID
         nullable: false
+    deletedBy:
+      targetEntity: VGA\Model\User
+      joinColumn:
+        name: deletedBy
+        referencedColumnName: steamID
+        nullable: true

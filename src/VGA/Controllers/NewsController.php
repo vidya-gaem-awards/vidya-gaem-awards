@@ -76,6 +76,7 @@ class NewsController extends BaseController
         }
 
         $news->setVisible(false);
+        $news->setDeletedBy($this->user);
 
         $this->em->persist($news);
         $this->em->flush();

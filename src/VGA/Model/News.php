@@ -37,6 +37,11 @@ class News
      */
     private $user;
 
+    /**
+     * @var \VGA\Model\User
+     */
+    private $deletedBy;
+
 
     /**
      * Get id
@@ -184,6 +189,22 @@ class News
     public function isOld()
     {
         return $this->getTimestamp() < new \DateTime('-7 days');
+    }
+
+    /**
+     * @return User
+     */
+    public function getDeletedBy()
+    {
+        return $this->deletedBy;
+    }
+
+    /**
+     * @param User $deletedBy
+     */
+    public function setDeletedBy($deletedBy)
+    {
+        $this->deletedBy = $deletedBy;
     }
 }
 
