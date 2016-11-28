@@ -63,4 +63,25 @@ class NewsController extends BaseController
         $response = new RedirectResponse($this->generator->generate('news'));
         $response->send();
     }
+
+    public function deleteAction($id)
+    {
+        /** @var News $news */
+        $news = $this->em->getRepository(News::class)->find($id);
+
+        if (!$news) {
+            $this->session->getFlashBag()->add('success', 'Couldn\'t delete news item: invalid ID.');
+            $response = new RedirectResponse($this->generator->generate('news'));
+            $response->send();
+        }
+
+        $news->setVisible(false);
+
+        $this->em->persist($news);
+        $this->em->flush();
+
+        $this->session->getFlashBag()->add('success', 'News item successfully deleted.');
+        $response = new RedirectResponse($this->generator->generate('news'));
+        $response->send();
+    }
 }

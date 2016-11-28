@@ -123,6 +123,19 @@ $routes->add('newsAdd', new Route(
     [],
     ['POST']
 ));
+$routes->add('newsDelete', new Route(
+    '/news/delete/{id}',
+    [
+        'controller' => Controllers\NewsController::class,
+        'action' => 'delete',
+        'permission' => 'news-manage'
+    ],
+    ['id' => '\d+'],
+    [],
+    '',
+    [],
+    ['POST']
+));
 $routes->add('login', new Route(
     '/login/{return}',
     [

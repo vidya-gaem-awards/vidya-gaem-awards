@@ -139,7 +139,7 @@ class News
      *
      * @return boolean
      */
-    public function getVisible()
+    public function isVisible()
     {
         return $this->visible;
     }
