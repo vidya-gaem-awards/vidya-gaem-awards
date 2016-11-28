@@ -39,10 +39,13 @@ class PeopleController extends BaseController
             return;
         }
 
+        $permissions = $this->em->getRepository(Permission::class)->findAll();
+
         $tpl = $this->twig->loadTemplate('viewPerson.twig');
         $response = new Response($tpl->render([
             'title' => $user->getName(),
-            '_user' => $user
+            '_user' => $user,
+            'permissions' => $permissions
         ]));
         $response->send();
     }
@@ -111,7 +114,7 @@ class PeopleController extends BaseController
             if (!$group) {
                 $this->session->getFlashBag()->add('formError', 'Invalid group name.');
             } elseif ($user->getPermissions()->contains($group)) {
-                $this->session->getFlashBag()->add('formError', 'User already has that group.');
+                $this->session->getFlashBag()->add('formError', 'User already has that permission.');
             } else {
                 $user->addPermission($group);
 
@@ -124,7 +127,7 @@ class PeopleController extends BaseController
                 $this->em->persist($action);
                 $this->em->flush();
 
-                $this->session->getFlashBag()->add('formSuccess', 'Group successfully added.');
+                $this->session->getFlashBag()->add('formSuccess', 'Permission successfully added.');
             }
         }
 
