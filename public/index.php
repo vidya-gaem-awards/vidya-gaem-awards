@@ -110,6 +110,19 @@ $routes->add('news', new Route(
         'controller' => Controllers\NewsController::class
     ]
 ));
+$routes->add('newsAdd', new Route(
+    '/news/add',
+    [
+        'controller' => Controllers\NewsController::class,
+        'action' => 'add',
+        'permission' => 'news-manage'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
+));
 $routes->add('login', new Route(
     '/login/{return}',
     [

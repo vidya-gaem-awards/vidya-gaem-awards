@@ -30,7 +30,7 @@ class News
     /**
      * @var boolean
      */
-    private $visible;
+    private $visible = true;
 
     /**
      * @var \VGA\Model\User
