@@ -91,7 +91,7 @@ if ($votingCodeCookie) {
 
 // Update the user object with information that doesn't come from the database.
 $user
-    ->setIP($request->server->get('HTTP_CF_CONNECTING_IP', $request->server->get('REMOVE_ATTR')))
+    ->setIP($request->server->get('HTTP_CF_CONNECTING_IP', $request->server->get('REMOTE_ADDR')))
     ->setRandomID($randomID)
     ->setVotingCode($votingCode);
 
