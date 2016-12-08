@@ -232,7 +232,7 @@ class AwardAdminController extends BaseController
             }
 
             $response = new RedirectResponse(
-                $this->generator->generate('editAward', ['award' => $award->getId()])
+                $this->generator->generate('editAward', ['awardID' => $award->getId()])
             );
             $response->send();
         }
