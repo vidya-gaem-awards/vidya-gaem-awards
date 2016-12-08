@@ -20,6 +20,9 @@ VGA\Model\Config:
       type: string
       nullable: false
       length: 30
+    publicPages:
+      type: json_array
+      nullable: false
     readOnly:
       type: boolean
       nullable: false

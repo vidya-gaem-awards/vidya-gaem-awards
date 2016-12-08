@@ -95,6 +95,9 @@ $user
     ->setRandomID($randomID)
     ->setVotingCode($votingCode);
 
+/** @var Config $config */
+$config = $em->getRepository(Config::class)->findOneBy([]);
+
 // Define the routes
 $routes = new RouteCollection();
 
@@ -235,7 +238,7 @@ $routes->add('awards', new Route(
     '/awards',
     [
         'controller' => Controllers\AwardController::class,
-        'permission' => 'awards-edit' // normally public, update when ready
+        'permission' => $config->isPagePublic('awards') ? false : 'awards-edit'
     ],
     [],
     [],
@@ -299,7 +302,7 @@ $routes->add('videoGames', new Route(
     '/vidya-in-2016',
     [
         'controller' => Controllers\VideoGamesController::class,
-//        'permission' => 'add-video-game' // normally public, update when ready
+        'permission' => $config->isPagePublic('videoGames') ? false : 'add-video-game'
     ],
     [],
     [],
@@ -325,7 +328,7 @@ $routes->add('awardFrontendPost', new Route(
     [
         'controller' => Controllers\AwardController::class,
         'action' => 'post',
-        'permission' => 'awards-edit' // normally public, update when ready
+        'permission' => $config->isPagePublic('awards') ? false : 'awards-edit',
     ],
     [],
     [],
@@ -404,7 +407,7 @@ $routes->add('voting', new Route(
     [
         'controller' => Controllers\VotingController::class,
         'awardID' => null,
-        'permission' => 'voting-view', // normally public, update when ready
+        'permission' => $config->isPagePublic('voting') ? false : 'voting-view'
     ],
     [],
     [],
@@ -417,7 +420,7 @@ $routes->add('votingSubmission', new Route(
     [
         'controller' => Controllers\VotingController::class,
         'action' => 'post',
-        'permission' => 'voting-view' // normally public, update when ready
+        'permission' => $config->isPagePublic('voting') ? false : 'voting-view'
     ],
     [],
     [],
@@ -437,7 +440,7 @@ $routes->add('simpleResults', new Route(
     [
         'controller' => Controllers\ResultController::class,
         'action' => 'simple',
-        'permission' => 'voting-results' // disable when results are public
+        'permission' => $config->isPagePublic('results') ? false : 'voting-results'
     ]
 ));
 $routes->add('detailedResults', new Route(
@@ -446,7 +449,7 @@ $routes->add('detailedResults', new Route(
         'controller' => Controllers\ResultController::class,
         'action' => 'detailed',
         'all' => null,
-        'permission' => 'voting-results', // disable when results are public
+        'permission' => $config->isPagePublic('results') ? false : 'voting-results'
     ],
     [
         'all' => '(all)?'
@@ -464,7 +467,7 @@ $routes->add('pairwiseResults', new Route(
     [
         'controller' => Controllers\ResultController::class,
         'action' => 'pairwise',
-        'permission' => 'voting-results', // disable when results are public
+        'permission' => $config->isPagePublic('results') ? false : 'voting-results'
     ]
 ));
 $routes->add('countdown', new Route(
@@ -472,7 +475,7 @@ $routes->add('countdown', new Route(
     [
         'controller' => Controllers\LauncherController::class,
         'action' => 'countdown',
-        'permission' => 'view-unfinished-pages', // normally public, disable when ready
+        'permission' => $config->isPagePublic('countdown') ? false : 'view-unfinished-pages'
     ]
 ));
 $routes->add('stream', new Route(
@@ -480,7 +483,7 @@ $routes->add('stream', new Route(
     [
         'controller' => Controllers\LauncherController::class,
         'action' => 'stream',
-        'permission' => 'view-unfinished-pages', // normally public, disable when ready
+        'permission' => $config->isPagePublic('stream') ? false : 'view-unfinished-pages'
     ]
 ));
 $routes->add('finished', new Route(
@@ -488,18 +491,17 @@ $routes->add('finished', new Route(
     [
         'controller' => Controllers\LauncherController::class,
         'action' => 'finished',
-        'permission' => 'view-unfinished-pages', // normally public, disable when ready
+        'permission' => $config->isPagePublic('finished') ? false : 'view-unfinished-pages'
     ]
 ));
 $routes->add('credits', new Route(
     '/credits',
     [
         'controller' => Controllers\CreditsController::class,
+        'permission' => $config->isPagePublic('credits') ? false : 'view-unfinished-pages'
     ]
 ));
 
-/** @var Config $config */
-$config = $em->getRepository(Config::class)->findOneBy([]);
 $defaultRoute = $routes->get($config->getDefaultPage());
 
 if ($defaultRoute) {
@@ -576,7 +578,7 @@ try {
         $action = 'indexAction';
     }
 
-    if (isset($match['permission']) && !$user->canDo($match['permission'])) {
+    if (isset($match['permission']) && $match['permission'] !== false && !$user->canDo($match['permission'])) {
         /** @var Controllers\ErrorController $controller */
         $controller = new Controllers\ErrorController($container);
         if ($user->isLoggedIn()) {

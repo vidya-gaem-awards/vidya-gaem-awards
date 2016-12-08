@@ -128,7 +128,7 @@ class VotingController extends BaseController
         $response = new Response($tpl->render([
             'title' => 'Voting',
             'awards' => $awards,
-            'award' => $award,
+            'award' => $award ?? false,
             'votingNotYetOpen' => $votingNotYetOpen,
             'votingClosed' => $votingClosed,
             'votingOpen' => $votingOpen,

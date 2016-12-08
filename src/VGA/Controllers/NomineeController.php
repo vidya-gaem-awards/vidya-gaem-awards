@@ -66,7 +66,7 @@ class NomineeController extends BaseController
         $response = new Response($tpl->render(array_merge([
             'title' => 'Nominee Manager',
             'awards' => $awards,
-            'award' => $award,
+            'award' => $award ?? false,
         ], $awardVariables)));
         $response->send();
     }

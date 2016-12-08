@@ -5,7 +5,14 @@ use Moment\Moment;
 
 class Config
 {
-    const ALLOWED_DEFAULT_PAGES = ['home', 'awards', 'voting', 'countdown', 'stream', 'finished'];
+    const ALLOWED_DEFAULT_PAGES = [
+        'home' => 'Standard landing page',
+        'awards' => 'Awards and Nominations',
+        'voting' => 'Voting page',
+        'countdown' => 'Stream countdown',
+        'stream' => 'Stream page',
+        'finished' => 'Post-stream "thank you" page',
+    ];
 
     /** @var string */
     private $id;
@@ -21,6 +28,9 @@ class Config
 
     /** @var string */
     private $defaultPage;
+
+    /** @var string[] */
+    private $publicPages;
 
     /** @var boolean */
     private $readOnly;
@@ -185,5 +195,32 @@ class Config
     public function isReadOnly(): bool
     {
         return $this->readOnly;
+    }
+
+    /**
+     * @param string $page
+     * @return bool
+     */
+    public function isPagePublic(string $page): bool
+    {
+        return in_array($page, $this->getPublicPages(), true);
+    }
+
+    /**
+     * @return \string[]
+     */
+    public function getPublicPages(): array
+    {
+        return $this->publicPages;
+    }
+
+    /**
+     * @param \string[] $publicPages
+     * @return Config
+     */
+    public function setPublicPages(array $publicPages): Config
+    {
+        $this->publicPages = $publicPages;
+        return $this;
     }
 }

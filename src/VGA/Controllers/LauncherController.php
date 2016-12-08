@@ -2,7 +2,6 @@
 namespace VGA\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
-use VGA\Model\Config;
 
 class LauncherController extends BaseController
 {
@@ -31,7 +30,7 @@ class LauncherController extends BaseController
 
         $otherTimezonesLink = sprintf(
             'https://www.timeanddate.com/worldclock/fixedtime.html?msg=2016+Vidya+Gaem+Awards&iso=%s&p1=179',
-            $streamDate->format("Y-m-d\TH:i:s")
+            $streamDate ? $streamDate->format("Y-m-d\TH:i:s") : ''
         );
 
         $tpl = $this->twig->loadTemplate('countdown.twig');

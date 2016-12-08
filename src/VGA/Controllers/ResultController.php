@@ -24,7 +24,7 @@ class ResultController extends BaseController
         ];
 
         foreach ($awards as $award) {
-            $rankings = array_values($award->getOfficialResults()->getResults());
+            $rankings = array_values($award->getOfficialResults() ? $award->getOfficialResults()->getResults() : []);
 
             foreach ($rankings as $key => &$value) {
                 $value = $ranks[$key] . '. ' . $award->getNominee($value)->getName();

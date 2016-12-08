@@ -4,8 +4,6 @@ namespace VGA\Controllers;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use VGA\Model\Config;
-
 class ConfigController extends BaseController
 {
     public function indexAction()
@@ -59,6 +57,7 @@ class ConfigController extends BaseController
         }
 
         $this->config->setDefaultPage($post->get('defaultPage'));
+        $this->config->setPublicPages(array_keys($post->get('publicPages', [])));
 
         $this->em->persist($this->config);
         $this->em->flush();
