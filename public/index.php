@@ -299,7 +299,7 @@ $routes->add('videoGames', new Route(
     '/vidya-in-2016',
     [
         'controller' => Controllers\VideoGamesController::class,
-        'permission' => 'add-video-game' // normally public, update when ready
+//        'permission' => 'add-video-game' // normally public, update when ready
     ],
     [],
     [],
