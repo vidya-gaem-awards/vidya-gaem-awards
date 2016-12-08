@@ -165,7 +165,7 @@ class Config
      */
     public function setDefaultPage($defaultPage)
     {
-        if (in_array($defaultPage, self::ALLOWED_DEFAULT_PAGES, true)) {
+        if (self::ALLOWED_DEFAULT_PAGES[$defaultPage] ?? false) {
             $this->defaultPage = $defaultPage;
         }
         return $this;
