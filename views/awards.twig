@@ -12,6 +12,28 @@
         #video-games img:hover {
             box-shadow: 0 0 4px black;
         }
+
+        #video-game-collage {
+            background-color: #111;
+        }
+
+        #video-game-collage .top {
+            top: 0;
+        }
+
+        #video-game-collage .bottom {
+            bottom: 0;
+        }
+
+        #video-game-collage .top, #video-game-collage .bottom {
+            position: absolute;
+            text-align: center;
+            font-weight: bold;
+            font-size: 31px;
+            color: white;
+            padding: 5px;
+            max-width: 555px;
+        }
     </style>
 
     {% if user.canDo('awards-edit') or user.canDo('nominations-view') %}
@@ -51,7 +73,11 @@
 
         <div class="col-md-6" id="video-games">
             <a href="{{ path('videoGames') }}">
-                <img class="img-responsive" src="/img/collage.jpg">
+                <div id="video-game-collage">
+                    <img class="img-responsive" src="img/collage.jpg">
+                    <div class="top">Forgotten what vidya you played earlier this year?</div>
+                    <div class="bottom">Click here for a list of video games from 2016.</div>
+                </div>
             </a>
         </div>
 
