@@ -49,7 +49,7 @@ VGA\Model\GameRelease:
     n3ds:
       type: boolean
       nullable: false
-    ouya:
+    vr:
       type: boolean
       nullable: false
     mobile:

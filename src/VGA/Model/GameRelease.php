@@ -50,7 +50,7 @@ class GameRelease
     private $n3ds = false;
 
     /** @var boolean */
-    private $ouya = false;
+    private $vr = false;
 
     /** @var boolean */
     private $mobile = false;
@@ -338,12 +338,12 @@ class GameRelease
     }
 
     /**
-     * @param boolean $ouya
+     * @param boolean $vr
      * @return GameRelease
      */
-    public function setOuya($ouya)
+    public function setVr($vr)
     {
-        $this->ouya = $ouya;
+        $this->vr = $vr;
 
         return $this;
     }
@@ -351,9 +351,9 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getOuya()
+    public function getVr()
     {
-        return $this->ouya;
+        return $this->vr;
     }
 
     /**
@@ -387,9 +387,6 @@ class GameRelease
         if ($this->xbla) {
             $others[] = 'XBLA';
         }
-        if ($this->ouya) {
-            $others[] = 'Ouya';
-        }
         return $others;
     }
 
@@ -402,6 +399,7 @@ class GameRelease
     {
         $allPlatforms = [
             'pc' => 'PC',
+            'vr' => 'VR',
             'ps3' => 'PS3',
             'ps4' => 'PS4',
             'vita' => 'Vita',
@@ -413,7 +411,6 @@ class GameRelease
             'wiiu' => 'Wii U',
             'wiiware' => 'WiiWare',
             'n3ds' => '3DS',
-            'ouya' => 'Ouya',
             'mobile' => 'Mobile'
         ];
 

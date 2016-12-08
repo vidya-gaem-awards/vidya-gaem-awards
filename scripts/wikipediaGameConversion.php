@@ -11,12 +11,13 @@ if (!file_exists('games.csv')) {
 
 $em = DependencyManager::getEntityManager();
 
-$search = [' ', 'Win', 'Mac', 'Lin', 'iOS', 'Droid', 'Android', 'WP', 'X360', 'XBO', 'PSVita', '3DS'];
-$replace = ['', 'pc', 'pc', 'pc', 'mobile', 'mobile', 'mobile', 'mobile', 'x360', 'xb1', 'vita', 'n3ds'];
-$delete = ['PS2', 'NDS', 'DC', 'PSP', 'Fire'];
+// The second and third characters are non-breaking spaces
+$search = [' ', "\xc2\xa0", "\xa0", 'Win', 'Mac', 'Lin', 'iOS', 'Droid', 'Android', 'WP', 'X360', 'XBO', 'PSVita', '3DS', 'HTCVive', 'OculusRift', 'PlayStationVR'];
+$replace = ['', '', '', 'pc', 'pc', 'pc', 'mobile', 'mobile', 'mobile', 'mobile', 'x360', 'xb1', 'vita', 'n3ds', 'pc,vr', 'pc,vr', 'ps4,vr'];
+$delete = ['PS2', 'NDS', 'DC', 'PSP', 'Fire', 'Ouya'];
 
 $allPlatforms = [
-    'pc', 'ps3', 'ps4', 'vita', 'psn', 'x360', 'xb1', 'xbla', 'wii', 'wiiu', 'wiiware', 'n3ds', 'ouya', 'mobile'
+    'pc', 'vr', 'ps3', 'ps4', 'vita', 'psn', 'x360', 'xb1', 'xbla', 'wii', 'wiiu', 'wiiware', 'n3ds', 'mobile'
 ];
 
 $games = array();
@@ -29,7 +30,7 @@ foreach ($csv as $line) {
         $games[$game] = array_fill_keys($allPlatforms, false);
     }
 
-    $platforms = explode(",", str_replace($search, $replace, $array[1]));
+    $platforms = explode(",", trim(str_replace($search, $replace, $array[1])));
     $platforms = array_diff($platforms, $delete);
     foreach ($platforms as $platform) {
         $platform = ucfirst(strtolower($platform));
@@ -40,10 +41,14 @@ foreach ($csv as $line) {
 foreach ($games as $name => $platforms) {
     $release = new GameRelease($name);
     $platforms = array_keys(array_filter($platforms));
-    foreach ($platforms as $platform) {
-        $release->{'set'.$platform}(true);
-    }
     echo "$name\n";
+    foreach ($platforms as $platform) {
+        if (method_exists($release, 'set' . $platform)) {
+            $release->{'set'.$platform}(true);
+        } else {
+            echo "! Unknown platform: $platform\n";
+        }
+    }
     $em->persist($release);
 }
 
