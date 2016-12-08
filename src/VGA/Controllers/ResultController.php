@@ -2,14 +2,14 @@
 namespace VGA\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
-use VGA\Model\Category;
+use VGA\Model\Award;
 
 class ResultController extends BaseController
 {
     public function simpleAction()
     {
-        /** @var Category[] $categories */
-        $categories = $this->em->getRepository(Category::class)
+        /** @var Award[] $awards */
+        $awards = $this->em->getRepository(Award::class)
             ->createQueryBuilder('c')
             ->where('c.enabled = true')
             ->orderBy('c.order', 'ASC')
@@ -23,22 +23,22 @@ class ResultController extends BaseController
             '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'
         ];
 
-        foreach ($categories as $category) {
-            $rankings = array_values($category->getOfficialResults()->getResults());
+        foreach ($awards as $award) {
+            $rankings = array_values($award->getOfficialResults()->getResults());
 
             foreach ($rankings as $key => &$value) {
-                $value = $ranks[$key] . '. ' . $category->getNominee($value)->getName();
+                $value = $ranks[$key] . '. ' . $award->getNominee($value)->getName();
             }
             $theOthers = implode(', ', array_slice($rankings, 5));
             $rankings = array_slice($rankings, 0, 5);
             $rankings[] = $theOthers;
 
-            $results[$category->getId()] = $rankings;
+            $results[$award->getId()] = $rankings;
         }
 
         $tpl = $this->twig->loadTemplate('winners.twig');
         $response = new Response($tpl->render([
-            'categories' => $categories,
+            'awards' => $awards,
             'results' => $results
         ]));
         $response->send();
@@ -46,8 +46,8 @@ class ResultController extends BaseController
 
     public function detailedAction($all = null)
     {
-        /** @var Category[] $categories */
-        $categories = $this->em->getRepository(Category::class)
+        /** @var Award[] $awards */
+        $awards = $this->em->getRepository(Award::class)
             ->createQueryBuilder('c')
             ->where('c.enabled = true')
             ->orderBy('c.order', 'ASC')
@@ -86,12 +86,12 @@ class ResultController extends BaseController
 
         $nominees = [];
 
-        foreach ($categories as $category) {
-            foreach ($category->getNominees() as $nominee) {
-                $nominees[$category->getId()][$nominee->getShortName()] = $nominee;
+        foreach ($awards as $award) {
+            foreach ($award->getNominees() as $nominee) {
+                $nominees[$award->getId()][$nominee->getShortName()] = $nominee;
             }
-            foreach ($category->getResultCache() as $result) {
-                $results[$category->getId()][$result->getFilter()] = $result;
+            foreach ($award->getResultCache() as $result) {
+                $results[$award->getId()][$result->getFilter()] = $result;
             }
         }
 
@@ -99,7 +99,7 @@ class ResultController extends BaseController
 
         $response = new Response($tpl->render([
             'title' => 'Results',
-            'categories' => $categories,
+            'awards' => $awards,
             'nominees' => $nominees,
             'all' => (bool)$all,
             'results' => $results,
@@ -110,8 +110,8 @@ class ResultController extends BaseController
 
     public function pairwiseAction()
     {
-        /** @var Category[] $categories */
-        $categories = $this->em->getRepository(Category::class)
+        /** @var Award[] $awards */
+        $awards = $this->em->getRepository(Award::class)
             ->createQueryBuilder('c')
             ->where('c.enabled = true')
             ->orderBy('c.order', 'ASC')
@@ -120,13 +120,13 @@ class ResultController extends BaseController
 
         $pairwise = [];
 
-        foreach ($categories as $category) {
-            $pairwise[$category->getId()] = $category->getOfficialResults()->getSteps()['pairwise'];
+        foreach ($awards as $award) {
+            $pairwise[$award->getId()] = $award->getOfficialResults()->getSteps()['pairwise'];
         }
 
         $tpl = $this->twig->loadTemplate('resultsPairwise.twig');
         $response = new Response($tpl->render([
-            'categories' => $categories,
+            'awards' => $awards,
             'pairwise' => $pairwise
         ]));
         $response->send();

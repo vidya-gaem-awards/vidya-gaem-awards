@@ -55,7 +55,7 @@
       color: #f7d059;
     }
 
-    .category {
+    .award {
         margin: 0 auto 35px auto;
         padding: 20px;
         background: black;
@@ -66,26 +66,26 @@
       border: 1px solid #970087;
     }
 
-    .category ul {
+    .award ul {
       list-style-type: none;
       margin: 0;
       font-size: 24px;
     }
 
-    .category ul li {
+    .award ul li {
       line-height: 1.5em;
       font-family: "modern typewriter", Calibri, sans-serif;
       color: #00ebdb;
     }
 
-    .category ul li:first-child {
+    .award ul li:first-child {
       font-weight: bold;
       font-size: 36px;
       font-family: "modern typewriter", Tahoma, sans-serif;
       color: #f7d059;
     }
 
-    .category ul li:last-child {
+    .award ul li:last-child {
       color: #f85898;
       font-size: 18px;
       font-family: "modern typewriter", Tahoma, sans-serif;
@@ -186,27 +186,27 @@
 
     <div class="zig"></div>
 
-    {% for category in categories %}
+    {% for award in awards %}
     <div class="row">
       <div class="col-xs-12">
 
         <div class="awardHeaderContainer">
           <div class="awardName">
-            <a id="{{ category.id }}" href="#{{ category.id }}" class="anchor">{{ category.name }}</a>
+            <a id="{{ award.id }}" href="#{{ award.id }}" class="anchor">{{ award.name }}</a>
           </div>
-          <h2 class="awardSubtitle">{{ category.subtitle }}</h2>
+          <h2 class="awardSubtitle">{{ award.subtitle }}</h2>
         </div>
 
-        <div class="category">
+        <div class="award">
           <div class="row">
             <div class="col-md-4">
-              {% if category.winnerImage %}
-                <img class="winner img-responsive center-block" src="{{ category.winnerImage | e('html_attr') }}">
+              {% if award.winnerImage %}
+                <img class="winner img-responsive center-block" src="{{ award.winnerImage | e('html_attr') }}">
               {% endif %}
             </div>
             <div class="col-md-8">
               <ul>
-                {% for result in results[category.id] %}
+                {% for result in results[award.id] %}
                 <li>{{ result }}</li>
                 {% endfor %}
               </ul>

@@ -71,11 +71,11 @@
         padding:0;
     }
 
-    #containerCategories h2, #limitsDrag h2 {
+    #containerAwards h2, #limitsDrag h2 {
         height: 52px;
     }
 
-    #containerCategories {
+    #containerAwards {
         clear: both;
         float: left;
         width: 269px;
@@ -83,7 +83,7 @@
         margin-right: 10px;
     }
         
-    .category {
+    .award {
       display:block;
       position:relative;
       padding:5px;
@@ -91,11 +91,11 @@
       border-top: none;
     }
 
-    .category:hover {
+    .award:hover {
         background: #4d5c21;
     }
 
-    .category h3 {
+    .award h3 {
       color: #789922;
       text-decoration: none;
       text-transform: uppercase;
@@ -107,7 +107,7 @@
       margin: 0;
     }
 
-    .category p {
+    .award p {
       text-decoration: none;
       color: #cacaca;
       font-family: "Lucida Sans Unicode",arial,sans-serif;

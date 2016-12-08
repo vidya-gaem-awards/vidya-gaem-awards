@@ -6,7 +6,7 @@ VGA\Model\Vote:
       type: string
       nullable: false
       length: 255
-    category:
+    award:
       associationKey: true
   fields:
     preferences:
@@ -27,8 +27,8 @@ VGA\Model\Vote:
       type: integer
       nullable: true
   manyToOne:
-    category:
-      targetEntity: Category
+    award:
+      targetEntity: Award
       nullable: false
       inversedBy: votes
       joinColumn:

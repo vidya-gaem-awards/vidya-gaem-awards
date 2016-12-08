@@ -106,13 +106,13 @@ table.tablesorter thead tr .headerSortUp {
 }
 
 @media (min-width: 992px) {
-	#category-info .affix {
+	#award-info .affix {
 		top: 85px;
 	}
 }
 
 @media (max-width: 991px) {
-	#category-info .affix {
+	#award-info .affix {
 		padding-top: 10px;
 		position: static;
 	}

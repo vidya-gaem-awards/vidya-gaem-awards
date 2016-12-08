@@ -12,7 +12,7 @@
         z-index: 100000;
     }
     
-    #category-name {
+    #award-name {
     text-shadow: #000 1px 1px 2px;
     text-align: center;
     color: #789922;
@@ -23,7 +23,7 @@
     line-height: 1em;
   }
   
-  #category-subtitle {
+  #award-subtitle {
     text-align: center;
     color: #1f1f1f;
     font-family: "Lucida Sans Unicode", arial, sans-serif;
@@ -109,16 +109,16 @@
 <p class="lead">Here's where nominees are assigned awards. Official nominees are the ones that will show up on the <a href="{{ path('voting') }}">voting page</a>.</p>
 
 <ul class="breadcrumb">
-  <li><a href="{{ path('categories') }}">Back to the main awards and nominations page</a></li>
+  <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
 </ul>
 
 <div class="row">
-  <div class="col-md-6" id="category-selector">
+  <div class="col-md-6" id="award-selector">
     <ul class="nav nav-list custom-navigation-pane">
-      {% for category in categories %}
+      {% for award in awards %}
         <li>
-          <a href="{{ path('nomineeManager', {'category': category.id}) }}">
-            <strong>{{ category.name }}</strong> {{ category.subtitle }}
+          <a href="{{ path('nomineeManager', {'awardID': award.id}) }}">
+            <strong>{{ award.name }}</strong> {{ award.subtitle }}
             <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
           </a>
         </li>
@@ -126,20 +126,20 @@
     </ul>
   </div>
 
-  {% if category %}
+  {% if award %}
   <div class="col-md-6">
     
-    <div id="category-name">{{ category.name }}</div>
-    <div id="category-subtitle">{{ category.subtitle }}</div>
+    <div id="award-name">{{ award.name }}</div>
+    <div id="award-subtitle">{{ award.subtitle }}</div>
 
-    {% if category.secret %}
+    {% if award.secret %}
     <p style='text-align: center; margin-top: 8px;'>This is a secret award. It won't be visible until the voting phase.</p>
     {% endif %}
 
     <div class="well" style="margin-top: 15px;">
       
       <div style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
-        Official Nominees: <span id="official-count">{{ category.nominees | length }}</span>
+        Official Nominees: <span id="official-count">{{ award.nominees | length }}</span>
         {% if user.canDo('nominations-edit') %}
           <button class="btn btn-default btn-xs" type="button" id="new" style="margin-left: 15px;">
             <span class="glyphicon glyphicon-plus"></span> New Nominee</button>
@@ -148,7 +148,7 @@
       
       <div id="nominee-container">
       
-        {% for nominee in category.nominees %}
+        {% for nominee in award.nominees %}
         <div class="aNominee" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}">
           <header>
             <p>ID: {{ nominee.shortName }}</p>
@@ -171,14 +171,14 @@
       
     </div>
   
-    {% if not category.secret %}
+    {% if not award.secret %}
       <div class="well">
 
         <div style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
-          User Nominations: {{ category.rawUserNominations | length }}
+          User Nominations: {{ award.rawUserNominations | length }}
         </div>
 
-        {% if category.nominationsEnabled %}
+        {% if award.nominationsEnabled %}
           <p style="font-weight: bold; text-align: center; font-size: 120%;">
             Nominations are currently open.
           </p>
@@ -193,7 +193,7 @@
         </p>
 
         <ol class="nominations">
-          {% for nomination in category.getUserNominations(alphabeticalSort)[:15] %}
+          {% for nomination in award.getUserNominations(alphabeticalSort)[:15] %}
             <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
           {% endfor %}
         </ol>
@@ -201,7 +201,7 @@
         <a href="#" id="show-more">show the rest</a>
 
         <ul id="more-nominations" style='display: none;' class="nominations">
-          {% for nomination in category.getUserNominations(alphabeticalSort)[15:] %}
+          {% for nomination in award.getUserNominations(alphabeticalSort)[15:] %}
             <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
           {% endfor %}
         </ul>
@@ -212,7 +212,7 @@
   </div>
 </div>
 
-  {% if user.canDo('nominations-edit') and category %}
+  {% if user.canDo('nominations-edit') and award %}
     <div id="dialog-delete" class="modal" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -361,7 +361,7 @@
         var nomineeID = $("#dialog-delete").attr("data-nominee");
 
         // Send through the AJAX request to do the actual deleting
-        $.post("{{ path('nomineePost', {'category': category.id}) }}", { action: "delete", id: nomineeID }, function(data) {
+        $.post("{{ path('nomineePost', {'awardID': award.id}) }}", { action: "delete", id: nomineeID }, function(data) {
           currentlySubmitting = false;
 
           if (data.success) {
@@ -498,7 +498,7 @@
         if (action == "edit") {
           ajaxData.push({ name: "id", value: nomineeID });
         }
-        $.post("{{ path('nomineePost', {'category': category.id}) }}", ajaxData, function(data) {
+        $.post("{{ path('nomineePost', {'awardID': award.id}) }}", ajaxData, function(data) {
           currentlySubmitting = false;
 
           if (data.success) {

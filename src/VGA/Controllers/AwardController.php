@@ -5,22 +5,22 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use VGA\Model\Action;
 use VGA\Model\Autocompleter;
-use VGA\Model\Category;
-use VGA\Model\CategoryFeedback;
+use VGA\Model\Award;
+use VGA\Model\AwardFeedback;
 use VGA\Model\GameRelease;
 use VGA\Model\UserNomination;
 
-class CategoryController extends BaseController
+class AwardController extends BaseController
 {
     public function indexAction()
     {
-        $repo = $this->em->getRepository(Category::class);
+        $repo = $this->em->getRepository(Award::class);
         $query = $repo->createQueryBuilder('c', 'c.id');
         $query->select('c')
             ->where('c.enabled = true')
             ->andWhere('c.secret = false')
             ->orderBy('c.order', 'ASC');
-        $categories = $query->getQuery()->getResult();
+        $awards = $query->getQuery()->getResult();
 
         $nominationRepo = $this->em->getRepository(UserNomination::class);
         $query = $nominationRepo->createQueryBuilder('un');
@@ -29,30 +29,30 @@ class CategoryController extends BaseController
             ->setParameter('user', $this->user->getFuzzyID());
         $result = $query->getQuery()->getResult();
 
-        $nominations = array_fill_keys(array_keys($categories), []);
+        $nominations = array_fill_keys(array_keys($awards), []);
 
         /** @var UserNomination $un */
         foreach ($result as $un) {
-            $nominations[$un->getCategory()->getId()][] = $un->getNomination();
+            $nominations[$un->getAward()->getId()][] = $un->getNomination();
         }
 
-        $feedbackRepo = $this->em->getRepository(CategoryFeedback::class);
+        $feedbackRepo = $this->em->getRepository(AwardFeedback::class);
         $query = $feedbackRepo->createQueryBuilder('cf')
             ->where('cf.user = :user')
             ->setParameter('user', $this->user->getFuzzyID());
         $result = $query->getQuery()->getResult();
 
-        $opinions = array_fill_keys(array_keys($categories), 0);
+        $opinions = array_fill_keys(array_keys($awards), 0);
 
-        /** @var CategoryFeedback $cf */
+        /** @var AwardFeedback $cf */
         foreach ($result as $cf) {
-            $opinions[$cf->getCategory()->getId()] = $cf->getOpinion();
+            $opinions[$cf->getAward()->getId()] = $cf->getOpinion();
         }
 
         $autocompleterRepo = $this->em->getRepository(Autocompleter::class);
         $result = $autocompleterRepo->findAll();
 
-        $autocompleters = array_fill_keys(array_keys($categories), []);
+        $autocompleters = array_fill_keys(array_keys($awards), []);
 
         /** @var Autocompleter $autocompleter */
         foreach ($result as $autocompleter) {
@@ -72,17 +72,17 @@ class CategoryController extends BaseController
             $autocompleters[$autocompleter->getId()] = $strings;
         }
 
-        /** @var Category $category */
-        foreach ($categories as $category) {
-            // Don't bother populating the autocompleter for this category if it already has a different one defined
-            if ($category->getAutocompleter()) {
+        /** @var Award $award */
+        foreach ($awards as $award) {
+            // Don't bother populating the autocompleter for this award if it already has a different one defined
+            if ($award->getAutocompleter()) {
                 continue;
             }
 
             $allNominations = array_map(function ($un) {
                 /** @var UserNomination $un */
                 return $un->getNomination();
-            }, $category->getRawUserNominations()->toArray());
+            }, $award->getRawUserNominations()->toArray());
 
             $nominationCount = array_fill_keys(array_values($allNominations), 0);
             foreach ($allNominations as $nomination) {
@@ -93,14 +93,14 @@ class CategoryController extends BaseController
                 return $count >= 2;
             }, ARRAY_FILTER_USE_BOTH);
 
-            $autocompleters[$category->getId()] = array_keys($nominationCount);
+            $autocompleters[$award->getId()] = array_keys($nominationCount);
         }
 
-        $tpl = $this->twig->loadTemplate('categories.twig');
+        $tpl = $this->twig->loadTemplate('awards.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Awards and Nominations',
-            'categories' => $categories,
+            'awards' => $awards,
             'userNominations' => $nominations,
             'userOpinions' => $opinions,
             'autocompleters' => $autocompleters
@@ -111,14 +111,14 @@ class CategoryController extends BaseController
     public function postAction()
     {
         $post = $this->request->request;
-        $repo = $this->em->getRepository(Category::class);
+        $repo = $this->em->getRepository(Award::class);
         $response = new JsonResponse();
 
-        /** @var Category $category */
-        $category = $repo->find($post->get('id'));
+        /** @var Award $award */
+        $award = $repo->find($post->get('id'));
 
-        if (!$category || $category->isSecret() || !$category->isEnabled()) {
-            $response->setData(['error' => 'Invalid category provided.']);
+        if (!$award || $award->isSecret() || !$award->isEnabled()) {
+            $response->setData(['error' => 'Invalid award provided.']);
             $response->send();
             return;
         }
@@ -131,11 +131,11 @@ class CategoryController extends BaseController
                 return;
             }
 
-            $opinionRepo = $this->em->getRepository(CategoryFeedback::class);
-            /** @var CategoryFeedback $feedback */
-            $feedback = $opinionRepo->findOneBy(['category' => $category, 'user' => $this->user->getFuzzyID()]);
+            $opinionRepo = $this->em->getRepository(AwardFeedback::class);
+            /** @var AwardFeedback $feedback */
+            $feedback = $opinionRepo->findOneBy(['award' => $award, 'user' => $this->user->getFuzzyID()]);
             if (!$feedback) {
-                $feedback = new CategoryFeedback($category, $this->user);
+                $feedback = new AwardFeedback($award, $this->user);
             }
             $feedback->setOpinion($opinion);
             $this->em->persist($feedback);
@@ -143,7 +143,7 @@ class CategoryController extends BaseController
             $action = new Action('opinion-given');
             $action->setUser($this->user)
                 ->setPage(__CLASS__)
-                ->setData1($category->getId())
+                ->setData1($award->getId())
                 ->setData2($opinion);
 
             $this->em->persist($action);
@@ -152,7 +152,7 @@ class CategoryController extends BaseController
         $nomination = $post->get('nomination');
         if ($nomination !== null) {
 
-            if (!$category->areNominationsEnabled()) {
+            if (!$award->areNominationsEnabled()) {
                 $response->setData(['error' => 'Nominations have been closed for this award.']);
                 $response->send();
                 return;
@@ -168,10 +168,10 @@ class CategoryController extends BaseController
             $nominationRepo = $this->em->getRepository(UserNomination::class);
             $result = $nominationRepo->createQueryBuilder('n')
                 ->where('n.user = :fuzzyUser')
-                ->andWhere('IDENTITY(n.category) = :category')
+                ->andWhere('IDENTITY(n.award) = :award')
                 ->andWhere('LOWER(n.nomination) = :nomination')
                 ->setParameter('fuzzyUser', $this->user->getFuzzyID())
-                ->setParameter('category', $category->getId())
+                ->setParameter('award', $award->getId())
                 ->setParameter('nomination', strtolower($nomination))
                 ->getQuery()
                 ->getOneOrNullResult();
@@ -182,13 +182,13 @@ class CategoryController extends BaseController
                 return;
             }
 
-            $userNomination = new UserNomination($category, $this->user, $nomination);
+            $userNomination = new UserNomination($award, $this->user, $nomination);
             $this->em->persist($userNomination);
 
             $action = new Action('nomination-made');
             $action->setUser($this->user)
                 ->setPage(__CLASS__)
-                ->setData1($category->getId())
+                ->setData1($award->getId())
                 ->setData2($nomination);
             $this->em->persist($action);
         }

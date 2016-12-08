@@ -27,8 +27,8 @@ VGA\Model\Nominee:
       type: text
       nullable: false
   manyToOne:
-    category:
-      targetEntity: Category
+    award:
+      targetEntity: Award
       inversedBy: nominees
       joinColumn:
         name: categoryID

@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 use VGA\DependencyManager;
-use VGA\Model\Category;
+use VGA\Model\Award;
 use VGA\Model\ResultCache;
 use VGA\Model\Vote;
 use VGA\ResultCalculator\Schulze;
@@ -16,15 +16,15 @@ $voteRepo = $em->getRepository(Vote::class);
 // Remove all existing data
 $em->createQueryBuilder()->delete(ResultCache::class)->getQuery()->execute();
 
-// Start by getting a list of categories and all the nominees.
-$categories = $em->getRepository(Category::class)
+// Start by getting a list of awards and all the nominees.
+$awards = $em->getRepository(Award::class)
     ->createQueryBuilder('c')
     ->where('c.enabled = true')
     ->orderBy('c.order', 'ASC')
     ->getQuery()
     ->getResult();
 
-echo $timer->time() . ": categories loaded.\n";
+echo $timer->time() . ": awards loaded.\n";
 
 $filters = [
     '01-all' => false, // no filtering
@@ -51,14 +51,14 @@ $filters = [
 
 // Now we can start grabbing votes.
 foreach ($filters as $filterName => $condition) {
-    /** @var Category $category */
-    foreach ($categories as $category) {
+    /** @var Award $award */
+    foreach ($awards as $award) {
 
         $query = $voteRepo->createQueryBuilder('v')
             ->select('v.preferences')
-            ->join('v.category', 'c')
-            ->where('c.id = :category')
-            ->setParameter('category', $category->getId());
+            ->join('v.award', 'c')
+            ->where('c.id = :award')
+            ->setParameter('award', $award->getId());
 
         if ($condition) {
             $query->andWhere($condition);
@@ -68,7 +68,7 @@ foreach ($filters as $filterName => $condition) {
         $votes = array_filter(array_column($result, 'preferences'));
 
         $nominees = [];
-        foreach ($category->getNominees() as $nominee) {
+        foreach ($award->getNominees() as $nominee) {
             $nominees[$nominee->getShortName()] = $nominee;
         }
 
@@ -77,7 +77,7 @@ foreach ($filters as $filterName => $condition) {
 
         $resultObject = new ResultCache();
         $resultObject
-            ->setCategory($category)
+            ->setAward($award)
             ->setFilter($filterName)
             ->setResults($result)
             ->setSteps($resultCalculator->getSteps())
@@ -85,7 +85,7 @@ foreach ($filters as $filterName => $condition) {
             ->setVotes(count($votes));
         $em->persist($resultObject);
 
-        echo $timer->time() . ": [$filterName] Category complete: " . $category->getId() . "\n";
+        echo $timer->time() . ": [$filterName] Award complete: " . $award->getId() . "\n";
     }
 
     // Flush after each filter

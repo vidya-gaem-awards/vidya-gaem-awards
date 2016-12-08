@@ -357,7 +357,7 @@ footer .navigation {
 /**************/
 
 
-#containerCategories {
+#containerAwards {
 	clear: both;
 	width: 988px;
 	margin: 0 auto;
@@ -365,11 +365,11 @@ footer .navigation {
 	overflow: auto;
 }
 
-#containerCategories h2, #limitsDrag h2 {
+#containerAwards h2, #limitsDrag h2 {
   height: 52px;
 }
     
-.category {
+.award {
 	display: block;
 	position: relative;
 	padding: 5px;
@@ -379,27 +379,27 @@ footer .navigation {
 	margin-left: 14px;
 }
 
-.category:hover {
+.award:hover {
   background: rgba(0,0,0,0.20);
 }
 
-/** extra categories **/
-#containerCategories .category:nth-child(27){
+/** extra awards **/
+#containerAwards .award:nth-child(27){
 	margin-top: 20px;
     width: 500px;
 }
-#containerCategories .category:nth-child(28){
+#containerAwards .award:nth-child(28){
     width: 500px;
 }
-#containerCategories .category:nth-child(29){
+#containerAwards .award:nth-child(29){
     width: 500px;
 }
-#containerCategories .category:nth-child(30){
+#containerAwards .award:nth-child(30){
     width: 500px;
 }
 
 
-.category h3 {
+.award h3 {
 	color: #80d7d1;
 	text-decoration: none;
 	font-family: Calibri, sans-serif;
@@ -411,7 +411,7 @@ footer .navigation {
 	display: inline;
 }
 
-.category p {
+.award p {
 	text-decoration: none;
 	color: #80d7d1;
 	font-family: Calibri,sans-serif;
@@ -490,7 +490,7 @@ footer .navigation {
 	margin-top: 10px;
 }
 
-#topCategories {
+#topAwards {
 	color: #00ebdb;
 }
 
@@ -597,7 +597,7 @@ footer .navigation {
 }
 
 @media only screen and (max-device-width: 1080px) {
-	.category {
+	.award {
 		float: none;
 		width: 600px;
 		font-size: 1em;

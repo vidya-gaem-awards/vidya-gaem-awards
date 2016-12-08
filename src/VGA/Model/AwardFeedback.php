@@ -2,7 +2,7 @@
 
 namespace VGA\Model;
 
-class CategoryFeedback
+class AwardFeedback
 {
     /** @var string */
     private $user;
@@ -10,22 +10,22 @@ class CategoryFeedback
     /** @var integer */
     private $opinion;
 
-    /** @var Category */
-    private $category;
+    /** @var Award */
+    private $award;
 
     /**
-     * @param Category $category
+     * @param Award $award
      * @param User $user
      */
-    public function __construct(Category $category, User $user)
+    public function __construct(Award $award, User $user)
     {
-        $this->category = $category;
+        $this->award = $award;
         $this->user = $user->getFuzzyID();
     }
 
     /**
      * @param string $user
-     * @return CategoryFeedback
+     * @return AwardFeedback
      */
     public function setUser($user)
     {
@@ -44,7 +44,7 @@ class CategoryFeedback
 
     /**
      * @param integer $opinion
-     * @return CategoryFeedback
+     * @return AwardFeedback
      */
     public function setOpinion($opinion)
     {
@@ -62,22 +62,22 @@ class CategoryFeedback
     }
 
     /**
-     * @param Category $category
-     * @return CategoryFeedback
+     * @param Award $award
+     * @return AwardFeedback
      */
-    public function setCategory(Category $category)
+    public function setAward(Award $award)
     {
-        $this->category = $category;
+        $this->award = $award;
 
         return $this;
     }
 
     /**
-     * @return Category
+     * @return Award
      */
-    public function getCategory()
+    public function getAward()
     {
-        return $this->category;
+        return $this->award;
     }
 }
 

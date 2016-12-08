@@ -1,6 +1,6 @@
-VGA\Model\Category:
+VGA\Model\Award:
   type: entity
-  table: categories
+  table: awards
   id:
     id:
       type: string
@@ -36,7 +36,7 @@ VGA\Model\Category:
       type: boolean
       nullable: false
       options:
-        comment: 'Secret categories only show up during voting'
+        comment: 'Secret awards only show up during voting'
   manyToOne:
     autocompleter:
       targetEntity: Autocompleter
@@ -46,23 +46,23 @@ VGA\Model\Category:
         nullable: true
   oneToMany:
     feedback:
-      targetEntity: CategoryFeedback
-      mappedBy: category
+      targetEntity: AwardFeedback
+      mappedBy: award
       cascade: ['remove']
     nominees:
       targetEntity: Nominee
-      mappedBy: category
+      mappedBy: award
       cascade: ['remove']
       orderBy: { 'name': 'ASC' }
     userNominations:
       targetEntity: UserNomination
-      mappedBy: category
+      mappedBy: award
       cascade: ['remove']
     votes:
       targetEntity: Vote
-      mappedBy: category
+      mappedBy: award
       cascade: ['remove']
     resultCache:
       targetEntity: ResultCache
-      mappedBy: category
+      mappedBy: award
       cascade: ['remove']

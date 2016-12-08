@@ -30,9 +30,9 @@ class ResultCache
     private $votes;
 
     /**
-     * @var Category
+     * @var Award
      */
-    private $category;
+    private $award;
 
     /**
      * @var string
@@ -137,27 +137,27 @@ class ResultCache
     }
 
     /**
-     * Set category
+     * Set award
      *
-     * @param Category $category
+     * @param Award $award
      *
      * @return ResultCache
      */
-    public function setCategory(Category $category)
+    public function setAward(Award $award)
     {
-        $this->category = $category;
+        $this->award = $award;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Get award
      *
-     * @return Category
+     * @return Award
      */
-    public function getCategory()
+    public function getAward()
     {
-        return $this->category;
+        return $this->award;
     }
 
     /**

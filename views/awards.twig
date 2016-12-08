@@ -14,12 +14,12 @@
         }
     </style>
 
-    {% if user.canDo('categories-edit') or user.canDo('nominations-view') %}
+    {% if user.canDo('awards-edit') or user.canDo('nominations-view') %}
         <ul class="breadcrumb">
             <li class="active">Admin tools:</li>
-            {% if user.canDo('categories-edit') %}
+            {% if user.canDo('awards-edit') %}
                 <li>
-                    <a href="{{ path('categoryManager') }}">Manage awards</a>
+                    <a href="{{ path('awardManager') }}">Manage awards</a>
                 </li>
             {% endif %}
             {% if user.canDo('nominations-view') %}
@@ -35,13 +35,13 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-6" id="category-selector">
+        <div class="col-md-6" id="award-selector">
             <ul class="nav nav-list custom-navigation-pane">
-                {% for category in categories %}
-                    <li data-id="{{ category.id }}">
-                        <a href="#{{ category.id }}">
-                            <span id="opinion-icon">[{{ userNominations[category.id] | length }}]</span>
-                            <strong>{{ category.name }}</strong> {{ category.subtitle }}
+                {% for award in awards %}
+                    <li data-id="{{ award.id }}">
+                        <a href="#{{ award.id }}">
+                            <span id="opinion-icon">[{{ userNominations[award.id] | length }}]</span>
+                            <strong>{{ award.name }}</strong> {{ award.subtitle }}
                             <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
                         </a>
                     </li>
@@ -55,15 +55,15 @@
             </a>
         </div>
 
-        <div class="col-md-6" id="category-info" style="display: none;">
+        <div class="col-md-6" id="award-info" style="display: none;">
             <div data-spy="affix" data-offset-top="230">
-                <div id="category-name" class="impressive-title"></div>
-                <div id="category-subtitle" class="impressive-subtitle"></div>
+                <div id="award-name" class="impressive-title"></div>
+                <div id="award-subtitle" class="impressive-subtitle"></div>
 
                 <p id="description" style="text-align: center;"></p>
 
                 <div style="text-align: center; margin-bottom: 10px;">
-                    <div class="btn-group" id="category-voting">
+                    <div class="btn-group" id="award-voting">
                         <button class="btn btn-default" id="thumbs-up">This award is good</button>
                         <button class="btn btn-default" id="thumbs-down">This award is shit</button>
                     </div>
@@ -97,7 +97,7 @@
                     </div>
 
                     <div id="nominations-closed" style="display: none; text-align: center;">
-                        Nominations for this category have been closed.
+                        Nominations for this award have been closed.
                     </div>
 
                 </div>
@@ -107,69 +107,69 @@
     </div>
 
     <script type="text/javascript">
-        var categories = {{ categories | json_encode() | raw }};
+        var awards = {{ awards | json_encode() | raw }};
         var userNominations = {{ userNominations | json_encode() | raw }};
         var opinions = {{ userOpinions | json_encode() | raw }};
         var autocompleters = {{ autocompleters | json_encode() | raw }};
 
-        var category = false;
+        var award = false;
 
         function updateNominations() {
-            $('#user-nomination-count').html(userNominations[category].length);
-            if (userNominations[category].length == 0) {
-                $('#user-nomination-list').html("You haven't nominated anything in this category.");
+            $('#user-nomination-count').html(userNominations[award].length);
+            if (userNominations[award].length == 0) {
+                $('#user-nomination-list').html("You haven't nominated anything for this award.");
             } else {
-                $('#user-nomination-list').html(userNominations[category].join(', '));
+                $('#user-nomination-list').html(userNominations[award].join(', '));
             }
         }
 
-        $('#category-selector li').click(function(event) {
+        $('#award-selector li').click(function(event) {
 
             $("#video-games").hide();
 
             var thus = this;
 
-            $('#category-info').fadeOut('fast', function() {
+            $('#award-info').fadeOut('fast', function() {
 
-                category = $(thus).attr('data-id');
-                $('#category-selector li').removeClass("active");
+                award = $(thus).attr('data-id');
+                $('#award-selector li').removeClass("active");
                 $(thus).addClass("active");
 
-                $('#category-info #category-name').html(categories[category]['name']);
-                $('#category-info #category-subtitle').html(categories[category]['subtitle']);
-                $('#category-info #description').html(categories[category]['comments']);
-                if (categories[category]['nominationsEnabled']) {
+                $('#award-info #award-name').html(awards[award]['name']);
+                $('#award-info #award-subtitle').html(awards[award]['subtitle']);
+                $('#award-info #description').html(awards[award]['comments']);
+                if (awards[award]['nominationsEnabled']) {
                     $('#nomination-section').show();
                     $('#nominations-closed').hide();
                 } else {
                     $('#nomination-section').hide();
                     $('#nominations-closed').show();
                 }
-                $('#category-voting button').removeClass("btn-success btn-danger selected");
-                if (opinions[category] == 1) {
+                $('#award-voting button').removeClass("btn-success btn-danger selected");
+                if (opinions[award] == 1) {
                     $('#thumbs-up').addClass("selected btn-success");
-                } else if (opinions[category] == -1) {
+                } else if (opinions[award] == -1) {
                     $('#thumbs-down').addClass("selected btn-danger");
                 }
 
                 {#<if:allowedToNominate>#}
-                    updateNominations(category);
+                    updateNominations(award);
                 {#</if:allowedToNominate>#}
 
-                $('#category-info').fadeIn('fast');
+                $('#award-info').fadeIn('fast');
                 $('#nomination-status').hide();
 
                 $('html').scroll();
 
                 $("#tags").val("");
 
-                var autocompleteCat = categories[category]['autocompleter'];
+                var autocompleteCat = awards[award]['autocompleter'];
                 if (autocompleteCat == "video-game") {
-                    $('#autocomplete').html("This category provides suggestions using a list of video games.");
-                } else if (autocompleteCat == category) {
-                    $('#autocomplete').html("This category provides suggestions based on nominations from other users.");
+                    $('#autocomplete').html("This award provides suggestions using a list of video games.");
+                } else if (autocompleteCat == award) {
+                    $('#autocomplete').html("This award provides suggestions based on nominations from other users.");
                 } else {
-                    $('#autocomplete').html("This category provides suggestions from a pre-defined list.");
+                    $('#autocomplete').html("This award provides suggestions from a pre-defined list.");
                 }
 
                 $( "#tags" ).autocomplete({
@@ -183,7 +183,7 @@
             });
         });
 
-        $('#category-voting button').click(function(event) {
+        $('#award-voting button').click(function(event) {
             event.preventDefault();
 
             var selected = event.currentTarget;
@@ -201,39 +201,39 @@
                 opposite = $("#thumbs-down");
             }
 
-            $('#category-voting button').attr('disabled', 'disabled');
+            $('#award-voting button').attr('disabled', 'disabled');
             $(selected).text('Saving...');
 
-            var formCategory = category;
+            var formAward = award;
 
-            $.post("{{ path('awardFrontendPost') }}", { id: category, opinion: opinion }, function(data) {
+            $.post("{{ path('awardFrontendPost') }}", { id: award, opinion: opinion }, function(data) {
                 if (data.success) {
 
-                    var icon = $('[data-id="'+formCategory+'"] #opinion-icon');
+                    var icon = $('[data-id="'+formAward+'"] #opinion-icon');
                     if (opinion == -1) {
-                        if (formCategory == category) {
+                        if (formAward == award) {
                             $(selected).addClass("btn-danger");
                             $(opposite).removeClass("btn-success");
                         }
 //                        $(icon).html("&#x2718;");
                     } else if (opinion == 1) {
-                        if (formCategory == category) {
+                        if (formAward == award) {
                             $(selected).addClass("btn-success");
                             $(opposite).removeClass("btn-danger");
                         }
 //                        $(icon).html("&#x2714;");
                     } else {
-                        if (formCategory == category) {
+                        if (formAward == award) {
                             $(selected).removeClass("btn-success btn-danger");
                         }
 //                        $(icon).html("");
                     }
-                    if (formCategory == category) {
+                    if (formAward == award) {
                         $(selected).addClass("selected");
                         $(opposite).removeClass("selected");
                     }
-                    opinions[formCategory] = opinion;
-                    $('#category-voting button').removeAttr('disabled');
+                    opinions[formAward] = opinion;
+                    $('#award-voting button').removeAttr('disabled');
                     $('#thumbs-up').text('This award is good');
                     $('#thumbs-down').text('This award is shit');
                 } else {
@@ -252,29 +252,29 @@
             }
 
             currentlySubmitting = true;
-            var formCategory = category;
+            var formAward = award;
 
             $("#nomination-status").show();
             $("#nomination-status").html("Submitting nomination...");
 
             var value = $('#tags').val();
 
-            $.post("{{ path('awardFrontendPost') }}", { id: category, nomination: value }, null, 'json')
+            $.post("{{ path('awardFrontendPost') }}", { id: award, nomination: value }, null, 'json')
                 .done(function(data) {
                     if (data.success) {
                         var safeValue = $('<div/>').text($.trim(value)).html();
-                        userNominations[formCategory].push(safeValue);
+                        userNominations[formAward].push(safeValue);
                         $('#tags').val("");
                         $('#tags').autocomplete("close");
-                        if (formCategory == category) {
+                        if (formAward == award) {
                             updateNominations();
                             $("#nomination-status").html("<span style='color: green;'>Success!</span>");
                             $("#nomination-status").fadeOut(3000);
                         }
-                        var icon = $('[data-id="'+formCategory+'"] #opinion-icon');
-                        icon.text("["+userNominations[formCategory].length+"]");
+                        var icon = $('[data-id="'+formAward+'"] #opinion-icon');
+                        icon.text("["+userNominations[formAward].length+"]");
                     } else {
-                        if (formCategory == category) {
+                        if (formAward == award) {
                             $("#nomination-status").html("<span style='color: red;'>" + data.error + "</span>");
                         }
                     }

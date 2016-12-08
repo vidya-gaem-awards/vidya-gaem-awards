@@ -23,8 +23,8 @@ class Nominee implements \JsonSerializable
     /** @var string */
     private $flavorText;
 
-    /** @var Category */
-    private $category;
+    /** @var Award */
+    private $award;
 
     /**
      * @return integer
@@ -127,21 +127,21 @@ class Nominee implements \JsonSerializable
     }
 
     /**
-     * @param Category $category
+     * @param Award $award
      * @return Nominee
      */
-    public function setCategory(Category $category = null)
+    public function setAward(Award $award = null)
     {
-        $this->category = $category;
+        $this->award = $award;
         return $this;
     }
 
     /**
-     * @return Category
+     * @return Award
      */
-    public function getCategory()
+    public function getAward()
     {
-        return $this->category;
+        return $this->award;
     }
 
     public function jsonSerialize()

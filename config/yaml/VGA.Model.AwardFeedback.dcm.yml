@@ -1,8 +1,8 @@
-VGA\Model\CategoryFeedback:
+VGA\Model\AwardFeedback:
   type: entity
-  table: category_feedback
+  table: award_feedback
   id:
-    category:
+    award:
       associationKey: true
     user:
       type: string
@@ -13,8 +13,8 @@ VGA\Model\CategoryFeedback:
       type: smallint
       nullable: false
   manyToOne:
-    category:
-      targetEntity: Category
+    award:
+      targetEntity: Award
       inversedBy: feedback
       joinColumn:
         name: categoryID

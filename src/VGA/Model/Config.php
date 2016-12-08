@@ -5,7 +5,7 @@ use Moment\Moment;
 
 class Config
 {
-    const ALLOWED_DEFAULT_PAGES = ['home', 'categories', 'voting', 'countdown', 'stream', 'finished'];
+    const ALLOWED_DEFAULT_PAGES = ['home', 'awards', 'voting', 'countdown', 'stream', 'finished'];
 
     /** @var string */
     private $id;

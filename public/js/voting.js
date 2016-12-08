@@ -10,7 +10,7 @@
 
 var votingEnabled;
 var previousLockExists = false;
-var currentCategory;
+var currentAward;
 var lastVotes = [null];
 var votesChanged = false;
 var postURL;
@@ -196,7 +196,7 @@ $(document).ready(function () {
             if (data.error) {
                 alert("An error occurred:\n" + data.error + "\nYour vote has not been saved.");
             } else {
-                $("#" + currentCategory).addClass("complete");
+                $("#" + currentAward).addClass("complete");
             }
         }, "json");
     });

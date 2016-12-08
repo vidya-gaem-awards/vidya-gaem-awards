@@ -1,6 +1,6 @@
 <?php
 $stats = array(
-  "category feedback" => 47663,
+  "award feedback" => 47663,
   "nominations made" => 13433,
   "total votes" => 438545,
   "unique users" => 30221,

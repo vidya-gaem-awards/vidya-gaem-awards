@@ -12,19 +12,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
     <script src='/js/dumbshit.js'></script>
-    {% if category %}
+    {% if award %}
     <script src='/js/voting.js'></script>
     {% endif %}
 
     <meta name="viewport" content="width=1100, maximum-scale=1.0, user-scalable=no" />
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
 
-    {% if category %}
+    {% if award %}
     <script type="text/javascript">
         var votingEnabled = {{ votingOpen ? 'true' : 'false' }};
         var lastVotes = {{ votes | json_encode | raw }};
-        var currentCategory = "{{ category.id }}";
-        var postURL = "{{ path('votingSubmission', {'category': category.id}) }}";
+        var currentAward = "{{ award.id }}";
+        var postURL = "{{ path('votingSubmission', {'award': award.id}) }}";
     </script>
     {% endif %}
 
@@ -49,27 +49,27 @@
 <div class="zig"></div>
 
 <div id="wrapper">
-    {% if category %}
+    {% if award %}
         <div class="awardHeader">
-            <a href="{{ path('voting', {'category': prevCategory.id}) }}" class="navigation left"></a>
+            <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
             <div class="awardHeaderContainer">
-                <div class="awardName">{{ category.name }}</div>
-                <h2 class="awardSubtitle">{{ category.subtitle }}</h2>
+                <div class="awardName">{{ award.name }}</div>
+                <h2 class="awardSubtitle">{{ award.subtitle }}</h2>
             </div>
-            <a href="{{ path('voting', {'category': nextCategory.id}) }}" class="navigation right"></a>
+            <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
         </div>
         {% if votingOpen %}
             <img src="/2015voting/dont_forget.gif" id="dontforget" alt="Don't forget to hit submit"/>
         {% endif %}
     {% endif %}
 
-    {% if category %}
+    {% if award %}
         <div id="limitsDrag">
             <div id="nomineeColumn" class="column">
 
                 <img src="/2015voting/instruc_pick.gif" width="172px" height="97px" alt="Pick your nominees"/>
 
-                {% for nominee in category.nominees | shuffle %}
+                {% for nominee in award.nominees | shuffle %}
 
                     {% spaceless %}
                     <div class="voteBox">
@@ -101,7 +101,7 @@
             {% if votingOpen or votingClosed %}
                 <div id="voteColumn" class="column">
                     <img src="/2015voting/instruc_drag.gif" width="234px" height="97px" alt="Drag and drop to vote"/>
-                    {% for nominee in category.nominees %}
+                    {% for nominee in award.nominees %}
                         <div id="voteBox{{ loop.index }}" class="voteBox">
                         </div>
                     {% endfor %}
@@ -119,7 +119,7 @@
                 <div id="votesAreLocked" style="display: none;">
                     <div id="btnLockVotes" class="btnSubmit iVoted" title="Saved!"></div>
                 </div>
-                <a href="{{ path('voting', {'category': nextCategory.id}) }}" class="navigation right" title="Next category"></a>
+                <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right" title="Next award"></a>
             </footer>
         {% endif %}
 
@@ -145,7 +145,7 @@
                 <p>You can use the award list at the bottom to navigate, or just use the arrows that appear after you
                     click submit.</p>
 
-                <a href="{{ path('voting', {'category': (categories|first).id}) }}" id="btnStart"></a>
+                <a href="{{ path('voting', {'awardID': (awards|first).id}) }}" id="btnStart"></a>
             {% endif %}
 
             {% if votingClosed %}
@@ -163,16 +163,16 @@
 
 <div class="zig"></div>
 
-<div id="containerCategories">
-    <h1 id="topCategories">
+<div id="containerAwards">
+    <h1 id="topAwards">
         The Awards
     </h1>
 
-    {% for _category in categories %}
-        <a href="{{ path('voting', {'category': _category.id}) }}" id="{{ _category.id }}"
-           class="category {{ category == _category ? 'active' : '' }} {{ allVotes[_category.id] ? 'complete' : '' }}">
-            <h3>{{ _category.name }}</h3>
-            <p>{{ _category.subtitle }}</p>
+    {% for _award in awards %}
+        <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
+           class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
+            <h3>{{ _award.name }}</h3>
+            <p>{{ _award.subtitle }}</p>
         </a>
     {% endfor %}
 

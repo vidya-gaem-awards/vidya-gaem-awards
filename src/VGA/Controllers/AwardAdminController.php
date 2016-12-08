@@ -6,38 +6,38 @@ use Symfony\Component\HttpFoundation\Response;
 
 use VGA\Model\Action;
 use VGA\Model\Autocompleter;
-use VGA\Model\Category;
+use VGA\Model\Award;
 use VGA\Model\TableHistory;
 use VGA\Utils;
 
-class CategoryAdminController extends BaseController
+class AwardAdminController extends BaseController
 {
     /**
-     * @param Category $categoryEditing
+     * @param Award $awardEditing
      */
-    public function managerListAction($categoryEditing = null)
+    public function managerListAction($awardEditing = null)
     {
-        $repo = $this->em->getRepository(Category::class);
-        $condition = $this->user->canDo('categories-secret') ? [] : ['secret' => false];
-        $categories = $repo->findBy($condition, ['order' => 'ASC']);
+        $repo = $this->em->getRepository(Award::class);
+        $condition = $this->user->canDo('awards-secret') ? [] : ['secret' => false];
+        $awards = $repo->findBy($condition, ['order' => 'ASC']);
 
         if ($this->request->get('sort') === 'feedback') {
-            usort($categories, function ($a, $b) {
-                /** @var Category $a */
-                /** @var Category $b */
+            usort($awards, function ($a, $b) {
+                /** @var Award $a */
+                /** @var Award $b */
                 return $b->getFeedbackPercent()['positive'] <=> $a->getFeedbackPercent()['positive'];
             });
         }
 
-        $tpl = $this->twig->loadTemplate('categoryManager.twig');
+        $tpl = $this->twig->loadTemplate('awardManager.twig');
 
         $variables = [
             'title' => 'Manage Awards',
-            'categories' => $categories
+            'awards' => $awards
         ];
 
-        if ($categoryEditing !== null) {
-            $variables['category'] = $categoryEditing;
+        if ($awardEditing !== null) {
+            $variables['award'] = $awardEditing;
             $variables['editing'] = true;
         }
 
@@ -50,7 +50,7 @@ class CategoryAdminController extends BaseController
         $post = $this->request->request;
         $flashbag = $this->session->getFlashBag();
 
-        // Add a new category
+        // Add a new award
         if ($post->get('action') === 'new') {
             if (strlen($post->get('id')) == 0 || strlen($post->get('name')) == 0 ||
                 strlen($post->get('subtitle')) == 0 || strlen($post->get('order')) == 0) {
@@ -62,8 +62,8 @@ class CategoryAdminController extends BaseController
             } elseif (intval($_POST['order']) > 10000) {
                 $flashbag->add('formError', 'Order must be less than 10000.');
             } else {
-                $category = new Category();
-                $category
+                $award = new Award();
+                $award
                     ->setId(strtolower($post->get('id')))
                     ->setName($post->get('name'))
                     ->setSubtitle($post->get('subtitle'))
@@ -71,9 +71,9 @@ class CategoryAdminController extends BaseController
                     ->setEnabled($post->getBoolean('enabled'))
                     ->setNominationsEnabled($post->getBoolean('nominations'))
                     ->setSecret($post->getBoolean('secret'));
-                $this->em->persist($category);
+                $this->em->persist($award);
 
-                $action = new Action('category-added');
+                $action = new Action('award-added');
                 $action->setUser($this->user)
                     ->setPage(__CLASS__)
                     ->setData1($post->get('id'));
@@ -81,19 +81,19 @@ class CategoryAdminController extends BaseController
 
                 $history = new TableHistory();
                 $history->setUser($this->user)
-                    ->setTable('Category')
+                    ->setTable('Award')
                     ->setEntry($post->get('id'))
                     ->setValues($post->all());
                 $this->em->persist($history);
 
                 $this->em->flush();
-                $flashbag->add('formSuccess', 'Category successfully added.');
+                $flashbag->add('formSuccess', 'Award successfully added.');
             }
         }
 
-        // Open / close all categories
+        // Open / close all awards
         if ($post->get('action') === 'massChangeNominations') {
-            $repo = $this->em->getRepository(Category::class);
+            $repo = $this->em->getRepository(Award::class);
             $query = $repo->createQueryBuilder('c');
 
             if ($post->get('todo') === 'open') {
@@ -105,7 +105,7 @@ class CategoryAdminController extends BaseController
                     ->setPage(__CLASS__)
                     ->setData1('open');
                 $this->em->persist($action);
-                $flashbag->add('formSuccess', 'Nominations for all categories are now open.');
+                $flashbag->add('formSuccess', 'Nominations for all awards are now open.');
             } elseif ($post->get('todo') === 'close') {
                 $query->update()->set('c.nominationsEnabled', 0);
                 $query->getQuery()->execute();
@@ -115,24 +115,24 @@ class CategoryAdminController extends BaseController
                     ->setPage(__CLASS__)
                     ->setData1('close');
                 $this->em->persist($action);
-                $flashbag->add('formSuccess', 'Nominations for all categories are now closed.');
+                $flashbag->add('formSuccess', 'Nominations for all awards are now closed.');
             }
 
             $this->em->flush();
         }
 
-        $response = new RedirectResponse($this->generator->generate('categoryManager'));
+        $response = new RedirectResponse($this->generator->generate('awardManager'));
         $response->send();
     }
 
-    public function editCategoryAction($category)
+    public function editAwardAction($awardID)
     {
-        /** @var Category $category */
-        $category = $this->em->getRepository(Category::class)->find($category);
+        /** @var Award $award */
+        $award = $this->em->getRepository(Award::class)->find($awardID);
 
-        if (!$category || ($category->isSecret() && !$this->user->canDo('categories-secret'))) {
-            $this->session->getFlashBag()->add('error', 'Invalid category ID specified.');
-            $response = new RedirectResponse($this->generator->generate('categoryManager'));
+        if (!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) {
+            $this->session->getFlashBag()->add('error', 'Invalid award ID specified.');
+            $response = new RedirectResponse($this->generator->generate('awardManager'));
             $response->send();
             return;
         }
@@ -140,17 +140,17 @@ class CategoryAdminController extends BaseController
         $autocompleters = $this->em->getRepository(Autocompleter::class)->findAll();
         $this->twig->addGlobal('autocompleters', $autocompleters);
 
-        $this->managerListAction($category);
+        $this->managerListAction($award);
     }
 
-    public function editCategoryPostAction($category)
+    public function editAwardPostAction($awardID)
     {
-        /** @var Category $category */
-        $category = $this->em->getRepository(Category::class)->find($category);
+        /** @var Award $award */
+        $award = $this->em->getRepository(Award::class)->find($awardID);
 
-        if (!$category || ($category->isSecret() && !$this->user->canDo('categories-secret'))) {
-            $this->session->getFlashBag()->add('error', 'Invalid category ID specified.');
-            $response = new RedirectResponse($this->generator->generate('categoryManager'));
+        if (!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) {
+            $this->session->getFlashBag()->add('error', 'Invalid award ID specified.');
+            $response = new RedirectResponse($this->generator->generate('awardManager'));
             $response->send();
             return;
         }
@@ -159,22 +159,22 @@ class CategoryAdminController extends BaseController
         $flashbag = $this->session->getFlashBag();
 
         if ($post->get('delete')) {
-            if ($this->user->canDo('categories-delete')) {
-                $this->em->remove($category);
+            if ($this->user->canDo('awards-delete')) {
+                $this->em->remove($award);
                 $this->em->flush();
 
-                $flashbag->add('formSuccess', sprintf('Category \'%s\' successfully deleted.', $category->getName()));
+                $flashbag->add('formSuccess', sprintf('Award \'%s\' successfully deleted.', $award->getName()));
 
-                $action = new Action('category-delete');
+                $action = new Action('award-delete');
                 $action->setUser($this->user)
                     ->setPage(__CLASS__)
-                    ->setData1($category->getId());
+                    ->setData1($award->getId());
                 $this->em->persist($action);
                 $this->em->flush();
             } else {
-                $flashbag->add('formSuccess', 'You aren\'t allowed to delete categories.');
+                $flashbag->add('formSuccess', 'You aren\'t allowed to delete awards.');
             }
-            $response = new RedirectResponse($this->generator->generate('categoryManager'));
+            $response = new RedirectResponse($this->generator->generate('awardManager'));
             $response->send();
         } else {
             if (strlen($post->get('name')) == 0 || strlen($post->get('subtitle')) == 0
@@ -194,7 +194,7 @@ class CategoryAdminController extends BaseController
                     $autocompleter = null;
                 }
 
-                $category
+                $award
                     ->setName($post->get('name'))
                     ->setSubtitle($post->get('subtitle'))
                     ->setComments($post->get('comments'))
@@ -208,31 +208,31 @@ class CategoryAdminController extends BaseController
                     if ($post->get('winnerImage') && !Utils::startsWith($post->get('winnerImage'), 'https://')) {
                         $flashbag->add('editFormError', 'Winner image must start with https://');
                     } else {
-                        $category->setWinnerImage($post->get('winnerImage'));
+                        $award->setWinnerImage($post->get('winnerImage'));
                     }
                 }
 
-                $this->em->persist($category);
+                $this->em->persist($award);
 
-                $action = new Action('category-edited');
+                $action = new Action('award-edited');
                 $action->setUser($this->user)
                     ->setPage(__CLASS__)
-                    ->setData1($category->getId());
+                    ->setData1($award->getId());
                 $this->em->persist($action);
 
                 $history = new TableHistory();
                 $history->setUser($this->user)
-                    ->setTable('Category')
-                    ->setEntry($category->getId())
+                    ->setTable('Award')
+                    ->setEntry($award->getId())
                     ->setValues($post->all());
                 $this->em->persist($history);
                 $this->em->flush();
 
-                $flashbag->add('editFormSuccess', 'Category successfully edited.');
+                $flashbag->add('editFormSuccess', 'Award successfully edited.');
             }
 
             $response = new RedirectResponse(
-                $this->generator->generate('editCategory', ['category' => $category->getId()])
+                $this->generator->generate('editAward', ['award' => $award->getId()])
             );
             $response->send();
         }

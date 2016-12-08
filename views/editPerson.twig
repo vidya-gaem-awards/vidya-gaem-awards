@@ -2,7 +2,7 @@
 
 {% block subContent %}
     <div class="col-md-12">
-        <form method="POST" action="{{ path('editPerson', {'steamID': _user.steamID}) }}" class="form-horizontal well" id="categoryForm">
+        <form method="POST" action="{{ path('editPerson', {'steamID': _user.steamID}) }}" class="form-horizontal well" id="awardForm">
             <input type="hidden" name="action" value="edit-details">
             <div class="form-group">
                 <label class="col-md-2 control-label" for="input01">Steam ID</label>

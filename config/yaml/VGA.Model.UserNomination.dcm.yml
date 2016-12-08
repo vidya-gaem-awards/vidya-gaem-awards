@@ -20,8 +20,8 @@ VGA\Model\UserNomination:
       type: datetime
       nullable: false
   manyToOne:
-    category:
-      targetEntity: Category
+    award:
+      targetEntity: Award
       inversedBy: userNominations
       joinColumn:
         name: categoryID

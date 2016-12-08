@@ -6,9 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 
 /**
- * Category
+ * Award
  */
-class Category implements \JsonSerializable
+class Award implements \JsonSerializable
 {
     /**
      * @var string
@@ -100,7 +100,7 @@ class Category implements \JsonSerializable
      *
      * @param string $id
      *
-     * @return Category
+     * @return Award
      */
     public function setId($id)
     {
@@ -124,7 +124,7 @@ class Category implements \JsonSerializable
      *
      * @param string $name
      *
-     * @return Category
+     * @return Award
      */
     public function setName($name)
     {
@@ -148,7 +148,7 @@ class Category implements \JsonSerializable
      *
      * @param string $subtitle
      *
-     * @return Category
+     * @return Award
      */
     public function setSubtitle($subtitle)
     {
@@ -172,7 +172,7 @@ class Category implements \JsonSerializable
      *
      * @param integer $order
      *
-     * @return Category
+     * @return Award
      */
     public function setOrder($order)
     {
@@ -196,7 +196,7 @@ class Category implements \JsonSerializable
      *
      * @param string $comments
      *
-     * @return Category
+     * @return Award
      */
     public function setComments($comments)
     {
@@ -220,7 +220,7 @@ class Category implements \JsonSerializable
      *
      * @param boolean $enabled
      *
-     * @return Category
+     * @return Award
      */
     public function setEnabled($enabled)
     {
@@ -242,7 +242,7 @@ class Category implements \JsonSerializable
      *
      * @param boolean $nominationsEnabled
      *
-     * @return Category
+     * @return Award
      */
     public function setNominationsEnabled($nominationsEnabled)
     {
@@ -264,7 +264,7 @@ class Category implements \JsonSerializable
      *
      * @param boolean $secret
      *
-     * @return Category
+     * @return Award
      */
     public function setSecret($secret)
     {
@@ -286,11 +286,11 @@ class Category implements \JsonSerializable
     /**
      * Add feedback
      *
-     * @param CategoryFeedback $feedback
+     * @param AwardFeedback $feedback
      *
-     * @return Category
+     * @return Award
      */
-    public function addFeedback(CategoryFeedback $feedback)
+    public function addFeedback(AwardFeedback $feedback)
     {
         $this->feedback[] = $feedback;
 
@@ -300,9 +300,9 @@ class Category implements \JsonSerializable
     /**
      * Remove feedback
      *
-     * @param CategoryFeedback $feedback
+     * @param AwardFeedback $feedback
      */
-    public function removeFeedback(CategoryFeedback $feedback)
+    public function removeFeedback(AwardFeedback $feedback)
     {
         $this->feedback->removeElement($feedback);
     }
@@ -322,7 +322,7 @@ class Category implements \JsonSerializable
      *
      * @param Nominee $nominee
      *
-     * @return Category
+     * @return Award
      */
     public function addNominee(Nominee $nominee)
     {
@@ -373,7 +373,7 @@ class Category implements \JsonSerializable
      *
      * @param UserNomination $userNomination
      *
-     * @return Category
+     * @return Award
      */
     public function addUserNomination(UserNomination $userNomination)
     {
@@ -441,7 +441,7 @@ class Category implements \JsonSerializable
      *
      * @param Vote $vote
      *
-     * @return Category
+     * @return Award
      */
     public function addVote(Vote $vote)
     {
@@ -475,7 +475,7 @@ class Category implements \JsonSerializable
      *
      * @param ResultCache $resultCache
      *
-     * @return Category
+     * @return Award
      */
     public function addResultCache(ResultCache $resultCache)
     {
@@ -525,7 +525,7 @@ class Category implements \JsonSerializable
      *
      * @param Autocompleter $autocompleter
      *
-     * @return Category
+     * @return Award
      */
     public function setAutocompleter(Autocompleter $autocompleter = null)
     {
@@ -590,7 +590,7 @@ class Category implements \JsonSerializable
 
     /**
      * @param string $winnerImage
-     * @return Category
+     * @return Award
      */
     public function setWinnerImage($winnerImage)
     {

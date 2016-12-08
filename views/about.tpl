@@ -6,7 +6,7 @@
         <div class="row">
             <div class="span5">
             <p>The /v/GAs (<em>Vidya Gaem Awards</em>) were born in early December 2011 as a response to the Spike VGAs, which were widely regarded as terrible and a cancer upon the video game industry.</p>
-            <p>A small group of anons decided to make their own presentation for /v/: after a month or so of planning, categories were made, votes were tallied and the presentation was shown to over 10,000 people live. It was widely regarded as terrible and a cancer upon /v/.</p>
+            <p>A small group of anons decided to make their own presentation for /v/: after a month or so of planning, awards were made, votes were tallied and the presentation was shown to over 10,000 people live. It was widely regarded as terrible and a cancer upon /v/.</p>
             <p>Despite this, a slightly different and much larger group of anons thought they could do better next time. They were right in some ways, but mostly wrong.</p>
             <p>It looked like common sense was going to take hold this year; nobody was working on it and there <a href="https://vidyagaemawards.com/2013_old/">weren't any plans to do so</a>. Unfortunately, there was one anon who was rather persistant, and it looks like the /v/GAs will go ahead once more, albeit with an almost completely different team.</p>
             <h2>Why the fuck would you think this is a good idea again?</h2>

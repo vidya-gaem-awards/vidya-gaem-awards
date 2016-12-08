@@ -231,11 +231,11 @@ $routes->add('privacy', new Route(
         'action' => 'privacy'
     ]
 ));
-$routes->add('categories', new Route(
+$routes->add('awards', new Route(
     '/awards',
     [
-        'controller' => Controllers\CategoryController::class,
-        'permission' => 'categories-edit' // normally public, update when ready
+        'controller' => Controllers\AwardController::class,
+        'permission' => 'awards-edit' // normally public, update when ready
     ],
     [],
     [],
@@ -243,12 +243,12 @@ $routes->add('categories', new Route(
     [],
     ['GET']
 ));
-$routes->add('categoryManager', new Route(
+$routes->add('awardManager', new Route(
     '/awards/manage',
     [
-        'controller' => Controllers\CategoryAdminController::class,
+        'controller' => Controllers\AwardAdminController::class,
         'action' => 'managerList',
-        'permission' => 'categories-feedback'
+        'permission' => 'awards-feedback'
     ],
     [],
     [],
@@ -256,12 +256,12 @@ $routes->add('categoryManager', new Route(
     [],
     ['GET']
 ));
-$routes->add('categoryManagerPost', new Route(
+$routes->add('awardManagerPost', new Route(
     '/awards/manage',
     [
-        'controller' => Controllers\CategoryAdminController::class,
+        'controller' => Controllers\AwardAdminController::class,
         'action' => 'managerPost',
-        'permission' => 'categories-edit'
+        'permission' => 'awards-edit'
     ],
     [],
     [],
@@ -269,12 +269,12 @@ $routes->add('categoryManagerPost', new Route(
     [],
     ['POST']
 ));
-$routes->add('editCategory', new Route(
-    '/awards/manage/{category}',
+$routes->add('editAward', new Route(
+    '/awards/manage/{awardID}',
     [
-        'controller' => Controllers\CategoryAdminController::class,
-        'action' => 'editCategory',
-        'permission' => 'categories-edit'
+        'controller' => Controllers\AwardAdminController::class,
+        'action' => 'editAward',
+        'permission' => 'awards-edit'
     ],
     [],
     [],
@@ -282,12 +282,12 @@ $routes->add('editCategory', new Route(
     [],
     ['GET']
 ));
-$routes->add('editCategoryPost', new Route(
-    '/awards/manage/{category}',
+$routes->add('editAwardPost', new Route(
+    '/awards/manage/{awardID}',
     [
-        'controller' => Controllers\CategoryAdminController::class,
-        'action' => 'editCategoryPost',
-        'permission' => 'categories-edit'
+        'controller' => Controllers\AwardAdminController::class,
+        'action' => 'editAwardPost',
+        'permission' => 'awards-edit'
     ],
     [],
     [],
@@ -323,9 +323,9 @@ $routes->add('addVideoGame', new Route(
 $routes->add('awardFrontendPost', new Route(
     '/awards',
     [
-        'controller' => Controllers\CategoryController::class,
+        'controller' => Controllers\AwardController::class,
         'action' => 'post',
-        'permission' => 'categories-edit' // normally public, update when ready
+        'permission' => 'awards-edit' // normally public, update when ready
     ],
     [],
     [],
@@ -341,11 +341,11 @@ $routes->add('referrers', new Route(
     ]
 ));
 $routes->add('nomineeManager', new Route(
-    '/nominees/{category}',
+    '/nominees/{awardID}',
     [
         'controller' => Controllers\NomineeController::class,
         'permission' => 'nominations-view',
-        'category' => null
+        'awardID' => null
     ],
     [],
     [],
@@ -354,7 +354,7 @@ $routes->add('nomineeManager', new Route(
     ['GET']
 ));
 $routes->add('nomineePost', new Route(
-    '/nominees/{category}',
+    '/nominees/{awardID}',
     [
         'controller' => Controllers\NomineeController::class,
         'action' => 'post',
@@ -400,10 +400,10 @@ $routes->add('viewVotingCode', new Route(
     ]
 ));
 $routes->add('voting', new Route(
-    '/vote/{category}',
+    '/vote/{awardID}',
     [
         'controller' => Controllers\VotingController::class,
-        'category' => null,
+        'awardID' => null,
         'permission' => 'voting-view', // normally public, update when ready
     ],
     [],
@@ -413,7 +413,7 @@ $routes->add('voting', new Route(
     ['GET']
 ));
 $routes->add('votingSubmission', new Route(
-    '/vote/{category}',
+    '/vote/{awardID}',
     [
         'controller' => Controllers\VotingController::class,
         'action' => 'post',

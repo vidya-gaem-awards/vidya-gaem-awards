@@ -6,33 +6,33 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 use VGA\Model\Action;
-use VGA\Model\Category;
+use VGA\Model\Award;
 use VGA\Model\Nominee;
 use VGA\Model\TableHistory;
 
 class NomineeController extends BaseController
 {
-    public function indexAction($category = null)
+    public function indexAction($awardID = null)
     {
-        $repo = $this->em->getRepository(Category::class);
+        $repo = $this->em->getRepository(Award::class);
         $query = $repo->createQueryBuilder('c', 'c.id');
         $query->select('c')
             ->where('c.enabled = true')
             ->orderBy('c.order', 'ASC');
 
-        if (!$this->user->canDo('categories-secret')) {
+        if (!$this->user->canDo('awards-secret')) {
             $query->andWhere('c.secret = false');
         }
-        $categories = $query->getQuery()->getResult();
+        $awards = $query->getQuery()->getResult();
 
-        $categoryVariables = [];
+        $awardVariables = [];
 
-        if ($category) {
-            /** @var Category $category */
-            $category = $this->em->getRepository(Category::class)->find($category);
+        if ($awardID) {
+            /** @var Award $award */
+            $award = $this->em->getRepository(Award::class)->find($awardID);
 
-            if (!$category || ($category->isSecret() && !$this->user->canDo('categories-secret'))) {
-                $this->session->getFlashBag()->add('error', 'Invalid category ID specified.');
+            if (!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) {
+                $this->session->getFlashBag()->add('error', 'Invalid award ID specified.');
                 $response = new RedirectResponse($this->generator->generate('nomineeManager'));
                 $response->send();
                 return;
@@ -40,7 +40,7 @@ class NomineeController extends BaseController
 
             $alphabeticalSort = $this->request->get('sort') === 'alphabetical';
 
-            $autocompleters = array_filter($category->getUserNominations(), function ($un) {
+            $autocompleters = array_filter($award->getUserNominations(), function ($un) {
                 return $un['count'] >= 3;
             });
             $autocompleters = array_map(function ($un) {
@@ -50,11 +50,11 @@ class NomineeController extends BaseController
 
             $nomineesArray = [];
             /** @var Nominee $nominee */
-            foreach ($category->getNominees() as $nominee) {
+            foreach ($award->getNominees() as $nominee) {
                 $nomineesArray[$nominee->getShortName()] = $nominee;
             }
 
-            $categoryVariables = [
+            $awardVariables = [
                 'alphabeticalSort' => $alphabeticalSort,
                 'autocompleters' => $autocompleters,
                 'nominees' => $nomineesArray
@@ -65,25 +65,25 @@ class NomineeController extends BaseController
 
         $response = new Response($tpl->render(array_merge([
             'title' => 'Nominee Manager',
-            'categories' => $categories,
-            'category' => $category,
-        ], $categoryVariables)));
+            'awards' => $awards,
+            'award' => $award,
+        ], $awardVariables)));
         $response->send();
     }
 
-    public function postAction($category)
+    public function postAction($award)
     {
         $response = new JsonResponse();
 
-        /** @var Category $category */
-        $category = $this->em->getRepository(Category::class)->find($category);
+        /** @var Award $award */
+        $award = $this->em->getRepository(Award::class)->find($award);
 
-        if (!$category || ($category->isSecret() && !$this->user->canDo('categories-secret'))) {
-            $response->setData(['error' => 'Invalid category specified.']);
+        if (!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) {
+            $response->setData(['error' => 'Invalid award specified.']);
             $response->send();
             return;
-        } elseif (!$category->isEnabled()) {
-            $response->setData(['error' => 'Category isn\'t enabled.']);
+        } elseif (!$award->isEnabled()) {
+            $response->setData(['error' => 'Award isn\'t enabled.']);
             $response->send();
             return;
         }
@@ -98,7 +98,7 @@ class NomineeController extends BaseController
         }
 
         if ($action === 'new') {
-            if ($category->getNominee($post->get('id'))) {
+            if ($award->getNominee($post->get('id'))) {
                 $response->setData(['error' => 'A nominee with that ID already exists for this award.']);
                 $response->send();
                 return;
@@ -114,10 +114,10 @@ class NomineeController extends BaseController
 
             $nominee = new Nominee();
             $nominee
-                ->setCategory($category)
+                ->setAward($award)
                 ->setShortName($post->get('id'));
         } else {
-            $nominee = $category->getNominee($post->get('id'));
+            $nominee = $award->getNominee($post->get('id'));
             if (!$nominee) {
                 $response->setData(['error' => 'Invalid nominee specified.']);
             }
@@ -129,7 +129,7 @@ class NomineeController extends BaseController
             $action = new Action('nominee-delete');
             $action->setUser($this->user)
                 ->setPage(__CLASS__)
-                ->setData1($category->getId())
+                ->setData1($award->getId())
                 ->setData2($nominee->getShortName());
             $this->em->persist($action);
 
@@ -162,14 +162,14 @@ class NomineeController extends BaseController
         $action = new Action('nominee-' . $action);
         $action->setUser($this->user)
             ->setPage(__CLASS__)
-            ->setData1($category->getId())
+            ->setData1($award->getId())
             ->setData2($nominee->getShortName());
         $this->em->persist($action);
 
         $history = new TableHistory();
         $history->setUser($this->user)
             ->setTable('Nominee')
-            ->setEntry($category->getId() . '/' . $nominee->getShortName())
+            ->setEntry($award->getId() . '/' . $nominee->getShortName())
             ->setValues($post->all());
         $this->em->persist($history);
         $this->em->flush();

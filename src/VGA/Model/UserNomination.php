@@ -24,18 +24,18 @@ class UserNomination
     private $timestamp;
 
     /**
-     * @var Category
+     * @var Award
      */
-    private $category;
+    private $award;
 
     /**
-     * @param Category $category
+     * @param Award $award
      * @param User $user
      * @param string $nomination
      */
-    public function __construct(Category $category, User $user, string $nomination)
+    public function __construct(Award $award, User $user, string $nomination)
     {
-        $this->category = $category;
+        $this->award = $award;
         $this->user = $user->getFuzzyID();
         $this->nomination = $nomination;
         $this->timestamp = new \DateTime();
@@ -124,27 +124,27 @@ class UserNomination
     }
 
     /**
-     * Set category
+     * Set award
      *
-     * @param Category $category
+     * @param Award $award
      *
      * @return UserNomination
      */
-    public function setCategory(Category $category = null)
+    public function setAward(Award $award = null)
     {
-        $this->category = $category;
+        $this->award = $award;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Get award
      *
-     * @return Category
+     * @return Award
      */
-    public function getCategory()
+    public function getAward()
     {
-        return $this->category;
+        return $this->award;
     }
 }
 
