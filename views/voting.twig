@@ -24,7 +24,7 @@
         var votingEnabled = {{ votingOpen ? 'true' : 'false' }};
         var lastVotes = {{ votes | json_encode | raw }};
         var currentAward = "{{ award.id }}";
-        var postURL = "{{ path('votingSubmission', {'award': award.id}) }}";
+        var postURL = "{{ path('votingSubmission', {'awardID': award.id}) }}";
     </script>
     {% endif %}
 

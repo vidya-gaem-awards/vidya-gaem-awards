@@ -1,45 +1,99 @@
 {% extends 'master.twig' %}
 
-{% block content %}
-    <style>
-        .ui-autocomplete {
-            max-height: 300px;
-            overflow-y: auto;
-            /* prevent horizontal scrollbar */
-            overflow-x: hidden;
-            /* add padding to account for vertical scrollbar */
-        }
-        #video-games img:hover {
-            box-shadow: 0 0 4px black;
-        }
+{% block head %}
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Titillium+Web:400,700" rel="stylesheet">
+    <style type="text/css">
+      .ui-autocomplete {
+        max-height: 300px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+        /* add padding to account for vertical scrollbar */
+      }
+      #video-games img:hover {
+        box-shadow: 0 0 4px black;
+      }
 
-        #video-game-collage {
-            background-color: #111;
-        }
+      #video-game-collage {
+        background-color: #111;
+      }
 
-        #video-game-collage .top {
-            top: 0;
-        }
+      #video-game-collage .top {
+        top: 0;
+      }
 
-        #video-game-collage .bottom {
-            bottom: 3px;
-        }
+      #video-game-collage .bottom {
+        bottom: 3px;
+      }
 
-        #video-game-collage .top, #video-game-collage .bottom {
-            position: absolute;
-            text-align: center;
-            font-weight: bold;
-            font-size: 35px;
-            color: white;
-            padding: 0 10px;
-            max-width: 555px;
-            text-shadow: 0 2px 0 black;
+      #video-game-collage .top, #video-game-collage .bottom {
+        position: absolute;
+        text-align: center;
+        font-weight: bold;
+        font-size: 35px;
+        color: white;
+        padding: 0 10px;
+        max-width: 555px;
+        text-shadow: 0 2px 0 black;
+      }
+
+      .page-header {
+        font-family: 'Bungee', sans-serif;
+        text-align: center;
+      }
+
+      .admin-tools {
+        margin-top: -20px;
+        text-align: center;
+        border-bottom: 1px solid #BBB;
+        border-radius: 0;
+      }
+
+      body {
+        font-family: 'Titillium Web', sans-serif;
+      }
+
+      .impressive-title {
+        /*text-shadow: #000 1px 1px 2px;*/
+        text-align: center;
+        color: #789922;
+        text-transform: uppercase;
+        font-family: 'Bungee', sans-serif;
+        font-size: 2.0em;
+        line-height: 1em;
+      }
+
+      .impressive-subtitle {
+        text-align: center;
+        color: #1F1F1F;
+        font-weight: bold;
+        font-size: 1.1em;
+        line-height: 1.95em;
+        margin-bottom: 10px;
+      }
+
+      .affix {
+        width: 100%;
+      }
+
+      @media (min-width: 1200px) {
+        .affix {
+          width: 585px;
         }
+      }
+
+      @media (min-width: 992px) {
+        .affix {
+          width: 555px;
+        }
+      }
     </style>
+{% endblock %}
 
+{% block content %}
+    <h1 class="page-header">Nominate Games for the 2016 /v/GAs</h1>
     {% if user.canDo('awards-edit') or user.canDo('nominations-view') %}
-        <ul class="breadcrumb">
-            <li class="active">Admin tools:</li>
+        <ul class="breadcrumb admin-tools">
             {% if user.canDo('awards-edit') %}
                 <li>
                     <a href="{{ path('awardManager') }}">Manage awards</a>
@@ -52,10 +106,6 @@
             {% endif %}
         </ul>
     {% endif %}
-    <h1 class="page-header">Awards and Nominations</h1>
-    <p class="lead">We use user nominations to decide which nominees get officially chosen for the voting stage.</p>
-    <p class="lead">You can make as many nominations as you want for each award below.</p>
-    <hr>
 
     <div class="row">
         <div class="col-md-6" id="award-selector">
@@ -83,7 +133,7 @@
         </div>
 
         <div class="col-md-6" id="award-info" style="display: none;">
-            <div data-spy="affix" data-offset-top="230">
+            <div data-spy="affix" data-offset-top="120">
                 <div id="award-name" class="impressive-title"></div>
                 <div id="award-subtitle" class="impressive-subtitle"></div>
 
@@ -124,7 +174,7 @@
                     </div>
 
                     <div id="nominations-closed" style="display: none; text-align: center;">
-                        Nominations for this award have been closed.
+                        Nominations for this award are not currently open.
                     </div>
 
                 </div>

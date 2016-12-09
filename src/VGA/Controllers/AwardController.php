@@ -153,7 +153,7 @@ class AwardController extends BaseController
         if ($nomination !== null) {
 
             if (!$award->areNominationsEnabled()) {
-                $response->setData(['error' => 'Nominations have been closed for this award.']);
+                $response->setData(['error' => 'Nominations are not currently open for this award.']);
                 $response->send();
                 return;
             }

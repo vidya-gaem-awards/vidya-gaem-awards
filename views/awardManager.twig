@@ -294,17 +294,11 @@
 
     <script type="text/javascript">
         $("#massChangeNominations").submit(function() {
-            event.preventDefault();
-            if(confirm("Are you sure you want to just fuck this shit up?")) {
-                $(this).unbind("submit").submit();
-            }
+            return confirm("Are you sure you want to just fuck this shit up?");
         });
 
         $("#deleteAward").submit(function() {
-            event.preventDefault();
-            if(confirm("Are you sure you want to just fuck this award up?")) {
-                $(this).unbind("submit").submit();
-            }
+            return confirm("Are you sure you want to just fuck this award up?");
         });
     </script>
 {% endblock %}
