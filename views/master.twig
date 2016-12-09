@@ -39,12 +39,17 @@
                         <li><a href="{{ path(route) }}">{{ title }}</a></li>
                     {% endfor %}
                 </ul>
-                <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+                <ul class="nav navbar-nav navbar-right">
                     {% if user.loggedIn %}
-                        <li><a href="https://steamcommunity.com/profiles/{{ user.steamID }}">{{ user.name }}</a></li>
-                        <li><img src="data:image/png;base64,{{ user.avatar }}" style='height: 50px;'></li>
+                        <li class="hidden-sm hidden-xs"><a href="https://steamcommunity.com/profiles/{{ user.steamID }}">{{ user.name }}</a></li>
+                        <li class="hidden-sm hidden-xs"><img src="data:image/png;base64,{{ user.avatar }}" style='height: 50px;'></li>
                     {% else %}
-                        <li><a href="{{ steamLoginLink }}"><img src="/img/sign_in_with_steam.png"></a></li>
+                        <li>
+                            <a href="{{ steamLoginLink }}">
+                                <img src="/img/sign_in_with_steam.png" class="hidden-sm hidden-xs" alt="Login">
+                                <span class="visible-sm visible-xs">Login</span>
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>
