@@ -501,6 +501,14 @@ $routes->add('credits', new Route(
         'permission' => $config->isPagePublic('credits') ? false : 'view-unfinished-pages'
     ]
 ));
+$routes->add('videos', new Route(
+    '/videos',
+    [
+        'controller' => Controllers\StaticController::class,
+        'action' => 'videos',
+        'permission' => $config->isPagePublic('videos') ? false : 'view-unfinished-pages'
+    ]
+));
 
 $defaultRoute = $routes->get($config->getDefaultPage());
 

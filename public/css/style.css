@@ -1,10 +1,10 @@
 body {
-	padding-top: 30px;
-	padding-bottom: 30px;
+	padding-top: 60px;
+	padding-bottom: 20px;
 	background: #EEF2FF url('/background.png') top center repeat-x;
 }
 
-body, label, input, select, textarea, p {
+body, label, input, select, textarea {
 	font-family: arial,helvetica,sans-serif;
 }
 
@@ -147,11 +147,6 @@ table.tablesorter thead tr .headerSortUp {
           box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
 }
 /* Chevrons */
-
-.filmstrip {
-	background: url('/filmstrip.png') repeat-x bottom;
-	height: 42px;
-}
 
 ul.nav li.dropdown:hover ul.dropdown-menu {
   display: block;    

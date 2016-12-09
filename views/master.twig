@@ -8,9 +8,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-    {#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css">#}
-    {#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.7/css/bootstrap-material-design.min.css">#}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Titillium+Web:400,700" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
@@ -21,7 +20,7 @@
     {% block head %}{% endblock %}
 </head>
 
-<body style="padding-top: 60px; padding-bottom: 20px;">
+<body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -51,6 +50,8 @@
             </div>
         </div>
     </nav>
+
+    {% block beforeContainer %}{% endblock %}
 
     <div class="container" role="main">
 {% for message in flashbag.get('error') %}
