@@ -3,6 +3,8 @@ namespace VGA\Controllers;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use VGA\Model\Action;
+use VGA\Model\TableHistory;
 
 class ConfigController extends BaseController
 {
@@ -60,6 +62,15 @@ class ConfigController extends BaseController
         $this->config->setPublicPages(array_keys($post->get('publicPages', [])));
 
         $this->em->persist($this->config);
+
+        $action = new Action('config-updated');
+        $action->setUser($this->user)->setPage(__CLASS__);
+        $this->em->persist($action);
+
+        $history = new TableHistory();
+        $history->setUser($this->user)->setTable('Config')->setEntry('')->setValues($post->all());
+        $this->em->persist($history);
+
         $this->em->flush();
 
         if (!$error) {
