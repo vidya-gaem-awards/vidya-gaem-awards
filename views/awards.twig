@@ -67,8 +67,24 @@
         color: #1F1F1F;
         font-weight: bold;
         font-size: 1.1em;
-        line-height: 1.95em;
         margin-bottom: 10px;
+      }
+
+      @media (max-width: 991px) {
+        .affix {
+          padding-top: 10px;
+          position: static;
+        }
+
+        #awardDropdown .dropdown-menu {
+          width: 100%;
+          margin-bottom: 60px;
+        }
+      }
+
+      #awardDropdownButton {
+        width: 100%;
+        margin-bottom: 20px;
       }
 
       .affix {
@@ -84,13 +100,31 @@
       @media (min-width: 992px) {
         .affix {
           width: 555px;
+          top: 85px;
+        }
+
+        #awardDropdownButton {
+          display: none;
+        }
+
+        #awardDropdown {
+          position: static;
+        }
+
+        #awardDropdown .dropdown-menu {
+          position: static;
+          display: block;
+          top: auto;
+          left: auto;
+          float: none;
+          border: none;
         }
       }
     </style>
 {% endblock %}
 
 {% block content %}
-    <h1 class="page-header">Nominate Games for the 2016 /v/GAs</h1>
+    <h1 class="page-header">Nominate Games for the 2016&nbsp;/v/GAs</h1>
     {% if user.canDo('awards-edit') or user.canDo('nominations-view') %}
         <ul class="breadcrumb admin-tools">
             {% if user.canDo('awards-edit') %}
@@ -108,7 +142,12 @@
 
     <div class="row">
         <div class="col-md-6" id="award-selector">
-            <ul class="nav nav-list custom-navigation-pane">
+          <div class="dropdown" id="awardDropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="awardDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Select an award
+              <span class="caret"></span>
+            </button>
+            <ul class="nav nav-list custom-navigation-pane dropdown-menu" aria-labelledby="awardDropdownButton">
                 {% for award in awards %}
                     <li data-id="{{ award.id }}">
                         <a href="#{{ award.id }}">
@@ -119,6 +158,7 @@
                     </li>
                 {% endfor %}
             </ul>
+          </div>
         </div>
 
         <div class="col-md-6" id="video-games">

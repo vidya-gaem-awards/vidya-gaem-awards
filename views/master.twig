@@ -39,7 +39,7 @@
                         <li><a href="{{ path(route) }}">{{ title }}</a></li>
                     {% endfor %}
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
                     {% if user.loggedIn %}
                         <li><a href="https://steamcommunity.com/profiles/{{ user.steamID }}">{{ user.name }}</a></li>
                         <li><img src="data:image/png;base64,{{ user.avatar }}" style='height: 50px;'></li>

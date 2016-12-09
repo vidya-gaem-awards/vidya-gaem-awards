@@ -105,19 +105,6 @@ table.tablesorter thead tr .headerSortUp {
 	float: right;
 }
 
-@media (min-width: 992px) {
-	#award-info .affix {
-		top: 85px;
-	}
-}
-
-@media (max-width: 991px) {
-	#award-info .affix {
-		padding-top: 10px;
-		position: static;
-	}
-}
-
 
 /* Sidenav for Docs
 -------------------------------------------------- */
