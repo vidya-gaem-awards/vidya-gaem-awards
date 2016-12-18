@@ -381,7 +381,7 @@ function parseCredits($input) {
     "github" => "http://github.com/"
   );
   
-  $input = explode("\r\n\r\n", $input);
+  $input = explode("\n\n", $input);
 
   foreach ($input as &$member) {
     $member = explode("\n", $member);
