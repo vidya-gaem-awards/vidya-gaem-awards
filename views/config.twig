@@ -70,6 +70,12 @@
                 </div>
                 <div class="checkbox">
                   <label>
+                    <input type="checkbox" name="publicPages[videos]" {{ config.isPagePublic('videos') ? 'checked' : '' }}>
+                    <a href="{{ path('videos') }}" target="_blank">Videos page</a>
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
                     <input type="checkbox" name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>
                     <a href="{{ path('voting') }}" target="_blank">Voting page</a>
                     <p class="help-block"><small>Checking this box does not open voting: use the settings on the left for that.</small></p>
