@@ -39,6 +39,7 @@
       .page-header {
         font-family: 'Bungee', sans-serif;
         text-align: center;
+        margin-top: 5px;
       }
 
       .admin-tools {
@@ -70,6 +71,16 @@
         margin-bottom: 10px;
       }
 
+      .award-container {
+          border: 1px solid #BBB;
+          background-color: #f5f5f5;
+          padding: 15px 15px 15px 15px;
+      }
+
+      #user-nomination-list {
+          margin-bottom: 10px;
+      }
+
       @media (max-width: 991px) {
         .affix {
           padding-top: 10px;
@@ -85,6 +96,10 @@
       #awardDropdownButton {
         width: 100%;
         margin-bottom: 20px;
+      }
+
+      #awardDropdown .dropdown-menu > li > a {
+          white-space: normal;
       }
 
       .affix {
@@ -172,7 +187,7 @@
         </div>
 
         <div class="col-md-6" id="award-info" style="display: none;">
-            <div data-spy="affix" data-offset-top="120">
+            <div data-spy="affix" data-offset-top="120" class="award-container">
                 <div id="award-name" class="impressive-title"></div>
                 <div id="award-subtitle" class="impressive-subtitle"></div>
 
@@ -185,39 +200,30 @@
                     </div>
                 </div>
 
-                <div class="well">
+                <div class="well" style="background-color: #fafafa;" id="user-nomination-list"></div>
 
-                    <div style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
-                        Your nominations for this award: <span id="user-nomination-count">0</span>
-                    </div>
-
-                    <div id="nomination-section">
-                        <div class="well" style="background-color: #fafafa;" id="user-nomination-list"></div>
-
-                        <form class="form-inline" style="text-align: center;" id="nomination-form">
-                            <div class="form-group">
-                                <label class="sr-only" for="tags">Add a nomination:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">Add a nomination:</div>
-                                    <input class="form-control" id="tags" name="nomination" type="text" required>
-                                </div>
+                <div id="nomination-section">
+                    <form class="form-inline" style="text-align: center;" id="nomination-form">
+                        <div class="form-group">
+                            <label class="sr-only" for="tags">Add a nomination:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Add a nomination:</div>
+                                <input class="form-control" id="tags" name="nomination" type="text" required>
                             </div>
-                            <button class="btn" type="submit">Submit</button>
-                            <p class="help-block" style="font-style: italic;">
-                                <span id="autocomplete"></span><br>
-                                You can make nominations for things that aren't in the dropdown.
-                            </p>
-                        </form>
+                        </div>
+                        <button class="btn" type="submit">Submit</button>
+                        <p class="help-block" style="font-style: italic;">
+                            <span id="autocomplete"></span><br>
+                            You can make nominations for things that aren't in the dropdown.
+                        </p>
+                    </form>
 
-                        <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
-                    </div>
-
-                    <div id="nominations-closed" style="display: none; text-align: center;">
-                        Nominations for this award are not currently open.
-                    </div>
-
+                    <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
                 </div>
 
+                <div id="nominations-closed" style="display: none; text-align: center;">
+                    Nominations for this award are not currently open.
+                </div>
             </div>
         </div>
     </div>
@@ -231,7 +237,7 @@
         var award = false;
 
         function updateNominations() {
-            $('#user-nomination-count').html(userNominations[award].length);
+//            $('#user-nomination-count').html(userNominations[award].length);
             if (userNominations[award].length == 0) {
                 $('#user-nomination-list').html("You haven't nominated anything for this award.");
             } else {
