@@ -14,7 +14,7 @@
                         {% if item.new %}
                             <span class="label label-info">New</span>
                         {% endif %}
-                        <strong>{{ item.timestamp|date('M j, Y') }}</strong>: {{ item.text }}
+                        <strong>{{ item.timestamp|date('M j, Y') }}</strong>: {{ item.text | raw }}
                     </li>
                 {% endfor %}
             </ul>

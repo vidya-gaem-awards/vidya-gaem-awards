@@ -41,7 +41,7 @@
                 <h3>{{ item.timestamp | date('M j, Y, g:ia') }}</h3>
                 <form action="{{ path('newsDelete', {'id': item.id}) }}" method="post">
                     <p>
-                        {{ item.text }}
+                        {{ item.text | raw }}
                         {% if user.canDo('news-view-user') %}
                             &ndash; <a href="https://steamcommunity.com/profiles/{{ item.user.steamID }}">{{ item.user.name }}</a>
                         {% endif %}
