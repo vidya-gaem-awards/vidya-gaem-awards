@@ -2,9 +2,10 @@ body {
 	padding-top: 60px;
 	padding-bottom: 20px;
 	background: #EEF2FF url('/background.png') top center repeat-x;
+	font-family: 'Titillium Web', arial, helvetica, sans-serif;
 }
 
-body, label, input, select, textarea {
+input, select, textarea {
 	font-family: arial,helvetica,sans-serif;
 }
 
