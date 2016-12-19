@@ -94,7 +94,7 @@
                     <label class="col-sm-4 control-label" for="nominationsEnabled">Nominations enabled?</label>
                     <div class="col-sm-8 checkbox">
                         <label>
-                            <input type="checkbox" id="nominationsEnabled" value="true" name="nominationsEnabled" {{ award.nominationsEnabled ? 'checked' : '' }}>
+                            <input type="checkbox" id="nominationsEnabled" value="true" name="nominationsEnabled" {{ award.areNominationsEnabled ? 'checked' : '' }}>
                         </label>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
                         <span class="label label-warning">Award Disabled</span>
                         {% elseif award.secret %}
                         <span class="label label-info">Secret Award!</span>
-                        {% elseif award.nominationsEnabled %}
+                        {% elseif award.areNominationsEnabled %}
                         <span class="label label-success">Nominations Open</span>
                         {% else %}
                         <span class="label label-default">Nominations Closed</span>
