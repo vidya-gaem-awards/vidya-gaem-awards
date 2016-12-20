@@ -29,7 +29,7 @@ VGA\Model\Access:
     ip:
       type: string
       nullable: false
-      length: 15
+      length: 45
     userAgent:
       type: string
       nullable: false
