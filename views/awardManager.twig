@@ -226,6 +226,9 @@
                             <div class="sparkbar-no" style="width: {{ award.feedbackPercent.negative }}%"></div>
                         </div>
                         {{ award.feedback | length }} votes
+                        <abbr style="float: right;" title="{{ award.feedbackPercent.positive | round(2) }}% positive">
+                            {{ award.feedbackPercent.positive | round }}%
+                        </abbr>
                     </td>
                     <td class="aligned">{{ award.order }}</td>
                     {% if user.canDo('awards-edit') %}
