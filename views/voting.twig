@@ -41,12 +41,10 @@
 
 <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
 <header>
-    <a href="{{ path('voting') }}"><img src="/2015voting/logo.gif" id="thelogo" alt="oh god it's happening again"/></a>
-    <h1>The 2016 Vidya Gaem Awards</h1>
+    <a href="{{ path('voting') }}"><img src="/2016images/vga_logo.png" id="thelogo" alt="oh god it's happening again"/></a>
+    <h1>The 2017 Vidya Gaem Awards</h1>
     <h2>{{ voteText }}</h2>
 </header>
-
-<div class="zig"></div>
 
 <div id="wrapper">
     {% if award %}
@@ -59,7 +57,7 @@
             <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
         </div>
         {% if votingOpen %}
-            <img src="/2015voting/dont_forget.gif" id="dontforget" alt="Don't forget to hit submit"/>
+            <img src="/2016images/dontForget.png" id="dontforget" alt="Don't forget to hit submit"/>
         {% endif %}
     {% endif %}
 
@@ -67,7 +65,7 @@
         <div id="limitsDrag">
             <div id="nomineeColumn" class="column">
 
-                <img src="/2015voting/instruc_pick.gif" width="172px" height="97px" alt="Pick your nominees"/>
+                <img src="/2016images/pickYourNominees.png" width="204px" height="70px" alt="Pick your nominees">
 
                 {% for nominee in award.nominees | shuffle %}
 
@@ -75,8 +73,8 @@
                     <div class="voteBox">
                         <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
                              data-nominee="{{ nominee.shortName }}">
-                            <img class="fakeBorder" src="/2015voting/votebox_foreground.png">
-                            <img class="fakeBorder locked" src="/2015voting/votebox_foreground_locked.png">
+                            <img class="fakeBorder" src="/2016images/votebox_foreground.png">
+                            <img class="fakeBorder locked" src="/2016images/votebox_foreground_locked.png">
                             <div class="info">
                                 <div class="innerInfo">{{ nominee.flavorText }}</div>
                             </div>
@@ -100,7 +98,7 @@
 
             {% if votingOpen or votingClosed %}
                 <div id="voteColumn" class="column">
-                    <img src="/2015voting/instruc_drag.gif" width="234px" height="97px" alt="Drag and drop to vote"/>
+                    <img src="/2016images/dragAndDrop.png" width="307px" height="70px" alt="Drag and drop to vote"/>
                     {% for nominee in award.nominees %}
                         <div id="voteBox{{ loop.index }}" class="voteBox">
                         </div>
@@ -155,7 +153,7 @@
             {% endif %}
 
             <h2>Stream information:</h2>
-            <p>We fucked up and probably won't stream until March.</p>
+            <p>We're aiming to stream at the end of January.</p>
 
         </div>
     {% endif %}
