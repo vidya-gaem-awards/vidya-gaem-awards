@@ -544,7 +544,7 @@ class Award implements \JsonSerializable
         return $this->autocompleter;
     }
 
-    public function getFeedbackPercent()
+    public function getGroupedFeedback()
     {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('opinion', 1));
@@ -554,9 +554,19 @@ class Award implements \JsonSerializable
             ->where(Criteria::expr()->eq('opinion', -1));
         $negative = count($this->getFeedback()->matching($criteria));
 
-        $total = $positive + $negative;
+        return [
+            'positive' => $positive,
+            'negative' => $negative,
+            'net' => $positive - $negative,
+            'total' => $positive + $negative
+        ];
+    }
 
-        if ($total === 0) {
+    public function getFeedbackPercent()
+    {
+        $feedback = $this->getGroupedFeedback();
+
+        if ($feedback['total'] === 0) {
             return [
                 'positive' => 0,
                 'negative' => 0
@@ -564,8 +574,8 @@ class Award implements \JsonSerializable
         }
 
         return [
-            'positive' => $positive / $total * 100,
-            'negative' => $negative / $total * 100
+            'positive' => $feedback['positive'] / $feedback['total'] * 100,
+            'negative' => $feedback['negative'] / $feedback['total'] * 100
         ];
     }
 

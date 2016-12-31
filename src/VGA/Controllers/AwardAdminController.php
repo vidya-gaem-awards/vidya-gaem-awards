@@ -21,11 +21,13 @@ class AwardAdminController extends BaseController
         $condition = $this->user->canDo('awards-secret') ? [] : ['secret' => false];
         $awards = $repo->findBy($condition, ['order' => 'ASC']);
 
-        if ($this->request->get('sort') === 'feedback') {
-            usort($awards, function ($a, $b) {
-                /** @var Award $a */
-                /** @var Award $b */
+        if ($this->request->get('sort') === 'percentage') {
+            usort($awards, function (Award $a, Award $b) {
                 return $b->getFeedbackPercent()['positive'] <=> $a->getFeedbackPercent()['positive'];
+            });
+        } elseif ($this->request->get('sort') === 'net') {
+            usort($awards, function (Award $a, Award $b) {
+                return $b->getGroupedFeedback()['net'] <=> $a->getGroupedFeedback()['net'];
             });
         }
 

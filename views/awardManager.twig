@@ -195,8 +195,11 @@
                     <th style="width: 130px;">Status</th>
                     <th class="col-sm-2">ID</th>
                     <th>Name</th>
-                    <th style="width: 160px;">
-                        Feedback <small><a href='?sort=feedback'>sort</a></small>
+                    <th style="width: 180px;">
+                        Feedback
+                        <span style="float: right;">
+                            <small><a href='?sort=percentage'>sort %</a> or <a href='?sort=net'>sort net</a></small>
+                        </span>
                     </th>
                     <th style="width: 60px;">Order</th>
                     {% if user.canDo('awards-edit') %}
@@ -226,7 +229,7 @@
                             <div class="sparkbar-no" style="width: {{ award.feedbackPercent.negative }}%"></div>
                         </div>
                         {{ award.feedback | length }} votes
-                        <abbr style="float: right;" title="{{ award.feedbackPercent.positive | round(2) }}% positive">
+                        <abbr style="float: right;" title="{{ award.groupedFeedback.positive }} - {{ award.groupedFeedback.negative }} = {{ award.groupedFeedback.net }}">
                             {{ award.feedbackPercent.positive | round }}%
                         </abbr>
                     </td>
