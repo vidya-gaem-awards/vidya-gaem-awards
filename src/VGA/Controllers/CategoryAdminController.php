@@ -50,6 +50,13 @@ class CategoryAdminController extends BaseController
         $post = $this->request->request;
         $flashbag = $this->session->getFlashBag();
 
+        if ($this->config->isReadOnly()) {
+            $flashbag->add('formError', 'The site is currently in read-only mode. No changes can be made.');
+            $response = new RedirectResponse($this->generator->generate('categoryManager'));
+            $response->send();
+            return;
+        }
+
         // Add a new category
         if ($post->get('action') === 'new') {
             if (strlen($post->get('id')) == 0 || strlen($post->get('name')) == 0 ||
@@ -127,6 +134,13 @@ class CategoryAdminController extends BaseController
 
     public function editCategoryAction($category)
     {
+        if ($this->config->isReadOnly()) {
+            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.');
+            $response = new RedirectResponse($this->generator->generate('categoryManager'));
+            $response->send();
+            return;
+        }
+
         /** @var Category $category */
         $category = $this->em->getRepository(Category::class)->find($category);
 
@@ -145,6 +159,13 @@ class CategoryAdminController extends BaseController
 
     public function editCategoryPostAction($category)
     {
+        if ($this->config->isReadOnly()) {
+            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.');
+            $response = new RedirectResponse($this->generator->generate('categoryManager'));
+            $response->send();
+            return;
+        }
+
         /** @var Category $category */
         $category = $this->em->getRepository(Category::class)->find($category);
 

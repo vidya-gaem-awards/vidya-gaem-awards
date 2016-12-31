@@ -30,6 +30,13 @@ class VideoGamesController extends BaseController
     public function addAction()
     {
         $response = new JsonResponse();
+
+        if ($this->config->isReadOnly()) {
+            $response->setData(['error' => 'The site is currently in read-only mode. No changes can be made.']);
+            $response->send();
+            return;
+        }
+
         $post = $this->request->request;
 
         $game = trim($post->get('name'));

@@ -145,6 +145,12 @@ class VotingController extends BaseController
     {
         $response = new JsonResponse();
 
+        if ($this->config->isReadOnly()) {
+            $response->setData(['error' => 'Voting has closed.']);
+            $response->send();
+            return;
+        }
+
         if (!$this->user->canDo('voting-view')) {
             if ($this->config->isVotingNotYetOpen()) {
                 $response->setData(['error' => 'Voting hasn\'t started yet.']);
@@ -245,15 +251,17 @@ class VotingController extends BaseController
     {
         $this->session->set('votingCode', $code);
 
-        $log = new VotingCodeLog();
-        $log
-            ->setUser($this->user)
-            ->setCode($code)
-            ->setReferer($this->request->server->get('HTTP_REFERER'))
-            ->setTimestamp(new \DateTime());
+        if (!$this->config->isReadOnly()) {
+            $log = new VotingCodeLog();
+            $log
+                ->setUser($this->user)
+                ->setCode($code)
+                ->setReferer($this->request->server->get('HTTP_REFERER'))
+                ->setTimestamp(new \DateTime());
 
-        $this->em->persist($log);
-        $this->em->flush();
+            $this->em->persist($log);
+            $this->em->flush();
+        }
 
         $response = new RedirectResponse($this->generator->generate('voting'));
         $response->headers->setCookie(new Cookie(
