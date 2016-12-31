@@ -131,4 +131,30 @@
       </form>
     </div>
   </div>
+
+  <h2>Read-Only Mode</h2>
+
+  <div class="row">
+    <div class="col-xs-12">
+      {% if config.isReadOnly %}
+        <p style="font-size: 18px;">
+          <strong class="text-info">Read-only mode is currently active.</strong>
+        </p>
+        <p>
+          It can only be disabled by directly editing the database.
+        </p>
+      {% else %}
+        <div class="alert alert-danger">
+          <form action="{{ path('configPost') }}" method="post">
+            <p>
+              <strong>Warning:</strong> turning on read-only mode will lock the site and prevent any more changes from being made.
+              This can only be undone by directly editing the database.
+            </p>
+            <input type="hidden" name="readOnly" value="1">
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to turn on read-only mode?')">Turn on read-only mode</button>
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

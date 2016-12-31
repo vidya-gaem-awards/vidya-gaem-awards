@@ -64,7 +64,10 @@ class AuthController extends BaseController
             ->setAvatar($avatar)
             ->setToken($randomToken);
         $this->em->persist($loginToken);
-        $this->em->flush();
+
+        if (!$this->config->isReadOnly()) {
+            $this->em->flush();
+        }
 
         $this->session->set('user', $steamID);
 

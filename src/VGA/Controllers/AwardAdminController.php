@@ -52,6 +52,13 @@ class AwardAdminController extends BaseController
         $post = $this->request->request;
         $flashbag = $this->session->getFlashBag();
 
+        if ($this->config->isReadOnly()) {
+            $flashbag->add('formError', 'The site is currently in read-only mode. No changes can be made.');
+            $response = new RedirectResponse($this->generator->generate('awardManager'));
+            $response->send();
+            return;
+        }
+
         // Add a new award
         if ($post->get('action') === 'new') {
             if (strlen($post->get('id')) == 0 || strlen($post->get('name')) == 0 ||
@@ -129,6 +136,13 @@ class AwardAdminController extends BaseController
 
     public function editAwardAction($awardID)
     {
+        if ($this->config->isReadOnly()) {
+            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.');
+            $response = new RedirectResponse($this->generator->generate('awardManager'));
+            $response->send();
+            return;
+        }
+
         /** @var Award $award */
         $award = $this->em->getRepository(Award::class)->find($awardID);
 
@@ -147,6 +161,13 @@ class AwardAdminController extends BaseController
 
     public function editAwardPostAction($awardID)
     {
+        if ($this->config->isReadOnly()) {
+            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.');
+            $response = new RedirectResponse($this->generator->generate('awardManager'));
+            $response->send();
+            return;
+        }
+
         /** @var Award $award */
         $award = $this->em->getRepository(Award::class)->find($awardID);
 

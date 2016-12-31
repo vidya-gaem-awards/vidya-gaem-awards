@@ -75,6 +75,12 @@ class NomineeController extends BaseController
     {
         $response = new JsonResponse();
 
+        if ($this->config->isReadOnly()) {
+            $response->setData(['error' => 'The site is currently in read-only mode. No changes can be made.']);
+            $response->send();
+            return;
+        }
+
         /** @var Award $award */
         $award = $this->em->getRepository(Award::class)->find($award);
 

@@ -32,6 +32,13 @@ class NewsController extends BaseController
 
     public function addAction()
     {
+        if ($this->config->isReadOnly()) {
+            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.');
+            $response = new RedirectResponse($this->generator->generate('news'));
+            $response->send();
+            return;
+        }
+
         $post = $this->request->request;
 
         if (!$post->get('news_text')) {

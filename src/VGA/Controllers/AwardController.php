@@ -125,6 +125,12 @@ class AwardController extends BaseController
 
         $opinion = $post->get('opinion');
         if ($opinion !== null) {
+            if ($this->config->isReadOnly()) {
+                $response->setData(['error' => 'Feedback can no longer be given on awards.']);
+                $response->send();
+                return;
+            }
+
             if (!in_array($opinion, ['-1', '1', '0'], true)) {
                 $response->setData(['error' => 'Invalid opinion provided.']);
                 $response->send();
@@ -151,6 +157,11 @@ class AwardController extends BaseController
 
         $nomination = $post->get('nomination');
         if ($nomination !== null) {
+            if ($this->config->isReadOnly()) {
+                $response->setData(['error' => 'Nominations can no longer be made for this award.']);
+                $response->send();
+                return;
+            }
 
             if (!$award->areNominationsEnabled()) {
                 $response->setData(['error' => 'Nominations aren\'t currently open for this award.']);

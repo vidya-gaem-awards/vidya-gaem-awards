@@ -72,6 +72,13 @@ class PeopleController extends BaseController
 
     public function postAction($steamID)
     {
+        if ($this->config->isReadOnly()) {
+            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.');
+            $response = new RedirectResponse($this->generator->generate('people'));
+            $response->send();
+            return;
+        }
+
         /** @var User $user */
         $user = $this->em->getRepository(User::class)->find($steamID);
 
@@ -242,6 +249,12 @@ class PeopleController extends BaseController
         }
 
         if ($post->getBoolean('add')) {
+            if ($this->config->isReadOnly()) {
+                $response->setData(['error' => 'The site is currently in read-only mode. No changes can be made.']);
+                $response->send();
+                return;
+            }
+
             // Make the user special and give them level 1 access
             $user->setSpecial(true);
             /** @var Permission $permission */

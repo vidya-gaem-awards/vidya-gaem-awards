@@ -21,9 +21,28 @@ class ConfigController extends BaseController
 
     public function postAction()
     {
+        if ($this->config->isReadOnly()) {
+            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.'
+                . ' To disable read-only mode, you will need to edit the database directly.');
+            $response = new RedirectResponse($this->generator->generate('config'));
+            $response->send();
+            return;
+        }
+
         $post = $this->request->request;
 
         $error = false;
+
+        if ($post->get('readOnly')) {
+            $this->config->setReadOnly(true);
+            $this->em->persist($this->config);
+            $this->em->flush();
+
+            $this->session->getFlashBag()->add('success', 'Read-only mode has been successfully enabled.');
+            $response = new RedirectResponse($this->generator->generate('config'));
+            $response->send();
+            return;
+        }
 
         if (!$post->get('votingStart')) {
             $this->config->setVotingStart(null);

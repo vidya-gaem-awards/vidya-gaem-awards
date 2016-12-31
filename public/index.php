@@ -610,17 +610,19 @@ try {
         $access->setUser($user);
     }
 
-    $access
-        ->setCookieID($user->getRandomID())
-        ->setPage($match['_route'])
-        ->setRequestMethod($request->server->get('REQUEST_METHOD'))
-        ->setRequestString($request->server->get('REQUEST_URI'))
-        ->setIp($user->getIP())
-        ->setUserAgent($request->server->get('HTTP_USER_AGENT', ''))
-        ->setFilename($request->server->get('SCRIPT_FILENAME'))
-        ->setReferer($request->server->get('HTTP_REFERER'));
-    $em->persist($access);
-    $em->flush();
+    if (!$config->isReadOnly()) {
+        $access
+            ->setCookieID($user->getRandomID())
+            ->setPage($match['_route'])
+            ->setRequestMethod($request->server->get('REQUEST_METHOD'))
+            ->setRequestString($request->server->get('REQUEST_URI'))
+            ->setIp($user->getIP())
+            ->setUserAgent($request->server->get('HTTP_USER_AGENT', ''))
+            ->setFilename($request->server->get('SCRIPT_FILENAME'))
+            ->setReferer($request->server->get('HTTP_REFERER'));
+        $em->persist($access);
+        $em->flush();
+    }
 
     unset($match['controller']);
     unset($match['action']);
