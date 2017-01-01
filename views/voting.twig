@@ -166,13 +166,25 @@
         The Awards
     </h1>
 
-    {% for _award in awards %}
+    {% for _award in awards[0:25] %}
         <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
            class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
             <h3>{{ _award.name }}</h3>
             <p>{{ _award.subtitle }}</p>
         </a>
     {% endfor %}
+
+    <h1 id="secondaryAwards">
+        Website-Only Awards
+    </h1>
+
+      {% for _award in awards[25:] %}
+          <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
+             class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
+              <h3>{{ _award.name }}</h3>
+              <p>{{ _award.subtitle }}</p>
+          </a>
+      {% endfor %}
 
     {% if user.loggedIn %}
         <h3 style='clear:both; padding-top: 50px;'><a href="{{ path('home') }}" style="color: #80d7d1;">Back to the main part of the

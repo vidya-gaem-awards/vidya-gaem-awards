@@ -374,7 +374,7 @@ footer .navigation {
 
 #containerAwards {
 	clear: both;
-	width: 988px;
+	width: 1000px;
 	margin: 0 auto;
 	padding-bottom: 30px;
 	overflow: auto;
@@ -389,7 +389,7 @@ footer .navigation {
 	position: relative;
 	padding: 5px;
 	border-top: none;
-	width: 463px;
+	width: 48%;
 	float: left;
 	margin-left: 14px;
 }
@@ -508,6 +508,13 @@ footer .navigation {
 
 #topAwards {
 	color: #00ebdb;
+}
+
+#secondaryAwards {
+	color: #00ebdb;
+	font-size: 30px;
+	clear: both;
+	padding-top: 20px;
 }
 
 #overlay {
