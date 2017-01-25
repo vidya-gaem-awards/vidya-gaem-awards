@@ -49,7 +49,7 @@ echo "Step 2 (get voting codes) complete: " . $timer->time() . "\n";
 $accessRepo = $em->getRepository(Access::class);
 $result = $accessRepo->createQueryBuilder('a')
     ->select('a')
-    ->where("a.referer NOT LIKE 'https://%vidyagaemawards.com%'")
+    ->where("a.referer NOT LIKE 'https://____.vidyagaemawards.com%'")
     ->orWhere('a.referer IS NULL')
     ->orderBy('a.timestamp', 'ASC')
     ->getQuery()
@@ -80,6 +80,8 @@ $sites = [
     '8ch.net' => 2 ** 6,
     'twitch.tv' => 2 ** 7,
     'facebook.com' => 2 ** 8,
+    'm.facebook.com' => 2 ** 8,
+    'l.facebook.com' => 2 ** 8,
     'google.' => 2 ** 9,
     // voting code: 2 ** 10
     // no referer: 2 ** 11
@@ -96,9 +98,15 @@ foreach ($voters as $id => &$info) {
 
     $referers = array_unique($info['referrers']);
 
+    // It's possible to have multiple unique referrers for one site.
+    // To avoid messing up the bitmask, only count each site once.
+    $used_bits = [];
+
     foreach ($referers as $referer) {
         foreach ($sites as $site => $value) {
-            if (Utils::startsWith($referer, $site)) {
+            if (Utils::startsWith($referer, $site) && !in_array($value, $used_bits, true)) {
+                $info['notes'][] = $site;
+                $used_bits[] = $value;
                 $number += $value;
             }
         }
