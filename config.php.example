@@ -5,17 +5,13 @@ define('DB_USER', '');
 define('DB_PASSWORD', '');
 define('DB_DATABASE', '');
 
-// Used for volunteer applications
-define('EMAIL_TO', '');
-define('EMAIL_FROM', '');
-
 // steamcommunity.com/dev/apikey
 define('STEAM_API_KEY', '');
 
 // Timezone for the site
 define('TIMEZONE', 'America/New_York');
 
-// Items will only be showed if the user has access to them
+// Items will only be shown if the user has access to them
 define('NAVBAR_ITEMS', [
     "home"  => "Home",
     "awards" => "Awards and Nominations",
