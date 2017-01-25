@@ -1,7 +1,9 @@
 <?php
 namespace VGA\Model;
 
+use Doctrine\ORM\EntityManager;
 use Moment\Moment;
+use VGA\DependencyManager;
 
 class Config
 {
@@ -34,6 +36,9 @@ class Config
 
     /** @var boolean */
     private $readOnly;
+
+    /** @var string */
+    private $timezone;
 
     /**
      * @return \DateTime
@@ -222,5 +227,38 @@ class Config
     {
         $this->publicPages = $publicPages;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone(): string
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * @param string $timezone Must be a valid timezone identifier
+     * @return Config
+     * @throws \Exception
+     */
+    public function setTimezone(string $timezone): Config
+    {
+        // This will throw an Exception if the timezone is invalid
+        new \DateTimeZone($timezone);
+
+        $this->timezone = $timezone;
+        return $this;
+    }
+
+    /**
+     * A convenience method to initialize the timezone.
+     * @param EntityManager $em
+     */
+    public static function initalizeTimezone(EntityManager $em)
+    {
+        /** @var Config $config */
+        $config = $em->getRepository(Config::class)->findOneBy([]);
+        date_default_timezone_set($config->getTimezone());
     }
 }

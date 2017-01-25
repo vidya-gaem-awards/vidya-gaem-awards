@@ -26,3 +26,7 @@ VGA\Model\Config:
     readOnly:
       type: boolean
       nullable: false
+    timezone:
+      type: string
+      length: 50
+      nullable: false

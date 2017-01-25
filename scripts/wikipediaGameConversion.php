@@ -2,7 +2,7 @@
 use VGA\DependencyManager;
 use VGA\Model\GameRelease;
 
-require_once('../bootstrap.php');
+require(__DIR__ . '/../bootstrap.php');
 
 if (!file_exists('games.csv')) {
     echo "Please create games.csv first.\n";

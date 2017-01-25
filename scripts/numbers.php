@@ -7,7 +7,7 @@ use VGA\Model\VotingCodeLog;
 use VGA\Timer;
 use VGA\Utils;
 
-require(__DIR__ . '/../vendor/autoload.php');
+require(__DIR__ . '/../bootstrap.php');
 
 $timer = new Timer();
 $em = DependencyManager::getEntityManager();

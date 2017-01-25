@@ -16,7 +16,7 @@ class DependencyManager
     /** @var \Twig_Environment */
     private static $twig;
 
-    public static function getEntityManager()
+    public static function getEntityManager($keepReference = false)
     {
         if (self::$entity_manager) {
             return self::$entity_manager;
@@ -37,8 +37,12 @@ class DependencyManager
             'charset' => 'UTF8'
         ];
 
-        self::$entity_manager = ORM\EntityManager::create($conn, $config);
-        return self::$entity_manager;
+        $entityManager = ORM\EntityManager::create($conn, $config);
+        if ($keepReference) {
+            self::$entity_manager = $entityManager;
+        }
+
+        return $entityManager;
     }
 
     public static function getTwig(UrlGeneratorInterface $urlGenerator)

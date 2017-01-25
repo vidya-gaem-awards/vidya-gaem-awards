@@ -12,9 +12,17 @@ class ConfigController extends BaseController
     {
         $tpl = $this->twig->loadTemplate('config.twig');
 
+        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        $timezonesByArea = [];
+        foreach ($timezones as $timezone) {
+            list($area, ) = explode('/', $timezone);
+            $timezonesByArea[$area][$timezone] = str_replace('_', ' ', $timezone);
+        }
+
         $response = new Response($tpl->render([
             'title' => 'Config',
-            'config' => $this->config
+            'config' => $this->config,
+            'timezones' => $timezonesByArea,
         ]));
         $response->send();
     }
@@ -75,6 +83,13 @@ class ConfigController extends BaseController
                 $this->session->getFlashBag()->add('error', 'Invalid date provided for stream time.');
                 $error = true;
             }
+        }
+
+        try {
+            $this->config->setTimezone($post->get('timezone'));
+        } catch (\Exception $e) {
+            $this->session->getFlashBag()->add('error', 'Invalid timezone provided.');
+            $error = true;
         }
 
         $this->config->setDefaultPage($post->get('defaultPage'));

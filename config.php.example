@@ -8,9 +8,6 @@ define('DB_DATABASE', '');
 // steamcommunity.com/dev/apikey
 define('STEAM_API_KEY', '');
 
-// Timezone for the site
-define('TIMEZONE', 'America/New_York');
-
 // Items will only be shown if the user has access to them
 define('NAVBAR_ITEMS', [
     "home"  => "Home",

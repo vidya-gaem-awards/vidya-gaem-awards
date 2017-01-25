@@ -6,11 +6,26 @@
   <div class="row">
     <div class="col-xs-12">
       <p style="margin-bottom: 20px;">
-        This website runs on 4chan time ({{ 'now' | date('P') }} UTC). Current time: {{ 'now' | date('Y-m-d H:i:s') }}.
+        In the selected timezone, it is currently <strong>{{ 'now' | date('D, d M Y H:i:s') }}</strong> ({{ 'now' | date('P') }} UTC)
       </p>
       <form class="form-horizontal" action="{{ path('configPost') }}" method="post">
         <div class="row">
           <div class="col-md-6">
+            <div class="form-group">
+              <label for="timezone" class="col-sm-4 control-label">Timezone</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="timezone" name="timezone">
+                  {% for area, timezoneArray in timezones %}
+                    <optgroup label="{{ area }}">
+                      {% for id, timezone in timezoneArray %}
+                        <option value="{{ id }}" {{ id == config.timezone ? 'selected' : '' }}>{{ timezone }}</option>
+                      {% endfor %}
+                    </optgroup>
+                  {% endfor %}
+                </select>
+                <p class="help-block">The timezone that 4chan uses is <em>America/New York</em>.</p>
+              </div>
+            </div>
             <div class="form-group">
               <label for="votingStart" class="col-sm-4 control-label">Voting Start</label>
               <div class="col-sm-8">

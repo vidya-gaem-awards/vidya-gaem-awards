@@ -7,7 +7,7 @@ use VGA\Model\Vote;
 use VGA\ResultCalculator\Schulze;
 use VGA\Timer;
 
-require(__DIR__ . '/../vendor/autoload.php');
+require(__DIR__ . '/../bootstrap.php');
 
 $timer = new Timer();
 $em = DependencyManager::getEntityManager();
