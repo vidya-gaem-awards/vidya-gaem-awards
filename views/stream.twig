@@ -16,6 +16,16 @@
   {#<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>#}
 
   <style type="text/css">
+
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+
+
+    html,body {
+      margin: 0;
+      padding: 0;
+    }
   h1 {
     color: #00ebdb;
     font-size: 40px;
@@ -23,15 +33,14 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-      background: url(/2015voting/title_bg.gif) left no-repeat;
-      background-position-y: 60%;
-      padding: 5px 5px 5px 20px;
+    padding: 5px 5px 0 5px;
+    text-shadow: 0 0 3px #00ebdb;
   }
 
   #live_player {
       /*border: 4px solid #970087;*/
       background-color: black;
-      margin-left: 20px;
+      /*margin-left: 20px;*/
   }
 
   .channel-main {
@@ -67,21 +76,22 @@
     z-index: 10;
     display: block;
     position: absolute;
-    width: 30px;
-    height: 42px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
     overflow: hidden;
-    top: 4px;
+    top: 10px;
     right: 10px;
   }
+
   .right_active {
-      background: url("/2015voting/btnNav_right.gif") 0 0;
+      background: url("/2016images/btnNav_right.png") 0 0;
   }
   .right_active:hover {
       background-position: 0 bottom;
   }
   .left_active {
-      background: url("/2015voting/btnNav_left.gif") 0 0;
+      background: url("/2016images/btnNav_left.png") 0 0;
   }
   .left_active:hover {
       background-position: 0 bottom;
@@ -103,7 +113,7 @@
   }
   #main_col .content .scroll-content {
     position: relative;
-    padding: 0 10px;
+    padding: 0;
     overflow: hidden;
     min-height: 100%;
   }
@@ -122,13 +132,16 @@
     right: 0;
     top: 0;
     bottom: 0;
-    width: 320px;
+    width: 322px;
     z-index: 3;
+    border-left: 2px solid #af3a81;
+    box-shadow: 0 0 10px #af3181;
   }
 
   #right_col .content {
-    width: 319px;
-    height: 99%;
+    width: 320px;
+    height: calc(100% - 3px);
+    /*overflow: hidden;*/
   }
 
   .controls {
@@ -176,7 +189,15 @@
             </h1>
             <div id="live_player">
               <div class="live_site_player_container swf_container" id="standard_holder" style="width: 100%; height: 485px;">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/fc7hS7ofkwM?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                {#<iframe width="100%" height="100%" src="https://www.youtube.com/embed/fc7hS7ofkwM?autoplay=1" frameborder="0" allowfullscreen></iframe>#}
+                <iframe
+                    src="https://player.twitch.tv/?channel=vidyagaemawards"
+                    height="100%"
+                    width="100%"
+                    frameborder="0"
+                    scrolling="no"
+                    allowfullscreen="true">
+                </iframe>
               </div>
             </div>
             {#<ul class="controls">#}
@@ -201,6 +222,7 @@
 function adjustHeight() {
   var bodyHeight = $(window).height();
   $("#standard_holder").height(bodyHeight - 60);
+  console.log('Resizing window: ' + (bodyHeight - 60));
 }
 $(document).ready(adjustHeight);
 $(window).resize(adjustHeight);

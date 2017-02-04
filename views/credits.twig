@@ -5,22 +5,35 @@
 {% block content %}
 <style type="text/css">
   @font-face {
-    font-family: 'modern typewriter';
-    src: url('/fonts/modern typewriter.eot');
-    src: local('☺'), url('/fonts/modern typewriter.woff') format('woff'), url('/fonts/modern typewriter.ttf') format('truetype'), url('/fonts/modern typewriter.svg') format('svg');
+    font-family: 'AnnapolisHalftoneItalic';
+    src: url('/fonts/AnnapolisHalftoneItalic.eot');
+    src: local('☺'), url('/fonts/AnnapolisHalftoneItalic.woff') format('woff'), url('/fonts/AnnapolisHalftoneItalic.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
+
   @font-face {
-    font-family: 'yoster';
-    src: url('/fonts/yoster.eot');
-    src: local('☺'), url('/fonts/yoster.woff') format('woff'), url('/fonts/yoster.ttf') format('truetype'), url('/fonts/yoster.svg') format('svg');
+    font-family: 'Annapolis';
+    src: url('/fonts/Annapolis.eot');
+    src: local('☺'), url('/fonts/Annapolis.woff') format('woff'), url('/fonts/Annapolis.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'FixedSystem';
+    src: url('/fonts/FixedSystem.eot');
+    src: local('☺'), url('/fonts/FixedSystem.woff') format('woff'), url('/fonts/FixedSystem.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 
   html {
-    background: black url("/2015voting/bg.gif");
+    background: #20172f url("/2016images/background_city.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 
   body {
@@ -35,7 +48,7 @@
   }
 
   h1 {
-    font-family: "modern typewriter", Tahoma, sans-serif;
+    font-family: 'AnnapolisHalftoneItalic','Tahoma Bold',Tahoma,sans-serif;
     text-transform: uppercase;
     font-size: 3em;
     line-height: 100%;
@@ -50,10 +63,22 @@
 
   p {
     font-family: "modern typewriter", Tahoma, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.3em;
-    color: #f85898;
-    margin-bottom: 10px;
+    color: #fac0cb;
+    /*color: #f7d059;*/
+  }
+
+  .award {
+    margin: 0 auto 35px auto;
+    padding: 20px;
+    background: black;
+    border: 2px solid #af3a81;
+    box-shadow: 0 0 10px #af3a81;
+  }
+
+  .winner {
+    border: 1px solid #970087;
   }
 
   .award ul {
@@ -69,10 +94,10 @@
   }
 
   .award ul li:first-child {
-    font-weight: bold;
     font-size: 36px;
-    font-family: "modern typewriter", Tahoma, sans-serif;
+    font-family: 'Annapolis','Tahoma Bold',Tahoma,sans-serif;
     color: #f7d059;
+    line-height: 1em;
   }
 
   .award ul li:last-child {
@@ -83,28 +108,40 @@
 
   .zig {
     clear: both;
-    height: 20px;
+    height: 15px;
     margin: 30px 0;
-    background-image: url("/2015voting/zig_horizontal.gif");
+    background-image: url("/2016images/zig.png");
+  }
+
+  .page-header {
+    text-align: center;
+    border: none;
+    margin-bottom: 0;
+  }
+
+  .page-header.the-bottom {
+    margin-bottom: 20px;
+  }
+
+  .awardHeaderContainer {
+    margin: 50px 0 10px 0;
+    /*padding-top: 24px;*/
+    padding: 10px;
+    /*height: 106px;*/
+    background: url(/2016images/title_bg.png) center center no-repeat;
+    text-align: center;
   }
 
   .awardHeaderContainer:first-child {
     margin-top: 0;
   }
 
-  .awardHeaderContainer {
-    margin-top: 45px;
-    padding-top: 24px;
-    height: 90px;
-    background: url(/2015voting/title_bg.gif) top center no-repeat;
-    background-size: 100%;
-    text-align: center;
-  }
   .awardName {
-    font-family: "modern typewriter", Tahoma, sans-serif;
+    font-family: "AnnapolisHalftoneItalic",'Tahoma Bold',Tahoma,sans-serif;
+    font-weight: normal;
+    font-style: normal;
     text-transform: uppercase;
-    font-size: 2em;
-    line-height: 35px;
+    font-size: 2.1em;
     color: #00ebdb;
   }
 
@@ -118,6 +155,9 @@
 
   .awardSubtitle {
     color: #00ebdb;
+    font-family: 'FixedSystem',Calibri,sans-serif;
+    font-size: 32px !important;
+    line-height: 20px;
   }
 
   .navbar, .navbar .navbar-inner {
@@ -125,18 +165,19 @@
     -webkit-box-shadow: none;
     box-shadow:         none;
     border:             none;
-    background: black;
+    background: url(/2016images/background_city.jpg) no-repeat fixed center center;
   }
 
   .navbar a {
-    font-family: "modern typewriter", Tahoma, sans-serif !important;
+    font-family: 'FixedSystem',Calibri,sans-serif !important;
+    font-size: 35px;
     color: white !important;
     text-shadow: none !important;
     background: none !important;
   }
 
   .navbar a:hover {
-    color: #f85898 !important;
+    color: #f0f1a3 !important;
   }
 
   .navbar .nav>.active>a {
@@ -146,15 +187,17 @@
   }
 
   .navbar-fixed-top {
-    border-bottom: 1px solid #f7d059;
+    border-bottom: 1px solid #f0f1a3;
+    box-shadow: 0 0 5px #f0f1a3;
   }
 
   .navbar-fixed-bottom {
-    border-top: 1px solid #f7d059;
+    border-top: 1px solid #f0f1a3;
+    box-shadow: 0 0 5px #f0f1a3;
   }
 
   .navbar-brand {
-    font-weight: bold;
+    font-weight: normal;
   }
 
   .credits {
@@ -180,16 +223,28 @@
     font-size: x-large;
     margin-bottom: 20px;
   }
+
+  .gren {
+    color: #008751;
+  }
+
+  .gold {
+    color: #FCD116;
+  }
+
+  .gren, .gold {
+    margin: 0 -7px 0 -7px;
+  }
 </style>
 
 <div class="zig"></div>
 
 <div class="row">
-  <div class="col-md-5" style="text-align: center;">
-    <img src="/2015voting/logo.gif" alt="Logo of the 2015 Vidya Gaem Awards">
+  <div class="col-md-4" style="text-align: center;">
+    <img src="/2016images/vga_logo.png" alt="Logo of the 2016 Vidya Gaem Awards">
   </div>
-  <div class="col-md-7" style="text-align: center; padding-top: 30px;">
-    <h1>Cast and Crew of the 2015 Vidya&nbsp;Gaem&nbsp;Awards</h1>
+  <div class="col-md-8" style="text-align: center; padding-top: 30px;">
+    <h1>Cast and Crew of the 2016 Vidya&nbsp;Gaem&nbsp;Awards</h1>
   </div>
 </div>
 
@@ -279,9 +334,28 @@
         <div class="awardName">Pleb Patrol:</div>
       </div>
       <p>Website by <strong>Clamburger</strong> and <strong>Segab</strong></p>
-      <p>Logistics by <strong>iAxX</strong></p>
-      <p>Japanese translation by <strong>Ahch117</strong></p>
+      <p>Discord Shitposter of the Year Award by <strong>tvas</strong></p>
+
+      <div class="awardHeaderContainer">
+        <div class="awardName">
+          <span class="gren">A</span>
+          <span class="gold">u</span>
+          <span class="gren">s</span>
+          <span class="gold">t</span>
+          <span class="gren">r</span>
+          <span class="gold">a</span>
+          <span class="gren">l</span>
+          <span class="gold">i</span>
+          <span class="gren">a</span>
+          <span class="gold">n</span>
+          <span class="gren">s</span>
+          <span class="gold">:</span>
+        </div>
+      </div>
+      <p><strong>Clamburger</strong> and <strong>CounterTunes</strong></p>
     </div>
+
+
   </div>
 
   <div class="zig" style="margin-top: 100px;"></div>

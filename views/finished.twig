@@ -17,8 +17,10 @@
 
   <style type="text/css">
     .logo {
+      border: 2px solid #af3a81;
+      box-shadow: 0 0 10px #af3a81;
+
       margin: 10px;
-      border: 4px solid #970087;
       background: black;
     }
 
@@ -31,31 +33,39 @@
       font-size: 55px;
       line-height: 1em;
       color: #00ebdb;
-      background: url(/2015voting/title_bg.gif) center center no-repeat;
+      text-shadow: 0 0 10px #00ebdb;
+      background: url(/2016images/title_bg.png) center center no-repeat;
       margin-bottom: 0;
-      padding: 20px 0;
+      padding: 20px 0 10px 0;
     }
 
     .title h2 {
-      font-family: "modern typewriter", Tahoma, sans-serif;
+      font-family: "Annapolis", Tahoma, sans-serif;
       color: #f7d059;
       font-size: 38px;
       font-weight: normal;
       line-height: 0.95em;
-      margin-top: 20px;
+      margin-top: 0;
+      text-shadow: 0 0 3px #f7d059;
     }
 
     .subtitle {
       text-align: center;
-      font-size: 25px;
-      line-height: 1em;
+      font-size: 50px;
+      line-height: 0.5em;
       margin: 20px;
-      font-family: "modern typewriter", Tahoma, sans-serif;
+      font-family: "FixedSystem", "Courier New", monospace;
+      color: silver;
     }
 
     .subtitle .main {
       font-size: 40px;
       line-height: 1em;
+    }
+
+    .subtitle .soon {
+      padding: 3px;
+      display: inline-block;
     }
 
     a, a:hover {
@@ -85,13 +95,19 @@
           <h2 id="countdown">Thanks for watching!</h2>
         </div>
         <div class="subtitle">
-          <a href="https://www.youtube.com/watch?v=HceF1alMnPw">Watch it on YouTube</a><br>
-          <a href="https://www.youtube.com/watch?v=pEQnvAEcA0U">Watch the preshow</a><br>
-          <a href="https://mega.nz/#!YMFz3SbK!3sbT8zKyjPqAIar_0weqh_HJJTDzhifvgyu7ZJGtLYw">Direct download</a><br>
+          {#<a href="https://www.youtube.com/watch?v=HceF1alMnPw">Watch it on YouTube</a><br>#}
+          <span class="soon">Watch it on Twitch <span style="font-size: 30px;">(feat. chat replay)</span></span><br>
+          <span class="soon">Watch it on YouTube</span><br>
+          {#<a href="https://www.youtube.com/watch?v=pEQnvAEcA0U">Watch the preshow</a><br>#}
+          {#<a href="https://mega.nz/#!YMFz3SbK!3sbT8zKyjPqAIar_0weqh_HJJTDzhifvgyu7ZJGtLYw">Direct download</a><br>#}
+          <span class="soon">Direct download</span><br>
           <a href="{{ path('simpleResults') }}">See the winners</a><br>
           <a href="{{ path('detailedResults') }}">See the detailed results</a><br>
-          <a href="{{ path('credits') }}">See the credits</a><br>
-          <a href="https://jabmashups.bandcamp.com/album/the-most-hated-v-gas-preshow-mashup-mix">Download the preshow music mix</a><br><br>
+          {#<a href="{{ path('credits') }}">See the credits</a><br>#}
+          <span class="soon">See the credits</span><br>
+          {#<a href="https://jabmashups.bandcamp.com/album/the-most-hated-v-gas-preshow-mashup-mix">Download the preshow music mix</a><br>#}
+          <span class="soon">Download the preshow music mix</span><br>
+          <br>
           <a href="https://vidyagaemawards.com/previous-years">View previous years</a>
         </div>
       </div>
