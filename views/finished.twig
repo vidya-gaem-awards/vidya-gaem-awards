@@ -86,27 +86,24 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-8 col-md-offset-2 col-xs-12">
-        <div class="logo">
-          <iframe width="100%" height="460" src="https://www.youtube.com/embed/HceF1alMnPw" frameborder="0"
-                  allowfullscreen=""></iframe>
-        </div>
+        {#<div class="logo">#}
+          {#<iframe width="100%" height="460" src="https://www.youtube.com/embed/HceF1alMnPw" frameborder="0"#}
+                  {#allowfullscreen=""></iframe>#}
+        {#</div>#}
+        <img class="logo" src="/2016images/alternate_logo.png" style="height: 400px; margin: 10px auto;">
         <div class="title">
           <h1>The 2016 Vidya Gaem Awards</h1>
           <h2 id="countdown">Thanks for watching!</h2>
         </div>
         <div class="subtitle">
           {#<a href="https://www.youtube.com/watch?v=HceF1alMnPw">Watch it on YouTube</a><br>#}
-          <span class="soon">Watch it on Twitch <span style="font-size: 30px;">(feat. chat replay)</span></span><br>
-          <span class="soon">Watch it on YouTube</span><br>
-          {#<a href="https://www.youtube.com/watch?v=pEQnvAEcA0U">Watch the preshow</a><br>#}
-          {#<a href="https://mega.nz/#!YMFz3SbK!3sbT8zKyjPqAIar_0weqh_HJJTDzhifvgyu7ZJGtLYw">Direct download</a><br>#}
-          <span class="soon">Direct download</span><br>
+          <a href="https://www.twitch.tv/videos/119726734">Watch it on Twitch</a> <span style="font-size: 30px;">(feat. chat replay)</span><br>
+          <span class="soon">Watch it on YouTube <span style="font-size: 30px;">(soon)</span></span><br>
+          <span class="soon">Direct download <span style="font-size: 30px;">(soon)</span></span><br>
           <a href="{{ path('simpleResults') }}">See the winners</a><br>
           <a href="{{ path('detailedResults') }}">See the detailed results</a><br>
-          {#<a href="{{ path('credits') }}">See the credits</a><br>#}
-          <span class="soon">See the credits</span><br>
-          {#<a href="https://jabmashups.bandcamp.com/album/the-most-hated-v-gas-preshow-mashup-mix">Download the preshow music mix</a><br>#}
-          <span class="soon">Download the preshow music mix</span><br>
+          <a href="{{ path('credits') }}">See the credits</a><br>
+          <a href="https://vidyagaemawards.com/music/2016-vga-music-mix.zip">Download the preshow music mix</a><br>
           <br>
           <a href="https://vidyagaemawards.com/previous-years">View previous years</a>
         </div>
