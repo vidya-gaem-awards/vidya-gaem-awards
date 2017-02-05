@@ -145,11 +145,11 @@
   }
 
   .controls {
-      font-family: "modern typewriter",Tahoma,sans-serif;
-      margin-top: 10px;
-      margin-left: 20px;
+      font-family: 'Annapolis','Tahoma Bold',Tahoma,sans-serif;
+      margin-left: 5px;
+    margin-bottom: 0;
       padding-top: 10px;
-      color: white;
+    color: silver;
   }
 
   .controls li {
@@ -200,12 +200,13 @@
                 </iframe>
               </div>
             </div>
-            {#<ul class="controls">#}
-              {#<li>Shitposting options: &nbsp;</li>#}
-              {#<li><a href="https://twitch.tv/chat/embed?channel=vidyagaemawards&popout_chat=true" target="_blank">Twitch</a> <span class="gap">|</span></li>#}
+            <ul class="controls">
+              <li><a href="https://discord.gg/Fx5wf7x" target="_blank">Discord</a> &ndash;</li>
+              <li><a href="https://twitch.tv/vidyagaemawards" target="_blank">Twitch</a> &ndash;</li>
+              <li><a href="https://youtube.com/user/vidyagaemawards" target="_blank">YouTube</a> &ndash;</li>
               {#<li>IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net <span class="gap">|</span></li>#}
-              {#<li><a href="https://boards.4chan.org/v/catalog" target="_blank">&gt;&gt;&gt;/v/</a></li>#}
-            {#</ul>#}
+              <li><a href="https://boards.4chan.org/v/catalog#s=vidyagaemawards" target="_blank">/v/</a></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -221,8 +222,7 @@
 <script type="text/javascript">
 function adjustHeight() {
   var bodyHeight = $(window).height();
-  $("#standard_holder").height(bodyHeight - 60);
-  console.log('Resizing window: ' + (bodyHeight - 60));
+  $("#standard_holder").height(bodyHeight - 80);
 }
 $(document).ready(adjustHeight);
 $(window).resize(adjustHeight);
