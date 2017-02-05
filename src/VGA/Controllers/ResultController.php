@@ -80,7 +80,7 @@ class ResultController extends BaseController
                 '19-google' => 'Google',
             ],
             [
-                '14-negoaf' => 'NeoGAF',
+                '14-neogaf' => 'NeoGAF',
                 '15-facepunch' => 'Facepunch',
                 '16-8chan' => '8chan',
             ],
