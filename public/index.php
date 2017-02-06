@@ -509,6 +509,14 @@ $routes->add('videos', new Route(
         'permission' => $config->isPagePublic('videos') ? false : 'view-unfinished-pages'
     ]
 ));
+$routes->add('soundtrack', new Route(
+    '/soundtrack',
+    [
+        'controller' => Controllers\StaticController::class,
+        'action' => 'soundtrack',
+//        'permission' => $config->isPagePublic('music') ? false : 'view-unfinished-pages'
+    ]
+));
 
 $defaultRoute = $routes->get($config->getDefaultPage());
 

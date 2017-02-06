@@ -1,0 +1,564 @@
+{% extends 'master.twig' %}
+
+{% block title %}Soundtrack{% endblock %}
+
+{% block beforeContainer %}
+  <h1 style="text-align: center; margin-top: 10px;">The Official Soundtrack of the 2016 /v/GAs</h1>
+{% endblock %}
+
+{% block content %}
+  <style type="text/css">
+    @font-face {
+      font-family: 'AnnapolisHalftoneItalic';
+      src: url('/fonts/AnnapolisHalftoneItalic.eot');
+      src: local('☺'), url('/fonts/AnnapolisHalftoneItalic.woff') format('woff'), url('/fonts/AnnapolisHalftoneItalic.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Annapolis';
+      src: url('/fonts/Annapolis.eot');
+      src: local('☺'), url('/fonts/Annapolis.woff') format('woff'), url('/fonts/Annapolis.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'FixedSystem';
+      src: url('/fonts/FixedSystem.eot');
+      src: local('☺'), url('/fonts/FixedSystem.woff') format('woff'), url('/fonts/FixedSystem.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html {
+      background: #20172f url("/2016images/background_city.jpg") no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    body {
+      background: none;
+    }
+
+    h1, h2 {
+      margin:0;
+      padding:0;
+      color: #00ebdb;
+      font-weight: normal;
+      text-shadow: rgba(0, 235, 219, 0.5) 1px 1px 5px;
+    }
+
+    h1 {
+      font-family: 'AnnapolisHalftoneItalic','Tahoma Bold',Tahoma,sans-serif;
+      text-transform: uppercase;
+      font-size: 3em;
+      line-height: 100%;
+    }
+    h2 {
+      font-family: "yoster", Calibri, sans-serif;
+      font-size: 1.3em;
+      line-height: 100%;
+      color: #bfbfbf;
+      -webkit-font-smoothing: none;
+    }
+
+    p {
+      font-family: "modern typewriter", Tahoma, sans-serif;
+      font-size: 22px;
+      line-height: 1.3em;
+      color: #f7d059;
+    }
+
+    .award {
+        margin: 0 auto 35px auto;
+        padding: 20px;
+        background: black;
+        border: 2px solid #af3a81;
+        box-shadow: 0 0 10px #af3a81;
+    }
+
+    .winner {
+      border: 1px solid #970087;
+    }
+
+    .award ul {
+      list-style-type: none;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .award ul li {
+      line-height: 1.5em;
+      font-family: "modern typewriter", Calibri, sans-serif;
+      color: #00ebdb;
+    }
+
+    .award ul li:first-child {
+      font-size: 36px;
+      font-family: 'Annapolis','Tahoma Bold',Tahoma,sans-serif;
+      color: #f7d059;
+      line-height: 1em;
+    }
+
+    .award ul li:last-child {
+      color: #f85898;
+      font-size: 18px;
+      font-family: "modern typewriter", Tahoma, sans-serif;
+    }
+
+    .zig {
+      clear: both;
+      height: 15px;
+      margin: 30px 0;
+      background-image: url("/2016images/zig.png");
+    }
+
+    .page-header {
+      text-align: center;
+      border: none;
+      margin-bottom: 0;
+    }
+
+    .page-header.the-bottom {
+      margin-bottom: 20px;
+    }
+
+    .awardHeaderContainer {
+      margin: 0 50px;
+      padding-top: 24px;
+      height: 106px;
+      background: url(/2016images/title_bg.png) center center no-repeat;
+      text-align: center;
+    }
+    .awardName {
+      font-family: "AnnapolisHalftoneItalic",'Tahoma Bold',Tahoma,sans-serif;
+      font-weight: normal;
+      font-style: normal;
+      text-transform: uppercase;
+      font-size: 2.6em;
+      line-height: 40px;
+      color: #00ebdb;
+    }
+
+    a, a:visited {
+      color: #bf6bff;
+    }
+
+    a:hover, a:active {
+      color: #bf6bff;
+    }
+
+    .awardSubtitle {
+      color: #00ebdb;
+      font-family: 'FixedSystem',Calibri,sans-serif;
+      font-size: 32px !important;
+      line-height: 20px;
+    }
+
+    .navbar, .navbar .navbar-inner {
+      -moz-box-shadow:    none;
+      -webkit-box-shadow: none;
+      box-shadow:         none;
+      border:             none;
+      background: url(/2016images/background_city.jpg) #1f1f1f no-repeat center center;
+      background-size: cover;
+    }
+
+    .navbar a {
+      font-family: 'FixedSystem',Calibri,sans-serif !important;
+      font-size: 35px;
+      color: white !important;
+      text-shadow: none !important;
+      background: none !important;
+    }
+
+    .navbar a:hover {
+      color: #f0f1a3 !important;
+    }
+
+    .navbar .nav>.active>a {
+      box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+      -webkit-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+      -moz-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+    }
+
+    .navbar-fixed-top {
+      border-bottom: 1px solid #f0f1a3;
+      box-shadow: 0 0 5px #f0f1a3;
+    }
+
+    .navbar-fixed-bottom {
+      border-top: 1px solid #f0f1a3;
+      box-shadow: 0 0 5px #f0f1a3;
+    }
+
+    .navbar-brand {
+      font-weight: normal;
+    }
+
+    .album-art {
+      box-shadow: 0 0 10px rgba(145, 30, 209, 0.8);
+      width: 300px;
+      max-width: 300px;
+      margin: 0 auto;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .album-art:hover {
+      box-shadow: 0 3px 15px rgba(145, 30, 209, 0.5);
+    }
+
+    .download-now a {
+      font-family: "Annapolis",Tahoma,sans-serif;
+      color: #bf6bff;
+      font-size: 38px;
+      font-weight: normal;
+      line-height: 0.95em;
+      margin-top: 0;
+      text-shadow: 0 0 3px #b124ff;
+      border-bottom: 3px dotted #bf6bff;
+    }
+
+    .download-now a:hover {
+      color: #a223ee;
+      border-bottom: 3px solid #a223ee;
+      text-decoration: none;
+    }
+
+    #track-list {
+      max-width: 700px;
+      margin: 25px auto 0;
+    }
+
+    #track-list td {
+      border: none;
+    }
+
+    #track-list td:nth-child(1) {
+      color: whitesmoke;
+    }
+
+    #track-list td:nth-child(2) {
+      color: #f0f1a3;
+    }
+
+    #track-list td:nth-child(3) {
+      color: whitesmoke;
+      font-style: italic;
+    }
+
+    #track-list .line-after td {
+      border-bottom: 1px solid #f1e9d0;
+      padding-bottom: 15px;
+    }
+
+    #track-list .line-before td {
+      border-top: 1px solid #f1e9d0;
+      padding-top: 15px;
+    }
+  </style>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-xs-12">
+      <div style="display: block; margin: 0 auto; max-width: 300px;">
+        <a href="https://drive.google.com/file/d/0B-ozeoDbB_HzRlNkTmRKRURHS28/view" target="_blank">
+          <img src="/2016images/album.jpg" alt="Album art" class="img-responsive album-art">
+        </a>
+      </div>
+      <p class="download-now text-center" style="margin-top: 10px;">
+        <a href="https://drive.google.com/file/d/0B-ozeoDbB_HzRlNkTmRKRURHS28/view" target="_blank">Download Now</a>
+      </p>
+      <p class="text-center" style="margin-top: 10px; color: white; font-size: 14px;">
+        <a href="https://vidyagaemawards.com/music/2016-vga-music-mix.zip">Download preshow music</a> (not included in main pack)
+      </p>
+
+      <table class="table" id="track-list">
+        <tr class="line-before">
+          <td>01</td>
+          <td>Electric Acid Dreams - 1-00</td>
+          <td>Intro</td>
+        </tr>
+        <tr>
+          <td>02</td>
+          <td>Super Mario 64 - File Select</td>
+          <td>Sweep Points Explanation</td>
+        </tr>
+        <tr>
+          <td>03</td>
+          <td>TimeSplitters 2 - Anaconda</td>
+          <td>Seal of Quality Award</td>
+        </tr>
+        <tr>
+          <td>04</td>
+          <td>haircuts for men - 呼吸蒸気</td>
+          <td>Style Over Substance Award</td>
+        </tr>
+        <tr>
+          <td>05</td>
+          <td>Cyanotic - Efficacy</td>
+          <td>Hype Machine Award</td>
+        </tr>
+        <tr>
+          <td>06</td>
+          <td>Front Line Assembly - Dark Dreams</td>
+          <td>IP Twist Award</td>
+        </tr>
+        <tr>
+          <td>07</td>
+          <td>Serial Experiments Lain - Cyberia Theme</td>
+          <td>New Challenger Award</td>
+        </tr>
+        <tr>
+          <td>08</td>
+          <td>Future Sound of London - Lifeforms</td>
+          <td>New Challenger Award</td>
+        </tr>
+        <tr>
+          <td>09</td>
+          <td>Skolskoly - Restricted Access</td>
+          <td>Never Coming Out Award </td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>TimeSplitters Future Perfect - Something to Crow About</td>
+          <td>Vague Genre Award</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Wipeout 3 - Icaras</td>
+          <td>Whites Move First Award</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>Radiomuff - Neons & Traffic 2017</td>
+          <td>Whites Move First Award</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Deus Ex - UNATCO Headquarters</td>
+          <td>Pixels 4re 4rt Award</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>TimeSplitters 2 - Main Menu</td>
+          <td>Worst Timeline Award</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>blank body x glocque - FIND PRIVACY</td>
+          <td>Intermission</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>Youtaro Nusro - Burn Out (Instrumental)</td>
+          <td>Intermission</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>Crystal Method - Vapor Trail</td>
+          <td>Best Timeline Award</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>Perfect Dark - Institute Menu</td>
+          <td>Syria Award</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>Space Channel 5 - Mexican Flyer</td>
+          <td>Space Award 5</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>Pokemon Sun and Moon - Encounter! Team Skull</td>
+          <td>Space Award 5</td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>Furi - 8:02</td>
+          <td>Space Award 5</td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>Darl Souls III - Yhorm The Giant</td>
+          <td>Space Award 5</td>
+        </tr>
+        <tr>
+          <td>23</td>
+          <td>Doom - Violence</td>
+          <td>Space Award 5</td>
+        </tr>
+        <tr>
+          <td>24</td>
+          <td>VA-11 Hall-A - Karmotrine Dream</td>
+          <td>Space Award 5</td>
+        </tr>
+        <tr>
+          <td>25</td>
+          <td>Space Channel 5 - Spaceport: Introducing Ulala!</td>
+          <td>Space Award 5</td>
+        </tr>
+        <tr>
+          <td>26</td>
+          <td>Doom - The Red Planet</td>
+          <td>Space Award 5</td>
+        </tr>
+        <tr>
+          <td>27</td>
+          <td>perfect katsuragi - Virtual Dive</td>
+          <td>Discworld Award</td>
+        </tr>
+        <tr>
+          <td>28</td>
+          <td>Tzusing - Face Of Electric</td>
+          <td>Silent Protagonist Award</td>
+        </tr>
+        <tr>
+          <td>29</td>
+          <td>恋のセキュリティホール - 〜HACK SONG〜</td>
+          <td>DeviantArt Award</td>
+        </tr>
+        <tr>
+          <td>30</td>
+          <td>Blank Banshee - BIOS</td>
+          <td>a e s t h e t i c award</td>
+        </tr>
+        <tr>
+          <td>31</td>
+          <td>Cobalt Road - Purgatory</td>
+          <td>a e s t h e t i c award</td>
+        </tr>
+        <tr>
+          <td>32</td>
+          <td>DELTA金TOPCO - INVESDFGPPPSPE®</td>
+          <td>a e s t h e t i c award</td>
+        </tr>
+        <tr>
+          <td>33</td>
+          <td>Vincent Remember - hods intel 彼は愛することを望ん</td>
+          <td>a e s t h e t i c award</td>
+        </tr>
+        <tr>
+          <td>34</td>
+          <td>Telan Devik - Edited funk part III</td>
+          <td>a e s t h e t i c award</td>
+        </tr>
+        <tr>
+          <td>35</td>
+          <td>Combo Reseller - あなたと</td>
+          <td>a e s t h e t i c award</td>
+        </tr>
+        <tr>
+          <td>36</td>
+          <td>haircuts for men - トニーは悪魔でした</td>
+          <td>a e s t h e t i c award</td>
+        </tr>
+        <tr>
+          <td>37</td>
+          <td>Headscan - Permafrost</td>
+          <td>Cincinnati Award</td>
+        </tr>
+        <tr>
+          <td>38</td>
+          <td>Crystal Method - Keep Hope Alive</td>
+          <td>/vr/ Award</td>
+        </tr>
+        <tr>
+          <td>39</td>
+          <td>Neotokyo - annul</td>
+          <td>Most Hated Award</td>
+        </tr>
+        <tr>
+          <td>40</td>
+          <td>TimeSplitters 2 - Return to planet X</td>
+          <td>Least Worst Award</td>
+        </tr>
+        <tr class="line-after">
+          <td>41</td>
+          <td>Radiomuff - Spirits In Frames</td>
+          <td>Outro</td>
+        </tr>
+        <tr class="line-before">
+          <td>42</td>
+          <td>DRP - Enkephalin</td>
+          <td>Bonus Track</td>
+        </tr>
+        <tr>
+          <td>43</td>
+          <td>neon shudder - lunar eclipse</td>
+          <td>Bonus Track</td>
+        </tr>
+        <tr>
+          <td>44</td>
+          <td>Ultraсube - Neurophone</td>
+          <td>Bonus Track</td>
+        </tr>
+        <tr>
+          <td>45</td>
+          <td>Front 242 - Junkdrome</td>
+          <td>Bonus Track</td>
+        </tr>
+        <tr>
+          <td>46</td>
+          <td>Ken Ishii - Game Over</td>
+          <td>Bonus Track</td>
+        </tr>
+        <tr>
+          <td>47</td>
+          <td>JK47 & Animal Firepower - Molly 莫莉</td>
+          <td>Bonus Track</td>
+        </tr>
+        <tr>
+          <td>48</td>
+          <td>Radiomuff - Internal Industrial Complex</td>
+          <td>Bonus Track</td>
+        </tr>
+        <tr class="line-after">
+          <td>49</td>
+          <td>Acumen Nation - Elective Surgical Strike</td>
+          <td>Bonus Track</td>
+        </tr>
+        <tr class="line-before">
+          <td></td>
+          <td>borgo - and you don't seem to</td>
+          <td>Preshow</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>borgo - Wired</td>
+          <td>Preshow</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>FutanariVorestep.exe - VGA 2k17 15 Minute Mix</td>
+          <td>Preshow - <a href="https://soundcloud.com/futanarivorestep-exe-2/vga-2k17-preshow-mix?in=futanarivorestep-exe-2/sets/vga-2016-preshow-mix" target="_blank">Listen on SoundCloud</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>MatrixMarioX - Programmed Tower</td>
+          <td>Preshow - <a href="https://soundcloud.com/matrixmariox2/vgas-2016-programmed-tower?in=matrixmariox2/sets/v-gas-2016-preshow-tracks" target="_blank">Listen on SoundCloud</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>MatrixMarioX - Y'all are stupid!</td>
+          <td>Preshow - <a href="https://soundcloud.com/matrixmariox2/vgas-2016-yall-are-stupid?in=matrixmariox2/sets/v-gas-2016-preshow-tracks" target="_blank">Listen on SoundCloud</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>MatrixMarioX - Интервью</td>
+          <td>Preshow - <a href="https://soundcloud.com/matrixmariox2/vgas-2016-intervyu?in=matrixmariox2/sets/v-gas-2016-preshow-tracks" target="_blank">Listen on SoundCloud</a></td>
+        </tr>
+        <tr class="line-after">
+          <td></td>
+          <td>Radiomuff - Preshow Music</td>
+          <td>Preshow - <a href="https://soundcloud.com/muffmachine/vga-2016-preshow-mix-radiomuff" target="_blank">Listen on SoundCloud</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

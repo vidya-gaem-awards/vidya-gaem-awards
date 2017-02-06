@@ -23,4 +23,10 @@ class StaticController extends BaseController
         $response = new Response($this->twig->render('videos.twig'));
         $response->send();
     }
+
+    public function soundtrackAction()
+    {
+        $response = new Response($this->twig->render('soundtrack.twig'));
+        $response->send();
+    }
 }
