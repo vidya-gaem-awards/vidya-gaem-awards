@@ -59,30 +59,34 @@ class ResultController extends BaseController
         $filters = [
             [
                 '01-all' => 'No filtering',
-                '02-voting-code' => 'Voting code',
-                '04-4chan' => '4chan',
-                '08-4chan-or-null-with-voting-code' => '4chan + NULL with code',
+                '03-null' => 'No referrer',
+                '08-4chan-or-null-with-voting-code' => 'Certified 4chan',
+                '16-8chan' => '8chan',
+//                '02-voting-code' => 'Voting code',
+//                '04-4chan' => '4chan',
+//            ],
+//            [
+//                '05-4chan-and-voting-code' => '4chan with code',
+//                '06-4chan-without-voting-code' => '4chan without code',
+
+//                '07-4chan-or-null' => '4chan + NULL',
             ],
+//            [
+//                '09-null-and-voting-code' => 'NULL with code',
+//                '10-null-without-voting-code' => 'NULL without code',
+//            ],
             [
-                '05-4chan-and-voting-code' => '4chan with code',
-                '06-4chan-without-voting-code' => '4chan without code',
-                '03-null' => 'NULL',
-                '07-4chan-or-null' => '4chan + NULL',
-            ],
-            [
-                '09-null-and-voting-code' => 'NULL with code',
-                '10-null-without-voting-code' => 'NULL without code',
+                '19-google' => 'Google',
+                '15-facepunch' => 'Facepunch',
+                '18-facebook' => 'Facebook',
+
             ],
             [
                 '17-twitch' => 'Twitch',
                 '11-reddit' => 'Reddit',
-                '18-facebook' => 'Facebook',
-                '19-google' => 'Google',
-            ],
-            [
                 '14-neogaf' => 'NeoGAF',
-                '15-facepunch' => 'Facepunch',
-                '16-8chan' => '8chan',
+
+
             ],
         ];
 

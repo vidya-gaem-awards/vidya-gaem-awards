@@ -118,8 +118,34 @@ class Schulze extends AbstractResultCalculator
 
         $finalRankings = array_combine(range(1, count($candidates)), $finalRankings);
 
+        $reversed = array_reverse($finalRankings);
+        $sweepPoints = [];
+
+        foreach ($reversed as $index => $nominee) {
+            if ($index === 0) {
+                $sweepPoints[$nominee] = 0;
+                continue;
+            }
+
+            $otherNominee = $reversed[$index - 1];
+            $comparison = $pairwise[$nominee][$otherNominee] - $pairwise[$otherNominee][$nominee];
+            $sweepPoints[$nominee] = $sweepPoints[$otherNominee] + $comparison;
+        }
+
+        // Now we have the raw sweep points, but we only want the first five (which we then want to scale accordingly)
+        // We take 6 instead of 5, because the 6th is going to be our baseline (it will be set to zero)
+        $sweepPoints = array_slice($sweepPoints, -6);
+
+        $min = min($sweepPoints);
+        $max = max($sweepPoints);
+
+        // Scaling formula from http://stackoverflow.com/a/31687097
+        foreach ($sweepPoints as &$point) {
+            $point = $max * ($point - $min) / ($max - $min);
+        }
+
         $this->warnings = $warnings;
-        $this->steps = ['pairwise' => $pairwise, 'strengths' => $strengths];
+        $this->steps = ['pairwise' => $pairwise, 'strengths' => $strengths, 'sweepPoints' => $sweepPoints];
 
         return $finalRankings;
     }
