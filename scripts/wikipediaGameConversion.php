@@ -1,5 +1,6 @@
 <?php
 use VGA\DependencyManager;
+use VGA\Model\Config;
 use VGA\Model\GameRelease;
 
 require_once('../bootstrap.php');
@@ -10,6 +11,12 @@ if (!file_exists('games.csv')) {
 }
 
 $em = DependencyManager::getEntityManager();
+/** @var Config $config */
+$config = $em->getRepository(Config::class)->findOneBy([]);
+if ($config->isReadOnly()) {
+    echo "Database is in read-only mode. Please disable read-only mode before running this script.\n";
+    exit(2);
+}
 
 $search = [' ', 'Win', 'Mac', 'Lin', 'iOS', 'Droid', 'Android', 'WP', 'X360', 'XBO', 'PSVita', '3DS'];
 $replace = ['', 'pc', 'pc', 'pc', 'mobile', 'mobile', 'mobile', 'mobile', 'x360', 'xb1', 'vita', 'n3ds'];

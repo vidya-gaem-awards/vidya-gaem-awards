@@ -2,6 +2,7 @@
 <?php
 use VGA\DependencyManager;
 use VGA\Model\Category;
+use VGA\Model\Config;
 use VGA\Model\ResultCache;
 use VGA\Model\Vote;
 use VGA\ResultCalculator\Schulze;
@@ -12,6 +13,13 @@ require(__DIR__ . '/../vendor/autoload.php');
 $timer = new Timer();
 $em = DependencyManager::getEntityManager();
 $voteRepo = $em->getRepository(Vote::class);
+
+/** @var Config $config */
+$config = $em->getRepository(Config::class)->findOneBy([]);
+if ($config->isReadOnly()) {
+    echo "Database is in read-only mode. Please disable read-only mode before running this script.\n";
+    exit(2);
+}
 
 // Remove all existing data
 $em->createQueryBuilder()->delete(ResultCache::class)->getQuery()->execute();

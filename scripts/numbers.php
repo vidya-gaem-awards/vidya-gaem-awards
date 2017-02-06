@@ -2,6 +2,7 @@
 <?php
 use VGA\DependencyManager;
 use VGA\Model\Access;
+use VGA\Model\Config;
 use VGA\Model\Vote;
 use VGA\Model\VotingCodeLog;
 use VGA\Timer;
@@ -12,6 +13,13 @@ require(__DIR__ . '/../vendor/autoload.php');
 $timer = new Timer();
 $em = DependencyManager::getEntityManager();
 $voteRepo = $em->getRepository(Vote::class);
+
+/** @var Config $config */
+$config = $em->getRepository(Config::class)->findOneBy([]);
+if ($config->isReadOnly()) {
+    echo "Database is in read-only mode. Please disable read-only mode before running this script.\n";
+    exit(2);
+}
 
 // Step 1. Get a list of voters
 $result = $voteRepo->createQueryBuilder('v')
