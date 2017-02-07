@@ -463,6 +463,13 @@ $routes->add('credits', new Route(
         'controller' => Controllers\CreditsController::class,
     ]
 ));
+$routes->add('soundtrack', new Route(
+    '/soundtrack',
+    [
+        'controller' => Controllers\StaticController::class,
+        'action' => 'soundtrack'
+    ]
+));
 
 /** @var Config $config */
 $config = $em->getRepository(Config::class)->findOneBy([]);

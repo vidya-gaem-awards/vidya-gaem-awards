@@ -17,4 +17,10 @@ class StaticController extends BaseController
         $response = new RedirectResponse($this->generator->generate('detailedResults'));
         $response->send();
     }
+
+    public function soundtrackAction()
+    {
+        $response = new Response($this->twig->render('soundtrack.twig'));
+        $response->send();
+    }
 }

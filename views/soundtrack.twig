@@ -1,0 +1,509 @@
+{% extends 'master.twig' %}
+
+{% block title %}Soundtrack{% endblock %}
+
+{% block content %}
+  <style type="text/css">
+    @font-face {
+      font-family: 'modern typewriter';
+      src: url('/fonts/modern typewriter.eot');
+      src: local('☺'), url('/fonts/modern typewriter.woff') format('woff'), url('/fonts/modern typewriter.ttf') format('truetype'), url('/fonts/modern typewriter.svg') format('svg');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'yoster';
+      src: url('/fonts/yoster.eot');
+      src: local('☺'), url('/fonts/yoster.woff') format('woff'), url('/fonts/yoster.ttf') format('truetype'), url('/fonts/yoster.svg') format('svg');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html {
+      background: black url("/2015voting/bg.gif");
+    }
+
+    body {
+      background: none;
+    }
+
+    h1, h2 {
+      margin:0;
+      padding:0;
+      color: #f85898;
+      font-weight: normal;
+    }
+
+    h1 {
+      font-family: "modern typewriter", Tahoma, sans-serif;
+      text-transform: uppercase;
+      font-size: 40px;
+      padding: 20px 0;
+      line-height: 1em;
+      color: #00ebdb;
+      background: url(/2015voting/title_bg.gif) center center no-repeat;
+    }
+    h2 {
+      font-family: "yoster", Calibri, sans-serif;
+      font-size: 1.3em;
+      line-height: 100%;
+      color: #bfbfbf;
+      -webkit-font-smoothing: none;
+    }
+
+    p {
+      font-family: "modern typewriter", Tahoma, sans-serif;
+      font-size: 22px;
+      line-height: 1.3em;
+      color: #f7d059;
+    }
+
+    .category {
+      margin: 0 auto 35px auto;
+      padding: 20px;
+      background: black;
+      border: 4px solid #970087;
+    }
+
+    .winner {
+      border: 1px solid #970087;
+    }
+
+    .category ul {
+      list-style-type: none;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .category ul li {
+      line-height: 1.5em;
+      font-family: "modern typewriter", Calibri, sans-serif;
+      color: #00ebdb;
+    }
+
+    .category ul li:first-child {
+      font-weight: bold;
+      font-size: 36px;
+      font-family: "modern typewriter", Tahoma, sans-serif;
+      color: #f7d059;
+    }
+
+    .category ul li:last-child {
+      color: #f85898;
+      font-size: 18px;
+      font-family: "modern typewriter", Tahoma, sans-serif;
+    }
+
+    .zig {
+      clear: both;
+      height: 20px;
+      margin: 30px 0;
+      background-image: url("/2015voting/zig_horizontal.gif");
+    }
+
+    .page-header {
+      text-align: center;
+      border: none;
+      margin-bottom: 0;
+    }
+
+    .page-header.the-bottom {
+      margin-bottom: 20px;
+    }
+
+    .awardHeaderContainer {
+      padding-top: 24px;
+      margin-bottom: 15px;
+      height: 106px;
+      background: url(/2015voting/title_bg.gif) top center no-repeat;
+      text-align: center;
+    }
+    .awardName {
+      font-family: "modern typewriter", Tahoma, sans-serif;
+      text-transform: uppercase;
+      font-size: 3em;
+      line-height: 50px;
+      color: #00ebdb;
+    }
+
+    a, a:visited {
+      color: #f85898;
+    }
+
+    a:hover, a:active {
+      color: white;
+    }
+
+    .awardSubtitle {
+      color: #00ebdb;
+    }
+
+    .navbar, .navbar .navbar-inner {
+      -moz-box-shadow:    none;
+      -webkit-box-shadow: none;
+      box-shadow:         none;
+      border:             none;
+      background: black;
+    }
+
+    .navbar a {
+      font-family: "modern typewriter", Tahoma, sans-serif !important;
+      color: white !important;
+      text-shadow: none !important;
+      background: none !important;
+    }
+
+    .navbar a:hover {
+      color: #f85898 !important;
+    }
+
+    .navbar .nav>.active>a {
+      box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+      -webkit-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+      -moz-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
+    }
+
+    .navbar-fixed-top {
+      border-bottom: 1px solid #f7d059;
+    }
+
+    .navbar-fixed-bottom {
+      border-top: 1px solid #f7d059;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+    }
+
+    .album-art {
+      border: 2px solid #990099;
+      width: 300px;
+      max-width: 300px;
+      margin: 0 auto;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .album-art:hover {
+      box-shadow: 0 3px 15px rgba(145, 30, 209, 0.5);
+    }
+
+    .download-now a {
+      font-family: "modern typewriter",Tahoma,sans-serif;
+      color: #f85898;
+      font-size: 38px;
+      font-weight: normal;
+      line-height: 0.95em;
+      margin-top: 0;
+      border-bottom: 3px dotted #f85898;
+    }
+
+    .download-now a:hover {
+      color: white;
+      border-bottom: 3px solid white;
+      text-decoration: none;
+    }
+
+    #track-list {
+      max-width: 800px;
+      margin: 25px auto 0;
+    }
+
+    #track-list td {
+      border: none;
+    }
+
+    #track-list td:nth-child(1) {
+      color: whitesmoke;
+    }
+
+    #track-list td:nth-child(2) {
+      color: #f7d059;
+    }
+
+    #track-list td:nth-child(3) {
+      color: whitesmoke;
+      font-style: italic;
+    }
+
+    #track-list .line-after td {
+      border-bottom: 1px solid #f1e9d0;
+      padding-bottom: 15px;
+    }
+
+    #track-list .line-before td {
+      border-top: 1px solid #f1e9d0;
+      padding-top: 15px;
+    }
+
+    .secondary-download {
+      font-family: "yoster",Calibri,sans-serif;
+      font-size: 16px;
+    }
+  </style>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-xs-12">
+      <h1 style="text-align: center; margin-bottom: 20px;">Official Soundtrack of the 2015 /v/GAs</h1>
+      <div style="display: block; margin: 0 auto; max-width: 300px;">
+        <a href="https://drive.google.com/file/d/0B-ozeoDbB_HzSzdjalFaWTBCbVE/view" target="_blank">
+          <img src="/2015voting/album.jpg" alt="Album art" class="img-responsive album-art">
+        </a>
+      </div>
+      <p class="download-now text-center" style="margin-top: 15px;">
+        <a href="https://drive.google.com/file/d/0B-ozeoDbB_HzSzdjalFaWTBCbVE/view" target="_blank">Download Now</a>
+      </p>
+      <p class="text-center secondary-download" style="margin-top: 15px; color: white;">
+        <a href="https://vidyagaemawards.com/music/2015-vga-music-mix.zip">Download preshow music</a> (not included in main pack)
+      </p>
+
+      <table class="table" id="track-list">
+        <tr class="line-before line-after">
+          <td></td>
+          <td>Jab50Yen - The Most Hated /v/GAs Preshow Mashup Mix</td>
+          <td>Preshow - <a href="https://jab50yen.bandcamp.com/album/the-most-hated-v-gas-preshow-mashup-mix" target="_blank">Listen on Bandcamp</a></td>
+        </tr>
+        <tr class="line-before">
+            <td>01</td>
+            <td>Majora's Mask - Final Hours (with Bells)</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>02</td>
+            <td>Street Fighter III 3rd Strike - The Beep (Arranged)</td>
+            <td>Sweep Points Explanation</td>
+        </tr>
+        <tr>
+            <td>03</td>
+            <td>Blast Corps - Simian Acres</td>
+            <td>Seal of Quality Award</td>
+        </tr>
+        <tr>
+            <td>04</td>
+            <td>Tom & Jerry - The One Reason</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>05</td>
+            <td>Tom & Jerry - Dancer</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>06</td>
+            <td>Ape Escape - Dark Ruins</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>07</td>
+            <td>Extreme-G 2 - Track 2 (Aquanor)</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>08</td>
+            <td>Bomberman World - Planet Forest</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>09</td>
+            <td>Aqours - 「君のこころは輝いてるかい？」</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>Wild Arms 2 - Town Where the West Wind Blows</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>Flow Theory Radio 002 with g l u e 7 0</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>Killer Instinct Gold - Orchid</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td>Iggy's Reckin' Balls - Violent Rollers</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td>Soichi Terada - Do It Again</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td>Vitas - 7th Element</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>Beetle Adventure Racing - Sunset Sands</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>17</td>
+            <td>Jet Set Radio Future - Concept of Love</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>Hotline Miami 2 - Roller Mobster</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td>Crypt of the Necrodancer - Konga Conga Kappa</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>Undertale - Spider Dance</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>Metal Gear Solid V The Phantom Pain - V has come to</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td>Splatoon - Vs. DJ Octavio (Squid Sisters)</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>23</td>
+            <td>Jet Set Radio Future - Humming the Bassline</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>24</td>
+            <td>Undertale - Metal Crusher</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>25</td>
+            <td>Beetle Adventure Racing - Menu Screen</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>26</td>
+            <td>Bomberman Hero - Redial</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td>Tetrisphere - Prophetic</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>28</td>
+            <td>Blank Banshee - Infinite Login</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>29</td>
+            <td>MACINTOSH PLUS - ブート</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>30</td>
+            <td>Topaz Gang - <small>ＳＯＭＥＷＨＥＲＥ　ＩＮ　ＴＨＥ　ＢＡＣＫ　ＯＦ　ＭＹ　ＭＩＮＤ</small></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>31</td>
+            <td>Blank Banshee - Anxiety Online</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>32</td>
+            <td>LUXURY ELITE - SCHAUMBURG</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>33</td>
+            <td>Nicky Flowers - These Things Happen</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>34</td>
+            <td>MUM-B1 - L.A.S.T. D.A.N.C.E</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>35</td>
+            <td>Streets of Rage Remake V5 - Jungle Base</td>
+            <td></td>
+        </tr>
+        <tr class="line-after">
+            <td>36</td>
+            <td>Tetrisphere - ManicDrumMix</td>
+            <td></td>
+        </tr>
+        <tr class="line-before">
+            <td>37</td>
+            <td>Glover - Intro</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>38</td>
+            <td>Soichi Terada - Purple Haze</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>39</td>
+            <td>Tetrisphere - Extol</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>40</td>
+            <td>Extreme-G - Track 4</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>41</td>
+            <td>Streets of Rage Remake V5 - Dub Slash</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>42</td>
+            <td>Streets of Rage Remake V5 - Go Straight</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>43</td>
+            <td>DDR 3rd Mix - 20, November</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>44</td>
+            <td>Racing Gears Advance - CYCL</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>45</td>
+            <td>Streets of Rage - Stage 1</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>46</td>
+            <td>Streets of Rage - Stage 8</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>47</td>
+            <td>Street Fighter III 3rd Strike - You Blow My Mind (Arranged)</td>
+            <td>Bonus Track</td>
+        </tr>
+        <tr>
+            <td>48</td>
+            <td>Killer Instinct - The Way You Move</td>
+            <td>Bonus Track</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}
