@@ -54,7 +54,7 @@
         {% if nominee1 == nominee2 %}
           <td>---</td>
         {% else %}
-          <td class="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] > pairwise[award.id][nominee2.shortName][nominee1.shortName] ? 'better' : 'worse' }}">{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }}</td>
+          <td title="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }} vs {{ pairwise[award.id][nominee2.shortName][nominee1.shortName] }}" class="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] > pairwise[award.id][nominee2.shortName][nominee1.shortName] ? 'better' : 'worse' }}">{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }}</td>
         {% endif %}
       {% endfor %}
     </tr>
