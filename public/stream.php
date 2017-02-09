@@ -37,7 +37,7 @@ body, html {
 	text-align: center;
 }
 body {
-	background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;
+	background: #EEF2FF url('/images/fade-blue.png') top center repeat-x;
 }
 .container {
 	margin: 20px;
@@ -160,7 +160,7 @@ function showTimezones() {
 	[<?php echo $statHTML; ?>]
 </div> -->
 
-<img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" height="200px" />
+<img src="/images/VGAlogo-large.png" alt="The Vidya Gaem Awards Logo" height="200px" />
 
 <div class="container">
 

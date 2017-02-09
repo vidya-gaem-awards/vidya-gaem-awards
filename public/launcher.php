@@ -38,7 +38,7 @@ body, html {
 	text-align: center;
 }
 body {
-	background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;
+	background: #EEF2FF url('/images/fade-blue.png') top center repeat-x;
 }
 .logo {
 	margin: 20px;
@@ -135,7 +135,7 @@ function showTimezones() {
 	[<?php echo $statHTML; ?>]
 </div>
 
-<!-- <img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
+<!-- <img src="/images/VGAlogo-large.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
 <div class="logo">
 	<iframe width="800" height="480" src="https://www.youtube.com/embed/3I-Kb4yVWsQ?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>

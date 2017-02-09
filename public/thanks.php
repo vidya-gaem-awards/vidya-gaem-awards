@@ -39,7 +39,7 @@ body, html {
 	text-align: center;
 }
 body {
-	background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;
+	background: #EEF2FF url('/images/fade-blue.png') top center repeat-x;
 }
 .logo {
 	margin: 20px;
@@ -100,7 +100,7 @@ a:hover {
 	[<?php echo $statHTML; ?>]
 </div>
 
-<!-- <img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
+<!-- <img src="/images/VGAlogo-large.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
 <div class="logo">
 	<iframe width="853" height="480" src="https://www.youtube.com/embed/mOGRDuY0DFI?rel=0" frameborder="0" allowfullscreen></iframe>
 	<!-- <div class="subsubtitle">The video was taken down by YouTube, and we are currently working on getting it back online. Here are some alternate downloads you can use in the meantime.<br /><br />
