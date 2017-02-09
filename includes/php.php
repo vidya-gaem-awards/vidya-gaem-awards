@@ -20,6 +20,11 @@ $APIkey = STEAM_API_KEY;
 
 // Login stuff
 $canDo = array();
+
+$page = explode("/", $_SERVER['SCRIPT_NAME']);
+$page = substr($page[count($page) - 1], 0, -4);
+$tpl->set("page", $page);
+
 if (isset($_SESSION['login'])) {
 	$loggedIn = true;
 	$ID = $_SESSION['login'];
@@ -34,13 +39,8 @@ if (isset($_SESSION['login'])) {
 		$canDo[$row['Privilege']] = true;
 	}
 	
-	$tpl->set("page", $page);
-	
 } else {
 	$loggedIn = false;
-	
-	$page = explode("/", $_SERVER['SCRIPT_NAME']);
-	$page = substr($page[count($page) - 1], 0, -4);    
 	
 	$tpl->set("openIDurl", SteamSignIn::genUrl("https://2011.vidyagaemawards.com/login.php?return={$page}.php"));
 }
