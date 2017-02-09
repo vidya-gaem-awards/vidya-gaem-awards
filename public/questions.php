@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 $result = mysql_query("SELECT * FROM `ceremony_feedback` WHERE `Questions` != ''");
 
 while ($row = mysql_fetch_assoc($result)) {

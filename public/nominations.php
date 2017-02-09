@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 $tpl->set("title", "Nominations");
 
 $query = "SELECT * FROM `categories` WHERE `Active` = 1 ORDER BY `Order` ASC";

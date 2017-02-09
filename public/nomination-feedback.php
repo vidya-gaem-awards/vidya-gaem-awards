@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 if (!$loggedIn) {
 	die();
 }

@@ -1,6 +1,6 @@
 <?php
 
-    include_once("includes/php.php");
+    include_once(__DIR__."/../includes/php.php");
     $tpl->set('title', "Polls");
     
     set_time_limit(5);

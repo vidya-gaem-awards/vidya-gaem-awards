@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 
 $stats = array(
 	"days taken" => 57,
@@ -163,7 +163,7 @@ function switchChat() {
 }
 </script>
 <script src="https://www-cdn.justin.tv/javascripts/jtv_api.js"></script>
-<script src="https://2011.vidyagaemawards.com/includes/jquery-1.7.1.min.js"></script>
+<script src="/assets/jquery-1.7.1.min.js"></script>
 </head>
 <body>
 

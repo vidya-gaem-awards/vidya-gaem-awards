@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 
 error_reporting(E_ALL ^ E_NOTICE);
 

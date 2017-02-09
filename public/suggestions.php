@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 
 $suggestion = mysql_real_escape_string($_POST['suggestion']);
 $result = mysql_query("INSERT INTO `suggestions` (`UserID`, `Suggestion`, `Timestamp`) VALUES (\"$ID\", \"$suggestion\", NOW())");

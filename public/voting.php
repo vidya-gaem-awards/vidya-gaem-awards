@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 $tpl->set("title", "Voting");
 
 date_default_timezone_set('America/New_York');
@@ -108,8 +108,8 @@ if (isset($_GET['category'])) {
 			if (empty($row['Image'])) {
 				
 				foreach ($prefixes as $prefix) {
-					if (file_exists("templates/images/nominees/{$prefix}{$row['ID']}.png")) {
-						$row['Background'] = "templates/images/nominees/{$prefix}{$row['ID']}.png";
+					if (file_exists(__DIR__."/images/nominees/{$prefix}{$row['ID']}.png")) {
+						$row['Background'] = "images/nominees/{$prefix}{$row['ID']}.png";
 						break;
 					}
 				}

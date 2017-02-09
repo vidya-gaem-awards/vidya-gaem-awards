@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 if (!empty($_POST) && isset($_GET['category']) && $loggedIn) {
 	$cat = mysql_real_escape_string($_GET['category']);
 	$query = "SELECT `ID` FROM `categories` WHERE `ID` = \"$cat\"";

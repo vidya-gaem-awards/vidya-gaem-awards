@@ -1,5 +1,5 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 
 ini_set("display_errors", true);
 error_reporting(E_ALL);

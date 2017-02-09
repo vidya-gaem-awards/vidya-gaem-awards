@@ -3,13 +3,13 @@
   <head>
     <title>/v/GAs - <tag:title /></title>
 
-    <link rel="stylesheet" href="/includes/bootstrap-1.4.0.css">
-    <link rel="stylesheet" href="/templates/style.css">
+    <link rel="stylesheet" href="/assets/bootstrap-1.4.0.css">
+    <link rel="stylesheet" href="/assets/style.css">
     
 	<script src='https://code.jquery.com/jquery-1.7.1.min.js'></script>
 	<!-- <script src='external/bootstrap-tabs.js'></script> -->
-	<script src="/includes/jquery.tablesorter.min.js"></script>
-	<script src='/includes/highcharts.js'></script>
+	<script src="/assets/jquery.tablesorter.min.js"></script>
+	<script src='/assets/highcharts.js'></script>
 
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
   </head>
@@ -34,7 +34,7 @@
 						</if:pretend>
 						<li><a href="http://steamcommunity.com/profiles/<tag:communityID />"> <tag:displayName /></a></li>
 					<else:loggedIn>
-						<li><a href="<tag:openIDurl />"><img src="/templates/images/sits_small.png" /></a></li>
+						<li><a href="<tag:openIDurl />"><img src="/images/sits_small.png" /></a></li>
 					</if:loggedIn>
 				</ul>
 			</div>

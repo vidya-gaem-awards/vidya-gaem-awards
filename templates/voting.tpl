@@ -203,7 +203,7 @@ a,a:hover{text-decoration:none;}
 		<else:loggedIn>
 			<br />
 			<div>
-				<a href="<tag:openIDurl />"><img src="/templates/images/sits_large_noborder.png" /></a>
+				<a href="<tag:openIDurl />"><img src="/images/sits_large_noborder.png" /></a>
 				<div style="font-size: 50%;">
 					<!-- To prevent ballot stuffing, you must sign in with Steam before voting. See our <a href="privacy.php">Privacy Policy</a> -->
 					<br />If you have already voted, you can sign in to see your votes.

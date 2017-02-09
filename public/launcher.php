@@ -1,8 +1,8 @@
 <?php
-include("includes/php.php");
+include(__DIR__."/../includes/php.php");
 
 $stats = array(
-	"days taken" => 57,
+	"days taken" => 55,
 	"category feedback" => 21209,
 	"nominations made" => 1620, 
 	"total votes" => 173899,
@@ -23,6 +23,7 @@ $statHTML = implode(" / ", $stats2);
 
 date_default_timezone_set("Australia/Brisbane");
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -39,12 +40,20 @@ body, html {
 body {
 	background: #EEF2FF url('https://i.imgur.com/vhP2J.png') top center repeat-x;
 }
-.container {
+.logo {
 	margin: 20px;
-	width: 1170px;
+	border: 1px solid #34345C;
+	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: 10px;
+}
+.subtitle {
+	font-size: 40px;
+	margin: 10px;
+}
+.subsubtitle {
+	font-size: 25px;
+	margin: 20px;
 }
 a {
 	text-decoration: none;
@@ -63,39 +72,6 @@ a:hover {
 .stat {
 	color: #34345C;
 	padding: 1px;
-}
-.stream {
-	float: left;
-	margin-right: 20px;
-	border: 2px solid #34345C;
-	width: 800px;
-	height: 480px;
-}
-
-.chat {
-	float: right;
-	width: 340px;
-	height: 480px;
-	border: 2px solid #34345C;
-}
-.chatSwitcher {
-	border-top: 2px solid #34345C;
-}
-.subtitle {
-	font-size: 40px;
-	margin: 10px;
-}
-.subsubtitle {
-	font-size: 25px;
-	margin: 20px;
-}
-a {
-	text-decoration: none;
-	color: #0069D6;
-}
-a:hover {
-	text-decoration: underline;
-	color: #00438A;
 }
 #countdown {
 	font-size: 50%;
@@ -138,12 +114,12 @@ function updateWCTime() {
 	mm = mins - hours * 60,
 	ss = secs - mins * 60;
 
-	var string = hh + ' hour' +
+	var string = dd + ' day' + (dd == 1 ? ', ' : 's, ') + hh + ' hour' +
 		(hh == 1 ? ', ' : 's, ') + mm + ' minute' + (mm == 1 ? ', ' : 's, ') +
 		ss + ' second' + (ss == 1 ? '' : 's');
 
 	document.getElementById("countdown").innerHTML = string;
-
+	
 }
 window.onload = updateWCTime;
 setInterval('updateWCTime()', 1000 );
@@ -152,64 +128,19 @@ function showTimezones() {
 	document.getElementById("timezones").style.display = "";
 }
 </script>
-<script src="https://www-cdn.justin.tv/javascripts/jtv_api.js"></script>
 </head>
 <body>
 
-<!-- <div class="stats">
+<div class="stats">
 	[<?php echo $statHTML; ?>]
-</div> -->
-
-<img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" height="200px" />
-
-<div class="container">
-
-	<div class="stream" id="stream">
-	
-		<object type="application/x-shockwave-flash"
-			height="480" width="800"
-			id="live_embed_player_flash"
-			data="https://www.justin.tv/widgets/live_embed_player.swf?channel=vidyagaemawards"
-			bgcolor="#000000">
-			<param name="allowFullScreen" value="true" />
-			<param name="allowScriptAccess" value="always" />
-			<param name="allowNetworking" value="all" />
-			<param name="movie" value="https://www.justin.tv/widgets/live_embed_player.swf" />
-			<param name="flashvars" value="hostname=www.justin.tv&channel=vidyagaemawards&auto_play=true&start_volume=25&consumer_key=ZvBaRzHpjrpVwIBwax9vOw" />
-		</object>
-	
-	</div>
-	
-	<div class="chat">
-		<!-- <iframe frameborder="0" scrolling="no" id="chat_embed" src="https://twitch.tv/chat/embed?channel=clamburger_&amp;popout_chat=true" height="480" width="300"></iframe> -->
-		<object width="340" height="460" id="obj_1328891570920">
-		<param name="movie" value="https://vidyagaemslive.chatango.com/group"/>
-		<param name="wmode" value="transparent"/>
-		<param name="AllowScriptAccess" VALUE="always"/>
-		<param name="AllowNetworking" VALUE="all"/>
-		<param name="AllowFullScreen" VALUE="true"/>
-		<param name="flashvars" value="cid=1328891570920&b=1&d=666666&f=50&l=999999&q=999999&w=0&t=0"/>
-		<embed id="emb_1328891570920" src="https://vidyagaemslive.chatango.com/group" width="340" height="460" wmode="transparent" allowScriptAccess="always" allowNetworking="all"
-		type="application/x-shockwave-flash" allowFullScreen="true" flashvars="cid=1328891570920&b=1&d=666666&f=50&l=999999&q=999999&w=0&t=0"></embed></object>
-		
-		<div class="chatSwitcher">
-			Chatango too hectic? Join <a href="steam://friends/joinchat/103582791432684008">Steam Chat</a>
-		</div>
-	</div>
-	&nbsp;
 </div>
 
-<!-- <script type="text/javascript">
-player = jtv_api.new_player(document.getElementById('stream'), { 
-	width:'800px', 
-	height:'480px', 
-	consumer_key: 'ZvBaRzHpjrpVwIBwax9vOw',  
-	auto_play: true,
-	channel: 'clamburger_',
-}); 
-</script> -->
+<!-- <img src="https://i.imgur.com/J0cW3.png" alt="The Vidya Gaem Awards Logo" class="logo" /> -->
+<div class="logo">
+	<iframe width="800" height="480" src="https://www.youtube.com/embed/3I-Kb4yVWsQ?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
 
-<div class="subtitle">February 11th at 6pm (4chan time)
+<div class="subtitle">February 11th - is your body ready?
 	<div id="countdown">&nbsp;</div>
 </div>
 
@@ -304,6 +235,5 @@ Timezone not listed? Check <a href="http://www.timeanddate.com/worldclock/fixedt
 </tr>
 </table>
 <br />
-
 </body>
 </html>

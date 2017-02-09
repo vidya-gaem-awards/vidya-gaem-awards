@@ -17,8 +17,8 @@ function fetch($filename = false) {
         $filename = basename($_SERVER["SCRIPT_NAME"], ".php");
 	}
 	
-	$tpl->set('content', $tpl->fetch("./templates/$filename.tpl"));
-	echo $tpl->fetch('./templates/master.tpl');
+	$tpl->set('content', $tpl->fetch(__DIR__."/../templates/$filename.tpl"));
+	echo $tpl->fetch(__DIR__.'/../templates/master.tpl');
 }
 
 function getAPIinfo($communityID) {
