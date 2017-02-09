@@ -53,7 +53,7 @@
 		<h1><tag:category[].Name /> <small><tag:category[].Subtitle /></small></h1>
 	</div>
 	<div class="span3" style="text-align: right;">
-		<br /><a href="/forum/viewtopic.php?f=2&t=<tag:category[].ForumLink />">View forum thread</a>
+		<br /><a href="/forum-archive/viewtopic.php%3Ff=2&t=<tag:category[].ForumLink />.html">View forum thread</a>
 	</div>
 	</div>
 </div>

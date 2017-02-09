@@ -1,3 +1,4 @@
 .idea
 includes/config.php
 forum/
+public/forum-archive/

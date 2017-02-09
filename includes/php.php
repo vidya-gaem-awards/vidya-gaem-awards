@@ -95,7 +95,7 @@ $tpl->set('error', $error);
 $navbarItems = array("home.php" => "Home", "polls.php" => "Polls", /*"categories.php" => "Categories",*/ "nominations.php" => "Nominations");
 $navbarItems["results.php"] = "Results";
 $navbarItems["voting.php"] = "Voting";
-$navbarItems["/forum"] = "Forum";
+$navbarItems["/forum-archive"] = "Forum";
 if (canDo("special")) {
 	$navbarItems["/wiki"] = "Wiki";
 }

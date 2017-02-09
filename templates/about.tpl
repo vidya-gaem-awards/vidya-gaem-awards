@@ -17,7 +17,7 @@
 		<div class="row">
 			<div class="span7">
 				<p>The /v/GAs are run for /v/, by /v/. It couldn't be done without the help of countless anon in figuring out categories, nominations and finally voting for the winners.</p>
-				<p>We're always happy for people to get involved: this is meant to be a collaborative effort, not just run by a few people. If you'd like to help, check out the <a href="/forum">forum</a> or the <a href="http://steamcommunity.com/groups/vidyagaemawards">Steam group</a>.</p>
+				<p>We're always happy for people to get involved: this is meant to be a collaborative effort, not just run by a few people. If you'd like to help, check out the <a href="/forum-archive">forum</a> or the <a href="http://steamcommunity.com/groups/vidyagaemawards">Steam group</a>.</p>
 			</div>
 		</div>
 	</div>

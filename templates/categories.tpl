@@ -1,6 +1,6 @@
 <div class="hero-unit" style="padding-top: 30px; padding-bottom: 30px;">
 <h1>Award Categories</h1>
-<p><a href="forum/viewforum.php?f=3">Provide feedback on categories in general in the forum</a></p>
+<p><a href="/forum-archive/viewforum.php%3Ff=3.html">Provide feedback on categories in general in the forum</a></p>
 </div>
 <div class="row">
 	<div class="span3">
@@ -29,7 +29,7 @@
 	<div class="page-header">
 		<h1><tag:categories[].name /> <small><tag:categories[].subtitle /></small></h1>
 		<p>
-			<a href="forum/viewtopic.php?f=2&t=<tag:categories[].forum />">Provide feedback on this category in the forum</a> |
+			<a href="/forum-archive/viewtopic.php%3Ff=2&t=<tag:categories[].forum />.html">Provide feedback on this category in the forum</a> |
 			<a href="nominations.php?category=<tag:categories[].id />">See nominations</a></p>
 	</div>
 </div>
