@@ -1,6 +1,7 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 
+ini_set("display_errors", false);
 error_reporting(E_ALL);
 
 include("config.php");
