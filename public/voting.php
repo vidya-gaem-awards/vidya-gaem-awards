@@ -58,18 +58,18 @@ if (isset($_GET['testImage'])) {
 
 $completedCategories = array();
 if ($loggedIn) {
-	$query = "SELECT * FROM `votes` WHERE `UserID` = \"$ID\"";
-	$result = mysql_query($query);
-	while ($row = mysql_fetch_array($result)) {
+	$query = "SELECT * FROM `votes` WHERE `UserID` = \"" . $dbh->real_escape_string($ID) . "\"";
+	$result = $dbh->query($query);
+	while ($row = $result->fetch_array()) {
 		$completedCategories[$row['CategoryID']] = $row['Nominee'];
 	}
 }
 
 $query = "SELECT * FROM `categories` WHERE `Active` = 1 ORDER BY `Order` ASC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $categories = array();
-while ($row = mysql_fetch_array($result)) {
+while ($row = $result->fetch_array()) {
 	if (isset($_GET['category']) && $_GET['category'] == $row['ID']) {
 		$row['Active'] = true;
 	} else {
@@ -88,19 +88,19 @@ $tpl->set("categories", $categories);
 
 $category = $nominees = false;
 if (isset($_GET['category'])) {
-	$cat = mysql_real_escape_string($_GET['category']);
+	$cat = $dbh->real_escape_string($_GET['category']);
 	$query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Active` = 1";
-	$result = mysql_query($query);
+	$result = $dbh->query($query);
 	
-	if (mysql_num_rows($result) == 1) {
+	if ($result->num_rows == 1) {
 		
-		$row = mysql_fetch_array($result);
+		$row = $result->fetch_array();
 		$category = $row;		
 		
-		$query = "SELECT * FROM `nominees`, `nominees_all` WHERE `Nominee` = `ID` AND `CategoryID` = \"$cat\" AND `Type` = \"{$category["Type"]}\" ORDER BY `Name` ASC";
-		$result = mysql_query($query);
+		$query = "SELECT * FROM `nominees`, `nominees_all` WHERE `Nominee` = `ID` AND `CategoryID` = \"$cat\" AND `Type` = \"" . $dbh->real_escape_string($category["Type"]) . "\" ORDER BY `Name` ASC";
+		$result = $dbh->query($query);
 		$nominees = array();
-		while ($row = mysql_fetch_array($result)) {
+		while ($row = $result->fetch_array()) {
 		
 			$row['Background'] = "";
 		
@@ -109,7 +109,7 @@ if (isset($_GET['category'])) {
 				
 				foreach ($prefixes as $prefix) {
 					if (file_exists(__DIR__."/images/nominees/{$prefix}{$row['ID']}.png")) {
-						$row['Background'] = "images/nominees/{$prefix}{$row['ID']}.png";
+						$row['Background'] = "/images/nominees/{$prefix}{$row['ID']}.png";
 						break;
 					}
 				}

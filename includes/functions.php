@@ -44,9 +44,11 @@ function canDo($privilege) {
 }
 
 function userInput($input, $mysql = true) {
+	global $dbh;
+
 	$output = $input;
 	if ($mysql) {
-		$output = mysql_real_escape_string($output);
+		$output = $dbh->real_escape_string($output);
 	}
 	$output = str_replace(array("<", ">", '"'), array("&lt;", "&gt;", "&quot;"), $output);
 	$output = trim($output);
@@ -65,25 +67,28 @@ function refresh() {
 }
 
 function action($action, $firstID = false, $secondID = false) {
-	global $ID;
-	
-	$page = explode("/", $_SERVER['SCRIPT_NAME']);
-	$page = substr($page[count($page) - 1], 0, -4);
-	
-	if (!$firstID) {
-		$firstID = 'NULL';
-	} else {
-		$firstID = "'$firstID'";
-	}
-	
-	if (!$secondID) {
-		$secondID = 'NULL';
-	} else {
-		$secondID = "'$secondID'";
-	}
-	
-	$query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`, `SpecificID1`, `SpecificID2`)";
-	$query .= " VALUES ('$ID', NOW(), '$page', '$action', $firstID, $secondID)";
-	mysql_query($query);
+    ## SITE PLACED INTO READ-ONLY MODE
+
+//	global $ID;
+//  global $dbh;
+//
+//	$page = explode("/", $_SERVER['SCRIPT_NAME']);
+//	$page = substr($page[count($page) - 1], 0, -4);
+//
+//	if (!$firstID) {
+//		$firstID = 'NULL';
+//	} else {
+//		$firstID = "'$firstID'";
+//	}
+//
+//	if (!$secondID) {
+//		$secondID = 'NULL';
+//	} else {
+//		$secondID = "'$secondID'";
+//	}
+//
+//	$query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`, `SpecificID1`, `SpecificID2`)";
+//	$query .= " VALUES ('$ID', NOW(), '$page', '$action', $firstID, $secondID)";
+//	$dbh->query($query);
 }
 ?>

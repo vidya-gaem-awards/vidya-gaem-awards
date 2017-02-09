@@ -1,8 +1,8 @@
 <?php
 include(__DIR__."/../includes/php.php");
-$result = mysql_query("SELECT * FROM `ceremony_feedback` WHERE `Questions` != ''");
+$result = $dbh->query("SELECT * FROM `ceremony_feedback` WHERE `Questions` != ''");
 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	echo "<span ";
 	if (strlen($row['Questions']) > 300) {
 		echo "style='background-color: yellow;'";

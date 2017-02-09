@@ -14,19 +14,19 @@ $query .= " WHERE `Privilege` = 'secretclub'";
 $query .= " AND `categories`.`Type` = `nominees_all`.`Type`";
 $query .= " ORDER BY `users`.`Name` ASC, `Order` ASC";
 
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $votes = array();
 $categories = array();
 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$votes[$row['CategoryID']][$row['User']] = $row['Nominee'];
 }
 
 $query = "SELECT * FROM `categories` WHERE `Active` = 1 ORDER BY `Order` ASC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$categories[$row['ID']] = $row['Name'];
 }
 

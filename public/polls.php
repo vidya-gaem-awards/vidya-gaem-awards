@@ -9,9 +9,9 @@
     
     # Get the complete list of polls: it is a useful resource to have
     $query = "SELECT * FROM `poll_questions` ORDER BY `ID` DESC";
-    $result = mysql_query($query);
+    $result = $dbh->query($query);
     $polls = array();
-    while ($row = mysql_fetch_array($result)) {
+    while ($row = $result->fetch_array()) {
 		$polls[$row['ID']] = array($row['Question'], $row['Description'], $row['Status']);
 	}
     
@@ -29,55 +29,59 @@
 		$tpl->set('new-description', false);
 		$tpl->set('new-responses', false);
 		$tpl->set('new-creator', $ID);
-		
+
 		# Creating a new poll
 		if (isset($_POST['question'])) {
-			$tpl->set('new-question', $_POST['question']);
-			$tpl->set('new-description', $_POST['description']);
-			$tpl->set('new-responses', $_POST['responses']);
-			
-			$question = userInput($_POST['question']);
-			$creator = userInput($_POST['creator']);
-			$description = userInput($_POST['description']);
-			if (empty($question)) {
-				$tpl->set('error', "You must enter in a question for the poll!");
-			} else {
-				$result = mysql_query("SELECT `Question` FROM `poll_questions` WHERE `Question` = '$question'");
-				if (mysql_num_rows($result) && false) {
-					$tpl->set('error', "A poll with that question already exists.");
-				} else {
-					$responses = array_values(array_filter(array_map("trim", explode("\n", $_POST['responses']))));
 
-					if (count($responses) < 2) {
-						$tpl->set('error', "You must enter at least two responses.");
-					} else {
-						$initialStatus = 1;
-						if (!empty($description)) {
-							$descSQL = "'$description'";
-						} else {
-							$descSQL = "NULL";
-						}
-						$query = "INSERT INTO `poll_questions` (`Question`, `Creator`, `Status`, `Description`) ";
-						$query .= "VALUES ('$question', '$creator', $initialStatus, $descSQL)";
-						mysql_query($query);
-						$pollID = mysql_insert_id();
-						action("new", $pollID);
-						$responses = array_map("userInput", $responses);
-						
-						foreach ($responses as $response) {
-							$query = "INSERT INTO `poll_options` (`PollID`, `Response`) VALUES ($pollID, '$response')";
-							mysql_query($query);
-						}
-						
-						storeMessage('success', "Poll successfully created! Go <a href='polls.php?id=$pollID'>check it out</a>.");
-						refresh();
-						
-						$tpl->set('new-question', false);
-						$tpl->set('new-responses', false);
-						$tpl->set('new-description', false);
-					}
-				}
-			}
+            ## SITE PLACED INTO READ-ONLY MODE
+            $tpl->set('error', "The site is in read-only mode. No new polls can be created.");
+
+//			$tpl->set('new-question', $_POST['question']);
+//			$tpl->set('new-description', $_POST['description']);
+//			$tpl->set('new-responses', $_POST['responses']);
+//
+//			$question = userInput($_POST['question']);
+//			$creator = userInput($_POST['creator']);
+//			$description = userInput($_POST['description']);
+//			if (empty($question)) {
+//				$tpl->set('error', "You must enter in a question for the poll!");
+//			} else {
+//				$result = $dbh->query("SELECT `Question` FROM `poll_questions` WHERE `Question` = '$question'");
+//				if ($result->num_rows && false) {
+//					$tpl->set('error', "A poll with that question already exists.");
+//				} else {
+//					$responses = array_values(array_filter(array_map("trim", explode("\n", $_POST['responses']))));
+//
+//					if (count($responses) < 2) {
+//						$tpl->set('error', "You must enter at least two responses.");
+//					} else {
+//						$initialStatus = 1;
+//						if (!empty($description)) {
+//							$descSQL = "'$description'";
+//						} else {
+//							$descSQL = "NULL";
+//						}
+//						$query = "INSERT INTO `poll_questions` (`Question`, `Creator`, `Status`, `Description`) ";
+//						$query .= "VALUES ('$question', '$creator', $initialStatus, $descSQL)";
+//                        $dbh->query($query);
+//						$pollID = $dbh->insert_id;
+//						action("new", $pollID);
+//						$responses = array_map("userInput", $responses);
+//
+//						foreach ($responses as $response) {
+//							$query = "INSERT INTO `poll_options` (`PollID`, `Response`) VALUES ($pollID, '$response')";
+//                            $dbh->query($query);
+//						}
+//
+//						storeMessage('success', "Poll successfully created! Go <a href='polls.php?id=$pollID'>check it out</a>.");
+//						refresh();
+//
+//						$tpl->set('new-question', false);
+//						$tpl->set('new-responses', false);
+//						$tpl->set('new-description', false);
+//					}
+//				}
+//			}
 		}
 	
 	} else if (!isset($pollIndex)) {
@@ -87,7 +91,7 @@
 	} else {
 
 		if (isset($_GET['id'])) {
-			if (is_numeric($_GET['id'])) {
+			if (ctype_digit($_GET['id'])) {
 				$pollIndex = $_GET['id'];
 			}
 		}
@@ -100,8 +104,8 @@
 		}
 		
 		# Find out if the user has voted on this poll yet
-		$query = "SELECT * FROM `poll_votes` WHERE `UserID` = '$ID' AND `PollID` = $pollIndex";
-		$voted = mysql_num_rows(mysql_query($query));
+		$query = "SELECT * FROM `poll_votes` WHERE `UserID` = '" . $dbh->real_escape_string($ID) . "' AND `PollID` = $pollIndex";
+		$voted = $dbh->query($query)->num_rows;
 		
 		# They can't reset the vote if they never voted to start with
 		if (!$voted) {
@@ -110,26 +114,32 @@
 		
 		# Reset the user's vote.
 		if (isset($_GET['reset']) && $valid) {
-			$query = "DELETE FROM `poll_votes` WHERE `UserID` = '$ID' AND `PollID` = $pollIndex";
-			mysql_query($query);
-			action("reset", $pollIndex);
-			$tpl->set("success", "Your vote has been reset. Don't forget to vote again!");
-			$voted = 0;
+            ## SITE PLACED INTO READ-ONLY MODE
+			$tpl->set("error", "Polls can no longer be voted on.");
+
+//			$query = "DELETE FROM `poll_votes` WHERE `UserID` = '$ID' AND `PollID` = $pollIndex";
+//            $dbh->query($query);
+//			action("reset", $pollIndex);
+//			$tpl->set("success", "Your vote has been reset. Don't forget to vote again!");
+//			$voted = 0;
 		}
 		
 		# Submit the vote.
 		if (isset($_POST['response']) && !$voted && $loggedIn) {
-			$query = "SELECT * FROM `poll_options` WHERE `OptionID` = {$_POST['response']} AND `PollID` = $pollIndex";
-			if (!mysql_num_rows(mysql_query($query))) {
-				$tpl->set("error", "Invalid option: perhaps the poll was deleted while you were voting?");
-			} else {
-				$query = "INSERT INTO `poll_votes` VALUES ($pollIndex, ${_POST["response"]}, '$ID')";
-				mysql_query($query);
-				action("voted", $pollIndex, $_POST['response']);
-				$voted = 1;
-				storeMessage("success", "You have successfully voted on this poll.");
-				refresh();
-			}
+            ## SITE PLACED INTO READ-ONLY MODE
+            $tpl->set("error", "Polls can no longer be voted on.");
+
+//			$query = "SELECT * FROM `poll_options` WHERE `OptionID` = {$_POST['response']} AND `PollID` = $pollIndex";
+//			if (!$dbh->query($query)->num_rows) {
+//				$tpl->set("error", "Invalid option: perhaps the poll was deleted while you were voting?");
+//			} else {
+//				$query = "INSERT INTO `poll_votes` VALUES ($pollIndex, ${_POST["response"]}, '$ID')";
+//                $dbh->query($query);
+//				action("voted", $pollIndex, $_POST['response']);
+//				$voted = 1;
+//				storeMessage("success", "You have successfully voted on this poll.");
+//				refresh();
+//			}
 		}
 		
 		# Find the question (to life, the universe and everything)
@@ -162,19 +172,19 @@
 			
 			# Look up the avaliable options for this poll.
 			$query = "SELECT * FROM `poll_options` WHERE `PollID` = $pollIndex";
-			$res = mysql_query($query);
+			$res = $dbh->query($query);
 			$options = array();
-			while($row = mysql_fetch_array($res)){
+			while($row = $res->fetch_array()){
 				$options[$row["OptionID"]] = array("text"=>$row["Response"], "value"=>0);
 			}
 			
 			# Figure out how many times each option has been voted for
-			$total = mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM `poll_votes` WHERE `PollID` = $pollIndex"));
+			$total = $dbh->query("SELECT COUNT(*) FROM `poll_votes` WHERE `PollID` = $pollIndex")->fetch_array();
 			$total = intval($total[0]);
 			
 			$query = "SELECT COUNT(*), `OptionID` FROM `poll_votes` WHERE `PollID` = $pollIndex GROUP BY `OptionID`";
-			$res = mysql_query($query);
-			while($row = mysql_fetch_array($res)){
+			$res = $dbh->query($query);
+			while($row = $res->fetch_array()){
 				$options[$row["OptionID"]]["count"] = $row[0];
 				$options[$row["OptionID"]]["value"] = (intval($row[0]) / $total) * 100;
 			}
@@ -188,9 +198,9 @@
 			# Get the complete list of votes for this poll.
 			$votes = array();
 			$query = "SELECT `UserID`, `OptionID` FROM `poll_votes` WHERE `PollID` = $pollIndex ORDER BY `OptionID` ASC, `UserID` ASC";
-			$result = mysql_query($query);
+			$result = $dbh->query($query);
 
-			while ($row = mysql_fetch_assoc($result)) {
+			while ($row = $result->fetch_assoc()) {
 				$tempUserID = strtolower($row['UserID']);
 				$votes[$row['OptionID']][] = $tempUserID;
 			}
@@ -229,11 +239,11 @@
 		} else {
 			
 			# Get the list of options for this poll
-			$query = mysql_fetch_array(mysql_query("SELECT `Question` FROM `poll_questions` WHERE `ID` = $pollIndex"));
+			$query = $dbh->query("SELECT `Question` FROM `poll_questions` WHERE `ID` = $pollIndex")->fetch_array();
 			$tpl->set('question', $query[0]);
-			$res = mysql_query("SELECT * FROM `poll_options` WHERE `PollID` = $pollIndex");
+			$res = $dbh->query("SELECT * FROM `poll_options` WHERE `PollID` = $pollIndex");
 			$options = array();
-			while ($row = mysql_fetch_array($res)) {
+			while ($row = $res->fetch_array()) {
 				$options[] = array("id" => $row["OptionID"], "text"=>$row["Response"]);
 			}
 			$tpl->set('options', $options);

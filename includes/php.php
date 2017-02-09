@@ -1,7 +1,7 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 
-error_reporting(0);
+error_reporting(E_ALL);
 
 include("config.php");
 include("openid.php");
@@ -10,8 +10,8 @@ include("functions.php");
 $tpl = new bTemplate();
 session_start();
 
-mysql_connect(DB_HOST, DB_USER, DB_PASS);
-mysql_select_db(DB_DATABASE);
+$dbh = new mysqli(DB_HOST, DB_USER, DB_PASS);
+$dbh->select_db(DB_DATABASE);
 
 $APIkey = STEAM_API_KEY;
 
@@ -28,8 +28,8 @@ if (isset($_SESSION['login'])) {
 	$tpl->set("avatarURL", $_SESSION['avatar']);
 	$tpl->set("steamID", convertSteamID($ID));
 	
-	$result = mysql_query("SELECT `Privilege` FROM `user_rights` WHERE `UserID` = \"$ID\"");
-	while ($row = mysql_fetch_array($result)) {
+	$result = $dbh->query("SELECT `Privilege` FROM `user_rights` WHERE `UserID` = \"" . $dbh->real_escape_string($ID) . "\"");
+	while ($row = $result->fetch_array()) {
 		$canDo[$row['Privilege']] = true;
 	}
 	
@@ -58,8 +58,8 @@ if (canDo("admin")) {
 	
 	if (isset($_SESSION['pretend'])) {
 		$ID = $_SESSION['pretend'];
-		$result = mysql_query("SELECT `Name` FROM `users` WHERE `SteamID` = \"$ID\"");
-		$row = mysql_fetch_array($result);
+		$result = $dbh->query("SELECT `Name` FROM `users` WHERE `SteamID` = \"" . $dbh->real_escape_string($ID) . "\"");
+		$row = $result->fetch_array();
 		$tpl->set("displayName", $row['Name']);
 	}
 
@@ -134,15 +134,16 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 	$refer = "NULL";
 }
 
-# Don't bother recording automatic page refreshes.
-if (substr($reqString, -11) != "autorefresh") {
+## SITE PLACED INTO READ-ONLY MODE
 
-	$query = "INSERT INTO `access` (`Timestamp`, `UserID`, `Page`, `RequestString`, `RequestMethod`, `IP`, `UserAgent`, `Filename`, `Refer`) ";
-	$query .= "VALUES (NOW(), '$ID', '$page', '$reqString', '{$_SERVER['REQUEST_METHOD']}', '{$_SERVER['REMOTE_ADDR']}',";
-	$query .= "'$userAgent', '$filename', $refer)";
-	mysql_query($query);
-	
-}
+# Don't bother recording automatic page refreshes.
+//if (substr($reqString, -11) != "autorefresh") {
+//	$query = "INSERT INTO `access` (`Timestamp`, `UserID`, `Page`, `RequestString`, `RequestMethod`, `IP`, `UserAgent`, `Filename`, `Refer`) ";
+//	$query .= "VALUES (NOW(), '$ID', '$page', '$reqString', '{$_SERVER['REQUEST_METHOD']}', '{$_SERVER['REMOTE_ADDR']}',";
+//	$query .= "'$userAgent', '$filename', $refer)";
+//	$dbh->query($query);
+//
+//}
 
 $tpl->set("false", false);
 $tpl->set("admin", canDo("admin"));

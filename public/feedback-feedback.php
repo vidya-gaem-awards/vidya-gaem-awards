@@ -7,13 +7,13 @@ $tpl->set("denied", !canDo("special") && !canDo("feedback"));
 ### GENERAL RATING
 
 $query = "SELECT COUNT(*) as `Count`, `GeneralRating` FROM `ceremony_feedback` WHERE `GeneralRating` != 0 GROUP BY `GeneralRating` ORDER BY `GeneralRating` DESC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $general = array();
 $maxCount = 0;
 $total = 0;
 $average = 0;
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$general[] = array(
 		"rating" => $row['GeneralRating'] + 5,
 		"bar" => $row['GeneralRating'],
@@ -40,13 +40,13 @@ $tpl->set("generalAverage", $average);
 ### CEREMONY RATING
 
 $query = "SELECT COUNT(*) as `Count`, `CeremonyRating` FROM `ceremony_feedback` WHERE `CeremonyRating` != 0 GROUP BY `CeremonyRating` ORDER BY `CeremonyRating` DESC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $ceremony = array();
 $maxCount = 0;
 $total = 0;
 $average = 0;
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$ceremony[] = array(
 		"rating" => $row['CeremonyRating'] + 5,
 		"bar" => $row['CeremonyRating'],
@@ -81,54 +81,54 @@ function implying($str) {
 ### BEST THINGS
 
 $query = "SELECT `BestThing` FROM `ceremony_feedback` WHERE `BestThing` != '' ORDER BY CHAR_LENGTH(`BestThing`) DESC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $best = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$best[] = implying($row['BestThing']);
 }
 $tpl->set("best", $best);
-$tpl->set("bestCount", mysql_num_rows($result));
+$tpl->set("bestCount", $result->num_rows);
 
 
 
 ### WORST THINGS
 
 $query = "SELECT `WorstThing` FROM `ceremony_feedback` WHERE `WorstThing` != '' ORDER BY CHAR_LENGTH(`WorstThing`) DESC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $worst = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$worst[] = implying($row['WorstThing']);
 }
 $tpl->set("worst", $worst);
-$tpl->set("worstCount", mysql_num_rows($result));
+$tpl->set("worstCount", $result->num_rows);
 
 
 ### OTHER COMMENTS
 
 $query = "SELECT `OtherComments` FROM `ceremony_feedback` WHERE `OtherComments` != '' ORDER BY CHAR_LENGTH(`OtherComments`) DESC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $other = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$other[] = implying($row['OtherComments']);
 }
 $tpl->set("other", $other);
-$tpl->set("otherCount", mysql_num_rows($result));
+$tpl->set("otherCount", $result->num_rows);
 
 
 ### QUESTIONS
 
 $query = "SELECT `ID`, `Questions` FROM `ceremony_feedback` WHERE `Questions` != '' ORDER BY `ID` ASC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $questions = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$questions[] = $row['ID'] . ": " . implying($row['Questions']);
 }
 $tpl->set("questions", $questions);
-$tpl->set("questionCount", mysql_num_rows($result));
+$tpl->set("questionCount", $result->num_rows);
 
 fetch();
 ?>

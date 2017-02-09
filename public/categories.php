@@ -3,21 +3,21 @@ require(__DIR__."/../includes/php.php");
 $tpl->set("title", "Categories");
 
 $query = "SELECT * FROM `categories` WHERE `Active` = 1 ORDER BY `order` ASC";
-$result = mysql_query($query);
+$result = $dbh->query($query);
 
 $opinions = array();
 
 if ($loggedIn) {
-	$query2 = "SELECT * FROM `category_feedback` WHERE `UserID` = \"$ID\"";
-	$result2 = mysql_query($query2);
-	while ($row2 = mysql_fetch_array($result2)) {
+	$query2 = "SELECT * FROM `category_feedback` WHERE `UserID` = \"" . $dbh->real_escape_string($ID) . "\"";
+	$result2 = $dbh->query($query2);
+	while ($row2 = $result2->fetch_array()) {
 		$opinions[$row2['CategoryID']] = $row2['Opinion'];
 	}
 }
 
 $categories = array();
 
-while ($row = mysql_fetch_array($result)) {
+while ($row = $result->fetch_array()) {
 	$up = $down = "";
 	$catID = $row['ID'];
 
