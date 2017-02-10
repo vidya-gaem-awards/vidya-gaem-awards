@@ -40,7 +40,7 @@ if (!empty($_POST) && canDo("categories-edit")) {
       } else if (intval($_POST['order']) > 32767) {
         $tpl->set("formError", "Order is limited to 32767.");
       } else {      
-        $category = $_POST['id'];
+        $category = $mysql->real_escape_string($_POST['id']);
         $name = $mysql->real_escape_string($_POST['name']);
         $subtitle = $mysql->real_escape_string($_POST['subtitle']);
         $order = $_POST['order'];

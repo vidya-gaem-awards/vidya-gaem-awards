@@ -86,7 +86,8 @@ $lastVotes = array();
 
 // Look up which categories have already been voted on by this user
 $completedCategories = array();
-$query = "SELECT * FROM `votes` WHERE `UniqueID` = \"$uniqueID\"";
+$uniqueIDsafe = $mysql->real_escape_string($uniqueID);
+$query = "SELECT * FROM `votes` WHERE `UniqueID` = \"$uniqueIDsafe\"";
 $result = $mysql->query($query);
 while ($row = $result->fetch_array()) {
   $completedCategories[$row['CategoryID']] = json_decode($row['Preferences'], true);
