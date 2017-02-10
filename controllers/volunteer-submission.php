@@ -1,5 +1,7 @@
 <?php
-$__POST = array_map("mysql_real_escape_string", $_POST);
+$__POST = array_map(function ($value) use ($mysql) {
+    return $mysql->real_escape_string($value);
+}, $_POST);
 
 storeMessage("formError", "Volunteer submissions for 2012 are closed. Feel free to come back when the 2013 site is online.");
 header("Location: /home");

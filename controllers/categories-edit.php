@@ -33,13 +33,15 @@ if (!empty($_POST)) {
 			} else if (intval($_POST['order']) > 32767) {
 				$tpl->set("formError", "Order is limited to 32767.");
 			} else {
-				array_map('mysql_real_escape_string', $_POST);
+                $values = array_map(function ($value) use ($mysql) {
+                    return $mysql->real_escape_string($value);
+                }, $_POST);
 				
-				$category = $_POST['id'];
-				$name = $_POST['name'];
-				$subtitle = $_POST['subtitle'];
-				$order = $_POST['order'];
-				$enabled = intval(isset($_POST['enabled']));
+				$category = $values['id'];
+				$name = $values['name'];
+				$subtitle = $values['subtitle'];
+				$order = $values['order'];
+				$enabled = intval(isset($values['enabled']));
 				
 				$query = "INSERT INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Enabled`)";
 				$query .= " VALUES ('$category', '$name', '$subtitle', '$order', $enabled)";
@@ -56,7 +58,7 @@ if (!empty($_POST)) {
 					debug_query($query);
 				
 					storeMessage("formSuccess", "Category successfully added.");
-					action("category-added", $_POST['id']);
+					action("category-added", $values['id']);
 					refresh();
 				}
 			}
@@ -70,17 +72,19 @@ if (!empty($_POST)) {
 			} else {
 			
 				$serial = $mysql->real_escape_string(json_encode($_POST));
-			
-				$_POST = array_map('mysql_real_escape_string', $_POST);
+
+                $values = array_map(function ($value) use ($mysql) {
+                    return $mysql->real_escape_string($value);
+                }, $_POST);
 				
-				$category = $_POST['ID'];
-				$name = $_POST['Name'];
-				$subtitle = $_POST['Subtitle'];
-				$comments = $_POST['Comments'];
-				$order = $_POST['Order'];
-				$secret = intval(isset($_POST['Secret']));
-				$enabled = intval(isset($_POST['Enabled']));
-				$nominationsEnabled = intval(isset($_POST['NominationsEnabled']));
+				$category = $values['ID'];
+				$name = $values['Name'];
+				$subtitle = $values['Subtitle'];
+				$comments = $values['Comments'];
+				$order = $values['Order'];
+				$secret = intval(isset($values['Secret']));
+				$enabled = intval(isset($values['Enabled']));
+				$nominationsEnabled = intval(isset($values['NominationsEnabled']));
 				
 				$query = "REPLACE INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Comments`, `Enabled`, `NominationsEnabled`, `Secret`) ";
 				$query .= "VALUES ('$category', '$name', '$subtitle', $order, '$comments', $enabled, $nominationsEnabled, $secret)";
@@ -94,7 +98,7 @@ if (!empty($_POST)) {
 					debug_query($query);
 				
 					storeMessage("formSuccess", "Category successfully edited.");
-					action("category-edited", $_POST['ID']);
+					action("category-edited", $values['ID']);
 					refresh();
 				}
 			}						

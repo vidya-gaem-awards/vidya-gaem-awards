@@ -20,7 +20,7 @@ if (!canDo("nominations-view")) {
 	$nominations = array();
 	$categories = array();
 	$category = "";
-	while ($row = $result->fetch_array()($result)) {
+	while ($row = $result->fetch_array()) {
 		if (!isset($categories[$row['ID']])) {
 			$categories[$row['ID']] = array($row['Name'], $row['Subtitle']);
 			$nominations[$row['ID']] = array();

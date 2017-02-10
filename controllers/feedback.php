@@ -13,7 +13,9 @@ if ($SEGMENTS[1] == "view") {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-  $values = array_map("mysql_real_escape_string", $_POST);
+    $values = array_map(function ($value) use ($mysql) {
+        return $mysql->real_escape_string($value);
+    }, $_POST);
 
   $query = "INSERT INTO `feedback` (`UserID`, `UniqueID`, `Timestamp`, `GeneralRating`, `CeremonyRating`, `BestThing`, `WorstThing`, `OtherComments`, `Questions`, `Email`) ";
   $query .= "VALUES (\"$ID\", \"$uniqueID\", NOW(), \"{$values['general']}\", \"{$values['ceremony']}\", \"{$values['best']}\", \"{$values['worst']}\", \"{$values['comments']}\", \"{$values['questions']}\", \"{$values['email']}\")";

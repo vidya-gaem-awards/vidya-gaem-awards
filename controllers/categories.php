@@ -10,7 +10,7 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 	$categoryVotes = array();
 	$query = "SELECT * FROM `category_feedback` WHERE `UserID` = \"$ID\"";
 	$result = $mysql->query($query);
-	while ($row = $result->fetch_array()($result)) {
+	while ($row = $result->fetch_array()) {
 		$categoryVotes[$row['CategoryID']] = $row['Opinion'];
 	}
 	
@@ -148,7 +148,7 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 
 		$categories = array();
 		
-		while ($row = $result->fetch_array()($result)) {
+		while ($row = $result->fetch_array()) {
 			$categories[$row['ID']] = array("Name" => str_replace('"', "", $row['Name']) . "<br/>" . $row['Subtitle'],
         "Disabled" => $row['Enabled'] ? "" : "backgroundColor: '#000000',", "Yes" => 0, "No" => 0);
 		}
@@ -160,7 +160,7 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 					ORDER BY `Count` DESC";
 		$result = $mysql->query($query);
 
-		while ($row = $result->fetch_array()($result)) {
+		while ($row = $result->fetch_array()) {
 			if ($row['Opinion'] == -1) {
 				$index = "No";
 			} else {

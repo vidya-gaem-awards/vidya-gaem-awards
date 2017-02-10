@@ -53,14 +53,16 @@ if ($action == "delete") {
     error("ID should consist of lowercase letters, numbers and dashes only.");
   }
   
-  $values = array_map("mysql_real_escape_string", $_POST);
+  $values = array_map(function ($value) use ($mysql) {
+      return $mysql->real_escape_string($value);
+  }, $_POST);
   
   if ($action == "edit") {
     $query = "UPDATE `nominees` SET `Name` = \"{$values["Name"]}\", `Subtitle` = \"{$values["Subtitle"]}\", ";
     $query .= "`Image` = \"{$values["Image"]}\" WHERE `CategoryID` = \"$cat\" AND `NomineeID` = \"$nom\"";
   } else {
-    $query = "INSERT INTO `nominees` (`CategoryID`, `NomineeID`, `Name`, `Subtitle`, `Image`) ";
-    $query .= "VALUES (\"$cat\", \"$nom\", \"{$values['Name']}\", \"{$values['Subtitle']}\", \"{$values['Image']}\")";
+    $query = "INSERT INTO `nominees` (`CategoryID`, `NomineeID`, `Name`, `Subtitle`, `Image`) "
+        . "VALUES (\"$cat\", \"$nom\", \"{$values['Name']}\", \"{$values['Subtitle']}\", \"{$values['Image']}\")";
   }
   
   $result = $mysql->query($query);
@@ -69,8 +71,8 @@ if ($action == "delete") {
     error("MySQL failure.<br>".$mysql->error);
   } else {
     $serial = $mysql->real_escape_string(json_encode($_POST));
-    $query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
-    $query .= "VALUES ('$ID', 'nominees', '$cat/$nominee', '$serial', NOW())";
+    $query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`) "
+        . "VALUES ('$ID', 'nominees', '$cat/$nominee', '$serial', NOW())";
     debug_query($query);
     
     action("nominee-$action", $category, $nominee);

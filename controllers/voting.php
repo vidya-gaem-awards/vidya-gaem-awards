@@ -80,7 +80,7 @@ $lastVotes = array();
 $completedCategories = array();
 $query = "SELECT * FROM `votes` WHERE `UniqueID` = \"$uniqueID\"";
 $result = $mysql->query($query);
-while ($row = $result->fetch_array()($result)) {
+while ($row = $result->fetch_array()) {
   $completedCategories[$row['CategoryID']] = json_decode($row['Preferences'], true);
 }
 
@@ -88,7 +88,7 @@ $query = "SELECT * FROM `categories` WHERE `Enabled` = 1 ORDER BY `Order` ASC";
 $result = $mysql->query($query);
 
 $categories = array();
-while ($row = $result->fetch_array()($result)) {
+while ($row = $result->fetch_array()) {
 	if ($SEGMENTS[1] == $row['ID']) {
 		$row['Active'] = true;
 	} else {
@@ -114,14 +114,14 @@ if ($SEGMENTS[1]) {
 	
 	if ($result->num_rows == 1) {
 		
-		$row = $result->fetch_array()($result);
+		$row = $result->fetch_array();
 		$category = $row;		
 		
 		$query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" ORDER BY `Name` ASC";
 		$result = $mysql->query($query);
 		$nominees = array();
 		$count = 0;
-		while ($row = $result->fetch_array()($result)) {
+		while ($row = $result->fetch_array()) {
       $count++;
 		
 			$row['Background'] = "";

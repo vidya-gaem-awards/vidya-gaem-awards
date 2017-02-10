@@ -86,7 +86,7 @@ if (isset($_SESSION['login'])) {
 	$query = "SELECT DISTINCT `CanDo` FROM `user_rights` WHERE `GroupName` IN ('";
 	$query .= implode("', '", $USER_GROUPS) . "')";
 	$result = $mysql->query($query);
-	while ($row = $result->fetch_array()($result)) {
+	while ($row = $result->fetch_array()) {
 		$USER_RIGHTS[] = $row['CanDo'];
 	}
 	
@@ -120,7 +120,7 @@ if (canDo("admin")) {
 	if (isset($_SESSION['pretend'])) {
 		$ID = $_SESSION['pretend'];
 		$result = $mysql->query("SELECT `Name` FROM `users` WHERE `SteamID` = \"$userID\"");
-		$row = $result->fetch_array()($result);
+		$row = $result->fetch_array();
 		$tpl->set("displayName", $row['Name']);
 	}
 
