@@ -1,7 +1,8 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 
-error_reporting(E_ALL ^ E_DEPRECATED);
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
 
 date_default_timezone_set("America/New_York");
 
