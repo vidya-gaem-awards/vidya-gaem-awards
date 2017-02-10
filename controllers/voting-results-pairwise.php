@@ -2,17 +2,17 @@
 $tpl->set("title", "Pairwise voting results");
 
 $query = "SELECT * FROM `nominees` ORDER BY `NomineeID` ASC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 $nominees = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
   $nominees[$row['CategoryID']][$row['NomineeID']] = $row['Name'];
 }
 
 $query = "SELECT `CategoryID`, `Name`, `Subtitle`, `Results`, `Steps` FROM `winner_cache`";
 $query .= "INNER JOIN `categories` ON `CategoryID` = `ID` WHERE `Filter` = \"05combined2\" AND `Enabled` = 1 ORDER BY `Order` ASC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 $categories = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
   $steps = json_decode($row['Steps'], true);
   $pairwise = $steps['Pairwise'];
   $rows = array();

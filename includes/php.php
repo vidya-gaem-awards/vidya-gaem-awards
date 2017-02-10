@@ -21,11 +21,6 @@ $tpl->set("YEAR", $YEAR);
 $mysql = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_DB);
 $mysql->set_charset("utf8");
 
-// Backwards compatibility
-mysql_connect($DB_HOST, $DB_USER, $DB_PASS);
-mysql_select_db($DB_DB);
-mysql_query("SET NAMES utf8");
-
 // Initialise some default template variables
 $init = array("success", "error", "formSuccess", "formError");
 foreach ($init as $item) {
