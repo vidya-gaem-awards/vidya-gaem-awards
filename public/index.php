@@ -2,7 +2,7 @@
 
   //ob_start('ob_gzhandler');
   
-  require_once("includes/config.php");
+  require_once(__DIR__ . "/../includes/config.php");
 
   define("EVERYONE", "*");
   define("LOGIN", "logged-in");
@@ -126,7 +126,7 @@
   // Pages have the option of specifying this variable to load a different template
   $CUSTOM_TEMPLATE = false;
 
-  include("includes/php.php");
+  include(__DIR__ . "/../includes/php.php");
 
   // Enforce access control
   if (!isset($ACCESS[$PAGE])) {
@@ -148,7 +148,7 @@
 
   // Run the page-specific code
   if (!isset($noPHP[$PAGE])) {
-    require("controllers/$PAGE.php");
+    require(__DIR__ . "/../controllers/$PAGE.php");
   } else {
     $tpl->set('title', $noPHP[$PAGE]);
   }
@@ -162,10 +162,10 @@
     // Render the required templates
     $template = $CUSTOM_TEMPLATE ? $PAGE . "-" . $CUSTOM_TEMPLATE : $PAGE;
     if (!in_array($PAGE, $noMaster)) {
-      $tpl->set('content', $tpl->fetch("views/$template.tpl"));
-      echo $tpl->fetch("views/master.tpl" );
+      $tpl->set('content', $tpl->fetch(__DIR__ . "/../views/$template.tpl"));
+      echo $tpl->fetch(__DIR__ . "/../views/master.tpl" );
     } else {
-      echo $tpl->fetch("views/$template.tpl");
+      echo $tpl->fetch(__DIR__ . "/../views/$template.tpl");
     }
     
   }
