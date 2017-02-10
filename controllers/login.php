@@ -8,17 +8,19 @@ if (strlen($result) > 0) {
   $_SESSION['name'] = $info->personaname;
   $_SESSION['avatar'] = $info->avatar;
 
-  $mysql->query("INSERT INTO `logins` (`ID`, `UserID`, `Timestamp`) VALUES (0, \"$result\", NOW())");
+  $res = $mysql->real_escape_string($result);
+
+  $mysql->query("INSERT INTO `logins` (`ID`, `UserID`, `Timestamp`) VALUES (0, \"$res\", NOW())");
   
   $name = $mysql->real_escape_string($info->personaname);
   $avatar = $mysql->real_escape_string(base64_encode(file_get_contents($info->avatar)));
-  $mysqlResult = $mysql->query("SELECT `SteamID` FROM `users` WHERE `SteamID` = \"$result\"");
+  $mysqlResult = $mysql->query("SELECT `SteamID` FROM `users` WHERE `SteamID` = \"$res\"");
   if ($mysqlResult->num_rows == 0) {
     //echo "New user";
-    $query = "INSERT INTO `users` (`SteamID`, `Name`, `FirstLogin`, `LastLogin`, `Avatar`) VALUES (\"$result\", \"$name\", NOW(), NOW(), \"$avatar\")";
+    $query = "INSERT INTO `users` (`SteamID`, `Name`, `FirstLogin`, `LastLogin`, `Avatar`) VALUES (\"$res\", \"$name\", NOW(), NOW(), \"$avatar\")";
   } else {
     //echo "Returning user";
-    $query = "UPDATE `users` SET `Name` = \"$name\", `Avatar` = \"$avatar\", `LastLogin` = NOW() WHERE `SteamID` = \"$result\"";
+    $query = "UPDATE `users` SET `Name` = \"$name\", `Avatar` = \"$avatar\", `LastLogin` = NOW() WHERE `SteamID` = \"$res\"";
   }
   $result = $mysql->query($query);
   if (!$result) {

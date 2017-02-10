@@ -110,7 +110,7 @@ if (canDo("admin")) {
 	
 	// Pretend to be the specified ID until further notice
 	if (isset($_GET['pretend'])) {
-		if (empty($_GET['pretend'])) {
+		if (empty($_GET['pretend'] || !ctype_digit($_GET['pretend']))) {
 			unset($_SESSION['pretend']);
 		} else {
 			$_SESSION['pretend'] = $_GET['pretend'];

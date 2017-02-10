@@ -40,7 +40,7 @@ if ($action == "delete") {
 
   $query = "DELETE FROM `nominees` WHERE `CategoryID` = \"$cat\" AND `NomineeID` = \"$nom\"";
   $result = $mysql->query($query);
-  action("nominee-delete", $category, $nominee);
+  action("nominee-delete", $cat, $nom);
   
 } else {
   if (trim($_POST['NomineeID']) == "") {
@@ -75,7 +75,7 @@ if ($action == "delete") {
         . "VALUES ('$ID', 'nominees', '$cat/$nominee', '$serial', NOW())";
     debug_query($query);
     
-    action("nominee-$action", $category, $nominee);
+    action("nominee-$action", $cat, $nom);
   }
   
 }

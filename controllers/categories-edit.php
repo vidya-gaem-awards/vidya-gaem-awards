@@ -13,7 +13,7 @@ if (!empty($_POST)) {
 			
 			if ($result) {
 				storeMessage("formSuccess", "Category \"$category\" successfully deleted.");
-				action("category-delete", $_POST['category']);
+				action("category-delete", $category);
 				refresh();
 			} else {
 				$tpl->set("formError", "An error occurred: " . $mysql->error);
@@ -57,7 +57,7 @@ if (!empty($_POST)) {
 					$query .= "VALUES ('$ID', 'categories', '$category', '$serial', NOW())";
 					debug_query($query);
 				
-					storeMessage("formSuccess", "Category successfully added.");
+					storeMessage("formSuccess", "Category cessfully added.");
 					action("category-added", $values['id']);
 					refresh();
 				}

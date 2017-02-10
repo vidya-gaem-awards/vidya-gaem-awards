@@ -128,7 +128,7 @@ if ($SEGMENTS[2]) {
     return;
   }
   
-  $query = "SELECT * FROM `feedback` WHERE `ID` = $feedbackID";
+  $query = "SELECT * FROM `feedback` WHERE `ID` = " . $mysql->real_escape_string($feedbackID);
   $result = $mysql->query($query);
   $row = $result->fetch_assoc();
   
