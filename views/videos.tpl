@@ -2,7 +2,7 @@
 
 <header class="jumbotron masthead" style="background-color: #333; color: white; text-shadow: 3px 3px black; padding-top: 0px; margin-bottom: 10px;">
     <div class="filmstrip"></div>
-    <div class="container" style="padding: 15px 0px; background-image: url('/public/frames.jpg');"> 
+    <div class="container" style="padding: 15px 0px; background-image: url('/assets/frames.jpg');">
         <h1>Want to make a video that will be seen in the /v/GAs?</h1>
         <p>You could win $20 of Steam credit!</p>
     </div>

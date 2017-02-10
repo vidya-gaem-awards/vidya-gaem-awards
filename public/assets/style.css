@@ -1,7 +1,7 @@
 body {
 	padding-top: 30px;
 	padding-bottom: 30px;
-	background: #EEF2FF url('/public/background.png') top center repeat-x;
+	background: #EEF2FF url('/assets/background.png') top center repeat-x;
 }
 
 body, label, input, select, textarea, p {
@@ -94,18 +94,18 @@ section {
 
 
 table.tablesorter thead tr th {
-	background-image: url("/public/sort.gif");
+	background-image: url("/assets/sort.gif");
 	background-repeat: no-repeat;
 	background-position: center right;
 	cursor: pointer;
 }
 
 table.tablesorter thead tr .headerSortDown {
-	background-image: url("/public/desc.gif");
+	background-image: url("/assets/desc.gif");
 }
 
 table.tablesorter thead tr .headerSortUp {
-	background-image: url("/public/asc.gif");
+	background-image: url("/assets/asc.gif");
 }
 
 .navbar .nav.secondary-nav {
@@ -181,12 +181,12 @@ table.tablesorter thead tr .headerSortUp {
 }
 .custom-navigation-pane .active .icon-chevron-right,
 .custom-navigation-pane .active a:hover .icon-chevron-right {
-  background-image: url("/public/bootstrap-2.1.0/img/glyphicons-halflings-white.png");
+  background-image: url("/assets/bootstrap-2.1.0/img/glyphicons-halflings-white.png");
   opacity: 1;
 }
 
 .filmstrip {
-  background-image: url('/public/filmstrip.png');
+  background-image: url('/assets/filmstrip.png');
   background-repeat: repeat-x;
   background-position: bottom;
   height: 42px;

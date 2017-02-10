@@ -5,17 +5,17 @@
 <style type="text/css">
 @font-face {
   font-family: "Neon 80s";
-  src: url("/public/Neon.ttf");
+  src: url("/assets/Neon.ttf");
 }
 
 @font-face {
   font-family: "Blade Runner";
-  src: url("/public/blade_runner.ttf");
+  src: url("/assets/blade_runner.ttf");
 }
 
 body {
   background-color: black;
-	background-image: url("/public/space.png");
+	background-image: url("/assets/space.png");
 	background-repeat: repeat;
 	background-attachment: fixed;
 	color: white;
@@ -95,7 +95,7 @@ body, html {
   -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5),inset 0 1px 0 rgba(255,255,255,0.5);
   text-indent: -999px;
   overflow: hidden;
-  background: url("/public/arrow_collapse.png") no-repeat 0 0;
+  background: url("/assets/arrow_collapse.png") no-repeat 0 0;
 }
 #right_close {
   top: 10px;
@@ -197,7 +197,7 @@ body, html {
 }
 </style>
 
-<script src='/public/jquery/jquery-1.8.2.min.js'></script>
+<script src='/assets/jquery/jquery-1.8.2.min.js'></script>
 </head>
 
 <body>

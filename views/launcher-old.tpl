@@ -118,7 +118,7 @@ function showTimezones() {
 	<iframe width="800" height="480" src="https://www.youtube.com/embed/3I-Kb4yVWsQ?rel=0" frameborder="0" allowfullscreen></iframe>
 </div> -->
 
-<img src="/public/geocities.gif" /><br />
+<img src="/assets/geocities.gif" /><br />
 
 <div class="subtitle">2012 Vidya Gaem Awards
 <div id="countdown">We'll be online soon.</div>

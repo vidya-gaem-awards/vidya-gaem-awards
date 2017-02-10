@@ -31,7 +31,7 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section {
 
 body {
 	background-color: #eef2ff;
-	background-image: url("/public/some-pics/bgTop.jpg");
+	background-image: url("/assets/some-pics/bgTop.jpg");
 	background-repeat: repeat-x;
 	font-size: 16px;
 	line-height: 16px;
@@ -151,10 +151,10 @@ h1, h2 {
 }
 
 .active{
-	background: url("/public/some-pics/memearrow.png") 255px center no-repeat, url("/public/some-pics/bgCategory.jpg") left top repeat-y;
+	background: url("/assets/some-pics/memearrow.png") 255px center no-repeat, url("/assets/some-pics/bgCategory.jpg") left top repeat-y;
 }
 .active:hover{
-	background: #4d5c21 url("/public/some-pics/memearrow.png") 255px center no-repeat;
+	background: #4d5c21 url("/assets/some-pics/memearrow.png") 255px center no-repeat;
 }
 
 .complete:before{
@@ -166,7 +166,7 @@ h1, h2 {
 	width: 9px;
 	height: 100%;
 	border: 1px solid #789922;
-	background: url("/public/some-pics/complete.png") 1px center no-repeat, url("/public/some-pics/bgComplete.gif") left top repeat-y;
+	background: url("/assets/some-pics/complete.png") 1px center no-repeat, url("/assets/some-pics/bgComplete.gif") left top repeat-y;
 }
 
 #containerNominees {
@@ -275,7 +275,7 @@ h1, h2 {
   clear:both;
   float:left;
   position: relative;
-  background: url("/public/some-pics/bgVoteBox.jpg");
+  background: url("/assets/some-pics/bgVoteBox.jpg");
   width: 430px;
   height: 102px;
   margin: 10px 0 0 10px;
@@ -322,20 +322,20 @@ h1, h2 {
   clear: both;
   margin-left: 9px;
   width: 430px;
-  background-image: url("/public/some-pics/btnSubmit.gif");
+  background-image: url("/assets/some-pics/btnSubmit.gif");
   background-position: 0px 0px;
 }
 
 #btnResetVotes {
   margin-left: 9px;
   width: 215px;
-  background-image: url("/public/some-pics/btnSubmit.gif");
+  background-image: url("/assets/some-pics/btnSubmit.gif");
   background-position: 0px -159px;
 }
 
 #btnCancelVotes {
   width: 215px;
-  background-image: url("/public/some-pics/btnSubmit.gif");
+  background-image: url("/assets/some-pics/btnSubmit.gif");
   background-position: 215px -159px;
 }
 
@@ -440,12 +440,12 @@ to {left:110%;}
 	</style>
 <![endif]-->
 
-<script type="text/javascript" src="/public/dumbshit.js"></script>
+<script type="text/javascript" src="/assets/dumbshit.js"></script>
 <script type="text/javascript">
 	dumbshit = new Dumbshit()
 	dumbshit.code = function() {
 		$(".shit").show();
-		$("body").css("background-image","url(/public/stars.gif)");
+		$("body").css("background-image","url(/assets/stars.gif)");
 		$("body").css("background-repeat","repeat");
 	}
 	dumbshit.load()
@@ -805,7 +805,7 @@ function random ( myArray ) {
 
 <div id="wrapper">
 	<header>
-		<h1><a href="/voting"><img src="/public/some-pics/logo.png" alt="/v/GA 2012 logo"></a></h1>
+		<h1><a href="/voting"><img src="/assets/some-pics/logo.png" alt="/v/GA 2012 logo"></a></h1>
 		
 		<div class="title">
       <if:category>
@@ -824,7 +824,7 @@ function random ( myArray ) {
 
 	<div id="containerCategories">
 		<h2 id="topCategories">
-			<img src="/public/some-pics/topCategories.jpg" alt="Categories">
+			<img src="/assets/some-pics/topCategories.jpg" alt="Categories">
 		</h2>
 		
 		<loop:categories>
@@ -839,7 +839,7 @@ function random ( myArray ) {
 <div id="limitsDrag"> 
 	<div id="containerNominees">
 		<h2 id="topNominees" data-order="-1">
-			<img src="/public/some-pics/topNominees.jpg" alt="Categories">
+			<img src="/assets/some-pics/topNominees.jpg" alt="Categories">
 		</h2>
 		
 		<loop:nominees>
@@ -858,7 +858,7 @@ function random ( myArray ) {
 	<!if:votingNotYetOpen>
 	<div id="containerVoteBoxes">
 		<h2 id="topVotes">
-			<img src="/public/some-pics/topVotes.jpg" alt="Categories">
+			<img src="/assets/some-pics/topVotes.jpg" alt="Categories">
 		</h2>
 		
 		<if:votingEnabled><a id="howToVote">How to vote</a></if:votingEnabled>
@@ -885,7 +885,7 @@ function random ( myArray ) {
 
 </div>
 
-<div id="overlay" title="Click to close"><img src="/public/some-pics/howToVote.jpg" id="closeOverlay" title="Mommy how do I vote?"></div>
+<div id="overlay" title="Click to close"><img src="/assets/some-pics/howToVote.jpg" id="closeOverlay" title="Mommy how do I vote?"></div>
 <else:category>
 <div id="startMessage">
   <if:votingEnabled>
@@ -894,7 +894,7 @@ function random ( myArray ) {
   <h2>The voting system has changed.</h2>
   <p>Instead of just voting for one nominee, you can vote for many, and put them in the order you'd like to see them win.</p>
   <p>Too much effort for you? Vote for one nominee (just like last year) and call it a day.</p>
-  <p>Still confused? We've prepared this handy <a href="/public/some-pics/howToVote.jpg">voting guide</a> for you.<br><strong>tl;dr:</strong> drag the thing you want to win from the left to the right, then click the Submit Votes button.</p>
+  <p>Still confused? We've prepared this handy <a href="/assets/some-pics/howToVote.jpg">voting guide</a> for you.<br><strong>tl;dr:</strong> drag the thing you want to win from the left to the right, then click the Submit Votes button.</p>
   <h2>Links to other things:</h2>
   <p>Looking for the main website? <a href="https://vidyagaemawards.com">It's right here</a>.</p>
   <p>It's not too late to submit a video and go into the draw for $20 of Steam games. Check our <a href="/videos">video</a> page for more information.</p>
@@ -907,7 +907,7 @@ function random ( myArray ) {
 </div>
 </if:category>
 
-<img src="/public/dumb.gif" alt="" class="shit">
+<img src="/assets/dumb.gif" alt="" class="shit">
 </div>
  
  

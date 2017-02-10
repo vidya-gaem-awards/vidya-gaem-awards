@@ -1,12 +1,12 @@
 <style type="text/css">
 @font-face {
   font-family: "Neon 80s";
-  src: url("/public/Neon.ttf");
+  src: url("/assets/Neon.ttf");
 }
 
 @font-face {
   font-family: "Blade Runner";
-  src: url("/public/blade_runner.ttf");
+  src: url("/assets/blade_runner.ttf");
 }
 
 a {
@@ -19,7 +19,7 @@ a:hover {
 
 body {
   background-color: black;
-	background-image: url("/public/space.png");
+	background-image: url("/assets/space.png");
 	background-repeat: repeat;
 	background-attachment: fixed;
 	font-size: 16px;
@@ -151,7 +151,7 @@ p {
       <div class="category">
         <div class="row">
           <div class="span4">
-            <img class="winner" src="/public/winners/<tag:categories[].ID />.png">
+            <img class="winner" src="/winners/<tag:categories[].ID />.png">
           </div>
           <div class="span7">
             <ul>

@@ -3,16 +3,16 @@
   <head>
     <title>/v/GAs - <tag:title /></title>
 
-    <link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="/public/jquery/jquery-ui-1.9.2.min.css">
-    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/assets/jquery/jquery-ui-1.9.2.min.css">
+    <link rel="stylesheet" href="/assets/style.css">
     
-    <script src='/public/jquery/jquery-1.8.2.min.js'></script>
-    <script src='/public/jquery/jquery-ui-1.9.2.min.js'></script>
-    <script src='/public/jquery/jquery.tablesorter.min.js'></script>
+    <script src='/assets/jquery/jquery-1.8.2.min.js'></script>
+    <script src='/assets/jquery/jquery-ui-1.9.2.min.js'></script>
+    <script src='/assets/jquery/jquery.tablesorter.min.js'></script>
     <script src='https://code.highcharts.com/3.0.7/highcharts.js'></script>
-    <script src='/public/bootstrap-2.1.0/js/bootstrap.min.js'></script>
+    <script src='/assets/bootstrap-2.1.0/js/bootstrap.min.js'></script>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
@@ -37,7 +37,7 @@
 						<li><img src="<tag:avatarURL />" style='margin-top: 3px; width: 32px; height: 32px;' /></li>
 						<li><a href="http://steamcommunity.com/profiles/<tag:communityID />"> <tag:displayName /></a></li>
 					<else:loggedIn>
-						<li><a href="<tag:openIDurl />"><img src="/public/sits_small.png" /></a></li>
+						<li><a href="<tag:openIDurl />"><img src="/assets/sits_small.png" /></a></li>
 					</if:loggedIn>
 				</ul>
 			</div>

@@ -36,7 +36,7 @@ if ($SEGMENTS[1]) {
     while ($row = mysql_fetch_assoc($result)) {
       $javascript[$row['NomineeID']] = $row;
 			if (empty($row['Image'])) {
-        $row["Image"] = "/public/nominees/{$row['NomineeID']}.png";
+        $row["Image"] = "/nominees/{$row['NomineeID']}.png";
       }
       $official[] = $row;
     }

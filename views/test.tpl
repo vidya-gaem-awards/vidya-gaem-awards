@@ -23,7 +23,7 @@ html{
 
 body{
 	background-color: #eef2ff;
-	background-image: url("/public/some-pics/bgTop.jpg");
+	background-image: url("/assets/some-pics/bgTop.jpg");
 	background-repeat: repeat-x;
 	font-size: 16px;
 	line-height: 16px;
@@ -131,7 +131,7 @@ h1, h2{
 	}
 	
 	.active{
-		background: url("/public/some-pics/memearrow.png") 255px center no-repeat;
+		background: url("/assets/some-pics/memearrow.png") 255px center no-repeat;
 	}
 	
 #containerNominees{
@@ -200,7 +200,7 @@ h1, h2{
 		clear:both;
 		float:left;
 		position: relative;
-		background: url("/public/some-pics/bgVoteBox.jpg");
+		background: url("/assets/some-pics/bgVoteBox.jpg");
 		width:430px;
 		height:102px;
 		margin: 10px 0 0 10px;
@@ -224,7 +224,7 @@ h1, h2{
 
 <div id="wrapper">
 	<header>
-		<h1><img src="/public/some-pics/logo.png" alt="/v/GA 2012 logo"></h1>
+		<h1><img src="/assets/some-pics/logo.png" alt="/v/GA 2012 logo"></h1>
 		
 		<div class="title">
 		
@@ -241,7 +241,7 @@ h1, h2{
 
 	<div id="containerCategories">
 		<h2 id="topCategories">
-			<img src="/public/some-pics/topCategories.jpg" alt="Categories">
+			<img src="/assets/some-pics/topCategories.jpg" alt="Categories">
 		</h2>
 		
 		<a id="<tag:categories[].ID />" class="category <if:image>active</if:image>">
@@ -255,7 +255,7 @@ h1, h2{
 <div id="limitsDrag"> 
 	<div id="containerNominees">
 		<h2 id="topNominees">
-			<img src="/public/some-pics/topNominees.jpg" alt="Categories">
+			<img src="/assets/some-pics/topNominees.jpg" alt="Categories">
 		</h2>
 		
 		<div id="option1" class="aNominee">

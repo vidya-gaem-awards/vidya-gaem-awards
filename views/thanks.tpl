@@ -1,25 +1,25 @@
 <script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
-<script type="text/javascript" src="/public/jquery/jquery.marquee.js"></script>
+<script type="text/javascript" src="/assets/jquery/jquery.marquee.js"></script>
 
 <!-- <audio autoplay loop>
-   <source src="/public/2spooky.mp3" type='audio/mpeg; codecs="mp3"'>
-   <source src="/public/2spooky.ogg" type='audio/ogg; codecs="vorbis"'>
+   <source src="/assets/2spooky.mp3" type='audio/mpeg; codecs="mp3"'>
+   <source src="/assets/2spooky.ogg" type='audio/ogg; codecs="vorbis"'>
 </audio> -->
 
 <style type="text/css">
 @font-face {
   font-family: "Neon 80s";
-  src: url("/public/Neon.ttf");
+  src: url("/assets/Neon.ttf");
 }
 
 @font-face {
   font-family: "Press Start 2P";
-  src: url("/public/PressStart2P.ttf");
+  src: url("/assets/PressStart2P.ttf");
 }
 
 @font-face {
   font-family: "Blade Runner";
-  src: url("/public/blade_runner.ttf");
+  src: url("/assets/blade_runner.ttf");
 }
 
 a {
@@ -32,7 +32,7 @@ a:hover {
 
 body {
   background-color: black;
-	background-image: url("/public/space.png");
+	background-image: url("/assets/space.png");
 	background-repeat: repeat;
 	font-size: 16px;
 	line-height: 16px;
@@ -149,7 +149,7 @@ body {
     <div class="span8 offset2">
       <div class="logo">
         <iframe width="100%" height="460" src="https://www.youtube.com/embed/6MxWMJCOKSY?rel=0" frameborder="0" allowfullscreen=""></iframe>
-        <!-- <img src="/public/80s_vsync.png"> -->
+        <!-- <img src="/assets/80s_vsync.png"> -->
       </div>
       <div class="title">
         <h1>The 2012 Vidya Gaem Awards</h1>

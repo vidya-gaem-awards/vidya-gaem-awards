@@ -31,7 +31,7 @@
 	</if:all>
 </ul>
 
-<img src="/public/illustrated-guide.png" class="img-polaroid">
+<img src="/assets/illustrated-guide.png" class="img-polaroid">
   
 <loop:categories>
 <h2><tag:categories[].Name /> <small><tag:categories[].Subtitle /></small></h2>

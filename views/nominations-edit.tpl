@@ -193,7 +193,7 @@
     <p>Are you sure you want to remove <span id="dialog-delete-nominee" style="font-weight: bold;"></span> from the list of nominees?</p>
   </div>
   <div class="modal-footer">
-    <span id="dialog-delete-status"><img src='/public/loading.gif' width="16px"> deleting...&nbsp;</span>
+    <span id="dialog-delete-status"><img src='/assets/loading.gif' width="16px"> deleting...&nbsp;</span>
     <button class="btn btn-danger" id="dialog-delete-nominee-confirm">Confirm</button>
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
   </div>
@@ -255,14 +255,14 @@
         <div class="controls">
           <input type="text" id="info-image" placeholder="" name="Image" autocomplete="off">
           <span class="help-block">If left blank, the webserver will look for the
-          image locally at <strong>/public/nominees/<span class="dialog-edit-id"></span>.png</strong></span>
+          image locally at <strong>/nominees/<span class="dialog-edit-id"></span>.png</strong></span>
         </div>
       </div>
     </form>
   
   </div>
   <div class="modal-footer">
-    <span id="dialog-edit-status" style="display: none;"><img src='/public/loading.gif' width="16px"> saving...&nbsp;</span>
+    <span id="dialog-edit-status" style="display: none;"><img src='/assets/loading.gif' width="16px"> saving...&nbsp;</span>
     <button class="btn btn-primary" id="dialog-edit-submit">Submit</button>
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
   </div>
@@ -377,7 +377,7 @@ $("button[name=edit]").click(function() {
   if (nominees[nomineeID].Image) {
     $( "#dialog-edit-image" ).attr("src", nominees[nomineeID].Image);
   } else {
-    $( "#dialog-edit-image" ).attr("src", "/public/nominees/"+nomineeID+".png");
+    $( "#dialog-edit-image" ).attr("src", "/nominees/"+nomineeID+".png");
   }
   
   $( "#info-id" ).val(nomineeID);
@@ -420,7 +420,7 @@ function updateDialogNominee() {
     if (lastImageValue) {
       $( "#dialog-edit-image" ).attr("src", lastImageValue );
     } else {
-      $( "#dialog-edit-image" ).attr("src", "/public/nominees/"+$( "#info-id" ).val()+".png");
+      $( "#dialog-edit-image" ).attr("src", "/nominees/"+$( "#info-id" ).val()+".png");
     }
   }
 
@@ -480,7 +480,7 @@ $("#dialog-edit-submit").click(function() {
       if ( $("#info-image") ) {
         nomineeBox.find("img").attr("src", $("#info-image").val() );
       } else {
-        nomineeBox.find("img").attr("src", "/public/nominees/"+nomineeID+".png");
+        nomineeBox.find("img").attr("src", "/nominees/"+nomineeID+".png");
       }
       
       nominees[nomineeID].Name = $("#info-name").val();
