@@ -40,13 +40,14 @@ function refresh() {
 }
 
 function action($action, $firstID = null, $secondID = null) {
-  global $ID, $PAGE, $mysql;
-  
-  $query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`,
-            `SpecificID1`, `SpecificID2`) VALUES(?, NOW(), ?, ?, ?, ?)";
-  $stmt = $mysql->prepare($query);
-  $stmt->bind_param('sssss', $ID, $PAGE, $action, $firstID, $secondID);
-  $stmt->execute();
+    ## SITE PLACED INTO READ-ONLY MODE
+//  global $ID, $PAGE, $mysql;
+//
+//  $query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`,
+//            `SpecificID1`, `SpecificID2`) VALUES(?, NOW(), ?, ?, ?, ?)";
+//  $stmt = $mysql->prepare($query);
+//  $stmt->bind_param('sssss', $ID, $PAGE, $action, $firstID, $secondID);
+//  $stmt->execute();
 }
 
 function return_json($result, $info = TRUE, $extraData = array()) {

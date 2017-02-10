@@ -59,6 +59,8 @@ $('#search-form').submit(function(event) {
                 msg = "a MySQL error occurred. Try again later.";
             } else if (data.error == "already special") {
                 msg = data.name + " is already in the user list.";
+            } else if (data.error == "read-only") {
+                msg = "the site is currently in read-only mode.";
             } else {
                 msg = "something went wrong. Try again later.";
             }
@@ -106,6 +108,8 @@ $('#btn-add').click(function() {
             } else if (data.error == "already special") {
                 msg = "it looks like that user is already on <a href='/people'>the list</a>.";
                 msg += " It may have been double submitted for some reason.";
+            } else if (data.error == "read-only") {
+                msg = "the site is currently in read-only mode.";
             } else {
                 msg = "something went wrong. Try again later.";
             }

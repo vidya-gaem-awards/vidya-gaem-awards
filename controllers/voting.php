@@ -170,13 +170,15 @@ if ($SEGMENTS[1]) {
     $tpl->set("nextCategory", $linkedNext[$cat]);
     
   } else {
-    $_SESSION['votingCode'] = $SEGMENTS[1];
-    $code = $mysql->real_escape_string($SEGMENTS[1]);
-    $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`)
-              VALUES (?, ?)";
-    $stmt = $mysql->prepare($query);
-    $stmt->bind_param('ss', $code, $uniqueID);
-    $stmt->execute();
+      ## SITE PLACED INTO READ-ONLY MODE
+
+//    $_SESSION['votingCode'] = $SEGMENTS[1];
+//    $code = $mysql->real_escape_string($SEGMENTS[1]);
+//    $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`)
+//              VALUES (?, ?)";
+//    $stmt = $mysql->prepare($query);
+//    $stmt->bind_param('ss', $code, $uniqueID);
+//    $stmt->execute();
     header("Location: https://$DOMAIN/voting");
   } 
   
