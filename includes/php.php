@@ -219,15 +219,17 @@ $tpl->set("page", $page);
 $tpl->set("logoutURL", rtrim(implode("/", $SEGMENTS), "/"));
 
 # Don't bother recording automatic page refreshes.
-if (substr($reqString, -11) != "autorefresh") {
-  $_unique = $mysql->real_escape_string($uniqueID);
 
-	$query = "INSERT INTO `access` (`Timestamp`, `UniqueID`, `UserID`, `Page`, `RequestString`, `RequestMethod`, `IP`, `UserAgent`, `Filename`, `Refer`) ";
-	$query .= "VALUES (NOW(), '$_unique', '$userID', '$page', '$reqString', '{$_SERVER['REQUEST_METHOD']}', '$ip', ";
-	$query .= "'$userAgent', '$filename', $refer)";
-	$mysql->query($query);
-	
-}
+## SITE PLACED INTO READ-ONLY MODE
+//if (substr($reqString, -11) != "autorefresh") {
+//  $_unique = $mysql->real_escape_string($uniqueID);
+//
+//	$query = "INSERT INTO `access` (`Timestamp`, `UniqueID`, `UserID`, `Page`, `RequestString`, `RequestMethod`, `IP`, `UserAgent`, `Filename`, `Refer`) ";
+//	$query .= "VALUES (NOW(), '$_unique', '$userID', '$page', '$reqString', '{$_SERVER['REQUEST_METHOD']}', '$ip', ";
+//	$query .= "'$userAgent', '$filename', $refer)";
+//	$mysql->query($query);
+//
+//}
 
 $tpl->set("true", true);
 $tpl->set("false", false);

@@ -1,4 +1,7 @@
 <?php
+## SITE PLACED INTO READ-ONLY MODE
+exit('The site is currently in read-only mode. No database changes can be made.');
+
 $timeStart = microtime(true);
 function timer($msg) {
   global $timeStart;

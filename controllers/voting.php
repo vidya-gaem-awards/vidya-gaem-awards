@@ -147,10 +147,11 @@ if ($SEGMENTS[1]) {
 		$tpl->set("lastVotes", $js);
 		
 	} else {
-    $_SESSION['votingCode'] = $SEGMENTS[1];
-    $code = $mysql->real_escape_string($SEGMENTS[1]);
-    $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`) VALUES (\"$code\", \"$uniqueID\")";
-    $mysql->query($query);
+        ## SITE PLACED INTO READ-ONLY MODE
+//    $_SESSION['votingCode'] = $SEGMENTS[1];
+//    $code = $mysql->real_escape_string($SEGMENTS[1]);
+//    $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`) VALUES (\"$code\", \"$uniqueID\")";
+//    $mysql->query($query);
     header("Location: https://$domain/voting");
 	}	
 	

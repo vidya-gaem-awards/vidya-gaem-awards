@@ -8,6 +8,9 @@ function timer() {
 
 include("../includes/config.php");
 
+## SITE PLACED INTO READ-ONLY MODE
+exit('The site is currently in read-only mode. No database changes can be made.');
+
 error_reporting(E_ALL);
 set_time_limit(0);
 $mysqli = new Mysqli(DB_HOST, DB_USER, DB_PASS, DB_DATABASE);

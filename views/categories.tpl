@@ -252,7 +252,9 @@ $('#nomination-form').submit(function(event) {
 			}
 		} else {
 			if (formCategory == category) {
-				if (data == "blank nomination") {
+        if (data == "closed") {
+					$("#nomination-status").html("<span style='color: red;'>Nominations can no longer be made.</span>");
+        } else if (data == "blank nomination") {
 					$("#nomination-status").html("<span style='color: red;'>Nomination cannot be blank.</span>");
 				} else if (data == "already exists") {
 					$("#nomination-status").html("<span style='color: red;'>You've already nominated that.</span>");

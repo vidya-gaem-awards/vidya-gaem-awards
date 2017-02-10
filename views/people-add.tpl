@@ -53,7 +53,9 @@ $('#search-form').submit(function(event) {
         
         if ('error' in data) {
             var msg;
-            if (data.error == "no matches") {
+            if (data.error == "read-only") {
+                msg = "the site is currently in read-only mode.";
+            } else if (data.error == "no matches") {
                 msg = "either the community ID was invalid or the user hasn't yet logged into the /v/GA site at least once.";
             } else if (data.error == "mysql") {
                 msg = "a MySQL error occurred. Try again later.";
@@ -106,6 +108,8 @@ $('#btn-add').click(function() {
             } else if (data.error == "already special") {
                 msg = "it looks like that user is already on <a href='/people'>the list</a>.";
                 msg += " It may have been double submitted for some reason.";
+            } else if (data.error == "read-only") {
+                msg = "the site is currently in read-only mode.";
             } else {
                 msg = "something went wrong. Try again later.";
             }

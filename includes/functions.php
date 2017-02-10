@@ -53,32 +53,37 @@ function refresh() {
 
 function action($action, $firstID = false, $secondID = false) {
 	global $ID, $PAGE, $mysql;
-		
-	if (!$firstID) {
-		$firstID = 'NULL';
-	} else {
-		$firstID = "'$firstID'";
-	}
-	
-	if (!$secondID) {
-		$secondID = 'NULL';
-	} else {
-		$secondID = "'$secondID'";
-	}
-	
-	$query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`, `SpecificID1`, `SpecificID2`)";
-	$query .= " VALUES ('$ID', NOW(), '$PAGE', '$action', $firstID, $secondID)";
-	$mysql->query($query);
+
+    ## SITE PLACED INTO READ-ONLY MODE
+
+//	if (!$firstID) {
+//		$firstID = 'NULL';
+//	} else {
+//		$firstID = "'$firstID'";
+//	}
+//
+//	if (!$secondID) {
+//		$secondID = 'NULL';
+//	} else {
+//		$secondID = "'$secondID'";
+//	}
+//
+//	$query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`, `SpecificID1`, `SpecificID2`)";
+//	$query .= " VALUES ('$ID', NOW(), '$PAGE', '$action', $firstID, $secondID)";
+//	$mysql->query($query);
 }
 
 function debug_query($query) {
-	global $mysql;
+    ## SITE PLACED INTO READ-ONLY MODE
+    return false;
 
-	$result = $mysql->query($query);
-	if (!$result) {
-		report_error($query);
-	}
-	return $result;
+//	global $mysql;
+//
+//	$result = $mysql->query($query);
+//	if (!$result) {
+//		report_error($query);
+//	}
+//	return $result;
 }
 
 function report_error($query) {

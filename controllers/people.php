@@ -107,35 +107,39 @@ if ($SEGMENTS[1] == "permissions") {
 	if (canDo("profile-edit-groups")) {
 		$steamID = $mysql->real_escape_string($SEGMENTS[1]);
 		if (isset($_POST['RemoveGroup'])) {
-		
-			$groupName = $mysql->real_escape_string($_POST['RemoveGroup']);
-			$query = "DELETE FROM `user_groups` WHERE `UserID` = '$steamID' AND `GroupName` = '$groupName'";
-			$result = $mysql->query($query);
-			if (!$result) {
-				$tpl->set("formError", "An error occurred: " . $mysql->error);
-			} else {
-				storeMessage("formSuccess", "Group successfully removed.");
-				action("profile-group-removed", $steamID, $groupName);
-				refresh();
-			}
+            ## SITE PLACED INTO READ-ONLY MODE
+			$tpl->set("formError", "The site is currently in read-only mode.");
+
+//			$groupName = $mysql->real_escape_string($_POST['RemoveGroup']);
+//			$query = "DELETE FROM `user_groups` WHERE `UserID` = '$steamID' AND `GroupName` = '$groupName'";
+//			$result = $mysql->query($query);
+//			if (!$result) {
+//				$tpl->set("formError", "An error occurred: " . $mysql->error);
+//			} else {
+//				storeMessage("formSuccess", "Group successfully removed.");
+//				action("profile-group-removed", $steamID, $groupName);
+//				refresh();
+//			}
 		} else if (isset($_POST['AddGroup'])) {
-		
-			$groupName = trim(strtolower($mysql->real_escape_string($_POST['GroupName'])));
-			if ($groupName == "level6" && !canDo("super-admin")) {
-        $tpl->set("formError", "That group can't be assigned through the web interface.");
-      } else if (strlen(trim($groupName)) == 0) {
-				$tpl->set("formError", "Group name cannot be empty.");
-			} else {
-				$query = "REPLACE INTO `user_groups` VALUES ('$steamID', '$groupName')";
-				$result = $mysql->query($query);
-				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . $mysql->error);
-				} else {
-					storeMessage("formSuccess", "Group successfully added.");
-					action("profile-group-added", $steamID, $groupName);
-					refresh();
-				}
-			}
+            ## SITE PLACED INTO READ-ONLY MODE
+            $tpl->set("formError", "The site is currently in read-only mode.");
+
+//			$groupName = trim(strtolower($mysql->real_escape_string($_POST['GroupName'])));
+//			if ($groupName == "level6" && !canDo("super-admin")) {
+//        $tpl->set("formError", "That group can't be assigned through the web interface.");
+//      } else if (strlen(trim($groupName)) == 0) {
+//				$tpl->set("formError", "Group name cannot be empty.");
+//			} else {
+//				$query = "REPLACE INTO `user_groups` VALUES ('$steamID', '$groupName')";
+//				$result = $mysql->query($query);
+//				if (!$result) {
+//					$tpl->set("formError", "An error occurred: " . $mysql->error);
+//				} else {
+//					storeMessage("formSuccess", "Group successfully added.");
+//					action("profile-group-added", $steamID, $groupName);
+//					refresh();
+//				}
+//			}
 		}
 	}
 
@@ -162,48 +166,50 @@ if ($SEGMENTS[1] == "permissions") {
 	if ($user) {
 
 		if (isset($_POST['action'])) {
+			## SITE PLACED INTO READ-ONLY MODE
+            $tpl->set("formError", "The site is currently in read-only mode.");
 
-			if ($_POST['action'] == "edit-details" && canDo("profile-edit-details")) {
-				$PrimaryRole = $mysql->real_escape_string($_POST['PrimaryRole']);
-				$Email = $mysql->real_escape_string($_POST['Email']);
-				
-				$query = "UPDATE `users` SET `PrimaryRole` = '$PrimaryRole', `Email` = '$Email' WHERE `SteamID` = '{$user['SteamID']}'";
-				$result = $mysql->query($query);
-				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . $mysql->error);
-				} else {
-					$serial = $mysql->real_escape_string(json_encode($_POST));
-					
-					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
-					$query .= "VALUES ('$ID', 'users', '{$user['SteamID']}', '$serial', NOW())";
-					debug_query($query);
-					
-					storeMessage("formSuccess", "Details successfully updated.");
-					action("profile-details-updated", $user['SteamID']);
-					refresh();
-				}
-				
-			} else if ($_POST['action'] == "edit-notes" && canDo("profile-edit-notes")) {
-				
-				$Notes = $mysql->real_escape_string($_POST['Notes']);
-				
-				$query = "UPDATE `users` SET `Notes` = '$Notes' WHERE `SteamID` = '{$user['SteamID']}'";
-				$result = $mysql->query($query);
-				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . $mysql->error);
-				} else {
-					$serial = $mysql->real_escape_string(json_encode($_POST));
-					
-					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
-					$query .= "VALUES ('$ID', 'users', '{$user['SteamID']}', '$serial', NOW())";
-					debug_query($query);
-					
-					storeMessage("formSuccess", "Notes successfully updated.");
-					action("profile-notes-updated", $user['SteamID']);
-					refresh();
-				}
-			
-			}
+//			if ($_POST['action'] == "edit-details" && canDo("profile-edit-details")) {
+//				$PrimaryRole = $mysql->real_escape_string($_POST['PrimaryRole']);
+//				$Email = $mysql->real_escape_string($_POST['Email']);
+//
+//				$query = "UPDATE `users` SET `PrimaryRole` = '$PrimaryRole', `Email` = '$Email' WHERE `SteamID` = '{$user['SteamID']}'";
+//				$result = $mysql->query($query);
+//				if (!$result) {
+//					$tpl->set("formError", "An error occurred: " . $mysql->error);
+//				} else {
+//					$serial = $mysql->real_escape_string(json_encode($_POST));
+//
+//					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
+//					$query .= "VALUES ('$ID', 'users', '{$user['SteamID']}', '$serial', NOW())";
+//					debug_query($query);
+//
+//					storeMessage("formSuccess", "Details successfully updated.");
+//					action("profile-details-updated", $user['SteamID']);
+//					refresh();
+//				}
+//
+//			} else if ($_POST['action'] == "edit-notes" && canDo("profile-edit-notes")) {
+//
+//				$Notes = $mysql->real_escape_string($_POST['Notes']);
+//
+//				$query = "UPDATE `users` SET `Notes` = '$Notes' WHERE `SteamID` = '{$user['SteamID']}'";
+//				$result = $mysql->query($query);
+//				if (!$result) {
+//					$tpl->set("formError", "An error occurred: " . $mysql->error);
+//				} else {
+//					$serial = $mysql->real_escape_string(json_encode($_POST));
+//
+//					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
+//					$query .= "VALUES ('$ID', 'users', '{$user['SteamID']}', '$serial', NOW())";
+//					debug_query($query);
+//
+//					storeMessage("formSuccess", "Notes successfully updated.");
+//					action("profile-notes-updated", $user['SteamID']);
+//					refresh();
+//				}
+//
+//			}
 		}
 	
 		if ($user['LastLogin']) {
