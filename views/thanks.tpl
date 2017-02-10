@@ -145,7 +145,7 @@ a:hover {
       </div>
       <div class="subtitle">
         <a href="https://www.youtube.com/watch?v=bDA_lIHkdDE">Watch it on YouTube</a><br>
-        <a href="https://www.twitch.tv/vidyagaemawards/c/3887991">Watch it on Twitch</a><br>
+        <a href="https://www.twitch.tv/videos/47019494">Watch it on Twitch</a><br>
         <a href="https://archive.org/details/2013vgas">Direct download</a><br>
         <a href="/winners">See the winners</a><br>
         <a href="/credits">See the credits</a><br>
