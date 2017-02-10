@@ -151,7 +151,7 @@ p {
       <div class="category">
         <div class="row">
           <div class="span4">
-            <img class="winner" src="/winners/<tag:categories[].ID />.png">
+            <img class="winner" src="/assets/winners/<tag:categories[].ID />.png">
           </div>
           <div class="span7">
             <ul>
