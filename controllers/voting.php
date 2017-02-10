@@ -148,7 +148,7 @@ if ($SEGMENTS[1]) {
     
       $prefixes = array(strtolower($cat)."-", "");
       if (empty($row['Image'])) {
-        $row['Image'] = "/public/nominees/{$row['NomineeID']}.png";
+        $row['Image'] = "/assets/nominees/{$row['NomineeID']}.png";
       } else {
         $row['Image'] = $row['Image'];
       }

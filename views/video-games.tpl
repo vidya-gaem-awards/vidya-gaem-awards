@@ -146,7 +146,7 @@ thead th {
 </table>
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
-<script type="text/javascript" src="/public/jquery/jquery.floatThead.min.js"></script>
+<script type="text/javascript" src="/assets/jquery/jquery.floatThead.min.js"></script>
 <script type="text/javascript">
 $('#games').floatThead({
     scrollingTop: 40

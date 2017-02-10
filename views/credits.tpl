@@ -3,21 +3,21 @@
   font-family: "ArtBrush";
   src: local("ArtBrush"),
        local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
+       url("/assets/Artbrush.woff") format("woff"),
+       url("/assets/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Brush Script MT";
   src: local("Brush Script MT"),
        local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
+       url("/assets/BrushScriptMT.woff") format("woff"),
+       url("/assets/BrushScriptMT.ttf") format("truetype");
 }
 
 body {
   background-color: black;
-  background-image: url("/public/50s/bgvoting.jpg"); 
+  background-image: url("/assets/50s/bgvoting.jpg");
   background-color: #f6e7be;
   /*font-size: 16px;
   line-height: 16px;*/
@@ -31,7 +31,7 @@ body {
   -webkit-box-shadow: none;
   box-shadow:         none;
   border:             none;
-  background-image:   url("/public/50s/bgvoting.jpg"); 
+  background-image:   url("/assets/50s/bgvoting.jpg");
   background-color:   #f6e7be;
 }
 
@@ -84,13 +84,13 @@ h2 {
 .page-header {
   text-align: center;
   border: none;
-  /*background: transparent url("/public/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;*/
+  /*background: transparent url("/assets/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;*/
   margin-bottom: 0px;
   padding-bottom: 40px;
 }
 
 .page-header.the-bottom {
-  background: url("/public/50s/shadow_the_edge.png") center top no-repeat;
+  background: url("/assets/50s/shadow_the_edge.png") center top no-repeat;
   padding-top: 20px;
 }
 
@@ -248,7 +248,7 @@ h2.thanks {
 .hr {
 	margin: 0 auto;
 	height: 8px;
-	background: url("/public/50s/underline.png") center center no-repeat;
+	background: url("/assets/50s/underline.png") center center no-repeat;
 }
 
 .credits {

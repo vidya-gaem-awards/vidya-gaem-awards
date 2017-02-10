@@ -33,7 +33,7 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section {
 }
 
 html {
-	background-image: url("50s/bgvoting.jpg"); 
+	background-image: url("50s/bgvoting.jpg");
 	background-color: #f6e7be;
 }
 
@@ -53,7 +53,7 @@ header{
 	width: 960px;
 	height: 144px;
 	margin: 0 auto 30px;
-	background: url("/public/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;
+	background: url("/assets/50s/featuring_dante_from_the_devil_may_cry_series.png") bottom center no-repeat;
 }
 
 header h1{
@@ -92,16 +92,16 @@ header h2{
   font-family: "ArtBrush";
   src: local("ArtBrush"),
        local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
+       url("/assets/Artbrush.woff") format("woff"),
+       url("/assets/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Brush Script MT";
   src: local("Brush Script MT"),
        local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
+       url("/assets/BrushScriptMT.woff") format("woff"),
+       url("/assets/BrushScriptMT.ttf") format("truetype");
 }
 
 .awardHeader {
@@ -123,7 +123,7 @@ header h2{
 .awardHeader .hr {
 	margin: 0 auto;
 	height: 8px;
-	background: url("/public/50s/underline.png") center center no-repeat;
+	background: url("/assets/50s/underline.png") center center no-repeat;
 }
 
 .navigation {
@@ -137,7 +137,7 @@ header h2{
 
 .navigation.left {
 	left: 0;
-	background: url("/public/50s/btnNav.png") 0px 0px;
+	background: url("/assets/50s/btnNav.png") 0px 0px;
 }
 .left:hover {
 	background-position: 0px 50px;
@@ -145,7 +145,7 @@ header h2{
 
 .navigation.right {
 	right: 0;
-	background: url("/public/50s/btnNav.png") 50px 0px;
+	background: url("/assets/50s/btnNav.png") 50px 0px;
 }
 
 footer .navigation {
@@ -189,7 +189,7 @@ top: 17px;
 left: -8px;
 width: 8px;
 height: 100%;
-background: url("/public/50s/kill_la_kill.png") 0px center no-repeat;
+background: url("/assets/50s/kill_la_kill.png") 0px center no-repeat;
 }
 
 #spacerColumn {
@@ -228,7 +228,7 @@ background: url("/public/50s/kill_la_kill.png") 0px center no-repeat;
 	top: 5px;
 	left: 5px;
 	z-index: 55;
-	background: url("/public/50s/info.png") center top no-repeat;
+	background: url("/assets/50s/info.png") center top no-repeat;
 	cursor: help;
 }
 .info:hover{
@@ -278,7 +278,7 @@ background: url("/public/50s/kill_la_kill.png") 0px center no-repeat;
   left: 0;
   /*height: 44px;*/
   width: 100%;
-  background: url("/public/50s/gradient.png");
+  background: url("/assets/50s/gradient.png");
   padding: 3px 3px 2px 5px;
   margin: 0 0 1px 3px;
   z-index: 99;
@@ -306,7 +306,7 @@ background: url("/public/50s/kill_la_kill.png") 0px center no-repeat;
   position: relative;
   width: 100%;
   height: 126px;
-  background: rgba(246, 231, 190, 0.5) url("/public/50s/votebox_background.png");
+  background: rgba(246, 231, 190, 0.5) url("/assets/50s/votebox_background.png");
   margin-bottom: 4px;
 }
 
@@ -315,7 +315,7 @@ background: url("/public/50s/kill_la_kill.png") 0px center no-repeat;
 }*/
 
 .voteBox.dragging {
-  /*background-image: url("/public/votebox_background_drag.png");*/
+  /*background-image: url("/assets/votebox_background_drag.png");*/
 }
 
 .number {
@@ -357,7 +357,7 @@ h2 {
 	padding-top: 14px;
 	padding-bottom: 30px;
 	overflow: auto;
-	background: url("/public/50s/shadow_the_edge.png") center 14px no-repeat;
+	background: url("/assets/50s/shadow_the_edge.png") center 14px no-repeat;
 }
 
 #containerCategories h2, #limitsDrag h2 {
@@ -415,7 +415,7 @@ h2 {
 	left: 0px;
 	width: 28px;
 	height: 100%;
-	background: url("/public/50s/complete.png") 0px center no-repeat;
+	background: url("/assets/50s/complete.png") 0px center no-repeat;
 }
 
 .voteBoxUsed {
@@ -433,13 +433,13 @@ h2 {
 #btnLockVotes {
   margin-left: 14px;
   width: 196px;
-  background-image: url("/public/50s/btnSubmit.png");
+  background-image: url("/assets/50s/btnSubmit.png");
   background-position: 0px 0px;
 }
 
 #btnResetVotes {
   width: 196px;
-  background-image: url("/public/50s/btnSubmit.png");
+  background-image: url("/assets/50s/btnSubmit.png");
   background-position: 0px -147px;
 }
 
@@ -546,7 +546,7 @@ to {left:110%;}
 	height: 84px;
 	margin: 0 auto;
 	display: block;
-	background: url("/public/50s/btnStart.png") top center no-repeat;
+	background: url("/assets/50s/btnStart.png") top center no-repeat;
 }
 #btnStart:hover{
 	background-position: bottom center;

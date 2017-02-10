@@ -7,22 +7,22 @@
   font-family: "ArtBrush";
   src: local("ArtBrush"),
        local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
+       url("/assets/Artbrush.woff") format("woff"),
+       url("/assets/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Brush Script MT";
   src: local("Brush Script MT"),
        local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
+       url("/assets/BrushScriptMT.woff") format("woff"),
+       url("/assets/BrushScriptMT.ttf") format("truetype");
 }
 
 
 body {
     background-color: #f6e7be;
-    background-image: url("/public/50s/bgvoting.jpg");
+    background-image: url("/assets/50s/bgvoting.jpg");
     background-repeat: repeat;
     background-attachment: fixed;
     font-family: "Calibri", Arial, sans-serif;
@@ -89,7 +89,7 @@ body, html {
   height: 30px;
   cursor: pointer;
   overflow: hidden;
-  background-image: url("/public/50s/btnNav.png");
+  background-image: url("/assets/50s/btnNav.png");
   background-size: 60px;
   top: 8px;
   right: 30px;
@@ -190,7 +190,7 @@ body, html {
 }
 </style>
 
-<script src='/public/jquery/jquery-1.8.2.min.js'></script>
+<script src='/assets/jquery/jquery-1.8.2.min.js'></script>
 </head>
 
 <body>

@@ -56,7 +56,7 @@
     <div class="span7" id="video-games">
 
         <a href="/video-games">
-            <img src="/public/collage.jpg">
+            <img src="/assets/collage.jpg">
         </a>
 
     </div>

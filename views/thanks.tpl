@@ -3,28 +3,28 @@
 <html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
 <script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
   font-family: "ArtBrush";
   src: local("ArtBrush"),
        local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
+       url("/assets/Artbrush.woff") format("woff"),
+       url("/assets/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Brush Script MT";
   src: local("Brush Script MT"),
        local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
+       url("/assets/BrushScriptMT.woff") format("woff"),
+       url("/assets/BrushScriptMT.ttf") format("truetype");
 }
 
 body {
-    background-image: url("/public/50s/bgvoting.jpg"); 
+    background-image: url("/assets/50s/bgvoting.jpg");
     background-color: #f6e7be;
     font-family: Calibri, Arial, sans-serif;
     text-align: center;
@@ -118,7 +118,7 @@ body {
 .hr {
 	margin: 0 auto;
 	height: 8px;
-	background: url("/public/50s/underline.png") center center no-repeat;
+	background: url("/assets/50s/underline.png") center center no-repeat;
 }
 
 a:hover {
@@ -135,7 +135,7 @@ a:hover {
         <div class="span8 offset2">
       <div class="logo">
         <iframe width="100%" height="460" src="https://www.youtube.com/embed/bDA_lIHkdDE?rel=0" frameborder="0" allowfullscreen=""></iframe>
-        <!-- <img src="/public/2013_logo.png"> -->
+        <!-- <img src="/assets/2013_logo.png"> -->
       </div>
       </div></div>
       <div class="title">
@@ -147,7 +147,7 @@ a:hover {
         <a href="https://www.youtube.com/watch?v=bDA_lIHkdDE">Watch it on YouTube</a><br>
         <a href="https://www.twitch.tv/vidyagaemawards/c/3887991">Watch it on Twitch</a><br>
         <a href="https://archive.org/details/2013vgas">Direct download</a><br>
-        <a href="/winners">See the winners</a><br>
+        <a href="/assets/winners">See the winners</a><br>
         <a href="/credits">See the credits</a><br>
         <a href="https://github.com/clamburger/vidya-gaem-awards">Website source code</a>
       </div>

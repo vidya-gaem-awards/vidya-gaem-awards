@@ -3,28 +3,28 @@
 <html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
 <script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
   font-family: "ArtBrush";
   src: local("ArtBrush"),
        local("ArtBrush Regular"),
-       url("/public/Artbrush.woff") format("woff"),
-       url("/public/Artbrush.ttf") format("truetype");
+       url("/assets/Artbrush.woff") format("woff"),
+       url("/assets/Artbrush.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Brush Script MT";
   src: local("Brush Script MT"),
        local("Brush Script MT Italic"),
-       url("/public/BrushScriptMT.woff") format("woff"),
-       url("/public/BrushScriptMT.ttf") format("truetype");
+       url("/assets/BrushScriptMT.woff") format("woff"),
+       url("/assets/BrushScriptMT.ttf") format("truetype");
 }
 
 body {
-    background-image: url("/public/50s/bgvoting.jpg"); 
+    background-image: url("/assets/50s/bgvoting.jpg");
     background-color: #f6e7be;
     font-family: Calibri, Arial, sans-serif;
     text-align: center;
@@ -95,7 +95,7 @@ a:hover {
 
 body {
   background-color: black;
-    background-image: url("/public/space.png");
+    background-image: url("/assets/space.png");
     background-repeat: repeat;
     font-size: 16px;
     line-height: 16px;
@@ -143,7 +143,7 @@ body {
 .title .hr {
 	margin: 0 auto;
 	height: 8px;
-	background: url("/public/50s/underline.png") center center no-repeat;
+	background: url("/assets/50s/underline.png") center center no-repeat;
 }
 
 .title h2 {
