@@ -172,18 +172,20 @@ $country = isset($_SERVER['HTTP_CF_IPCOUNTRY'])
 $tpl->set("page", $page);
 $tpl->set("logoutURL", rtrim(implode("/", $SEGMENTS), "/"));
 
+## SITE PLACED INTO READ-ONLY MODE
+
 # Don't bother recording automatic page refreshes.
-if (substr($_SERVER['REQUEST_URI'], -11) != "autorefresh") {
-  $query = "INSERT INTO `access` (`Timestamp`, `UniqueID`, `UserID`, `Page`, 
-            `RequestString`, `RequestMethod`, `IP`, `UserAgent`, `Filename`,
-            `Refer`) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-  $stmt = $mysql->prepare($query);
-  $stmt->bind_param('sssssssss', $uniqueID, $userID, $page,
-    $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], $IP,
-    $_SERVER['HTTP_USER_AGENT'], $_SERVER['SCRIPT_FILENAME'],
-    $_SERVER['HTTP_REFERER']);
-  $stmt->execute();
-}
+//if (substr($_SERVER['REQUEST_URI'], -11) != "autorefresh") {
+//  $query = "INSERT INTO `access` (`Timestamp`, `UniqueID`, `UserID`, `Page`,
+//            `RequestString`, `RequestMethod`, `IP`, `UserAgent`, `Filename`,
+//            `Refer`) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//  $stmt = $mysql->prepare($query);
+//  $stmt->bind_param('sssssssss', $uniqueID, $userID, $page,
+//    $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], $IP,
+//    $_SERVER['HTTP_USER_AGENT'], $_SERVER['SCRIPT_FILENAME'],
+//    $_SERVER['HTTP_REFERER']);
+//  $stmt->execute();
+//}
 
 $tpl->set("true", true);
 $tpl->set("false", false);

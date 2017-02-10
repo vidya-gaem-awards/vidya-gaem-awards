@@ -302,7 +302,9 @@ $('#nomination-form').submit(function(event) {
                 icon.text("["+categories[formCategory]['UserNominations'].length+"]");
             } else {
                 if (formCategory == category) {
-                    if (data == "blank nomination") {
+                    if (data == "closed") {
+                        $("#nomination-status").html("<span style='color: red;'>Nominations for this award are now closed.</span>");
+                    } else if (data == "blank nomination") {
                         $("#nomination-status").html("<span style='color: red;'>Nomination cannot be blank.</span>");
                     } else if (data == "already exists") {
                         $("#nomination-status").html("<span style='color: red;'>You've already nominated that.</span>");
