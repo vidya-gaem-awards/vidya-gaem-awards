@@ -2,13 +2,13 @@
 $tpl->set("title", "News");
 
 $query = "SELECT * FROM `news` ORDER BY `Timestamp` DESC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 $news = array();
 $newsCount = -1;
 $currentDate = new DateTime('now');
 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$newsCount++;	
 	
 	$postDate = new DateTime($row['Timestamp']);

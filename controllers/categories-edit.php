@@ -4,7 +4,7 @@ $tpl->set("editFormError", false);
 if (!empty($_POST)) {
   
 	if (isset($_POST['delete'])) {
-		$category = mysql_real_escape_string($_POST['category']);
+		$category = $mysql->real_escape_string($_POST['category']);
 		
 		if (isset($_POST['confirm'])) {
 		
@@ -16,7 +16,7 @@ if (!empty($_POST)) {
 				action("category-delete", $_POST['category']);
 				refresh();
 			} else {
-				$tpl->set("formError", "An error occurred: " . mysql_error());
+				$tpl->set("formError", "An error occurred: " . $mysql->error);
 			}
 		
 		} else {
@@ -44,11 +44,11 @@ if (!empty($_POST)) {
 				$query = "INSERT INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Enabled`)";
 				$query .= " VALUES ('$category', '$name', '$subtitle', '$order', $enabled)";
 				
-				$result = mysql_query($query);
+				$result = $mysql->query($query);
 				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . mysql_error());
+					$tpl->set("formError", "An error occurred: " . $mysql->error);
 				} else {
-					$serial = mysql_real_escape_string(json_encode(
+					$serial = $mysql->real_escape_string(json_encode(
 						array("Name" => $name, "Subtitle" => $subtitle, "Order" => $order, "Enabled" => $enabled)));
 						
 					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
@@ -69,7 +69,7 @@ if (!empty($_POST)) {
 				$tpl->set("editFormError", "Position number is limited to 32767.");
 			} else {
 			
-				$serial = mysql_real_escape_string(json_encode($_POST));
+				$serial = $mysql->real_escape_string(json_encode($_POST));
 			
 				$_POST = array_map('mysql_real_escape_string', $_POST);
 				
@@ -85,9 +85,9 @@ if (!empty($_POST)) {
 				$query = "REPLACE INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Comments`, `Enabled`, `NominationsEnabled`, `Secret`) ";
 				$query .= "VALUES ('$category', '$name', '$subtitle', $order, '$comments', $enabled, $nominationsEnabled, $secret)";
 				
-				$result = mysql_query($query);
+				$result = $mysql->query($query);
 				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . mysql_error());
+					$tpl->set("formError", "An error occurred: " . $mysql->error);
 				} else {
 					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
 					$query .= "VALUES ('$ID', 'categories', '$category', '$serial', NOW())";
@@ -101,9 +101,9 @@ if (!empty($_POST)) {
 		} else if ($_POST['action'] == "massChangeNominations") {
 		  if ($_POST['todo'] == "open") {
         $query = "UPDATE `categories` SET `NominationsEnabled` = 1";
-        $result = mysql_query($query);
+        $result = $mysql->query($query);
         if (!$result) {
-          $tpl->set("formError", "An error ocurred: " . mysql_error());
+          $tpl->set("formError", "An error ocurred: " . $mysql->error);
         } else {
           storeMessage("formSuccess", "Nominations for all categories are now <strong>open</strong>.");
           action("mass-nomination-change", "open");
@@ -111,9 +111,9 @@ if (!empty($_POST)) {
         }
       } else if ($_POST['todo'] == "close") {
         $query = "UPDATE `categories` SET `NominationsEnabled` = 0";
-        $result = mysql_query($query);
+        $result = $mysql->query($query);
         if (!$result) {
-          $tpl->set("formError", "An error ocurred: " . mysql_error());
+          $tpl->set("formError", "An error ocurred: " . $mysql->error);
         } else {
           storeMessage("formSuccess", "Nominations for all categories are now <strong>closed</strong>.");
           action("mass-nomination-change", "close");
@@ -127,11 +127,11 @@ if (!empty($_POST)) {
 }
 
 $query = "SELECT * FROM `categories` ORDER BY `Order` ASC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 $cats = array();
 $categories = array(); 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 
 	$categories[$row['ID']] = $row;
 

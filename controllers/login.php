@@ -8,21 +8,21 @@ if (strlen($result) > 0) {
   $_SESSION['name'] = $info->personaname;
   $_SESSION['avatar'] = $info->avatar;
 
-  mysql_query("INSERT INTO `logins` (`ID`, `UserID`, `Timestamp`) VALUES (0, \"$result\", NOW())");
+  $mysql->query("INSERT INTO `logins` (`ID`, `UserID`, `Timestamp`) VALUES (0, \"$result\", NOW())");
   
-  $name = mysql_real_escape_string($info->personaname);
-  $avatar = mysql_real_escape_string(base64_encode(file_get_contents($info->avatar)));
-  $mysql = mysql_query("SELECT `SteamID` FROM `users` WHERE `SteamID` = \"$result\"");
-  if (mysql_num_rows($mysql) == 0) {
+  $name = $mysql->real_escape_string($info->personaname);
+  $avatar = $mysql->real_escape_string(base64_encode(file_get_contents($info->avatar)));
+  $mysqlResult = $mysql->query("SELECT `SteamID` FROM `users` WHERE `SteamID` = \"$result\"");
+  if ($mysqlResult->num_rows == 0) {
     //echo "New user";
     $query = "INSERT INTO `users` (`SteamID`, `Name`, `FirstLogin`, `LastLogin`, `Avatar`) VALUES (\"$result\", \"$name\", NOW(), NOW(), \"$avatar\")";
   } else {
     //echo "Returning user";
     $query = "UPDATE `users` SET `Name` = \"$name\", `Avatar` = \"$avatar\", `LastLogin` = NOW() WHERE `SteamID` = \"$result\"";
   }
-  $result = mysql_query($query);
+  $result = $mysql->query($query);
   if (!$result) {
-    echo "Sorry, there was an error in processing your login.<br />".mysql_error();
+    echo "Sorry, there was an error in processing your login.<br />".$mysql->error;
     die();
   }
   
@@ -31,10 +31,10 @@ if (strlen($result) > 0) {
   $randomToken .= ':'.hash_hmac('md5', $randomToken, $APIkey);
   setcookie("token", $randomToken, time()+60*60*24*30, "/", $domain);
   
-  $avatar = mysql_real_escape_string($info->avatar);
+  $avatar = $mysql->real_escape_string($info->avatar);
   $query =  "REPLACE INTO `login_tokens` (`UserID`, `Name`, `Avatar`, `Token`, `Generated`, `Expires`) ";
   $query .= "VALUES(\"{$_SESSION['login']}\", \"$name\", \"$avatar\", \"$randomToken\", NOW(), DATE_ADD(NOW(), INTERVAL 30 DAY))";
-  mysql_query($query);
+  $mysql->query($query);
   
 }
 

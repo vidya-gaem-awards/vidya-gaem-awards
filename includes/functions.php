@@ -31,7 +31,7 @@ function canDo($privilege) {
 function userInput($input, $mysql = true) {
 	$output = $input;
 	if ($mysql) {
-		$output = mysql_real_escape_string($output);
+		$output = $mysql->real_escape_string($output);
 	}
 	$output = str_replace(array("<", ">", '"'), array("&lt;", "&gt;", "&quot;"), $output);
 	$output = trim($output);
@@ -50,7 +50,7 @@ function refresh() {
 }
 
 function action($action, $firstID = false, $secondID = false) {
-	global $ID, $PAGE;
+	global $ID, $PAGE, $mysql;
 		
 	if (!$firstID) {
 		$firstID = 'NULL';
@@ -66,12 +66,13 @@ function action($action, $firstID = false, $secondID = false) {
 	
 	$query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`, `SpecificID1`, `SpecificID2`)";
 	$query .= " VALUES ('$ID', NOW(), '$PAGE', '$action', $firstID, $secondID)";
-	mysql_query($query);
+	$mysql->query($query);
 }
 
 function debug_query($query) {
+	global $mysql;
 
-	$result = mysql_query($query);
+	$result = $mysql->query($query);
 	if (!$result) {
 		report_error($query);
 	}
@@ -79,8 +80,9 @@ function debug_query($query) {
 }
 
 function report_error($query) {
-        
-	$error = mysql_error();
+    global $mysql;
+
+	$error = $mysql->error;
 	echo "<pre><strong>A MySQL error has occurred.</strong>\n";
 		
 	echo "<strong>Query:</strong> $query\n";

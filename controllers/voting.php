@@ -79,16 +79,16 @@ $lastVotes = array();
 // Look up which categories have already been voted on by this user
 $completedCategories = array();
 $query = "SELECT * FROM `votes` WHERE `UniqueID` = \"$uniqueID\"";
-$result = mysql_query($query);
-while ($row = mysql_fetch_array($result)) {
+$result = $mysql->query($query);
+while ($row = $result->fetch_array()($result)) {
   $completedCategories[$row['CategoryID']] = json_decode($row['Preferences'], true);
 }
 
 $query = "SELECT * FROM `categories` WHERE `Enabled` = 1 ORDER BY `Order` ASC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 $categories = array();
-while ($row = mysql_fetch_array($result)) {
+while ($row = $result->fetch_array()($result)) {
 	if ($SEGMENTS[1] == $row['ID']) {
 		$row['Active'] = true;
 	} else {
@@ -108,20 +108,20 @@ $tpl->set("categories", $categories);
 $category = false;
 $nominees = array();
 if ($SEGMENTS[1]) {
-	$cat = mysql_real_escape_string($SEGMENTS[1]);
+	$cat = $mysql->real_escape_string($SEGMENTS[1]);
 	$query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
-	$result = mysql_query($query);
+	$result = $mysql->query($query);
 	
-	if (mysql_num_rows($result) == 1) {
+	if ($result->num_rows == 1) {
 		
-		$row = mysql_fetch_array($result);
+		$row = $result->fetch_array()($result);
 		$category = $row;		
 		
 		$query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" ORDER BY `Name` ASC";
-		$result = mysql_query($query);
+		$result = $mysql->query($query);
 		$nominees = array();
 		$count = 0;
-		while ($row = mysql_fetch_array($result)) {
+		while ($row = $result->fetch_array()($result)) {
       $count++;
 		
 			$row['Background'] = "";
@@ -148,9 +148,9 @@ if ($SEGMENTS[1]) {
 		
 	} else {
     $_SESSION['votingCode'] = $SEGMENTS[1];
-    $code = mysql_real_escape_string($SEGMENTS[1]);
+    $code = $mysql->real_escape_string($SEGMENTS[1]);
     $query = "INSERT IGNORE INTO `voting_codes` (`Code`, `UserID`) VALUES (\"$code\", \"$uniqueID\")";
-    mysql_query($query);
+    $mysql->query($query);
     header("Location: https://$domain/voting");
 	}	
 	

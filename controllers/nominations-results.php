@@ -15,12 +15,12 @@ if (!canDo("nominations-view")) {
 	
 	//$query = "SELECT `ID`, `Name`, `Subtitle`, `Nomination`, `AutoID`, `UserID` FROM `user_nominations`, `categories` WHERE `ID` = `CategoryID` ORDER BY `Order` ASC, `AutoID` DESC";
 	$query = "SELECT `ID`, `Name`, `Subtitle`, `Nomination`, COUNT(*) as `Count` FROM `user_nominations`, `categories` WHERE `ID` = `CategoryID` GROUP BY `ID`, `Nomination` ORDER BY `Enabled` DESC, `Order` ASC, `Count` DESC, `Nomination` ASC";
-	$result = mysql_query($query);
+	$result = $mysql->query($query);
 	
 	$nominations = array();
 	$categories = array();
 	$category = "";
-	while ($row = mysql_fetch_array($result)) {
+	while ($row = $result->fetch_array()($result)) {
 		if (!isset($categories[$row['ID']])) {
 			$categories[$row['ID']] = array($row['Name'], $row['Subtitle']);
 			$nominations[$row['ID']] = array();

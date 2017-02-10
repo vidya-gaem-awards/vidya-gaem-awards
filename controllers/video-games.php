@@ -2,11 +2,11 @@
 $tpl->set('title', "2012 in vidya");
 
 $query = "SELECT * FROM `2010_releases`";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 $games = array();
 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	
 	foreach ($row as $key => $value) {
 		if ($key == "Game") {

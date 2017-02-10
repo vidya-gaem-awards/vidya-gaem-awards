@@ -12,9 +12,6 @@ include("functions.php");
 $tpl = new bTemplate();
 session_start();
 
-mysql_connect(DB_HOST, DB_USER, DB_PASS);
-mysql_select_db(DB_DATABASE);
-
 // Forward compatibility
 $mysql = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_DATABASE);
 
@@ -38,11 +35,11 @@ if (!isset($_SESSION['login']) && isset($_COOKIE['token'])) {
   list($token, $hmac) = explode(':', $_COOKIE['token'], 2);
   $tokenValid = $hmac == hash_hmac('md5', $token, $APIkey);
   if ($tokenValid) {
-    $token = mysql_real_escape_string($_COOKIE['token']);
+    $token = $mysql->real_escape_string($_COOKIE['token']);
     $query = "SELECT * FROM `login_tokens` WHERE `Token` = \"$token\"";
-    $result = mysql_query($query);
-    if (mysql_num_rows($result) === 1) {
-      $row = mysql_fetch_assoc($result);
+    $result = $mysql->query($query);
+    if ($result->num_rows === 1) {
+      $row = $result->fetch_assoc();
       if (strtotime($row['Expires']) > time()) {
         $_SESSION['login'] = $row['UserID'];
         $_SESSION['name'] = $row['Name'];
@@ -69,8 +66,8 @@ if (isset($_SESSION['login'])) {
 	
 	// Find out which groups the user is in
 	$query = "SELECT `GroupName` FROM `user_groups` WHERE `UserID` = '$userID'";
-	$result = mysql_query($query);
-	while ($row = mysql_fetch_assoc($result)) {
+	$result = $mysql->query($query);
+	while ($row = $result->fetch_assoc()) {
 		$USER_GROUPS[] = $row['GroupName'];
 		if (substr($row['GroupName'], 0, 5) != "level") {
       $USER_RIGHTS[] = $row['GroupName'];
@@ -88,8 +85,8 @@ if (isset($_SESSION['login'])) {
 	
 	$query = "SELECT DISTINCT `CanDo` FROM `user_rights` WHERE `GroupName` IN ('";
 	$query .= implode("', '", $USER_GROUPS) . "')";
-	$result = mysql_query($query);
-	while ($row = mysql_fetch_array($result)) {
+	$result = $mysql->query($query);
+	while ($row = $result->fetch_array()($result)) {
 		$USER_RIGHTS[] = $row['CanDo'];
 	}
 	
@@ -122,8 +119,8 @@ if (canDo("admin")) {
 	
 	if (isset($_SESSION['pretend'])) {
 		$ID = $_SESSION['pretend'];
-		$result = mysql_query("SELECT `Name` FROM `users` WHERE `SteamID` = \"$userID\"");
-		$row = mysql_fetch_array($result);
+		$result = $mysql->query("SELECT `Name` FROM `users` WHERE `SteamID` = \"$userID\"");
+		$row = $result->fetch_array()($result);
 		$tpl->set("displayName", $row['Name']);
 	}
 
@@ -137,7 +134,7 @@ if (!isset($_COOKIE['access']) || strlen($_COOKIE['access']) <= 10) {
   $uniqueID = $randomToken;
 	setcookie("access", $randomToken, time()+60*60*24*90, "/", $domain);
 } else {
-  $uniqueID = mysql_real_escape_string($_COOKIE['access']);
+  $uniqueID = $mysql->real_escape_string($_COOKIE['access']);
 }
 
 
@@ -222,12 +219,12 @@ $tpl->set("logoutURL", rtrim(implode("/", $SEGMENTS), "/"));
 
 # Don't bother recording automatic page refreshes.
 if (substr($reqString, -11) != "autorefresh") {
-  $_unique = mysql_real_escape_string($uniqueID);
+  $_unique = $mysql->real_escape_string($uniqueID);
 
 	$query = "INSERT INTO `access` (`Timestamp`, `UniqueID`, `UserID`, `Page`, `RequestString`, `RequestMethod`, `IP`, `UserAgent`, `Filename`, `Refer`) ";
 	$query .= "VALUES (NOW(), '$_unique', '$userID', '$page', '$reqString', '{$_SERVER['REQUEST_METHOD']}', '$ip', ";
 	$query .= "'$userAgent', '$filename', $refer)";
-	mysql_query($query);
+	$mysql->query($query);
 	
 }
 

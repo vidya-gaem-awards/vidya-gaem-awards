@@ -13,7 +13,7 @@ if (strlen($_POST['name']) == 0 || strlen($_POST['email']) == 0 || strlen($_POST
 	
 $query = "INSERT INTO `applications` (`UserID`, `Name`, `Email`, `Interest`, `Timestamp`)";
 $query .= " VALUES('$userID', '{$__POST['name']}', '{$__POST['email']}', '{$__POST['skills']}', NOW())";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 	
 if ($result) {
 	storeMessage("formSuccess", "Your interest has been successfully registered.");
@@ -31,7 +31,7 @@ if ($result) {
 	mail($to, $subject, $message, $headers);
 	
 } else {
-	storeMessage("formError", "An error has occurred. The form has not been saved.<br />".mysql_error());
+	storeMessage("formError", "An error has occurred. The form has not been saved.<br />".$mysql->error);
 }
 
 header("Location: /home");

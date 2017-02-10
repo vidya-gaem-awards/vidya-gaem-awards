@@ -14,10 +14,10 @@ AND `Timestamp` > DATE_SUB(NOW(), INTERVAL 5 DAY)
 GROUP BY `Refer`
 HAVING `Count` >= 5
 ORDER BY `Count` DESC, `Latest` DESC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 $data = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
   $latest = strtotime($row["Latest"]);
   $diff = floor((time() - $latest) / 60 / 60 / 24);
   $diffStr = "$diff days ago";

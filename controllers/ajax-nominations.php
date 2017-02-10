@@ -12,24 +12,24 @@ if ($action != "edit" && $action != "delete" && $action != "new") {
 }
 
 $category = $_POST['Category'];
-$cat = mysql_real_escape_string($category);
+$cat = $mysql->real_escape_string($category);
 
 // Sanity checks on provided category and nominee
 if ($action == "new") {
   $query = "SELECT * FROM `categories` WHERE `ID` = \"$cat\" AND `Enabled` = 1";
-  $result = mysql_query($query);
-  if (mysql_num_rows($result) === 0) {
+  $result = $mysql->query($query);
+  if ($result->num_rows === 0) {
     error("Category \"$category\" doesn't exist or isn't enabled.");
   }
 }
 
 $nominee = $_POST['NomineeID'];
-$nom = mysql_real_escape_string($nominee);
+$nom = $mysql->real_escape_string($nominee);
 
 $query = "SELECT * FROM `nominees` WHERE `CategoryID` = \"$cat\" AND `NomineeID` = \"$nom\"";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
-$nomineeExists = mysql_num_rows($result);
+$nomineeExists = $result->num_rows;
   
 if (($action == "edit" || $action == "delete") && !$nomineeExists) {
   error("Couldn't find nominee \"$nominee\" in category \"$category\".");
@@ -39,7 +39,7 @@ if (($action == "edit" || $action == "delete") && !$nomineeExists) {
 if ($action == "delete") {
 
   $query = "DELETE FROM `nominees` WHERE `CategoryID` = \"$cat\" AND `NomineeID` = \"$nom\"";
-  $result = mysql_query($query);
+  $result = $mysql->query($query);
   action("nominee-delete", $category, $nominee);
   
 } else {
@@ -63,12 +63,12 @@ if ($action == "delete") {
     $query .= "VALUES (\"$cat\", \"$nom\", \"{$values['Name']}\", \"{$values['Subtitle']}\", \"{$values['Image']}\")";
   }
   
-  $result = mysql_query($query);
+  $result = $mysql->query($query);
   
   if (!$result) {
-    error("MySQL failure.<br>".mysql_error());
+    error("MySQL failure.<br>".$mysql->error);
   } else {
-    $serial = mysql_real_escape_string(json_encode($_POST));
+    $serial = $mysql->real_escape_string(json_encode($_POST));
     $query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
     $query .= "VALUES ('$ID', 'nominees', '$cat/$nominee', '$serial', NOW())";
     debug_query($query);

@@ -1,8 +1,8 @@
 <?php
-$cat = mysql_real_escape_string($_POST['Category']);
+$cat = $mysql->real_escape_string($_POST['Category']);
 $query = "SELECT `ID` FROM `categories` WHERE `ID` = \"$cat\"";
-$result = mysql_query($query);
-if (mysql_num_rows($result) == 0) {
+$result = $mysql->query($query);
+if ($result->num_rows == 0) {
 	die("bad category");
 }
 
@@ -10,20 +10,20 @@ $nomination = trim($_POST['Nomination']);
 if (empty($nomination)) {
 	die("blank nomination");
 }
-$nomination = mysql_real_escape_string($nomination);
+$nomination = $mysql->real_escape_string($nomination);
 
 $query = "SELECT `Nomination` FROM `user_nominations` WHERE `CategoryID` = \"$cat\" AND `UserID` = \"$ID\"";
 $query .= " AND LOWER(`Nomination`) = \"".strtolower($nomination)."\"";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 if (!$result) {
-	die(mysql_error());
+	die($mysql->error);
 }
-if (mysql_num_rows($result) > 0) {
+if ($result->num_rows > 0) {
 	die("already exists");
 }
 
 $query = "INSERT INTO `user_nominations` (`CategoryID`, `UserID`, `Nomination`, `Timestamp`) VALUES (\"$cat\", \"$ID\", \"$nomination\", NOW())";
-mysql_query($query);
+$mysql->query($query);
 action("nomination-made", $cat);	
 echo "success";
 ?>

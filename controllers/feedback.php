@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $query = "INSERT INTO `feedback` (`UserID`, `UniqueID`, `Timestamp`, `GeneralRating`, `CeremonyRating`, `BestThing`, `WorstThing`, `OtherComments`, `Questions`, `Email`) ";
   $query .= "VALUES (\"$ID\", \"$uniqueID\", NOW(), \"{$values['general']}\", \"{$values['ceremony']}\", \"{$values['best']}\", \"{$values['worst']}\", \"{$values['comments']}\", \"{$values['questions']}\", \"{$values['email']}\")";
   
-  $result = mysql_query($query);
+  $result = $mysql->query($query);
   
   if (!$result) {
 		$tpl->set("error", "An error occurred. Your feedback was not saved. You can try refreshing to save it again.".$query);

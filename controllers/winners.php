@@ -4,16 +4,16 @@ $tpl->set("title", "Winners");
 $results = array();
 
 $query = "SELECT * FROM `categories` WHERE `Enabled` = 1 ORDER BY `Order` ASC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 $categories = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
   $categories[$row['ID']] = array("ID" => $row['ID'], "Name" => $row['Name'], "Subtitle" => $row['Subtitle'], "Rankings" => array(), "Nominees" => array());
 }
 
 $query = "SELECT * FROM `nominees`";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 $nominees = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
   if (!isset($categories[$row['CategoryID']])) {
     continue;
   }
@@ -23,8 +23,8 @@ while ($row = mysql_fetch_assoc($result)) {
 $ranks = array("1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th");
 
 $query = "SELECT * FROM `winner_cache` WHERE `Filter` = \"05combined2\"";
-$result = mysql_query($query);
-while ($row = mysql_fetch_assoc($result)) {
+$result = $mysql->query($query);
+while ($row = $result->fetch_assoc()) {
   $rankings = array_values(json_decode($row['Results'], true));
   foreach ($rankings as $key => &$value) {
     $value = $ranks[$key] . ". " . $categories[$row['CategoryID']]["Nominees"][$value];

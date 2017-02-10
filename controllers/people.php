@@ -5,7 +5,7 @@ $users = array();
 
 $query = "SELECT `users`.*, GROUP_CONCAT(`GroupName` SEPARATOR '|') as `Groups` FROM `users` LEFT JOIN `user_groups` ";
 $query .= "ON `SteamID` = `UserID` WHERE `Special` = 1 GROUP BY `SteamID` ORDER BY `Name` ASC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 class User {
 
@@ -55,7 +55,7 @@ class User {
 	}
 }
 
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$user = new User($row);
 	$users[$user->SteamID] = get_object_vars($user);
 }
@@ -78,9 +78,9 @@ if ($SEGMENTS[1] == "permissions") {
     $tpl->set("level", $level);
     
     $query = "SELECT * FROM `user_rights` ORDER BY `GroupName` DESC, `Description` ASC";
-    $result = mysql_query($query);
+    $result = $mysql->query($query);
     $permissions = array();
-    while ($row = mysql_fetch_assoc($result)) {
+    while ($row = $result->fetch_assoc()) {
         if (canDo($row['CanDo'])) {
             if (isset($row['Description'])) {
                 $desc = "<abbr title='{$row['CanDo']}'>{$row['Description']}</abbr>";
@@ -105,14 +105,14 @@ if ($SEGMENTS[1] == "permissions") {
 } else if ($SEGMENTS[1]) {
 
 	if (canDo("profile-edit-groups")) {
-		$steamID = mysql_real_escape_string($SEGMENTS[1]);
+		$steamID = $mysql->real_escape_string($SEGMENTS[1]);
 		if (isset($_POST['RemoveGroup'])) {
 		
-			$groupName = mysql_real_escape_string($_POST['RemoveGroup']);
+			$groupName = $mysql->real_escape_string($_POST['RemoveGroup']);
 			$query = "DELETE FROM `user_groups` WHERE `UserID` = '$steamID' AND `GroupName` = '$groupName'";
-			$result = mysql_query($query);
+			$result = $mysql->query($query);
 			if (!$result) {
-				$tpl->set("formError", "An error occurred: " . mysql_error());
+				$tpl->set("formError", "An error occurred: " . $mysql->error);
 			} else {
 				storeMessage("formSuccess", "Group successfully removed.");
 				action("profile-group-removed", $steamID, $groupName);
@@ -120,16 +120,16 @@ if ($SEGMENTS[1] == "permissions") {
 			}
 		} else if (isset($_POST['AddGroup'])) {
 		
-			$groupName = trim(strtolower(mysql_real_escape_string($_POST['GroupName'])));
+			$groupName = trim(strtolower($mysql->real_escape_string($_POST['GroupName'])));
 			if ($groupName == "level6" && !canDo("super-admin")) {
         $tpl->set("formError", "That group can't be assigned through the web interface.");
       } else if (strlen(trim($groupName)) == 0) {
 				$tpl->set("formError", "Group name cannot be empty.");
 			} else {
 				$query = "REPLACE INTO `user_groups` VALUES ('$steamID', '$groupName')";
-				$result = mysql_query($query);
+				$result = $mysql->query($query);
 				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . mysql_error());
+					$tpl->set("formError", "An error occurred: " . $mysql->error);
 				} else {
 					storeMessage("formSuccess", "Group successfully added.");
 					action("profile-group-added", $steamID, $groupName);
@@ -143,15 +143,15 @@ if ($SEGMENTS[1] == "permissions") {
 		$user = $users[$SEGMENTS[1]];
 		$inList = true;
 	} else {
-		$steamID = mysql_real_escape_string($SEGMENTS[1]);
+		$steamID = $mysql->real_escape_string($SEGMENTS[1]);
 		
 		$query = "SELECT * FROM `users` WHERE `SteamID` = '$steamID'";
-		$result = mysql_query($query);
-		if (mysql_num_rows($result) === 0) {
+		$result = $mysql->query($query);
+		if ($result->num_rows === 0) {
 			$user = false;
 			$tpl->set("userNotFound", true);
 		} else {
-			$user = new User(mysql_fetch_assoc($result));
+			$user = new User($result->fetch_assoc());
 			$user = get_object_vars($user);
 			$inList = false;
 		}
@@ -164,15 +164,15 @@ if ($SEGMENTS[1] == "permissions") {
 		if (isset($_POST['action'])) {
 
 			if ($_POST['action'] == "edit-details" && canDo("profile-edit-details")) {
-				$PrimaryRole = mysql_real_escape_string($_POST['PrimaryRole']);
-				$Email = mysql_real_escape_String($_POST['Email']);
+				$PrimaryRole = $mysql->real_escape_string($_POST['PrimaryRole']);
+				$Email = $mysql->real_escape_string($_POST['Email']);
 				
 				$query = "UPDATE `users` SET `PrimaryRole` = '$PrimaryRole', `Email` = '$Email' WHERE `SteamID` = '{$user['SteamID']}'";
-				$result = mysql_query($query);
+				$result = $mysql->query($query);
 				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . mysql_error());
+					$tpl->set("formError", "An error occurred: " . $mysql->error);
 				} else {
-					$serial = mysql_real_escape_string(json_encode($_POST));
+					$serial = $mysql->real_escape_string(json_encode($_POST));
 					
 					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
 					$query .= "VALUES ('$ID', 'users', '{$user['SteamID']}', '$serial', NOW())";
@@ -185,14 +185,14 @@ if ($SEGMENTS[1] == "permissions") {
 				
 			} else if ($_POST['action'] == "edit-notes" && canDo("profile-edit-notes")) {
 				
-				$Notes = mysql_real_escape_String($_POST['Notes']);
+				$Notes = $mysql->real_escape_string($_POST['Notes']);
 				
 				$query = "UPDATE `users` SET `Notes` = '$Notes' WHERE `SteamID` = '{$user['SteamID']}'";
-				$result = mysql_query($query);
+				$result = $mysql->query($query);
 				if (!$result) {
-					$tpl->set("formError", "An error occurred: " . mysql_error());
+					$tpl->set("formError", "An error occurred: " . $mysql->error);
 				} else {
-					$serial = mysql_real_escape_string(json_encode($_POST));
+					$serial = $mysql->real_escape_string(json_encode($_POST));
 					
 					$query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
 					$query .= "VALUES ('$ID', 'users', '{$user['SteamID']}', '$serial', NOW())";

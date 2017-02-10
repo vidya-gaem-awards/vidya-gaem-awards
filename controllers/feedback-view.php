@@ -4,13 +4,13 @@ $tpl->set("title", "Viewer Feedback");
 ### GENERAL RATING
 
 $query = "SELECT COUNT(*) as `Count`, `GeneralRating` FROM `feedback` WHERE `GeneralRating` != 0 GROUP BY `GeneralRating` ORDER BY `GeneralRating` DESC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 $general = array();
 $maxCount = 0;
 $total = 0;
 $average = 0;
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$general[] = array(
 		"rating" => $row['GeneralRating'] + 5,
 		"bar" => $row['GeneralRating'] + 5,
@@ -37,13 +37,13 @@ $tpl->set("generalAverage", $average);
 ### CEREMONY RATING
 
 $query = "SELECT COUNT(*) as `Count`, `CeremonyRating` FROM `feedback` WHERE `CeremonyRating` != 0 GROUP BY `CeremonyRating` ORDER BY `CeremonyRating` DESC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 
 $ceremony = array();
 $maxCount = 0;
 $total = 0;
 $average = 0;
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$ceremony[] = array(
 		"rating" => $row['CeremonyRating'] + 5,
 		"bar" => $row['CeremonyRating'] + 5,
@@ -98,9 +98,9 @@ $categories = array(
 
 if (in_array($SEGMENTS[2], array_keys($categories))) {
   $query = "SELECT `ID`, `Timestamp`, `{$categories[$SEGMENTS[2]][0]}` AS `Text` FROM `feedback` WHERE `{$categories[$SEGMENTS[2]][0]}` != '' ORDER BY $sort";
-  $result = mysql_query($query);
+  $result = $mysql->query($query);
 
-  while ($row = mysql_fetch_assoc($result)) {
+  while ($row = $result->fetch_assoc()) {
     $items[] = array("ID" => $row['ID'], "Text" => implying($row['Text']));
   }
   
@@ -129,8 +129,8 @@ if ($SEGMENTS[2]) {
   }
   
   $query = "SELECT * FROM `feedback` WHERE `ID` = $feedbackID";
-  $result = mysql_query($query);
-  $row = mysql_fetch_assoc($result);
+  $result = $mysql->query($query);
+  $row = $result->fetch_assoc();
   
   $tpl->set("unique", true);
   $tpl->set("feedbackID", $row['ID']);

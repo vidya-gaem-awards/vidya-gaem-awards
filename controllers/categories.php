@@ -1,7 +1,7 @@
 <?php
 $tpl->set("title", "Categories and Nominations");
 
-mysql_query('SET NAMES utf8');
+$mysql->query('SET NAMES utf8');
 
 if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 
@@ -9,8 +9,8 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 
 	$categoryVotes = array();
 	$query = "SELECT * FROM `category_feedback` WHERE `UserID` = \"$ID\"";
-	$result = mysql_query($query);
-	while ($row = mysql_fetch_array($result)) {
+	$result = $mysql->query($query);
+	while ($row = $result->fetch_array()($result)) {
 		$categoryVotes[$row['CategoryID']] = $row['Opinion'];
 	}
 	
@@ -18,8 +18,8 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 	$userNominations = array();
 	if ($loggedIn) {
 		$query = "SELECT `CategoryID`, `Nomination` FROM `user_nominations` WHERE `UserID` = \"$ID\" ORDER BY `CategoryID` ASC, `Nomination` ASC";
-		$result = mysql_query($query);
-		while ($row = mysql_fetch_assoc($result)) {
+		$result = $mysql->query($query);
+		while ($row = $result->fetch_assoc()) {
 			$userNominations[$row['CategoryID']][] = htmlentities($row['Nomination']);
 		}
 	}
@@ -27,7 +27,7 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 	##### Grab the list of categories #####
 
 	$query = "SELECT * FROM `categories` WHERE `Enabled` = 1 AND `Secret` = 0 ORDER BY `Order` ASC";
-	$result = mysql_query($query);
+	$result = $mysql->query($query);
 
 	$categories = array();
 
@@ -35,9 +35,9 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 	$categoryJS = "";
 	$autocompleters = array();
 
-	$categoryCount = mysql_num_rows($result);
+	$categoryCount = $result->num_rows;
 
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = $result->fetch_assoc()) {
 		
 		$categoryVote = isset($categoryVotes[$row['ID']]) ? $categoryVotes[$row['ID']] : 0;
 		if ($categoryVote == 1) {
@@ -93,11 +93,11 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 
 	##### Grab the list of video games for relevant autocompletions #####
 	$query = "SELECT * FROM `2010_releases`";
-	$result = mysql_query($query);
+	$result = $mysql->query($query);
 
 	$games = array();
 
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = $result->fetch_assoc()) {
 
 		$platforms = array();
 		
@@ -120,9 +120,9 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 
 	##### Grab a list of entered nominations for other autocompletions #####
 	$query = "SELECT `CategoryID`, `Nomination`, COUNT(*) as `Count` FROM `user_nominations` WHERE `CategoryID` IN (SELECT `ID` FROM `categories` WHERE `categories`.`AutocompleteCategory` IS NULL) GROUP BY `CategoryID`, `Nomination` HAVING `Count` >= 2 ORDER BY `CategoryID` ASC, `Nomination` ASC";
-	$result = mysql_query($query);
+	$result = $mysql->query($query);
 
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = $result->fetch_assoc()) {
 		$autocompleters[$row['CategoryID']][] = '"'.$row['Nomination'].'"';
 	}
 
@@ -144,11 +144,11 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 		$CUSTOM_TEMPLATE = "results";
 	
 		$query = "SELECT * FROM `categories` WHERE `Secret` = 0 ORDER BY `Enabled` DESC, `Order` ASC";
-		$result = mysql_query($query);
+		$result = $mysql->query($query);
 
 		$categories = array();
 		
-		while ($row = mysql_fetch_array($result)) {
+		while ($row = $result->fetch_array()($result)) {
 			$categories[$row['ID']] = array("Name" => str_replace('"', "", $row['Name']) . "<br/>" . $row['Subtitle'],
         "Disabled" => $row['Enabled'] ? "" : "backgroundColor: '#000000',", "Yes" => 0, "No" => 0);
 		}
@@ -158,9 +158,9 @@ if ($SEGMENTS[1] != "edit" && $SEGMENTS[1] != "results") {
 					WHERE `Opinion` != 0
 					GROUP BY `CategoryID`, `Opinion`
 					ORDER BY `Count` DESC";
-		$result = mysql_query($query);
+		$result = $mysql->query($query);
 
-		while ($row = mysql_fetch_array($result)) {
+		while ($row = $result->fetch_array()($result)) {
 			if ($row['Opinion'] == -1) {
 				$index = "No";
 			} else {
