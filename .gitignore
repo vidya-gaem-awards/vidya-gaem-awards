@@ -1,2 +1,3 @@
 includes/config.php
 webhook-deployer/
+.idea/
