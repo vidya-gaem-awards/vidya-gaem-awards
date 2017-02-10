@@ -160,8 +160,8 @@ body {
         <a href="https://www.youtube.com/watch?v=cRVOMHFBEjA">watch the director's cut</a><br>
         <a href="https://mega.co.nz/#!kwwCxJpJ!QRS-ii80ti2n3KDDYKacImO0ggwoneB78mikvjqUYDw" class="special">direct download</a> - includes preshow<br>
         <a href="http://vga.rbt.asia/">download mirror</a><br>
-        <a href="https://www.twitch.tv/vidyagaemawards/b/373126916">watch it on twitch</a> - includes preshow<br>
-        <a href="/assets/winners">see the winners</a><br>
+        <a href="https://www.twitch.tv/videos/50846072">watch it on twitch</a> - includes preshow<br>
+        <a href="/winners">see the winners</a><br>
         <a href="/credits">see the credits</a><br>
         <a href="https://vidyagaemawards.com/music/2012-vga-music-mix.mp3">preshow music mix</a><br>
         <a href="https://github.com/clamburger/vidya-gaem-awards">website source code</a>
