@@ -171,7 +171,7 @@ if ($SEGMENTS[1] == "permissions") {
     $user = $users[$SEGMENTS[1]];
     $inList = true;
   } else {
-    $steamID = mysql_real_escape_string($SEGMENTS[1]);
+    $steamID = $mysql->real_escape_string($SEGMENTS[1]);
     
     $query = "SELECT * FROM `users` WHERE `SteamID` = '$steamID'";
     $result = $mysql->query($query);

@@ -27,16 +27,16 @@ if ($SEGMENTS[2] == "pairwise") {
 $tpl->set("all", $SEGMENTS[2] == "all");
 
 $query = "SELECT * FROM `categories` WHERE `Enabled` = 1 ORDER BY `Order` ASC";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 $categories = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
   $categories[$row['ID']] = array("Name" => $row['Name'], "Subtitle" => $row['Subtitle'], "Filters" => array(), "Nominees" => array());
 }
 
 $query = "SELECT * FROM `nominees`";
-$result = mysql_query($query);
+$result = $mysql->query($query);
 $nominees = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
   if (!isset($categories[$row['CategoryID']])) {
     continue;
   }
@@ -44,8 +44,8 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 
 $query = "SELECT * FROM `winner_cache` ORDER BY `Filter` ASC";
-$result = mysql_query($query);
-while ($row = mysql_fetch_assoc($result)) {
+$result = $mysql->query($query);
+while ($row = $result->fetch_assoc()) {
   $rankings = array_values(json_decode($row['Results'], true));
   $steps = json_decode($row['Steps'], true);
   foreach ($rankings as $key => &$value) {

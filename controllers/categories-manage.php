@@ -11,19 +11,19 @@ if (canDo("categories-edit")) {
 if (!empty($_POST) && canDo("categories-edit")) {
   
   if (isset($_POST['delete'])) {
-    $category = mysql_real_escape_string($_POST['category']);
+    $category = $mysql->real_escape_string($_POST['category']);
     
     if (isset($_POST['confirm'])) {
     
       $query = "DELETE FROM `categories` WHERE `ID` = '$category'";
-      $result = mysql_query($query);
+      $result = $mysql->query($query);
       
       if ($result) {
         storeMessage("formSuccess", "Category \"$category\" successfully deleted.");
         action("category-delete", $_POST['category']);
         refresh();
       } else {
-        $tpl->set("formError", "An error occurred: " . mysql_error());
+        $tpl->set("formError", "An error occurred: " . $mysql->error);
       }
     
     } else {
@@ -41,8 +41,8 @@ if (!empty($_POST) && canDo("categories-edit")) {
         $tpl->set("formError", "Order is limited to 32767.");
       } else {      
         $category = $_POST['id'];
-        $name = mysql_real_escape_string($_POST['name']);
-        $subtitle = mysql_real_escape_string($_POST['subtitle']);
+        $name = $mysql->real_escape_string($_POST['name']);
+        $subtitle = $mysql->real_escape_string($_POST['subtitle']);
         $order = $_POST['order'];
 
         $enabled = intval(isset($_POST['enabled']));
@@ -52,16 +52,16 @@ if (!empty($_POST) && canDo("categories-edit")) {
         $query = "INSERT INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Enabled`, `NominationsEnabled`, `Secret`)";
         $query .= " VALUES ('$category', '$name', '$subtitle', '$order', $enabled, $nominations, $secret)";
         
-        $result = mysql_query($query);
+        $result = $mysql->query($query);
         if (!$result) {
-          $tpl->set("formError", "An error occurred: " . mysql_error());
+          $tpl->set("formError", "An error occurred: " . $mysql->error);
         } else {
-          $serial = mysql_real_escape_string(json_encode(
+          $serial = $mysql->real_escape_string(json_encode(
             array("Name" => $name, "Subtitle" => $subtitle, "Order" => $order, "Enabled" => $enabled)));
             
           $query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
           $query .= "VALUES ('$ID', 'categories', '$category', '$serial', NOW())";
-          mysql_query($query);
+          $mysql->query($query);
         
           storeMessage("formSuccess", "Category successfully added.");
           action("category-added", $_POST['id']);
@@ -77,9 +77,11 @@ if (!empty($_POST) && canDo("categories-edit")) {
         $tpl->set("editFormError", "Position number is limited to 32767.");
       } else {
       
-        $serial = mysql_real_escape_string(json_encode($_POST));
+        $serial = $mysql->real_escape_string(json_encode($_POST));
       
-        $_POST = array_map('mysql_real_escape_string', $_POST);
+        $_POST = array_map(function ($value) use ($mysql) {
+            return $mysql->real_escape_string($value);
+        }, $_POST);
         
         $category = $_POST['ID'];
         $name = $_POST['Name'];
@@ -99,13 +101,13 @@ if (!empty($_POST) && canDo("categories-edit")) {
         $query = "REPLACE INTO `categories` (`ID`, `Name`, `Subtitle`, `Order`, `Comments`, `Enabled`, `NominationsEnabled`, `Secret`, `AutocompleteCategory`) ";
         $query .= "VALUES ('$category', '$name', '$subtitle', $order, '$comments', $enabled, $nominationsEnabled, $secret, $autocomplete)";
         
-        $result = mysql_query($query);
+        $result = $mysql->query($query);
         if (!$result) {
-          $tpl->set("formError", "An error occurred: " . mysql_error());
+          $tpl->set("formError", "An error occurred: " . $mysql->error);
         } else {
           $query = "INSERT INTO `history` (`UserID`, `Table`, `EntryID`, `Values`, `Timestamp`)";
           $query .= "VALUES ('$ID', 'categories', '$category', '$serial', NOW())";
-          mysql_query($query);
+          $mysql->query($query);
         
           storeMessage("formSuccess", "Category successfully edited.");
           action("category-edited", $_POST['ID']);
@@ -115,9 +117,9 @@ if (!empty($_POST) && canDo("categories-edit")) {
     } else if ($_POST['action'] == "massChangeNominations") {
       if ($_POST['todo'] == "open") {
         $query = "UPDATE `categories` SET `NominationsEnabled` = 1";
-        $result = mysql_query($query);
+        $result = $mysql->query($query);
         if (!$result) {
-          $tpl->set("formError", "An error ocurred: " . mysql_error());
+          $tpl->set("formError", "An error ocurred: " . $mysql->error);
         } else {
           storeMessage("formSuccess", "Nominations for all categories are now <strong>open</strong>.");
           action("mass-nomination-change", "open");
@@ -125,9 +127,9 @@ if (!empty($_POST) && canDo("categories-edit")) {
         }
       } else if ($_POST['todo'] == "close") {
         $query = "UPDATE `categories` SET `NominationsEnabled` = 0";
-        $result = mysql_query($query);
+        $result = $mysql->query($query);
         if (!$result) {
-          $tpl->set("formError", "An error ocurred: " . mysql_error());
+          $tpl->set("formError", "An error ocurred: " . $mysql->error);
         } else {
           storeMessage("formSuccess", "Nominations for all categories are now <strong>closed</strong>.");
           action("mass-nomination-change", "close");
