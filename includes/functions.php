@@ -28,9 +28,11 @@ function canDo($privilege) {
 	return in_array($privilege, $USER_RIGHTS);
 }
 
-function userInput($input, $mysql = true) {
+function userInput($input, $mysqlInput = true) {
+	global $mysql;
+
 	$output = $input;
-	if ($mysql) {
+	if ($mysqlInput) {
 		$output = $mysql->real_escape_string($output);
 	}
 	$output = str_replace(array("<", ">", '"'), array("&lt;", "&gt;", "&quot;"), $output);
