@@ -6,27 +6,18 @@
 a, a:hover {
   text-decoration: none;
 }
-a img { border:none;}
-img {display:block;}
+
+a img {
+  border: none;
+}
+
+img {
+  display: block;
+}
 
 article, aside, figcaption, figure, footer, header, nav, section {
   display: block;
 }
-
-/*::selection {
-  opacity: 0;
-  background: rgba(0,0,0,0);
-}   
-
-::-moz-selection {
-  opacity: 0;
-  background: rgba(0,0,0,0);
-}   
-
-::-webkit-selection {
-  opacity: 0;
-  background: rgba(0,0,0,0);
-}*/
 
 *, :before, :after {
   box-sizing: border-box;
@@ -42,73 +33,48 @@ img {
   max-width: none;
 }
 
-
-header{
-	width: 960px;
-	height: 150px;
-	margin: 0 auto 30px;
+header {
+  width: 960px;
+  height: 150px;
+  margin: 0 auto 30px;
 }
 
-.zig{
-	margin: 50px 0;
+.zig {
+  margin: 50px 0;
 }
-
 
 p {
   padding: 10px;
 }
 
-h1, h2 {
-  margin:0;
-  padding:0;
-  color: #f85898;
+header h1 {
+  float: right;
+  width: 600px;
+  font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
+  font-size: 1.7em;
+  text-align: center;
+  margin-top: 50px;
   font-weight: normal;
 }
 
-h1{
-	font-family: 'AnnapolisHalftoneItalic', 'Tahoma Bold', Tahoma, sans-serif;
-    font-weight: normal;
-    font-style: normal;
-	text-transform: uppercase;
-	font-size: 3em;
-	line-height: 100%;
-}
-h2 {
-	font-family: 'FixedSystem', Calibri, sans-serif;
-	font-size: 2em;
-	color: #bfbfbf;
-	font-smooth: never;
-	-webkit-font-smoothing : none;
+header h2 {
+  float: right;
+  width: 600px;
+  text-align: center;
 }
 
-header h1{
-	float: right;
-	width: 600px;
-	font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
-	font-size: 1.7em;
-	text-align: center;
-	margin-top: 50px;
-	font-weight: normal;
-}
-header h2{
-	float: right;
-	width: 600px;
-	text-align: center;
-}
-
-#thelogo{
-	float: left;
-	margin-top: 18px;
+#thelogo {
+  float: left;
+  margin-top: 18px;
 }
 
 #wrapper {
   width: 988px;
-	position: relative;
-	margin: 0 auto 90px;
+  position: relative;
+  margin: 0 auto 90px;
 }
 
 /* Award Header */
-
 
 .awardHeader {
   text-align: center;
@@ -122,6 +88,7 @@ header h2{
   height: 106px;
   background: url(/2016images/title_bg.png) center center no-repeat;
 }
+
 .awardName {
   font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;
   font-weight: normal;
@@ -131,36 +98,38 @@ header h2{
   line-height: 40px;
   color: #00ebdb;
 }
+
 .awardSubtitle {
-    font-family: 'FixedSystem', Calibri, sans-serif;
-	color: #00ebdb;
-	width: 888px;
+  font-family: 'FixedSystem', Calibri, sans-serif;
+  color: #00ebdb;
+  width: 888px;
 }
 
-
 .navigation {
-	width: 25px;
-    height: 25px;
-	position: absolute;
-	top: 36px;
-	cursor: pointer;
-	display: block;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 36px;
+  cursor: pointer;
+  display: block;
 }
 
 .navigation.left {
-	left: 0;
-	background: url("/2016images/btnNav_left.png") 0px 0px;
+  left: 0;
+  background: url("/2016images/btnNav_left.png") 0 0;
 }
+
 .left:hover {
-	background-position: 0px bottom;
+  background-position: 0 bottom;
 }
 
 .navigation.right {
-	right: 0;
-	background: url("/2016images/btnNav_right.png") 0px 0px;
+  right: 0;
+  background: url("/2016images/btnNav_right.png") 0 0;
 }
+
 .right:hover {
-	background-position: 0px bottom;
+  background-position: 0 bottom;
 }
 
 footer .navigation {
@@ -168,12 +137,11 @@ footer .navigation {
   display: none;
 }
 
-#dontforget{
-	position: absolute;
-	top: 218px;
-	right: -40px;
+#dontforget {
+  position: absolute;
+  top: 218px;
+  right: -40px;
 }
-
 
 /* Column layout */
 
@@ -216,35 +184,38 @@ footer .navigation {
   height: 126px;
 }
 
-.info{
-	width: 25px;
-	height: 25px;
-	position: absolute;
-	top: 4px;
-	left: 4px;
-	z-index: 55;
-	background: url("/2016images/info.png") center top no-repeat;
-	cursor: help;
+.info {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 55;
+  background: url("/2016images/info.png") center top no-repeat;
+  cursor: help;
 }
-.info:hover{
-	background-position: center bottom;
+
+.info:hover {
+  background-position: center bottom;
 }
+
 .innerInfo {
-	display: none;
-	background-color: rgba(0,0,0,0.6);
-	position: relative;
-	top: 0px;
-	left: 30px;
-	padding: 3px;
-	width: 433px;
-	height: auto;
-	font-family: Calibri,sans-serif;
-	font-size: 0.81em;
-	line-height: 13px;
-	color: white;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: relative;
+  top: 0;
+  left: 30px;
+  padding: 3px;
+  width: 433px;
+  height: auto;
+  font-family: Calibri, sans-serif;
+  font-size: 0.81em;
+  line-height: 13px;
+  color: white;
 }
+
 .info:hover .innerInfo {
-	display: block;
+  display: block;
 }
 
 .aNominee .fakeBorder {
@@ -278,33 +249,34 @@ footer .navigation {
 }
 
 .nomineeInfo .nomineeName {
-	color: #f85898;
-	font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
-	text-transform: uppercase;
-	font-size: 1em;
-	padding: 4px 0 0 5px;
+  color: #f85898;
+  font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
+  text-transform: uppercase;
+  font-size: 1em;
+  padding: 4px 0 0 5px;
 }
 
 .nomineeInfo .nomineeSubtitle {
-  font-family: "Calibri",arial,sans-serif;
+  font-family: "Calibri", arial, sans-serif;
   color: #00ebdb;
   font-size: 0.85em;
   padding: 0 0 0 4px;
 }
 
-.nomineeSubtitle a{
-	color: white;
+.nomineeSubtitle a {
+  color: white;
 }
-.nomineeSubtitle a:hover{
-	color: white;
-	text-decoration: underline;
+
+.nomineeSubtitle a:hover {
+  color: white;
+  text-decoration: underline;
 }
 
 /* Vote Box */
 
 .voteBox {
-  clear:both;
-  float:left;
+  clear: both;
+  float: left;
   position: relative;
   width: 100%;
   height: 126px;
@@ -322,102 +294,83 @@ footer .navigation {
 
 .number {
   position: absolute;
-	top: 6px;
-	right: 8px;
-	color: #f85898;
-	text-decoration: none;
-	text-transform: uppercase;
-	font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;
-	font-size: 1.8em;
-	line-height: 1em;
+  top: 6px;
+  right: 8px;
+  color: #f85898;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;
+  font-size: 1.8em;
+  line-height: 1em;
 }
 
 /**************/
 
-
 #containerAwards {
-	clear: both;
-	width: 1000px;
-	margin: 0 auto;
-	padding-bottom: 30px;
-	overflow: auto;
+  clear: both;
+  width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+  overflow: auto;
 }
 
 #containerAwards h2, #limitsDrag h2 {
   height: 52px;
 }
-    
+
 .award {
-	display: block;
-	position: relative;
-	padding: 5px;
-	border-top: none;
-	width: 48%;
-	float: left;
-	margin-left: 14px;
+  display: block;
+  position: relative;
+  padding: 5px;
+  border-top: none;
+  width: 48%;
+  float: left;
+  margin-left: 14px;
 }
 
 .award:hover {
-  background: rgba(0,0,0,0.20);
+  background: rgba(0, 0, 0, 0.20);
 }
-
-/** force spacing for extra awards **/
-/**
-#containerAwards .award:nth-child(27){
-	margin-top: 20px;
-    width: 500px;
-}
-
-#containerAwards .award:nth-child(28){
-    width: 500px;
-}
-#containerAwards .award:nth-child(29){
-    width: 500px;
-}
-#containerAwards .award:nth-child(30){
-    width: 500px;
-}
-**/
-
 
 .award h3 {
-	color: #f0f1a3;
-	text-decoration: none;
-	font-family: Calibri, sans-serif;
-	font-weight: bold;
-	font-size: 1em;
-	line-height: 0.95em;
-	padding: 0;
-	margin: 0 5px 0 17px;
-	display: inline;
+  color: #f0f1a3;
+  text-decoration: none;
+  font-family: Calibri, sans-serif;
+  font-weight: bold;
+  font-size: 1em;
+  line-height: 0.95em;
+  padding: 0;
+  margin: 0 5px 0 17px;
+  display: inline;
 }
 
 .award p {
-	text-decoration: none;
-	color: #00ebdb;
-	font-family: Calibri,sans-serif;
-	font-size: 0.9em;
-	padding: 0;
-	margin: 0;
-	display: inline;
+  text-decoration: none;
+  color: #00ebdb;
+  font-family: Calibri, sans-serif;
+  font-size: 0.9em;
+  padding: 0;
+  margin: 0;
+  display: inline;
 }
 
 .active {
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
 }
+
 .active:hover {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .complete:before {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 26px;
-	height: 100%;
-	background: url("/2016images/check.png") 0px center no-repeat;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 100%;
+  background: url("/2016images/check.png") 0 center no-repeat;
 }
 
 .voteBoxUsed {
@@ -427,107 +380,90 @@ footer .navigation {
 .btnSubmit {
   cursor: pointer;
   margin-top: 10px;
-  float:left;
+  float: left;
   height: 49px;
   position: relative;
 }
-    
+
 #btnResetVotes {
   margin-left: 311px;
   width: 166px;
   height: 40px;
-  background: url("/2016images/btn_reset.png") 0px 0px;
+  background: url("/2016images/btn_reset.png") 0 0;
 }
+
 #btnLockVotes {
   margin-left: 34px;
   width: 175px;
   height: 40px;
-  background: url("/2016images/btn_submit.png") 0px 0px;
+  background: url("/2016images/btn_submit.png") 0 0;
 }
 
 #btnResetVotes:hover {
-  background-position: 0px bottom;
-}
-#btnLockVotes:hover {
-  background-position: 0px center;
+  background-position: 0 bottom;
 }
 
+#btnLockVotes:hover {
+  background-position: 0 center;
+}
 
 .iVoted {
-  background-position: 0px bottom !important;
+  background-position: 0 bottom !important;
   cursor: default;
 }
 
 #arrow_left {
-	float: left;
-	margin-left: 216px;
-	margin-top: 10px;
+  float: left;
+  margin-left: 216px;
+  margin-top: 10px;
 }
 
 #arrow_right {
-	float: left;
-	margin-top: 10px;
+  float: left;
+  margin-top: 10px;
 }
 
 #topAwards {
-	color: #00ebdb;
+  color: #00ebdb;
 }
 
 #secondaryAwards {
-	color: #00ebdb;
-	font-size: 30px;
-	clear: both;
-	padding-top: 20px;
+  color: #00ebdb;
+  font-size: 30px;
+  clear: both;
+  padding-top: 20px;
 }
 
 #overlay {
   cursor: pointer;
   width: 650px;
   height: 471px;
-  -moz-box-shadow:    0px 0px 60px 0px rgba(0,0,0,0.4);
-  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.4);
-  box-shadow:         0px 0px 60px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.4);
 }
 
 .shit {
-  position:absolute;
-  z-index:999;
-  left:0px;
-  top:-200px;
-  display:none;
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  top: -200px;
+  display: none;
   color: white;
   font-size: 4em;
   width: 100%;
   text-align: center;
   line-height: 85px;
   animation: dumb 9s infinite linear;
-  -moz-animation: dumb 9s infinite linear; /* Firefox */
-  -webkit-animation: dumb 9s infinite linear; /* Safari and Chrome */
-  -o-animation: dumb 9s infinite linear; /* Opera */
-}
-    
-@keyframes dumb
-{
-    0%{top:1500px;}
-    100%{top:-200px;}
 }
 
-@-moz-keyframes dumb /* Firefox */
-{
-    0%{top:1500px;}
-    100%{top:-200px;}
-}
-
-@-webkit-keyframes dumb /* Safari and Chrome */
-{
-    0%{top:1500px;}
-    100%{top:-200px;}
-}
-
-@-o-keyframes dumb /* Opera */
-{
-    0%{top:1500px;}
-    100%{top:-200px;}
+@keyframes dumb {
+  0% {
+    top: 1500px;
+  }
+  100% {
+    top: -200px;
+  }
 }
 
 #test {
@@ -536,8 +472,8 @@ footer .navigation {
 }
 
 .title h2 {
- margin-top: 40px;
- text-shadow: black 1px 1px 2px;
+  margin-top: 40px;
+  text-shadow: black 1px 1px 2px;
 }
 
 #startMessage {
@@ -551,41 +487,43 @@ footer .navigation {
 }
 
 #startMessage h2:first-child {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 #startMessage p {
-  padding-top: 0px;
+  padding-top: 0;
   line-height: 1.3;
   color: white;
 }
-#startMessage a{
-	color: #f85898;
+
+#startMessage a {
+  color: #f85898;
 }
 
-#btnStart{
-	width: 233px;
-	height: 63px;
-	margin: 0 auto;
-	display: block;
-	background: url("/2015voting/btnStart.gif") top center no-repeat;
+#btnStart {
+  width: 233px;
+  height: 63px;
+  margin: 0 auto;
+  display: block;
+  background: url("/2015voting/btnStart.gif") top center no-repeat;
 }
-#btnStart:hover{
-	background-position: bottom center;
+
+#btnStart:hover {
+  background-position: bottom center;
 }
 
 /**************/
 
-@media screen and (max-width: 1090px){
-	#dontforget{
-		display: none;
-	}
+@media screen and (max-width: 1090px) {
+  #dontforget {
+    display: none;
+  }
 }
 
 @media only screen and (max-device-width: 1080px) {
-	.award {
-		float: none;
-		width: 600px;
-		font-size: 1em;
-	}
+  .award {
+    float: none;
+    width: 600px;
+    font-size: 1em;
+  }
 }

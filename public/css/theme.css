@@ -35,12 +35,33 @@ body {
   background-image: url("/2016images/zig.png");
 }
 
+/* Typography (headings) */
+h1, h2 {
+  font-weight: normal;
+}
+
+h1 {
+  font-family: 'AnnapolisHalftoneItalic', 'Tahoma Bold', Tahoma, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: 3em;
+  line-height: 100%;
+  color: #00ebdb;
+}
+
+h2 {
+  font-family: 'FixedSystem', Calibri, sans-serif;
+  font-size: 2em;
+  color: #bfbfbf;
+}
+
 /* Navbar */
 .navbar, .navbar .navbar-inner {
-  -moz-box-shadow:    none;
+  -moz-box-shadow: none;
   -webkit-box-shadow: none;
-  box-shadow:         none;
-  border:             none;
+  box-shadow: none;
+  border: none;
   background: url(/2016images/background_city.jpg) #1f1f1f no-repeat center center;
   background-size: cover;
 }
@@ -57,7 +78,7 @@ body {
   color: #f0f1a3 !important;
 }
 
-.navbar .nav>.active>a {
+.navbar .nav > .active > a {
   box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
   -webkit-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
   -moz-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);

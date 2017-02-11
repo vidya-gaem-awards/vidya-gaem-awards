@@ -2,12 +2,18 @@
 
 {% block fullTitle %}/v/GAs - Voting{% endblock %}
 
+{% block css %}
+  {{ parent() }}
+  <link rel="stylesheet" href="/css/voting.css">
+{% endblock %}
+
 {% block js %}
     {{ parent() }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
     {% if award %}
     <script src='/js/voting.js'></script>
     {% endif %}
+    <script src='/js/dumbshit.js'></script>
 {% endblock %}
 
 {% block head %}

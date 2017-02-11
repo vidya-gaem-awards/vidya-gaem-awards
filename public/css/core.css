@@ -1,105 +1,106 @@
 body {
-	padding-top: 60px;
-	padding-bottom: 20px;
-	background: #EEF2FF url('/background.png') top center repeat-x;
-	font-family: 'Titillium Web', arial, helvetica, sans-serif;
+  padding-top: 60px;
+  padding-bottom: 20px;
+  background: #EEF2FF url('/background.png') top center repeat-x;
+  font-family: 'Titillium Web', arial, helvetica, sans-serif;
 }
 
 input, select, textarea {
-	font-family: arial,helvetica,sans-serif;
+  font-family: arial, helvetica, sans-serif;
 }
 
 .implying {
-	color: #789922;
+  color: #789922;
 }
 
 .spoiler {
-	background-color: black;
-	color: black;
+  background-color: black;
+  color: black;
 }
 
 .spoiler:hover {
-	color: white;
+  color: white;
 }
 
 .news {
-	font-size: 120%;
+  font-size: 120%;
 }
 
 .news li {
-	line-height: 150%;
-	margin-bottom: 10px;
+  line-height: 150%;
+  margin-bottom: 10px;
 }
 
 .news .news-old {
-	color: grey;
+  color: grey;
 }
 
 .container[role="main"] {
-	padding-bottom: 40px;
+  padding-bottom: 40px;
 }
 
 .jumbotron {
-	position: relative;
+  position: relative;
 }
 
 .masthead {
-	padding-top: 36px;
-	margin-bottom: 72px;
+  padding-top: 36px;
+  margin-bottom: 72px;
 }
 
 .masthead h1 {
-	margin-bottom: 18px;
+  margin-bottom: 18px;
 }
+
 .masthead h1, .masthead p {
-	text-align: center;
+  text-align: center;
 }
+
 .jumbotron h1 {
-	margin-bottom: 9px;
-	font-size: 80px;
-	letter-spacing: -1px;
-	line-height: 1;
+  margin-bottom: 9px;
+  font-size: 80px;
+  letter-spacing: -1px;
+  line-height: 1;
 }
+
 .masthead p {
-	margin-left: 5%;
-	margin-right: 5%;
-	font-size: 30px;
-	line-height: 36px;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-size: 30px;
+  line-height: 36px;
 }
 
 .page-header {
-	border-bottom-color: #BBB;
+  border-bottom-color: #BBB;
 }
 
-
 .form-table input {
-	margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .subhead h1 {
-	font-size: 54px;
+  font-size: 54px;
 }
 
 section {
-	padding-top: 30px;
+  padding-top: 30px;
 }
 
 .page-header.spacing {
-	padding-top: 30px;
+  padding-top: 30px;
 }
 
-
 table.tablesorter thead tr th {
-	background: url("/sort.gif") no-repeat center right;
-	cursor: pointer;
+  background: url("/sort.gif") no-repeat center right;
+  cursor: pointer;
 }
 
 table.tablesorter thead tr .headerSortDown {
-	background-image: url("/desc.gif");
+  background-image: url("/desc.gif");
 }
 
 table.tablesorter thead tr .headerSortUp {
-	background-image: url("/asc.gif");
+  background-image: url("/asc.gif");
 }
 
 /* Sidenav for Docs
@@ -108,10 +109,11 @@ table.tablesorter thead tr .headerSortUp {
 .custom-navigation-pane {
   padding: 0;
   background-color: #fff;
-  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-     -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-          box-shadow: 0 1px 4px rgba(0,0,0,.065);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .065);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, .065);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .065);
 }
+
 .custom-navigation-pane > li > a {
   display: block;
   *width: 190px;
@@ -119,20 +121,22 @@ table.tablesorter thead tr .headerSortUp {
   padding: 8px 14px;
   border: 1px solid #e5e5e5;
 }
+
 .custom-navigation-pane > .active > a {
   position: relative;
   z-index: 2;
   padding: 9px 15px;
   border: 0;
-  text-shadow: 0 1px 0 rgba(0,0,0,.15);
-  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
-     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
-          box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .15);
+  -webkit-box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1), inset -1px 0 0 rgba(0, 0, 0, .1);
+  -moz-box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1), inset -1px 0 0 rgba(0, 0, 0, .1);
+  box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1), inset -1px 0 0 rgba(0, 0, 0, .1);
 }
+
 /* Chevrons */
 
 ul.nav li.dropdown:hover ul.dropdown-menu {
-  display: block;    
+  display: block;
 }
 
 a[rel=publisher] {
