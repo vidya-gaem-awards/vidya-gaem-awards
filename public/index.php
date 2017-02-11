@@ -272,24 +272,11 @@ $routes->add('awardManagerPost', new Route(
     [],
     ['POST']
 ));
-$routes->add('editAward', new Route(
-    '/awards/manage/{awardID}',
+$routes->add('awardManagerPostAjax', new Route(
+    '/awards/manage/ajax',
     [
         'controller' => Controllers\AwardAdminController::class,
-        'action' => 'editAward',
-        'permission' => 'awards-edit'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['GET']
-));
-$routes->add('editAwardPost', new Route(
-    '/awards/manage/{awardID}',
-    [
-        'controller' => Controllers\AwardAdminController::class,
-        'action' => 'editAwardPost',
+        'action' => 'managerPostAjax',
         'permission' => 'awards-edit'
     ],
     [],

@@ -96,16 +96,17 @@ class Award implements \JsonSerializable
     }
 
     /**
-     * Set id
-     *
      * @param string $id
-     *
      * @return Award
+     * @throws \Exception
      */
     public function setId($id)
     {
-        $this->id = $id;
+        if (!preg_match('/^[A-Za-z0-9-]+$/', $id)) {
+            throw new \Exception('Invalid ID provided: award IDs can only consist of numbers, letters, and dashes.');
+        }
 
+        $this->id = $id;
         return $this;
     }
 
@@ -582,11 +583,15 @@ class Award implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'subtitle' => $this->getSubtitle(),
-            'autocompleter' => $this->getAutocompleter() ? $this->getAutocompleter()->getId() : $this->getId(),
             'comments' => $this->getComments() ?: '',
-            'nominationsEnabled' => $this->areNominationsEnabled()
+            'autocompleter' => $this->getAutocompleter() ? $this->getAutocompleter()->getId() : $this->getId(),
+            'order' => $this->getOrder(),
+            'enabled' => $this->isEnabled(),
+            'nominationsEnabled' => $this->areNominationsEnabled(),
+            'secret' => $this->isSecret(),
         ];
     }
 
