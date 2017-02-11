@@ -1,0 +1,20 @@
+{% extends 'base/master.twig' %}
+
+{#
+  The special template does not include the navbars or a Bootstrap container, but it does have the themed CSS.
+
+  Example pages:
+    - Countdown
+    - Stream
+    - Voting
+#}
+
+{% block css %}
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/voting.css">
+{% endblock %}
+
+{% block js %}
+  <script src='/js/dumbshit.js'></script>
+{% endblock %}
+

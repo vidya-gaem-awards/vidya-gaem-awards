@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>The Vidya Gaem Awards</title>
+{% extends 'base/special.twig' %}
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/core.css">
-  <link rel="stylesheet" href="/css/theme.css">
-  <link rel="stylesheet" href="/css/voting.css">
+{% block fullTitle %}2017 Vidya Game Awards{% endblock %}
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
-  <script src='/js/dumbshit.js'></script>
-
-  <meta name="viewport" content="width=1100, maximum-scale=1.0, user-scalable=no" />
-  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
-
+{% block head %}
   <style type="text/css">
      a, a:hover {
       text-decoration: none;
@@ -95,84 +82,81 @@
       display: inline-block;
     }
   </style>
-</head>
+{% endblock %}
 
-<body>
+{% block body %}
+  <div style="text-align: center;">
+    <img src="/2016images/vga_logo.png" alt="Logo of the 2016 Vidya Gaem Awards" style="display: inline;">
+  </div>
 
-<div style="text-align: center;">
-  <img src="/2016images/vga_logo.png" alt="Logo of the 2016 Vidya Gaem Awards" style="display: inline;">
-</div>
-
-<div class="zig hidden-xs hidden-sm" style="margin-top: 20px;"></div>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-3 timezones hidden-xs hidden-sm">
-      <dl>
-        {% for friendlyTimezone, timezone in timezones[:(timezones|length)/2] %}
-          <dt><abbr title="UTC {{ streamDate | date('P', timezone) }}">{{ friendlyTimezone }}</abbr></dt>
-          <dd>{{ streamDate | date('D M jS, H:i', timezone) }}</dd>
-        {% endfor %}
-        <dt><a href="{{ otherTimezonesLink }}">Other Timezones</a></dt>
-      </dl>
-    </div>
-    <div class="col-md-6">
-      <div class="logo">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/JUZ0NVj3Q-0" frameborder="0" allowfullscreen></iframe>
+  <div class="zig hidden-xs hidden-sm" style="margin-top: 20px;"></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 timezones hidden-xs hidden-sm">
+        <dl>
+          {% for friendlyTimezone, timezone in timezones[:(timezones|length)/2] %}
+            <dt><abbr title="UTC {{ streamDate | date('P', timezone) }}">{{ friendlyTimezone }}</abbr></dt>
+            <dd>{{ streamDate | date('D M jS, H:i', timezone) }}</dd>
+          {% endfor %}
+          <dt><a href="{{ otherTimezonesLink }}">Other Timezones</a></dt>
+        </dl>
       </div>
-      <div class="title">
-        <h1>Please understand.</h1>
-        <h2 id="countdown">&nbsp;</h2>
-        <h2 style="font-family: sans-serif; color: white; padding-top: 15px; font-size: 18px;">
-          The preshow starts 90 minutes before the main show, and features music and skits.
-        </h2>
-        <div class="visible-xs-block visible-sm-block" style="margin-top: 15px;">
-          <a href="{{ otherTimezonesLink }}" class="mobile-link">View the stream date in your timezone</a>
+      <div class="col-md-6">
+        <div class="logo">
+          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/JUZ0NVj3Q-0" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="title">
+          <h1>Please understand.</h1>
+          <h2 id="countdown">&nbsp;</h2>
+          <h2 style="font-family: sans-serif; color: white; padding-top: 15px; font-size: 18px;">
+            The preshow starts 90 minutes before the main show, and features music and skits.
+          </h2>
+          <div class="visible-xs-block visible-sm-block" style="margin-top: 15px;">
+            <a href="{{ otherTimezonesLink }}" class="mobile-link">View the stream date in your timezone</a>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-3 timezones hidden-xs hidden-sm">
-      <dl>
-        {% for friendlyTimezone, timezone in timezones[(timezones|length)/2:] %}
-          <dt><abbr title="UTC {{ streamDate | date('P', timezone) }}">{{ friendlyTimezone }}</abbr></dt>
-          <dd>{{ streamDate | date('D M jS, H:i', timezone) }}</dd>
-        {% endfor %}
-        <dt><a href="{{ otherTimezonesLink }}">Other Timezones</a></dt>
-      </dl>
+      <div class="col-md-3 timezones hidden-xs hidden-sm">
+        <dl>
+          {% for friendlyTimezone, timezone in timezones[(timezones|length)/2:] %}
+            <dt><abbr title="UTC {{ streamDate | date('P', timezone) }}">{{ friendlyTimezone }}</abbr></dt>
+            <dd>{{ streamDate | date('D M jS, H:i', timezone) }}</dd>
+          {% endfor %}
+          <dt><a href="{{ otherTimezonesLink }}">Other Timezones</a></dt>
+        </dl>
+      </div>
     </div>
   </div>
-</div>
-<div class="zig hidden-xs hidden-sm"></div>
+  <div class="zig hidden-xs hidden-sm"></div>
 
-<script type="text/javascript">
-  var serverLoad = Date.parse("{{ 'now' | date('c') }}");
-  var clientLoad = Date.now();
+  <script type="text/javascript">
+    var serverLoad = Date.parse("{{ 'now' | date('c') }}");
+    var clientLoad = Date.now();
 
-  // This could probably be replaced by moment.js
-  function updateWCTime() {
-    var clientNow = Date.now();
-    var serverNow = clientNow - clientLoad + serverLoad - 1;
-    
-    var kickoff = Date.parse("{{ streamDate | date('c') }}");
-    var diff = kickoff - serverNow;
-    diff = Math.max(diff, 0);
+    // This could probably be replaced by moment.js
+    function updateWCTime() {
+      var clientNow = Date.now();
+      var serverNow = clientNow - clientLoad + serverLoad - 1;
 
-    var days = Math.floor( diff / (1000*60*60*24) );
-    var hours = Math.floor( diff / (1000*60*60) );
-    var mins = Math.floor( diff / (1000*60) );
-    var secs = Math.floor( diff / 1000 );
+      var kickoff = Date.parse("{{ streamDate | date('c') }}");
+      var diff = kickoff - serverNow;
+      diff = Math.max(diff, 0);
 
-    var dd = days;
-    var hh = hours - days * 24;
-    var mm = mins - hours * 60;
-    var ss = secs - mins * 60;
-      
-    document.getElementById("countdown").innerHTML = dd + ' day' + (dd == 1 ? ', ' : 's, ') + hh + ' hour' +
-        (hh == 1 ? ', ' : 's, ') + mm + ' minute' + (mm == 1 ? ', ' : 's, ') +
-        ss + ' second' + (ss == 1 ? '' : 's');
-  }
-  window.onload = updateWCTime;
-  setInterval('updateWCTime()', 1000 ); 
-</script>
+      var days = Math.floor( diff / (1000*60*60*24) );
+      var hours = Math.floor( diff / (1000*60*60) );
+      var mins = Math.floor( diff / (1000*60) );
+      var secs = Math.floor( diff / 1000 );
 
-</body>
-</html>
+      var dd = days;
+      var hh = hours - days * 24;
+      var mm = mins - hours * 60;
+      var ss = secs - mins * 60;
+
+      document.getElementById("countdown").innerHTML = dd + ' day' + (dd == 1 ? ', ' : 's, ') + hh + ' hour' +
+          (hh == 1 ? ', ' : 's, ') + mm + ' minute' + (mm == 1 ? ', ' : 's, ') +
+          ss + ' second' + (ss == 1 ? '' : 's');
+    }
+    window.onload = updateWCTime;
+    setInterval('updateWCTime()', 1000 );
+  </script>
+{% endblock %}

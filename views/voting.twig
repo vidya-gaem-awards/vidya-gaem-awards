@@ -1,25 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>/v/GAs - Voting</title>
+{% extends 'base/special.twig' %}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
-    <link rel="stylesheet" href="/css/core.css">
-    <link rel="stylesheet" href="/css/theme.css">
-    <link rel="stylesheet" href="/css/voting.css">
+{% block fullTitle %}/v/GAs - Voting{% endblock %}
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+{% block js %}
+    {{ parent() }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
-    <script src='/js/dumbshit.js'></script>
     {% if award %}
     <script src='/js/voting.js'></script>
     {% endif %}
+{% endblock %}
 
-    <meta name="viewport" content="width=1100, maximum-scale=1.0, user-scalable=no" />
-    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
-
+{% block head %}
     {% if award %}
     <script type="text/javascript">
         var votingEnabled = {{ votingOpen ? 'true' : 'false' }};
@@ -36,10 +27,9 @@
             }
         </style>
     {% endif %}
+{% endblock %}
 
-</head>
-<body>
-
+{% block body %}
 <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
 <header>
     <a href="{{ path('voting') }}"><img src="/2016images/vga_logo.png" id="thelogo" alt="oh god it's happening again"/></a>
@@ -192,6 +182,4 @@
                 site</a></h3>
     {% endif %}
 </div>
-
-</body>
-</html>
+{% endblock %}

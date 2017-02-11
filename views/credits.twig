@@ -1,25 +1,9 @@
-{% extends 'master.twig' %}
+{% extends 'base/standardThemed.twig' %}
 
 {% block title %}Credits{% endblock %}
 
-{% block head %}
-<link rel="stylesheet" href="/css/theme.css">
-{% endblock %}
-
 {% block content %}
 <style type="text/css">
-  html {
-    background: #20172f url("/2016images/background_city.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-
-  body {
-    background: none;
-  }
-
   h1, h2 {
     margin:0;
     padding:0;
@@ -131,46 +115,6 @@
     font-family: 'FixedSystem',Calibri,sans-serif;
     font-size: 32px !important;
     line-height: 20px;
-  }
-
-  .navbar, .navbar .navbar-inner {
-    -moz-box-shadow:    none;
-    -webkit-box-shadow: none;
-    box-shadow:         none;
-    border:             none;
-    background: url(/2016images/background_city.jpg) no-repeat fixed center center;
-  }
-
-  .navbar a {
-    font-family: 'FixedSystem',Calibri,sans-serif !important;
-    font-size: 35px;
-    color: white !important;
-    text-shadow: none !important;
-    background: none !important;
-  }
-
-  .navbar a:hover {
-    color: #f0f1a3 !important;
-  }
-
-  .navbar .nav>.active>a {
-    box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
-    -webkit-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
-    -moz-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
-  }
-
-  .navbar-fixed-top {
-    border-bottom: 1px solid #f0f1a3;
-    box-shadow: 0 0 5px #f0f1a3;
-  }
-
-  .navbar-fixed-bottom {
-    border-top: 1px solid #f0f1a3;
-    box-shadow: 0 0 5px #f0f1a3;
-  }
-
-  .navbar-brand {
-    font-weight: normal;
   }
 
   .credits {

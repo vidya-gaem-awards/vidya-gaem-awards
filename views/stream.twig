@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>The 2017 Vidya Gaem Awards</title>
+{% extends 'base/special.twig' %}
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/core.css">
-  <link rel="stylesheet" href="/css/theme.css">
-  <link rel="stylesheet" href="/css/voting.css">
+{% block fullTitle %}2017 Vidya Game Awards{% endblock %}
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js'></script>
-  <script src='/js/dumbshit.js'></script>
-
-  {#<meta name="viewport" content="width=1100, maximum-scale=1.0, user-scalable=no" />#}
-  {#<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>#}
-
+{% block head %}
   <style type="text/css">
 
     *, *:before, *:after {
@@ -174,10 +161,9 @@
     margin-right: 6px;
   }
   </style>
-</head>
+{% endblock %}
 
-<body>
-
+{% block body %}
 <div class="channel-main">
   <div class="" id="main_col" style="margin-left: 0px;">
     <div class="content">
@@ -291,5 +277,4 @@ $("#link-chat-twitch").click(function() {
 </script>
 {% endif %}
 
-</body>
-</html>
+{% endblock %}
