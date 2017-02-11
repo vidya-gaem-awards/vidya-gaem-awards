@@ -36,7 +36,7 @@ class ResultController extends BaseController
             $results[$award->getId()] = $rankings;
         }
 
-        $tpl = $this->twig->loadTemplate('winners.twig');
+        $tpl = $this->twig->load('winners.twig');
         $response = new Response($tpl->render([
             'awards' => $awards,
             'results' => $results
@@ -101,7 +101,7 @@ class ResultController extends BaseController
             }
         }
 
-        $tpl = $this->twig->loadTemplate('results.twig');
+        $tpl = $this->twig->load('results.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Results',
@@ -130,7 +130,7 @@ class ResultController extends BaseController
             $pairwise[$award->getId()] = $award->getOfficialResults()->getSteps()['pairwise'];
         }
 
-        $tpl = $this->twig->loadTemplate('resultsPairwise.twig');
+        $tpl = $this->twig->load('resultsPairwise.twig');
         $response = new Response($tpl->render([
             'awards' => $awards,
             'pairwise' => $pairwise

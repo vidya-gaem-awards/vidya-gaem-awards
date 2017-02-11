@@ -19,7 +19,7 @@ class VotingController extends BaseController
 {
     public function indexAction($awardID = null)
     {
-        $tpl = $this->twig->loadTemplate('voting.twig');
+        $tpl = $this->twig->load('voting.twig');
 
         // Fetch all of the enabled awards
         $repo = $this->em->getRepository(Award::class);
@@ -276,7 +276,7 @@ class VotingController extends BaseController
 
     public function codeViewerAction()
     {
-        $tpl = $this->twig->loadTemplate('votingCode.twig');
+        $tpl = $this->twig->load('votingCode.twig');
 
         $date = new \DateTime();
         $dateString = $date->format('M d Y, g A');

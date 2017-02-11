@@ -18,7 +18,7 @@ class VideoGamesController extends BaseController
 
         $games = $query->getQuery()->getResult();
 
-        $tpl = $this->twig->loadTemplate('videoGames.twig');
+        $tpl = $this->twig->load('videoGames.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Vidya in 2016',

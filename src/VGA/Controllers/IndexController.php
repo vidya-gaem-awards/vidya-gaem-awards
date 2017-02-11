@@ -18,7 +18,7 @@ class IndexController extends BaseController
 
         $news = $query->getQuery()->getResult();
 
-        $tpl = $this->twig->loadTemplate('index.twig');
+        $tpl = $this->twig->load('index.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Home',

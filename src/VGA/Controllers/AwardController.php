@@ -96,7 +96,7 @@ class AwardController extends BaseController
             $autocompleters[$award->getId()] = array_keys($nominationCount);
         }
 
-        $tpl = $this->twig->loadTemplate('awards.twig');
+        $tpl = $this->twig->load('awards.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Awards and Nominations',

@@ -11,7 +11,7 @@ class CreditsController extends BaseController
 {
     public function indexAction()
     {
-        $tpl = $this->twig->loadTemplate('credits.twig');
+        $tpl = $this->twig->load('credits.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Credits',

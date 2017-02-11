@@ -14,7 +14,7 @@ class PeopleController extends BaseController
 {
     public function indexAction()
     {
-        $tpl = $this->twig->loadTemplate('people.twig');
+        $tpl = $this->twig->load('people.twig');
 
         $users = $this->em->getRepository(User::class)->findBy(
             ['special' => true], ['name' => 'ASC']
@@ -41,7 +41,7 @@ class PeopleController extends BaseController
 
         $permissions = $this->em->getRepository(Permission::class)->findAll();
 
-        $tpl = $this->twig->loadTemplate('viewPerson.twig');
+        $tpl = $this->twig->load('viewPerson.twig');
         $response = new Response($tpl->render([
             'title' => $user->getName(),
             '_user' => $user,
@@ -62,7 +62,7 @@ class PeopleController extends BaseController
             return;
         }
 
-        $tpl = $this->twig->loadTemplate('editPerson.twig');
+        $tpl = $this->twig->load('editPerson.twig');
         $response = new Response($tpl->render([
             'title' => $user->getName(),
             '_user' => $user
@@ -192,7 +192,7 @@ class PeopleController extends BaseController
 
     public function permissionsAction()
     {
-        $tpl = $this->twig->loadTemplate('permissions.twig');
+        $tpl = $this->twig->load('permissions.twig');
         $response = new Response($tpl->render([
             'title' => 'Permissions'
         ]));
@@ -201,7 +201,7 @@ class PeopleController extends BaseController
 
     public function newAction()
     {
-        $tpl = $this->twig->loadTemplate('addPerson.twig');
+        $tpl = $this->twig->load('addPerson.twig');
         $response = new Response($tpl->render([
             'title' => 'Add Person'
         ]));

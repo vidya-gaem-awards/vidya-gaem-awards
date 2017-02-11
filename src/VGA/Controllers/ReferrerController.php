@@ -68,7 +68,7 @@ class ReferrerController extends BaseController
             return $b['latest'] <=> $a['latest'];
         });
 
-        $tpl = $this->twig->loadTemplate('referrers.twig');
+        $tpl = $this->twig->load('referrers.twig');
 
         $response = new Response($tpl->render([
             'title' => 'Referrers',

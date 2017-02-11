@@ -31,7 +31,7 @@ class AwardAdminController extends BaseController
             });
         }
 
-        $tpl = $this->twig->loadTemplate('awardManager.twig');
+        $tpl = $this->twig->load('awardManager.twig');
 
         $variables = [
             'title' => 'Manage Awards',

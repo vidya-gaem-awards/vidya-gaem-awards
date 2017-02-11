@@ -33,7 +33,7 @@ class LauncherController extends BaseController
             $streamDate ? $streamDate->format("Y-m-d\TH:i:s") : ''
         );
 
-        $tpl = $this->twig->loadTemplate('countdown.twig');
+        $tpl = $this->twig->load('countdown.twig');
         $response = new Response($tpl->render([
             'streamDate' => $streamDate,
             'timezones' => $timezones,
@@ -44,7 +44,7 @@ class LauncherController extends BaseController
 
     public function streamAction()
     {
-        $tpl = $this->twig->loadTemplate('stream.twig');
+        $tpl = $this->twig->load('stream.twig');
 
         $streamDate = $this->config->getStreamTime();
         $showCountdown = ($streamDate > new \DateTime());
@@ -58,7 +58,7 @@ class LauncherController extends BaseController
 
     public function finishedAction()
     {
-        $tpl = $this->twig->loadTemplate('finished.twig');
+        $tpl = $this->twig->load('finished.twig');
         $response = new Response($tpl->render([]));
         $response->send();
     }

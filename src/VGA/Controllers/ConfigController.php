@@ -10,7 +10,7 @@ class ConfigController extends BaseController
 {
     public function indexAction()
     {
-        $tpl = $this->twig->loadTemplate('config.twig');
+        $tpl = $this->twig->load('config.twig');
 
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
         $timezonesByArea = [];

@@ -61,7 +61,7 @@ class NomineeController extends BaseController
             ];
         }
 
-        $tpl = $this->twig->loadTemplate('nominees.twig');
+        $tpl = $this->twig->load('nominees.twig');
 
         $response = new Response($tpl->render(array_merge([
             'title' => 'Nominee Manager',

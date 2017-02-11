@@ -21,7 +21,7 @@ class NewsController extends BaseController
 
         $news = $query->getQuery()->getResult();
 
-        $tpl = $this->twig->loadTemplate('news.twig');
+        $tpl = $this->twig->load('news.twig');
 
         $response = new Response($tpl->render([
             'title' => 'News',
