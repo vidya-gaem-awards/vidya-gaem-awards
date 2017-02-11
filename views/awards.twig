@@ -1,413 +1,415 @@
 {% extends 'base/standard.twig' %}
 
 {% block head %}
-    <style type="text/css">
-      .ui-autocomplete {
-        max-height: 300px;
-        overflow-y: auto;
-        /* prevent horizontal scrollbar */
-        overflow-x: hidden;
-        /* add padding to account for vertical scrollbar */
-      }
-      #video-games img:hover {
-        box-shadow: 0 0 4px black;
+  <style type="text/css">
+    .ui-autocomplete {
+      max-height: 300px;
+      overflow-y: auto;
+      /* prevent horizontal scrollbar */
+      overflow-x: hidden;
+      /* add padding to account for vertical scrollbar */
+    }
+
+    #video-games img:hover {
+      box-shadow: 0 0 4px black;
+    }
+
+    #video-game-collage {
+      background-color: #111;
+    }
+
+    #video-game-collage .top {
+      top: 0;
+    }
+
+    #video-game-collage .bottom {
+      bottom: 3px;
+    }
+
+    #video-game-collage .top, #video-game-collage .bottom {
+      position: absolute;
+      text-align: center;
+      font-weight: bold;
+      font-size: 35px;
+      color: white;
+      padding: 0 10px;
+      max-width: 555px;
+      text-shadow: 0 2px 0 black;
+    }
+
+    .page-header {
+      font-family: 'Bungee', sans-serif;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .admin-tools {
+      margin-top: -20px;
+      text-align: center;
+      border-bottom: 1px solid #BBB;
+      border-radius: 0;
+    }
+
+    .impressive-title {
+      /*text-shadow: #000 1px 1px 2px;*/
+      text-align: center;
+      color: #789922;
+      text-transform: uppercase;
+      font-family: 'Bungee', sans-serif;
+      font-size: 2.0em;
+      line-height: 1em;
+    }
+
+    .impressive-subtitle {
+      text-align: center;
+      color: #1F1F1F;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+
+    .award-container {
+      border: 1px solid #BBB;
+      background-color: #f5f5f5;
+      padding: 15px 15px 15px 15px;
+    }
+
+    #user-nomination-list {
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 991px) {
+      .affix {
+        padding-top: 10px;
+        position: static;
       }
 
-      #video-game-collage {
-        background-color: #111;
+      #awardDropdown .dropdown-menu {
+        width: 100%;
+        margin-bottom: 60px;
       }
+    }
 
-      #video-game-collage .top {
-        top: 0;
+    #awardDropdownButton {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    #awardDropdown .dropdown-menu > li > a {
+      white-space: normal;
+    }
+
+    .affix {
+      width: 100%;
+    }
+
+    @media (min-width: 1200px) {
+      .affix {
+        width: 585px;
       }
+    }
 
-      #video-game-collage .bottom {
-        bottom: 3px;
-      }
-
-      #video-game-collage .top, #video-game-collage .bottom {
-        position: absolute;
-        text-align: center;
-        font-weight: bold;
-        font-size: 35px;
-        color: white;
-        padding: 0 10px;
-        max-width: 555px;
-        text-shadow: 0 2px 0 black;
-      }
-
-      .page-header {
-        font-family: 'Bungee', sans-serif;
-        text-align: center;
-        margin-top: 5px;
-      }
-
-      .admin-tools {
-        margin-top: -20px;
-        text-align: center;
-        border-bottom: 1px solid #BBB;
-        border-radius: 0;
-      }
-
-      .impressive-title {
-        /*text-shadow: #000 1px 1px 2px;*/
-        text-align: center;
-        color: #789922;
-        text-transform: uppercase;
-        font-family: 'Bungee', sans-serif;
-        font-size: 2.0em;
-        line-height: 1em;
-      }
-
-      .impressive-subtitle {
-        text-align: center;
-        color: #1F1F1F;
-        font-weight: bold;
-        font-size: 1.1em;
-        margin-bottom: 10px;
-      }
-
-      .award-container {
-          border: 1px solid #BBB;
-          background-color: #f5f5f5;
-          padding: 15px 15px 15px 15px;
-      }
-
-      #user-nomination-list {
-          margin-bottom: 10px;
-      }
-
-      @media (max-width: 991px) {
-        .affix {
-          padding-top: 10px;
-          position: static;
-        }
-
-        #awardDropdown .dropdown-menu {
-          width: 100%;
-          margin-bottom: 60px;
-        }
+    @media (min-width: 992px) {
+      .affix {
+        width: 555px;
+        top: 85px;
       }
 
       #awardDropdownButton {
-        width: 100%;
-        margin-bottom: 20px;
+        display: none;
       }
 
-      #awardDropdown .dropdown-menu > li > a {
-          white-space: normal;
+      #awardDropdown {
+        position: static;
       }
 
-      .affix {
-        width: 100%;
+      #awardDropdown .dropdown-menu {
+        position: static;
+        display: block;
+        top: auto;
+        left: auto;
+        float: none;
+        border: none;
       }
-
-      @media (min-width: 1200px) {
-        .affix {
-          width: 585px;
-        }
-      }
-
-      @media (min-width: 992px) {
-        .affix {
-          width: 555px;
-          top: 85px;
-        }
-
-        #awardDropdownButton {
-          display: none;
-        }
-
-        #awardDropdown {
-          position: static;
-        }
-
-        #awardDropdown .dropdown-menu {
-          position: static;
-          display: block;
-          top: auto;
-          left: auto;
-          float: none;
-          border: none;
-        }
-      }
-    </style>
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
-    <h1 class="page-header">Nominate Games for the 2017&nbsp;/v/GAs</h1>
-    {% if user.canDo('awards-edit') or user.canDo('nominations-view') %}
-        <ul class="breadcrumb admin-tools">
-            {% if user.canDo('awards-edit') %}
-                <li>
-                    <a href="{{ path('awardManager') }}">Manage awards</a>
-                </li>
-            {% endif %}
-            {% if user.canDo('nominations-view') %}
-                <li>
-                    <a href="{{ path('nomineeManager') }}">Manage nominees</a>
-                </li>
-            {% endif %}
-        </ul>
-    {% endif %}
+  <h1 class="page-header">Nominate Games for the 2017&nbsp;/v/GAs</h1>
+  {% if user.canDo('awards-edit') or user.canDo('nominations-view') %}
+    <ul class="breadcrumb admin-tools">
+      {% if user.canDo('awards-edit') %}
+        <li>
+          <a href="{{ path('awardManager') }}">Manage awards</a>
+        </li>
+      {% endif %}
+      {% if user.canDo('nominations-view') %}
+        <li>
+          <a href="{{ path('nomineeManager') }}">Manage nominees</a>
+        </li>
+      {% endif %}
+    </ul>
+  {% endif %}
 
-    <div class="row">
-        <div class="col-md-6" id="award-selector">
-          <div class="dropdown" id="awardDropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="awardDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              Select an award
-              <span class="caret"></span>
-            </button>
-            <ul class="nav nav-list custom-navigation-pane dropdown-menu" aria-labelledby="awardDropdownButton">
-                {% for award in awards %}
-                    <li data-id="{{ award.id }}">
-                        <a href="#{{ award.id }}">
-                            <span id="opinion-icon">[{{ userNominations[award.id] | length }}]</span>
-                            <strong>{{ award.name }}</strong> {{ award.subtitle }}
-                            <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+  <div class="row">
+    <div class="col-md-6" id="award-selector">
+      <div class="dropdown" id="awardDropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="awardDropdownButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
+          Select an award
+          <span class="caret"></span>
+        </button>
+        <ul class="nav nav-list custom-navigation-pane dropdown-menu" aria-labelledby="awardDropdownButton">
+          {% for award in awards %}
+            <li data-id="{{ award.id }}">
+              <a href="#{{ award.id }}">
+                <span id="opinion-icon">[{{ userNominations[award.id] | length }}]</span>
+                <strong>{{ award.name }}</strong> {{ award.subtitle }}
+                <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-6" id="video-games">
+      <a href="{{ path('videoGames') }}">
+        <div id="video-game-collage">
+          <img class="img-responsive" src="img/collage.jpg">
+          <div class="top">Forgotten what vidya you played earlier this year?</div>
+          <div class="bottom">Click here for a list of video&nbsp;games from 2017.</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-6" id="award-info" style="display: none;">
+      <div data-spy="affix" data-offset-top="90" class="award-container">
+        <div id="award-name" class="impressive-title"></div>
+        <div id="award-subtitle" class="impressive-subtitle"></div>
+
+        <p id="description" style="text-align: center;"></p>
+
+        <div style="text-align: center; margin-bottom: 10px;">
+          <div class="btn-group" id="award-voting">
+            <button class="btn btn-default" id="thumbs-up">This award is good</button>
+            <button class="btn btn-default" id="thumbs-down">This award is shit</button>
           </div>
         </div>
 
-        <div class="col-md-6" id="video-games">
-            <a href="{{ path('videoGames') }}">
-                <div id="video-game-collage">
-                    <img class="img-responsive" src="img/collage.jpg">
-                    <div class="top">Forgotten what vidya you played earlier this year?</div>
-                    <div class="bottom">Click here for a list of video&nbsp;games from 2017.</div>
-                </div>
-            </a>
-        </div>
+        <div class="well" style="background-color: #fafafa;" id="user-nomination-list"></div>
 
-        <div class="col-md-6" id="award-info" style="display: none;">
-            <div data-spy="affix" data-offset-top="90" class="award-container">
-                <div id="award-name" class="impressive-title"></div>
-                <div id="award-subtitle" class="impressive-subtitle"></div>
-
-                <p id="description" style="text-align: center;"></p>
-
-                <div style="text-align: center; margin-bottom: 10px;">
-                    <div class="btn-group" id="award-voting">
-                        <button class="btn btn-default" id="thumbs-up">This award is good</button>
-                        <button class="btn btn-default" id="thumbs-down">This award is shit</button>
-                    </div>
-                </div>
-
-                <div class="well" style="background-color: #fafafa;" id="user-nomination-list"></div>
-
-                <div id="nomination-section">
-                    <form class="form-inline" style="text-align: center;" id="nomination-form">
-                        <div class="form-group">
-                            <label class="sr-only" for="tags">Add a nomination:</label>
-                            <div class="input-group">
-                                <div class="input-group-addon">Add a nomination:</div>
-                                <input class="form-control" id="tags" name="nomination" type="text" required>
-                            </div>
-                        </div>
-                        <button class="btn" type="submit">Submit</button>
-                        <p class="help-block" style="font-style: italic;">
-                            <span id="autocomplete"></span><br>
-                            You can make nominations for things that aren't in the dropdown.
-                        </p>
-                    </form>
-
-                    <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
-                </div>
-
-                <div id="nominations-closed" style="display: none; text-align: center;">
-                    Nominations for this award are not currently open.
-                </div>
+        <div id="nomination-section">
+          <form class="form-inline" style="text-align: center;" id="nomination-form">
+            <div class="form-group">
+              <label class="sr-only" for="tags">Add a nomination:</label>
+              <div class="input-group">
+                <div class="input-group-addon">Add a nomination:</div>
+                <input class="form-control" id="tags" name="nomination" type="text" required>
+              </div>
             </div>
+            <button class="btn" type="submit">Submit</button>
+            <p class="help-block" style="font-style: italic;">
+              <span id="autocomplete"></span><br>
+              You can make nominations for things that aren't in the dropdown.
+            </p>
+          </form>
+
+          <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
         </div>
+
+        <div id="nominations-closed" style="display: none; text-align: center;">
+          Nominations for this award are not currently open.
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script type="text/javascript">
-        var awards = {{ awards | json_encode() | raw }};
-        var userNominations = {{ userNominations | json_encode() | raw }};
-        var opinions = {{ userOpinions | json_encode() | raw }};
-        var autocompleters = {{ autocompleters | json_encode() | raw }};
+  <script type="text/javascript">
+    var awards = {{ awards | json_encode() | raw }};
+    var userNominations = {{ userNominations | json_encode() | raw }};
+    var opinions = {{ userOpinions | json_encode() | raw }};
+    var autocompleters = {{ autocompleters | json_encode() | raw }};
 
-        var award = false;
+    var award = false;
 
-        function updateNominations() {
+    function updateNominations() {
 //            $('#user-nomination-count').html(userNominations[award].length);
-            if (userNominations[award].length == 0) {
-                $('#user-nomination-list').html("You haven't nominated anything for this award.");
-            } else {
-                $('#user-nomination-list').html(userNominations[award].join(', '));
-            }
+      if (userNominations[award].length == 0) {
+        $('#user-nomination-list').html("You haven't nominated anything for this award.");
+      } else {
+        $('#user-nomination-list').html(userNominations[award].join(', '));
+      }
+    }
+
+    $('#award-selector').find('li').click(function (event) {
+
+      $("#video-games").hide();
+
+      var thus = this;
+
+      $('#award-info').fadeOut('fast', function () {
+
+        award = $(thus).attr('data-id');
+        $('#award-selector').find('li').removeClass("active");
+        $(thus).addClass("active");
+
+        $('#award-info').find('#award-name').html(awards[award]['name']);
+        $('#award-info').find('#award-subtitle').html(awards[award]['subtitle']);
+        $('#award-info').find('#description').html(awards[award]['comments']);
+        if (awards[award]['nominationsEnabled']) {
+          $('#nomination-section').show();
+          $('#nominations-closed').hide();
+        } else {
+          $('#nomination-section').hide();
+          $('#nominations-closed').show();
+        }
+        $('#award-voting').find('button').removeClass("btn-success btn-danger selected");
+        if (opinions[award] == 1) {
+          $('#thumbs-up').addClass("selected btn-success");
+        } else if (opinions[award] == -1) {
+          $('#thumbs-down').addClass("selected btn-danger");
         }
 
-        $('#award-selector li').click(function(event) {
+        {#<if:allowedToNominate>#}
+        updateNominations(award);
+        {#</if:allowedToNominate>#}
 
-            $("#video-games").hide();
+        $('#award-info').fadeIn('fast');
+        $('#nomination-status').hide();
 
-            var thus = this;
+        $('html').scroll();
 
-            $('#award-info').fadeOut('fast', function() {
+        $("#tags").val("");
 
-                award = $(thus).attr('data-id');
-                $('#award-selector li').removeClass("active");
-                $(thus).addClass("active");
+        var autocompleteCat = awards[award]['autocompleter'];
+        if (autocompleteCat == "video-game") {
+          $('#autocomplete').html("This award provides suggestions using a list of video games.");
+        } else if (autocompleteCat == award) {
+          $('#autocomplete').html("This award provides suggestions based on nominations from other users.");
+        } else {
+          $('#autocomplete').html("This award provides suggestions from a pre-defined list.");
+        }
 
-                $('#award-info #award-name').html(awards[award]['name']);
-                $('#award-info #award-subtitle').html(awards[award]['subtitle']);
-                $('#award-info #description').html(awards[award]['comments']);
-                if (awards[award]['nominationsEnabled']) {
-                    $('#nomination-section').show();
-                    $('#nominations-closed').hide();
-                } else {
-                    $('#nomination-section').hide();
-                    $('#nominations-closed').show();
-                }
-                $('#award-voting button').removeClass("btn-success btn-danger selected");
-                if (opinions[award] == 1) {
-                    $('#thumbs-up').addClass("selected btn-success");
-                } else if (opinions[award] == -1) {
-                    $('#thumbs-down').addClass("selected btn-danger");
-                }
-
-                {#<if:allowedToNominate>#}
-                    updateNominations(award);
-                {#</if:allowedToNominate>#}
-
-                $('#award-info').fadeIn('fast');
-                $('#nomination-status').hide();
-
-                $('html').scroll();
-
-                $("#tags").val("");
-
-                var autocompleteCat = awards[award]['autocompleter'];
-                if (autocompleteCat == "video-game") {
-                    $('#autocomplete').html("This award provides suggestions using a list of video games.");
-                } else if (autocompleteCat == award) {
-                    $('#autocomplete').html("This award provides suggestions based on nominations from other users.");
-                } else {
-                    $('#autocomplete').html("This award provides suggestions from a pre-defined list.");
-                }
-
-                $( "#tags" ).autocomplete({
-                    source: autocompleters[autocompleteCat],
-                    minLength: 2,
-                    delay: 0
-                });
-
-                $("#tags").focus();
-
-            });
+        $("#tags").autocomplete({
+          source: autocompleters[autocompleteCat],
+          minLength: 2,
+          delay: 0
         });
 
-        $('#award-voting button').click(function(event) {
-            event.preventDefault();
+        $("#tags").focus();
 
-            var selected = event.currentTarget;
-            var opinion;
-            var opposite;
+      });
+    });
 
-            if ($(selected).hasClass("selected")) {
-                opinion = 0;
-                opposite = selected;
-            } else if (selected.id == "thumbs-down") {
-                opinion = -1;
-                opposite = $("#thumbs-up");
-            } else if (selected.id == "thumbs-up") {
-                opinion = 1;
-                opposite = $("#thumbs-down");
+    $('#award-voting').find('button').click(function (event) {
+      event.preventDefault();
+
+      var selected = event.currentTarget;
+      var opinion;
+      var opposite;
+
+      if ($(selected).hasClass("selected")) {
+        opinion = 0;
+        opposite = selected;
+      } else if (selected.id == "thumbs-down") {
+        opinion = -1;
+        opposite = $("#thumbs-up");
+      } else if (selected.id == "thumbs-up") {
+        opinion = 1;
+        opposite = $("#thumbs-down");
+      }
+
+      $('#award-voting').find('button').attr('disabled', 'disabled');
+      $(selected).text('Saving...');
+
+      var formAward = award;
+
+      $.post("{{ path('awardFrontendPost') }}", {id: award, opinion: opinion}, function (data) {
+        if (data.success) {
+
+          var icon = $('[data-id="' + formAward + '"] #opinion-icon');
+          if (opinion == -1) {
+            if (formAward == award) {
+              $(selected).addClass("btn-danger");
+              $(opposite).removeClass("btn-success");
             }
-
-            $('#award-voting button').attr('disabled', 'disabled');
-            $(selected).text('Saving...');
-
-            var formAward = award;
-
-            $.post("{{ path('awardFrontendPost') }}", { id: award, opinion: opinion }, function(data) {
-                if (data.success) {
-
-                    var icon = $('[data-id="'+formAward+'"] #opinion-icon');
-                    if (opinion == -1) {
-                        if (formAward == award) {
-                            $(selected).addClass("btn-danger");
-                            $(opposite).removeClass("btn-success");
-                        }
 //                        $(icon).html("&#x2718;");
-                    } else if (opinion == 1) {
-                        if (formAward == award) {
-                            $(selected).addClass("btn-success");
-                            $(opposite).removeClass("btn-danger");
-                        }
-//                        $(icon).html("&#x2714;");
-                    } else {
-                        if (formAward == award) {
-                            $(selected).removeClass("btn-success btn-danger");
-                        }
-//                        $(icon).html("");
-                    }
-                    if (formAward == award) {
-                        $(selected).addClass("selected");
-                        $(opposite).removeClass("selected");
-                    }
-                    opinions[formAward] = opinion;
-                    $('#award-voting button').removeAttr('disabled');
-                    $('#thumbs-up').text('This award is good');
-                    $('#thumbs-down').text('This award is shit');
-                } else {
-                    alert("An error occurred: "+data.error);
-                }
-            }, "json");
-        });
-
-        var currentlySubmitting = false;
-
-        $('#nomination-form').submit(function(event) {
-            event.preventDefault();
-
-            if (currentlySubmitting) {
-                return;
+          } else if (opinion == 1) {
+            if (formAward == award) {
+              $(selected).addClass("btn-success");
+              $(opposite).removeClass("btn-danger");
             }
-
-            currentlySubmitting = true;
-            var formAward = award;
-
-            $("#nomination-status").show();
-            $("#nomination-status").html("Submitting nomination...");
-
-            var value = $('#tags').val();
-
-            $.post("{{ path('awardFrontendPost') }}", { id: award, nomination: value }, null, 'json')
-                .done(function(data) {
-                    if (data.success) {
-                        var safeValue = $('<div/>').text($.trim(value)).html();
-                        userNominations[formAward].push(safeValue);
-                        $('#tags').val("");
-                        $('#tags').autocomplete("close");
-                        if (formAward == award) {
-                            updateNominations();
-                            $("#nomination-status").html("<span style='color: green;'>Success!</span>");
-                            $("#nomination-status").fadeOut(3000);
-                        }
-                        var icon = $('[data-id="'+formAward+'"] #opinion-icon');
-                        icon.text("["+userNominations[formAward].length+"]");
-                    } else {
-                        if (formAward == award) {
-                            $("#nomination-status").html("<span style='color: red;'>" + data.error + "</span>");
-                        }
-                    }
-                    currentlySubmitting = false;
-                })
-                .fail(function (xhr, textStatus, error) {
-                    currentlySubmitting = false;
-                    $("#nomination-status").html("<span style='color: red;'>HTTP error: " + xhr.status + " " + xhr.statusText+". Try again.</span>");
-                    console.log(xhr);
-                });
-        });
-
-        if (window.location.hash) {
-            var selected = window.location.hash.slice(1);
-            $('[data-id="'+selected+'"]').click();
+//                        $(icon).html("&#x2714;");
+          } else {
+            if (formAward == award) {
+              $(selected).removeClass("btn-success btn-danger");
+            }
+//                        $(icon).html("");
+          }
+          if (formAward == award) {
+            $(selected).addClass("selected");
+            $(opposite).removeClass("selected");
+          }
+          opinions[formAward] = opinion;
+          $('#award-voting').find('button').removeAttr('disabled');
+          $('#thumbs-up').text('This award is good');
+          $('#thumbs-down').text('This award is shit');
+        } else {
+          alert("An error occurred: " + data.error);
         }
-    </script>
+      }, "json");
+    });
+
+    var currentlySubmitting = false;
+
+    $('#nomination-form').submit(function (event) {
+      event.preventDefault();
+
+      if (currentlySubmitting) {
+        return;
+      }
+
+      currentlySubmitting = true;
+      var formAward = award;
+
+      $("#nomination-status").show();
+      $("#nomination-status").html("Submitting nomination...");
+
+      var value = $('#tags').val();
+
+      $.post("{{ path('awardFrontendPost') }}", {id: award, nomination: value}, null, 'json')
+        .done(function (data) {
+          if (data.success) {
+            var safeValue = $('<div/>').text($.trim(value)).html();
+            userNominations[formAward].push(safeValue);
+            $('#tags').val("");
+            $('#tags').autocomplete("close");
+            if (formAward == award) {
+              updateNominations();
+              $("#nomination-status").html("<span style='color: green;'>Success!</span>");
+              $("#nomination-status").fadeOut(3000);
+            }
+            var icon = $('[data-id="' + formAward + '"] #opinion-icon');
+            icon.text("[" + userNominations[formAward].length + "]");
+          } else {
+            if (formAward == award) {
+              $("#nomination-status").html("<span style='color: red;'>" + data.error + "</span>");
+            }
+          }
+          currentlySubmitting = false;
+        })
+        .fail(function (xhr, textStatus, error) {
+          currentlySubmitting = false;
+          $("#nomination-status").html("<span style='color: red;'>HTTP error: " + xhr.status + " " + xhr.statusText + ". Try again.</span>");
+          console.log(xhr);
+        });
+    });
+
+    if (window.location.hash) {
+      var selected = window.location.hash.slice(1);
+      $('[data-id="' + selected + '"]').click();
+    }
+  </script>
 {% endblock %}

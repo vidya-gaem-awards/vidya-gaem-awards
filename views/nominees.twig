@@ -1,226 +1,245 @@
 {% extends 'base/standard.twig' %}
 
 {% block content %}
-<style>
+  <style>
     .ui-autocomplete {
-        max-height: 300px;
-        overflow-y: auto;
-        /* prevent horizontal scrollbar */
-        overflow-x: hidden;
-        /* add padding to account for vertical scrollbar */
-        width: 200px;
-        z-index: 100000;
+      max-height: 300px;
+      overflow-y: auto;
+      /* prevent horizontal scrollbar */
+      overflow-x: hidden;
+      /* add padding to account for vertical scrollbar */
+      width: 200px;
+      z-index: 100000;
     }
-    
+
     #award-name {
-    text-shadow: #000 1px 1px 2px;
-    text-align: center;
-    color: #789922;
-    text-transform: uppercase;
-    font-family: "Century Gothic", arial, sans-serif;
-    font-weight: bold;
-    font-size: 2.3em;
-    line-height: 1em;
-  }
-  
-  #award-subtitle {
-    text-align: center;
-    color: #1f1f1f;
-    font-family: "Lucida Sans Unicode", arial, sans-serif;
-    font-size: 0.95em;
-    line-height: 1.95em;
-    margin: 0;
-    font-weight: bold;
-  }
-  
-  .aNominee {
-        position: relative;
-        background: lightblue;
-        border: 1px solid black;
-        width: 428px;
-        height: 100px;
-        margin-bottom: 5px;
+      text-shadow: #000 1px 1px 2px;
+      text-align: center;
+      color: #789922;
+      text-transform: uppercase;
+      font-family: "Century Gothic", arial, sans-serif;
+      font-weight: bold;
+      font-size: 2.3em;
+      line-height: 1em;
     }
+
+    #award-subtitle {
+      text-align: center;
+      color: #1f1f1f;
+      font-family: "Lucida Sans Unicode", arial, sans-serif;
+      font-size: 0.95em;
+      line-height: 1.95em;
+      margin: 0;
+      font-weight: bold;
+    }
+
+    .aNominee {
+      position: relative;
+      background: lightblue;
+      border: 1px solid black;
+      width: 428px;
+      height: 100px;
+      margin-bottom: 5px;
+    }
+
     .aNominee form {
-    position: absolute;
-    left: 435px;
-    width: 90px;
-  }
-  .aNominee form button {
-    width: 100%;
-    margin-bottom: 5px;
-  }
+      position: absolute;
+      left: 435px;
+      width: 90px;
+    }
+
+    .aNominee form button {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
     .aNominee header {
-    position: absolute;
-    color: white;
-    font-size: 12px;
-    padding-left: 5px;
-    padding-right: 5px;
-    background-color: black;
-  }
-  .aNominee header p {
-    padding: 0px;
-    margin: 0px;
-  }
-    .aNominee footer{
-        position: absolute;
-        top: 56px;
-        left: 0;
-        height: 42px;
-        width: 426px;
-        background: black;
-        background: rgba(0,0,0,0.5);
+      position: absolute;
+      color: white;
+      font-size: 12px;
+      padding-left: 5px;
+      padding-right: 5px;
+      background-color: black;
     }
-    .aNominee footer h3{
-        color: white;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-family: "Century Gothic",arial,sans-serif;
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 1em;
-        padding: 0;
-        margin: 5px 0 0 5px;
+
+    .aNominee header p {
+      padding: 0;
+      margin: 0;
     }
-    .aNominee footer p{
-        text-decoration: none;
-        color: #cacaca;
-        font-family: "Lucida Sans Unicode",arial,sans-serif;
-        font-size: 13px;
-        padding: 0;
-        margin: 0 0 0 5px;
+
+    .aNominee footer {
+      position: absolute;
+      top: 56px;
+      left: 0;
+      height: 42px;
+      width: 426px;
+      background: black;
+      background: rgba(0, 0, 0, 0.5);
     }
-    .aNominee img{
-        max-width: 426px;
-        max-height: 98px;
+
+    .aNominee footer h3 {
+      color: white;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: "Century Gothic", arial, sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 1em;
+      padding: 0;
+      margin: 5px 0 0 5px;
     }
-  ol.nominations, ul.nominations {
-    margin-right: 35px;
-  }
-  ol.nominations {
-    font-size: 120%;
-  }
-  ol.nominations li {
-    line-height: 1.2;
-  }
-</style>
 
-<h1 class="page-header">Nominee Manager</h1>
-<p class="lead">Here's where nominees are assigned awards. Official nominees are the ones that will show up on the <a href="{{ path('voting') }}">voting page</a>.</p>
+    .aNominee footer p {
+      text-decoration: none;
+      color: #cacaca;
+      font-family: "Lucida Sans Unicode", arial, sans-serif;
+      font-size: 13px;
+      padding: 0;
+      margin: 0 0 0 5px;
+    }
 
-<ul class="breadcrumb">
-  <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
-</ul>
+    .aNominee img {
+      max-width: 426px;
+      max-height: 98px;
+    }
 
-<div class="row">
-  <div class="col-md-6" id="award-selector">
-    <ul class="nav nav-list custom-navigation-pane">
-      {% for award in awards %}
-        <li>
-          <a href="{{ path('nomineeManager', {'awardID': award.id}) }}">
-            <strong>{{ award.name }}</strong> {{ award.subtitle }}
-            <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+    ol.nominations, ul.nominations {
+      margin-right: 35px;
+    }
 
-  {% if award %}
-  <div class="col-md-6">
-    
-    <div id="award-name">{{ award.name }}</div>
-    <div id="award-subtitle">{{ award.subtitle }}</div>
+    ol.nominations {
+      font-size: 120%;
+    }
 
-    {% if award.secret %}
-    <p style='text-align: center; margin-top: 8px;'>This is a secret award. It won't be visible until the voting phase.</p>
-    {% endif %}
+    ol.nominations li {
+      line-height: 1.2;
+    }
+  </style>
 
-    <div class="well" style="margin-top: 15px;">
-      
-      <div style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
-        Official Nominees: <span id="official-count">{{ award.nominees | length }}</span>
-        {% if user.canDo('nominations-edit') %}
-          <button class="btn btn-default btn-xs" type="button" id="new" style="margin-left: 15px;">
-            <span class="glyphicon glyphicon-plus"></span> New Nominee</button>
-        {% endif %}
-      </div>
-      
-      <div id="nominee-container">
-      
-        {% for nominee in award.nominees %}
-        <div class="aNominee" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}">
-          <header>
-            <p>ID: {{ nominee.shortName }}</p>
-          </header>
-          {% if user.canDo('nominations-edit') %}
-          <form>
-            <button class="btn btn-default" type="button" name="edit">Edit</button>
-            <button class="btn btn-default" type="button" name="delete">Delete</button>
-          </form>
-          {% endif %}
-          <img src="{{ nominee.image | escape('html_attr') }}">
-          <footer>
-            <h3>{{ nominee.name }}</h3>
-            <p>{{ nominee.subtitle | raw }}</p>
-          </footer>
-        </div>
+  <h1 class="page-header">Nominee Manager</h1>
+  <p class="lead">
+    Here's where nominees are assigned awards.
+    Official nominees are the ones that will show up on the <a href="{{ path('voting') }}">voting page</a>.
+  </p>
+
+  <ul class="breadcrumb">
+    <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
+  </ul>
+
+  <div class="row">
+    <div class="col-md-6" id="award-selector">
+      <ul class="nav nav-list custom-navigation-pane">
+        {% for award in awards %}
+          <li>
+            <a href="{{ path('nomineeManager', {'awardID': award.id}) }}">
+              <strong>{{ award.name }}</strong> {{ award.subtitle }}
+              <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
+            </a>
+          </li>
         {% endfor %}
-    
-      </div>
-      
+      </ul>
     </div>
-  
-    {% if not award.secret %}
-      <div class="well">
 
-        <div style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
-          User Nominations: {{ award.rawUserNominations | length }}
+    {% if award %}
+    <div class="col-md-6">
+
+      <div id="award-name">{{ award.name }}</div>
+      <div id="award-subtitle">{{ award.subtitle }}</div>
+
+      {% if award.secret %}
+        <p style='text-align: center; margin-top: 8px;'>This is a secret award. It won't be visible until the voting
+          phase.</p>
+      {% endif %}
+
+      <div class="well" style="margin-top: 15px;">
+
+        <div
+            style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
+          Official Nominees: <span id="official-count">{{ award.nominees | length }}</span>
+          {% if user.canDo('nominations-edit') %}
+            <button class="btn btn-default btn-xs" type="button" id="new" style="margin-left: 15px;">
+              <span class="glyphicon glyphicon-plus"></span> New Nominee
+            </button>
+          {% endif %}
         </div>
 
-        {% if award.areNominationsEnabled %}
-          <p style="font-weight: bold; text-align: center; font-size: 120%;">
-            Nominations are currently open.
-          </p>
-        {% endif %}
+        <div id="nominee-container">
 
-        <p style="text-align: center; font-size: small;">
-          {% if alphabeticalSort %}
-            Currently sorted alphabetically <a href="?sort=total">(sort by total)</a>
-          {% else %}
-            Currently sorted by total <a href="?sort=alphabetical">(sort alphabetically)</a>
-          {% endif %}
-        </p>
-
-        <ol class="nominations">
-          {% for nomination in award.getUserNominations(alphabeticalSort)[:15] %}
-            <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
+          {% for nominee in award.nominees %}
+            <div class="aNominee" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}">
+              <header>
+                <p>ID: {{ nominee.shortName }}</p>
+              </header>
+              {% if user.canDo('nominations-edit') %}
+                <form>
+                  <button class="btn btn-default" type="button" name="edit">Edit</button>
+                  <button class="btn btn-default" type="button" name="delete">Delete</button>
+                </form>
+              {% endif %}
+              <img src="{{ nominee.image | escape('html_attr') }}">
+              <footer>
+                <h3>{{ nominee.name }}</h3>
+                <p>{{ nominee.subtitle | raw }}</p>
+              </footer>
+            </div>
           {% endfor %}
-        </ol>
 
-        <a href="#" id="show-more">show the rest</a>
-
-        <ul id="more-nominations" style='display: none;' class="nominations">
-          {% for nomination in award.getUserNominations(alphabeticalSort)[15:] %}
-            <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
-          {% endfor %}
-        </ul>
+        </div>
 
       </div>
-    {% endif %}
-  {% endif %}
+
+      {% if not award.secret %}
+        <div class="well">
+
+          <div
+              style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
+            User Nominations: {{ award.rawUserNominations | length }}
+          </div>
+
+          {% if award.areNominationsEnabled %}
+            <p style="font-weight: bold; text-align: center; font-size: 120%;">
+              Nominations are currently open.
+            </p>
+          {% endif %}
+
+          <p style="text-align: center; font-size: small;">
+            {% if alphabeticalSort %}
+              Currently sorted alphabetically <a href="?sort=total">(sort by total)</a>
+            {% else %}
+              Currently sorted by total <a href="?sort=alphabetical">(sort alphabetically)</a>
+            {% endif %}
+          </p>
+
+          <ol class="nominations">
+            {% for nomination in award.getUserNominations(alphabeticalSort)[:15] %}
+              <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
+            {% endfor %}
+          </ol>
+
+          <a href="#" id="show-more">show the rest</a>
+
+          <ul id="more-nominations" style='display: none;' class="nominations">
+            {% for nomination in award.getUserNominations(alphabeticalSort)[15:] %}
+              <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
+            {% endfor %}
+          </ul>
+
+        </div>
+      {% endif %}
+      {% endif %}
+    </div>
   </div>
-</div>
 
   {% if user.canDo('nominations-edit') and award %}
     <div id="dialog-delete" class="modal" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <p>Are you sure you want to remove <span id="dialog-delete-nominee" style="font-weight: bold;"></span> from the list of nominees?</p>
+            <p>Are you sure you want to remove <span id="dialog-delete-nominee" style="font-weight: bold;"></span> from
+              the list of nominees?</p>
           </div>
           <div class="modal-footer">
-            <span id="dialog-delete-status"><img src='/loading.gif' width="16px"> deleting...&nbsp;</span>
+            <span id="dialog-delete-status"><img src='/loading.gif' style="width: 16px;"> deleting...&nbsp;</span>
             <button class="btn btn-default" data-dismiss="modal">Cancel</button>
             <button class="btn btn-danger" id="dialog-delete-nominee-confirm">Confirm</button>
           </div>
@@ -270,20 +289,23 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-id">ID</label>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" id="info-id" placeholder="monster-girl-quest" required name="id"
+                  <input class="form-control" type="text" id="info-id" placeholder="monster-girl-quest" required
+                         name="id"
                          autocomplete="off">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-name">Name</label>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" id="info-name" placeholder="Monster Girl Quest" required name="name">
+                  <input class="form-control" type="text" id="info-name" placeholder="Monster Girl Quest" required
+                         name="name">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-subtitle">Subtitle</label>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" id="info-subtitle" placeholder="Toro Toro Resistance" name="subtitle"
+                  <input class="form-control" type="text" id="info-subtitle" placeholder="Toro Toro Resistance"
+                         name="subtitle"
                          autocomplete="off">
                 </div>
               </div>
@@ -306,7 +328,7 @@
           </div>
           <div class="modal-footer">
             <span id="dialog-edit-status" style="display: none;">
-              <img src='/loading.gif' width="16px"> saving...&nbsp;
+              <img src='/loading.gif' style="width: 16px;"> saving...&nbsp;
             </span>
             <button class="btn btn-default" data-dismiss="modal">Cancel</button>
             <button class="btn btn-primary" id="dialog-edit-submit">Submit</button>
@@ -319,8 +341,8 @@
       var autocompleters = {{ autocompleters | json_encode() | raw }};
       var nominees = {{ nominees | json_encode() | raw }};
 
-      $(document).ready(function() {
-        $( "#info-name" ).autocomplete({
+      $(document).ready(function () {
+        $("#info-name").autocomplete({
           source: autocompleters,
           minLength: 2,
           delay: 0
@@ -330,52 +352,52 @@
       var currentlySubmitting = false;
 
       // When a delete button is clicked
-      $("button[name=delete]").click(function() {
+      $("button[name=delete]").click(function () {
 
         // Get the nominee name and ID from the contents of the nominee box
         var nomineeID = $(this).parents(".aNominee").attr("data-nominee");
         var nomineeName = nominees[nomineeID].name;
 
         // Set up the dialog elements for this nominee
-        $( "#dialog-delete-status" ).hide();
-        $( "#dialog-delete-nominee-confirm" ).removeAttr("disabled");
-        $( "#dialog-delete-nominee" ).html(nomineeName);
-        $( "#dialog-delete" ).attr("data-nominee", nomineeID);
+        $("#dialog-delete-status").hide();
+        $("#dialog-delete-nominee-confirm").removeAttr("disabled");
+        $("#dialog-delete-nominee").html(nomineeName);
+        $("#dialog-delete").attr("data-nominee", nomineeID);
 
         // Finally, show the dialog
-        $( "#dialog-delete" ).modal("show");
+        $("#dialog-delete").modal("show");
       });
 
       // When the confirm button is clicked in the delete dialog
-      $("#dialog-delete-nominee-confirm").click(function() {
+      $("#dialog-delete-nominee-confirm").click(function () {
         if (currentlySubmitting) {
           return;
         }
         currentlySubmitting = true;
 
         // Show the "please wait" message and disable the submit button
-        $( "#dialog-delete-status" ).show();
-        $( "#dialog-delete-nominee-confirm" ).attr("disabled", "disabled");
+        $("#dialog-delete-status").show();
+        $("#dialog-delete-nominee-confirm").attr("disabled", "disabled");
 
         // Grab the nomineeID from the attribute we set earlier
         var nomineeID = $("#dialog-delete").attr("data-nominee");
 
         // Send through the AJAX request to do the actual deleting
-        $.post("{{ path('nomineePost', {'awardID': award.id}) }}", { action: "delete", id: nomineeID }, function(data) {
+        $.post("{{ path('nomineePost', {'awardID': award.id}) }}", {action: "delete", id: nomineeID}, function (data) {
           currentlySubmitting = false;
 
           if (data.success) {
-            $( "#nominee-" + nomineeID ).slideUp(500, function() {
+            $("#nominee-" + nomineeID).slideUp(500, function () {
               $(this).remove();
               $("#official-count").text($("#official-count").text() - 1);
             });
             delete nominees[nomineeID];
           } else {
-            alert("An error occurred: "+data.error);
+            alert("An error occurred: " + data.error);
           }
 
           // Close the dialog
-          $( "#dialog-delete" ).modal("hide");
+          $("#dialog-delete").modal("hide");
         }, "json");
       });
 
@@ -384,68 +406,68 @@
       var lastID = "";
 
       // When the new nominee button is clicked
-      $("#new").click(function(){
+      $("#new").click(function () {
         // Update the dialog action
-        $( "#dialog-edit" ).attr("data-action", "new");
-        $( "#dialog-edit" ).removeAttr("data-nominee");
-        $( "#dialog-edit-header" ).text("Add new nominee");
+        $("#dialog-edit").attr("data-action", "new");
+        $("#dialog-edit").removeAttr("data-nominee");
+        $("#dialog-edit-header").text("Add new nominee");
 
         // Clear any existing information in the dialog
-        $( ".dialog-edit-id" ).text("");
-        $( "#dialog-edit-name" ).text("");
-        $( "#dialog-edit-subtitle" ).text("");
-        $( "#dialog-edit-image" ).removeAttr("src");
+        $(".dialog-edit-id").text("");
+        $("#dialog-edit-name").text("");
+        $("#dialog-edit-subtitle").text("");
+        $("#dialog-edit-image").removeAttr("src");
 
-        $( "#info-id" ).val("");
-        $( "#info-name" ).val("");
-        $( "#info-subtitle" ).val("");
-        $( "#info-image" ).val("");
-        $( "#info-flavor" ).val("");
+        $("#info-id").val("");
+        $("#info-name").val("");
+        $("#info-subtitle").val("");
+        $("#info-image").val("");
+        $("#info-flavor").val("");
 
-        $( "#info-id" ).removeAttr("disabled");
+        $("#info-id").removeAttr("disabled");
 
         // Show the dialog
-        $( "#dialog-edit" ).modal("show");
+        $("#dialog-edit").modal("show");
       });
 
       // When an edit button is clicked
-      $("button[name=edit]").click(function() {
+      $("button[name=edit]").click(function () {
         // Grab the ID
         var nomineeID = $(this).parents(".aNominee").attr("data-nominee");
 
         // Update the dialog action
-        $( "#dialog-edit" ).attr("data-action", "edit");
-        $( "#dialog-edit" ).attr("data-nominee", nomineeID);
-        $( "#dialog-edit-header" ).text("Editing "+nominees[nomineeID].name);
+        $("#dialog-edit").attr("data-action", "edit");
+        $("#dialog-edit").attr("data-nominee", nomineeID);
+        $("#dialog-edit-header").text("Editing " + nominees[nomineeID].name);
 
         // Grab all the relevant information
-        $( ".dialog-edit-id" ).text(nomineeID);
-        $( "#dialog-edit-name" ).text(nominees[nomineeID].name);
-        $( "#dialog-edit-subtitle" ).html(nominees[nomineeID].subtitle);
+        $(".dialog-edit-id").text(nomineeID);
+        $("#dialog-edit-name").text(nominees[nomineeID].name);
+        $("#dialog-edit-subtitle").html(nominees[nomineeID].subtitle);
         if (nominees[nomineeID].image) {
-          $( "#dialog-edit-image" ).attr("src", nominees[nomineeID].image);
+          $("#dialog-edit-image").attr("src", nominees[nomineeID].image);
         } else {
-          $( "#dialog-edit-image" ).attr("src", "/img/nominees/"+nomineeID+".png");
+          $("#dialog-edit-image").attr("src", "/img/nominees/" + nomineeID + ".png");
         }
 
-        $( "#info-id" ).val(nomineeID);
-        $( "#info-name" ).val(nominees[nomineeID].name);
-        $( "#info-subtitle" ).val(nominees[nomineeID].subtitle);
-        $( "#info-image" ).val(nominees[nomineeID].image);
-        $( "#info-flavor" ).val(nominees[nomineeID].flavorText);
+        $("#info-id").val(nomineeID);
+        $("#info-name").val(nominees[nomineeID].name);
+        $("#info-subtitle").val(nominees[nomineeID].subtitle);
+        $("#info-image").val(nominees[nomineeID].image);
+        $("#info-flavor").val(nominees[nomineeID].flavorText);
 
-        $( "#info-id").attr("disabled", "disabled");
+        $("#info-id").attr("disabled", "disabled");
 
         // Show the dialog
-        $( "#dialog-edit" ).modal("show");
+        $("#dialog-edit").modal("show");
       });
 
 
       // When the dialog is opened, start the monitor
-      $("#dialog-edit").on("show.bs.modal", function() {
-        $( "#dialog-edit-status" ).hide();
-        $( "#dialog-edit-submit" ).removeAttr("disabled");
-        $( "#dialog-edit-error" ).parent().hide();
+      $("#dialog-edit").on("show.bs.modal", function () {
+        $("#dialog-edit-status").hide();
+        $("#dialog-edit-submit").removeAttr("disabled");
+        $("#dialog-edit-error").parent().hide();
 
         lastImageValue = "";
         lastID = "";
@@ -453,52 +475,52 @@
       });
 
       // When the dialog is closed, clear it
-      $("#dialog-edit").on("hide.bs.modal", function() {
+      $("#dialog-edit").on("hide.bs.modal", function () {
         clearInterval(editDialogInterval);
       });
 
       // Update the information in the template nominee box
       function updateDialogNominee() {
-        $( ".dialog-edit-id" ).text( $( "#info-id" ).val() );
-        $( "#dialog-edit-name" ).text( $( "#info-name" ).val() );
-        $( "#dialog-edit-subtitle" ).html( $( "#info-subtitle" ).val() );
+        $(".dialog-edit-id").text($("#info-id").val());
+        $("#dialog-edit-name").text($("#info-name").val());
+        $("#dialog-edit-subtitle").html($("#info-subtitle").val());
 
-        if ($( "#info-image" ).val() != lastImageValue || (lastImageValue == "" && $("#info-id").val() != lastID)) {
-          lastImageValue = $( "#info-image").val();
-          lastID = $( "#info-id").val();
+        if ($("#info-image").val() != lastImageValue || (lastImageValue == "" && $("#info-id").val() != lastID)) {
+          lastImageValue = $("#info-image").val();
+          lastID = $("#info-id").val();
           if (lastImageValue) {
-            $( "#dialog-edit-image" ).attr("src", lastImageValue );
+            $("#dialog-edit-image").attr("src", lastImageValue);
           } else {
-            $( "#dialog-edit-image" ).attr("src", "/img/nominees/"+$( "#info-id" ).val()+".png");
+            $("#dialog-edit-image").attr("src", "/img/nominees/" + $("#info-id").val() + ".png");
           }
         }
 
       }
 
       // When the confirm button is clicked in the edit dialog
-      $("#dialog-edit-submit").click(function() {
+      $("#dialog-edit-submit").click(function () {
         if (currentlySubmitting) {
           return;
         }
         currentlySubmitting = true;
 
         // Show the "please wait" message and disable the submit button
-        $( "#dialog-edit-status" ).show();
-        $( "#dialog-edit-submit" ).attr("disabled", "disabled");
-        $( "#dialog-edit-error" ).parent().slideUp();
+        $("#dialog-edit-status").show();
+        $("#dialog-edit-submit").attr("disabled", "disabled");
+        $("#dialog-edit-error").parent().slideUp();
 
         // Grab the nomineeID and action from the dialog
         var nomineeID = $("#dialog-edit").attr("data-nominee");
         var action = $("#dialog-edit").attr("data-action");
 
         // Send through the AJAX request to do the actual editing
-        var ajaxData = $( "#dialog-edit-form" ).serializeArray();
+        var ajaxData = $("#dialog-edit-form").serializeArray();
         console.log(ajaxData);
-        ajaxData.push({ name: "action", value: action });
+        ajaxData.push({name: "action", value: action});
         if (action == "edit") {
-          ajaxData.push({ name: "id", value: nomineeID });
+          ajaxData.push({name: "id", value: nomineeID});
         }
-        $.post("{{ path('nomineePost', {'awardID': award.id}) }}", ajaxData, function(data) {
+        $.post("{{ path('nomineePost', {'awardID': award.id}) }}", ajaxData, function (data) {
           currentlySubmitting = false;
 
           if (data.success) {
@@ -506,13 +528,13 @@
             if (action == "new") {
 
               nomineeID = $("#info-id").val();
-              var clone = $("#dialog-edit .aNominee").clone(true, true);
+              var clone = $("#dialog-edit").find(".aNominee").clone(true, true);
               clone.find("*").removeAttr("id");
               clone.removeAttr("style");
-              clone.attr("id", "nominee"+nomineeID);
+              clone.attr("id", "nominee" + nomineeID);
               clone.attr("data-nominee", nomineeID);
               clone.find("form").show();
-              clone.find("header p").text("ID: "+nomineeID);
+              clone.find("header p").text("ID: " + nomineeID);
 
               $("#nominee-container").append(clone);
 
@@ -523,13 +545,13 @@
 
             }
 
-            var nomineeBox = $("#nominee-"+nomineeID);
-            nomineeBox.find("h3").text( $("#info-name").val() );
-            nomineeBox.find("footer p").html( $("#info-subtitle").val() );
-            if ( $("#info-image") ) {
-              nomineeBox.find("img").attr("src", $("#info-image").val() );
+            var nomineeBox = $("#nominee-" + nomineeID);
+            nomineeBox.find("h3").text($("#info-name").val());
+            nomineeBox.find("footer p").html($("#info-subtitle").val());
+            if ($("#info-image")) {
+              nomineeBox.find("img").attr("src", $("#info-image").val());
             } else {
-              nomineeBox.find("img").attr("src", "/img/nominees/"+nomineeID+".png");
+              nomineeBox.find("img").attr("src", "/img/nominees/" + nomineeID + ".png");
             }
 
             nominees[nomineeID].name = $("#info-name").val();
@@ -538,10 +560,10 @@
             nominees[nomineeID].flavorText = $("#info-flavor").val();
 
             // Close the dialog
-            $( "#dialog-edit" ).modal("hide");
+            $("#dialog-edit").modal("hide");
           } else {
             // Something went wrong! Show the error message.
-            $( "#dialog-edit-status" ).hide();
+            $("#dialog-edit-status").hide();
             $("#dialog-edit-submit").removeAttr("disabled");
             $("#dialog-edit-error").html("<strong>Error:</strong> " + data.error);
             $("#dialog-edit-error").parent().fadeIn("fast");
@@ -549,10 +571,10 @@
         }, "json");
       });
 
-      $( "#show-more" ).click(function(e) {
+      $("#show-more").click(function (e) {
         e.preventDefault();
-        $( "#show-more" ).hide();
-        $( "#more-nominations" ).show();
+        $("#show-more").hide();
+        $("#more-nominations").show();
       });
     </script>
   {% endif %}

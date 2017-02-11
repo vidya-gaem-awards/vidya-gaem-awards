@@ -4,10 +4,10 @@
 
 {% block head %}
   <style type="text/css">
-     a, a:hover {
+    a, a:hover {
       text-decoration: none;
       color: #f0f1a3;
-      font-family: 'FixedSystem',Calibri,sans-serif;
+      font-family: 'FixedSystem', Calibri, sans-serif;
     }
 
     a:hover {
@@ -20,6 +20,7 @@
       font-size: 9pt;
       font-family: arial, helvetica, sans-serif;
     }
+
     .stat {
       color: #34345C;
       padding: 1px;
@@ -28,7 +29,7 @@
     .timezones, dd, dt {
       font-size: 34px;
       line-height: 0.6;
-      font-family: 'FixedSystem',Calibri,sans-serif;
+      font-family: 'FixedSystem', Calibri, sans-serif;
     }
 
     .timezones dl {
@@ -65,7 +66,7 @@
     }
 
     .title h2 {
-      font-family: 'Annapolis','Tahoma Bold',Tahoma,sans-serif;
+      font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
       color: #00ebdb;
       font-size: 24px;
       margin-top: 5px;
@@ -103,7 +104,8 @@
       </div>
       <div class="col-md-6">
         <div class="logo">
-          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/JUZ0NVj3Q-0" frameborder="0" allowfullscreen></iframe>
+          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/JUZ0NVj3Q-0" frameborder="0"
+                  allowfullscreen></iframe>
         </div>
         <div class="title">
           <h1>Please understand.</h1>
@@ -130,33 +132,33 @@
   <div class="zig hidden-xs hidden-sm"></div>
 
   <script type="text/javascript">
-    var serverLoad = Date.parse("{{ 'now' | date('c') }}");
-    var clientLoad = Date.now();
+      var serverLoad = Date.parse("{{ 'now' | date('c') }}");
+      var clientLoad = Date.now();
 
-    // This could probably be replaced by moment.js
-    function updateWCTime() {
-      var clientNow = Date.now();
-      var serverNow = clientNow - clientLoad + serverLoad - 1;
+      // This could probably be replaced by moment.js
+      function updateWCTime() {
+          var clientNow = Date.now();
+          var serverNow = clientNow - clientLoad + serverLoad - 1;
 
-      var kickoff = Date.parse("{{ streamDate | date('c') }}");
-      var diff = kickoff - serverNow;
-      diff = Math.max(diff, 0);
+          var kickoff = Date.parse("{{ streamDate | date('c') }}");
+          var diff = kickoff - serverNow;
+          diff = Math.max(diff, 0);
 
-      var days = Math.floor( diff / (1000*60*60*24) );
-      var hours = Math.floor( diff / (1000*60*60) );
-      var mins = Math.floor( diff / (1000*60) );
-      var secs = Math.floor( diff / 1000 );
+          var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          var hours = Math.floor(diff / (1000 * 60 * 60));
+          var mins = Math.floor(diff / (1000 * 60));
+          var secs = Math.floor(diff / 1000);
 
-      var dd = days;
-      var hh = hours - days * 24;
-      var mm = mins - hours * 60;
-      var ss = secs - mins * 60;
+          var dd = days;
+          var hh = hours - days * 24;
+          var mm = mins - hours * 60;
+          var ss = secs - mins * 60;
 
-      document.getElementById("countdown").innerHTML = dd + ' day' + (dd == 1 ? ', ' : 's, ') + hh + ' hour' +
-          (hh == 1 ? ', ' : 's, ') + mm + ' minute' + (mm == 1 ? ', ' : 's, ') +
-          ss + ' second' + (ss == 1 ? '' : 's');
-    }
-    window.onload = updateWCTime;
-    setInterval('updateWCTime()', 1000 );
+          document.getElementById("countdown").innerHTML = dd + ' day' + (dd == 1 ? ', ' : 's, ') + hh + ' hour' +
+              (hh == 1 ? ', ' : 's, ') + mm + ' minute' + (mm == 1 ? ', ' : 's, ') +
+              ss + ' second' + (ss == 1 ? '' : 's');
+      }
+      window.onload = updateWCTime;
+      setInterval('updateWCTime()', 1000);
   </script>
 {% endblock %}

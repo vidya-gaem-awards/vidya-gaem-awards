@@ -1,7 +1,9 @@
 {% extends 'base/standard.twig' %}
 
 {% block content %}
-<h1 class="page-header">Voting code for {{ date }}:</h1>
+  <h1 class="page-header">Voting code for {{ date }}:</h1>
 
-<p class="lead"><code>{{ url }}<strong>{{ code }}</strong></code></p>
+  <p class="lead">
+    <code>{{ url }}<strong>{{ code }}</strong></code>
+  </p>
 {% endblock %}

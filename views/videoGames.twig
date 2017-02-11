@@ -1,249 +1,267 @@
 {% extends 'base/standard.twig' %}
 
-{% block content %}
-
-    <h1 class="page-header">Vidya in 2017</h1>
-    <p class="lead">Need a reminder of what games were released in 2017?</p>
-    <p>Click on the row headers to sort by platform. List is from <a href="https://en.wikipedia.org/wiki/2017_in_video_gaming">Wikipedia</a>.</p>
-
-    <script type="text/javascript">
-    $(document).ready(function()
-        {
-            $("#games").tablesorter();
-        }
+{% block head %}
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $("#games").tablesorter();
+      }
     );
-    </script>
+  </script>
 
-    <style type="text/css">
+  <style type="text/css">
     #games td {
-        text-align: center;
+      text-align: center;
     }
+
     .pc {
-        background-color: rgb(10, 10, 10);
-        color: white;
+      background-color: rgb(10, 10, 10);
+      color: white;
     }
+
     .vr {
-        background-color: #b63438;
-        color: white;
+      background-color: #b63438;
+      color: white;
     }
+
     .sony {
-        background-color: rgb(0, 64, 152);
-        color: white;
+      background-color: rgb(0, 64, 152);
+      color: white;
     }
+
     .microsoft {
-        background-color: rgb(17, 125, 16);
-        color: white;
+      background-color: rgb(17, 125, 16);
+      color: white;
     }
+
     .nintendo {
-        background-color: rgb(127, 127, 127);
-        color: white;
+      background-color: rgb(127, 127, 127);
+      color: white;
     }
+
     .yes {
-        display: block;
+      display: block;
     }
+
     #games {
-        border-color: black;
-        border-radius: 0;
+      border-color: black;
+      border-radius: 0;
     }
+
     thead th {
-        background-color: white;
-        border-bottom: 2px black solid;
+      background-color: white;
+      border-bottom: 2px black solid;
     }
+
     #games td, thead th {
-        border-radius: 0 !important;
+      border-radius: 0 !important;
     }
+
     #games .divider {
-        border-left: 1px solid rgba(0, 0, 0, 0.2);
+      border-left: 1px solid rgba(0, 0, 0, 0.2);
     }
+
     #games {
-        border: 1px solid rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 0, 0, 0.2);
     }
+
     .notable {
-        font-weight: bold;
+      font-weight: bold;
     }
+
     #new-game input[type=checkbox] {
-        width: 100%;
-        height: 25px;
+      width: 100%;
+      height: 25px;
     }
 
     #new-game td {
-        vertical-align: middle;
+      vertical-align: middle;
     }
-    </style>
+  </style>
+{% endblock %}
 
-    {% if user.canDo('add-video-game') %}
+{% block content %}
+
+  <h1 class="page-header">Vidya in 2017</h1>
+  <p class="lead">Need a reminder of what games were released in 2017?</p>
+  <p>
+    Click on the row headers to sort by platform. List is from
+    <a href="https://en.wikipedia.org/wiki/2017_in_video_gaming">Wikipedia</a>.
+  </p>
+
+  {% if user.canDo('add-video-game') %}
     <div class="row">
-        <div class="span12" style='text-align: center; margin-bottom: 8px;'>
-            <a class="btn btn-success btn-large" id="add-a-game">Add a Game</a>
-            <div class="alert alert-warning" id="add-a-game-msg" style="display: none; margin-bottom: 0;">
-                Please make sure you spell the game correctly. You won't be able to edit it afterwards and it will show up as
-                a suggestion when users are writing their nominations.
-            </div>
+      <div class="span12" style='text-align: center; margin-bottom: 8px;'>
+        <a class="btn btn-success btn-large" id="add-a-game">Add a Game</a>
+        <div class="alert alert-warning" id="add-a-game-msg" style="display: none; margin-bottom: 0;">
+          Please make sure you spell the game correctly. You won't be able to edit it afterwards and it will show up as
+          a suggestion when users are writing their nominations.
         </div>
+      </div>
     </div>
-    {% endif %}
+  {% endif %}
 
-    <table class="table table-striped table-condensed tablesorter" id="games">
+  <table class="table table-striped table-condensed tablesorter" id="games">
     <thead>
     <tr>
-        <th>Game Title</th>
-        <th width='50px' class='divider'>PC</th>
-        <th width='50px' class='divider'>VR</th>
-        <th width='50px' class='divider'>PS3</th>
-        <th width='50px'>PS4</th>
-        <th width='50px'>Vita</th>
-        <th width='50px' class='divider'>360</th>
-        <th width='50px'>XB1</th>
-        <th width='55px' class='divider'>Wii</th>
-        <th width='60px'>Wii U</th>
-        <th width='55px'>3DS</th>
-        <th width='70px' class='divider'>Mobile</th>
-        <th width='120px' class='divider'>Others</th>
+      <th>Game Title</th>
+      <th width='50px' class='divider'>PC</th>
+      <th width='50px' class='divider'>VR</th>
+      <th width='50px' class='divider'>PS3</th>
+      <th width='50px'>PS4</th>
+      <th width='50px'>Vita</th>
+      <th width='50px' class='divider'>360</th>
+      <th width='50px'>XB1</th>
+      <th width='55px' class='divider'>Wii</th>
+      <th width='60px'>Wii U</th>
+      <th width='55px'>3DS</th>
+      <th width='70px' class='divider'>Mobile</th>
+      <th width='120px' class='divider'>Others</th>
     </tr>
     </thead>
     <tbody>
     {% if user.canDo('add-video-game') %}
-    <tr id="new-game" style="display: none;">
+      <tr id="new-game" style="display: none;">
         <form id="new-game-form">
-        <td class='divider' style='text-align: left;'>
+          <td class='divider' style='text-align: left;'>
             <input type="text" class="form-control" required name="name" id="Game">
-        </td>
-        <td class='divider'>
+          </td>
+          <td class='divider'>
             <input type="checkbox" name="pc">
-        </td>
-        <td class='divider'>
+          </td>
+          <td class='divider'>
             <input type="checkbox" name="vr">
-        </td>
-        <td class='divider'>
+          </td>
+          <td class='divider'>
             <input type="checkbox" name="ps3">
-        </td>
-        <td>
+          </td>
+          <td>
             <input type="checkbox" name="ps4">
-        </td>
-        <td>
+          </td>
+          <td>
             <input type="checkbox" name="vita">
-        </td>
-        <td class='divider'>
+          </td>
+          <td class='divider'>
             <input type="checkbox" name="x360">
-        </td>
-        <td>
+          </td>
+          <td>
             <input type="checkbox" name="xb1">
-        </td>
-        <td class='divider'>
+          </td>
+          <td class='divider'>
             <input type="checkbox" name="wii">
-        </td>
-        <td>
+          </td>
+          <td>
             <input type="checkbox" name="wiiu">
-        </td>
-        <td>
+          </td>
+          <td>
             <input type="checkbox" name="n3ds">
-        </td>
-        <td class='divider'>
+          </td>
+          <td class='divider'>
             <input type="checkbox" name="mobile">
-        </td>
-        <td class='divider'>
+          </td>
+          <td class='divider'>
             <input class="btn btn-default" type="submit" id="game-submit">
-        </td>
+          </td>
         </form>
-    </tr>
+      </tr>
     {% endif %}
     {% for game in games %}
-    <tr>
+      <tr>
         <td class='{{ game.notable ? 'notable' : '' }}' style='text-align: left;'>
-            <a href="{{ game.url }}">{{ game.name }}</a>
+          <a href="{{ game.url }}">{{ game.name }}</a>
         </td>
         <td class='divider'>
-            {% if game.pc %}
-                <strong class='yes pc'>✓</strong>
-            {% endif %}
-        </td>
-        <td class='divider'>
-          {% if game.vr %}
-              <strong class='yes vr'>✓</strong>
+          {% if game.pc %}
+            <strong class='yes pc'>✓</strong>
           {% endif %}
         </td>
         <td class='divider'>
-            {% if game.ps3 %}
-                <strong class='yes sony'>✓</strong>
-            {% endif %}
-        </td>
-        <td>
-            {% if game.ps4 %}
-                <strong class='yes sony'>✓</strong>
-            {% endif %}
-        </td>
-        <td>
-            {% if game.vita %}
-                <strong class='yes sony'>✓</strong>
-            {% endif %}
+          {% if game.vr %}
+            <strong class='yes vr'>✓</strong>
+          {% endif %}
         </td>
         <td class='divider'>
-            {% if game.x360 %}
-                <strong class='yes microsoft'>✓</strong>
-            {% endif %}
+          {% if game.ps3 %}
+            <strong class='yes sony'>✓</strong>
+          {% endif %}
         </td>
         <td>
-            {% if game.xb1 %}
-                <strong class='yes microsoft'>✓</strong>
-            {% endif %}
-        </td>
-        <td class='divider'>
-            {% if game.wii %}
-                <strong class='yes nintendo'>✓</strong>
-            {% endif %}
+          {% if game.ps4 %}
+            <strong class='yes sony'>✓</strong>
+          {% endif %}
         </td>
         <td>
-            {% if game.wiiu %}
-                <strong class='yes nintendo'>✓</strong>
-            {% endif %}
+          {% if game.vita %}
+            <strong class='yes sony'>✓</strong>
+          {% endif %}
+        </td>
+        <td class='divider'>
+          {% if game.x360 %}
+            <strong class='yes microsoft'>✓</strong>
+          {% endif %}
         </td>
         <td>
-            {% if game.n3ds %}
-                <strong class='yes nintendo'>✓</strong>
-            {% endif %}
+          {% if game.xb1 %}
+            <strong class='yes microsoft'>✓</strong>
+          {% endif %}
         </td>
         <td class='divider'>
-            {% if game.mobile %}
-                <strong class='yes'>✓</strong>
-            {% endif %}
+          {% if game.wii %}
+            <strong class='yes nintendo'>✓</strong>
+          {% endif %}
+        </td>
+        <td>
+          {% if game.wiiu %}
+            <strong class='yes nintendo'>✓</strong>
+          {% endif %}
+        </td>
+        <td>
+          {% if game.n3ds %}
+            <strong class='yes nintendo'>✓</strong>
+          {% endif %}
         </td>
         <td class='divider'>
-            {{ game.others | join(', ') }}
+          {% if game.mobile %}
+            <strong class='yes'>✓</strong>
+          {% endif %}
         </td>
-    </tr>
+        <td class='divider'>
+          {{ game.others | join(', ') }}
+        </td>
+      </tr>
     {% endfor %}
     </tbody>
-    </table>
+  </table>
 
-    {% if user.canDo('add-video-game') %}
+  {% if user.canDo('add-video-game') %}
     <script type="text/javascript">
-    $("#add-a-game").click(function(e){
+      $("#add-a-game").click(function () {
         $("#new-game").show();
         $("#Game").focus();
         $("#add-a-game").hide();
         $("#add-a-game-msg").show();
-    });
-    $("#new-game-form").submit(function(e){
+      });
+      $("#new-game-form").submit(function (e) {
         e.preventDefault();
         $("#game-submit").attr("disabled", "disabled");
 
-        $.post("{{ path('addVideoGame') }}", $("#new-game-form").serialize(), function(data) {
-            if (data.error) {
-                $("#add-a-game-msg").html("<strong>Error:</strong> "+data.error);
-                $("#add-a-game-msg").removeClass("alert-warning alert-success");
-                $("#add-a-game-msg").addClass("alert-danger");
-            } else {
-                $("#add-a-game-msg").text('Success! '+data.success+' has been added. It will show up after a refresh.');
-                $("#add-a-game-msg").removeClass("alert-warning alert-danger");
-                $("#add-a-game-msg").addClass("alert-success");
-                $("#Game").attr("value", "");
-                $("#new-game input[type=checkbox]").prop("checked", false);
-                $("#Game").focus();
-            }
-            $("#game-submit").removeAttr("disabled");
+        $.post("{{ path('addVideoGame') }}", $("#new-game-form").serialize(), function (data) {
+          var msg = $("#add-a-game-msg");
+          if (data.error) {
+            msg.html("<strong>Error:</strong> " + data.error);
+            msg.removeClass("alert-warning alert-success");
+            msg.addClass("alert-danger");
+          } else {
+            msg.text('Success! ' + data.success + ' has been added. It will show up after a refresh.');
+            msg.removeClass("alert-warning alert-danger");
+            msg.addClass("alert-success");
+            $("#Game").attr("value", "");
+            $("#new-game").find("input[type=checkbox]").prop("checked", false);
+            $("#Game").focus();
+          }
+          $("#game-submit").removeAttr("disabled");
         }, "json");
 
-    });
+      });
     </script>
-    {% endif %}
+  {% endif %}
 {% endblock %}

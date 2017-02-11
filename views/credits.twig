@@ -3,294 +3,214 @@
 {% block title %}Credits{% endblock %}
 
 {% block content %}
-<style type="text/css">
-  h1, h2 {
-    margin:0;
-    padding:0;
-    color: #f85898;
-    font-weight: normal;
-  }
+  <style type="text/css">
+    p {
+      font-family: Tahoma, sans-serif;
+      font-size: 18px;
+      line-height: 1.3em;
+    }
 
-  h1 {
-    font-family: 'AnnapolisHalftoneItalic','Tahoma Bold',Tahoma,sans-serif;
-    text-transform: uppercase;
-    font-size: 3em;
-    line-height: 100%;
-  }
-  h2 {
-    font-family: "yoster", Calibri, sans-serif;
-    font-size: 1.3em;
-    line-height: 100%;
-    color: #bfbfbf;
-    -webkit-font-smoothing: none;
-  }
+    .awardHeaderContainer {
+      margin: 50px 0 10px 0;
+      padding: 10px;
+      background: url(/2016images/title_bg.png) center center no-repeat;
+      text-align: center;
+    }
 
-  p {
-    font-family: "modern typewriter", Tahoma, sans-serif;
-    font-size: 18px;
-    line-height: 1.3em;
-    color: #fac0cb;
-    /*color: #f7d059;*/
-  }
+    .awardHeaderContainer:first-child {
+      margin-top: 0;
+    }
 
-  .award {
-    margin: 0 auto 35px auto;
-    padding: 20px;
-    background: black;
-    border: 2px solid #af3a81;
-    box-shadow: 0 0 10px #af3a81;
-  }
+    .awardName {
+      font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;
+      font-weight: normal;
+      font-style: normal;
+      text-transform: uppercase;
+      font-size: 2.1em;
+      color: #00ebdb;
+    }
 
-  .winner {
-    border: 1px solid #970087;
-  }
+    .credits {
+      text-align: center;
+      font-size: 20px;
+      line-height: 30px;
+      color: #fac0cb;
+    }
 
-  .award ul {
-    list-style-type: none;
-    margin: 0;
-    font-size: 24px;
-  }
+    .credits strong {
+      color: #f7d059;
+      font-size: 22px;
+    }
 
-  .award ul li {
-    line-height: 1.5em;
-    font-family: "modern typewriter", Calibri, sans-serif;
-    color: #00ebdb;
-  }
+    .FLAOT {
+      display: inline-block;
+      margin: 0 30px;
+    }
 
-  .award ul li:first-child {
-    font-size: 36px;
-    font-family: 'Annapolis','Tahoma Bold',Tahoma,sans-serif;
-    color: #f7d059;
-    line-height: 1em;
-  }
+    .specialThanks {
+      background-size: auto;
+      height: 100px;
+      padding-top: 38px;
+      font-size: x-large;
+      margin-bottom: 20px;
+    }
 
-  .award ul li:last-child {
-    color: #f85898;
-    font-size: 18px;
-    font-family: "modern typewriter", Tahoma, sans-serif;
-  }
+    .green {
+      color: #008751;
+    }
 
-  .page-header {
-    text-align: center;
-    border: none;
-    margin-bottom: 0;
-  }
+    .gold {
+      color: #FCD116;
+    }
 
-  .page-header.the-bottom {
-    margin-bottom: 20px;
-  }
+    .green, .gold {
+      margin: 0 -7px 0 -7px;
+    }
+  </style>
 
-  .awardHeaderContainer {
-    margin: 50px 0 10px 0;
-    /*padding-top: 24px;*/
-    padding: 10px;
-    /*height: 106px;*/
-    background: url(/2016images/title_bg.png) center center no-repeat;
-    text-align: center;
-  }
-
-  .awardHeaderContainer:first-child {
-    margin-top: 0;
-  }
-
-  .awardName {
-    font-family: "AnnapolisHalftoneItalic",'Tahoma Bold',Tahoma,sans-serif;
-    font-weight: normal;
-    font-style: normal;
-    text-transform: uppercase;
-    font-size: 2.1em;
-    color: #00ebdb;
-  }
-
-  a, a:visited {
-    color: #00ebdb;
-  }
-
-  a:hover, a:active {
-    color: #f85898;
-  }
-
-  .awardSubtitle {
-    color: #00ebdb;
-    font-family: 'FixedSystem',Calibri,sans-serif;
-    font-size: 32px !important;
-    line-height: 20px;
-  }
-
-  .credits {
-    text-align: center;
-    font-size: 20px;
-    line-height: 30px;
-  }
-
-  .credits strong {
-    color: #f7d059;
-    font-size: 22px;
-  }
-
-  .FLAOT {
-    display: inline-block;
-    margin: 0 30px;
-  }
-
-  .specialThanks {
-    background-size: auto;
-    height: 100px;
-    padding-top: 38px;
-    font-size: x-large;
-    margin-bottom: 20px;
-  }
-
-  .gren {
-    color: #008751;
-  }
-
-  .gold {
-    color: #FCD116;
-  }
-
-  .gren, .gold {
-    margin: 0 -7px 0 -7px;
-  }
-</style>
-
-<div class="zig"></div>
-
-<div class="row">
-  <div class="col-md-4" style="text-align: center;">
-    <img src="/2016images/vga_logo.png" alt="Logo of the 2016 Vidya Gaem Awards">
-  </div>
-  <div class="col-md-8" style="text-align: center; padding-top: 30px;">
-    <h1>Cast and Crew of the 2017 Vidya&nbsp;Gaem&nbsp;Awards</h1>
-  </div>
-</div>
-
-<div class="zig"></div>
-
-<div class="credits">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="awardHeaderContainer">
-        <div class="awardName">Production Team:</div>
-      </div>
-      <p>Directed by <strong>PhoneEatingBear</strong></p>
-      <p>Produced by <strong>PhoneEatingBear</strong> &amp; <strong>Lucien93</strong></p>
-      <p>Template by <strong>Ghost</strong></p>
-      <p>Edited by <strong>PhoneEatingBear</strong></p>
-      <p>Voiced by <strong>JohnCuck</strong>, <strong>Laggy44</strong>, <strong>borgo</strong>, <strong>Lucien93</strong>, <strong>CounterTunes</strong> & <strong>Duke</strong></p>
-      <p>Preshow Music Mix by <strong>Radiomuff</strong>, <strong>MatrixMarioX</strong>, <strong>borgo</strong> & <strong>FutanariVorestep.exe</strong></p>
-      <p>Sound Effects by <strong>Radiomuff</strong></p>
-
-      <div class="awardHeaderContainer">
-        <div class="awardName">Writing Team:</div>
-      </div>
-
-      <p>
-        <strong>LamerGamer</strong>, <strong>Lucien93</strong>, <strong>Importuno</strong>, <strong>ghmorello</strong>, <strong>Val</strong>,
-        <strong>OrbitalCoffeeBound</strong>, <strong>Gravetracer</strong> & <strong>PhoneEatingBear</strong>
-      </p>
-
-      <div class="awardHeaderContainer">
-        <div class="awardName">Awards:</div>
-      </div>
-
-      <p>
-        "Seal of Quality Award", "Hyperbole Award", "DeviantArt Award", "IP Twist Award", "Bioware Award", "Syria Award",
-        "Discworld Award", "Pixels 4re 4rt 4w4rd", "Most Hated Award" & "Least Worst Award" by <strong>PhoneEatingBear</strong>
-      </p>
-
-      <p>
-        "/vr/ Award", "Never Coming Out Award", "Digital Suicide Award", "Best Timeline Award", "ａｅｓｔｈｅｔｉｃ　ａｗａｒｄ", "Worst Timeline Award" & "Space Award 5" by <strong>Segab</strong>
-      </p>
-
-      <p>
-        "Silent Protagonist Award", "Hype Machine Award", "Cincinnati Award" & "Literally Hitler Award" by <strong>CounterTunes</strong>
-      </p>
-
-      <p>
-        "White's Move First Award" & "New Challenger Award" by <strong>Monoframe</strong>
-      </p>
-    </div>
-    <div class="col-md-6">
-      <div class="awardHeaderContainer">
-        <div class="awardName">Skits:</div>
-      </div>
-      <p>
-        &ldquo;Take Gaming Seriously&rdquo; &ndash; <strong>Val</strong><br>
-        &ldquo;20170122skit&rdquo; &ndash; <strong>Monoframe</strong><br>
-        &ldquo;QTs&rdquo; &ndash; <strong>Val</strong><br>
-        &ldquo;Metal Gear Profit 2&rdquo; &ndash; <strong>Whomobile</strong><br>
-        &ldquo;Problems of AAA Games&rdquo; &ndash; <strong>Anonymous</strong><br>
-        &ldquo;Memories of /v/&rdquo; &ndash; <strong>Laggy44</strong><br>
-        &ldquo;The Truth About Your Lives&rdquo; &ndash; <strong>Anonymous</strong><br>
-        &ldquo;This is Bait&rdquo; &ndash; <strong>Clamburger</strong><br>
-        &ldquo;Twitch 2017&rdquo; &ndash; <strong>Flower_Child</strong><br>
-        &ldquo;CanadianSkit&rdquo; &ndash; <strong>Segab</strong><br>
-        &ldquo;2017 Overture&rdquo; &ndash; <strong>Brobuzz</strong><br>
-        &ldquo;Fuck Atari&rdquo; &ndash; <strong>Anonymous</strong><br>
-        &ldquo;MOTHERXV&rdquo; &ndash; <strong>TackAngel</strong><br>
-        &ldquo;XCOM Bumper&rdquo; &ndash; <strong>X6</strong><br>
-        &ldquo;Phil Spencer: The False God&rdquo; &ndash; <strong>Anonymous</strong><br>
-        &ldquo;KOJI-MAN Full Opening (1987 VHS-Rip)&rdquo; &ndash; <strong>Radiomuff</strong><br>
-        &ldquo;Electronic Old Men&rdquo; &ndash; <strong>LamerGamer</strong><br>
-        &ldquo;Deus Ex Bumper&rdquo; &ndash; <strong>Z6</strong><br>
-        &ldquo;Watch for Big Guys - 0.5x A Presses (Commentated)&rdquo; &ndash; <strong>BoulderBash</strong><br>
-        &ldquo;No Man's Stranding&rdquo; &ndash; <strong>Anonymous</strong><br>
-        &ldquo;Next Time&rdquo; &ndash; <strong>PhoneEatingBear</strong>
-      </p>
-
-      <div class="awardHeaderContainer">
-        <div class="awardName">Pleb Patrol:</div>
-      </div>
-      <p>Nippon Team: <strong>Shibashabu</strong> & <strong>Ahch</strong></p>
-      <p>Streamed by <strong>Anonymous</strong></p>
-      <p>Website by <strong>Clamburger</strong> and <strong>Segab</strong></p>
-      <p>Discord Poster of the Year Award goes to <strong>tvas</strong></p>
-
-      <div class="awardHeaderContainer">
-        <div class="awardName">
-          <span class="gren">A</span>
-          <span class="gold">u</span>
-          <span class="gren">s</span>
-          <span class="gold">t</span>
-          <span class="gren">r</span>
-          <span class="gold">a</span>
-          <span class="gren">l</span>
-          <span class="gold">i</span>
-          <span class="gren">a</span>
-          <span class="gold">n</span>
-          <span class="gren">s</span>
-          <span class="gold">:</span>
-        </div>
-      </div>
-      <p><strong>Clamburger</strong> and <strong>CounterTunes</strong></p>
-    </div>
-
-
-  </div>
-
-  <div class="zig" style="margin-top: 100px;"></div>
+  <div class="zig"></div>
 
   <div class="row">
-    <div class="col-md-12">
-      <div class="awardHeaderContainer specialThanks">
-        <div class="awardName">Special Thanks:</div>
-      </div>
-      <p class="FLAOT"><strong>Anonymous</strong></p>
-      <p style="margin-top: 20px;">And most importantly, <strong style="font-size: x-large;">you!</strong></p>
+    <div class="col-md-4" style="text-align: center;">
+      <img src="/2016images/vga_logo.png" alt="Logo of the 2016 Vidya Gaem Awards">
+    </div>
+    <div class="col-md-8" style="text-align: center; padding-top: 30px;">
+      <h1>Cast and Crew of the 2017 Vidya&nbsp;Gaem&nbsp;Awards</h1>
     </div>
   </div>
 
   <div class="zig"></div>
 
-  <div class="row" style="margin-top: 200px;">
-    <div class="col-xs-12">
-      <p class="implying">&gt;they contribute to a shitty online video game award show</p>
-      <p class="implying">&gt;they take their jobs very seriously</p>
-      <p class="implying">&gt;they do it for free</p>
-      <img src="/for-free.jpg" width="200px">
+  <div class="credits">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="awardHeaderContainer">
+          <div class="awardName">Production Team:</div>
+        </div>
+        <p>Directed by <strong>PhoneEatingBear</strong></p>
+        <p>Produced by <strong>PhoneEatingBear</strong> &amp; <strong>Lucien93</strong></p>
+        <p>Template by <strong>Ghost</strong></p>
+        <p>Edited by <strong>PhoneEatingBear</strong></p>
+        <p>Voiced by <strong>JohnCuck</strong>, <strong>Laggy44</strong>, <strong>borgo</strong>,
+          <strong>Lucien93</strong>, <strong>CounterTunes</strong> & <strong>Duke</strong></p>
+        <p>Preshow Music Mix by <strong>Radiomuff</strong>, <strong>MatrixMarioX</strong>, <strong>borgo</strong> &
+          <strong>FutanariVorestep.exe</strong></p>
+        <p>Sound Effects by <strong>Radiomuff</strong></p>
+
+        <div class="awardHeaderContainer">
+          <div class="awardName">Writing Team:</div>
+        </div>
+
+        <p>
+          <strong>LamerGamer</strong>, <strong>Lucien93</strong>, <strong>Importuno</strong>, <strong>ghmorello</strong>,
+          <strong>Val</strong>,
+          <strong>OrbitalCoffeeBound</strong>, <strong>Gravetracer</strong> & <strong>PhoneEatingBear</strong>
+        </p>
+
+        <div class="awardHeaderContainer">
+          <div class="awardName">Awards:</div>
+        </div>
+
+        <p>
+          "Seal of Quality Award", "Hyperbole Award", "DeviantArt Award", "IP Twist Award", "Bioware Award", "Syria
+          Award",
+          "Discworld Award", "Pixels 4re 4rt 4w4rd", "Most Hated Award" & "Least Worst Award" by
+          <strong>PhoneEatingBear</strong>
+        </p>
+
+        <p>
+          "/vr/ Award", "Never Coming Out Award", "Digital Suicide Award", "Best Timeline Award", "ａｅｓｔｈｅｔｉｃ　ａｗａｒｄ",
+          "Worst Timeline Award" & "Space Award 5" by <strong>Segab</strong>
+        </p>
+
+        <p>
+          "Silent Protagonist Award", "Hype Machine Award", "Cincinnati Award" & "Literally Hitler Award" by <strong>CounterTunes</strong>
+        </p>
+
+        <p>
+          "White's Move First Award" & "New Challenger Award" by <strong>Monoframe</strong>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <div class="awardHeaderContainer">
+          <div class="awardName">Skits:</div>
+        </div>
+        <p>
+          &ldquo;Take Gaming Seriously&rdquo; &ndash; <strong>Val</strong><br>
+          &ldquo;20170122skit&rdquo; &ndash; <strong>Monoframe</strong><br>
+          &ldquo;QTs&rdquo; &ndash; <strong>Val</strong><br>
+          &ldquo;Metal Gear Profit 2&rdquo; &ndash; <strong>Whomobile</strong><br>
+          &ldquo;Problems of AAA Games&rdquo; &ndash; <strong>Anonymous</strong><br>
+          &ldquo;Memories of /v/&rdquo; &ndash; <strong>Laggy44</strong><br>
+          &ldquo;The Truth About Your Lives&rdquo; &ndash; <strong>Anonymous</strong><br>
+          &ldquo;This is Bait&rdquo; &ndash; <strong>Clamburger</strong><br>
+          &ldquo;Twitch 2017&rdquo; &ndash; <strong>Flower_Child</strong><br>
+          &ldquo;CanadianSkit&rdquo; &ndash; <strong>Segab</strong><br>
+          &ldquo;2017 Overture&rdquo; &ndash; <strong>Brobuzz</strong><br>
+          &ldquo;Fuck Atari&rdquo; &ndash; <strong>Anonymous</strong><br>
+          &ldquo;MOTHERXV&rdquo; &ndash; <strong>TackAngel</strong><br>
+          &ldquo;XCOM Bumper&rdquo; &ndash; <strong>X6</strong><br>
+          &ldquo;Phil Spencer: The False God&rdquo; &ndash; <strong>Anonymous</strong><br>
+          &ldquo;KOJI-MAN Full Opening (1987 VHS-Rip)&rdquo; &ndash; <strong>Radiomuff</strong><br>
+          &ldquo;Electronic Old Men&rdquo; &ndash; <strong>LamerGamer</strong><br>
+          &ldquo;Deus Ex Bumper&rdquo; &ndash; <strong>Z6</strong><br>
+          &ldquo;Watch for Big Guys - 0.5x A Presses (Commentated)&rdquo; &ndash; <strong>BoulderBash</strong><br>
+          &ldquo;No Man's Stranding&rdquo; &ndash; <strong>Anonymous</strong><br>
+          &ldquo;Next Time&rdquo; &ndash; <strong>PhoneEatingBear</strong>
+        </p>
+
+        <div class="awardHeaderContainer">
+          <div class="awardName">Pleb Patrol:</div>
+        </div>
+        <p>Nippon Team: <strong>Shibashabu</strong> & <strong>Ahch</strong></p>
+        <p>Streamed by <strong>Anonymous</strong></p>
+        <p>Website by <strong>Clamburger</strong> and <strong>Segab</strong></p>
+        <p>Discord Poster of the Year Award goes to <strong>tvas</strong></p>
+
+        <div class="awardHeaderContainer">
+          <div class="awardName">
+            <span class="green">A</span>
+            <span class="gold">u</span>
+            <span class="green">s</span>
+            <span class="gold">t</span>
+            <span class="green">r</span>
+            <span class="gold">a</span>
+            <span class="green">l</span>
+            <span class="gold">i</span>
+            <span class="green">a</span>
+            <span class="gold">n</span>
+            <span class="green">s</span>
+            <span class="gold">:</span>
+          </div>
+        </div>
+        <p><strong>Clamburger</strong> and <strong>CounterTunes</strong></p>
+      </div>
+
+
+    </div>
+
+    <div class="zig" style="margin-top: 100px;"></div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="awardHeaderContainer specialThanks">
+          <div class="awardName">Special Thanks:</div>
+        </div>
+        <p class="FLAOT"><strong>Anonymous</strong></p>
+        <p style="margin-top: 20px;">And most importantly, <strong style="font-size: x-large;">you!</strong></p>
+      </div>
+    </div>
+
+    <div class="zig"></div>
+
+    <div class="row" style="margin-top: 200px;">
+      <div class="col-xs-12">
+        <p class="implying">&gt;they contribute to a shitty online video game award show</p>
+        <p class="implying">&gt;they take their jobs very seriously</p>
+        <p class="implying">&gt;they do it for free</p>
+        <img src="/for-free.jpg" style="width: 200px;">
+      </div>
     </div>
   </div>
-</div>
 
 {% endblock %}

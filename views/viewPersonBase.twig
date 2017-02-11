@@ -1,30 +1,32 @@
 {% extends 'base/standard.twig' %}
 
 {% block content %}
-<div class="page-header">
+  <div class="page-header">
     <h1>
-        <img src="data:image/png;base64,{{ _user.avatar }}" style='height: 40px; margin-bottom: 5px;' />
-        {{ _user.name }}
-        <small>{{ _user.primaryRole }}</small>
+      <img src="data:image/png;base64,{{ _user.avatar }}" style='height: 40px; margin-bottom: 5px;'/>
+      {{ _user.name }}
+      <small>{{ _user.primaryRole }}</small>
     </h1>
     <p>Back to <a href="{{ path('people') }}">Cast and Crew</a></p>
-</div>
+  </div>
 
-    {% for message in flashbag.get('formError') %}
-        <div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ message }}
-        </div>
-    {% endfor %}
+  {% for message in flashbag.get('formError') %}
+    <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      {{ message }}
+    </div>
+  {% endfor %}
 
-    {% for message in flashbag.get('formSuccess') %}
-        <div class="alert alert-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ message }}
-        </div>
-    {% endfor %}
+  {% for message in flashbag.get('formSuccess') %}
+    <div class="alert alert-success" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      {{ message }}
+    </div>
+  {% endfor %}
 
-<div class="row">
+  <div class="row">
     {% block subContent %}{% endblock %}
-</div>
+  </div>
 {% endblock %}

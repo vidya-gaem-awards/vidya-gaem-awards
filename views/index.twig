@@ -1,47 +1,52 @@
 {% extends 'base/standard.twig' %}
 
 {% block head %}
-    <style type="text/css">
-        .jumbotron {
-            font-family: 'Bungee', sans-serif;
-        }
-        .jumbotron h1 {
-            font-size: 70px;
-        }
-    </style>
+  <style type="text/css">
+    .jumbotron {
+      font-family: 'Bungee', sans-serif;
+    }
+
+    .jumbotron h1 {
+      font-size: 70px;
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
-    <header class="jumbotron masthead">
-        <h1>2017 Vidya Gaem Awards</h1>
-        <p class="implying">>implying you're opinion is worth shit</p>
-    </header>
-    <div class="row">
-        <div class="col-md-6">
-            <h1>News <small><a href="{{ path('news') }}">view all</a></small></h1>
-            <ul class="news">
-                {% for item in news %}
-                    <li class="{{ item.old and not loop.first ? 'news-old' : '' }}">
-                        {% if item.new %}
-                            <span class="label label-info">New</span>
-                        {% endif %}
-                        <strong>{{ item.timestamp|date('M j, Y') }}</strong>: {{ item.text | raw }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-md-5">
-            <h1>Want to get involved?</h1>
-            <p>
-                If you're interested in being involved with the production of the show
-                in some way, fill out our <a href="https://docs.google.com/forms/d/17lTs8RfS5nVvDPUExPCcT8LDKHU94Melwc1M-FhYlFU/edit">Talent Recruitment Form</a>.
-            </p>
-            <p>
-                If you'd like to be involved or just want to verbally shitpost, you can
-                also join our <a href="http://discord.gg/4e8JQB4">Discord channel</a>.
-            </p>
-        </div>
+  <header class="jumbotron masthead">
+    <h1>2017 Vidya Gaem Awards</h1>
+    <p class="implying">>implying you're opinion is worth shit</p>
+  </header>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>News
+        <small><a href="{{ path('news') }}">view all</a></small>
+      </h1>
+      <ul class="news">
+        {% for item in news %}
+          <li class="{{ item.old and not loop.first ? 'news-old' : '' }}">
+            {% if item.new %}
+              <span class="label label-info">New</span>
+            {% endif %}
+            <strong>{{ item.timestamp|date('M j, Y') }}</strong>: {{ item.text | raw }}
+          </li>
+        {% endfor %}
+      </ul>
     </div>
+    <div class="col-md-5">
+      <h1>Want to get involved?</h1>
+      <p>
+        If you're interested in being involved with the production of the show
+        in some way, fill out our <a
+            href="https://docs.google.com/forms/d/17lTs8RfS5nVvDPUExPCcT8LDKHU94Melwc1M-FhYlFU/edit">Talent Recruitment
+          Form</a>.
+      </p>
+      <p>
+        If you'd like to be involved or just want to verbally shitpost, you can
+        also join our <a href="http://discord.gg/4e8JQB4">Discord channel</a>.
+      </p>
+    </div>
+  </div>
 
-    <a href="https://plus.google.com/111295979980964577432" rel="publisher">Google+</a>
+  <a href="https://plus.google.com/111295979980964577432" rel="publisher">Google+</a>
 {% endblock %}

@@ -1,310 +1,338 @@
 {% extends 'base/standard.twig' %}
 
 {% block content %}
-    <h1 class="page-header">Manage Awards</h1>
+  <h1 class="page-header">Manage Awards</h1>
 
-    <ul class="breadcrumb">
-        <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
-    </ul>
+  <ul class="breadcrumb">
+    <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
+  </ul>
 
-    {% if editing %}
-        {% for message in flashbag.get('editFormError') %}
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ message }}
+  {% if editing %}
+    {% for message in flashbag.get('editFormError') %}
+      <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        {{ message }}
+      </div>
+    {% endfor %}
+
+    {% for message in flashbag.get('editFormSuccess') %}
+      <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        {{ message }}
+      </div>
+    {% endfor %}
+
+    <h2>{{ award.name }}</h2>
+
+    <form method="POST" action="{{ path('editAwardPost', {'awardID': award.id}) }}" class="form-horizontal well"
+          id="awardForm">
+      <input type="hidden" name="action" value="edit">
+      <div class="row">
+        <div class="col-sm-6 form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="input01">ID</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="input01" disabled value="{{ award.id | e('html_attr') }}">
             </div>
-        {% endfor %}
+          </div>
 
-        {% for message in flashbag.get('editFormSuccess') %}
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ message }}
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="input02">Name</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="input02" required name="name"
+                     value="{{ award.name | e('html_attr') }}">
             </div>
-        {% endfor %}
+          </div>
 
-        <h2>{{ award.name }}</h2>
-
-        <form method="POST" action="{{ path('editAwardPost', {'awardID': award.id}) }}" class="form-horizontal well" id="awardForm">
-            <input type="hidden" name="action" value="edit">
-            <div class="row">
-            <div class="col-sm-6 form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input01">ID</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="input01" disabled value="{{ award.id | e('html_attr') }}">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input02">Name</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="input02" required name="name" value="{{ award.name | e('html_attr') }}">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input03">Subtitle</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="input03" required name="subtitle" value="{{ award.subtitle | e('html_attr') }}">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input05">Extra Comments</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="input05" name="comments" value="{{ award.comments | e('html_attr') }}">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input06">
-                        <abbr title="Determines what shows up in the autocomplete box when users are writing in nominations">Autocomplete Group</abbr>
-                    </label>
-                    <div class="col-sm-8">
-                        <select name="autocompleter" id="input06" class="form-control">
-                            <option></option>
-                            {% for autocompleter in autocompleters %}
-                                <option value="{{ autocompleter.id }}" {{ autocompleter == award.autocompleter ? 'selected' : '' }}>
-                                    {{ autocompleter.name }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="input03">Subtitle</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="input03" required name="subtitle"
+                     value="{{ award.subtitle | e('html_attr') }}">
             </div>
+          </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input04"><abbr title="Awards with a lower position will be sorted first">Position number</abbr></label>
-                    <div class="col-sm-8">
-                        <input type="number" min="0" max="10000" class="form-control" id="input04" required name="order" value="{{ award.order | e('html_attr') }}">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="enabled">Award enabled?</label>
-                    <div class="col-sm-8 checkbox">
-                        <label>
-                            <input type="checkbox" id="enabled" value="true" name="enabled" {{ award.enabled ? 'checked' : '' }}>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="nominationsEnabled">Nominations enabled?</label>
-                    <div class="col-sm-8 checkbox">
-                        <label>
-                            <input type="checkbox" id="nominationsEnabled" value="true" name="nominationsEnabled" {{ award.areNominationsEnabled ? 'checked' : '' }}>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="secret"><abbr title="Secret awards will only show up during the voting stage">Secret award?</abbr></label>
-                    <div class="col-sm-8 checkbox">
-                        <label>
-                            <input type="checkbox" id="secret" value="true" name="secret" {{ award.secret ? 'checked' : '' }}>
-                        </label>
-                    </div>
-                </div>
-
-                {% if user.canDo('voting-results') %}
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="winnerImage"><abbr title="This image will show up next to the winner when results are released.">Winner image</abbr></label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="winnerImage" value="{{ award.winnerImage | e('html_attr') }}" name="winnerImage">
-                        <p class="help-block">URL must start with https://</p>
-                    </div>
-                </div>
-                {% endif %}
-
-                <div class="form-group">
-                    <div class="col-sm-8 col-sm-offset-4">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                        <a href="{{ path('awardManager') }}" class="btn">Cancel</a>
-                    </div>
-                </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="input05">Extra Comments</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="input05" name="comments"
+                     value="{{ award.comments | e('html_attr') }}">
             </div>
-            </div>
-        </form>
+          </div>
 
-        {% if user.canDo('awards-delete') %}
-            <form method="POST" action="{{ path('editAwardPost', {'awardID': award.id}) }}" id="deleteAward">
-                <div class="alert alert-danger">
-                    <input type="hidden" name="delete" value="delete">
-                    <button class="btn btn-danger" title="Remove award" type="submit" name="award">Delete award ({{ award.name }})</button>
-                </div>
-            </form>
-        {% endif %}
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="input06">
+              <abbr title="Determines what shows up in the autocomplete box when users are writing in nominations">Autocomplete
+                Group</abbr>
+            </label>
+            <div class="col-sm-8">
+              <select name="autocompleter" id="input06" class="form-control">
+                <option></option>
+                {% for autocompleter in autocompleters %}
+                  <option value="{{ autocompleter.id }}" {{ autocompleter == award.autocompleter ? 'selected' : '' }}>
+                    {{ autocompleter.name }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="input04"><abbr
+                  title="Awards with a lower position will be sorted first">Position number</abbr></label>
+            <div class="col-sm-8">
+              <input type="number" min="0" max="10000" class="form-control" id="input04" required name="order"
+                     value="{{ award.order | e('html_attr') }}">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="enabled">Award enabled?</label>
+            <div class="col-sm-8 checkbox">
+              <label>
+                <input type="checkbox" id="enabled" value="true" name="enabled" {{ award.enabled ? 'checked' : '' }}>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="nominationsEnabled">Nominations enabled?</label>
+            <div class="col-sm-8 checkbox">
+              <label>
+                <input type="checkbox" id="nominationsEnabled" value="true"
+                       name="nominationsEnabled" {{ award.areNominationsEnabled ? 'checked' : '' }}>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="secret"><abbr
+                  title="Secret awards will only show up during the voting stage">Secret award?</abbr></label>
+            <div class="col-sm-8 checkbox">
+              <label>
+                <input type="checkbox" id="secret" value="true" name="secret" {{ award.secret ? 'checked' : '' }}>
+              </label>
+            </div>
+          </div>
+
+          {% if user.canDo('voting-results') %}
+            <div class="form-group">
+              <label class="col-sm-4 control-label" for="winnerImage"><abbr
+                    title="This image will show up next to the winner when results are released.">Winner
+                  image</abbr></label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="winnerImage"
+                       value="{{ award.winnerImage | e('html_attr') }}" name="winnerImage">
+                <p class="help-block">URL must start with https://</p>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="form-group">
+            <div class="col-sm-8 col-sm-offset-4">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+              <a href="{{ path('awardManager') }}" class="btn">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    {% if user.canDo('awards-delete') %}
+      <form method="POST" action="{{ path('editAwardPost', {'awardID': award.id}) }}" id="deleteAward">
+        <div class="alert alert-danger">
+          <input type="hidden" name="delete" value="delete">
+          <button class="btn btn-danger" title="Remove award" type="submit" name="award">Delete award ({{ award.name }}
+            )
+          </button>
+        </div>
+      </form>
     {% endif %}
+  {% endif %}
 
-    {% for message in flashbag.get('formError') %}
-        <div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ message }}
-        </div>
-    {% endfor %}
+  {% for message in flashbag.get('formError') %}
+    <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      {{ message }}
+    </div>
+  {% endfor %}
 
-    {% for message in flashbag.get('formSuccess') %}
-        <div class="alert alert-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ message }}
-        </div>
-    {% endfor %}
+  {% for message in flashbag.get('formSuccess') %}
+    <div class="alert alert-success" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      {{ message }}
+    </div>
+  {% endfor %}
 
-    <style type="text/css">
-        #awards, #addAward {
-            background-color: white;
-        }
-        .label {
-            display: block;
-            text-align: center;
-            padding: 13px 0;
-        }
-        #awards .aligned {
-            text-align: center;
-            vertical-align: middle;
-        }
-        .monospace {
-            font-family: monospace;
-        }
+  <style type="text/css">
+    #awards, #addAward {
+      background-color: white;
+    }
 
-        .sparkbar {
-            margin: 4px 0;
-            height: 10px;
-            overflow: hidden;
-        }
+    .label {
+      display: block;
+      text-align: center;
+      padding: 13px 0;
+    }
 
-        .sparkbar-yes {
-            float: left;
-            height: 10px;
-            background: #55A54E;
-        }
+    #awards .aligned {
+      text-align: center;
+      vertical-align: middle;
+    }
 
-        .sparkbar-no {
-            float: right;
-            height: 10px;
-            background: #AA4643;
-        }
-    </style>
+    .monospace {
+      font-family: monospace;
+    }
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover form-table" id="awards">
-            <thead>
-                <tr>
-                    <th style="width: 130px;">Status</th>
-                    <th class="col-sm-2">ID</th>
-                    <th>Name</th>
-                    <th style="width: 180px;">
-                        Feedback
-                        <span style="float: right;">
+    .sparkbar {
+      margin: 4px 0;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .sparkbar-yes {
+      float: left;
+      height: 10px;
+      background: #55A54E;
+    }
+
+    .sparkbar-no {
+      float: right;
+      height: 10px;
+      background: #AA4643;
+    }
+  </style>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover form-table" id="awards">
+      <thead>
+      <tr>
+        <th style="width: 130px;">Status</th>
+        <th class="col-sm-2">ID</th>
+        <th>Name</th>
+        <th style="width: 180px;">
+          Feedback
+          <span style="float: right;">
                             <small><a href='?sort=percentage'>sort %</a> or <a href='?sort=net'>sort net</a></small>
                         </span>
-                    </th>
-                    <th style="width: 60px;">Order</th>
-                    {% if user.canDo('awards-edit') %}
-                        <th style="width: 80px;">Controls</th>
-                    {% endif %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for award in awards %}
-                <tr class="{{ not award.enabled ? 'warning' : award.secret ? 'info' : '' }}">
-                    <td class="aligned">
-                        {% if not award.enabled %}
-                        <span class="label label-warning">Award Disabled</span>
-                        {% elseif award.secret %}
-                        <span class="label label-info">Secret Award!</span>
-                        {% elseif award.areNominationsEnabled %}
-                        <span class="label label-success">Nominations Open</span>
-                        {% else %}
-                        <span class="label label-default">Nominations Closed</span>
-                        {% endif %}
-                    </td>
-                    <td class="monospace">{{ award.id }}</td>
-                    <td>{{ award.name }}<br><small>{{ award.subtitle }}</small></td>
-                    <td>
-                        <div class="sparkbar">
-                            <div class="sparkbar-yes" style="width: {{ award.feedbackPercent.positive }}%"></div>
-                            <div class="sparkbar-no" style="width: {{ award.feedbackPercent.negative }}%"></div>
-                        </div>
-                        {{ award.feedback | length }} votes
-                        <abbr style="float: right;" title="{{ award.groupedFeedback.positive }} - {{ award.groupedFeedback.negative }} = {{ award.groupedFeedback.net }}">
-                            {{ award.feedbackPercent.positive | round }}%
-                        </abbr>
-                    </td>
-                    <td class="aligned">{{ award.order }}</td>
-                    {% if user.canDo('awards-edit') %}
-                    <td class="aligned">
-                        <a class="btn btn-primary" href="{{ path('editAward', {'awardID': award.id}) }}" title="Edit award">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> &nbsp;Edit
-                        </a>
-                    </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
+        </th>
+        <th style="width: 60px;">Order</th>
         {% if user.canDo('awards-edit') %}
-            <form method="POST" action="{{ path('awardManagerPost') }}">
-                <input type="hidden" name="action" value="new">
-                <table class="table table-bordered" id="addAward">
-                    <tr>
-                        <th colspan="6">Add a new award</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name="enabled" checked> Enabled </label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name="nominations"> Nominations </label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name="secret"> Secret </label>
-                            </div>
-                        </td>
-                        <td>
-                            <input type="text" name="id" id="id" placeholder="ID" style="width: 90%;" maxlength="30" pattern="[0-9a-zA-Z-]+"
-                                   required class="form-control">
-                            <p class="help-block">
-                                ID can only contain letters, numbers and dashes.
-                            </p>
-                        </td>
-                        <td colspan="2">
-                            <input type="text" name="name" id="name" placeholder="Name" style="width: 90%;" required class="form-control">
-                            <input type="text" name="subtitle" id="subtitle" placeholder="Subtitle" style="width: 90%;" required class="form-control">
-                        </td>
-                        <td>
-                            <input type="number" min="0" max="10000" name="order" id="order" placeholder="Order" required class="form-control">
-                        </td>
-                        <td>
-                            <input type="submit" class="btn btn-primary" value="Create">
-                        </td>
-                    </tr>
-                </table>
-            </form>
+          <th style="width: 80px;">Controls</th>
         {% endif %}
-    </div>
+      </tr>
+      </thead>
+      <tbody>
+      {% for award in awards %}
+        <tr class="{{ not award.enabled ? 'warning' : award.secret ? 'info' : '' }}">
+          <td class="aligned">
+            {% if not award.enabled %}
+              <span class="label label-warning">Award Disabled</span>
+            {% elseif award.secret %}
+              <span class="label label-info">Secret Award!</span>
+            {% elseif award.areNominationsEnabled %}
+              <span class="label label-success">Nominations Open</span>
+            {% else %}
+              <span class="label label-default">Nominations Closed</span>
+            {% endif %}
+          </td>
+          <td class="monospace">{{ award.id }}</td>
+          <td>{{ award.name }}<br>
+            <small>{{ award.subtitle }}</small>
+          </td>
+          <td>
+            <div class="sparkbar">
+              <div class="sparkbar-yes" style="width: {{ award.feedbackPercent.positive }}%"></div>
+              <div class="sparkbar-no" style="width: {{ award.feedbackPercent.negative }}%"></div>
+            </div>
+            {{ award.feedback | length }} votes
+            <abbr style="float: right;"
+                  title="{{ award.groupedFeedback.positive }} - {{ award.groupedFeedback.negative }} = {{ award.groupedFeedback.net }}">
+              {{ award.feedbackPercent.positive | round }}%
+            </abbr>
+          </td>
+          <td class="aligned">{{ award.order }}</td>
+          {% if user.canDo('awards-edit') %}
+            <td class="aligned">
+              <a class="btn btn-primary" href="{{ path('editAward', {'awardID': award.id}) }}" title="Edit award">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> &nbsp;Edit
+              </a>
+            </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
 
     {% if user.canDo('awards-edit') %}
-        <form method="POST" action="{{ path('awardManagerPost') }}" id="massChangeNominations">
-            <div class="alert alert-info">
-                <input type="hidden" id="action" name="action" value="massChangeNominations" />
-                <button class="btn btn-success" type="submit" name="todo" value="open">Open all nominations</button>
-                <button class="btn btn-danger" type="submit" name="todo" value="close">Close all nominations</button>
-            </div>
-        </form>
+      <form method="POST" action="{{ path('awardManagerPost') }}">
+        <input type="hidden" name="action" value="new">
+        <table class="table table-bordered" id="addAward">
+          <tr>
+            <th colspan="6">Add a new award</th>
+          </tr>
+          <tr>
+            <td>
+              <div class="checkbox">
+                <label><input type="checkbox" name="enabled" checked> Enabled </label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" name="nominations"> Nominations </label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" name="secret"> Secret </label>
+              </div>
+            </td>
+            <td>
+              <input type="text" name="id" id="id" placeholder="ID" style="width: 90%;" maxlength="30"
+                     pattern="[0-9a-zA-Z-]+"
+                     required class="form-control">
+              <p class="help-block">
+                ID can only contain letters, numbers and dashes.
+              </p>
+            </td>
+            <td colspan="2">
+              <input type="text" name="name" id="name" placeholder="Name" style="width: 90%;" required
+                     class="form-control">
+              <input type="text" name="subtitle" id="subtitle" placeholder="Subtitle" style="width: 90%;" required
+                     class="form-control">
+            </td>
+            <td>
+              <input type="number" min="0" max="10000" name="order" id="order" placeholder="Order" required
+                     class="form-control">
+            </td>
+            <td>
+              <input type="submit" class="btn btn-primary" value="Create">
+            </td>
+          </tr>
+        </table>
+      </form>
     {% endif %}
+  </div>
 
-    <script type="text/javascript">
-        $("#massChangeNominations").submit(function() {
-            return confirm("Are you sure you want to just fuck this shit up?");
-        });
+  {% if user.canDo('awards-edit') %}
+    <form method="POST" action="{{ path('awardManagerPost') }}" id="massChangeNominations">
+      <div class="alert alert-info">
+        <input type="hidden" id="action" name="action" value="massChangeNominations"/>
+        <button class="btn btn-success" type="submit" name="todo" value="open">Open all nominations</button>
+        <button class="btn btn-danger" type="submit" name="todo" value="close">Close all nominations</button>
+      </div>
+    </form>
+  {% endif %}
 
-        $("#deleteAward").submit(function() {
-            return confirm("Are you sure you want to just fuck this award up?");
-        });
-    </script>
+  <script type="text/javascript">
+    $("#massChangeNominations").submit(function () {
+      return confirm("Are you sure you want to just fuck this shit up?");
+    });
+
+    $("#deleteAward").submit(function () {
+      return confirm("Are you sure you want to just fuck this award up?");
+    });
+  </script>
 {% endblock %}

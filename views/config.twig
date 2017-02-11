@@ -6,7 +6,8 @@
   <div class="row">
     <div class="col-xs-12">
       <p style="margin-bottom: 20px;">
-        In the selected timezone, it is currently <strong>{{ 'now' | date('D, d M Y H:i:s') }}</strong> ({{ 'now' | date('P') }} UTC)
+        In the selected timezone, it is currently <strong>{{ 'now' | date('D, d M Y H:i:s') }}</strong>
+        ({{ 'now' | date('P') }} UTC)
       </p>
       <form class="form-horizontal" action="{{ path('configPost') }}" method="post">
         <div class="row">
@@ -29,7 +30,8 @@
             <div class="form-group">
               <label for="votingStart" class="col-sm-4 control-label">Voting Start</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="votingStart" name="votingStart" value="{{ config.votingStart ? config.votingStart | date('Y-m-d H:i:s') : '' }}"
+                <input type="text" class="form-control" id="votingStart" name="votingStart"
+                       value="{{ config.votingStart ? config.votingStart | date('Y-m-d H:i:s') : '' }}"
                        placeholder="yyyy-mm-dd hh:mm:ss">
                 <p class="help-block">Leaving this blank will result in votes never opening</p>
               </div>
@@ -37,7 +39,8 @@
             <div class="form-group">
               <label for="votingEnd" class="col-sm-4 control-label">Voting End</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="votingEnd" name="votingEnd" value="{{ config.votingEnd ? config.votingEnd | date('Y-m-d H:i:s') : '' }}"
+                <input type="text" class="form-control" id="votingEnd" name="votingEnd"
+                       value="{{ config.votingEnd ? config.votingEnd | date('Y-m-d H:i:s') : '' }}"
                        placeholder="yyyy-mm-dd hh:mm:ss">
                 <p class="help-block">Leaving this blank will keep voting open indefinitely</p>
               </div>
@@ -45,7 +48,8 @@
             <div class="form-group">
               <label for="streamTime" class="col-sm-4 control-label">Stream Time</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="streamTime" name="streamTime" value="{{ config.streamTime ? config.streamTime | date('Y-m-d H:i:s') : '' }}"
+                <input type="text" class="form-control" id="streamTime" name="streamTime"
+                       value="{{ config.streamTime ? config.streamTime | date('Y-m-d H:i:s') : '' }}"
                        placeholder="yyyy-mm-dd hh:mm:ss">
                 <p class="help-block">This is shown on the countdown page</p>
               </div>
@@ -55,7 +59,8 @@
               <div class="col-sm-8">
                 <select class="form-control" id="defaultPage" name="defaultPage">
                   {% for page, title in config.allowedDefaultPages %}
-                    <option {{ (config.defaultPage == page) ? 'selected' : '' }} value="{{ page }}">{{ page }} &ndash; {{ title }}</option>
+                    <option {{ (config.defaultPage == page) ? 'selected' : '' }}
+                        value="{{ page }}">{{ page }} &ndash; {{ title }}</option>
                   {% endfor %}
                 </select>
                 <p class="help-block">
@@ -69,61 +74,75 @@
             <div class="form-group">
               <label class="col-sm-4 control-label">Public Access</label>
               <div class="col-sm-8">
-                <p class="help-block">The pages listed below will not be publicly accessible unless they are checked.</p>
+                <p class="help-block">The pages listed below will not be publicly accessible unless they are
+                  checked.</p>
                 {# Note: although the parameters to isPagePublic look like route names, they are actually unrelated. #}
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="publicPages[videoGames]" {{ config.isPagePublic('videoGames') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[videoGames]" {{ config.isPagePublic('videoGames') ? 'checked' : '' }}>
                     <a href="{{ path('videoGames') }}" target="_blank">2017 in Vidya</a>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="publicPages[awards]" {{ config.isPagePublic('awards') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[awards]" {{ config.isPagePublic('awards') ? 'checked' : '' }}>
                     <a href="{{ path('awards') }}" target="_blank">Awards and Nominations</a>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="publicPages[videos]" {{ config.isPagePublic('videos') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[videos]" {{ config.isPagePublic('videos') ? 'checked' : '' }}>
                     <a href="{{ path('videos') }}" target="_blank">Videos page</a>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>
                     <a href="{{ path('voting') }}" target="_blank">Voting page</a>
-                    <p class="help-block"><small>Checking this box does not open voting: use the settings on the left for that.</small></p>
+                    <p class="help-block">
+                      <small>Checking this box does not open voting: use the settings on the left for that.</small>
+                    </p>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="publicPages[countdown]" {{ config.isPagePublic('countdown') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[countdown]" {{ config.isPagePublic('countdown') ? 'checked' : '' }}>
                     <a href="{{ path('countdown') }}" target="_blank">Stream countdown</a>
-                    <p class="help-block"><small>Set the countdown timer on the left.</small></p>
+                    <p class="help-block">
+                      <small>Set the countdown timer on the left.</small>
+                    </p>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="publicPages[stream]" {{ config.isPagePublic('stream') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[stream]" {{ config.isPagePublic('stream') ? 'checked' : '' }}>
                     <a href="{{ path('countdown') }}" target="_blank">Stream page</a>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="publicPages[finished]" {{ config.isPagePublic('finished') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[finished]" {{ config.isPagePublic('finished') ? 'checked' : '' }}>
                     <a href="{{ path('finished') }}" target="_blank">Post-stream "thank you" page</a>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="publicPages[credits]" {{ config.isPagePublic('credits') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[credits]" {{ config.isPagePublic('credits') ? 'checked' : '' }}>
                     <a href="{{ path('credits') }}" target="_blank">Credits</a>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label class="dangerous">
-                    <input type="checkbox" name="publicPages[results]" {{ config.isPagePublic('results') ? 'checked' : '' }}>
+                    <input type="checkbox"
+                           name="publicPages[results]" {{ config.isPagePublic('results') ? 'checked' : '' }}>
                     <a href="{{ path('detailedResults') }}" target="_blank">Voting results</a>
                     and the <a href="{{ path('simpleResults') }}" target="_blank">winners page</a>
                     <p class="help-block text-danger">
@@ -162,11 +181,13 @@
         <div class="alert alert-danger">
           <form action="{{ path('configPost') }}" method="post">
             <p>
-              <strong>Warning:</strong> turning on read-only mode will lock the site and prevent any more changes from being made.
-              This can only be undone by directly editing the database.
+              <strong>Warning:</strong> turning on read-only mode will lock the site and prevent any more changes from
+              being made. This can only be undone by directly editing the database.
             </p>
             <input type="hidden" name="readOnly" value="1">
-            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to turn on read-only mode?')">Turn on read-only mode</button>
+            <button type="submit" class="btn btn-danger btn-sm"
+                    onclick="return confirm('Are you sure you want to turn on read-only mode?')">Turn on read-only mode
+            </button>
           </form>
         </div>
       {% endif %}

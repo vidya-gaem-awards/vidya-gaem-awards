@@ -18,33 +18,42 @@
     .thumbnail {
       background-color: white;
     }
+
     .filter-02-voting-code {
       background-color: #FFF9C4;
     }
+
     .filter-04-4chan {
       background-color: #C8E6C9;
     }
+
     .filter-08-4chan-or-null-with-voting-code {
       border: 2px solid black;
       background-color: #A5D6A7;
     }
+
     .filter-14-neogaf, .filter-17-twitch, .filter-11-reddit, .filter-18-facebook, .filter-19-google, .filter-15-facepunch {
-      background-color: #ffcdd2; 
+      background-color: #ffcdd2;
     }
+
     .filter-16-8chan {
       background-color: #EEEEEE;
     }
+
     .infobox {
       border: 3px solid lightblue;
     }
+
     .results .thumbnail {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow-x: hidden;
     }
+
     .results ol {
       padding-left: 35px;
     }
+
     .results li:first-child {
       color: green;
       font-weight: bold;
@@ -68,8 +77,14 @@
     <div class="col-xs-12 col-sm-6">
       <div class="panel panel-default">
         <div class="panel-body">
-          <p>Here are the detailed results for the 2017 /v/GAs. Although we only use votes from 4chan in our official results, we include the results of other websites here for your amusement.</p>
-          <p>If all you want is the official results for each award, you can get those on the <a href="{{ path('simpleResults') }}">winners&nbsp;page</a>. If you want to see the results in even <em>more</em> detail, you can view the <a href="{{ path('pairwiseResults') }}">pairwise voting results</a>.</p>
+          <p>
+            Here are the detailed results for the 2017 /v/GAs. Although we only use votes from 4chan in our official
+            results, we include the results of other websites here for your amusement.
+          </p>
+          <p>
+            If all you want is the official results for each award, you can get those on the
+            <a href="{{ path('simpleResults') }}">winners&nbsp;page</a>. If you want to see the results in even <em>more</em>
+            detail, you can view the <a href="{{ path('pairwiseResults') }}">pairwise voting results</a>.</p>
         </div>
       </div>
     </div>
@@ -80,7 +95,8 @@
         </div>
         <div class="panel-body">
           <p>
-            The Schulze method doesn't allow for exact vote counts for each nominee, so instead we calculate Sweep Points™ as a way to see how much the winners won by.
+            The Schulze method doesn't allow for exact vote counts for each nominee, so instead we calculate Sweep
+            Points™ as a way to see how much the winners won by.
             It may give unexpected results for low vote counts.
           </p>
           <p>
@@ -102,34 +118,38 @@
   </ul>
 
   {% for award in awards %}
-    <h2 id="{{ award.id }}"><a href="#{{ award.id }}">{{ award.name }}</a> <small>{{ award.subtitle }}</small></h2>
+    <h2 id="{{ award.id }}"><a href="#{{ award.id }}">{{ award.name }}</a>
+      <small>{{ award.subtitle }}</small>
+    </h2>
 
     {% set limit = (all ? 100 : 5) %}
 
     {% for filterCollection in filters %}
-    <div class="row results">
-      {% for filter, filterName in filterCollection %}
-        {% set result = results[award.id][filter] %}
-        {% if result.votes > 0 %}
-          <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail filter-{{ filter }}">
-              <strong>{{ filterName }}</strong>
-              <span class="voteCount">{{ result.votes }} votes</span>
-              <ol>
-                {% for nominee in result.results[:limit] %}
-                <li style="clear: both;">
-                  {{ nominees[award.id][nominee].name }}
-                  {% if result.steps['sweepPoints'][nominee] %}
-                    <span class="sweepPoints" title="{{ result.steps['sweepPoints'][nominee] | round(2, 'floor') | number_format(2) }} Sweep Points&trade;">{{ result.steps['sweepPoints'][nominee] | round(0, 'floor') }} pts</span>
-                  {% endif %}
-                </li>
-                {% endfor %}
-              </ol>
+      <div class="row results">
+        {% for filter, filterName in filterCollection %}
+          {% set result = results[award.id][filter] %}
+          {% if result.votes > 0 %}
+            <div class="col-xs-6 col-sm-4 col-md-3">
+              <div class="thumbnail filter-{{ filter }}">
+                <strong>{{ filterName }}</strong>
+                <span class="voteCount">{{ result.votes }} votes</span>
+                <ol>
+                  {% for nominee in result.results[:limit] %}
+                    <li style="clear: both;">
+                      {{ nominees[award.id][nominee].name }}
+                      {% if result.steps['sweepPoints'][nominee] %}
+                        <span class="sweepPoints"
+                              title="{{ result.steps['sweepPoints'][nominee] | round(2, 'floor') | number_format(2) }} Sweep Points&trade;">{{ result.steps['sweepPoints'][nominee] | round(0, 'floor') }}
+                          pts</span>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ol>
+              </div>
             </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+          {% endif %}
+        {% endfor %}
+      </div>
     {% endfor %}
   {% endfor %}
 {% endblock %}

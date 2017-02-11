@@ -4,245 +4,257 @@
 
 {% block head %}
   <style type="text/css">
-
-    *, *:before, *:after {
-      box-sizing: border-box;
-    }
-
-
-    html,body {
+    html, body {
       margin: 0;
       padding: 0;
     }
-  h1 {
-    color: #00ebdb;
-    font-size: 40px;
-    margin: 0 5px 0 5px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 5px 5px 0 5px;
-    text-shadow: 0 0 3px #00ebdb;
-  }
 
-  #live_player {
+    h1 {
+      color: #00ebdb;
+      font-size: 40px;
+      margin: 0 5px 0 5px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 5px 5px 0 5px;
+      text-shadow: 0 0 3px #00ebdb;
+    }
+
+    #live_player {
       /*border: 4px solid #970087;*/
       background-color: black;
       /*margin-left: 20px;*/
-  }
+    }
 
-  .channel-main {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  #main_col {
-    position: relative;
-    height: 100%;
-    overflow: hidden;
-    margin-left: 0px;
-    margin-right: 320px;
-    z-index: 2;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  .content {
-    height: 100%;
-  }
-  .scroll {
-    position: relative;
-    overflow: hidden;
-  }
-  .stretch {
-    position: absolute;
-    width: 100%;
-  }
-  #right_close {
-    z-index: 10;
-    display: block;
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    overflow: hidden;
-    top: 10px;
-    right: 10px;
-  }
+    .channel-main {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
 
-  .right_active {
+    #main_col {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      margin-left: 0;
+      margin-right: 320px;
+      z-index: 2;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    .content {
+      height: 100%;
+    }
+
+    .scroll {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stretch {
+      position: absolute;
+      width: 100%;
+    }
+
+    #right_close {
+      z-index: 10;
+      display: block;
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      overflow: hidden;
+      top: 10px;
+      right: 10px;
+    }
+
+    .right_active {
       background: url("/2016images/btnNav_right.png") 0 0;
-  }
-  .right_active:hover {
+    }
+
+    .right_active:hover {
       background-position: 0 bottom;
-  }
-  .left_active {
+    }
+
+    .left_active {
       background: url("/2016images/btnNav_left.png") 0 0;
-  }
-  .left_active:hover {
+    }
+
+    .left_active:hover {
       background-position: 0 bottom;
-  }
-  .scroll-content-contain {
-    width: auto !important;
-    height: auto !important;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  .scroll .scroll-content-contain {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    overflow-y: auto;
-  }
-  #main_col .content .scroll-content {
-    position: relative;
-    padding: 0;
-    overflow: hidden;
-    min-height: 100%;
-  }
-  .scroll-content {
-    overflow: hidden !important;
-  }
-  #main_col .content .live_site_player_container {
-    width: 100%;
-  }
-  .swf_container {
-    color: #fff;
-    background: #000;
-  }
-  #right_col {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 322px;
-    z-index: 3;
-    border-left: 2px solid #af3a81;
-    box-shadow: 0 0 10px #af3181;
-  }
+    }
 
-  #right_col .content {
-    width: 320px;
-    height: calc(100% - 3px);
-    /*overflow: hidden;*/
-  }
+    .scroll-content-contain {
+      width: auto !important;
+      height: auto !important;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
 
-  .controls {
-      font-family: 'Annapolis','Tahoma Bold',Tahoma,sans-serif;
+    .scroll .scroll-content-contain {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+
+    #main_col .content .scroll-content {
+      position: relative;
+      padding: 0;
+      overflow: hidden;
+      min-height: 100%;
+    }
+
+    .scroll-content {
+      overflow: hidden !important;
+    }
+
+    #main_col .content .live_site_player_container {
+      width: 100%;
+    }
+
+    .swf_container {
+      color: #fff;
+      background: #000;
+    }
+
+    #right_col {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 322px;
+      z-index: 3;
+      border-left: 2px solid #af3a81;
+      box-shadow: 0 0 10px #af3181;
+    }
+
+    #right_col .content {
+      width: 320px;
+      height: calc(100% - 3px);
+      /*overflow: hidden;*/
+    }
+
+    .controls {
+      font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
       margin-left: 5px;
-    margin-bottom: 0;
+      margin-bottom: 0;
       padding-top: 10px;
-    color: silver;
-  }
+      color: silver;
+    }
 
-  .controls li {
-    display: inline;
-    list-style-type: none;
-    font-size: x-large;
-  }
+    .controls li {
+      display: inline;
+      list-style-type: none;
+      font-size: x-large;
+    }
 
-  .controls a, .controls a:hover {
-    text-decoration: none;
-    color: #f85898;
-    padding: 5px;
-  }
+    .controls a, .controls a:hover {
+      text-decoration: none;
+      color: #f85898;
+      padding: 5px;
+    }
 
-  .controls a:hover {
-    color: white;
-  }
+    .controls a:hover {
+      color: white;
+    }
 
-  .controls .gap {
-    margin-left: 6px;
-    margin-right: 6px;
-  }
+    .controls .gap {
+      margin-left: 6px;
+      margin-right: 6px;
+    }
   </style>
 {% endblock %}
 
 {% block body %}
-<div class="channel-main">
-  <div class="" id="main_col" style="margin-left: 0px;">
-    <div class="content">
-      <div class="stretch scroll" style="top: 0px; bottom: 0px;">
-        <a id="right_close" class="right_active" title="Show/Hide chat"></a>
-        <div class="scroll-content-contain" style="right: 0px;">
-          <div class="scroll-content">
-            <h1 id="title">
-              The 2017 Vidya Gaem Awards
-            </h1>
-            <div id="live_player">
-              <div class="live_site_player_container swf_container" id="standard_holder" style="width: 100%; height: 485px;">
-                {#<iframe width="100%" height="100%" src="https://www.youtube.com/embed/fc7hS7ofkwM?autoplay=1" frameborder="0" allowfullscreen></iframe>#}
-                <iframe
-                    src="https://player.twitch.tv/?channel=vidyagaemawards"
-                    height="100%"
-                    width="100%"
-                    frameborder="0"
-                    scrolling="no"
-                    allowfullscreen="true">
-                </iframe>
+  <div class="channel-main">
+    <div class="" id="main_col" style="margin-left: 0;">
+      <div class="content">
+        <div class="stretch scroll" style="top: 0; bottom: 0;">
+          <a id="right_close" class="right_active" title="Show/Hide chat"></a>
+          <div class="scroll-content-contain" style="right: 0;">
+            <div class="scroll-content">
+              <h1 id="title">
+                The 2017 Vidya Gaem Awards
+              </h1>
+              <div id="live_player">
+                <div class="live_site_player_container swf_container" id="standard_holder"
+                     style="width: 100%; height: 485px;">
+                  {#<iframe width="100%" height="100%" src="https://www.youtube.com/embed/fc7hS7ofkwM?autoplay=1" frameborder="0" allowfullscreen></iframe>#}
+                  <iframe
+                      src="https://player.twitch.tv/?channel=vidyagaemawards"
+                      height="100%"
+                      width="100%"
+                      frameborder="0"
+                      scrolling="no"
+                      allowfullscreen="true">
+                  </iframe>
+                </div>
               </div>
+              <ul class="controls">
+                <li><a href="https://discord.gg/Fx5wf7x" target="_blank">Discord</a> &ndash;</li>
+                <li><a href="https://twitch.tv/vidyagaemawards" target="_blank">Twitch</a> &ndash;</li>
+                <li><a href="https://youtube.com/user/vidyagaemawards" target="_blank">YouTube</a> &ndash;</li>
+                {#<li>IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net <span class="gap">|</span></li>#}
+                <li><a href="https://boards.4chan.org/v/catalog#s=vidyagaemawards" target="_blank">/v/</a></li>
+              </ul>
             </div>
-            <ul class="controls">
-              <li><a href="https://discord.gg/Fx5wf7x" target="_blank">Discord</a> &ndash;</li>
-              <li><a href="https://twitch.tv/vidyagaemawards" target="_blank">Twitch</a> &ndash;</li>
-              <li><a href="https://youtube.com/user/vidyagaemawards" target="_blank">YouTube</a> &ndash;</li>
-              {#<li>IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net <span class="gap">|</span></li>#}
-              <li><a href="https://boards.4chan.org/v/catalog#s=vidyagaemawards" target="_blank">/v/</a></li>
-            </ul>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="fixed" id="right_col">
-    <div class="content" id="chat_container">
-      <iframe src=" https://www.twitch.tv/vidyagaemawards/chat?popout=" frameborder="0" scrolling="no" height="100%" width="320"></iframe>
+    <div class="fixed" id="right_col">
+      <div class="content" id="chat_container">
+        <iframe src=" https://www.twitch.tv/vidyagaemawards/chat?popout=" frameborder="0" scrolling="no" height="100%"
+                width="320"></iframe>
+      </div>
     </div>
   </div>
-</div>
 
-<script type="text/javascript">
-function adjustHeight() {
-  var bodyHeight = $(window).height();
-  $("#standard_holder").height(bodyHeight - 80);
-}
-$(document).ready(adjustHeight);
-$(window).resize(adjustHeight);
+  <script type="text/javascript">
+    function adjustHeight() {
+      var bodyHeight = $(window).height();
+      $("#standard_holder").height(bodyHeight - 80);
+    }
+    $(document).ready(adjustHeight);
+    $(window).resize(adjustHeight);
 
-$("#right_close").click(function() {
-  $("#right_col").toggle();
-  if ($("#right_col").is(":visible")) {
-    $("#main_col").css("margin-right", 320);
-    $("#right_close").removeClass("left_active");
-    $("#right_close").addClass("right_active");
-  } else {
-    $("#main_col").css("margin-right", 0);
-    $("#right_close").removeClass("right_active");
-    $("#right_close").addClass("left_active");
-  }
-});
+    $("#right_close").click(function () {
+      $("#right_col").toggle();
+      if ($("#right_col").is(":visible")) {
+        $("#main_col").css("margin-right", 320);
+        $("#right_close").removeClass("left_active");
+        $("#right_close").addClass("right_active");
+      } else {
+        $("#main_col").css("margin-right", 0);
+        $("#right_close").removeClass("right_active");
+        $("#right_close").addClass("left_active");
+      }
+    });
 
-$("#link-chat-twitch").click(function() {
-  event.preventDefault();
-  $("#chat_container").empty();
-  $("#chat_container").append('<iframe frameborder="0" scrolling="no" id="chat_embed" src="https://twitch.tv/chat/embed?channel=vidyagaemawards&amp;" height="100%" width="320"></iframe>');
-  $("#link-chat-chatango").parent().show();
-  $("#link-chat-twitch").parent().hide();
-});
-</script>
+    $("#link-chat-twitch").click(function () {
+      event.preventDefault();
+      $("#chat_container").empty();
+      $("#chat_container").append('<iframe frameborder="0" scrolling="no" id="chat_embed" src="https://twitch.tv/chat/embed?channel=vidyagaemawards&amp;" height="100%" width="320"></iframe>');
+      $("#link-chat-chatango").parent().show();
+      $("#link-chat-twitch").parent().hide();
+    });
+  </script>
 
-{% if countdown %}
-<script type="text/javascript">
-    var serverLoad = Date.parse("{{ 'now' | date('c') }}");
-    var clientLoad = Date.now();
+  {% if countdown %}
+    <script type="text/javascript">
+      var serverLoad = Date.parse("{{ 'now' | date('c') }}");
+      var clientLoad = Date.now();
 
-    // This could probably be replaced by moment.js
-    function updateWCTime() {
+      // This could probably be replaced by moment.js
+      function updateWCTime() {
         var clientNow = Date.now();
         var serverNow = clientNow - clientLoad + serverLoad - 1;
 
@@ -250,31 +262,31 @@ $("#link-chat-twitch").click(function() {
         var diff = kickoff - serverNow;
         diff = Math.max(diff, 0);
 
-        var hours = Math.floor( diff / (1000*60*60) );
-        var mins = Math.floor( diff / (1000*60) );
-        var secs = Math.floor( diff / 1000 );
+        var hours = Math.floor(diff / (1000 * 60 * 60));
+        var mins = Math.floor(diff / (1000 * 60));
+        var secs = Math.floor(diff / 1000);
 
         var hh = hours;
         var mm = mins - hours * 60;
         var ss = secs - mins * 60;
 
         if (diff == 0) {
-            document.getElementById("title").innerHTML = 'The 2017 Vidya Gaem Awards';
+          document.getElementById("title").innerHTML = 'The 2017 Vidya Gaem Awards';
         } else {
-            var string = '';
-            if (hh > 0) {
-                string = string.concat(hh + ' hour' + (hh == 1 ? ', ' : 's, '));
-            }
-            if (mm > 0) {
-                string = string.concat(mm + ' minute' + (mm == 1 ? ', ' : 's, '));
-            }
-            string = string.concat(ss + ' second' + (ss == 1 ? '' : 's'));
-            document.getElementById('title').innerHTML = string;
+          var string = '';
+          if (hh > 0) {
+            string = string.concat(hh + ' hour' + (hh == 1 ? ', ' : 's, '));
+          }
+          if (mm > 0) {
+            string = string.concat(mm + ' minute' + (mm == 1 ? ', ' : 's, '));
+          }
+          string = string.concat(ss + ' second' + (ss == 1 ? '' : 's'));
+          document.getElementById('title').innerHTML = string;
         }
-    }
-    window.onload = updateWCTime;
-    setInterval('updateWCTime()', 1000 );
-</script>
-{% endif %}
+      }
+      window.onload = updateWCTime;
+      setInterval('updateWCTime()', 1000);
+    </script>
+  {% endif %}
 
 {% endblock %}

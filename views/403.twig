@@ -3,11 +3,14 @@
 {% block title %}403{% endblock %}
 
 {% block content %}
-<div class="row">
+  <div class="row">
     <div class="col-xs-12">
-        <h2>403 - Forbidden</h2>
-        <p>You aren't allowed to access this page.</p>
-        <p>If you think you should be able to, contact the show producer.<br />You'll need your Steam community ID: {{ user.steamID }}</p>
+      <h2>403 - Forbidden</h2>
+      <p>You aren't allowed to access this page.</p>
+      <p>
+        If you think you should be able to, contact Clamburger.<br>
+        You'll need your Steam Community ID: {{ user.steamID }}
+      </p>
     </div>
-</div>
+  </div>
 {% endblock %}

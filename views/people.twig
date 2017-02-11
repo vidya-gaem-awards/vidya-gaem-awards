@@ -1,57 +1,58 @@
 {% extends 'base/standard.twig' %}
 
-{% block content %}
-    <h1>Cast and Crew of the /v/GAs</h1>
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $("#users").tablesorter();
+{% block head %}
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#users").tablesorter();
     });
-    </script>
+  </script>
+{% endblock %}
 
-    <div class="row">
-        <div class="col-xs-12">
-            <p>The list of everybody of importance involved in the creation, organization and production of the /v/GAs.</p>
-        </div>
+{% block content %}
+  <h1>Cast and Crew of the /v/GAs</h1>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <p>The list of everybody of importance involved in the creation, organization and production of the /v/GAs.</p>
     </div>
+  </div>
 
-    <ul class="breadcrumb">
-        <li class="active">Admin tools:</li>
-        <li>
-            <a href="{{ path('permissions') }}">View group and permission information</a>
-        </li>
-        {% if user.canDo('add-user') %}
-        <li>
-            <a href="{{ path('addPerson') }}">Add new user</a>
-        </li>
-        {% endif %}
-    </ul>
+  <ul class="breadcrumb">
+    <li class="active">Admin tools:</li>
+    <li>
+      <a href="{{ path('permissions') }}">View group and permission information</a>
+    </li>
+    {% if user.canDo('add-user') %}
+      <li>
+        <a href="{{ path('addPerson') }}">Add new user</a>
+      </li>
+    {% endif %}
+  </ul>
 
-    <table class="table table-bordered table-striped form-table tablesorter" style="margin-top: 5px;" id="users">
-        <thead>
-            <tr>
-                <th>&nbsp;</th>
-                <th>Name</th>
-                <th class="col-md-6">Groups</th>
-                <th class="col-md-3">Primary Role</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td style='padding: 0; width: 40px;'>
-                    <a href="https://steamcommunity.com/profiles/{{ user.steamID }}">
-                        <img src="data:image/png;base64,{{ user.avatar }}" style="width: 40px;">
-                    </a>
-                </td>
-                <td style='white-space: nowrap;"'>
-                    <a href="{{ path('viewPerson', {'steamID': user.steamID}) }}">{{ user.name }}</a>
-                </td>
-                <td>{{ user.permissions.toArray | join(', ') }}</td>
-                <td>{{ user.primaryRole }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-
-    </table>
+  <table class="table table-bordered table-striped form-table tablesorter" style="margin-top: 5px;" id="users">
+    <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th>Name</th>
+      <th class="col-md-6">Groups</th>
+      <th class="col-md-3">Primary Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+      <tr>
+        <td style='padding: 0; width: 40px;'>
+          <a href="https://steamcommunity.com/profiles/{{ user.steamID }}">
+            <img src="data:image/png;base64,{{ user.avatar }}" style="width: 40px;">
+          </a>
+        </td>
+        <td style='white-space: nowrap;"'>
+          <a href="{{ path('viewPerson', {'steamID': user.steamID}) }}">{{ user.name }}</a>
+        </td>
+        <td>{{ user.permissions.toArray | join(', ') }}</td>
+        <td>{{ user.primaryRole }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

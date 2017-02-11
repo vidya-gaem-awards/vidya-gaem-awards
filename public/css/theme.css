@@ -37,7 +37,7 @@ body {
 
 /* Typography (headings) */
 h1, h2 {
-  font-weight: normal;
+  margin: 0;
 }
 
 h1 {
@@ -52,6 +52,7 @@ h1 {
 
 h2 {
   font-family: 'FixedSystem', Calibri, sans-serif;
+  font-weight: normal;
   font-size: 2em;
   color: #bfbfbf;
 }

@@ -31,34 +31,44 @@
 
   <h1 class="page-header">Pairwise Voting Results</h1>
 
-  <p>The /v/GAs use a preferential voting system (specifically, the <a href="https://en.wikipedia.org/wiki/Schulze_method">Schulze method</a>) to calculate results. This allows us to more accurately determine the winner and runner-ups.</p>
+  <p>
+    The /v/GAs use a preferential voting system (specifically, the <a
+        href="https://en.wikipedia.org/wiki/Schulze_method">Schulze method</a>) to calculate results. This allows us to
+    more accurately determine the winner and runner-ups.
+  </p>
 
-  <p>Below is the data we used to calculate the rankings. Each row contains the number of people who preferred that nominee to the nominee in each column. The winner is the nominee that was preferred more than any other nominee.</p>
+  <p>
+    Below is the data we used to calculate the rankings. Each row contains the number of people who preferred that
+    nominee to the nominee in each column. The winner is the nominee that was preferred more than any other nominee.
+  </p>
 
   {% for award in awards %}
-  <h2>{{ award.name }} <small>{{ award.subtitle }}</small></h2>
+    <h2>{{ award.name }}
+      <small>{{ award.subtitle }}</small>
+    </h2>
 
-  {% set width = 120 + (15 - award.nominees | length) * 20 %}
+    {% set width = 120 + (15 - award.nominees | length) * 20 %}
 
-  <table class="table table-bordered table-hover table-condensed pairwise" style="table-layout: fixed;">
-    <tr class='rotate'>
-      <th style='width: {{ width }}px;'>&nbsp;</th>
-      {% for nominee in award.nominees %}
-        <th title="{{ nominee.name | e('html_attr') }}">{{ nominee.name }}</th>
+    <table class="table table-bordered table-hover table-condensed pairwise" style="table-layout: fixed;">
+      <tr class='rotate'>
+        <th style='width: {{ width }}px;'>&nbsp;</th>
+        {% for nominee in award.nominees %}
+          <th title="{{ nominee.name | e('html_attr') }}">{{ nominee.name }}</th>
+        {% endfor %}
+      </tr>
+      {% for nominee1 in award.nominees %}
+        <tr>
+          <th title="{{ nominee1.name | e('html_attr') }}">{{ nominee1.name }}</th>
+          {% for nominee2 in award.nominees %}
+            {% if nominee1 == nominee2 %}
+              <td>---</td>
+            {% else %}
+              <td title="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }} vs {{ pairwise[award.id][nominee2.shortName][nominee1.shortName] }}"
+                  class="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] > pairwise[award.id][nominee2.shortName][nominee1.shortName] ? 'better' : 'worse' }}">{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }}</td>
+            {% endif %}
+          {% endfor %}
+        </tr>
       {% endfor %}
-    </tr>
-    {% for nominee1 in award.nominees %}
-    <tr>
-      <th title="{{ nominee1.name | e('html_attr') }}">{{ nominee1.name }}</th>
-      {% for nominee2 in award.nominees %}
-        {% if nominee1 == nominee2 %}
-          <td>---</td>
-        {% else %}
-          <td title="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }} vs {{ pairwise[award.id][nominee2.shortName][nominee1.shortName] }}" class="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] > pairwise[award.id][nominee2.shortName][nominee1.shortName] ? 'better' : 'worse' }}">{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }}</td>
-        {% endif %}
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </table>
+    </table>
   {% endfor %}
 {% endblock %}

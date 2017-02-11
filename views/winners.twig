@@ -3,24 +3,25 @@
 {% block title %}Winners{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/theme.css">
 {% endblock %}
 
 {% block content %}
   <style type="text/css">
     h1, h2 {
-      margin:0;
-      padding:0;
+      margin: 0;
+      padding: 0;
       color: #f85898;
       font-weight: normal;
     }
 
     h1 {
-      font-family: 'AnnapolisHalftoneItalic','Tahoma Bold',Tahoma,sans-serif;
+      font-family: 'AnnapolisHalftoneItalic', 'Tahoma Bold', Tahoma, sans-serif;
       text-transform: uppercase;
       font-size: 3em;
       line-height: 100%;
     }
+
     h2 {
       font-family: "yoster", Calibri, sans-serif;
       font-size: 1.3em;
@@ -37,11 +38,11 @@
     }
 
     .award {
-        margin: 0 auto 35px auto;
-        padding: 20px;
-        background: black;
-        border: 2px solid #af3a81;
-        box-shadow: 0 0 10px #af3a81;
+      margin: 0 auto 35px auto;
+      padding: 20px;
+      background: black;
+      border: 2px solid #af3a81;
+      box-shadow: 0 0 10px #af3a81;
     }
 
     .winner {
@@ -64,7 +65,7 @@
 
     .award ul li:first-child {
       font-size: 36px;
-      font-family: 'Annapolis','Tahoma Bold',Tahoma,sans-serif;
+      font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
       color: #f7d059;
       line-height: 1em;
     }
@@ -92,8 +93,9 @@
       background: url(/2016images/title_bg.png) center center no-repeat;
       text-align: center;
     }
+
     .awardName {
-      font-family: "AnnapolisHalftoneItalic",'Tahoma Bold',Tahoma,sans-serif;
+      font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;
       font-weight: normal;
       font-style: normal;
       text-transform: uppercase;
@@ -112,26 +114,26 @@
 
     .awardSubtitle {
       color: #00ebdb;
-      font-family: 'FixedSystem',Calibri,sans-serif;
+      font-family: 'FixedSystem', Calibri, sans-serif;
       font-size: 32px !important;
       line-height: 20px;
     }
   </style>
 
-    <div class="zig"></div>
+  <div class="zig"></div>
 
-    <div class="row">
-      <div class="col-md-5" style="text-align: center;">
-        <img src="/2016images/vga_logo.png" alt="Logo of the 2016 Vidya Gaem Awards">
-      </div>
-      <div class="col-md-7" style="text-align: center; padding-top: 30px;">
-        <h1>Winners of the 2017 Vidya&nbsp;Gaem&nbsp;Awards</h1>
-      </div>
+  <div class="row">
+    <div class="col-md-5" style="text-align: center;">
+      <img src="/2016images/vga_logo.png" alt="Logo of the 2016 Vidya Gaem Awards">
     </div>
+    <div class="col-md-7" style="text-align: center; padding-top: 30px;">
+      <h1>Winners of the 2017 Vidya&nbsp;Gaem&nbsp;Awards</h1>
+    </div>
+  </div>
 
-    <div class="zig"></div>
+  <div class="zig"></div>
 
-    {% for award in awards %}
+  {% for award in awards %}
     <div class="row">
       <div class="col-xs-12">
 
@@ -152,7 +154,7 @@
             <div class="col-md-8">
               <ul>
                 {% for result in results[award.id] %}
-                <li>{{ result }}</li>
+                  <li>{{ result }}</li>
                 {% endfor %}
               </ul>
             </div>
@@ -160,20 +162,25 @@
         </div>
       </div>
     </div>
-    {% endfor %}
+  {% endfor %}
 
-    <div class="zig"></div>
+  <div class="zig"></div>
 
-    <div class="page-header the-bottom">
-      <h1>Detailed Results</h1>
+  <div class="page-header the-bottom">
+    <h1>Detailed Results</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <p>
+        The results shown above are the same as those shown during the show and are based only on the votes from /v/.
+        For more details, including vote counts and votes that we filtered out, see the
+        <a href="{{ path('detailedResults') }}">detailed results</a> and
+        <a href="{{ path('pairwiseResults') }}">pairwise comparison</a> pages.
+      </p>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col-xs-12">
-        <p>The results shown above are the same as those shown during the show and are based only on the votes from /v/. For more details, including vote counts and votes that we filtered out, see the <a href="{{ path('detailedResults') }}">detailed results</a> and <a href="{{ path('pairwiseResults') }}">pairwise comparison</a> pages.</p>
-      </div>
-    </div>
-
-    <div class="zig"></div>
+  <div class="zig"></div>
 
 {% endblock %}

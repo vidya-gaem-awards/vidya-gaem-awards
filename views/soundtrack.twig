@@ -1,104 +1,17 @@
 {% extends 'base/standardThemed.twig' %}
 
-{% block title %}Soundtrack{% endblock %}
+{% block title 'Soundtrack' %}
 
 {% block beforeContainer %}
-  <h1 style="text-align: center; margin-top: 10px;">The Official Soundtrack of the 2017 /v/GAs</h1>
+  <h1>The Official Soundtrack of the 2017 /v/GAs</h1>
 {% endblock %}
 
 {% block content %}
   <style type="text/css">
-    h1, h2 {
-      margin:0;
-      padding:0;
-      color: #00ebdb;
-      font-weight: normal;
-      text-shadow: rgba(0, 235, 219, 0.5) 1px 1px 5px;
-    }
-
     h1 {
-      font-family: 'AnnapolisHalftoneItalic','Tahoma Bold',Tahoma,sans-serif;
-      text-transform: uppercase;
-      font-size: 3em;
-      line-height: 100%;
-    }
-    h2 {
-      font-family: "yoster", Calibri, sans-serif;
-      font-size: 1.3em;
-      line-height: 100%;
-      color: #bfbfbf;
-      -webkit-font-smoothing: none;
-    }
-
-    p {
-      font-family: "modern typewriter", Tahoma, sans-serif;
-      font-size: 22px;
-      line-height: 1.3em;
-      color: #f7d059;
-    }
-
-    .award {
-        margin: 0 auto 35px auto;
-        padding: 20px;
-        background: black;
-        border: 2px solid #af3a81;
-        box-shadow: 0 0 10px #af3a81;
-    }
-
-    .winner {
-      border: 1px solid #970087;
-    }
-
-    .award ul {
-      list-style-type: none;
-      margin: 0;
-      font-size: 24px;
-    }
-
-    .award ul li {
-      line-height: 1.5em;
-      font-family: "modern typewriter", Calibri, sans-serif;
-      color: #00ebdb;
-    }
-
-    .award ul li:first-child {
-      font-size: 36px;
-      font-family: 'Annapolis','Tahoma Bold',Tahoma,sans-serif;
-      color: #f7d059;
-      line-height: 1em;
-    }
-
-    .award ul li:last-child {
-      color: #f85898;
-      font-size: 18px;
-      font-family: "modern typewriter", Tahoma, sans-serif;
-    }
-
-    .page-header {
+      text-shadow: rgba(0, 235, 219, 0.5) 1px 1px 5px;
       text-align: center;
-      border: none;
-      margin-bottom: 0;
-    }
-
-    .page-header.the-bottom {
-      margin-bottom: 20px;
-    }
-
-    .awardHeaderContainer {
-      margin: 0 50px;
-      padding-top: 24px;
-      height: 106px;
-      background: url(/2016images/title_bg.png) center center no-repeat;
-      text-align: center;
-    }
-    .awardName {
-      font-family: "AnnapolisHalftoneItalic",'Tahoma Bold',Tahoma,sans-serif;
-      font-weight: normal;
-      font-style: normal;
-      text-transform: uppercase;
-      font-size: 2.6em;
-      line-height: 40px;
-      color: #00ebdb;
+      margin-top: 10px;
     }
 
     a, a:visited {
@@ -107,13 +20,6 @@
 
     a:hover, a:active {
       color: #bf6bff;
-    }
-
-    .awardSubtitle {
-      color: #00ebdb;
-      font-family: 'FixedSystem',Calibri,sans-serif;
-      font-size: 32px !important;
-      line-height: 20px;
     }
 
     .album-art {
@@ -129,7 +35,7 @@
     }
 
     .download-now a {
-      font-family: "Annapolis",Tahoma,sans-serif;
+      font-family: "Annapolis", Tahoma, sans-serif;
       color: #bf6bff;
       font-size: 38px;
       font-weight: normal;
@@ -189,44 +95,57 @@
         <a href="https://drive.google.com/file/d/0B-ozeoDbB_HzRlNkTmRKRURHS28/view" target="_blank">Download Now</a>
       </p>
       <p class="text-center" style="margin-top: 10px; color: white; font-size: 14px;">
-        <a href="https://vidyagaemawards.com/music/2017-vga-music-mix.zip">Download preshow music</a> (not included in main pack)
+        <a href="https://vidyagaemawards.com/music/2017-vga-music-mix.zip">Download preshow music</a> (not included in
+        main pack)
       </p>
 
       <table class="table" id="track-list">
         <tr class="line-before">
           <td></td>
           <td>borgo - and you don't seem to</td>
-          <td>Preshow - <a href="https://soundcloud.com/lborgo/and-you-dont-seem-to?in=lborgo/sets/vga-2016-pre-show-mix" target="_blank">Listen on SoundCloud</a></td>
+          <td>Preshow - <a
+                href="https://soundcloud.com/lborgo/and-you-dont-seem-to?in=lborgo/sets/vga-2016-pre-show-mix"
+                target="_blank">Listen on SoundCloud</a></td>
         </tr>
         <tr>
           <td></td>
           <td>borgo - Wired</td>
-          <td>Preshow - <a href="https://soundcloud.com/lborgo/wired-1?in=lborgo/sets/vga-2016-pre-show-mix" target="_blank">Listen on SoundCloud</a></td>
+          <td>Preshow - <a href="https://soundcloud.com/lborgo/wired-1?in=lborgo/sets/vga-2016-pre-show-mix"
+                           target="_blank">Listen on SoundCloud</a></td>
         </tr>
         <tr>
           <td></td>
           <td>FutanariVorestep.exe - VGA 2k17 15 Minute Mix</td>
-          <td>Preshow - <a href="https://soundcloud.com/futanarivorestep-exe-2/vga-2k17-preshow-mix?in=futanarivorestep-exe-2/sets/vga-2016-preshow-mix" target="_blank">Listen on SoundCloud</a></td>
+          <td>Preshow - <a
+                href="https://soundcloud.com/futanarivorestep-exe-2/vga-2k17-preshow-mix?in=futanarivorestep-exe-2/sets/vga-2016-preshow-mix"
+                target="_blank">Listen on SoundCloud</a></td>
         </tr>
         <tr>
           <td></td>
           <td>MatrixMarioX - Programmed Tower</td>
-          <td>Preshow - <a href="https://soundcloud.com/matrixmariox2/vgas-2016-programmed-tower?in=matrixmariox2/sets/v-gas-2016-preshow-tracks" target="_blank">Listen on SoundCloud</a></td>
+          <td>Preshow - <a
+                href="https://soundcloud.com/matrixmariox2/vgas-2016-programmed-tower?in=matrixmariox2/sets/v-gas-2016-preshow-tracks"
+                target="_blank">Listen on SoundCloud</a></td>
         </tr>
         <tr>
           <td></td>
           <td>MatrixMarioX - Y'all are stupid!</td>
-          <td>Preshow - <a href="https://soundcloud.com/matrixmariox2/vgas-2016-yall-are-stupid?in=matrixmariox2/sets/v-gas-2016-preshow-tracks" target="_blank">Listen on SoundCloud</a></td>
+          <td>Preshow - <a
+                href="https://soundcloud.com/matrixmariox2/vgas-2016-yall-are-stupid?in=matrixmariox2/sets/v-gas-2016-preshow-tracks"
+                target="_blank">Listen on SoundCloud</a></td>
         </tr>
         <tr>
           <td></td>
           <td>MatrixMarioX - Интервью</td>
-          <td>Preshow - <a href="https://soundcloud.com/matrixmariox2/vgas-2016-intervyu?in=matrixmariox2/sets/v-gas-2016-preshow-tracks" target="_blank">Listen on SoundCloud</a></td>
+          <td>Preshow - <a
+                href="https://soundcloud.com/matrixmariox2/vgas-2016-intervyu?in=matrixmariox2/sets/v-gas-2016-preshow-tracks"
+                target="_blank">Listen on SoundCloud</a></td>
         </tr>
         <tr class="line-after">
           <td></td>
           <td>Radiomuff - Preshow Music</td>
-          <td>Preshow - <a href="https://soundcloud.com/muffmachine/vga-2016-preshow-mix-radiomuff" target="_blank">Listen on SoundCloud</a></td>
+          <td>Preshow - <a href="https://soundcloud.com/muffmachine/vga-2016-preshow-mix-radiomuff" target="_blank">Listen
+              on SoundCloud</a></td>
         </tr>
         <tr class="line-before">
           <td>01</td>
@@ -271,7 +190,7 @@
         <tr>
           <td>09</td>
           <td>Skolskoly - Restricted Access</td>
-          <td>Never Coming Out Award </td>
+          <td>Never Coming Out Award</td>
         </tr>
         <tr>
           <td>10</td>
@@ -468,7 +387,7 @@
           <td>Radiomuff - Internal Industrial Complex</td>
           <td>Bonus Track</td>
         </tr>
-        <tr class="line-after">
+        <tr>
           <td>49</td>
           <td>Acumen Nation - Elective Surgical Strike</td>
           <td>Bonus Track</td>
@@ -476,5 +395,4 @@
       </table>
     </div>
   </div>
-
 {% endblock %}
