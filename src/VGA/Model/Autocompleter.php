@@ -20,7 +20,7 @@ class Autocompleter
     /**
      * @var array
      */
-    private $strings;
+    private $strings = [];
 
 
     /**

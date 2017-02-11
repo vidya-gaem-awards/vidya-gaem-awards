@@ -3,7 +3,6 @@ namespace VGA\Model;
 
 use Doctrine\ORM\EntityManager;
 use Moment\Moment;
-use VGA\DependencyManager;
 
 class Config
 {
@@ -16,8 +15,10 @@ class Config
         'finished' => 'Post-stream "thank you" page',
     ];
 
+    const DEFAULT_TIMEZONE = 'America/New_York';
+
     /** @var string */
-    private $id;
+    private $id = 1;
 
     /** @var \DateTime */
     private $votingStart;
@@ -29,16 +30,16 @@ class Config
     private $streamTime;
 
     /** @var string */
-    private $defaultPage;
+    private $defaultPage = 'home';
 
     /** @var string[] */
-    private $publicPages;
+    private $publicPages = [];
 
     /** @var boolean */
-    private $readOnly;
+    private $readOnly = false;
 
     /** @var string */
-    private $timezone;
+    private $timezone = self::DEFAULT_TIMEZONE;
 
     /**
      * @return \DateTime
@@ -259,6 +260,10 @@ class Config
     {
         /** @var Config $config */
         $config = $em->getRepository(Config::class)->findOneBy([]);
-        date_default_timezone_set($config->getTimezone());
+        if ($config) {
+            date_default_timezone_set($config->getTimezone());
+        } else {
+            date_default_timezone_set(self::DEFAULT_TIMEZONE);
+        }
     }
 }

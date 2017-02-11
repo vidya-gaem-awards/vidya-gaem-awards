@@ -1,6 +1,11 @@
 <?php
 namespace VGA;
 
+use Doctrine\ORM\EntityManager;
+use VGA\Model\Autocompleter;
+use VGA\Model\Config;
+use VGA\Model\Permission;
+
 class Utils
 {
     /**
@@ -23,6 +28,53 @@ class Utils
     public static function startsWith($haystack, $needle)
     {
         return substr($haystack, 0, strlen($needle)) === $needle;
+    }
+
+    public static function initializeDatabase(EntityManager $em)
+    {
+        $repo = $em->getRepository(Config::class);
+        $config = $repo->findOneBy([]);
+
+        if ($config) {
+            throw new \Exception('The database already appears to be initalized.');
+        }
+
+        // Add the default config
+        $config = new Config();
+        $em->persist($config);
+
+        // Add the special-case autocompleter
+        $autocompleter = new Autocompleter();
+        $autocompleter->setId('video-game');
+        $autocompleter->setName('Video games in ' . date('Y'));
+        $em->persist($autocompleter);
+
+        // Add the standard permissions
+        foreach (Permission::STANDARD_PERMISSIONS as $id => $description) {
+            $permission = new Permission();
+            $permission->setId($id);
+            $permission->setDescription($description);
+            $em->persist($permission);
+        }
+
+        $em->flush();
+
+        // Add the default permission inheritance
+        $repo = $em->getRepository(Permission::class);
+        foreach (Permission::STANDARD_PERMISSION_INHERITANCE as $parent => $children) {
+            /** @var Permission $parent */
+            $parent = $repo->find($parent);
+
+            foreach ($children as $child) {
+                /** @var Permission $child */
+                $child = $repo->find($child);
+                $parent->addChild($child);
+            }
+
+            $em->persist($parent);
+        }
+
+        $em->flush();
     }
 }
 
