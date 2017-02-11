@@ -32,7 +32,7 @@ VGA\Model\Vote:
       nullable: false
       inversedBy: votes
       joinColumn:
-        name: categoryID
+        name: awardID
         referencedColumnName: id
     user:
       targetEntity: User

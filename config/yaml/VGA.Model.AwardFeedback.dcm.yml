@@ -17,5 +17,5 @@ VGA\Model\AwardFeedback:
       targetEntity: Award
       inversedBy: feedback
       joinColumn:
-        name: categoryID
+        name: awardID
         referencedColumnName: id

@@ -26,5 +26,5 @@ VGA\Model\ResultCache:
       targetEntity: Award
       inversedBy: resultCache
       joinColumn:
-        name: categoryID
+        name: awardID
         referencedColumnName: id

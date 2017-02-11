@@ -31,5 +31,5 @@ VGA\Model\Nominee:
       targetEntity: Award
       inversedBy: nominees
       joinColumn:
-        name: categoryID
+        name: awardID
         referencedColumnName: id
