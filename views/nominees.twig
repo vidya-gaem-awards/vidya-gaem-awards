@@ -12,6 +12,19 @@
       z-index: 100000;
     }
 
+    .page-header {
+      font-family: 'Bungee', sans-serif;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .admin-tools {
+      margin-top: -20px;
+      text-align: center;
+      border-bottom: 1px solid #BBB;
+      border-radius: 0;
+    }
+
     #award-name {
       text-shadow: #000 1px 1px 2px;
       text-align: center;
@@ -117,14 +130,17 @@
   </style>
 
   <h1 class="page-header">Nominee Manager</h1>
+
+  <ul class="breadcrumb admin-tools">
+    <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
+    <li><a href="{{ path('awardManager') }}">Award Manager</a></li>
+  </ul>
+
   <p class="lead">
     Here's where nominees are assigned awards.
     Official nominees are the ones that will show up on the <a href="{{ path('voting') }}">voting page</a>.
   </p>
 
-  <ul class="breadcrumb">
-    <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
-  </ul>
 
   <div class="row">
     <div class="col-md-6" id="award-selector">

@@ -7,14 +7,59 @@
       text-align: center;
       margin-top: 5px;
     }
+
     .admin-tools {
       margin-top: -20px;
       text-align: center;
       border-bottom: 1px solid #BBB;
       border-radius: 0;
     }
+
     #dialog-edit-header {
       font-weight: bold;
+    }
+
+    #awards {
+      background-color: white;
+    }
+
+    .label {
+      display: block;
+      text-align: center;
+      padding: 13px 0;
+    }
+
+    #awards .aligned {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .award-id {
+      font-family: monospace;
+      font-size: smaller;
+      color: #9E9E9E;
+    }
+
+    .award-id:hover {
+      color: inherit;
+    }
+
+    .sparkbar {
+      margin: 4px 0;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .sparkbar-yes {
+      float: left;
+      height: 10px;
+      background: #55A54E;
+    }
+
+    .sparkbar-no {
+      float: right;
+      height: 10px;
+      background: #AA4643;
     }
   </style>
 
@@ -149,70 +194,34 @@
 
   <ul class="breadcrumb admin-tools">
     <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
+    <li><a href="{{ path('nomineeManager') }}">Nominee Manager</a></li>
   </ul>
 
   {% for message in flashbag.get('formError') %}
     <div class="alert alert-danger" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
       {{ message }}
     </div>
   {% endfor %}
 
   {% for message in flashbag.get('formSuccess') %}
     <div class="alert alert-success" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
       {{ message }}
     </div>
   {% endfor %}
-
-  <style type="text/css">
-    #awards, #addAward {
-      background-color: white;
-    }
-
-    .label {
-      display: block;
-      text-align: center;
-      padding: 13px 0;
-    }
-
-    #awards .aligned {
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    .monospace {
-      font-family: monospace;
-    }
-
-    .sparkbar {
-      margin: 4px 0;
-      height: 10px;
-      overflow: hidden;
-    }
-
-    .sparkbar-yes {
-      float: left;
-      height: 10px;
-      background: #55A54E;
-    }
-
-    .sparkbar-no {
-      float: right;
-      height: 10px;
-      background: #AA4643;
-    }
-  </style>
 
   <div class="table-responsive">
     <table class="table table-bordered table-hover form-table" id="awards">
       <thead>
       <tr>
-        <th style="width: 130px;">Status</th>
-        <th class="col-sm-2">ID</th>
+        <th style="width: 60px;">Order</th>
         <th>Name</th>
+        <th style="width: 60px;">Nominees</th>
         <th style="width: 180px;">
           Feedback
           <span style="float: right;">
@@ -221,7 +230,7 @@
             </small>
           </span>
         </th>
-        <th style="width: 60px;">Order</th>
+        <th style="width: 130px;">Status</th>
         {% if user.canDo('awards-edit') %}
           <th style="width: 80px;">Controls</th>
         {% endif %}
@@ -230,20 +239,22 @@
       <tbody>
       {% for award in awards %}
         <tr class="{{ not award.enabled ? 'warning' : award.secret ? 'info' : '' }}">
-          <td class="aligned">
-            {% if not award.enabled %}
-              <span class="label label-warning">Award Disabled</span>
-            {% elseif award.secret %}
-              <span class="label label-info">Secret Award!</span>
-            {% elseif award.areNominationsEnabled %}
-              <span class="label label-success">Nominations Open</span>
-            {% else %}
-              <span class="label label-default">Nominations Closed</span>
-            {% endif %}
-          </td>
-          <td class="monospace">{{ award.id }}</td>
-          <td>{{ award.name }}<br>
+          <td class="aligned">{{ award.order }}</td>
+          <td>
+            <div class="pull-right award-id">
+              <abbr title="The internal ID of the award. Visible in some places, such as URLs.">{{ award.id }}</abbr>
+            </div>
+            <strong>{{ award.name }}</strong><br>
             <small>{{ award.subtitle }}</small>
+          </td>
+          <td class="aligned">
+            {% if user.canDo("nominations-edit") %}
+              <a href="{{ path('nomineeManager', {'awardID': award.id}) }}" target="_blank">
+                {{ award.nominees|length }}
+              </a>
+            {% else %}
+              {{ award.nominees|length }}
+            {% endif %}
           </td>
           <td>
             <div class="sparkbar">
@@ -256,7 +267,17 @@
               {{ award.feedbackPercent.positive | round }}%
             </abbr>
           </td>
-          <td class="aligned">{{ award.order }}</td>
+          <td class="aligned">
+            {% if not award.enabled %}
+              <span class="label label-warning">Award Disabled</span>
+            {% elseif award.secret %}
+              <span class="label label-info">Secret Award!</span>
+            {% elseif award.areNominationsEnabled %}
+              <span class="label label-success">Nominations Open</span>
+            {% else %}
+              <span class="label label-default">Nominations Closed</span>
+            {% endif %}
+          </td>
           {% if user.canDo('awards-edit') %}
             <td class="aligned">
               <button class="btn btn-primary" title="Edit award" data-toggle="modal" data-target="#dialog-edit"
