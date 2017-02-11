@@ -3,27 +3,6 @@ namespace VGA;
 
 class Utils
 {
-    public static function storeMessage($type, $string, $value = null)
-    {
-        $_SESSION['message'] = array($type, $string);
-        if ($value !== null) {
-            $_SESSION['message'][2] = $value;
-        }
-    }
-
-    public static function action($action, $firstID = null, $secondID = null)
-    {
-        global $ID, $PAGE, $mysql;
-
-        /** @var \Mysqli $mysql */
-        
-        $query = "INSERT INTO `actions` (`UserID`, `Timestamp`, `Page`, `Action`,
-            `SpecificID1`, `SpecificID2`) VALUES(?, NOW(), ?, ?, ?, ?)";
-        $stmt = $mysql->prepare($query);
-        $stmt->bind_param('sssss', $ID, $PAGE, $action, $firstID, $secondID);
-        $stmt->execute();
-    }
-
     /**
      * @param $seed
      * @param int $max_number
