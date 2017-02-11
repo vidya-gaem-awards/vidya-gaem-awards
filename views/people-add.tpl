@@ -16,7 +16,7 @@
             <form class="form-inline" id="search-form">
                 <input type="text" placeholder="Steam Community ID" style="font-size: 20px; height: 28px; width: 200px;" maxlength="17" id="search-id" required /> <input type="submit" class="btn btn-large" value="Search">
             </form>
-            <p id="searching" style="display: none;">Processing... <img src="/public/loading.gif" style="height: 16px; width: 16px;" /></p>
+            <p id="searching" style="display: none;">Processing... <img src="/assets/loading.gif" style="height: 16px; width: 16px;" /></p>
             <div class="alert alert-error" style="display: none;" id="error-box">
                 <strong>Error:</strong>
                 <span id="error-msg"></span>

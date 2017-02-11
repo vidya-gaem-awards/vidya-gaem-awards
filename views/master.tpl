@@ -3,15 +3,15 @@
   <head>
     <title>/v/GAs - <tag:title /></title>
 
-    <link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="/public/jquery/jquery-ui-1.9.2.min.css">
-    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/assets/jquery/jquery-ui-1.9.2.min.css">
+    <link rel="stylesheet" href="/assets/style.css">
     
-    <script src='/public/jquery/jquery-1.8.2.min.js'></script>
-    <script src='/public/jquery/jquery-ui-1.9.2.min.js'></script>
-    <script src='/public/jquery/jquery.tablesorter.min.js'></script>
-    <script src='/public/bootstrap-2.1.0/js/bootstrap.min.js'></script>
+    <script src='/assets/jquery/jquery-1.8.2.min.js'></script>
+    <script src='/assets/jquery/jquery-ui-1.9.2.min.js'></script>
+    <script src='/assets/jquery/jquery.tablesorter.min.js'></script>
+    <script src='/assets/bootstrap-2.1.0/js/bootstrap.min.js'></script>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />

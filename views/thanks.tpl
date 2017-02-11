@@ -9,15 +9,15 @@
 <style type="text/css">
 @font-face {
   font-family: "Bebas Neue";
-  src: url('/public/fonts/BebasNeue.eot');
-  src: url('/public/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
-  url("/public/fonts/BebasNeue.woff") format("woff"),
-  url("/public/fonts/BebasNeue.ttf") format("truetype");
+  src: url('/assets/fonts/BebasNeue.eot');
+  src: url('/assets/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
+  url("/assets/fonts/BebasNeue.woff") format("woff"),
+  url("/assets/fonts/BebasNeue.ttf") format("truetype");
   url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
-  background: #212121 url("/public/2014voting/bg_tile.png");
+  background: #212121 url("/assets/2014voting/bg_tile.png");
   font-family: Calibri, Arial, sans-serif;
   text-align: center;
   color: white;
@@ -120,7 +120,7 @@ a:hover {
         <a href="https://archive.org/details/2014vgas">Direct download</a><br>
         <a href="https://www.twitch.tv/vidyagaemawards/c/6014967">Watch the preshow skits</a><br>
         <a href="https://vidyagaemawards.com/music/2014-vga-music-mix.mp3">Download the preshow music mix</a><br>
-        <a href="/winners">See the winners</a><br>
+        <a href="/assets/winners">See the winners</a><br>
         <a href="/credits">See the credits</a><br>
       </div>
       <div class="subtitle">

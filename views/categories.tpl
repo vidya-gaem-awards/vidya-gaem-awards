@@ -57,7 +57,7 @@
 
         <!if:CATEGORY_VOTING_ENABLED>
         <a href="/video-games">
-            <img src="/public/collage.jpg">
+            <img src="/assets/collage.jpg">
         </a>
         </!if:CATEGORY_VOTING_ENABLED>
 

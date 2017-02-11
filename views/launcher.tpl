@@ -9,15 +9,15 @@
 <style type="text/css">
 @font-face {
     font-family: "Bebas Neue";
-    src: url('/public/fonts/BebasNeue.eot');
-    src: url('/public/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
-    url("/public/fonts/BebasNeue.woff") format("woff"),
-    url("/public/fonts/BebasNeue.ttf") format("truetype");
+    src: url('/assets/fonts/BebasNeue.eot');
+    src: url('/assets/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
+    url("/assets/fonts/BebasNeue.woff") format("woff"),
+    url("/assets/fonts/BebasNeue.ttf") format("truetype");
     url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
-    background-image: url("/public/2014voting/bg_tile.png");
+    background-image: url("/assets/2014voting/bg_tile.png");
     background-color: #212121;
     font-family: Calibri, Arial, sans-serif;
     text-align: center;

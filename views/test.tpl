@@ -1,12 +1,12 @@
   <style type="text/css"> 
     @font-face{
       font-family:"Overseer";
-      src:url("/public/overseer.ttf");
+      src:url("/assets/overseer.ttf");
     }
 
     @font-face{
       font-family:"Monofonto";
-      src:url("/public/monofonto.ttf");
+      src:url("/assets/monofonto.ttf");
     }
 
     img {
@@ -22,7 +22,7 @@
         margin: 0 auto;
         padding: 10px;
         background-color: rgb(211, 213, 176);
-        background-image: url("/public/falloutbackground2.jpg");
+        background-image: url("/assets/falloutbackground2.jpg");
         
         -moz-box-shadow:    0px 0px 5px 0px rgba(0,0,0,1);
         -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
@@ -129,7 +129,7 @@
       position: relative;
       width: 889px;
       background-color: #1f1f1f;
-      background-image: url("/public/lines.fw.png");
+      background-image: url("/assets/lines.fw.png");
       padding: 0 10px 10px 0;
     }
 
@@ -158,12 +158,12 @@
       padding: 4px;
       box-sizing: border-box;
       background: rgba(0,0,0,0.3);
-      background: url("/public/lines2.png");
+      background: url("/assets/lines2.png");
       border: 1px solid #31E782;
     }
 
     .voteBox .nomineeBasicInfo {
-      background: url("/public/lines2.png");
+      background: url("/assets/lines2.png");
     }
 
     .nomineeWords {

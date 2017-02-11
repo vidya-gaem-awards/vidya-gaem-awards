@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
-<link rel="stylesheet" href="/public/bootstrap-2.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap.min.css">
 <style type="text/css">
 body, html {
     padding: 0px;
