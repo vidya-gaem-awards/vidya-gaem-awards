@@ -11,7 +11,7 @@ _gaq.push(['_trackPageview']);
 dumbshit = new Dumbshit()
 dumbshit.code = function() {
     $(".shit").show();
-    $("body").css("background-image","url(/public/stars.gif)");
+    $("body").css("background-image","url(/assets/stars.gif)");
     $("body").css("background-repeat","repeat");
 }
 dumbshit.load()

@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
 <script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
@@ -13,7 +13,7 @@
     src: url('/assets/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
     url("/assets/fonts/BebasNeue.woff") format("woff"),
     url("/assets/fonts/BebasNeue.ttf") format("truetype");
-    url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
+    url("/assets/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
@@ -91,7 +91,7 @@ a:hover {
 
 body {
   background-color: black;
-    background-image: url("/public/space.png");
+    background-image: url("/assets/space.png");
     background-repeat: repeat;
     font-size: 16px;
     line-height: 16px;

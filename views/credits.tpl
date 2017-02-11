@@ -5,7 +5,7 @@
     src: url('/assets/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
     url("/assets/fonts/BebasNeue.woff") format("woff"),
     url("/assets/fonts/BebasNeue.ttf") format("truetype");
-  url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
+  url("/assets/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
   }
 
   body {

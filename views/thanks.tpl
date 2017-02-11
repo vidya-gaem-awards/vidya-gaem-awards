@@ -3,8 +3,8 @@
 <html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://2012.vidyagaemawards.com/public/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
 <script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
 <style type="text/css">
 @font-face {
@@ -13,7 +13,7 @@
   src: url('/assets/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
   url("/assets/fonts/BebasNeue.woff") format("woff"),
   url("/assets/fonts/BebasNeue.ttf") format("truetype");
-  url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
+  url("/assets/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
@@ -106,8 +106,8 @@ a:hover {
       <div class="logo">
         <iframe width="100%" height="460" src="https://www.youtube.com/embed/jqHdj8uVggY?rel=0" frameborder="0"
                  allowfullscreen=""></iframe>
-        <!-- <img src="/public/2014voting/2014logo.png" alt="2014 Vidya Gaem Awards Logo"> -->
-        <!-- <img src="/public/2013_logo.png"> -->
+        <!-- <img src="/assets/2014voting/2014logo.png" alt="2014 Vidya Gaem Awards Logo"> -->
+        <!-- <img src="/assets/2013_logo.png"> -->
       </div>
       </div></div>
       <div class="title">
@@ -120,7 +120,7 @@ a:hover {
         <a href="https://archive.org/details/2014vgas">Direct download</a><br>
         <a href="https://www.twitch.tv/vidyagaemawards/c/6014967">Watch the preshow skits</a><br>
         <a href="https://vidyagaemawards.com/music/2014-vga-music-mix.mp3">Download the preshow music mix</a><br>
-        <a href="/assets/winners">See the winners</a><br>
+        <a href="/winners">See the winners</a><br>
         <a href="/credits">See the credits</a><br>
       </div>
       <div class="subtitle">

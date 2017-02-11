@@ -114,7 +114,7 @@ header h2{
   src: url('/assets/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
        url("/assets/fonts/BebasNeue.woff") format("woff"),
        url("/assets/fonts/BebasNeue.ttf") format("truetype");
-       url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
+       url("/assets/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 .awardHeader {
@@ -319,7 +319,7 @@ footer .navigation {
 }*/
 
 .voteBox.dragging {
-  /*background-image: url("/public/votebox_background_drag.png");*/
+  /*background-image: url("/assets/votebox_background_drag.png");*/
 }
 
 .number {

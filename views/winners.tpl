@@ -5,7 +5,7 @@
   src: url('/assets/fonts/BebasNeue.eot?#iefix') format('embedded-opentype'),
   url("/assets/fonts/BebasNeue.woff") format("woff"),
   url("/assets/fonts/BebasNeue.ttf") format("truetype");
-url("/public/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
+url("/assets/fonts/BebasNeue.svg#svgBebasNeue") format("svg"),
 }
 
 body {
@@ -50,7 +50,7 @@ p {
     -webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.2);
     box-shadow:         0px 0px 30px 5px rgba(0,0,0,0.2);
 
-    /*background: rgba(246, 231, 190, 0.5) url("/public/2014voting/votebox_background.png");*/
+    /*background: rgba(246, 231, 190, 0.5) url("/assets/2014voting/votebox_background.png");*/
 }
 
 .navbar, .navbar .navbar-inner {

@@ -284,7 +284,7 @@
         <div class="controls">
           <input type="text" id="info-image" placeholder="" name="Image" autocomplete="off">
           <span class="help-block">If left blank, the webserver will look for the
-          image locally at <strong>/public/nominees/<span class="dialog-edit-id"></span>.png</strong></span>
+          image locally at <strong>/assets/nominees/<span class="dialog-edit-id"></span>.png</strong></span>
         </div>
       </div>
       <div class="control-group">
@@ -413,7 +413,7 @@ $("button[name=edit]").click(function() {
   if (nominees[nomineeID].Image) {
     $( "#dialog-edit-image" ).attr("src", nominees[nomineeID].Image);
   } else {
-    $( "#dialog-edit-image" ).attr("src", "/public/nominees/"+nomineeID+".png");
+    $( "#dialog-edit-image" ).attr("src", "/assets/nominees/"+nomineeID+".png");
   }
   
   $( "#info-id" ).val(nomineeID);
@@ -457,7 +457,7 @@ function updateDialogNominee() {
     if (lastImageValue) {
       $( "#dialog-edit-image" ).attr("src", lastImageValue );
     } else {
-      $( "#dialog-edit-image" ).attr("src", "/public/nominees/"+$( "#info-id" ).val()+".png");
+      $( "#dialog-edit-image" ).attr("src", "/assets/nominees/"+$( "#info-id" ).val()+".png");
     }
   }
 
@@ -518,7 +518,7 @@ $("#dialog-edit-submit").click(function() {
       if ( $("#info-image") ) {
         nomineeBox.find("img").attr("src", $("#info-image").val() );
       } else {
-        nomineeBox.find("img").attr("src", "/public/nominees/"+nomineeID+".png");
+        nomineeBox.find("img").attr("src", "/assets/nominees/"+nomineeID+".png");
       }
       
       nominees[nomineeID].Name = $("#info-name").val();
