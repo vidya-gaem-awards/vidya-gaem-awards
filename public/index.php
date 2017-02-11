@@ -156,7 +156,7 @@ $routes->add('logout', new Route(
 ));
 
 $routes->add('people', new Route(
-    '/people',
+    '/crew',
     [
         'controller' => Controllers\PeopleController::class,
         'permission' => 'profile-view'
@@ -222,7 +222,7 @@ $peopleCollection->add('editPersonPost', new Route(
     [],
     ['POST']
 ));
-$peopleCollection->addPrefix('/people');
+$peopleCollection->addPrefix('/crew');
 $peopleCollection->addDefaults([
     'controller' => Controllers\PeopleController::class
 ]);

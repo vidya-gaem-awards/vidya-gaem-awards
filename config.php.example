@@ -12,6 +12,7 @@ define('STEAM_API_KEY', '');
 define('NAVBAR_ITEMS', [
     "home"  => "Home",
     "awards" => "Awards and Nominations",
-    "people" => "People",
-    "https://steamcommunity.com/groups/vidyagaemawards/discussions/" => "Forum",
+    "people" => "Crew",
+    "referrers" => "Referrers",
+    "config" => "Config",
 ]);
