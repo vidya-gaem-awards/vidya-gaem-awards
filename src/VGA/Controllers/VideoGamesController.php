@@ -21,7 +21,7 @@ class VideoGamesController extends BaseController
         $tpl = $this->twig->load('videoGames.twig');
 
         $response = new Response($tpl->render([
-            'title' => 'Vidya in 2016',
+            'title' => 'Vidya in 2017',
             'games' => $games
         ]));
         $response->send();

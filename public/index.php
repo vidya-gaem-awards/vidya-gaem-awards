@@ -299,7 +299,7 @@ $routes->add('editAwardPost', new Route(
     ['POST']
 ));
 $routes->add('videoGames', new Route(
-    '/vidya-in-2016',
+    '/vidya-in-2017',
     [
         'controller' => Controllers\VideoGamesController::class,
         'permission' => $config->isPagePublic('videoGames') ? false : 'add-video-game'
@@ -311,7 +311,7 @@ $routes->add('videoGames', new Route(
     ['GET']
 ));
 $routes->add('addVideoGame', new Route(
-    '/vidya-in-2016',
+    '/vidya-in-2017',
     [
         'controller' => Controllers\VideoGamesController::class,
         'action' => 'add',
