@@ -2,16 +2,9 @@
 
 {% block content %}
   <style type="text/css">
-    .page-header {
-      font-family: 'Bungee', sans-serif;
-      text-align: center;
-      margin-top: 5px;
-    }
-
-    .admin-tools {
-      text-align: center;
+    .breadcrumb.fancy {
+      margin-top: 0;
       border-top: 1px solid #BBB;
-      border-bottom: 1px solid #BBB;
       border-radius: 0;
     }
 
@@ -72,7 +65,7 @@
     }
   </style>
 
-  <h1 class="page-header">Detailed Results</h1>
+  <h1 class="page-header fancy">Detailed Results</h1>
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <div class="panel panel-default">
@@ -107,7 +100,7 @@
     </div>
   </div>
 
-  <ul class="breadcrumb admin-tools">
+  <ul class="breadcrumb fancy">
     {% if all %}
       <li class="active">Currently viewing the complete rankings.</li>
       <li><a href="{{ path('detailedResults') }}">Show the top 5 positions only</a></li>

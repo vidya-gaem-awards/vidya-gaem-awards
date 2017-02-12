@@ -2,19 +2,6 @@
 
 {% block head %}
   <style type="text/css">
-    .page-header {
-      font-family: 'Bungee', sans-serif;
-      text-align: center;
-      margin-top: 5px;
-    }
-
-    .admin-tools {
-      margin-top: -20px;
-      text-align: center;
-      border-bottom: 1px solid #BBB;
-      border-radius: 0;
-    }
-
     #dialog-edit-header {
       font-weight: bold;
     }
@@ -190,9 +177,9 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="page-header">Award Manager</h1>
+  <h1 class="page-header fancy">Award Manager</h1>
 
-  <ul class="breadcrumb admin-tools">
+  <ul class="breadcrumb fancy">
     <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
     <li><a href="{{ path('nomineeManager') }}">Manage nominees</a></li>
   </ul>

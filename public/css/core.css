@@ -9,6 +9,19 @@ body {
   font-family: 'Titillium Web', arial, helvetica, sans-serif;
 }
 
+.page-header.fancy {
+  font-family: 'Bungee', sans-serif;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.breadcrumb.fancy {
+  margin-top: -20px;
+  text-align: center;
+  border-bottom: 1px solid #BBB;
+  border-radius: 0;
+}
+
 input, select, textarea {
   font-family: arial, helvetica, sans-serif;
 }
@@ -45,6 +58,7 @@ input, select, textarea {
 
 .jumbotron {
   position: relative;
+  font-family: 'Bungee', sans-serif;
 }
 
 .masthead {
@@ -62,7 +76,7 @@ input, select, textarea {
 
 .jumbotron h1 {
   margin-bottom: 9px;
-  font-size: 80px;
+  font-size: 70px;
   letter-spacing: -1px;
   line-height: 1;
 }
@@ -141,8 +155,4 @@ table.tablesorter thead tr .headerSortUp {
 
 ul.nav li.dropdown:hover ul.dropdown-menu {
   display: block;
-}
-
-a[rel=publisher] {
-  display: none;
 }

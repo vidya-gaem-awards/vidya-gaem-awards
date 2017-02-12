@@ -37,19 +37,6 @@
       text-shadow: 0 2px 0 black;
     }
 
-    .page-header {
-      font-family: 'Bungee', sans-serif;
-      text-align: center;
-      margin-top: 5px;
-    }
-
-    .admin-tools {
-      margin-top: -20px;
-      text-align: center;
-      border-bottom: 1px solid #BBB;
-      border-radius: 0;
-    }
-
     .impressive-title {
       /*text-shadow: #000 1px 1px 2px;*/
       text-align: center;
@@ -136,9 +123,9 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="page-header">Nominate Games for the 2017&nbsp;/v/GAs</h1>
+  <h1 class="page-header fancy">Nominate Games for the 2017&nbsp;/v/GAs</h1>
   {% if user.canDo('awards-edit') or user.canDo('nominations-view') %}
-    <ul class="breadcrumb admin-tools">
+    <ul class="breadcrumb fancy">
       {% if user.canDo('awards-edit') %}
         <li>
           <a href="{{ path('awardManager') }}">Manage awards</a>
