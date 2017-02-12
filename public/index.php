@@ -428,7 +428,25 @@ $routes->add('simpleResults', new Route(
         'controller' => Controllers\ResultController::class,
         'action' => 'simple',
         'permission' => $config->isPagePublic('results') ? false : 'voting-results'
-    ]
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['GET']
+));
+$routes->add('winnerImageUpload', new Route(
+    '/winners',
+    [
+        'controller' => Controllers\ResultController::class,
+        'action' => 'winnerImageUpload',
+        'permission' => 'awards-edit'
+    ],
+    [],
+    [],
+    '',
+    [],
+    ['POST']
 ));
 $routes->add('detailedResults', new Route(
     '/results/{all}',

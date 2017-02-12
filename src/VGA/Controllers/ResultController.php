@@ -1,8 +1,11 @@
 <?php
 namespace VGA\Controllers;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use VGA\FileSystem;
 use VGA\Model\Award;
+use VGA\Model\TableHistory;
 
 class ResultController extends BaseController
 {
@@ -135,6 +138,42 @@ class ResultController extends BaseController
             'awards' => $awards,
             'pairwise' => $pairwise
         ]));
+        $response->send();
+    }
+
+    public function winnerImageUploadAction()
+    {
+        $response = new JsonResponse();
+        $id = $this->request->request->get('id') ?? false;
+
+        /** @var Award $award */
+        $award = $this->em->getRepository(Award::class)->find($id);
+
+        if (!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) {
+            $response->setData(['error' => 'Invalid award specified.']);
+            $response->send();
+        }
+
+        try {
+            $imagePath = FileSystem::handleUploadedFile($_FILES['file'], 'winners', $award->getId());
+        } catch (\Exception $e) {
+            $response->setData(['error' => $e->getMessage()]);
+            $response->send();
+            return;
+        }
+
+        $award->setWinnerImage($imagePath);
+        $this->em->persist($award);
+
+        $history = new TableHistory();
+        $history->setUser($this->user)
+            ->setTable('Award')
+            ->setEntry($award->getId())
+            ->setValues(['image' => $imagePath]);
+        $this->em->persist($history);
+        $this->em->flush();
+
+        $response->setData(['success' => true, 'filePath' => $imagePath]);
         $response->send();
     }
 }

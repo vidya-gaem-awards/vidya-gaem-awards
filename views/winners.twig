@@ -3,35 +3,70 @@
 {% block title %}Winners{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="/css/theme.css">
+  <style type="text/css">
+    .uploadable {
+      cursor: pointer;
+    }
+
+    .uploadable:hover {
+      border-color: #f5e8c4;
+      box-shadow:  0 0 15px rgb(247, 208, 89);
+    }
+  </style>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var fileUploadTarget;
+
+      $('.uploadable').click(function (event) {
+        fileUploadTarget = $(event.target);
+        $('#fileInput').click();
+      });
+
+      $('#fileInput').change(function () {
+        var target = fileUploadTarget;
+        var id = target.attr('data-id');
+
+        $('#uploadAwardID').val(id);
+        target.attr('src', '/img/uploadImageHappening.png');
+        target.removeClass('uploadable');
+
+        var form = $('#fileForm')[0];
+        var data = new FormData(form);
+
+        $.ajax({
+          type: 'post',
+          url: '{{ path('winnerImageUpload') }}',
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          dataType: 'json',
+          success: function (response) {
+            if (response.success) {
+              target.attr('src', response.filePath + '?t=' + new Date().getTime());
+            } else {
+              alert('File upload error: ' + response.error);
+              target.attr('src', '/img/uploadImage.png');
+            }
+            target.addClass('uploadable');
+          }
+        });
+
+        $('#fileInput').val('');
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block content %}
+  <form enctype="multipart/form-data" id="fileForm" style="display: none;">
+    <input type="hidden" name="id" id="uploadAwardID">
+    <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif">
+  </form>
+
   <style type="text/css">
-    h1, h2 {
-      margin: 0;
-      padding: 0;
-      color: #f85898;
-      font-weight: normal;
-    }
-
-    h1 {
-      font-family: 'AnnapolisHalftoneItalic', 'Tahoma Bold', Tahoma, sans-serif;
-      text-transform: uppercase;
-      font-size: 3em;
-      line-height: 100%;
-    }
-
-    h2 {
-      font-family: "yoster", Calibri, sans-serif;
-      font-size: 1.3em;
-      line-height: 100%;
-      color: #bfbfbf;
-      -webkit-font-smoothing: none;
-    }
-
     p {
-      /*font-family: "modern typewriter", Tahoma, sans-serif;*/
       font-size: 22px;
       line-height: 1.3em;
       color: #f7d059;
@@ -148,7 +183,11 @@
           <div class="row">
             <div class="col-md-4">
               {% if award.winnerImage %}
-                <img class="winner img-responsive center-block" src="{{ award.winnerImage | e('html_attr') }}">
+                <img class="winner img-responsive center-block {{ user.canDo('awards-edit') ? 'uploadable' : '' }}"
+                     src="{{ award.winnerImage | e('html_attr') }}" data-id="{{ award.id }}">
+              {% elseif user.canDo('awards-edit') %}
+                <img class="winner img-responsive center-block uploadable" src="/img/uploadImage.png"
+                     data-id="{{ award.id }}">
               {% endif %}
             </div>
             <div class="col-md-8">
