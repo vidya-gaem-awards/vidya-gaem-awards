@@ -219,7 +219,7 @@
     <table class="table table-bordered table-hover form-table" id="awards">
       <thead>
       <tr>
-        <th style="width: 60px;">Order</th>
+        <th style="width: 60px;" class="hidden-sm">Order</th>
         <th>Name</th>
         <th style="width: 60px;">Nominees</th>
         <th style="width: 180px;">
@@ -239,9 +239,9 @@
       <tbody>
       {% for award in awards %}
         <tr class="{{ not award.enabled ? 'warning' : award.secret ? 'info' : '' }}">
-          <td class="aligned">{{ award.order }}</td>
+          <td class="aligned hidden-sm">{{ award.order }}</td>
           <td>
-            <div class="pull-right award-id">
+            <div class="pull-right award-id hidden-sm">
               <abbr title="The internal ID of the award. Visible in some places, such as URLs.">{{ award.id }}</abbr>
             </div>
             <strong>{{ award.name }}</strong><br>
@@ -372,7 +372,7 @@
                       </option>
                     {% endfor %}
                   </select>
-                  <span class="help-block">Determines what shows up in the autocomplete box when users are adding nominations</span>
+                  <span class="help-block">Determines what will be suggested when users are adding nominations</span>
                 </div>
               </div>
               <div class="form-group">
