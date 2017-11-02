@@ -117,7 +117,7 @@ class AwardAdminController extends BaseController
             $response->setData(['error' => 'That ID is already in use. Please enter another ID.']);
             $response->send();
             return;
-        } elseif ((!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) && $post->get('action') !== 'edit') {
+        } elseif ((!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) && $post->get('action') === 'edit') {
             $response->setData(['error' => 'Couldn\'t find an award with that ID.']);
             $response->send();
             return;
