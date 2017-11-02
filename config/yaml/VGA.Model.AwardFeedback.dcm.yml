@@ -1,6 +1,9 @@
 VGA\Model\AwardFeedback:
   type: entity
   table: award_feedback
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
   id:
     award:
       associationKey: true

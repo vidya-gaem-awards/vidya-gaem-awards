@@ -1,6 +1,9 @@
 VGA\Model\Award:
   type: entity
   table: awards
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
   id:
     id:
       type: string

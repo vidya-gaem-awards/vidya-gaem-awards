@@ -1,6 +1,9 @@
 VGA\Model\Action:
   type: entity
   table: actions
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
   id:
     id:
       type: integer

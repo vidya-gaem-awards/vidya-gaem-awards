@@ -1,6 +1,9 @@
 VGA\Model\LoginToken:
   type: entity
   table: login_tokens
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
   id:
     user:
       associationKey: true

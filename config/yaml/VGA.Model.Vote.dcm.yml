@@ -1,11 +1,14 @@
 VGA\Model\Vote:
   type: entity
   table: votes
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
   id:
     cookieID:
       type: string
       nullable: false
-      length: 255
+      length: 191
     award:
       associationKey: true
   fields:

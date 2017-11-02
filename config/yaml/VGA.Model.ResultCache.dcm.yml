@@ -1,6 +1,9 @@
 VGA\Model\ResultCache:
   type: entity
   table: result_cache
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
   id:
     award:
       associationKey: true

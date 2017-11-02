@@ -1,6 +1,9 @@
 VGA\Model\User:
   type: entity
   table: users
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
   id:
     steamID:
       type: string

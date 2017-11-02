@@ -34,7 +34,7 @@ class DependencyManager
             'user' => DB_USER,
             'password' => DB_PASSWORD,
             'dbname' => DB_DATABASE,
-            'charset' => 'UTF8'
+            'charset' => 'utf8mb4',
         ];
 
         $entityManager = ORM\EntityManager::create($conn, $config);
