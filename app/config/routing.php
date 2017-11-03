@@ -7,7 +7,8 @@ $routes = new RouteCollection();
 $routes->add('privacy', new Route(
     '/privacy',
     [
-        '_controller' => 'AppBundle:Static:privacy',
+        '_controller' => 'FrameworkBundle:Template:template',
+        'template' => 'privacy.twig',
     ]
 ));
 $routes->add('videos', new Route(
@@ -27,7 +28,8 @@ $routes->add('soundtrack', new Route(
 $routes->add('resultRedirect', new Route(
     '/voting/results',
     [
-        '_controller' => 'AppBundle:Static:votingRedirect',
+        '_controller' => 'FrameworkBundle:Redirect:redirect',
+        'route' => 'detailedResults'
     ]
 ));
 $routes->add('news', new Route(
@@ -59,6 +61,12 @@ $routes->add('newsDelete', new Route(
     '',
     [],
     ['POST']
+));
+$routes->add('login_check', new Route(
+    '/login'
+));
+$routes->add('logout', new Route(
+    '/logout'
 ));
 
 return $routes;

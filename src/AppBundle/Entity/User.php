@@ -3,16 +3,20 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections;
+use SteamAuthBundle\Security\User\SteamUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class User
+class User implements SteamUserInterface, UserInterface
 {
     const EVERYONE = '*';
     const LOGGED_IN = 'logged-in';
 
+    private $id;
+
     /**
      * @var string
      */
-    private $steamID;
+    private $username;
 
     /**
      * @var string
@@ -99,12 +103,8 @@ class User
      */
     private $votingCode;
 
-    /**
-     * @param string $steamID
-     */
-    public function __construct($steamID)
+    public function __construct()
     {
-        $this->steamID = $steamID;
         $this->votes = new Collections\ArrayCollection();
         $this->permissions = new Collections\ArrayCollection();
         $this->logins = new Collections\ArrayCollection();
@@ -119,7 +119,7 @@ class User
      */
     public function setSteamID($steamID)
     {
-        $this->steamID = $steamID;
+        $this->username = $steamID;
 
         return $this;
     }
@@ -131,7 +131,7 @@ class User
      */
     public function getSteamID()
     {
-        return $this->steamID;
+        return $this->username;
     }
 
     /**
@@ -595,6 +595,115 @@ class User
     {
         $this->votingCode = $votingCode;
         return $this;
+    }
+
+    /**
+     * Returns the current Steam nickname of the user.
+     *
+     * @return string The current nickname
+     */
+    public function getNickname()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Sets the users current nickname.
+     *
+     * @param string $nickname
+     */
+    public function setNickname($nickname)
+    {
+        $this->setName($nickname);
+    }
+
+    /**
+     * Sets the username.
+     *
+     * The username represents the unique SteamID.
+     *
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->setSteamID($username);
+    }
+
+    /**
+     * Sets the password.
+     *
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        // Do nothing
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        return [];
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return '';
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->getSteamID();
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // Do nothing
     }
 }
 

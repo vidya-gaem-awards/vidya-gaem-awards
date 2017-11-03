@@ -43,4 +43,4 @@ AppBundle\Entity\Vote:
       inversedBy: votes
       joinColumn:
         name: userID
-        referencedColumnName: steamID
+        referencedColumnName: id

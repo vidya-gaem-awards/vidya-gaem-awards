@@ -32,4 +32,4 @@ AppBundle\Entity\LoginToken:
       inversedBy: loginToken
       joinColumn:
         name: userID
-        referencedColumnName: steamID
+        referencedColumnName: id

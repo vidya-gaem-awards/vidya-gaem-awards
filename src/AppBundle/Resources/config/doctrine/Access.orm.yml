@@ -51,5 +51,5 @@ AppBundle\Entity\Access:
       nullable: true
       joinColumn:
         name: userID
-        referencedColumnName: steamID
+        referencedColumnName: id
         nullable: true

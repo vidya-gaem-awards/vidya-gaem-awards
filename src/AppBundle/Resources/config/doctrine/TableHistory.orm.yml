@@ -32,5 +32,5 @@ AppBundle\Entity\TableHistory:
       targetEntity: AppBundle\Entity\User
       joinColumn:
         name: userID
-        referencedColumnName: steamID
+        referencedColumnName: id
         nullable: false

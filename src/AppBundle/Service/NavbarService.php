@@ -22,7 +22,7 @@ class NavbarService
 
     public function getItems()
     {
-        $navbar = ['foo' => 'bar'];
+        $navbar = [];
         foreach (NAVBAR_ITEMS as $routeName => $title) {
             if ($route = $this->router->getRouteCollection()->get($routeName)) {
                 // Only show items in the menu if the user has access to them
@@ -39,8 +39,8 @@ class NavbarService
     public function getLoginLink()
     {
         $returnLink = $this->router->generate(
-            'login',
-            ['return' => $this->requestStack->getCurrentRequest()->getPathInfo()],
+            'login_check',
+            [],
             UrlGenerator::ABSOLUTE_URL
         );
 

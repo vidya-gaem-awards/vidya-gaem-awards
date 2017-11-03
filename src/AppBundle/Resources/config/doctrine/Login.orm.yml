@@ -20,5 +20,5 @@ AppBundle\Entity\Login:
       inversedBy: logins
       joinColumn:
         name: userID
-        referencedColumnName: steamID
+        referencedColumnName: id
         nullable: false

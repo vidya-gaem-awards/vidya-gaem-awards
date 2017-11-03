@@ -5,22 +5,29 @@
     "config": {
         "sort-packages": true
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Tsumiki-Chan/SteamAuthBundle"
+        }
+    ],
     "require": {
+        "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5.3",
-        "twig/twig": "^2.0.0",
-        "twig/extensions": "^1.3.0",
-        "ircmaxell/random-lib": "^1.1.0",
         "ehesp/steam-login": "^1.0.2",
-        "koraktor/steam-condenser": "^1.3.10",
         "fightbulc/moment": "^1.17.1",
-        "symfony/symfony": "^3.3",
         "incenteev/composer-parameter-handler": "^2.0",
+        "ircmaxell/random-lib": "^1.1.0",
+        "koraktor/steam-condenser": "^1.3.10",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "sirwaddles/steamauth": "dev-forkfix",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3.10",
-        "doctrine/doctrine-bundle": "^1.6"
+        "symfony/symfony": "^3.3",
+        "twig/extensions": "^1.3.0",
+        "twig/twig": "^2.0.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

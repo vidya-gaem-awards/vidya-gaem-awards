@@ -7,6 +7,9 @@ security:
         in_memory:
             memory: ~
 
+        steamauth:
+            id: steam.user_provider
+
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -22,3 +25,13 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+
+            provider: steamauth
+            steam:
+                default_route: privacy
+            remember_me:
+                secret: '%secret%'
+
+            logout:
+                path: /logout
+                target: /privacy

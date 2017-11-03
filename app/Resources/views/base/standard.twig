@@ -29,9 +29,9 @@
           {% endfor %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          {% if user.loggedIn %}
-            <li class="hidden-sm hidden-xs"><a href="https://steamcommunity.com/profiles/{{ user.steamID }}">{{ user.name }}</a></li>
-            <li class="hidden-sm hidden-xs"><img src="data:image/png;base64,{{ user.avatar }}" style='height: 50px;'></li>
+          {% if app.user %}
+            <li class="hidden-sm hidden-xs"><a href="https://steamcommunity.com/profiles/{{ app.user.steamID }}">{{ app.user.name }}</a></li>
+            <li class="hidden-sm hidden-xs"><img src="{{ app.user.avatar }}" style='height: 50px;'></li>
           {% else %}
             <li>
               <a href="{{ navbar.getLoginLink() }}">
@@ -78,7 +78,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{{ path('privacy') }}">Privacy Policy</a></li>
-          {% if user.loggedIn %}
+          {% if app.user %}
             <li><a href="{{ path('logout') }}">Logout</a></li>
           {% endif %}
         </ul>

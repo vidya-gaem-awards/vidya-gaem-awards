@@ -28,11 +28,11 @@ AppBundle\Entity\News:
       targetEntity: AppBundle\Entity\User
       joinColumn:
         name: userID
-        referencedColumnName: steamID
+        referencedColumnName: id
         nullable: false
     deletedBy:
       targetEntity: AppBundle\Entity\User
       joinColumn:
         name: deletedBy
-        referencedColumnName: steamID
+        referencedColumnName: id
         nullable: true

@@ -5,11 +5,14 @@ AppBundle\Entity\User:
     collate: utf8mb4_unicode_ci
     charset: utf8mb4
   id:
-    steamID:
-      column: steamID
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    username:
       type: string
       length: 17
-  fields:
     name:
       type: string
       nullable: false
@@ -63,7 +66,7 @@ AppBundle\Entity\User:
         name: user_permissions
         joinColumns:
           userID:
-            referencedColumnName: steamID
+            referencedColumnName: id
         inverseJoinColumns:
           permissionID:
             referencedColumnName: id

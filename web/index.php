@@ -139,21 +139,6 @@ $routes->add('newsDelete', new Route(
     [],
     ['POST']
 ));
-$routes->add('login', new Route(
-    '/login/{return}',
-    [
-        'controller' => Controller\AuthController::class,
-        'action' => 'login'
-    ],
-    ['return' => '.*']
-));
-$routes->add('logout', new Route(
-    '/logout',
-    [
-        'controller' => Controller\AuthController::class,
-        'action' => 'logout'
-    ]
-));
 
 $routes->add('people', new Route(
     '/crew',
