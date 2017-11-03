@@ -1,7 +1,7 @@
 <?php
 use VGA\DependencyManager;
-use VGA\Model\Config;
-use VGA\Model\GameRelease;
+use AppBundle\Entity\Config;
+use AppBundle\Entity\GameRelease;
 
 require(__DIR__ . '/../bootstrap.php');
 

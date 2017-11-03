@@ -1,13 +1,13 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 use Ehesp\SteamLogin\SteamLogin;
 use RandomLib;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use VGA\Model\Login;
-use VGA\Model\LoginToken;
-use VGA\Model\User;
+use AppBundle\Entity\Login;
+use AppBundle\Entity\LoginToken;
+use AppBundle\Entity\User;
 
 class AuthController extends BaseController
 {

@@ -1,5 +1,5 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use VGA\DependencyContainer;
 
-use VGA\Model\Config;
-use VGA\Model\User;
+use AppBundle\Entity\Config;
+use AppBundle\Entity\User;
 
 abstract class BaseController
 {

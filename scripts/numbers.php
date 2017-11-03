@@ -1,10 +1,10 @@
 #!/usr/bin/env php
 <?php
 use VGA\DependencyManager;
-use VGA\Model\Access;
-use VGA\Model\Config;
-use VGA\Model\Vote;
-use VGA\Model\VotingCodeLog;
+use AppBundle\Entity\Access;
+use AppBundle\Entity\Config;
+use AppBundle\Entity\Vote;
+use AppBundle\Entity\VotingCodeLog;
 use VGA\Timer;
 use VGA\Utils;
 

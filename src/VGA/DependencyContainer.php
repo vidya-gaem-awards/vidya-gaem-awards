@@ -5,8 +5,8 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use VGA\Model\Config;
-use VGA\Model\User;
+use AppBundle\Entity\Config;
+use AppBundle\Entity\User;
 
 class DependencyContainer
 {

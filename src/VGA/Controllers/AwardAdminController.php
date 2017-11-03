@@ -1,14 +1,14 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use VGA\Model\Action;
-use VGA\Model\Autocompleter;
-use VGA\Model\Award;
-use VGA\Model\TableHistory;
+use AppBundle\Entity\Action;
+use AppBundle\Entity\Autocompleter;
+use AppBundle\Entity\Award;
+use AppBundle\Entity\TableHistory;
 
 class AwardAdminController extends BaseController
 {

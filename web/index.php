@@ -1,4 +1,5 @@
 <?php
+use AppBundle\Controller;
 use Ehesp\SteamLogin\SteamLogin;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,14 +11,13 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use VGA\Controllers;
 use VGA\DependencyContainer;
 use VGA\DependencyManager;
-use VGA\Model\Access;
-use VGA\Model\AnonymousUser;
-use VGA\Model\Config;
-use VGA\Model\LoginToken;
-use VGA\Model\User;
+use AppBundle\Entity\Access;
+use AppBundle\Entity\AnonymousUser;
+use AppBundle\Entity\Config;
+use AppBundle\Entity\LoginToken;
+use AppBundle\Entity\User;
 
 require(__DIR__ . '/../bootstrap.php');
 
@@ -104,19 +104,19 @@ $routes = new RouteCollection();
 $routes->add('home', new Route(
     '/home',
     [
-        'controller' => Controllers\IndexController::class
+        'controller' => Controller\IndexController::class
     ]
 ));
 $routes->add('news', new Route(
     '/news',
     [
-        'controller' => Controllers\NewsController::class
+        'controller' => Controller\NewsController::class
     ]
 ));
 $routes->add('newsAdd', new Route(
     '/news/add',
     [
-        'controller' => Controllers\NewsController::class,
+        'controller' => Controller\NewsController::class,
         'action' => 'add',
         'permission' => 'news-manage'
     ],
@@ -129,7 +129,7 @@ $routes->add('newsAdd', new Route(
 $routes->add('newsDelete', new Route(
     '/news/delete/{id}',
     [
-        'controller' => Controllers\NewsController::class,
+        'controller' => Controller\NewsController::class,
         'action' => 'delete',
         'permission' => 'news-manage'
     ],
@@ -142,7 +142,7 @@ $routes->add('newsDelete', new Route(
 $routes->add('login', new Route(
     '/login/{return}',
     [
-        'controller' => Controllers\AuthController::class,
+        'controller' => Controller\AuthController::class,
         'action' => 'login'
     ],
     ['return' => '.*']
@@ -150,7 +150,7 @@ $routes->add('login', new Route(
 $routes->add('logout', new Route(
     '/logout',
     [
-        'controller' => Controllers\AuthController::class,
+        'controller' => Controller\AuthController::class,
         'action' => 'logout'
     ]
 ));
@@ -158,7 +158,7 @@ $routes->add('logout', new Route(
 $routes->add('people', new Route(
     '/crew',
     [
-        'controller' => Controllers\PeopleController::class,
+        'controller' => Controller\PeopleController::class,
         'permission' => 'profile-view'
     ]
 ));
@@ -224,20 +224,20 @@ $peopleCollection->add('editPersonPost', new Route(
 ));
 $peopleCollection->addPrefix('/crew');
 $peopleCollection->addDefaults([
-    'controller' => Controllers\PeopleController::class
+    'controller' => Controller\PeopleController::class
 ]);
 $routes->addCollection($peopleCollection);
 $routes->add('privacy', new Route(
     '/privacy',
     [
-        'controller' => Controllers\StaticController::class,
+        'controller' => Controller\StaticController::class,
         'action' => 'privacy'
     ]
 ));
 $routes->add('awards', new Route(
     '/awards',
     [
-        'controller' => Controllers\AwardController::class,
+        'controller' => Controller\AwardController::class,
         'permission' => $config->isPagePublic('awards') ? false : 'awards-edit'
     ],
     [],
@@ -249,7 +249,7 @@ $routes->add('awards', new Route(
 $routes->add('awardManager', new Route(
     '/awards/manage',
     [
-        'controller' => Controllers\AwardAdminController::class,
+        'controller' => Controller\AwardAdminController::class,
         'action' => 'managerList',
         'permission' => 'awards-feedback'
     ],
@@ -262,7 +262,7 @@ $routes->add('awardManager', new Route(
 $routes->add('awardManagerPost', new Route(
     '/awards/manage',
     [
-        'controller' => Controllers\AwardAdminController::class,
+        'controller' => Controller\AwardAdminController::class,
         'action' => 'managerPost',
         'permission' => 'awards-edit'
     ],
@@ -275,7 +275,7 @@ $routes->add('awardManagerPost', new Route(
 $routes->add('awardManagerPostAjax', new Route(
     '/awards/manage/ajax',
     [
-        'controller' => Controllers\AwardAdminController::class,
+        'controller' => Controller\AwardAdminController::class,
         'action' => 'managerPostAjax',
         'permission' => 'awards-edit'
     ],
@@ -288,7 +288,7 @@ $routes->add('awardManagerPostAjax', new Route(
 $routes->add('videoGames', new Route(
     '/vidya-in-2017',
     [
-        'controller' => Controllers\VideoGamesController::class,
+        'controller' => Controller\VideoGamesController::class,
         'permission' => $config->isPagePublic('videoGames') ? false : 'add-video-game'
     ],
     [],
@@ -300,7 +300,7 @@ $routes->add('videoGames', new Route(
 $routes->add('addVideoGame', new Route(
     '/vidya-in-2017',
     [
-        'controller' => Controllers\VideoGamesController::class,
+        'controller' => Controller\VideoGamesController::class,
         'action' => 'add',
         'permission' => 'add-video-game'
     ],
@@ -313,7 +313,7 @@ $routes->add('addVideoGame', new Route(
 $routes->add('awardFrontendPost', new Route(
     '/awards',
     [
-        'controller' => Controllers\AwardController::class,
+        'controller' => Controller\AwardController::class,
         'action' => 'post',
         'permission' => $config->isPagePublic('awards') ? false : 'awards-edit',
     ],
@@ -326,14 +326,14 @@ $routes->add('awardFrontendPost', new Route(
 $routes->add('referrers', new Route(
     '/referrers',
     [
-        'controller' => Controllers\ReferrerController::class,
+        'controller' => Controller\ReferrerController::class,
         'permission' => 'referrers-view'
     ]
 ));
 $routes->add('nomineeManager', new Route(
     '/nominees/{awardID}',
     [
-        'controller' => Controllers\NomineeController::class,
+        'controller' => Controller\NomineeController::class,
         'permission' => 'nominations-view',
         'awardID' => null
     ],
@@ -346,7 +346,7 @@ $routes->add('nomineeManager', new Route(
 $routes->add('nomineePost', new Route(
     '/nominees/{awardID}',
     [
-        'controller' => Controllers\NomineeController::class,
+        'controller' => Controller\NomineeController::class,
         'action' => 'post',
         'permission' => 'nominations-edit'
     ],
@@ -359,7 +359,7 @@ $routes->add('nomineePost', new Route(
 $routes->add('config', new Route(
     '/config',
     [
-        'controller' => Controllers\ConfigController::class,
+        'controller' => Controller\ConfigController::class,
         'permission' => 'edit-config'
     ],
     [],
@@ -371,7 +371,7 @@ $routes->add('config', new Route(
 $routes->add('configPost', new Route(
     '/config',
     [
-        'controller' => Controllers\ConfigController::class,
+        'controller' => Controller\ConfigController::class,
         'action' => 'post',
         'permission' => 'edit-config'
     ],
@@ -384,7 +384,7 @@ $routes->add('configPost', new Route(
 $routes->add('viewVotingCode', new Route(
     '/vote/code',
     [
-        'controller' => Controllers\VotingController::class,
+        'controller' => Controller\VotingController::class,
         'action' => 'codeViewer',
         'permission' => 'voting-view'
     ]
@@ -392,7 +392,7 @@ $routes->add('viewVotingCode', new Route(
 $routes->add('voting', new Route(
     '/vote/{awardID}',
     [
-        'controller' => Controllers\VotingController::class,
+        'controller' => Controller\VotingController::class,
         'awardID' => null,
         'permission' => $config->isPagePublic('voting') ? false : 'voting-view'
     ],
@@ -405,7 +405,7 @@ $routes->add('voting', new Route(
 $routes->add('votingSubmission', new Route(
     '/vote/{awardID}',
     [
-        'controller' => Controllers\VotingController::class,
+        'controller' => Controller\VotingController::class,
         'action' => 'post',
         'permission' => $config->isPagePublic('voting') ? false : 'voting-view'
     ],
@@ -418,14 +418,14 @@ $routes->add('votingSubmission', new Route(
 $routes->add('voteWithCode', new Route(
     '/vote/v/{code}',
     [
-        'controller' => Controllers\VotingController::class,
+        'controller' => Controller\VotingController::class,
         'action' => 'codeEntry'
     ]
 ));
 $routes->add('simpleResults', new Route(
     '/winners',
     [
-        'controller' => Controllers\ResultController::class,
+        'controller' => Controller\ResultController::class,
         'action' => 'simple',
         'permission' => $config->isPagePublic('results') ? false : 'voting-results'
     ],
@@ -438,7 +438,7 @@ $routes->add('simpleResults', new Route(
 $routes->add('winnerImageUpload', new Route(
     '/winners',
     [
-        'controller' => Controllers\ResultController::class,
+        'controller' => Controller\ResultController::class,
         'action' => 'winnerImageUpload',
         'permission' => 'awards-edit'
     ],
@@ -451,7 +451,7 @@ $routes->add('winnerImageUpload', new Route(
 $routes->add('detailedResults', new Route(
     '/results/{all}',
     [
-        'controller' => Controllers\ResultController::class,
+        'controller' => Controller\ResultController::class,
         'action' => 'detailed',
         'all' => null,
         'permission' => $config->isPagePublic('results') ? false : 'voting-results'
@@ -463,14 +463,14 @@ $routes->add('detailedResults', new Route(
 $routes->add('resultRedirect', new Route(
     '/voting/results',
     [
-        'controller' => Controllers\StaticController::class,
+        'controller' => Controller\StaticController::class,
         'action' => 'votingRedirect'
     ]
 ));
 $routes->add('pairwiseResults', new Route(
     '/results/pairwise',
     [
-        'controller' => Controllers\ResultController::class,
+        'controller' => Controller\ResultController::class,
         'action' => 'pairwise',
         'permission' => $config->isPagePublic('results') ? false : 'voting-results'
     ]
@@ -478,7 +478,7 @@ $routes->add('pairwiseResults', new Route(
 $routes->add('countdown', new Route(
     '/countdown',
     [
-        'controller' => Controllers\LauncherController::class,
+        'controller' => Controller\LauncherController::class,
         'action' => 'countdown',
         'permission' => $config->isPagePublic('countdown') ? false : 'view-unfinished-pages'
     ]
@@ -486,7 +486,7 @@ $routes->add('countdown', new Route(
 $routes->add('stream', new Route(
     '/stream',
     [
-        'controller' => Controllers\LauncherController::class,
+        'controller' => Controller\LauncherController::class,
         'action' => 'stream',
         'permission' => $config->isPagePublic('stream') ? false : 'view-unfinished-pages'
     ]
@@ -494,7 +494,7 @@ $routes->add('stream', new Route(
 $routes->add('finished', new Route(
     '/finished',
     [
-        'controller' => Controllers\LauncherController::class,
+        'controller' => Controller\LauncherController::class,
         'action' => 'finished',
         'permission' => $config->isPagePublic('finished') ? false : 'view-unfinished-pages'
     ]
@@ -502,14 +502,14 @@ $routes->add('finished', new Route(
 $routes->add('credits', new Route(
     '/credits',
     [
-        'controller' => Controllers\CreditsController::class,
+        'controller' => Controller\CreditsController::class,
         'permission' => $config->isPagePublic('credits') ? false : 'view-unfinished-pages'
     ]
 ));
 $routes->add('videos', new Route(
     '/videos',
     [
-        'controller' => Controllers\StaticController::class,
+        'controller' => Controller\StaticController::class,
         'action' => 'videos',
         'permission' => $config->isPagePublic('videos') ? false : 'view-unfinished-pages'
     ]
@@ -517,7 +517,7 @@ $routes->add('videos', new Route(
 $routes->add('soundtrack', new Route(
     '/soundtrack',
     [
-        'controller' => Controllers\StaticController::class,
+        'controller' => Controller\StaticController::class,
         'action' => 'soundtrack',
 //        'permission' => $config->isPagePublic('music') ? false : 'view-unfinished-pages'
     ]
@@ -555,18 +555,18 @@ if ($user instanceof AnonymousUser) {
     $twig->addGlobal('steamLoginLink', $steam->url($returnLink));
 }
 
-$navbar = [];
-foreach (NAVBAR_ITEMS as $routeName => $title) {
-    if ($route = $routes->get($routeName)) {
-        // Only show items in the menu if the user has access to them
-        $permission = $route->getDefault('permission');
-        if (!$permission || $user->canDo($permission)) {
-            $navbar[$routeName] = $title;
-        }
-    }
-}
-
-$twig->addGlobal('navbarItems', $navbar);
+//$navbar = [];
+//foreach (NAVBAR_ITEMS as $routeName => $title) {
+//    if ($route = $routes->get($routeName)) {
+//        // Only show items in the menu if the user has access to them
+//        $permission = $route->getDefault('permission');
+//        if (!$permission || $user->canDo($permission)) {
+//            $navbar[$routeName] = $title;
+//        }
+//    }
+//}
+//
+//$twig->addGlobal('navbarItems', $navbar);
 
 $matcher = new UrlMatcher($routes, $context);
 
@@ -585,12 +585,12 @@ try {
     $match = $matcher->match($request->getPathInfo());
 
     if (!class_exists($match['controller'])) {
-        $controller = new Controllers\ErrorController($container);
+        $controller = new Controller\ErrorController($container);
         $controller->internalErrorAction();
         return;
     }
 
-    /** @var Controllers\BaseController $controller */
+    /** @var Controller\BaseController $controller */
     $controller = new $match['controller']($container);
 
     if (isset($match['action'])) {
@@ -600,8 +600,8 @@ try {
     }
 
     if (isset($match['permission']) && $match['permission'] !== false && !$user->canDo($match['permission'])) {
-        /** @var Controllers\ErrorController $controller */
-        $controller = new Controllers\ErrorController($container);
+        /** @var Controller\ErrorController $controller */
+        $controller = new Controller\ErrorController($container);
         if ($user->isLoggedIn()) {
             $controller->noAccessAction();
         } else {
@@ -611,8 +611,8 @@ try {
     }
 
     if (!method_exists($controller, $action)) {
-        /** @var Controllers\ErrorController $controller */
-        $controller = new Controllers\ErrorController($container);
+        /** @var Controller\ErrorController $controller */
+        $controller = new Controller\ErrorController($container);
         $controller->internalErrorAction();
         return;
     }
@@ -644,11 +644,11 @@ try {
     call_user_func_array([$controller, $action], $match);
 
 } catch (ResourceNotFoundException $e) {
-    $controller = new Controllers\ErrorController($container);
+    $controller = new Controller\ErrorController($container);
     $controller->notFoundAction();
     return;
 } catch (MethodNotAllowedException $e) {
-    $controller = new Controllers\ErrorController($container);
+    $controller = new Controller\ErrorController($container);
     $controller->wrongMethodAction();
     return;
 }

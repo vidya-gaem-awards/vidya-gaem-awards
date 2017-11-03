@@ -1,10 +1,10 @@
 #!/usr/bin/env php
 <?php
 use VGA\DependencyManager;
-use VGA\Model\Award;
-use VGA\Model\Config;
-use VGA\Model\ResultCache;
-use VGA\Model\Vote;
+use AppBundle\Entity\Award;
+use AppBundle\Entity\Config;
+use AppBundle\Entity\ResultCache;
+use AppBundle\Entity\Vote;
 use VGA\ResultCalculator\Schulze;
 use VGA\Timer;
 

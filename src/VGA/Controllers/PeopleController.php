@@ -1,14 +1,14 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use VGA\Model\Action;
-use VGA\Model\Permission;
-use VGA\Model\TableHistory;
-use VGA\Model\User;
+use AppBundle\Entity\Action;
+use AppBundle\Entity\Permission;
+use AppBundle\Entity\TableHistory;
+use AppBundle\Entity\User;
 
 class PeopleController extends BaseController
 {

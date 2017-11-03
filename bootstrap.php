@@ -1,6 +1,6 @@
 <?php
 use VGA\DependencyManager;
-use VGA\Model\Config;
+use AppBundle\Entity\Config;
 
 ini_set('display_errors', 0);
 require(__DIR__ . '/vendor/autoload.php');

@@ -1,5 +1,5 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 

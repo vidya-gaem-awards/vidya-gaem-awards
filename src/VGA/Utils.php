@@ -2,9 +2,9 @@
 namespace VGA;
 
 use Doctrine\ORM\EntityManager;
-use VGA\Model\Autocompleter;
-use VGA\Model\Config;
-use VGA\Model\Permission;
+use AppBundle\Entity\Autocompleter;
+use AppBundle\Entity\Config;
+use AppBundle\Entity\Permission;
 
 class Utils
 {

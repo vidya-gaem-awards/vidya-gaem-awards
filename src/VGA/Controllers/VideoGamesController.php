@@ -1,10 +1,10 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use VGA\Model\Action;
-use VGA\Model\GameRelease;
+use AppBundle\Entity\Action;
+use AppBundle\Entity\GameRelease;
 
 
 class VideoGamesController extends BaseController

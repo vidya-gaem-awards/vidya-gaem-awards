@@ -1,11 +1,11 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use VGA\FileSystem;
-use VGA\Model\Award;
-use VGA\Model\TableHistory;
+use AppBundle\Entity\Award;
+use AppBundle\Entity\TableHistory;
 
 class ResultController extends BaseController
 {

@@ -1,5 +1,5 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 
 use Symfony\Component\HttpFoundation\Cookie;
@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use VGA\Model\Action;
-use VGA\Model\Award;
-use VGA\Model\Config;
-use VGA\Model\Nominee;
-use VGA\Model\Vote;
-use VGA\Model\VotingCodeLog;
+use AppBundle\Entity\Action;
+use AppBundle\Entity\Award;
+use AppBundle\Entity\Config;
+use AppBundle\Entity\Nominee;
+use AppBundle\Entity\Vote;
+use AppBundle\Entity\VotingCodeLog;
 use VGA\Utils;
 
 class VotingController extends BaseController

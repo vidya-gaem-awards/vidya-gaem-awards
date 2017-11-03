@@ -1,8 +1,8 @@
 <?php
-namespace VGA\Controllers;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
-use VGA\Model\News;
+use AppBundle\Entity\News;
 
 class IndexController extends BaseController
 {
