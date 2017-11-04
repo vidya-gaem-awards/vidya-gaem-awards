@@ -17,13 +17,12 @@ In the extremely unlikely event that you decide to use it anyway, here's what yo
 
 ### Requirements
 
- * PHP 7
+ * PHP 7.1
  * A MySQL or MariaDB database
  * [Composer](https://getcomposer.org/)
 
 ### Installation
 
  * Clone the repo to a server of your choice and run `composer install`.
- * There's a file called `config.php.example`. You'll want to copy this to `config.php` and adjust as needed.
- * Once you've got a database created, run `vendor/bin/doctrine orm:schema-tool:update` to create the tables.
- * Run `scripts/init.php` to populate the tables.
+ * Copy `app/config/parameters.yml.dist` to `app/config/parameters.yml` and adjust as needed.
+ * Once you've got a database created, run `bin/console app:db-init` to set up the database.
