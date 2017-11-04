@@ -1,21 +1,30 @@
 <?php
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Service\NavbarService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use VGA\FileSystem;
 use AppBundle\Entity\Award;
 use AppBundle\Entity\TableHistory;
 
-class ResultController extends BaseController
+class ResultController extends Controller
 {
-    public function simpleAction()
+    public function simpleAction(EntityManagerInterface $em, NavbarService $navbar)
     {
+        if (!$navbar->canAccessRoute('results')) {
+            throw $this->createAccessDeniedException();
+        }
+
         /** @var Award[] $awards */
-        $awards = $this->em->getRepository(Award::class)
-            ->createQueryBuilder('c')
-            ->where('c.enabled = true')
-            ->orderBy('c.order', 'ASC')
+        $awards = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a')
+            ->where('a.enabled = true')
+            ->orderBy('a.order', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -39,21 +48,24 @@ class ResultController extends BaseController
             $results[$award->getId()] = $rankings;
         }
 
-        $tpl = $this->twig->load('winners.twig');
-        $response = new Response($tpl->render([
+        return $this->render('winners.twig', [
             'awards' => $awards,
             'results' => $results
-        ]));
-        $response->send();
+        ]);
     }
 
-    public function detailedAction($all = null)
+    public function detailedAction(?string $all, EntityManagerInterface $em, NavbarService $navbar)
     {
+        if (!$navbar->canAccessRoute('results')) {
+            throw $this->createAccessDeniedException();
+        }
+
         /** @var Award[] $awards */
-        $awards = $this->em->getRepository(Award::class)
-            ->createQueryBuilder('c')
-            ->where('c.enabled = true')
-            ->orderBy('c.order', 'ASC')
+        $awards = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a')
+            ->where('a.enabled = true')
+            ->orderBy('a.order', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -104,26 +116,28 @@ class ResultController extends BaseController
             }
         }
 
-        $tpl = $this->twig->load('results.twig');
-
-        $response = new Response($tpl->render([
+        return $this->render('results.twig', [
             'title' => 'Results',
             'awards' => $awards,
             'nominees' => $nominees,
             'all' => (bool)$all,
             'results' => $results,
             'filters' => $filters
-        ]));
-        $response->send();
+        ]);
     }
 
-    public function pairwiseAction()
+    public function pairwiseAction(EntityManagerInterface $em, NavbarService $navbar)
     {
+        if (!$navbar->canAccessRoute('results')) {
+            throw $this->createAccessDeniedException();
+        }
+
         /** @var Award[] $awards */
-        $awards = $this->em->getRepository(Award::class)
-            ->createQueryBuilder('c')
-            ->where('c.enabled = true')
-            ->orderBy('c.order', 'ASC')
+        $awards = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a')
+            ->where('a.enabled = true')
+            ->orderBy('a.order', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -133,47 +147,40 @@ class ResultController extends BaseController
             $pairwise[$award->getId()] = $award->getOfficialResults()->getSteps()['pairwise'];
         }
 
-        $tpl = $this->twig->load('resultsPairwise.twig');
-        $response = new Response($tpl->render([
+        return $this->render('resultsPairwise.twig', [
             'awards' => $awards,
             'pairwise' => $pairwise
-        ]));
-        $response->send();
+        ]);
     }
 
-    public function winnerImageUploadAction()
+    public function winnerImageUploadAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, UserInterface $user, Request $request)
     {
-        $response = new JsonResponse();
-        $id = $this->request->request->get('id') ?? false;
+        $id = $request->request->get('id') ?? false;
 
         /** @var Award $award */
-        $award = $this->em->getRepository(Award::class)->find($id);
+        $award = $em->getRepository(Award::class)->find($id);
 
-        if (!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) {
-            $response->setData(['error' => 'Invalid award specified.']);
-            $response->send();
+        if (!$award || ($award->isSecret() && !$authChecker->isGranted('ROLE_AWARDS_SECRET'))) {
+            return $this->json(['error' => 'Invalid award specified.']);
         }
 
         try {
             $imagePath = FileSystem::handleUploadedFile($_FILES['file'], 'winners', $award->getId());
         } catch (\Exception $e) {
-            $response->setData(['error' => $e->getMessage()]);
-            $response->send();
-            return;
+            return $this->json(['error' => $e->getMessage()]);
         }
 
         $award->setWinnerImage($imagePath);
-        $this->em->persist($award);
+        $em->persist($award);
 
         $history = new TableHistory();
-        $history->setUser($this->user)
+        $history->setUser($user)
             ->setTable('Award')
             ->setEntry($award->getId())
             ->setValues(['image' => $imagePath]);
-        $this->em->persist($history);
-        $this->em->flush();
+        $em->persist($history);
+        $em->flush();
 
-        $response->setData(['success' => true, 'filePath' => $imagePath]);
-        $response->send();
+        return $this->json(['success' => true, 'filePath' => $imagePath]);
     }
 }

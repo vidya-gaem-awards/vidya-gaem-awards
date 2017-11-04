@@ -76,7 +76,7 @@
           </p>
           <p>
             If all you want is the official results for each award, you can get those on the
-            <a href="{{ path('simpleResults') }}">winners&nbsp;page</a>. If you want to see the results in even <em>more</em>
+            <a href="{{ path('winners') }}">winners&nbsp;page</a>. If you want to see the results in even <em>more</em>
             detail, you can view the <a href="{{ path('pairwiseResults') }}">pairwise voting results</a>.</p>
         </div>
       </div>
@@ -103,10 +103,10 @@
   <ul class="breadcrumb fancy">
     {% if all %}
       <li class="active">Currently viewing the complete rankings.</li>
-      <li><a href="{{ path('detailedResults') }}">Show the top 5 positions only</a></li>
+      <li><a href="{{ path('results') }}">Show the top 5 positions only</a></li>
     {% else %}
       <li class="active">Currently viewing the top 5 nominees for each award only.</li>
-      <li><a href="{{ path('detailedResults', {all: 'all'}) }}">Show complete rankings</a></li>
+      <li><a href="{{ path('results', {all: 'all'}) }}">Show complete rankings</a></li>
     {% endif %}
   </ul>
 

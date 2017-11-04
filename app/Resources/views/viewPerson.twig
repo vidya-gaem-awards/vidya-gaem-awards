@@ -5,45 +5,45 @@
     <h2>User Information</h2>
 
     <ul>
-      <li>Steam profile: <a href="https://steamcommunity.com/profiles/{{ _user.steamID }}">{{ _user.steamID }}</a></li>
+      <li>Steam profile: <a href="https://steamcommunity.com/profiles/{{ user.steamID }}">{{ user.steamID }}</a></li>
       <li>Permissions:
-        {% if _user.permissions | length > 0 %}
-          {{ _user.permissions | join(', ') }}
+        {% if user.permissions | length > 0 %}
+          {{ user.permissions | join(', ') }}
         {% else %}
           <span class="label label-default">None</span>
         {% endif %}
       </li>
 
       <li>Email address: <span id="email">
-                {% if _user.email %}
-                  <a href="mailto:{{ _user.email }}">{{ _user.email }}</a>
+                {% if user.email %}
+                  <a href="mailto:{{ user.email }}">{{ user.email }}</a>
                 {% else %}
                   <span class="label label-default">Unavailable</span>
                 {% endif %}
             </span></li>
 
       <li>
-        {% if _user.lastLogin %}
-          Last logged in on {{ _user.lastLogin | date('F jS, Y') }}
+        {% if user.lastLogin %}
+          Last logged in on {{ user.lastLogin | date('F jS, Y') }}
         {% else %}
           Never logged in
         {% endif %}
       </li>
     </ul>
 
-    {% if user.canDo('profile-edit-details') %}
-      <a class="btn btn-primary" href="{{ path('editPerson', {'steamID': _user.steamID}) }}">Edit user information</a>
+    {% if is_granted('ROLE_PROFILE_EDIT_DETAILS') %}
+      <a class="btn btn-primary" href="{{ path('editPerson', {'steamID': user.steamID}) }}">Edit user information</a>
     {% endif %}
 
-    {% if user.canDo('profile-edit-groups') %}
+    {% if is_granted('ROLE_PROFILE_EDIT_GROUPS') %}
       <div id="groups">
         <h2>Permissions</h2>
 
-        {% if _user.permissions | length > 0 %}
+        {% if user.permissions | length > 0 %}
           <p>Click on a permission to remove it. Hover over the permission for more details.</p>
-          <form method="POST" action="{{ path('editPerson', {'steamID': _user.steamID}) }}"
+          <form method="POST" action="{{ path('editPerson', {'steamID': user.steamID}) }}"
                 style="margin-bottom: 25px;">
-            {% for permission in _user.permissions %}
+            {% for permission in user.permissions %}
               <button class="btn btn-danger" name="RemoveGroup" value="{{ permission.id }}"
                       title="{{ permission.description }}">
                 {{ permission.id }}
@@ -52,9 +52,9 @@
           </form>
         {% endif %}
 
-        <form method="POST" action="{{ path('editPerson', {'steamID': _user.steamID}) }}">
+        <form method="POST" action="{{ path('editPerson', {'steamID': user.steamID}) }}">
           <select class="input-small" name="GroupName" style="margin-bottom: 3px;">
-            {% for permission in permissions if permission not in _user.permissions %}
+            {% for permission in permissions if permission not in user.permissions %}
               <option value="{{ permission.id }}">
                 {{ permission.id }} &ndash; {{ permission.description }}
                 {% if permission.id[0:5] != 'level' %}
@@ -71,24 +71,24 @@
   </div>
 
   <div class="col-md-6">
-    {% if user.canDo('profile-edit-notes') %}
+    {% if is_granted('ROLE_PROFILE_EDIT_NOTES') %}
       <h2>
         Notes
         <small><a href="#" id="notes-edit"
                   onclick="$('#notes-button').show();$('#notes').removeAttr('readonly');$(this).hide();">edit</a>
         </small>
       </h2>
-      <form method="POST" action="{{ path('editPerson', {'steamID': _user.steamID}) }}">
+      <form method="POST" action="{{ path('editPerson', {'steamID': user.steamID}) }}">
         <input type="hidden" name="action" value="edit-notes"/>
-        <textarea rows="10" style="width: 100%" id="notes" readonly name="Notes">{{ _user.notes }}</textarea>
+        <textarea rows="10" style="width: 100%" id="notes" readonly name="Notes">{{ user.notes }}</textarea>
         <div id="notes-button" style='display: none;'>
           <input type="submit" class="btn btn-success" value="Save notes"/>
-          <a href="{{ path('viewPerson', {'steamID': _user.steamID}) }}" class="btn">Cancel</a>
+          <a href="{{ path('viewPerson', {'steamID': user.steamID}) }}" class="btn">Cancel</a>
         </div>
       </form>
     {% else %}
       <h2>Notes:</h2>
-      <textarea rows="10" style="width: 100%;" readonly>{{ _user.notes }}</textarea>
+      <textarea rows="10" style="width: 100%;" readonly>{{ user.notes }}</textarea>
     {% endif %}
   </div>
 {% endblock %}

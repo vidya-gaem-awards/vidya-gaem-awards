@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  {#{% if user.canDo('news-manage') %}#}
+  {% if is_granted('ROLE_NEWS_MANAGE') %}
     <div class="row">
       <div class="col-md-8">
         <div class="well">
@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-  {#{% endif %}#}
+  {% endif %}
 
   <div class="row">
     <div class="col-xs-12">

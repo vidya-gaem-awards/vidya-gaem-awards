@@ -5,7 +5,6 @@ use AppBundle\Service\ConfigService;
 use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Autocompleter;
@@ -126,29 +125,22 @@ class AwardController extends Controller
         
         $post = $request->request;
         $repo = $em->getRepository(Award::class);
-        $response = new JsonResponse();
 
         /** @var Award $award */
         $award = $repo->find($post->get('id'));
 
         if (!$award || $award->isSecret() || !$award->isEnabled()) {
-            $response->setData(['error' => 'Invalid award provided.']);
-            $response->send();
-            return;
+            return $this->json(['error' => 'Invalid award provided.']);
         }
 
         $opinion = $post->get('opinion');
         if ($opinion !== null) {
             if ($configService->isReadOnly()) {
-                $response->setData(['error' => 'Feedback can no longer be given on awards.']);
-                $response->send();
-                return;
+                return $this->json(['error' => 'Feedback can no longer be given on awards.']);
             }
 
             if (!in_array($opinion, ['-1', '1', '0'], true)) {
-                $response->setData(['error' => 'Invalid opinion provided.']);
-                $response->send();
-                return;
+                return $this->json(['error' => 'Invalid opinion provided.']);
             }
 
             $opinionRepo = $em->getRepository(AwardFeedback::class);
@@ -172,25 +164,20 @@ class AwardController extends Controller
         $nomination = $post->get('nomination');
         if ($nomination !== null) {
             if ($configService->isReadOnly()) {
-                $response->setData(['error' => 'Nominations can no longer be made for this award.']);
-                $response->send();
-                return;
+                return $this->json(['error' => 'Nominations can no longer be made for this award.']);
             }
 
             if (!$award->areNominationsEnabled()) {
-                $response->setData(['error' => 'Nominations aren\'t currently open for this award.']);
-                $response->send();
-                return;
+                return $this->json(['error' => 'Nominations aren\'t currently open for this award.']);
             }
 
             $nomination = trim($nomination);
             if ($nomination === '') {
-                $response->setData(['error' => 'Nomination cannot be blank.']);
-                $response->send();
-                return;
+                return $this->json(['error' => 'Nomination cannot be blank.']);
             }
 
             $result = $em->createQueryBuilder()
+                ->select('un')
                 ->from(UserNomination::class, 'un')
                 ->where('un.user = :fuzzyUser')
                 ->andWhere('IDENTITY(un.award) = :award')
@@ -202,9 +189,7 @@ class AwardController extends Controller
                 ->getOneOrNullResult();
 
             if ($result) {
-                $response->setData(['error' => 'You\'ve already nominated that.']);
-                $response->send();
-                return;
+                return $this->json(['error' => 'You\'ve already nominated that.']);
             }
 
             $userNomination = new UserNomination($award, $user, $nomination);
@@ -220,7 +205,6 @@ class AwardController extends Controller
 
         $em->flush();
 
-        $response->setData(['success' => true]);
-        $response->send();
+        return $this->json(['success' => true]);
     }
 }

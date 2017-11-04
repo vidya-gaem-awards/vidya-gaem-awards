@@ -1,13 +1,19 @@
 <?php
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Service\ConfigService;
+use AppBundle\Service\NavbarService;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class LauncherController extends BaseController
+class LauncherController extends Controller
 {
-    public function countdownAction()
+    public function countdownAction(ConfigService $configService, NavbarService $navbar)
     {
-        $streamDate = $this->config->getStreamTime();
+        if (!$navbar->canAccessRoute('countdown')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $streamDate = $configService->getConfig()->getStreamTime();
 
         $timezones = [
             'Honolulu' => 'Pacific/Honolulu',
@@ -33,33 +39,34 @@ class LauncherController extends BaseController
             $streamDate ? $streamDate->format("Y-m-d\TH:i:s") : ''
         );
 
-        $tpl = $this->twig->load('countdown.twig');
-        $response = new Response($tpl->render([
+        return $this->render('countdown.twig', [
             'streamDate' => $streamDate,
             'timezones' => $timezones,
             'otherTimezonesLink' => $otherTimezonesLink
-        ]));
-        $response->send();
+        ]);
     }
 
-    public function streamAction()
+    public function streamAction(ConfigService $configService, NavbarService $navbar)
     {
-        $tpl = $this->twig->load('stream.twig');
+        if (!$navbar->canAccessRoute('stream')) {
+            throw $this->createAccessDeniedException();
+        }
 
-        $streamDate = $this->config->getStreamTime();
+        $streamDate = $configService->getConfig()->getStreamTime();
         $showCountdown = ($streamDate > new \DateTime());
-        
-        $response = new Response($tpl->render([
+
+        return $this->render('stream.twig', [
             'streamDate' => $streamDate,
             'countdown' => $showCountdown
-        ]));
-        $response->send();
+        ]);
     }
 
-    public function finishedAction()
+    public function finishedAction(NavbarService $navbar)
     {
-        $tpl = $this->twig->load('finished.twig');
-        $response = new Response($tpl->render([]));
-        $response->send();
+        if (!$navbar->canAccessRoute('finished')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $this->render('finished.twig');
     }
 }

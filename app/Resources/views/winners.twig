@@ -183,9 +183,9 @@
           <div class="row">
             <div class="col-md-4">
               {% if award.winnerImage %}
-                <img class="winner img-responsive center-block {{ user.canDo('awards-edit') ? 'uploadable' : '' }}"
+                <img class="winner img-responsive center-block {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}"
                      src="{{ award.winnerImage | e('html_attr') }}" data-id="{{ award.id }}">
-              {% elseif user.canDo('awards-edit') %}
+              {% elseif is_granted('ROLE_AWARDS_EDIT') %}
                 <img class="winner img-responsive center-block uploadable" src="/img/uploadImage.png"
                      data-id="{{ award.id }}">
               {% endif %}
@@ -214,7 +214,7 @@
       <p>
         The results shown above are the same as those shown during the show and are based only on the votes from /v/.
         For more details, including vote counts and votes that we filtered out, see the
-        <a href="{{ path('detailedResults') }}">detailed results</a> and
+        <a href="{{ path('results') }}">detailed results</a> and
         <a href="{{ path('pairwiseResults') }}">pairwise comparison</a> pages.
       </p>
     </div>

@@ -22,7 +22,7 @@
     <li>
       <a href="{{ path('permissions') }}">View group and permission information</a>
     </li>
-    {% if user.canDo('add-user') %}
+    {% if is_granted('ROLE_ADD_USER') %}
       <li>
         <a href="{{ path('addPerson') }}">Add new user</a>
       </li>
@@ -43,7 +43,7 @@
       <tr>
         <td style='padding: 0; width: 40px;'>
           <a href="https://steamcommunity.com/profiles/{{ user.steamID }}">
-            <img src="data:image/png;base64,{{ user.avatar }}" style="width: 40px;">
+            <img src="{{ user.avatar }}" style="width: 40px;">
           </a>
         </td>
         <td style='white-space: nowrap;"'>

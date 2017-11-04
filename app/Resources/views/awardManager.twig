@@ -184,7 +184,7 @@
     <li><a href="{{ path('nomineeManager') }}">Manage nominees</a></li>
   </ul>
 
-  {% for message in flashbag.get('formError') %}
+  {% for message in app.session.getFlashBag().get('formError') %}
     <div class="alert alert-danger" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -193,7 +193,7 @@
     </div>
   {% endfor %}
 
-  {% for message in flashbag.get('formSuccess') %}
+  {% for message in app.session.getFlashBag().get('formSuccess') %}
     <div class="alert alert-success" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -218,7 +218,7 @@
           </span>
         </th>
         <th style="width: 130px;">Status</th>
-        {% if user.canDo('awards-edit') %}
+        {% if is_granted('ROLE_AWARDS_EDIT') %}
           <th style="width: 80px;">Controls</th>
         {% endif %}
       </tr>
@@ -235,7 +235,7 @@
             <small>{{ award.subtitle }}</small>
           </td>
           <td class="aligned">
-            {% if user.canDo("nominations-edit") %}
+            {% if is_granted("ROLE_NOMINATIONS_EDIT") %}
               <a href="{{ path('nomineeManager', {'awardID': award.id}) }}" target="_blank">
                 {{ award.nominees|length }}
               </a>
@@ -265,7 +265,7 @@
               <span class="label label-default">Nominations Closed</span>
             {% endif %}
           </td>
-          {% if user.canDo('awards-edit') %}
+          {% if is_granted('ROLE_AWARDS_EDIT') %}
             <td class="aligned">
               <button class="btn btn-primary" title="Edit award" data-toggle="modal" data-target="#dialog-edit"
                 data-id="{{ award.id }}">
@@ -278,13 +278,13 @@
       </tbody>
     </table>
 
-    {% if user.canDo('awards-edit') %}
+    {% if is_granted('ROLE_AWARDS_EDIT') %}
       <form method="POST" action="{{ path('awardManagerPost') }}">
       </form>
     {% endif %}
   </div>
 
-  {% if user.canDo('awards-edit') %}
+  {% if is_granted('ROLE_AWARDS_EDIT') %}
     <div class="panel">
       <div class="panel-body">
         <form method="POST" action="{{ path('awardManagerPost') }}" id="massChangeNominations">
@@ -393,7 +393,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              {% if user.canDo('awards-delete') %}
+              {% if is_granted('ROLE_AWARDS_DELETE') %}
                 <button class="btn btn-danger pull-left" type="button" id="deleteAward">Delete award</button>
               {% endif %}
               <span id="dialog-edit-status" style="display: none;">

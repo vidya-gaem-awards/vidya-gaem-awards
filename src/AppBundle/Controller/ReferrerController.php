@@ -1,17 +1,17 @@
 <?php
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Access;
 
-class ReferrerController extends BaseController
+class ReferrerController extends Controller
 {
-    public function indexAction()
+    public function indexAction(EntityManagerInterface $em)
     {
-        $repo = $this->em->getRepository(Access::class);
-        $query = $repo->createQueryBuilder('a');
-        $query
+        $result = $em->createQueryBuilder()
             ->select('MAX(a.timestamp) as latest')
+            ->from(Access::class, 'a')
             ->addSelect('COUNT(a.id) as total')
             ->addSelect('a.referer')
             ->where("a.referer NOT LIKE '%vidyagaemawards.com%'")
@@ -20,9 +20,9 @@ class ReferrerController extends BaseController
             ->groupBy('a.referer')
             ->having('total >= 1')
             ->orderBy('total', 'DESC')
-            ->addOrderBy('latest', 'DESC');
-
-        $result = $query->getQuery()->getArrayResult();
+            ->addOrderBy('latest', 'DESC')
+            ->getQuery()
+            ->getArrayResult();
 
         $referrers = [];
 
@@ -68,12 +68,9 @@ class ReferrerController extends BaseController
             return $b['latest'] <=> $a['latest'];
         });
 
-        $tpl = $this->twig->load('referrers.twig');
-
-        $response = new Response($tpl->render([
+        return $this->render('referrers.twig', [
             'title' => 'Referrers',
             'referrers' => $referrers
-        ]));
-        $response->send();
+        ]);
     }
 }

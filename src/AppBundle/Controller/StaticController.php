@@ -19,7 +19,7 @@ class StaticController extends Controller
     public function videosAction(NavbarService $navbar)
     {
         if (!$navbar->canAccessRoute('videos')) {
-            throw $this->createAccessDeniedException('nope');
+            throw $this->createAccessDeniedException();
         }
         return $this->render('videos.twig');
     }
@@ -30,5 +30,13 @@ class StaticController extends Controller
             throw $this->createAccessDeniedException();
         }
         return $this->render('soundtrack.twig');
+    }
+
+    public function creditsAction(NavbarService $navbar)
+    {
+        if (!$navbar->canAccessRoute('credits')) {
+            throw $this->createAccessDeniedException();
+        }
+        return $this->render('credits.twig');
     }
 }

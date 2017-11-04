@@ -469,36 +469,6 @@ class User implements SteamUserInterface, UserInterface
     }
 
     /**
-     * @deprecated
-     * @param $permissionCheck
-     * @return bool
-     */
-    public function canDo($permissionCheck)
-    {
-        trigger_error('Use of canDo() is deprecated, use AuthorizationCheckerInterface (PHP) or is_granted (Twig) instead', E_USER_DEPRECATED);
-
-        if ($permissionCheck === self::EVERYONE) {
-            return true;
-        }
-
-        if ($permissionCheck === self::LOGGED_IN) {
-            return $this->isLoggedIn();
-        }
-
-        if ($this->permissionCache === null) {
-            $this->populatePermissionCache();
-        }
-
-        foreach ($this->permissionCache as $permission) {
-            if ($permission->getId() === $permissionCheck) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * @return bool
      */
     public function isLoggedIn()

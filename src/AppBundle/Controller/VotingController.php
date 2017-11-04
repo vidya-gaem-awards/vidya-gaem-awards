@@ -1,11 +1,13 @@
 <?php
 namespace AppBundle\Controller;
 
-
+use AppBundle\Service\ConfigService;
+use AppBundle\Service\NavbarService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Award;
@@ -13,32 +15,40 @@ use AppBundle\Entity\Config;
 use AppBundle\Entity\Nominee;
 use AppBundle\Entity\Vote;
 use AppBundle\Entity\VotingCodeLog;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use VGA\Utils;
 
-class VotingController extends BaseController
+class VotingController extends Controller
 {
-    public function indexAction($awardID = null)
+    public function indexAction(?string $awardID, NavbarService $navbar, EntityManagerInterface $em, ConfigService $configService, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user)
     {
-        $tpl = $this->twig->load('voting.twig');
+        if (!$navbar->canAccessRoute('voting')) {
+            throw $this->createAccessDeniedException();
+        }
 
         // Fetch all of the enabled awards
-        $repo = $this->em->getRepository(Award::class);
-        $query = $repo->createQueryBuilder('a', 'a.id');
-        $query->select('a')
+        $awards = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a', 'a.id')
             ->where('a.enabled = true')
-            ->orderBy('a.order', 'ASC');
-        $awards = $query->getQuery()->getResult();
+            ->orderBy('a.order', 'ASC')
+            ->getQuery()
+            ->getResult();
 
         $prevAward = null;
         $nextAward = null;
         $voteJSON = [null];
 
-        $start = $this->config->getVotingStart();
-        $end = $this->config->getVotingEnd();
+        $config = $configService->getConfig();
 
-        $votingNotYetOpen = $this->config->isVotingNotYetOpen();
-        $votingClosed = $this->config->hasVotingClosed();
-        $votingOpen = $this->config->isVotingOpen();
+        $start = $config->getVotingStart();
+        $end = $config->getVotingEnd();
+
+        $votingNotYetOpen = $config->isVotingNotYetOpen();
+        $votingClosed = $config->hasVotingClosed();
+        $votingOpen = $config->isVotingOpen();
 
         if ($votingNotYetOpen) {
             if (!$start) {
@@ -57,8 +67,8 @@ class VotingController extends BaseController
         }
 
         // Users with special access to the voting page can change the current vote status for testing purposes
-        if ($this->user->canDo('voting-view')) {
-            $time = $this->request->get('time');
+        if ($authChecker->isGranted('ROLE_VOTING_VIEW')) {
+            $time = $request->get('time');
             if ($time === 'before') {
                 $votingNotYetOpen = true;
                 $votingOpen = $votingClosed = false;
@@ -74,12 +84,12 @@ class VotingController extends BaseController
             }
         }
 
-        $query = $this->em->getRepository(Vote::class)->createQueryBuilder('v');
         /** @var Vote[] $votes */
-        $votes = $query
+        $votes = $em->createQueryBuilder()
             ->select('v')
+            ->from(Vote::class, 'v')
             ->where('v.cookieID = :cookie')
-            ->setParameter('cookie', $this->user->getRandomID())
+            ->setParameter('cookie', $user->getRandomID())
             ->getQuery()
             ->getResult();
 
@@ -92,16 +102,14 @@ class VotingController extends BaseController
 
         // Fetch the active award (if given)
         if ($awardID) {
-            $repo = $this->em->getRepository(Award::class);
+            $repo = $em->getRepository(Award::class);
 
             /** @var Award $award */
             $award = $repo->find($awardID);
 
             if (!$award || !$award->isEnabled()) {
                 $this->addFlash('error', 'Invalid award specified.');
-                $response = new RedirectResponse($this->generator->generate('voting'));
-                $response->send();
-                return;
+                return $this->redirectToRoute('voting');
             }
 
             // Iterate through the awards list to get the previous and next awards
@@ -125,7 +133,7 @@ class VotingController extends BaseController
             }
         }
 
-        $response = new Response($tpl->render([
+        return $this->render('voting.twig', [
             'title' => 'Voting',
             'awards' => $awards,
             'award' => $award ?? false,
@@ -137,42 +145,35 @@ class VotingController extends BaseController
             'nextAward' => $nextAward,
             'votes' => $voteJSON,
             'allVotes' => $simpleVotes
-        ]));
-        $response->send();
+        ]);
     }
 
-    public function postAction($awardID)
+    public function postAction($awardID, NavbarService $navbar, ConfigService $configService, AuthorizationCheckerInterface $authChecker, EntityManagerInterface $em, Request $request, UserInterface $user)
     {
-        $response = new JsonResponse();
-
-        if ($this->config->isReadOnly()) {
-            $response->setData(['error' => 'Voting has closed.']);
-            $response->send();
-            return;
+        if (!$navbar->canAccessRoute('voting')) {
+            throw $this->createAccessDeniedException();
         }
 
-        if (!$this->user->canDo('voting-view')) {
-            if ($this->config->isVotingNotYetOpen()) {
-                $response->setData(['error' => 'Voting hasn\'t started yet.']);
-                $response->send();
-                return;
-            } elseif ($this->config->hasVotingClosed()) {
-                $response->setData(['error' => 'Voting has closed.']);
-                $response->send();
-                return;
+        if ($configService->isReadOnly()) {
+            return $this->json(['error' => 'Voting has closed.']);
+        }
+
+        if (!$authChecker->isGranted('ROLE_VOTING_VIEW')) {
+            if ($configService->getConfig()->isVotingNotYetOpen()) {
+                return $this->json(['error' => 'Voting hasn\'t started yet.']);
+            } elseif ($configService->getConfig()->hasVotingClosed()) {
+                return $this->json(['error' => 'Voting has closed.']);
             }
         }
 
         /** @var Award $award */
-        $award = $this->em->getRepository(Award::class)->find($awardID);
+        $award = $em->getRepository(Award::class)->find($awardID);
 
         if (!$award || !$award->isEnabled()) {
-            $response->setData(['error' => 'Invalid award specified.']);
-            $response->send();
-            return;
+            return $this->json(['error' => 'Invalid award specified.']);
         }
 
-        $preferences = $this->request->request->get('preferences', ['']);
+        $preferences = $request->request->get('preferences', ['']);
 
         // Remove blank preferences and recreate the key ordering.
         $preferences = array_values(array_filter($preferences));
@@ -181,9 +182,7 @@ class VotingController extends BaseController
         unset($preferences[0]);
 
         if (count($preferences) != count(array_unique($preferences))) {
-            $response->setData(['error' => 'Duplicate nominees are not allowed.']);
-            $response->send();
-            return;
+            return $this->json(['error' => 'Duplicate nominees are not allowed.']);
         }
 
         $nomineeIDs = $award->getNominees()->map(function (Nominee $n) {
@@ -192,92 +191,90 @@ class VotingController extends BaseController
         $invalidNominees = array_diff($preferences, $nomineeIDs->toArray());
 
         if (count($invalidNominees) > 0) {
-            $response->setData(
+            return $this->json(
                 ['error' => 'Some of the nominees you\'ve voted for are invalid: ' . implode(', ', $invalidNominees)]
             );
-            $response->send();
-            return;
         }
 
-        $query = $this->em->getRepository(Vote::class)->createQueryBuilder('v');
-        $query
+        $query = $em->createQueryBuilder()
             ->select('v')
-            ->join('v.award', 'c')
-            ->where('c.id = :award')
+            ->from(Vote::class, 'v')
+            ->join('v.award', 'a')
+            ->where('a.id = :award')
             ->setParameter('award', $award->getId())
             ->andWhere('v.cookieID = :cookie')
-            ->setParameter('cookie', $this->user->getRandomID());
+            ->setParameter('cookie', $user->getRandomID());
 
         $vote = $query->getQuery()->getOneOrNullResult();
 
         if (count($preferences) === 0) {
             if ($vote) {
-                $this->em->remove($vote);
-                $this->em->flush();
+                $em->remove($vote);
+                $em->flush();
             }
-            $response->setData(['success' => true]);
-            $response->send();
-            return;
+            return $this->json(['success' => true]);
         }
 
         if (!$vote) {
             $vote = new Vote();
             $vote
                 ->setAward($award)
-                ->setCookieID($this->user->getRandomID());
+                ->setCookieID($user->getRandomID());
         }
 
         $vote
             ->setPreferences($preferences)
             ->setTimestamp(new \DateTime())
-            ->setUser($this->user)
-            ->setIp($this->user->getIP())
-            ->setVotingCode($this->user->getVotingCode());
-        $this->em->persist($vote);
+            ->setUser($user)
+            ->setIp($user->getIP())
+            ->setVotingCode($user->getVotingCode());
+        $em->persist($vote);
 
         $action = new Action('voted');
-        $action->setUser($this->user)
+        $action
+            ->setUser($user)
             ->setPage(__CLASS__)
             ->setData1($award->getId());
-        $this->em->persist($action);
+        $em->persist($action);
 
-        $this->em->flush();
+        $em->flush();
 
-        $response->setData(['success' => true]);
-        $response->send();
+        return $this->json(['success' => true]);
     }
 
-    public function codeEntryAction($code)
+    public function codeEntryAction($code, NavbarService $navbar, ConfigService $configService, Request $request, EntityManagerInterface $em, UserInterface $user, SessionInterface $session)
     {
-        $this->session->set('votingCode', $code);
-
-        if (!$this->config->isReadOnly()) {
-            $log = new VotingCodeLog();
-            $log
-                ->setUser($this->user)
-                ->setCode($code)
-                ->setReferer($this->request->server->get('HTTP_REFERER'))
-                ->setTimestamp(new \DateTime());
-
-            $this->em->persist($log);
-            $this->em->flush();
+        if (!$navbar->canAccessRoute('voting')) {
+            throw $this->createAccessDeniedException();
         }
 
-        $response = new RedirectResponse($this->generator->generate('voting'));
+        $session->set('votingCode', $code);
+
+        if (!$configService->isReadOnly()) {
+            $log = new VotingCodeLog();
+            $log
+                ->setUser($user)
+                ->setCode($code)
+                ->setReferer($request->server->get('HTTP_REFERER'))
+                ->setTimestamp(new \DateTime());
+
+            $em->persist($log);
+            $em->flush();
+        }
+
+        $response = $this->redirectToRoute('voting');
         $response->headers->setCookie(new Cookie(
             'votingCode',
             $code,
             new \DateTime('+90 days'),
             '/',
-            $this->request->getHost()
+            $request->getHost()
         ));
-        $response->send();
+        return $response;
     }
 
-    public function codeViewerAction()
+    public function codeViewerAction(Router $router)
     {
-        $tpl = $this->twig->load('votingCode.twig');
-
         $date = new \DateTime();
         $dateString = $date->format('M d Y, g A');
 
@@ -289,15 +286,14 @@ class VotingController extends BaseController
             $code .= $characters[Utils::randomNumber($dateString . $i, strlen($characters) - 1)];
         }
 
-        $url = $this->generator->generate('voteWithCode', ['code' => $code] , UrlGenerator::ABSOLUTE_URL);
+        $url = $router->generate('voteWithCode', ['code' => $code], UrlGenerator::ABSOLUTE_URL);
         $url = substr($url, 0, strrpos($url, '/') + 1);
 
-        $response = new Response($tpl->render([
+        return $this->render('votingCode.twig', [
             'title' => 'Voting Code',
             'date' => $dateString,
             'url' => $url,
             'code' => $code
-        ]));
-        $response->send();
+        ]);
     }
 }

@@ -16,7 +16,10 @@ class AwardAdminController extends Controller
 {
     public function managerListAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authCheck, Request $request)
     {
-        $query = $em->createQueryBuilder()->from(Award::class, 'a');
+        $query = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a');
+
         if (!$authCheck->isGranted('ROLE_AWARDS_SECRET')) {
             $query->andWhere('a.secret = false');
         }

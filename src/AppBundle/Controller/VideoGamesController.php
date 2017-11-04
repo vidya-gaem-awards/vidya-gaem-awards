@@ -5,7 +5,6 @@ use AppBundle\Service\ConfigService;
 use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\GameRelease;
@@ -34,8 +33,6 @@ class VideoGamesController extends Controller
 
     public function addAction(EntityManagerInterface $em, ConfigService $configService, Request $request, UserInterface $user)
     {
-        $response = new JsonResponse();
-
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
         }
@@ -70,7 +67,6 @@ class VideoGamesController extends Controller
         $em->persist($action);
         $em->flush();
 
-        $response->setData(['success' => $game->getName()]);
-        $response->send();
+        return $this->json(['success' => $game->getName()]);
     }
 }
