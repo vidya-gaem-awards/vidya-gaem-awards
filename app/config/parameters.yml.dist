@@ -17,3 +17,9 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    app.navbar_items:
+        home: 'Home'
+        videoGames: 'Vidya in 2017'
+        awards: 'Awards and Nominations'
+        config: 'Config'

@@ -70,3 +70,6 @@ AppBundle\Entity\User:
         inverseJoinColumns:
           permissionID:
             referencedColumnName: id
+  uniqueConstraints:
+    steam_id:
+      columns: [ username ]

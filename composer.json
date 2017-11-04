@@ -35,7 +35,6 @@
     },
     "scripts": {
         "symfony-scripts": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -55,7 +54,6 @@
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ],
         "files": [
-            "config.php",
             "vendor/koraktor/steam-condenser/lib/steam-condenser.php"
         ]
     },
