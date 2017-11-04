@@ -5,7 +5,7 @@ class AnonymousUser extends User
 {
     public function __construct()
     {
-        parent::__construct(null);
+        parent::__construct();
     }
 
     public function isLoggedIn()

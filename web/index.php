@@ -1,23 +1,11 @@
 <?php
-use AppBundle\Controller;
-use Ehesp\SteamLogin\SteamLogin;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\RouteCollection;
-use VGA\DependencyContainer;
 use VGA\DependencyManager;
 use AppBundle\Entity\Access;
 use AppBundle\Entity\AnonymousUser;
-use AppBundle\Entity\Config;
-use AppBundle\Entity\LoginToken;
-use AppBundle\Entity\User;
 
 require(__DIR__ . '/../bootstrap.php');
 
@@ -26,24 +14,6 @@ $em = DependencyManager::getEntityManager();
 $request = Request::createFromGlobals();
 $session = new Session();
 $session->start();
-
-// TODO: unsure if this is needed when using the Response class
-header("Content-type: text/html; charset=utf-8");
-
-// Check if the user is currently logged in
-if ($session->get('user')) {
-    $user = $em->getRepository(User::class)->find($session->get('user'));
-} elseif ($cookie = $request->cookies->get('rememberMeToken')) {
-    list($token, $hmac) = explode(':', $cookie, 2);
-    $tokenValid = ($hmac == hash_hmac('md5', $token, STEAM_API_KEY));
-    if ($tokenValid) {
-        /** @var LoginToken $token */
-        $token = $em->getRepository(LoginToken::class)->findBy(['token' => $token]);
-        if ($token) {
-            $user = $token->getUser();
-        }
-    }
-}
 
 if (!isset($user)) {
     $user = new AnonymousUser();
@@ -95,12 +65,6 @@ $user
     ->setRandomID($randomID)
     ->setVotingCode($votingCode);
 
-/** @var Config $config */
-$config = $em->getRepository(Config::class)->findOneBy([]);
-
-// Define the routes
-$routes = new RouteCollection();
-
 $context = new RequestContext();
 $context->fromRequest($request);
 // Due to the way that Cloudflare is set up, the user sees HTTPS but our server only sees HTTP.
@@ -108,117 +72,22 @@ $context->fromRequest($request);
 $_SERVER['HTTPS'] = 'on';
 $context->setScheme('https');
 
-$generator = new UrlGenerator($routes, $context);
+// Log the page access
+$access = new Access();
+if (!($user instanceof AnonymousUser)) {
+    $access->setUser($user);
+}
 
-// We can't instantiate Twig object any earlier as we need the UrlGenerator
-$twig = DependencyManager::getTwig($generator);
-
-// Steam login link
-//if ($user instanceof AnonymousUser) {
-//    $returnLink = $generator->generate(
-//        'login',
-//        ['return' => $request->getPathInfo()],
-//        UrlGenerator::ABSOLUTE_URL
-//    );
-//
-//    $steam = new SteamLogin();
-//    $twig->addGlobal('steamLoginLink', $steam->url($returnLink));
-//}
-
-//$navbar = [];
-//foreach (NAVBAR_ITEMS as $routeName => $title) {
-//    if ($route = $routes->get($routeName)) {
-//        // Only show items in the menu if the user has access to them
-//        $permission = $route->getDefault('permission');
-//        if (!$permission || $user->canDo($permission)) {
-//            $navbar[$routeName] = $title;
-//        }
-//    }
-//}
-//
-//$twig->addGlobal('navbarItems', $navbar);
-
-$matcher = new UrlMatcher($routes, $context);
-
-$container = new DependencyContainer(
-    $em,
-    $request,
-    $twig,
-    $session,
-    $user,
-    $generator,
-    $config
-);
-
-// Call the correct controller and method
-try {
-    $match = $matcher->match($request->getPathInfo());
-
-    if (!class_exists($match['controller'])) {
-        $controller = new Controller\ErrorController($container);
-        $controller->internalErrorAction();
-        return;
-    }
-
-    /** @var Controller\BaseController $controller */
-    $controller = new $match['controller']($container);
-
-    if (isset($match['action'])) {
-        $action = $match['action'] . 'Action';
-    } else {
-        $action = 'indexAction';
-    }
-
-    if (isset($match['permission']) && $match['permission'] !== false && !$user->canDo($match['permission'])) {
-        /** @var Controller\ErrorController $controller */
-        $controller = new Controller\ErrorController($container);
-        if ($user->isLoggedIn()) {
-            $controller->noAccessAction();
-        } else {
-            $controller->needLoginAction();
-        }
-        return;
-    }
-
-    if (!method_exists($controller, $action)) {
-        /** @var Controller\ErrorController $controller */
-        $controller = new Controller\ErrorController($container);
-        $controller->internalErrorAction();
-        return;
-    }
-
-    // Log the page access
-    $access = new Access();
-    if (!($user instanceof AnonymousUser)) {
-        $access->setUser($user);
-    }
-
-    if (!$config->isReadOnly()) {
-        $access
-            ->setCookieID($user->getRandomID())
-            ->setPage($match['_route'])
-            ->setRequestMethod($request->server->get('REQUEST_METHOD'))
-            ->setRequestString($request->server->get('REQUEST_URI'))
-            ->setIp($user->getIP())
-            ->setUserAgent($request->server->get('HTTP_USER_AGENT', ''))
-            ->setFilename($request->server->get('SCRIPT_FILENAME'))
-            ->setReferer($request->server->get('HTTP_REFERER'));
-        $em->persist($access);
-        $em->flush();
-    }
-
-    unset($match['controller']);
-    unset($match['action']);
-    unset($match['permission']);
-    unset($match['_route']);
-    call_user_func_array([$controller, $action], $match);
-
-} catch (ResourceNotFoundException $e) {
-    $controller = new Controller\ErrorController($container);
-    $controller->notFoundAction();
-    return;
-} catch (MethodNotAllowedException $e) {
-    $controller = new Controller\ErrorController($container);
-    $controller->wrongMethodAction();
-    return;
+if (!$config->isReadOnly()) {
+    $access
+        ->setCookieID($user->getRandomID())
+        ->setPage($match['_route'])
+        ->setRequestMethod($request->server->get('REQUEST_METHOD'))
+        ->setRequestString($request->server->get('REQUEST_URI'))
+        ->setIp($user->getIP())
+        ->setUserAgent($request->server->get('HTTP_USER_AGENT', ''))
+        ->setFilename($request->server->get('SCRIPT_FILENAME'))
+        ->setReferer($request->server->get('HTTP_REFERER'));
+    $em->persist($access);
+    $em->flush();
 }
