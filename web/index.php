@@ -174,102 +174,12 @@ $peopleCollection->addDefaults([
 ]);
 $routes->addCollection($peopleCollection);
 
-$routes->add('awards', new Route(
-    '/awards',
-    [
-        'controller' => Controller\AwardController::class,
-        'permission' => $config->isPagePublic('awards') ? false : 'awards-edit'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['GET']
-));
-$routes->add('awardManager', new Route(
-    '/awards/manage',
-    [
-        'controller' => Controller\AwardAdminController::class,
-        'action' => 'managerList',
-        'permission' => 'awards-feedback'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['GET']
-));
-$routes->add('awardManagerPost', new Route(
-    '/awards/manage',
-    [
-        'controller' => Controller\AwardAdminController::class,
-        'action' => 'managerPost',
-        'permission' => 'awards-edit'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['POST']
-));
-$routes->add('awardManagerPostAjax', new Route(
-    '/awards/manage/ajax',
-    [
-        'controller' => Controller\AwardAdminController::class,
-        'action' => 'managerPostAjax',
-        'permission' => 'awards-edit'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['POST']
-));
-$routes->add('awardFrontendPost', new Route(
-    '/awards',
-    [
-        'controller' => Controller\AwardController::class,
-        'action' => 'post',
-        'permission' => $config->isPagePublic('awards') ? false : 'awards-edit',
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['POST']
-));
 $routes->add('referrers', new Route(
     '/referrers',
     [
         'controller' => Controller\ReferrerController::class,
         'permission' => 'referrers-view'
     ]
-));
-$routes->add('nomineeManager', new Route(
-    '/nominees/{awardID}',
-    [
-        'controller' => Controller\NomineeController::class,
-        'permission' => 'nominations-view',
-        'awardID' => null
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['GET']
-));
-$routes->add('nomineePost', new Route(
-    '/nominees/{awardID}',
-    [
-        'controller' => Controller\NomineeController::class,
-        'action' => 'post',
-        'permission' => 'nominations-edit'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['POST']
 ));
 $routes->add('viewVotingCode', new Route(
     '/vote/code',

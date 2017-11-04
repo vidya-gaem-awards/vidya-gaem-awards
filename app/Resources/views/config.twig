@@ -76,19 +76,19 @@
               <div class="col-sm-8">
                 <p class="help-block">The pages listed below will not be publicly accessible unless they are
                   checked.</p>
-                {# Note: although the parameters to isPagePublic look like route names, they are actually unrelated. #}
+                {# Note: parameters to isPagePublic must match the route name for those pages. #}
                 <div class="checkbox">
                   <label>
                     <input type="checkbox"
                            name="publicPages[videoGames]" {{ config.isPagePublic('videoGames') ? 'checked' : '' }}>
-                    {#<a href="{{ path('videoGames') }}" target="_blank">2017 in Vidya</a>#}
+                    <a href="{{ path('videoGames') }}" target="_blank">2017 in Vidya</a>
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     <input type="checkbox"
                            name="publicPages[awards]" {{ config.isPagePublic('awards') ? 'checked' : '' }}>
-                    {#<a href="{{ path('awards') }}" target="_blank">Awards and Nominations</a>#}
+                    <a href="{{ path('awards') }}" target="_blank">Awards and Nominations</a>
                   </label>
                 </div>
                 <div class="checkbox">
@@ -98,47 +98,47 @@
                     <a href="{{ path('videos') }}" target="_blank">Videos page</a>
                   </label>
                 </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>
+                {#<div class="checkbox">#}
+                  {#<label>#}
+                    {#<input type="checkbox"#}
+                           {#name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>#}
                     {#<a href="{{ path('voting') }}" target="_blank">Voting page</a>#}
-                    <p class="help-block">
-                      <small>Checking this box does not open voting: use the settings on the left for that.</small>
-                    </p>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[countdown]" {{ config.isPagePublic('countdown') ? 'checked' : '' }}>
+                    {#<p class="help-block">#}
+                      {#<small>Checking this box does not open voting: use the settings on the left for that.</small>#}
+                    {#</p>#}
+                  {#</label>#}
+                {#</div>#}
+                {#<div class="checkbox">#}
+                  {#<label>#}
+                    {#<input type="checkbox"#}
+                           {#name="publicPages[countdown]" {{ config.isPagePublic('countdown') ? 'checked' : '' }}>#}
                     {#<a href="{{ path('countdown') }}" target="_blank">Stream countdown</a>#}
-                    <p class="help-block">
-                      <small>Set the countdown timer on the left.</small>
-                    </p>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[stream]" {{ config.isPagePublic('stream') ? 'checked' : '' }}>
+                    {#<p class="help-block">#}
+                      {#<small>Set the countdown timer on the left.</small>#}
+                    {#</p>#}
+                  {#</label>#}
+                {#</div>#}
+                {#<div class="checkbox">#}
+                  {#<label>#}
+                    {#<input type="checkbox"#}
+                           {#name="publicPages[stream]" {{ config.isPagePublic('stream') ? 'checked' : '' }}>#}
                     {#<a href="{{ path('stream') }}" target="_blank">Stream page</a>#}
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[finished]" {{ config.isPagePublic('finished') ? 'checked' : '' }}>
+                  {#</label>#}
+                {#</div>#}
+                {#<div class="checkbox">#}
+                  {#<label>#}
+                    {#<input type="checkbox"#}
+                           {#name="publicPages[finished]" {{ config.isPagePublic('finished') ? 'checked' : '' }}>#}
                     {#<a href="{{ path('finished') }}" target="_blank">Post-stream "thank you" page</a>#}
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[credits]" {{ config.isPagePublic('credits') ? 'checked' : '' }}>
+                  {#</label>#}
+                {#</div>#}
+                {#<div class="checkbox">#}
+                  {#<label>#}
+                    {#<input type="checkbox"#}
+                           {#name="publicPages[credits]" {{ config.isPagePublic('credits') ? 'checked' : '' }}>#}
                     {#<a href="{{ path('credits') }}" target="_blank">Credits</a>#}
-                  </label>
-                </div>
+                  {#</label>#}
+                {#</div>#}
                 <div class="checkbox">
                   <label>
                     <input type="checkbox"
@@ -146,19 +146,19 @@
                     <a href="{{ path('soundtrack') }}" target="_blank">Soundtrack</a>
                   </label>
                 </div>
-                <div class="checkbox">
-                  <label class="dangerous">
-                    <input type="checkbox"
-                           name="publicPages[results]" {{ config.isPagePublic('results') ? 'checked' : '' }}>
+                {#<div class="checkbox">#}
+                  {#<label class="dangerous">#}
+                    {#<input type="checkbox"#}
+                           {#name="publicPages[results]" {{ config.isPagePublic('results') ? 'checked' : '' }}>#}
                     {#<a href="{{ path('detailedResults') }}" target="_blank">Voting results</a>#}
                     {#and the <a href="{{ path('simpleResults') }}" target="_blank">winners page</a>#}
-                    <p class="help-block text-danger">
-                      <small class="text-danger">
-                        <strong>Warning:</strong> this will reveal the results to everybody!
-                      </small>
-                    </p>
-                  </label>
-                </div>
+                    {#<p class="help-block text-danger">#}
+                      {#<small class="text-danger">#}
+                        {#<strong>Warning:</strong> this will reveal the results to everybody!#}
+                      {#</small>#}
+                    {#</p>#}
+                  {#</label>#}
+                {#</div>#}
               </div>
             </div>
           </div>

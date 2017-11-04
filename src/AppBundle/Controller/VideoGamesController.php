@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\ConfigService;
+use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,8 +13,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class VideoGamesController extends Controller
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em, NavbarService $navbar)
     {
+        if (!$navbar->canAccessRoute('videoGames')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $query = $em->createQueryBuilder()
             ->from(GameRelease::class, 'gr')
             ->select('gr')

@@ -42,6 +42,11 @@ security:
         - { path: ^/news/delete, roles: ROLE_NEWS_MANAGE }
         - { path: ^/vidya-in-2017, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }
         - { path: ^/vidya-in-2017, roles: ROLE_ADD_VIDEO_GAME, methods: [POST] }
+        - { path: ^/awards, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/awards/manage, roles: ROLE_AWARDS_FEEDBACK, methods: [GET] }
+        - { path: ^/awards/manage, roles: ROLE_AWARDS_EDIT, methods: [POST] }
+        - { path: ^/nominees, roles: ROLE_NOMINATIONS_VIEW, methods: [GET] }
+        - { path: ^/nominees, roles: ROLE_NOMINATIONS_EDIT, methods: [POST] }
         - { path: ^/videos, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/soundtrack, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 

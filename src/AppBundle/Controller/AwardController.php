@@ -1,55 +1,68 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Service\ConfigService;
+use AppBundle\Service\NavbarService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Autocompleter;
 use AppBundle\Entity\Award;
 use AppBundle\Entity\AwardFeedback;
 use AppBundle\Entity\GameRelease;
 use AppBundle\Entity\UserNomination;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class AwardController extends BaseController
+class AwardController extends Controller
 {
-    public function indexAction()
+    public function indexAction(NavbarService $navbar, EntityManagerInterface $em, UserInterface $user)
     {
-        $repo = $this->em->getRepository(Award::class);
-        $query = $repo->createQueryBuilder('c', 'c.id');
-        $query->select('c')
-            ->where('c.enabled = true')
-            ->andWhere('c.secret = false')
-            ->orderBy('c.order', 'ASC');
-        $awards = $query->getQuery()->getResult();
+        if (!$navbar->canAccessRoute('awards')) {
+            throw $this->createAccessDeniedException();
+        }
+        
+        $awards = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a', 'a.id')
+            ->where('a.enabled = true')
+            ->andWhere('a.secret = false')
+            ->orderBy('a.order', 'ASC')
+            ->getQuery()
+            ->getResult();
 
-        $nominationRepo = $this->em->getRepository(UserNomination::class);
-        $query = $nominationRepo->createQueryBuilder('un');
-        $query->select('un')
+        $userNominations = $em->createQueryBuilder()
+            ->select('un')
+            ->from(UserNomination::class, 'un')
             ->where('un.user = :user')
-            ->setParameter('user', $this->user->getFuzzyID());
-        $result = $query->getQuery()->getResult();
-
+            ->setParameter('user', $user->getFuzzyID())
+            ->getQuery()
+            ->getResult();
+        
         $nominations = array_fill_keys(array_keys($awards), []);
 
         /** @var UserNomination $un */
-        foreach ($result as $un) {
+        foreach ($userNominations as $un) {
             $nominations[$un->getAward()->getId()][] = $un->getNomination();
         }
 
-        $feedbackRepo = $this->em->getRepository(AwardFeedback::class);
-        $query = $feedbackRepo->createQueryBuilder('cf')
-            ->where('cf.user = :user')
-            ->setParameter('user', $this->user->getFuzzyID());
-        $result = $query->getQuery()->getResult();
+        $feedback = $em->createQueryBuilder()
+            ->select('af')
+            ->from(AwardFeedback::class,'af')
+            ->where('af.user = :user')
+            ->setParameter('user', $user->getFuzzyID())
+            ->getQuery()
+            ->getResult();
 
         $opinions = array_fill_keys(array_keys($awards), 0);
 
         /** @var AwardFeedback $cf */
-        foreach ($result as $cf) {
+        foreach ($feedback as $cf) {
             $opinions[$cf->getAward()->getId()] = $cf->getOpinion();
         }
 
-        $autocompleterRepo = $this->em->getRepository(Autocompleter::class);
+        $autocompleterRepo = $em->getRepository(Autocompleter::class);
         $result = $autocompleterRepo->findAll();
 
         $autocompleters = array_fill_keys(array_keys($awards), []);
@@ -59,7 +72,7 @@ class AwardController extends BaseController
             $strings = $autocompleter->getStrings();
             // The video-game autocompleter is a special case: its values are stored in another table
             if ($autocompleter->getId() === 'video-game') {
-                $gameRepo = $this->em->getRepository(GameRelease::class);
+                $gameRepo = $em->getRepository(GameRelease::class);
                 $games = $gameRepo->findAll();
                 /** @var GameRelease $game */
                 foreach ($games as $game) {
@@ -96,22 +109,23 @@ class AwardController extends BaseController
             $autocompleters[$award->getId()] = array_keys($nominationCount);
         }
 
-        $tpl = $this->twig->load('awards.twig');
-
-        $response = new Response($tpl->render([
+        return $this->render('awards.twig', [
             'title' => 'Awards and Nominations',
             'awards' => $awards,
             'userNominations' => $nominations,
             'userOpinions' => $opinions,
             'autocompleters' => $autocompleters
-        ]));
-        $response->send();
+        ]);
     }
 
-    public function postAction()
+    public function postAction(NavbarService $navbar, Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user)
     {
-        $post = $this->request->request;
-        $repo = $this->em->getRepository(Award::class);
+        if (!$navbar->canAccessRoute('awards')) {
+            throw $this->createAccessDeniedException();
+        }
+        
+        $post = $request->request;
+        $repo = $em->getRepository(Award::class);
         $response = new JsonResponse();
 
         /** @var Award $award */
@@ -125,7 +139,7 @@ class AwardController extends BaseController
 
         $opinion = $post->get('opinion');
         if ($opinion !== null) {
-            if ($this->config->isReadOnly()) {
+            if ($configService->isReadOnly()) {
                 $response->setData(['error' => 'Feedback can no longer be given on awards.']);
                 $response->send();
                 return;
@@ -137,27 +151,27 @@ class AwardController extends BaseController
                 return;
             }
 
-            $opinionRepo = $this->em->getRepository(AwardFeedback::class);
+            $opinionRepo = $em->getRepository(AwardFeedback::class);
             /** @var AwardFeedback $feedback */
-            $feedback = $opinionRepo->findOneBy(['award' => $award, 'user' => $this->user->getFuzzyID()]);
+            $feedback = $opinionRepo->findOneBy(['award' => $award, 'user' => $user->getFuzzyID()]);
             if (!$feedback) {
-                $feedback = new AwardFeedback($award, $this->user);
+                $feedback = new AwardFeedback($award, $user);
             }
             $feedback->setOpinion($opinion);
-            $this->em->persist($feedback);
+            $em->persist($feedback);
 
             $action = new Action('opinion-given');
-            $action->setUser($this->user)
+            $action->setUser($user)
                 ->setPage(__CLASS__)
                 ->setData1($award->getId())
                 ->setData2($opinion);
 
-            $this->em->persist($action);
+            $em->persist($action);
         }
 
         $nomination = $post->get('nomination');
         if ($nomination !== null) {
-            if ($this->config->isReadOnly()) {
+            if ($configService->isReadOnly()) {
                 $response->setData(['error' => 'Nominations can no longer be made for this award.']);
                 $response->send();
                 return;
@@ -176,12 +190,12 @@ class AwardController extends BaseController
                 return;
             }
 
-            $nominationRepo = $this->em->getRepository(UserNomination::class);
-            $result = $nominationRepo->createQueryBuilder('n')
-                ->where('n.user = :fuzzyUser')
-                ->andWhere('IDENTITY(n.award) = :award')
-                ->andWhere('LOWER(n.nomination) = :nomination')
-                ->setParameter('fuzzyUser', $this->user->getFuzzyID())
+            $result = $em->createQueryBuilder()
+                ->from(UserNomination::class, 'un')
+                ->where('un.user = :fuzzyUser')
+                ->andWhere('IDENTITY(un.award) = :award')
+                ->andWhere('LOWER(un.nomination) = :nomination')
+                ->setParameter('fuzzyUser', $user->getFuzzyID())
                 ->setParameter('award', $award->getId())
                 ->setParameter('nomination', strtolower($nomination))
                 ->getQuery()
@@ -193,18 +207,18 @@ class AwardController extends BaseController
                 return;
             }
 
-            $userNomination = new UserNomination($award, $this->user, $nomination);
-            $this->em->persist($userNomination);
+            $userNomination = new UserNomination($award, $user, $nomination);
+            $em->persist($userNomination);
 
             $action = new Action('nomination-made');
-            $action->setUser($this->user)
+            $action->setUser($user)
                 ->setPage(__CLASS__)
                 ->setData1($award->getId())
                 ->setData2($nomination);
-            $this->em->persist($action);
+            $em->persist($action);
         }
 
-        $this->em->flush();
+        $em->flush();
 
         $response->setData(['success' => true]);
         $response->send();
