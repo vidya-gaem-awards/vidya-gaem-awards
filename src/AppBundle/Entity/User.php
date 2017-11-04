@@ -468,8 +468,15 @@ class User implements SteamUserInterface, UserInterface
         return $this->permissionCache;
     }
 
+    /**
+     * @deprecated
+     * @param $permissionCheck
+     * @return bool
+     */
     public function canDo($permissionCheck)
     {
+        trigger_error('Use of canDo() is deprecated, use AuthorizationCheckerInterface (PHP) or is_granted (Twig) instead', E_USER_DEPRECATED);
+
         if ($permissionCheck === self::EVERYONE) {
             return true;
         }
@@ -657,7 +664,18 @@ class User implements SteamUserInterface, UserInterface
      */
     public function getRoles()
     {
-        return [];
+        $roles[] = 'ROLE_EVERYONE';
+        $roles[] = 'ROLE_LOGGED_IN';
+
+        if ($this->permissionCache === null) {
+            $this->populatePermissionCache();
+        }
+
+        foreach ($this->permissionCache as $permission) {
+            $roles[] = 'ROLE_' . strtoupper(str_replace('-', '_', $permission->getId()));
+        }
+
+        return $roles;
     }
 
     /**

@@ -1,12 +1,6 @@
 {% extends 'base/standard.twig' %}
 
 {% block content %}
-  <ul class="nav navbar-nav">
-    {% for route, title in navbar_items.getItems() %}
-      <li><a href="{{ path(route) }}">{{ title }}</a></li>
-    {% endfor %}
-  </ul>
-
   <div class="row">
     <div class="col-xs-12">
       <h1>Recent Updates</h1>
@@ -16,7 +10,7 @@
     </div>
   </div>
 
-  {% if user.canDo('news-manage') %}
+  {#{% if user.canDo('news-manage') %}#}
     <div class="row">
       <div class="col-md-8">
         <div class="well">
@@ -32,7 +26,7 @@
                 <span class="help-block">The news item won't be shown until this date.</span>
               </div>
               <div class="form-group col-sm-6">
-                <input type="text" class="form-control" id="user" disabled value="{{ user.name | e('html_attr') }}">
+                <input type="text" class="form-control" id="user" disabled value="{{ app.user.name | e('html_attr') }}">
                 <span class="help-block">Unprivileged users won't see your name.</span>
               </div>
             </div>
@@ -50,10 +44,10 @@
         <form action="{{ path('newsDelete', {'id': item.id}) }}" method="post">
           <p>
             {{ item.text | raw }}
-            {% if user.canDo('news-view-user') %}
+            {% if is_granted('ROLE_NEWS_VIEW_USER') %}
               &ndash; <a href="https://steamcommunity.com/profiles/{{ item.user.steamID }}">{{ item.user.name }}</a>
             {% endif %}
-            {% if user.canDo('news-manage') %}
+            {% if is_granted('ROLE_NEWS_MANAGE') %}
               <button type="submit" class="btn btn-danger btn-xs" title="Delete this news item"
                       onclick="return confirm('Are you sure you want to delete this news item?')">
                 <span class="glyphicon glyphicon-trash"></span>

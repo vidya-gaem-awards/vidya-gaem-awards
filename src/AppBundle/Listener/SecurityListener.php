@@ -2,8 +2,10 @@
 
 namespace AppBundle\Listener;
 
+use AppBundle\Entity\Config;
 use AppBundle\Entity\Login;
 use AppBundle\Entity\User;
+use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -12,9 +14,13 @@ class SecurityListener
     /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /** @var Config */
+    private $config;
+
+    public function __construct(EntityManagerInterface $em, ConfigService $config)
     {
         $this->em = $em;
+        $this->config = $config->getConfig();
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
@@ -22,10 +28,7 @@ class SecurityListener
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
 
-        $steam = \SteamId::create($user->getSteamID());
-
         $login = new Login();
-
         $user
             ->addLogin($login)
             ->setLastLogin(new \DateTime());
@@ -36,8 +39,8 @@ class SecurityListener
         $this->em->persist($login);
         $this->em->persist($user);
 
-//        if (!$this->config->isReadOnly()) {
+        if (!$this->config->isReadOnly()) {
             $this->em->flush();
-//        }
+        }
     }
 }

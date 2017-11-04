@@ -1,26 +1,28 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\News;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class NewsController extends Controller
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker)
     {
-        $repo = $em->getRepository(News::class);
-        $query = $repo->createQueryBuilder('n');
-        $query->select('n, u')
+        $query = $em->createQueryBuilder()
+            ->select('n, u')
+            ->from(News::class, 'n')
             ->join('n.user', 'u')
             ->where('n.visible = true')
             ->orderBy('n.timestamp', 'DESC');
 
-//        if (!$this->user->canDo('news-manage')) {
-//            $query->andWhere('n.timestamp < CURRENT_TIMESTAMP()');
-//        }
+        if (!$authChecker->isGranted('ROLE_NEWS_MANAGE')) {
+            $query->andWhere('n.timestamp < CURRENT_TIMESTAMP()');
+        }
 
         $news = $query->getQuery()->getResult();
 
@@ -30,30 +32,24 @@ class NewsController extends Controller
         ]);
     }
 
-    public function addAction()
+    public function addAction(EntityManagerInterface $em, ConfigService $configService, Request $request, UserInterface $user)
     {
-        if ($this->config->isReadOnly()) {
-            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.');
-            $response = new RedirectResponse($this->generator->generate('news'));
-            $response->send();
-            return;
+        if ($configService->isReadOnly()) {
+            $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
+            return $this->redirectToRoute('news');
         }
 
-        $post = $this->request->request;
+        $post = $request->request;
 
         if (!$post->get('news_text')) {
-            $this->session->getFlashBag()->add('error', 'Cannot add a news item without any text.');
-            $response = new RedirectResponse($this->generator->generate('news'));
-            $response->send();
-            return;
+            $this->addFlash('error', 'Cannot add a news item without any text.');
+            return $this->redirectToRoute('news');
         } else {
             try {
                 $date = new \DateTime($post->get('date'));
             } catch (\Exception $e) {
-                $this->session->getFlashBag()->add('error', 'Invalid date provided.');
-                $response = new RedirectResponse($this->generator->generate('news'));
-                $response->send();
-                return;
+                $this->addFlash('error', 'Invalid date provided.');
+                return $this->redirectToRoute('news');
             }
         }
 
@@ -61,35 +57,32 @@ class NewsController extends Controller
         $news
             ->setText($post->get('news_text'))
             ->setTimestamp($date)
-            ->setUser($this->user);
+            ->setUser($user);
 
-        $this->em->persist($news);
-        $this->em->flush();
+        $em->persist($news);
+        $em->flush();
 
-        $this->session->getFlashBag()->add('success', 'News item successfully added.');
-        $response = new RedirectResponse($this->generator->generate('news'));
-        $response->send();
+        $this->addFlash('success', 'News item successfully added.');
+        return $this->redirectToRoute('news');
     }
 
-    public function deleteAction($id)
+    public function deleteAction(int $id, EntityManagerInterface $em, UserInterface $user)
     {
         /** @var News $news */
-        $news = $this->em->getRepository(News::class)->find($id);
+        $news = $em->getRepository(News::class)->find($id);
 
         if (!$news) {
-            $this->session->getFlashBag()->add('success', 'Couldn\'t delete news item: invalid ID.');
-            $response = new RedirectResponse($this->generator->generate('news'));
-            $response->send();
+            $this->addFlash('success', 'Couldn\'t delete news item: invalid ID.');
+            return $this->redirectToRoute('news');
         }
 
         $news->setVisible(false);
-        $news->setDeletedBy($this->user);
+        $news->setDeletedBy($user);
 
-        $this->em->persist($news);
-        $this->em->flush();
+        $em->persist($news);
+        $em->flush();
 
-        $this->session->getFlashBag()->add('success', 'News item successfully deleted.');
-        $response = new RedirectResponse($this->generator->generate('news'));
-        $response->send();
+        $this->addFlash('success', 'News item successfully deleted.');
+        return $this->redirectToRoute('news');
     }
 }

@@ -101,45 +101,6 @@ $config = $em->getRepository(Config::class)->findOneBy([]);
 // Define the routes
 $routes = new RouteCollection();
 
-$routes->add('home', new Route(
-    '/home',
-    [
-        'controller' => Controller\IndexController::class
-    ]
-));
-$routes->add('news', new Route(
-    '/news',
-    [
-        'controller' => Controller\NewsController::class
-    ]
-));
-$routes->add('newsAdd', new Route(
-    '/news/add',
-    [
-        'controller' => Controller\NewsController::class,
-        'action' => 'add',
-        'permission' => 'news-manage'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['POST']
-));
-$routes->add('newsDelete', new Route(
-    '/news/delete/{id}',
-    [
-        'controller' => Controller\NewsController::class,
-        'action' => 'delete',
-        'permission' => 'news-manage'
-    ],
-    ['id' => '\d+'],
-    [],
-    '',
-    [],
-    ['POST']
-));
-
 $routes->add('people', new Route(
     '/crew',
     [
@@ -212,13 +173,7 @@ $peopleCollection->addDefaults([
     'controller' => Controller\PeopleController::class
 ]);
 $routes->addCollection($peopleCollection);
-$routes->add('privacy', new Route(
-    '/privacy',
-    [
-        'controller' => Controller\StaticController::class,
-        'action' => 'privacy'
-    ]
-));
+
 $routes->add('awards', new Route(
     '/awards',
     [
@@ -270,31 +225,6 @@ $routes->add('awardManagerPostAjax', new Route(
     [],
     ['POST']
 ));
-$routes->add('videoGames', new Route(
-    '/vidya-in-2017',
-    [
-        'controller' => Controller\VideoGamesController::class,
-        'permission' => $config->isPagePublic('videoGames') ? false : 'add-video-game'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['GET']
-));
-$routes->add('addVideoGame', new Route(
-    '/vidya-in-2017',
-    [
-        'controller' => Controller\VideoGamesController::class,
-        'action' => 'add',
-        'permission' => 'add-video-game'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['POST']
-));
 $routes->add('awardFrontendPost', new Route(
     '/awards',
     [
@@ -334,31 +264,6 @@ $routes->add('nomineePost', new Route(
         'controller' => Controller\NomineeController::class,
         'action' => 'post',
         'permission' => 'nominations-edit'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['POST']
-));
-$routes->add('config', new Route(
-    '/config',
-    [
-        'controller' => Controller\ConfigController::class,
-        'permission' => 'edit-config'
-    ],
-    [],
-    [],
-    '',
-    [],
-    ['GET']
-));
-$routes->add('configPost', new Route(
-    '/config',
-    [
-        'controller' => Controller\ConfigController::class,
-        'action' => 'post',
-        'permission' => 'edit-config'
     ],
     [],
     [],
@@ -445,13 +350,6 @@ $routes->add('detailedResults', new Route(
         'all' => '(all)?'
     ]
 ));
-$routes->add('resultRedirect', new Route(
-    '/voting/results',
-    [
-        'controller' => Controller\StaticController::class,
-        'action' => 'votingRedirect'
-    ]
-));
 $routes->add('pairwiseResults', new Route(
     '/results/pairwise',
     [
@@ -491,30 +389,6 @@ $routes->add('credits', new Route(
         'permission' => $config->isPagePublic('credits') ? false : 'view-unfinished-pages'
     ]
 ));
-$routes->add('videos', new Route(
-    '/videos',
-    [
-        'controller' => Controller\StaticController::class,
-        'action' => 'videos',
-        'permission' => $config->isPagePublic('videos') ? false : 'view-unfinished-pages'
-    ]
-));
-$routes->add('soundtrack', new Route(
-    '/soundtrack',
-    [
-        'controller' => Controller\StaticController::class,
-        'action' => 'soundtrack',
-//        'permission' => $config->isPagePublic('music') ? false : 'view-unfinished-pages'
-    ]
-));
-
-$defaultRoute = $routes->get($config->getDefaultPage());
-
-if ($defaultRoute) {
-    $index = clone $defaultRoute;
-    $index->setPath('/');
-    $routes->add('index', $index);
-}
 
 $context = new RequestContext();
 $context->fromRequest($request);
@@ -529,16 +403,16 @@ $generator = new UrlGenerator($routes, $context);
 $twig = DependencyManager::getTwig($generator);
 
 // Steam login link
-if ($user instanceof AnonymousUser) {
-    $returnLink = $generator->generate(
-        'login',
-        ['return' => $request->getPathInfo()],
-        UrlGenerator::ABSOLUTE_URL
-    );
-
-    $steam = new SteamLogin();
-    $twig->addGlobal('steamLoginLink', $steam->url($returnLink));
-}
+//if ($user instanceof AnonymousUser) {
+//    $returnLink = $generator->generate(
+//        'login',
+//        ['return' => $request->getPathInfo()],
+//        UrlGenerator::ABSOLUTE_URL
+//    );
+//
+//    $steam = new SteamLogin();
+//    $twig->addGlobal('steamLoginLink', $steam->url($returnLink));
+//}
 
 //$navbar = [];
 //foreach (NAVBAR_ITEMS as $routeName => $title) {
@@ -637,21 +511,3 @@ try {
     $controller->wrongMethodAction();
     return;
 }
-
-//$ACCESS = array(
-//    // Volatile pages
-//    "applications" => "applications-view",
-//    "test" => EVERYONE,
-//    "volunteer-submission" => LOGIN,
-//    "videos" => EVERYONE,
-//);
-//
-//// Pages so basic they don't need a PHP file.
-//$noPHP = array(
-//    "about" => "About",
-//    "videos" => "Video Submission",
-//);
-//
-//$noContainer = array(
-//    "videos"
-//);

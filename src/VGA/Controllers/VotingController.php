@@ -98,7 +98,7 @@ class VotingController extends BaseController
             $award = $repo->find($awardID);
 
             if (!$award || !$award->isEnabled()) {
-                $this->session->getFlashBag()->add('error', 'Invalid award specified.');
+                $this->addFlash('error', 'Invalid award specified.');
                 $response = new RedirectResponse($this->generator->generate('voting'));
                 $response->send();
                 return;

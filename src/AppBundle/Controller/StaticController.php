@@ -1,27 +1,34 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Service\ConfigService;
+use AppBundle\Service\NavbarService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\RouterInterface;
 
 class StaticController extends Controller
 {
-    public function privacyAction()
+    public function indexAction(RouterInterface $router, ConfigService $configService)
     {
-        return $this->render('privacy.twig');
+        $defaultPage = $configService->getConfig()->getDefaultPage();
+        $defaultRoute = $router->getRouteCollection()->get($defaultPage);
+
+        return $this->forward($defaultRoute->getDefault('_controller'), $defaultRoute->getDefaults());
     }
 
-    public function votingRedirectAction()
+    public function videosAction(NavbarService $navbar)
     {
-        return $this->redirectToRoute('detailedResults');
-    }
-
-    public function videosAction()
-    {
+        if (!$navbar->canAccessRoute('videos')) {
+            throw $this->createAccessDeniedException('nope');
+        }
         return $this->render('videos.twig');
     }
 
-    public function soundtrackAction()
+    public function soundtrackAction(NavbarService $navbar)
     {
+        if (!$navbar->canAccessRoute('soundtrack')) {
+            throw $this->createAccessDeniedException();
+        }
         return $this->render('soundtrack.twig');
     }
 }

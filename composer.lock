@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d0cefde0dba6cedc60e49cfb9f6c9f0c",
+    "content-hash": "eef7e122e6545fcc37faa23829b28e40",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2134,13 +2134,13 @@
             "version": "dev-forkfix",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Tsumiki-Chan/SteamAuthBundle.git",
-                "reference": "54cbb588feba2d0d7d5dbe416e320b4750d7a6e7"
+                "url": "https://github.com/clamburger/SteamAuthBundle.git",
+                "reference": "986042a3eeaf654a5b39fe937a799ef54afc85bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Tsumiki-Chan/SteamAuthBundle/zipball/54cbb588feba2d0d7d5dbe416e320b4750d7a6e7",
-                "reference": "54cbb588feba2d0d7d5dbe416e320b4750d7a6e7",
+                "url": "https://api.github.com/repos/clamburger/SteamAuthBundle/zipball/986042a3eeaf654a5b39fe937a799ef54afc85bc",
+                "reference": "986042a3eeaf654a5b39fe937a799ef54afc85bc",
                 "shasum": ""
             },
             "require": {
@@ -2172,9 +2172,9 @@
                 "User management"
             ],
             "support": {
-                "source": "https://github.com/Tsumiki-Chan/SteamAuthBundle/tree/forkfix"
+                "source": "https://github.com/clamburger/SteamAuthBundle/tree/forkfix"
             },
-            "time": "2017-10-15T23:05:12+00:00"
+            "time": "2017-11-04T04:36:30+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

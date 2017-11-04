@@ -8,7 +8,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/Tsumiki-Chan/SteamAuthBundle"
+            "url": "https://github.com/clamburger/SteamAuthBundle"
         }
     ],
     "require": {

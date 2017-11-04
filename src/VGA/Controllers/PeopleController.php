@@ -33,7 +33,7 @@ class PeopleController extends BaseController
         $user = $this->em->getRepository(User::class)->find($steamID);
 
         if (!$user || !$user->isSpecial()) {
-            $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
+            $this->addFlash('error', 'Invalid SteamID provided.');
             $response = new RedirectResponse($this->generator->generate('people'));
             $response->send();
             return;
@@ -56,7 +56,7 @@ class PeopleController extends BaseController
         $user = $this->em->getRepository(User::class)->find($steamID);
 
         if (!$user || !$user->isSpecial()) {
-            $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
+            $this->addFlash('error', 'Invalid SteamID provided.');
             $response = new RedirectResponse($this->generator->generate('people'));
             $response->send();
             return;
@@ -73,7 +73,7 @@ class PeopleController extends BaseController
     public function postAction($steamID)
     {
         if ($this->config->isReadOnly()) {
-            $this->session->getFlashBag()->add('error', 'The site is currently in read-only mode. No changes can be made.');
+            $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
             $response = new RedirectResponse($this->generator->generate('people'));
             $response->send();
             return;
@@ -83,7 +83,7 @@ class PeopleController extends BaseController
         $user = $this->em->getRepository(User::class)->find($steamID);
 
         if (!$user || !$user->isSpecial()) {
-            $this->session->getFlashBag()->add('error', 'Invalid SteamID provided.');
+            $this->addFlash('error', 'Invalid SteamID provided.');
             $response = new RedirectResponse($this->generator->generate('people'));
             $response->send();
             return;
@@ -100,7 +100,7 @@ class PeopleController extends BaseController
             $user->removePermission($group);
             $this->em->persist($user);
 
-            $this->session->getFlashBag()->add('formSuccess', 'Group successfully removed.');
+            $this->addFlash('formSuccess', 'Group successfully removed.');
 
             $action = new Action('profile-group-removed');
             $action->setUser($this->user)
@@ -119,9 +119,9 @@ class PeopleController extends BaseController
             /** @var Permission $group */
             $group = $this->em->getRepository(Permission::class)->find($groupName);
             if (!$group) {
-                $this->session->getFlashBag()->add('formError', 'Invalid group name.');
+                $this->addFlash('formError', 'Invalid group name.');
             } elseif ($user->getPermissions()->contains($group)) {
-                $this->session->getFlashBag()->add('formError', 'User already has that permission.');
+                $this->addFlash('formError', 'User already has that permission.');
             } else {
                 $user->addPermission($group);
 
@@ -134,7 +134,7 @@ class PeopleController extends BaseController
                 $this->em->persist($action);
                 $this->em->flush();
 
-                $this->session->getFlashBag()->add('formSuccess', 'Permission successfully added.');
+                $this->addFlash('formSuccess', 'Permission successfully added.');
             }
         }
 
@@ -159,7 +159,7 @@ class PeopleController extends BaseController
 
             $this->em->flush();
 
-            $this->session->getFlashBag()->add('formSuccess', 'Details successfully updated.');
+            $this->addFlash('formSuccess', 'Details successfully updated.');
         }
 
         if ($post->get('action') === 'edit-notes' && $this->user->canDo('profile-edit-notes')) {
@@ -181,7 +181,7 @@ class PeopleController extends BaseController
 
             $this->em->flush();
 
-            $this->session->getFlashBag()->add('formSuccess', 'Notes successfully updated.');
+            $this->addFlash('formSuccess', 'Notes successfully updated.');
         }
 
         $response = new RedirectResponse(

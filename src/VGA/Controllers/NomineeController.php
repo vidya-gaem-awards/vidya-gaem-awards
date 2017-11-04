@@ -32,7 +32,7 @@ class NomineeController extends BaseController
             $award = $this->em->getRepository(Award::class)->find($awardID);
 
             if (!$award || ($award->isSecret() && !$this->user->canDo('awards-secret'))) {
-                $this->session->getFlashBag()->add('error', 'Invalid award ID specified.');
+                $this->addFlash('error', 'Invalid award ID specified.');
                 $response = new RedirectResponse($this->generator->generate('nomineeManager'));
                 $response->send();
                 return;

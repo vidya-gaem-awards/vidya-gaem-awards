@@ -39,7 +39,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-      navbar: '@AppBundle\Service\NavbarService'
+        navbar: '@AppBundle\Service\NavbarService'
 
 # Doctrine Configuration
 doctrine:
@@ -77,10 +77,5 @@ swiftmailer:
 steam_auth:
     steam_key: A5AD250B28674FA844A319523CF95B79
     user_class: AppBundle\Entity\User
+    login_redirect_route: false
 
-services:
-    account.security_listener:
-        class: 'AppBundle\Listener\SecurityListener'
-        tags:
-          - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
-        arguments: ['@doctrine.orm.entity_manager']

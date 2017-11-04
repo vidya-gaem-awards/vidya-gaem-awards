@@ -1,16 +1,17 @@
 <?php
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\News;
 
-class IndexController extends BaseController
+class IndexController extends Controller
 {
-    public function indexAction()
+    public function indexAction(EntityManagerInterface $em)
     {
-        $repo = $this->em->getRepository(News::class);
-        $query = $repo->createQueryBuilder('n');
+        $query = $em->createQueryBuilder();
         $query->select('n')
+            ->from(News::class, 'n')
             ->where('n.visible = true')
             ->andWhere('n.timestamp < CURRENT_TIMESTAMP()')
             ->setMaxResults(5)
@@ -18,12 +19,9 @@ class IndexController extends BaseController
 
         $news = $query->getQuery()->getResult();
 
-        $tpl = $this->twig->load('index.twig');
-
-        $response = new Response($tpl->render([
+        return $this->render('index.twig', [
             'title' => 'Home',
             'news' => $news
-        ]));
-        $response->send();
+        ]);
     }
 }

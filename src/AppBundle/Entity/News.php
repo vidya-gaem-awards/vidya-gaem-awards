@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * News
  */
@@ -152,11 +154,11 @@ class News
     /**
      * Set user
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return News
      */
-    public function setUser(User $user)
+    public function setUser(UserInterface $user)
     {
         $this->user = $user;
 
@@ -200,7 +202,7 @@ class News
     }
 
     /**
-     * @param User $deletedBy
+     * @param UserInterface $deletedBy
      */
     public function setDeletedBy($deletedBy)
     {

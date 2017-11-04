@@ -28,10 +28,21 @@ security:
 
             provider: steamauth
             steam:
-                default_route: privacy
+                default_route: index
             remember_me:
                 secret: '%secret%'
 
             logout:
                 path: /logout
-                target: /privacy
+                target: /
+
+    access_control:
+        - { path: ^/config, roles: ROLE_EDIT_CONFIG }
+        - { path: ^/news/add, roles: ROLE_NEWS_MANAGE }
+        - { path: ^/news/delete, roles: ROLE_NEWS_MANAGE }
+        - { path: ^/vidya-in-2017, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }
+        - { path: ^/vidya-in-2017, roles: ROLE_ADD_VIDEO_GAME, methods: [POST] }
+        - { path: ^/videos, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/soundtrack, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+
