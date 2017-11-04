@@ -114,6 +114,11 @@ class ResultController extends Controller
             foreach ($award->getResultCache() as $result) {
                 $results[$award->getId()][$result->getFilter()] = $result;
             }
+
+            // If the result cache is empty, results haven't been generated yet.
+            if ($award->getResultCache()->isEmpty()) {
+                $results[$award->getId()] = null;
+            }
         }
 
         return $this->render('results.twig', [
@@ -144,7 +149,7 @@ class ResultController extends Controller
         $pairwise = [];
 
         foreach ($awards as $award) {
-            $pairwise[$award->getId()] = $award->getOfficialResults()->getSteps()['pairwise'];
+            $pairwise[$award->getId()] = $award->getOfficialResults() ? $award->getOfficialResults()->getSteps()['pairwise'] : null;
         }
 
         return $this->render('resultsPairwise.twig', [

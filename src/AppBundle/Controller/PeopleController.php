@@ -29,7 +29,7 @@ class PeopleController extends Controller
     public function viewAction($steamID, EntityManagerInterface $em)
     {
         /** @var User $user */
-        $user = $em->getRepository(User::class)->find($steamID);
+        $user = $em->getRepository(User::class)->findOneBy(['username' => $steamID]);
 
         if (!$user || !$user->isSpecial()) {
             $this->addFlash('error', 'Invalid SteamID provided.');
@@ -48,7 +48,7 @@ class PeopleController extends Controller
     public function editAction($steamID, EntityManagerInterface $em)
     {
         /** @var User $user */
-        $user = $em->getRepository(User::class)->find($steamID);
+        $user = $em->getRepository(User::class)->findOneBy(['username' => $steamID]);
 
         if (!$user || !$user->isSpecial()) {
             $this->addFlash('error', 'Invalid SteamID provided.');
@@ -69,7 +69,7 @@ class PeopleController extends Controller
         }
 
         /** @var User $user */
-        $user = $em->getRepository(User::class)->find($steamID);
+        $user = $em->getRepository(User::class)->findOneBy(['username' => $steamID]);
 
         if (!$user || !$user->isSpecial()) {
             $this->addFlash('error', 'Invalid SteamID provided.');

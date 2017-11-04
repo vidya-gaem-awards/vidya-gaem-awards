@@ -49,26 +49,32 @@
 
     {% set width = 120 + (15 - award.nominees | length) * 20 %}
 
-    <table class="table table-bordered table-hover table-condensed pairwise" style="table-layout: fixed;">
-      <tr class='rotate'>
-        <th style='width: {{ width }}px;'>&nbsp;</th>
-        {% for nominee in award.nominees %}
-          <th title="{{ nominee.name | e('html_attr') }}">{{ nominee.name }}</th>
-        {% endfor %}
-      </tr>
-      {% for nominee1 in award.nominees %}
-        <tr>
-          <th title="{{ nominee1.name | e('html_attr') }}">{{ nominee1.name }}</th>
-          {% for nominee2 in award.nominees %}
-            {% if nominee1 == nominee2 %}
-              <td>---</td>
-            {% else %}
-              <td title="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }} vs {{ pairwise[award.id][nominee2.shortName][nominee1.shortName] }}"
-                  class="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] > pairwise[award.id][nominee2.shortName][nominee1.shortName] ? 'better' : 'worse' }}">{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }}</td>
-            {% endif %}
+    {% if not pairwise[award.id] %}
+      <div class="alert alert-warning">
+        Results for this award have not yet been generated.
+      </div>
+    {% else %}
+      <table class="table table-bordered table-hover table-condensed pairwise" style="table-layout: fixed;">
+        <tr class='rotate'>
+          <th style='width: {{ width }}px;'>&nbsp;</th>
+          {% for nominee in award.nominees %}
+            <th title="{{ nominee.name | e('html_attr') }}">{{ nominee.name }}</th>
           {% endfor %}
         </tr>
-      {% endfor %}
-    </table>
+        {% for nominee1 in award.nominees %}
+          <tr>
+            <th title="{{ nominee1.name | e('html_attr') }}">{{ nominee1.name }}</th>
+            {% for nominee2 in award.nominees %}
+              {% if nominee1 == nominee2 %}
+                <td>---</td>
+              {% else %}
+                <td title="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }} vs {{ pairwise[award.id][nominee2.shortName][nominee1.shortName] }}"
+                    class="{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] > pairwise[award.id][nominee2.shortName][nominee1.shortName] ? 'better' : 'worse' }}">{{ pairwise[award.id][nominee1.shortName][nominee2.shortName] }}</td>
+              {% endif %}
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    {% endif %}
   {% endfor %}
 {% endblock %}

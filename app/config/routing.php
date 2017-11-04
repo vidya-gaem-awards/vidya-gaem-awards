@@ -28,14 +28,15 @@ $routes->add('home', new Route(
     ['_controller' => 'AppBundle:Index:index']
 ));
 
+//
+// NEWS
+//
+
 $routes->add('news', new Route(
     '/news',
     ['_controller' => 'AppBundle:News:index']
 ));
 
-//
-// NEWS
-//
 $routes->add('newsAdd', (new Route(
     '/news/add',
     ['_controller' => 'AppBundle:News:add']

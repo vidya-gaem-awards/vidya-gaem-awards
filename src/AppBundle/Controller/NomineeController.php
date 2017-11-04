@@ -68,14 +68,14 @@ class NomineeController extends Controller
         ], $awardVariables));
     }
 
-    public function postAction(string $award, ConfigService $configService, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, UserInterface $user)
+    public function postAction(string $awardID, ConfigService $configService, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, UserInterface $user)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
         }
 
         /** @var Award $award */
-        $award = $em->getRepository(Award::class)->find($award);
+        $award = $em->getRepository(Award::class)->find($awardID);
 
         if (!$award || ($award->isSecret() && !$authChecker->isGranted('ROLE_AWARDS_SECRET'))) {
             return $this->json(['error' => 'Invalid award specified.']);

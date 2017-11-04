@@ -15,7 +15,7 @@ use AppBundle\Entity\Config;
 use AppBundle\Entity\Nominee;
 use AppBundle\Entity\Vote;
 use AppBundle\Entity\VotingCodeLog;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use VGA\Utils;
@@ -28,7 +28,7 @@ class VotingController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        // Fetch all of the enabled awards
+        /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
             ->select('a')
             ->from(Award::class, 'a', 'a.id')
@@ -94,6 +94,9 @@ class VotingController extends Controller
             ->getResult();
 
         $simpleVotes = [];
+        foreach ($awards as $a) {
+            $simpleVotes[$a->getId()] = [];
+        }
         foreach ($votes as $vote) {
             $preferences = $vote->getPreferences();
             array_unshift($preferences, null);
@@ -273,7 +276,7 @@ class VotingController extends Controller
         return $response;
     }
 
-    public function codeViewerAction(Router $router)
+    public function codeViewerAction(RouterInterface $router)
     {
         $date = new \DateTime();
         $dateString = $date->format('M d Y, g A');

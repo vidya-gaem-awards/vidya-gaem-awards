@@ -117,32 +117,38 @@
 
     {% set limit = (all ? 100 : 5) %}
 
-    {% for filterCollection in filters %}
-      <div class="row results">
-        {% for filter, filterName in filterCollection %}
-          {% set result = results[award.id][filter] %}
-          {% if result.votes > 0 %}
-            <div class="col-xs-6 col-sm-4 col-md-3">
-              <div class="thumbnail filter-{{ filter }}">
-                <strong>{{ filterName }}</strong>
-                <span class="voteCount">{{ result.votes }} votes</span>
-                <ol>
-                  {% for nominee in result.results[:limit] %}
-                    <li style="clear: both;">
-                      {{ nominees[award.id][nominee].name }}
-                      {% if result.steps['sweepPoints'][nominee] %}
-                        <span class="sweepPoints"
-                              title="{{ result.steps['sweepPoints'][nominee] | round(2, 'floor') | number_format(2) }} Sweep Points&trade;">{{ result.steps['sweepPoints'][nominee] | round(0, 'floor') }}
-                          pts</span>
-                      {% endif %}
-                    </li>
-                  {% endfor %}
-                </ol>
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
+    {% if not results[award.id] %}
+      <div class="alert alert-warning">
+        Results for this award have not yet been generated.
       </div>
-    {% endfor %}
+    {% else %}
+      {% for filterCollection in filters %}
+        <div class="row results">
+          {% for filter, filterName in filterCollection %}
+            {% set result = results[award.id][filter] %}
+            {% if result.votes > 0 %}
+              <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="thumbnail filter-{{ filter }}">
+                  <strong>{{ filterName }}</strong>
+                  <span class="voteCount">{{ result.votes }} votes</span>
+                  <ol>
+                    {% for nominee in result.results[:limit] %}
+                      <li style="clear: both;">
+                        {{ nominees[award.id][nominee].name }}
+                        {% if result.steps['sweepPoints'][nominee] %}
+                          <span class="sweepPoints"
+                                title="{{ result.steps['sweepPoints'][nominee] | round(2, 'floor') | number_format(2) }} Sweep Points&trade;">{{ result.steps['sweepPoints'][nominee] | round(0, 'floor') }}
+                            pts</span>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ol>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    {% endif %}
   {% endfor %}
 {% endblock %}
