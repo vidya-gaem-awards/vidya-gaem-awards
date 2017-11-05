@@ -154,7 +154,6 @@ class AwardController extends Controller
 
             $action = new Action('opinion-given');
             $action->setUser($user)
-                ->setPage(__CLASS__)
                 ->setData1($award->getId())
                 ->setData2($opinion);
 
@@ -197,7 +196,6 @@ class AwardController extends Controller
 
             $action = new Action('nomination-made');
             $action->setUser($user)
-                ->setPage(__CLASS__)
                 ->setData1($award->getId())
                 ->setData2($nomination);
             $em->persist($action);

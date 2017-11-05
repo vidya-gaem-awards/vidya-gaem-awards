@@ -236,7 +236,6 @@ class VotingController extends Controller
         $action = new Action('voted');
         $action
             ->setUser($user)
-            ->setPage(__CLASS__)
             ->setData1($award->getId());
         $em->persist($action);
 

@@ -115,7 +115,6 @@ class NomineeController extends Controller
 
             $action = new Action('nominee-delete');
             $action->setUser($user)
-                ->setPage(__CLASS__)
                 ->setData1($award->getId())
                 ->setData2($nominee->getShortName());
             $em->persist($action);
@@ -142,7 +141,6 @@ class NomineeController extends Controller
 
         $action = new Action('nominee-' . $action);
         $action->setUser($user)
-            ->setPage(__CLASS__)
             ->setData1($award->getId())
             ->setData2($nominee->getShortName());
         $em->persist($action);

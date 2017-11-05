@@ -96,7 +96,7 @@ class ConfigController extends Controller
         $em->persist($config);
 
         $action = new Action('config-updated');
-        $action->setUser($user)->setPage(__CLASS__);
+        $action->setUser($user);
         $em->persist($action);
 
         $history = new TableHistory();

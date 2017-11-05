@@ -62,7 +62,6 @@ class VideoGamesController extends Controller
 
         $action = new Action('add-video-game');
         $action->setUser($user)
-            ->setPage(__CLASS__)
             ->setData1($game->getName());
         $em->persist($action);
         $em->flush();

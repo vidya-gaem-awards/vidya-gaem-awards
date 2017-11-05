@@ -91,7 +91,6 @@ class PeopleController extends Controller
 
             $action = new Action('profile-group-removed');
             $action->setUser($currentUser)
-                ->setPage(__CLASS__)
                 ->setData1($steamID)
                 ->setData2($groupName);
 
@@ -114,7 +113,6 @@ class PeopleController extends Controller
 
                 $action = new Action('profile-group-added');
                 $action->setUser($currentUser)
-                    ->setPage(__CLASS__)
                     ->setData1($steamID)
                     ->setData2($groupName);
 
@@ -133,7 +131,6 @@ class PeopleController extends Controller
 
             $action = new Action('profile-details-updated');
             $action->setUser($currentUser)
-                ->setPage(__CLASS__)
                 ->setData1($steamID);
             $em->persist($action);
 
@@ -155,7 +152,6 @@ class PeopleController extends Controller
 
             $action = new Action('profile-notes-updated');
             $action->setUser($currentUser)
-                ->setPage(__CLASS__)
                 ->setData1($steamID);
             $em->persist($action);
 

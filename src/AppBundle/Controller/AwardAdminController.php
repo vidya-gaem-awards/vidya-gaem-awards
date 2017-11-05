@@ -67,7 +67,6 @@ class AwardAdminController extends Controller
 
                 $action = new Action('mass-nomination-change');
                 $action->setUser($user)
-                    ->setPage(__CLASS__)
                     ->setData1('open');
                 $em->persist($action);
                 $this->addFlash('formSuccess', 'Nominations for all awards are now open.');
@@ -77,7 +76,6 @@ class AwardAdminController extends Controller
 
                 $action = new Action('mass-nomination-change');
                 $action->setUser($user)
-                    ->setPage(__CLASS__)
                     ->setData1('close');
                 $em->persist($action);
                 $this->addFlash('formSuccess', 'Nominations for all awards are now closed.');
@@ -115,7 +113,6 @@ class AwardAdminController extends Controller
 
                 $action = new Action('award-delete');
                 $action->setUser($user)
-                    ->setPage(__CLASS__)
                     ->setData1($award->getId());
                 $em->persist($action);
                 $em->flush();
@@ -165,7 +162,6 @@ class AwardAdminController extends Controller
 
             $action = new Action($post->get('action') === 'new' ? 'award-added' : 'award-edited');
             $action->setUser($user)
-                ->setPage(__CLASS__)
                 ->setData1($post->get('id'));
             $em->persist($action);
 

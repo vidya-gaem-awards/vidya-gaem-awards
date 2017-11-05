@@ -44,6 +44,9 @@ class Action
 
     public function __construct($action)
     {
+        $backtrace = debug_backtrace();
+        $this->setPage($backtrace[1]['class'] . '::' . $backtrace[1]['function']);
+
         $this->setAction($action);
         $this->setTimestamp(new \DateTime());
     }
