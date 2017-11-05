@@ -8,6 +8,11 @@ class AnonymousUser extends User
         parent::__construct();
     }
 
+    public function getUsername()
+    {
+        return 'Anonymous (' . substr($this->getRandomID(), 0, 10) . ')';
+    }
+
     public function isLoggedIn()
     {
         return false;

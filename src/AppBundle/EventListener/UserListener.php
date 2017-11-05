@@ -27,6 +27,12 @@ class UserListener
     {
         $request = $event->getRequest();
 
+        // The token won't be set in rare cases (such as when loading the web debug toolbar).
+        // These requests can be ignored.
+        if (!$this->tokenStorage->getToken()) {
+            return;
+        }
+
         // Generate a random ID to keep in the cookie if one doesn't already exist.
         // We use this cookie as part of the voting identification process.
         $randomIDCookie = $request->cookies->get('access');
@@ -71,6 +77,12 @@ class UserListener
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $request = $event->getRequest();
+
+        // The token won't be set in rare cases (such as when loading the web debug toolbar).
+        // These requests can be ignored.
+        if (!$this->tokenStorage->getToken()) {
+            return;
+        }
 
         // If the user didn't have an access cookie when they first loaded the page, one would have been generated
         // in the request handler above. As such, we only need to worry about copying the value from the session
