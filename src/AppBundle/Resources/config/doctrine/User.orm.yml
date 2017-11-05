@@ -54,10 +54,6 @@ AppBundle\Entity\User:
     logins:
       targetEntity: Login
       mappedBy: user
-  oneToOne:
-    loginToken:
-      targetEntity: LoginToken
-      mappedBy: user
   manyToMany:
     permissions:
       targetEntity: Permission

@@ -64,11 +64,6 @@ class User implements SteamUserInterface, UserInterface
     private $avatar;
 
     /**
-     * @var LoginToken
-     */
-    private $loginToken;
-
-    /**
      * @var Collections\Collection
      */
     private $votes;
@@ -348,30 +343,6 @@ class User implements SteamUserInterface, UserInterface
     public function getAvatar()
     {
         return $this->avatar;
-    }
-
-    /**
-     * Set loginToken
-     *
-     * @param LoginToken $loginToken
-     *
-     * @return User
-     */
-    public function setLoginToken(LoginToken $loginToken = null)
-    {
-        $this->loginToken = $loginToken;
-
-        return $this;
-    }
-
-    /**
-     * Get loginToken
-     *
-     * @return LoginToken
-     */
-    public function getLoginToken()
-    {
-        return $this->loginToken;
     }
 
     /**
