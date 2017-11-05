@@ -10,7 +10,7 @@ class AnonymousUser extends User
 
     public function getUsername()
     {
-        return 'Anonymous (' . substr($this->getRandomID(), 0, 10) . ')';
+        return 'Anonymous (' . substr($this->getRandomID(), 0, 6) . ')';
     }
 
     public function isLoggedIn()
