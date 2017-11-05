@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\DependencyInjection\Compiler;
 
-use AppBundle\Component\Security\Http\Firewall\AnonymousAuthenticationListener;
+use AppBundle\Security\Http\Firewall\AnonymousAuthenticationListener;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

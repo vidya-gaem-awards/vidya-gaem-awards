@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Component\Security\Http\Firewall;
+namespace AppBundle\Security\Http\Firewall;
 
 use AppBundle\Entity\AnonymousUser;
 use Psr\Log\LoggerInterface;
