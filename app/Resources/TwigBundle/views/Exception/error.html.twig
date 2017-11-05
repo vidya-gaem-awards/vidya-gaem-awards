@@ -1,13 +1,13 @@
 {% extends 'base/standard.twig' %}
 
-{% block title %}500{% endblock %}
+{% block title %}{{ status_code }}{% endblock %}
 
 {% block content %}
   <div class="row">
     <div class="col-xs-12">
-      <h2>500 - Internal Server Error</h2>
-      <p class="implying">&gt;2011+{{ 'now'|date('Y') - 2011 }}</p>
-      <p class="implying">&gt;having competent web developers</p>
+      <h2>{{ status_code }} - {{ status_text }}</h2>
+      <p>Something has gone terribly wrong.</p>
+      <p>Report this error in <em>#website</em> on the <a href="https://discord.gg/4e8JQB4">Discord</a>.</p>
     </div>
   </div>
 {% endblock %}

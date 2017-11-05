@@ -5,6 +5,7 @@ use Ehesp\SteamLogin\SteamLogin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Http\AccessMapInterface;
@@ -16,14 +17,16 @@ class NavbarService
     private $router;
     private $accessMap;
     private $authChecker;
+    private $tokenStorage;
 
-    public function __construct($navbarItems, ConfigService $configService, RouterInterface $router, AccessMapInterface $accessMap, AuthorizationCheckerInterface $authChecker)
+    public function __construct($navbarItems, ConfigService $configService, RouterInterface $router, AccessMapInterface $accessMap, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
     {
         $this->navbarItems = $navbarItems;      // Parameter containing the menu items to show
         $this->router = $router;                // Used to get the RouteCollection which we use to fetch the route for each item
         $this->configService = $configService;  // Used to determine which pages should be public
         $this->accessMap = $accessMap;          // Used to get role restrictions from security.yml
         $this->authChecker = $authChecker;      // Used to get roles for the current user
+        $this->tokenStorage = $tokenStorage;    // Used to check if the user is logged in (authChecker throws exceptions if not)
     }
 
     public function getItems()
@@ -54,6 +57,11 @@ class NavbarService
                 return true;
             }
 
+            // Not logged in
+            if (!$this->tokenStorage->getToken()) {
+                return false;
+            }
+
             if ($this->authChecker->isGranted($route->getDefault('permission'))) {
                 return true;
             }
@@ -63,6 +71,11 @@ class NavbarService
 
         if (empty($roles)) {
             return true;
+        }
+
+        // Not logged in
+        if (!$this->tokenStorage->getToken()) {
+            return false;
         }
 
         foreach ($roles as $role) {
