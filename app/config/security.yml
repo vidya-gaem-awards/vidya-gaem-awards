@@ -57,6 +57,7 @@ security:
         - { path: ^/winners, roles: ROLE_AWARDS_EDIT, methods: [POST] }
         - { path: ^/results, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/referrers, roles: ROLE_REFERRERS_VIEW }
+        - { path: ^/audit-log, roles: ROLE_AUDIT_LOG_VIEW }
         - { path: ^/countdown, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/stream, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/finished, roles: IS_AUTHENTICATED_ANONYMOUSLY }

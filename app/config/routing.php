@@ -201,6 +201,15 @@ $routes->add('referrers', new Route(
 ));
 
 //
+// AUDIT LOG
+//
+
+$routes->add('auditLog', new Route(
+    '/audit-log',
+    ['_controller' => 'AppBundle:AuditLog:index']
+));
+
+//
 // LAUNCHER
 //
 

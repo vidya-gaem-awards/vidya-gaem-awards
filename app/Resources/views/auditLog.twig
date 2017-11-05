@@ -1,0 +1,35 @@
+{% extends 'base/standard.twig' %}
+
+{% block content %}
+  <h1 class="page-header">Audit Log</h1>
+
+  <blockquote>
+    <p>
+      He sees you when you're sleeping<br>
+      He knows when you're awake<br>
+      He knows if you've been bad or good<br>
+      So be good for goodness sake<br>
+    </p>
+  </blockquote>
+
+  <table class="table table-bordered table-striped" style="background-color: white;">
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>User</th>
+        <th>Action</th>
+        <th>Data 1</th>
+        <th>Data 2</th>
+      </tr>
+    </thead>
+  {% for action in actions %}
+    <tr>
+      <td>{{ action.timestamp.format('Y-m-d H:i:s') }}</td>
+      <td><strong>{{ action.user.name }}</strong></td>
+      <td>{{ actionTypes[action.action] }}</td>
+      <td>{{ action.data1 }}</td>
+      <td>{{ action.data2 }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}

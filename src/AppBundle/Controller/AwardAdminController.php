@@ -162,13 +162,13 @@ class AwardAdminController extends Controller
 
             $action = new Action($post->get('action') === 'new' ? 'award-added' : 'award-edited');
             $action->setUser($user)
-                ->setData1($post->get('id'));
+                ->setData1(strtolower($post->get('id')));
             $em->persist($action);
 
             $history = new TableHistory();
             $history->setUser($user)
                 ->setTable('Award')
-                ->setEntry($post->get('id'))
+                ->setEntry(strtolower($post->get('id')))
                 ->setValues($post->all());
             $em->persist($history);
             $em->flush();

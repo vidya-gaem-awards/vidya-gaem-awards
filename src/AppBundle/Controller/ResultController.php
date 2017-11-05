@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Action;
 use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -177,6 +178,11 @@ class ResultController extends Controller
 
         $award->setWinnerImage($imagePath);
         $em->persist($award);
+
+        $action = new Action('winner-image-upload');
+        $action->setUser($user)
+            ->setData1($award->getId());
+        $em->persist($action);
 
         $history = new TableHistory();
         $history->setUser($user)
