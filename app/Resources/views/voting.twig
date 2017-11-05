@@ -183,7 +183,7 @@
       </a>
     {% endfor %}
 
-    {% if app.user %}
+    {% if app.user.loggedIn %}
       <h3 style='clear:both; padding-top: 50px;'>
         <a href="{{ path('home') }}" style="color: #80d7d1;">Back to the main part of the site</a>
       </h3>
