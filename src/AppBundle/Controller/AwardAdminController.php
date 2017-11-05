@@ -99,7 +99,7 @@ class AwardAdminController extends Controller
             return $this->json(['error' => 'An ID is required.']);
         }
 
-        $award = $em->getRepository(Award::class)->find($post->get('id'));
+        $award = $em->getRepository(Award::class)->find(strtolower($post->get('id')));
         if ($award && $post->get('action') === 'new') {
             return $this->json(['error' => 'That ID is already in use. Please enter another ID.']);
         } elseif ((!$award || ($award->isSecret() && !$authChecker->isGranted('ROLE_AWARDS_SECRET'))) && $post->get('action') === 'edit') {
@@ -125,7 +125,7 @@ class AwardAdminController extends Controller
             if (!$award) {
                 $award = new Award();
                 try {
-                    $award->setId($post->get('id'));
+                    $award->setId(strtolower($post->get('id')));
                 } catch (\Exception $e) {
                     return $this->json(['error' => 'Invalid award ID provided.']);
                 }
