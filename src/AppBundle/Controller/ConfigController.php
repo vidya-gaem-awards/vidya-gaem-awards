@@ -83,12 +83,12 @@ class ConfigController extends Controller
             }
         }
 
-        try {
-            $config->setTimezone($post->get('timezone'));
-        } catch (\Exception $e) {
-            $this->addFlash('error', 'Invalid timezone provided.');
-            $error = true;
-        }
+//        try {
+//            $config->setTimezone($post->get('timezone'));
+//        } catch (\Exception $e) {
+//            $this->addFlash('error', 'Invalid timezone provided.');
+//            $error = true;
+//        }
 
         $config->setDefaultPage($post->get('defaultPage'));
         $config->setPublicPages(array_keys($post->get('publicPages', [])));

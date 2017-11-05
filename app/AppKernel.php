@@ -5,6 +5,14 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+    public function __construct($environment, $debug)
+    {
+        // It would be nice to have this be dynamic, but it's not super practical.
+        date_default_timezone_set('America/New_York');
+
+        parent::__construct($environment, $debug);
+    }
+
     public function registerBundles()
     {
         $bundles = [

@@ -15,7 +15,7 @@
             <div class="form-group">
               <label for="timezone" class="col-sm-4 control-label">Timezone</label>
               <div class="col-sm-8">
-                <select class="form-control" id="timezone" name="timezone">
+                <select class="form-control" id="timezone" name="timezone" disabled>
                   {% for area, timezoneArray in timezones %}
                     <optgroup label="{{ area }}">
                       {% for id, timezone in timezoneArray %}
@@ -24,7 +24,8 @@
                     </optgroup>
                   {% endfor %}
                 </select>
-                <p class="help-block">The timezone that 4chan uses is <em>America/New York</em>.</p>
+                {# <p class="help-block">The timezone that 4chan uses is <em>America/New York</em>.</p> #}
+                <p class="help-block">This can't currently be changed. It's the same timezone that 4chan uses.</p>
               </div>
             </div>
             <div class="form-group">
