@@ -203,7 +203,7 @@ class PeopleController extends Controller
         $repo = $em->getRepository(User::class);
 
         /** @var User $user */
-        $user = $repo->find($steam->getSteamId64());
+        $user = $repo->findOneBy(['username' => $steam->getSteamId64()]);
         if (!$user) {
             $user = new User();
             $user
