@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Listener;
+namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Config;
 use AppBundle\Entity\Login;
