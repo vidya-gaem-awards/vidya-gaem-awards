@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use VGA\Timer;
-use VGA\Utils;
 
 class VoteReferrersCommand extends ContainerAwareCommand
 {
@@ -129,7 +128,7 @@ class VoteReferrersCommand extends ContainerAwareCommand
 
             foreach ($referers as $referer) {
                 foreach ($sites as $site => $value) {
-                    if (Utils::startsWith($referer, $site) && !in_array($value, $used_bits, true)) {
+                    if (self::startsWith($referer, $site) && !in_array($value, $used_bits, true)) {
                         $info['notes'][] = $site;
                         $used_bits[] = $value;
                         $number += $value;
@@ -176,5 +175,10 @@ class VoteReferrersCommand extends ContainerAwareCommand
         }
 
         $output->writeln("Step 5 (update database) complete: " . $timer->time());
+    }
+
+    private static function startsWith($haystack, $needle)
+    {
+        return substr($haystack, 0, strlen($needle)) === $needle;
     }
 }

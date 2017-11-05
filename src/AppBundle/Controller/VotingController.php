@@ -18,7 +18,6 @@ use AppBundle\Entity\VotingCodeLog;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use VGA\Utils;
 
 class VotingController extends Controller
 {
@@ -282,10 +281,10 @@ class VotingController extends Controller
 
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-        // This is an awful implementation, but will do for now
         $code = '';
         for ($i = 0; $i < 4; $i++) {
-            $code .= $characters[Utils::randomNumber($dateString . $i, strlen($characters) - 1)];
+            $seedString = $this->getParameter('secret') . $date->format(' Y-m-d H:00 ') . $i;
+            $code .= $characters[self::randomNumber($seedString, strlen($characters) - 1)];
         }
 
         $url = $router->generate('voteWithCode', ['code' => $code], UrlGenerator::ABSOLUTE_URL);
@@ -297,5 +296,23 @@ class VotingController extends Controller
             'url' => $url,
             'code' => $code
         ]);
+    }
+
+    /**
+     * Normally we would just use random_int, but we want to be able to provide a seed.
+     * @param string $seed
+     * @param int $max
+     * @return int
+     */
+    private static function randomNumber(string $seed, int $max)
+    {
+        //hash the seed to ensure enough random(ish) characters each time
+        $hash = sha1($seed);
+
+        //use the first x characters, and convert from hex to base 10 (this is where the random number is obtain)
+        $rand = base_convert(substr($hash, 0, 6), 16, 10);
+
+        //as a decimal percentage (ensures between 0 and max number)
+        return (int)round($rand / 0xFFFFFF * $max);
     }
 }
