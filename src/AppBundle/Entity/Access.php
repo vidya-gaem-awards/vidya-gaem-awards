@@ -13,7 +13,10 @@ class Access
     private $timestamp;
 
     /** @var string */
-    private $page;
+    private $route;
+    
+    /** @var string */
+    private $controller;
 
     /** @var string */
     private $requestString;
@@ -88,12 +91,12 @@ class Access
     }
 
     /**
-     * @param string $page
+     * @param string $route
      * @return Access
      */
-    public function setPage($page)
+    public function setRoute($route)
     {
-        $this->page = $page;
+        $this->route = $route;
 
         return $this;
     }
@@ -101,9 +104,28 @@ class Access
     /**
      * @return string
      */
-    public function getPage()
+    public function getRoute()
     {
-        return $this->page;
+        return $this->route;
+    }
+
+    /**
+     * @param string $controller
+     * @return Access
+     */
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getController()
+    {
+        return $this->controller;
     }
 
     /**

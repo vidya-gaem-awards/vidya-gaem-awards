@@ -2,9 +2,13 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Entity\Access;
 use AppBundle\Entity\User;
+use AppBundle\Service\ConfigService;
+use Doctrine\ORM\EntityManagerInterface;
 use RandomLib\Factory;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -15,12 +19,16 @@ class UserListener
     private $secret;
     private $tokenStorage;
     private $session;
+    private $em;
+    private $configService;
 
-    public function __construct(string $secret, TokenStorageInterface $tokenStorage, SessionInterface $session)
+    public function __construct(string $secret, TokenStorageInterface $tokenStorage, SessionInterface $session, EntityManagerInterface $em, ConfigService $configService)
     {
         $this->secret = $secret;
         $this->tokenStorage = $tokenStorage;
         $this->session = $session;
+        $this->em = $em;
+        $this->configService = $configService;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -101,5 +109,47 @@ class UserListener
                 $request->getHost()
             ));
         }
+
+        // Log the page access.
+        $access = new Access();
+
+        if (!$this->configService->isReadOnly() && $this->shouldLogRequest($request)) {
+            /** @var User $user */
+            $user = $this->tokenStorage->getToken()->getUser();
+
+            $access
+                ->setCookieID($user->getRandomID())
+                ->setRoute($request->attributes->get('_route'))
+                ->setController($request->attributes->get('_controller'))
+                ->setRequestMethod($request->server->get('REQUEST_METHOD'))
+                ->setRequestString($request->server->get('REQUEST_URI'))
+                ->setIp($user->getIP())
+                ->setUserAgent($request->server->get('HTTP_USER_AGENT', ''))
+                ->setFilename($request->server->get('SCRIPT_FILENAME'))
+                ->setReferer($request->server->get('HTTP_REFERER'));
+
+            if ($user->isLoggedIn()) {
+                $access->setUser($user);
+            }
+
+            $this->em->persist($access);
+            $this->em->flush();
+        }
+    }
+
+    private function shouldLogRequest(Request $request)
+    {
+        // A request that is forwarded internally (such as what we do for the index route) triggers the listener
+        // twice, so only log the initial request.
+        if ($request->attributes->get('_forwarded')) {
+            return false;
+        }
+
+        // Don't log anything that doesn't come through to our code (includes login/logout).
+        if (!$request->attributes->get('_controller')) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -17,10 +17,13 @@ AppBundle\Entity\Access:
     timestamp:
       type: datetime
       nullable: false
-    page:
+    route:
       type: string
       nullable: false
       length: 30
+    controller:
+      type: string
+      nullable: false
     requestString:
       type: string
       nullable: false

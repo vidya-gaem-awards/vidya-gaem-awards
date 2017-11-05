@@ -251,19 +251,4 @@ class Config
         $this->timezone = $timezone;
         return $this;
     }
-
-    /**
-     * A convenience method to initialize the timezone.
-     * @param EntityManager $em
-     */
-    public static function initalizeTimezone(EntityManager $em)
-    {
-        /** @var Config $config */
-        $config = $em->getRepository(Config::class)->findOneBy([]);
-        if ($config) {
-            date_default_timezone_set($config->getTimezone());
-        } else {
-            date_default_timezone_set(self::DEFAULT_TIMEZONE);
-        }
-    }
 }
