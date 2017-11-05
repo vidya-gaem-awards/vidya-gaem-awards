@@ -10,7 +10,7 @@ AppBundle\Entity\Action:
       generator:
         strategy: AUTO
   fields:
-    user:
+    ip:
       type: string
       nullable: false
       length: 45
@@ -33,3 +33,11 @@ AppBundle\Entity\Action:
       type: string
       nullable: true
       length: 50
+  manyToOne:
+    user:
+      targetEntity: AppBundle\Entity\User
+      nullable: true
+      joinColumn:
+        name: userID
+        referencedColumnName: id
+        nullable: true

@@ -15,7 +15,7 @@ class Action
     /**
      * @var string
      */
-    private $user;
+    private $ip;
 
     /**
      * @var \DateTime
@@ -41,6 +41,11 @@ class Action
      * @var string
      */
     private $data2;
+
+    /**
+     * @var User
+     */
+    private $user;
 
     public function __construct($action)
     {
@@ -70,7 +75,10 @@ class Action
      */
     public function setUser($user)
     {
-        $this->user = $user->getFuzzyID();
+        $this->ip = $user->getIP();
+        if ($user->isLoggedIn()) {
+            $this->user = $user;
+        }
         return $this;
     }
 
@@ -79,9 +87,9 @@ class Action
      *
      * @return string
      */
-    public function getUser()
+    public function getIp()
     {
-        return $this->user;
+        return $this->ip;
     }
 
     /**
@@ -202,6 +210,14 @@ class Action
     public function getData2()
     {
         return $this->data2;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
 
