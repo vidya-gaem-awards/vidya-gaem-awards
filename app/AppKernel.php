@@ -20,9 +20,12 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
         ];
 
+        // Normally these would be in dev only, but the site is in a perpetual state of development so it helps to have
+        // them available all of the time.
+        $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
+        $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
-            $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
-            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
 
             if ('dev' === $this->getEnvironment()) {

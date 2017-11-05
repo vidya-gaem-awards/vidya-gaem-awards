@@ -54,12 +54,12 @@
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ],
         "files": [
-            "vendor/koraktor/steam-condenser/lib/steam-condenser.php"
+            "vendor/koraktor/steam-condenser/lib/steam-condenser.php",
+            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
         ]
     },
     "autoload-dev": {
-        "psr-4": { "Tests\\": "tests/" },
-        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
+        "psr-4": { "Tests\\": "tests/" }
     },
     "extra": {
         "symfony-app-dir": "app",

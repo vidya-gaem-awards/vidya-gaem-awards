@@ -35,7 +35,8 @@ framework:
 
 # Twig Configuration
 twig:
-    debug: '%kernel.debug%'
+#    debug: '%kernel.debug%'
+    debug: true
     strict_variables: '%kernel.debug%'
     globals:
         navbar: '@AppBundle\Service\NavbarService'
