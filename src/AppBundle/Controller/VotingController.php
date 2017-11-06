@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use AppBundle\Service\NavbarService;
@@ -27,6 +28,8 @@ class VotingController extends Controller
         if (!$navbar->canAccessRoute('voting')) {
             throw $this->createAccessDeniedException();
         }
+
+        /** @var User $user */
 
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
@@ -198,6 +201,8 @@ class VotingController extends Controller
                 ['error' => 'Some of the nominees you\'ve voted for are invalid: ' . implode(', ', $invalidNominees)]
             );
         }
+
+        /** @var User $user */
 
         $query = $em->createQueryBuilder()
             ->select('v')

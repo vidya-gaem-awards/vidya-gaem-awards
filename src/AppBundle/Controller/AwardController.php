@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use AppBundle\Service\NavbarService;
@@ -19,6 +20,8 @@ class AwardController extends Controller
 {
     public function indexAction(NavbarService $navbar, EntityManagerInterface $em, UserInterface $user)
     {
+        /** @var User $user */
+
         if (!$navbar->canAccessRoute('awards')) {
             throw $this->createAccessDeniedException();
         }
@@ -123,6 +126,8 @@ class AwardController extends Controller
         if (!$navbar->canAccessRoute('awards')) {
             throw $this->createAccessDeniedException();
         }
+
+        /** @var User $user */
         
         $post = $request->request;
         $repo = $em->getRepository(Award::class);

@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 class VotingCodeLog
 {
     /** @var integer */
@@ -38,7 +40,7 @@ class VotingCodeLog
     }
 
     /**
-     * @param User $user
+     * @param User|UserInterface $user
      * @return VotingCodeLog
      */
     public function setUser($user)
@@ -139,5 +141,13 @@ class VotingCodeLog
     {
         $this->cookieID = $cookieID;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 }

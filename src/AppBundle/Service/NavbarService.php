@@ -98,7 +98,7 @@ class NavbarService
     public function getRoles($path)
     {
         $request = Request::create($path, 'GET');
-        list($roles, $channel) = $this->accessMap->getPatterns($request);
+        list($roles, ) = $this->accessMap->getPatterns($request);
         return $roles ?: [];
     }
 }

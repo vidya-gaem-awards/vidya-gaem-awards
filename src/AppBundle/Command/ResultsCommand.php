@@ -20,7 +20,7 @@ class ResultsCommand extends ContainerAwareCommand
     /** @var ConfigService */
     private $configService;
 
-    public function __constrct($name = null, EntityManagerInterface $em, ConfigService $configService)
+    public function __construct($name = null, EntityManagerInterface $em, ConfigService $configService)
     {
         parent::__construct();
         $this->em = $em;
@@ -41,8 +41,6 @@ class ResultsCommand extends ContainerAwareCommand
         }
 
         $timer = new Timer();
-
-        $voteRepo = $this->em->getRepository(Vote::class);
 
         // Remove all existing data
         $this->em->createQueryBuilder()->delete(ResultCache::class)->getQuery()->execute();

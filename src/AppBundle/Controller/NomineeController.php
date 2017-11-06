@@ -11,7 +11,6 @@ use AppBundle\Entity\Award;
 use AppBundle\Entity\Nominee;
 use AppBundle\Entity\TableHistory;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class NomineeController extends Controller
 {

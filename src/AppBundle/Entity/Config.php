@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
+
 use Moment\Moment;
 
 class Config
@@ -250,5 +250,13 @@ class Config
 
         $this->timezone = $timezone;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
     }
 }

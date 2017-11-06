@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 class AwardFeedback
 {
     /** @var string */
@@ -15,7 +17,7 @@ class AwardFeedback
 
     /**
      * @param Award $award
-     * @param User $user
+     * @param User|UserInterface $user
      */
     public function __construct(Award $award, User $user)
     {

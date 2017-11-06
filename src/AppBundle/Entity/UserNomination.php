@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 class UserNomination
 {
     /**
@@ -30,7 +32,7 @@ class UserNomination
 
     /**
      * @param Award $award
-     * @param User $user
+     * @param User|UserInterface $user
      * @param string $nomination
      */
     public function __construct(Award $award, User $user, string $nomination)

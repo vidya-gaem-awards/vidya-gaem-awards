@@ -154,9 +154,9 @@
           var mm = mins - hours * 60;
           var ss = secs - mins * 60;
 
-          document.getElementById("countdown").innerHTML = dd + ' day' + (dd == 1 ? ', ' : 's, ') + hh + ' hour' +
-              (hh == 1 ? ', ' : 's, ') + mm + ' minute' + (mm == 1 ? ', ' : 's, ') +
-              ss + ' second' + (ss == 1 ? '' : 's');
+          document.getElementById("countdown").innerHTML = dd + ' day' + (dd === 1 ? ', ' : 's, ') + hh + ' hour' +
+              (hh === 1 ? ', ' : 's, ') + mm + ' minute' + (mm === 1 ? ', ' : 's, ') +
+              ss + ' second' + (ss === 1 ? '' : 's');
       }
       window.onload = updateWCTime;
       setInterval('updateWCTime()', 1000);

@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\GameRelease;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class VideoGamesController extends Controller
 {

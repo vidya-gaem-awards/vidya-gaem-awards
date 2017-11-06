@@ -11,7 +11,6 @@ use AppBundle\Entity\Permission;
 use AppBundle\Entity\TableHistory;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class PeopleController extends Controller
 {

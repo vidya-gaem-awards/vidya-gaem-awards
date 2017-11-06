@@ -96,7 +96,7 @@ $(document).ready(function () {
             var droppedOn = $(this);
 
             //if you're dropping the nominee exactly where you took it from, it cancels the drop
-            if (droppedOn.attr("id") == draggedFrom.attr("id")) {
+            if (droppedOn.attr("id") === draggedFrom.attr("id")) {
                 $(dragged).draggable("option", "revert", true);
                 return
             }
@@ -126,7 +126,7 @@ $(document).ready(function () {
             var droppedOn = $(this);
 
             //if you're dropping the nominee exactly where you took it from, it cancels the drop
-            if (droppedOn.attr("id") == draggedFrom.attr("id")) {
+            if (droppedOn.attr("id") === draggedFrom.attr("id")) {
                 $(dragged).draggable("option", "revert", true);
 
                 //put their margins back to normal

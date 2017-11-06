@@ -65,9 +65,9 @@
 
         if ('error' in data) {
           var msg;
-          if (data.error == "no matches") {
+          if (data.error === "no matches") {
             msg = "couldn't find a Steam profile with that ID.";
-          } else if (data.error == "already special") {
+          } else if (data.error === "already special") {
             msg = data.name + " is already in the user list.";
           } else {
             msg = "something went wrong. Try again later.";
@@ -75,7 +75,7 @@
           $("#error-msg").text(msg);
           $("#error-box").show("fast");
         } else {
-          var name = $('<div/>').text(data.name).html();
+          var name = $('<div></div>').text(data.name).html();
           msg = "<img src='" + data.avatar + "'>";
           msg += "&nbsp;&nbsp;<a href='https://steamcommunity.com/profiles/" + data.steamID + "'>";
           msg += name + "</a>";
@@ -108,9 +108,9 @@
 
         if ('error' in data) {
           var msg;
-          if (data.error == "no matches") {
+          if (data.error === "no matches") {
             msg = "couldn't find a Steam profile with that ID.";
-          } else if (data.error == "already special") {
+          } else if (data.error === "already special") {
             msg = "it looks like that user is already on <a href='{{ path('people') }}'>the list</a>.";
             msg += " It may have been double submitted for some reason.";
           } else {

@@ -26,7 +26,7 @@ var Dumbshit = function() {
 					if (ref_obj) dumbshit = ref_obj; // IE
 					dumbshit.input+= e ? e.keyCode : event.keyCode;
 					if (dumbshit.input.length > dumbshit.pattern.length) dumbshit.input = dumbshit.input.substr((dumbshit.input.length - dumbshit.pattern.length));
-					if (dumbshit.input == dumbshit.pattern) {
+					if (dumbshit.input === dumbshit.pattern) {
                     dumbshit.code(link);
 					dumbshit.input="";
                     }

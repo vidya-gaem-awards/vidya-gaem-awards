@@ -488,7 +488,7 @@
         $("#dialog-edit-name").text($("#info-name").val());
         $("#dialog-edit-subtitle").html($("#info-subtitle").val());
 
-        if ($("#info-image").val() != lastImageValue || (lastImageValue == "" && $("#info-id").val() != lastID)) {
+        if ($("#info-image").val() != lastImageValue || (lastImageValue === "" && $("#info-id").val() != lastID)) {
           lastImageValue = $("#info-image").val();
           lastID = $("#info-id").val();
           if (lastImageValue) {
@@ -520,7 +520,7 @@
         var ajaxData = $("#dialog-edit-form").serializeArray();
         console.log(ajaxData);
         ajaxData.push({name: "action", value: action});
-        if (action == "edit") {
+        if (action === "edit") {
           ajaxData.push({name: "id", value: nomineeID});
         }
         $.post("{{ path('nomineePost', {'awardID': award.id}) }}", ajaxData, function (data) {
@@ -528,7 +528,7 @@
 
           if (data.success) {
 
-            if (action == "new") {
+            if (action === "new") {
 
               nomineeID = $("#info-id").val();
               var clone = $("#dialog-edit").find(".aNominee").clone(true, true);

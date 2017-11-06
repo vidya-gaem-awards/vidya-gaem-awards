@@ -270,17 +270,17 @@
         var mm = mins - hours * 60;
         var ss = secs - mins * 60;
 
-        if (diff == 0) {
+        if (diff === 0) {
           document.getElementById("title").innerHTML = 'The 2017 Vidya Gaem Awards';
         } else {
           var string = '';
           if (hh > 0) {
-            string = string.concat(hh + ' hour' + (hh == 1 ? ', ' : 's, '));
+            string = string.concat(hh + ' hour' + (hh === 1 ? ', ' : 's, '));
           }
           if (mm > 0) {
-            string = string.concat(mm + ' minute' + (mm == 1 ? ', ' : 's, '));
+            string = string.concat(mm + ' minute' + (mm === 1 ? ', ' : 's, '));
           }
-          string = string.concat(ss + ' second' + (ss == 1 ? '' : 's'));
+          string = string.concat(ss + ' second' + (ss === 1 ? '' : 's'));
           document.getElementById('title').innerHTML = string;
         }
       }
