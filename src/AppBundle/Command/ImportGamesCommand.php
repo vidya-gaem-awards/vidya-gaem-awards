@@ -1,14 +1,10 @@
 <?php
 namespace AppBundle\Command;
 
-
-
 use AppBundle\Entity\GameRelease;
-
 use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,11 +15,12 @@ class ImportGamesCommand extends ContainerAwareCommand
     private $em;
     private $configService;
 
-    public function __construct($name = null, EntityManagerInterface $em, ConfigService $configService)
+    public function __construct(EntityManagerInterface $em, ConfigService $configService)
     {
-        parent::__construct();
         $this->em = $em;
         $this->configService = $configService;
+
+        parent::__construct();
     }
 
     protected function configure()

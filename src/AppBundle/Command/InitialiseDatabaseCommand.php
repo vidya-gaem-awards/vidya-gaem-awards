@@ -16,10 +16,11 @@ class InitialiseDatabaseCommand extends ContainerAwareCommand
 {
     private $em;
 
-    public function __construct($name = null, EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em)
     {
-        parent::__construct();
         $this->em = $em;
+
+        parent::__construct();
     }
 
     protected function configure()

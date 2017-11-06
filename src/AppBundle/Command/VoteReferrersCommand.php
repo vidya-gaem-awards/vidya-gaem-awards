@@ -19,11 +19,12 @@ class VoteReferrersCommand extends ContainerAwareCommand
     /** @var ConfigService */
     private $configService;
 
-    public function __construct($name = null, EntityManagerInterface $em, ConfigService $configService)
+    public function __construct(EntityManagerInterface $em, ConfigService $configService)
     {
-        parent::__construct();
         $this->em = $em;
         $this->configService = $configService;
+
+        parent::__construct();
     }
 
     protected function configure()
