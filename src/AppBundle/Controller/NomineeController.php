@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -68,7 +69,7 @@ class NomineeController extends Controller
         ], $awardVariables));
     }
 
-    public function postAction(string $awardID, ConfigService $configService, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, UserInterface $user)
+    public function postAction(string $awardID, ConfigService $configService, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, AuditService $auditService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -112,13 +113,9 @@ class NomineeController extends Controller
 
         if ($action === 'delete') {
             $em->remove($nominee);
-
-            $action = new Action('nominee-delete');
-            $action->setUser($user)
-                ->setData1($award->getId())
-                ->setData2($nominee->getShortName());
-            $em->persist($action);
-
+            $auditService->add(
+                new Action('nominee-delete', $award->getId(), $nominee->getShortName())
+            );
             $em->flush();
 
             return $this->json(['success' => true]);
@@ -139,18 +136,11 @@ class NomineeController extends Controller
             ->setFlavorText($post->get('flavorText'));
         $em->persist($nominee);
 
-        $action = new Action('nominee-' . $action);
-        $action->setUser($user)
-            ->setData1($award->getId())
-            ->setData2($nominee->getShortName());
-        $em->persist($action);
+        $auditService->add(
+            new Action('nominee-' . $action, $award->getId(), $nominee->getShortName()),
+            new TableHistory(Nominee::class, $award->getId() . '/' . $nominee->getShortName(), $post->all())
+        );
 
-        $history = new TableHistory();
-        $history->setUser($user)
-            ->setTable('Nominee')
-            ->setEntry($award->getId() . '/' . $nominee->getShortName())
-            ->setValues($post->all());
-        $em->persist($history);
         $em->flush();
 
         return $this->json(['success' => true]);

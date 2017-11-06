@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -117,7 +118,7 @@ class AwardController extends Controller
         ]);
     }
 
-    public function postAction(NavbarService $navbar, Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user)
+    public function postAction(NavbarService $navbar, Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user, AuditService $auditService)
     {
         if (!$navbar->canAccessRoute('awards')) {
             throw $this->createAccessDeniedException();
@@ -152,12 +153,9 @@ class AwardController extends Controller
             $feedback->setOpinion($opinion);
             $em->persist($feedback);
 
-            $action = new Action('opinion-given');
-            $action->setUser($user)
-                ->setData1($award->getId())
-                ->setData2($opinion);
-
-            $em->persist($action);
+            $auditService->add(
+                new Action('opinion-given', $award->getId(), $opinion)
+            );
         }
 
         $nomination = $post->get('nomination');
@@ -194,11 +192,9 @@ class AwardController extends Controller
             $userNomination = new UserNomination($award, $user, $nomination);
             $em->persist($userNomination);
 
-            $action = new Action('nomination-made');
-            $action->setUser($user)
-                ->setData1($award->getId())
-                ->setData2($nomination);
-            $em->persist($action);
+            $auditService->add(
+                new Action('nomination-made', $award->getId(), $nomination)
+            );
         }
 
         $em->flush();

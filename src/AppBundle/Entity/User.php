@@ -664,5 +664,13 @@ class User implements SteamUserInterface, UserInterface
     {
         // Do nothing
     }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
 

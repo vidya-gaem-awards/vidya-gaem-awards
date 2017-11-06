@@ -37,9 +37,12 @@ class TableHistory
      */
     private $user;
 
-    public function __construct()
+    public function __construct(string $entityClass, $entityID, array $values)
     {
         $this->setTimestamp(new \DateTime());
+        $this->table = $entityClass;
+        $this->entry = $entityID;
+        $this->values = $values;
     }
 
     /**

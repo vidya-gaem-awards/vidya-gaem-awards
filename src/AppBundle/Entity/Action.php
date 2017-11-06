@@ -47,13 +47,20 @@ class Action
      */
     private $user;
 
-    public function __construct($action)
+    /**
+     * @var TableHistory
+     */
+    private $tableHistory;
+
+    public function __construct($action, $data1 = null, $data2 = null)
     {
         $backtrace = debug_backtrace();
         $this->setPage($backtrace[1]['class'] . '::' . $backtrace[1]['function']);
 
         $this->setAction($action);
         $this->setTimestamp(new \DateTime());
+        $this->setData1($data1);
+        $this->setData2($data2);
     }
 
     /**
@@ -218,6 +225,22 @@ class Action
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @return TableHistory
+     */
+    public function getTableHistory(): ?TableHistory
+    {
+        return $this->tableHistory;
+    }
+
+    /**
+     * @param TableHistory $tableHistory
+     */
+    public function setTableHistory(?TableHistory $tableHistory)
+    {
+        $this->tableHistory = $tableHistory;
     }
 }
 

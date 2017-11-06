@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -150,7 +151,7 @@ class VotingController extends Controller
         ]);
     }
 
-    public function postAction($awardID, NavbarService $navbar, ConfigService $configService, AuthorizationCheckerInterface $authChecker, EntityManagerInterface $em, Request $request, UserInterface $user)
+    public function postAction($awardID, NavbarService $navbar, ConfigService $configService, AuthorizationCheckerInterface $authChecker, EntityManagerInterface $em, Request $request, UserInterface $user, AuditService $auditService)
     {
         if (!$navbar->canAccessRoute('voting')) {
             throw $this->createAccessDeniedException();
@@ -232,12 +233,9 @@ class VotingController extends Controller
             ->setVotingCode($user->getVotingCode());
         $em->persist($vote);
 
-        $action = new Action('voted');
-        $action
-            ->setUser($user)
-            ->setData1($award->getId());
-        $em->persist($action);
-
+        $auditService->add(
+            new Action('voted', $award->getId())
+        );
         $em->flush();
 
         return $this->json(['success' => true]);

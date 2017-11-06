@@ -14,7 +14,7 @@ AppBundle\Entity\TableHistory:
     table:
       type: string
       nullable: false
-      length: 30
+      length: 100
       column: '`table`'
     entry:
       type: string

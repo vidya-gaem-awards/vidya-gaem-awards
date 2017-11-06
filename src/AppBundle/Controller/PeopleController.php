@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -61,7 +62,7 @@ class PeopleController extends Controller
         ]);
     }
 
-    public function postAction($steamID, ConfigService $configService, EntityManagerInterface $em, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $currentUser)
+    public function postAction($steamID, ConfigService $configService, EntityManagerInterface $em, Request $request, AuthorizationCheckerInterface $authChecker, AuditService $auditService)
     {
         if ($configService->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
@@ -89,12 +90,9 @@ class PeopleController extends Controller
 
             $this->addFlash('formSuccess', 'Group successfully removed.');
 
-            $action = new Action('profile-group-removed');
-            $action->setUser($currentUser)
-                ->setData1($steamID)
-                ->setData2($groupName);
-
-            $em->persist($action);
+            $auditService->add(
+                new Action('profile-group-removed', $steamID, $groupName)
+            );
             $em->flush();
         }
 
@@ -110,13 +108,9 @@ class PeopleController extends Controller
                 $this->addFlash('formError', 'User already has that permission.');
             } else {
                 $user->addPermission($group);
-
-                $action = new Action('profile-group-added');
-                $action->setUser($currentUser)
-                    ->setData1($steamID)
-                    ->setData2($groupName);
-
-                $em->persist($action);
+                $auditService->add(
+                    new Action('profile-group-added', $steamID, $groupName)
+                );
                 $em->flush();
 
                 $this->addFlash('formSuccess', 'Permission successfully added.');
@@ -129,17 +123,10 @@ class PeopleController extends Controller
             $user->setEmail($post->get('Email'));
             $em->persist($user);
 
-            $action = new Action('profile-details-updated');
-            $action->setUser($currentUser)
-                ->setData1($steamID);
-            $em->persist($action);
-
-            $history = new TableHistory();
-            $history->setUser($currentUser)
-                ->setTable('User')
-                ->setEntry($steamID)
-                ->setValues($post->all());
-            $em->persist($history);
+            $auditService->add(
+                new Action('profile-details-updated', $user->getId()),
+                new TableHistory(User::class, $user->getId(), $post->all())
+            );
 
             $em->flush();
 
@@ -150,18 +137,10 @@ class PeopleController extends Controller
             $user->setNotes($post->get('Notes'));
             $em->persist($user);
 
-            $action = new Action('profile-notes-updated');
-            $action->setUser($currentUser)
-                ->setData1($steamID);
-            $em->persist($action);
-
-            $history = new TableHistory();
-            $history->setUser($currentUser)
-                ->setTable('User')
-                ->setEntry($steamID)
-                ->setValues($post->all());
-            $em->persist($history);
-
+            $auditService->add(
+                new Action('profile-notes-updated', $user->getId()),
+                new TableHistory(User::class, $user->getId(), $post->all())
+            );
             $em->flush();
 
             $this->addFlash('formSuccess', 'Notes successfully updated.');

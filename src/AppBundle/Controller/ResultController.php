@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Action;
+use AppBundle\Service\AuditService;
 use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -159,7 +160,7 @@ class ResultController extends Controller
         ]);
     }
 
-    public function winnerImageUploadAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, UserInterface $user, Request $request)
+    public function winnerImageUploadAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, AuditService $auditService)
     {
         $id = $request->request->get('id') ?? false;
 
@@ -179,17 +180,10 @@ class ResultController extends Controller
         $award->setWinnerImage($imagePath);
         $em->persist($award);
 
-        $action = new Action('winner-image-upload');
-        $action->setUser($user)
-            ->setData1($award->getId());
-        $em->persist($action);
-
-        $history = new TableHistory();
-        $history->setUser($user)
-            ->setTable('Award')
-            ->setEntry($award->getId())
-            ->setValues(['image' => $imagePath]);
-        $em->persist($history);
+        $auditService->add(
+            new Action('winner-image-updated', $award->getId()),
+            new TableHistory(Award::class, $award->getId(), ['image' => $imagePath])
+        );
         $em->flush();
 
         return $this->json(['success' => true, 'filePath' => $imagePath]);

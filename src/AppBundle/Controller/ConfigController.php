@@ -1,13 +1,14 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Config;
+use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\TableHistory;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class ConfigController extends Controller
 {
@@ -27,7 +28,7 @@ class ConfigController extends Controller
         ]);
     }
 
-    public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, UserInterface $user)
+    public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService)
     {
         $config = $configService->getConfig();
         
@@ -94,16 +95,12 @@ class ConfigController extends Controller
         $config->setPublicPages(array_keys($post->get('publicPages', [])));
 
         $em->persist($config);
-
-        $action = new Action('config-updated');
-        $action->setUser($user);
-        $em->persist($action);
-
-        $history = new TableHistory();
-        $history->setUser($user)->setTable('Config')->setEntry('')->setValues($post->all());
-        $em->persist($history);
-
         $em->flush();
+
+        $auditService->add(
+            new Action('config-updated', 1),
+            new TableHistory(Config::class, 1, $post->all())
+        );
 
         if (!$error) {
             $this->addFlash('success', 'Config successfully saved.');

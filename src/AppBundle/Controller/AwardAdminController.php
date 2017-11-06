@@ -5,6 +5,7 @@ use AppBundle\Entity\Action;
 use AppBundle\Entity\Autocompleter;
 use AppBundle\Entity\Award;
 use AppBundle\Entity\TableHistory;
+use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,7 +49,7 @@ class AwardAdminController extends Controller
         ]);
     }
 
-    public function managerPostAction(EntityManagerInterface $em, Request $request, ConfigService $configService, UserInterface $user)
+    public function managerPostAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService)
     {
         $post = $request->request;
 
@@ -65,19 +66,19 @@ class AwardAdminController extends Controller
                 $query->update()->set('a.nominationsEnabled', true);
                 $query->getQuery()->execute();
 
-                $action = new Action('mass-nomination-change');
-                $action->setUser($user)
-                    ->setData1('open');
-                $em->persist($action);
+                $auditService->add(
+                    new Action('mass-nomination-change', 'open')
+                );
+
                 $this->addFlash('formSuccess', 'Nominations for all awards are now open.');
             } elseif ($post->get('todo') === 'close') {
                 $query->update()->set('a.nominationsEnabled', 0);
                 $query->getQuery()->execute();
 
-                $action = new Action('mass-nomination-change');
-                $action->setUser($user)
-                    ->setData1('close');
-                $em->persist($action);
+                $auditService->add(
+                    new Action('mass-nomination-change', 'close')
+                );
+
                 $this->addFlash('formSuccess', 'Nominations for all awards are now closed.');
             }
 
@@ -87,19 +88,21 @@ class AwardAdminController extends Controller
         return $this->redirectToRoute('awardManager');
     }
 
-    public function managerPostAjaxAction(EntityManagerInterface $em, Request $request, ConfigService $configService, UserInterface $user, AuthorizationCheckerInterface $authChecker)
+    public function managerPostAjaxAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuthorizationCheckerInterface $authChecker, AuditService $auditService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
         }
 
         $post = $request->request;
+        
+        $id = strtolower($post->get('id'));
 
-        if (strlen($post->get('id')) == 0) {
+        if (strlen($id) == 0) {
             return $this->json(['error' => 'An ID is required.']);
         }
 
-        $award = $em->getRepository(Award::class)->find(strtolower($post->get('id')));
+        $award = $em->getRepository(Award::class)->find($id);
         if ($award && $post->get('action') === 'new') {
             return $this->json(['error' => 'That ID is already in use. Please enter another ID.']);
         } elseif ((!$award || ($award->isSecret() && !$authChecker->isGranted('ROLE_AWARDS_SECRET'))) && $post->get('action') === 'edit') {
@@ -111,11 +114,9 @@ class AwardAdminController extends Controller
                 $em->remove($award);
                 $em->flush();
 
-                $action = new Action('award-delete');
-                $action->setUser($user)
-                    ->setData1($award->getId());
-                $em->persist($action);
-                $em->flush();
+                $auditService->add(
+                    new Action('award-delete', $award->getId())
+                );
 
                 return $this->json(['success' => true]);
             } else {
@@ -125,7 +126,7 @@ class AwardAdminController extends Controller
             if (!$award) {
                 $award = new Award();
                 try {
-                    $award->setId(strtolower($post->get('id')));
+                    $award->setId($id);
                 } catch (\Exception $e) {
                     return $this->json(['error' => 'Invalid award ID provided.']);
                 }
@@ -159,19 +160,12 @@ class AwardAdminController extends Controller
                 ->setSecret((bool)$post->get('secret'));
 
             $em->persist($award);
-
-            $action = new Action($post->get('action') === 'new' ? 'award-added' : 'award-edited');
-            $action->setUser($user)
-                ->setData1(strtolower($post->get('id')));
-            $em->persist($action);
-
-            $history = new TableHistory();
-            $history->setUser($user)
-                ->setTable('Award')
-                ->setEntry(strtolower($post->get('id')))
-                ->setValues($post->all());
-            $em->persist($history);
             $em->flush();
+
+            $auditService->add(
+                new Action($post->get('action') === 'new' ? 'award-added' : 'award-edited', $award->getId()),
+                new TableHistory(Award::class, $id, $post->all())
+            );
 
             return $this->json(['success' => true]);
         } else {

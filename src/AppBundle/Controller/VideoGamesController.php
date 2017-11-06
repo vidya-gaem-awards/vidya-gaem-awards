@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\TableHistory;
+use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +33,7 @@ class VideoGamesController extends Controller
         ]);
     }
 
-    public function addAction(EntityManagerInterface $em, ConfigService $configService, Request $request, UserInterface $user)
+    public function addAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -59,11 +61,12 @@ class VideoGamesController extends Controller
         }
 
         $em->persist($game);
+        $em->flush();
 
-        $action = new Action('add-video-game');
-        $action->setUser($user)
-            ->setData1($game->getName());
-        $em->persist($action);
+        $auditService->add(
+            new Action('add-video-game', $game->getId()),
+            new TableHistory(GameRelease::class, $game->getId(), $post->all())
+        );
         $em->flush();
 
         return $this->json(['success' => $game->getName()]);
