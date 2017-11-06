@@ -162,3 +162,8 @@ abbr[title] {
   border-bottom: none;
   text-decoration: underline dotted;
 }
+
+/* 🤔 */
+.emoji {
+  width: 28px;
+}
