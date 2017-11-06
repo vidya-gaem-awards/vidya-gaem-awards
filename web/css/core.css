@@ -156,3 +156,9 @@ table.tablesorter thead tr .headerSortUp {
 ul.nav li.dropdown:hover ul.dropdown-menu {
   display: block;
 }
+
+/* See https://github.com/twbs/bootstrap/issues/22562 */
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline dotted;
+}

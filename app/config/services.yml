@@ -35,7 +35,7 @@ services:
     #         $someArgument: 'some_value'
 
     AppBundle\Service\:
-        resource: '../../src/AppBundle/Service/*'
+        resource: '../../src/AppBundle/Service'
         public: true
 
     AppBundle\Service\NavbarService:
@@ -72,5 +72,10 @@ services:
 
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    AppBundle\Twig\:
+        resource: '../../src/AppBundle/Twig'
         tags:
             - { name: twig.extension }

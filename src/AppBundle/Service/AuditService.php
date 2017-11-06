@@ -3,6 +3,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Action;
 use AppBundle\Entity\TableHistory;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -34,5 +35,25 @@ class AuditService
         $action->setUser($user);
         $this->em->persist($action);
         $this->em->flush();
+    }
+
+    /**
+     * @param Action $action
+     * @return null|object
+     */
+    public function getEntity(Action $action)
+    {
+        if ($history = $action->getTableHistory()) {
+            $class = $history->getTable();
+            $id = $history->getEntry();
+            if (!class_exists($class)) {
+                return null;
+            }
+            return $this->em->getRepository($class)->find($id);
+        } elseif (substr($action->getAction(), 0, 7) === 'profile') {
+            return $this->em->getRepository(User::class)->find($action->getData1());
+        } else {
+            return null;
+        }
     }
 }

@@ -134,10 +134,11 @@ class NomineeController extends Controller
             ->setImage($post->get('image'))
             ->setFlavorText($post->get('flavorText'));
         $em->persist($nominee);
+        $em->flush();
 
         $auditService->add(
             new Action('nominee-' . $action, $award->getId(), $nominee->getShortName()),
-            new TableHistory(Nominee::class, $award->getId() . '/' . $nominee->getShortName(), $post->all())
+            new TableHistory(Nominee::class, $nominee->getId(), $post->all())
         );
 
         $em->flush();

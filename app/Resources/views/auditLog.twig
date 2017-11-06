@@ -15,20 +15,52 @@
   <table class="table table-bordered table-striped" style="background-color: white;">
     <thead>
       <tr>
-        <th>Timestamp</th>
-        <th>User</th>
+        <th>Time</th>
         <th>Action</th>
-        <th>Data 1</th>
-        <th>Data 2</th>
       </tr>
     </thead>
   {% for action in actions %}
+    {% set entity = auditService.getEntity(action) %}
     <tr>
-      <td>{{ action.timestamp.format('Y-m-d H:i:s') }}</td>
-      <td><strong>{{ action.user.name }}</strong></td>
-      <td>{{ actionTypes[action.action] }}</td>
-      <td>{{ action.data1 }}</td>
-      <td>{{ action.data2 }}</td>
+      <td>
+        <abbr title="{{ action.timestamp.format('Y-m-d H:i:s') }}">
+          {{ (action.timestamp | moment).fromNow.relative }}
+        </abbr>
+         &nbsp; <small class="text-muted">{{ action.timestamp.format('H:i') }}</small>
+      </td>
+      <td>
+        <div>
+          <img src="{{ action.user.avatar }}" style="width: 25px; margin-right: 3px;"> <strong>{{ action.user.name }}</strong>
+          {{ actionTypes[action.action] | lower }}
+        </div>
+        {% if action.action starts with 'profile' %}
+          <div style="margin-left: 31px; margin-top: 5px;">
+            <a href="{{ path('viewPerson', {'steamID': entity.username}) }}">{{ entity.getName() }}</a>
+            {% if action.data2 %}
+            : <code>{{ action.data2 }}</code>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if action.action starts with 'award' or action.action starts with 'winner' %}
+          <div style="margin-left: 31px; margin-top: 5px;">
+            {% if entity and action.action != 'award-delete' %}
+              {{ entity.name }} :
+            {% endif %}
+            <code>{{ action.data1 }}</code>
+          </div>
+        {% endif %}
+        {% if action.action starts with 'nominee' %}
+          <div style="margin-left: 31px; margin-top: 5px;">
+            {% if entity and action.action != 'nominee-delete' %}
+              {{ entity.award.name }} : <code>{{ action.data1 }}</code><br>
+              {{ entity.name }} : <code>{{ action.data2 }}</code>
+            {% else %}
+              <code>{{ action.data1 }}</code><br>
+              <code>{{ action.data2 }}</code>
+            {% endif %}
+          </div>
+        {% endif %}
+      </td>
     </tr>
   {% endfor %}
   </table>

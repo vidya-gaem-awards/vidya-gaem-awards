@@ -66,7 +66,7 @@ class AwardAdminController extends Controller
                 $query->getQuery()->execute();
 
                 $auditService->add(
-                    new Action('mass-nomination-change', 'open')
+                    new Action('mass-nomination-open')
                 );
 
                 $this->addFlash('formSuccess', 'Nominations for all awards are now open.');
@@ -75,7 +75,7 @@ class AwardAdminController extends Controller
                 $query->getQuery()->execute();
 
                 $auditService->add(
-                    new Action('mass-nomination-change', 'close')
+                    new Action('mass-nomination-close')
                 );
 
                 $this->addFlash('formSuccess', 'Nominations for all awards are now closed.');

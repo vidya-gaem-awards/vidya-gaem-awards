@@ -2,12 +2,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Action;
+use AppBundle\Service\AuditService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AuditLogController extends Controller
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em, AuditService $auditService)
     {
         $actions = [
             'profile-group-added' => 'Added a permission to a user',
@@ -19,9 +20,10 @@ class AuditLogController extends Controller
             'award-edited' => 'Edited an award',
             'add-video-game' => 'Added a video game to the autocomplete list',
             'config-updated' => 'Updated the website config',
-            'mass-nomination-change' => 'Opened or closed all nominations',
+            'mass-nomination-open' => 'Opened nominations for all awards',
+            'mass-nomination-close' => 'Closed nominations for all awards',
             'nominee-new' => 'Added a nominee to an award',
-            'nominee-deleted' => 'Removed a nominee from an award',
+            'nominee-delete' => 'Removed a nominee from an award',
             'nominee-edit' => 'Edited an award nominee',
             'winner-image-upload' => 'Uploaded an image for an award winner',
         ];
@@ -40,6 +42,7 @@ class AuditLogController extends Controller
             'title' => 'Audit Log',
             'actions' => $result,
             'actionTypes' => $actions,
+            'auditService' => $auditService,
         ]);
     }
 }
