@@ -94,5 +94,15 @@ class Autocompleter
     {
         return $this->strings;
     }
+
+    /**
+     * @param string $string
+     * @return $this
+     */
+    public function addString(string $string)
+    {
+        $this->strings[] = $string;
+        return $this;
+    }
 }
 

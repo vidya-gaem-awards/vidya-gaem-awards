@@ -49,6 +49,9 @@ AppBundle\Entity\GameRelease:
     wiiware:
       type: boolean
       nullable: false
+    switch:
+      type: boolean
+      nullable: false
     n3ds:
       type: boolean
       nullable: false

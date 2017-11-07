@@ -47,6 +47,9 @@ class GameRelease
     private $wiiware = false;
 
     /** @var boolean */
+    private $switch = false;
+
+    /** @var boolean */
     private $n3ds = false;
 
     /** @var boolean */
@@ -375,6 +378,23 @@ class GameRelease
         return $this->mobile;
     }
 
+
+    /**
+     * @return bool
+     */
+    public function isSwitch(): bool
+    {
+        return $this->switch;
+    }
+
+    /**
+     * @param bool $switch
+     */
+    public function setSwitch(bool $switch)
+    {
+        $this->switch = $switch;
+    }
+
     public function getOthers()
     {
         $others = [];
@@ -386,6 +406,9 @@ class GameRelease
         }
         if ($this->xbla) {
             $others[] = 'XBLA';
+        }
+        if ($this->wii) {
+            $others[] = 'Wii';
         }
         return $others;
     }
@@ -409,6 +432,7 @@ class GameRelease
             'xbla' => 'XBLA',
             'wii' => 'Wii',
             'wiiu' => 'Wii U',
+            'switch' => 'Switch',
             'wiiware' => 'WiiWare',
             'n3ds' => '3DS',
             'mobile' => 'Mobile'

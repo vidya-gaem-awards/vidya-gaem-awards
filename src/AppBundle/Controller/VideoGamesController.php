@@ -48,7 +48,7 @@ class VideoGamesController extends Controller
 
         $game = new GameRelease($game);
 
-        $platforms = ['pc', 'vr', 'ps3', 'ps4', 'vita', 'x360', 'xb1', 'xbla', 'wii', 'wiiu', 'n3ds', 'mobile'];
+        $platforms = ['pc', 'vr', 'ps3', 'ps4', 'vita', 'x360', 'xb1', 'wiiu', 'switch', 'n3ds', 'mobile'];
         foreach ($platforms as $platform) {
             if ($post->get($platform)) {
                 $game->{'set'.$platform}(true);
