@@ -112,7 +112,7 @@ class AwardController extends Controller
             $autocompleters[$award->getId()] = array_keys($nominationCount);
         }
 
-        return $this->render('awards.twig', [
+        return $this->render('awards.html.twig', [
             'title' => 'Awards and Nominations',
             'awards' => $awards,
             'userNominations' => $nominations,

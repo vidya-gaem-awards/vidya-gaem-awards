@@ -233,7 +233,7 @@ $routes->add('finished', new Route(
 //
 $routes->add('privacy', new Route(
     '/privacy',
-    ['_controller' => 'FrameworkBundle:Template:template', 'template' => 'privacy.twig']
+    ['_controller' => 'FrameworkBundle:Template:template', 'template' => 'privacy.html.twig']
 ));
 
 $routes->add('videos', new Route(

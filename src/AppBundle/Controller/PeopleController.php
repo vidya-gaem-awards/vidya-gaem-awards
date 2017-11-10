@@ -20,7 +20,7 @@ class PeopleController extends Controller
             ['special' => true], ['name' => 'ASC']
         );
 
-        return $this->render('people.twig', [
+        return $this->render('people.html.twig', [
             'title' => 'People',
             'users' => $users
         ]);
@@ -38,7 +38,7 @@ class PeopleController extends Controller
 
         $permissions = $em->getRepository(Permission::class)->findAll();
 
-        return $this->render('viewPerson.twig', [
+        return $this->render('viewPerson.html.twig', [
             'title' => $user->getName(),
             'user' => $user,
             'permissions' => $permissions
@@ -55,7 +55,7 @@ class PeopleController extends Controller
             return $this->redirectToRoute('people');
         }
 
-        return $this->render('editPerson.twig', [
+        return $this->render('editPerson.html.twig', [
             'title' => $user->getName(),
             'user' => $user
         ]);
@@ -150,12 +150,12 @@ class PeopleController extends Controller
 
     public function permissionsAction()
     {
-        return $this->render('permissions.twig');
+        return $this->render('permissions.html.twig');
     }
 
     public function newAction()
     {
-        return $this->render('addPerson.twig');
+        return $this->render('addPerson.html.twig');
     }
 
     public function searchAction(EntityManagerInterface $em, Request $request, ConfigService $configService)

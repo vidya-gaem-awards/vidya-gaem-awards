@@ -19,7 +19,7 @@ class IndexController extends Controller
 
         $news = $query->getQuery()->getResult();
 
-        return $this->render('index.twig', [
+        return $this->render('index.html.twig', [
             'title' => 'Home',
             'news' => $news
         ]);

@@ -38,7 +38,7 @@ class AuditLogController extends Controller
             ->getQuery()
             ->getResult();
 
-        return $this->render('auditLog.twig', [
+        return $this->render('auditLog.html.twig', [
             'title' => 'Audit Log',
             'actions' => $result,
             'actionTypes' => $actions,

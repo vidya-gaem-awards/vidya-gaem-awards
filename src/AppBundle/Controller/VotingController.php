@@ -139,7 +139,7 @@ class VotingController extends Controller
             }
         }
 
-        return $this->render('voting.twig', [
+        return $this->render('voting.html.twig', [
             'title' => 'Voting',
             'awards' => $awards,
             'award' => $award ?? false,
@@ -293,7 +293,7 @@ class VotingController extends Controller
         $url = $router->generate('voteWithCode', ['code' => $code], UrlGenerator::ABSOLUTE_URL);
         $url = substr($url, 0, strrpos($url, '/') + 1);
 
-        return $this->render('votingCode.twig', [
+        return $this->render('votingCode.html.twig', [
             'title' => 'Voting Code',
             'date' => $dateString,
             'url' => $url,

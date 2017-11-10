@@ -26,7 +26,7 @@ class VideoGamesController extends Controller
 
         $games = $query->getQuery()->getResult();
 
-        return $this->render('videoGames.twig', [
+        return $this->render('videoGames.html.twig', [
             'title' => 'Vidya in 2017',
             'games' => $games
         ]);

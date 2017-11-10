@@ -61,7 +61,7 @@ class NomineeController extends Controller
             ];
         }
 
-        return $this->render('nominees.twig', array_merge([
+        return $this->render('nominees.html.twig', array_merge([
             'title' => 'Nominee Manager',
             'awards' => $awards,
             'award' => $award ?? false,

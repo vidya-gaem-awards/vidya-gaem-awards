@@ -41,7 +41,7 @@ class AwardAdminController extends Controller
         
         $autocompleters = $em->getRepository(Autocompleter::class)->findAll();
 
-        return $this->render('awardManager.twig', [
+        return $this->render('awardManager.html.twig', [
             'title' => 'Award Manager',
             'awards' => $awards,
             'autocompleters' => $autocompleters

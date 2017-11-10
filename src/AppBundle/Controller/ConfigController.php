@@ -21,7 +21,7 @@ class ConfigController extends Controller
             $timezonesByArea[$area][$timezone] = str_replace('_', ' ', $timezone);
         }
 
-        return $this->render('config.twig', [
+        return $this->render('config.html.twig', [
             'title' => 'Config',
             'config' => $config->getConfig(),
             'timezones' => $timezonesByArea,

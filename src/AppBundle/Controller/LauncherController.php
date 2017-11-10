@@ -39,7 +39,7 @@ class LauncherController extends Controller
             $streamDate ? $streamDate->format("Y-m-d\TH:i:s") : ''
         );
 
-        return $this->render('countdown.twig', [
+        return $this->render('countdown.html.twig', [
             'streamDate' => $streamDate,
             'timezones' => $timezones,
             'otherTimezonesLink' => $otherTimezonesLink
@@ -55,7 +55,7 @@ class LauncherController extends Controller
         $streamDate = $configService->getConfig()->getStreamTime();
         $showCountdown = ($streamDate > new \DateTime());
 
-        return $this->render('stream.twig', [
+        return $this->render('stream.html.twig', [
             'streamDate' => $streamDate,
             'countdown' => $showCountdown
         ]);
@@ -67,6 +67,6 @@ class LauncherController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('finished.twig');
+        return $this->render('finished.html.twig');
     }
 }

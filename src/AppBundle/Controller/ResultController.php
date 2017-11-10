@@ -50,7 +50,7 @@ class ResultController extends Controller
             $results[$award->getId()] = $rankings;
         }
 
-        return $this->render('winners.twig', [
+        return $this->render('winners.html.twig', [
             'awards' => $awards,
             'results' => $results
         ]);
@@ -123,7 +123,7 @@ class ResultController extends Controller
             }
         }
 
-        return $this->render('results.twig', [
+        return $this->render('results.html.twig', [
             'title' => 'Results',
             'awards' => $awards,
             'nominees' => $nominees,
@@ -154,7 +154,7 @@ class ResultController extends Controller
             $pairwise[$award->getId()] = $award->getOfficialResults() ? $award->getOfficialResults()->getSteps()['pairwise'] : null;
         }
 
-        return $this->render('resultsPairwise.twig', [
+        return $this->render('resultsPairwise.html.twig', [
             'awards' => $awards,
             'pairwise' => $pairwise
         ]);

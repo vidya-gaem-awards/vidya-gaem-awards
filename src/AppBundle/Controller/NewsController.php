@@ -26,7 +26,7 @@ class NewsController extends Controller
 
         $news = $query->getQuery()->getResult();
 
-        return $this->render('news.twig', [
+        return $this->render('news.html.twig', [
             'title' => 'News',
             'news' => $news
         ]);

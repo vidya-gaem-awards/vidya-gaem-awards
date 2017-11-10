@@ -68,7 +68,7 @@ class ReferrerController extends Controller
             return $b['latest'] <=> $a['latest'];
         });
 
-        return $this->render('referrers.twig', [
+        return $this->render('referrers.html.twig', [
             'title' => 'Referrers',
             'referrers' => $referrers
         ]);
