@@ -11,9 +11,9 @@
   {{ parent() }}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
   {% if award %}
-    <script src='/js/voting.js'></script>
+    <script src='{{ asset('js/voting.js') }}'></script>
   {% endif %}
-  <script src='/js/dumbshit.js'></script>
+  <script src='{{ asset('js/dumbshit.js') }}'></script>
 {% endblock %}
 
 {% block head %}
@@ -38,7 +38,7 @@
 {% block body %}
   <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
   <header>
-    <a href="{{ path('voting') }}"><img src="/2016images/vga_logo.png" id="thelogo" alt="oh god it's happening again"/></a>
+    <a href="{{ path('voting') }}"><img src="{{ asset('2016images/vga_logo.png') }}" id="thelogo" alt="oh god it's happening again"/></a>
     <h1>The 2017 Vidya Gaem Awards</h1>
     <h2>{{ voteText }}</h2>
   </header>
@@ -54,7 +54,7 @@
         <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
       </div>
       {% if votingOpen %}
-        <img src="/2016images/dontForget.png" id="dontforget" alt="Don't forget to hit submit"/>
+        <img src="{{ asset('2016images/dontForget.png') }}" id="dontforget" alt="Don't forget to hit submit"/>
       {% endif %}
     {% endif %}
 
@@ -62,7 +62,7 @@
       <div id="limitsDrag">
         <div id="nomineeColumn" class="column">
 
-          <img src="/2016images/pickYourNominees.png" width="204" height="70" alt="Pick your nominees">
+          <img src="{{ asset('2016images/pickYourNominees.png') }}" width="204" height="70" alt="Pick your nominees">
 
           {% for nominee in award.nominees | shuffle %}
 
@@ -70,8 +70,8 @@
               <div class="voteBox">
                 <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
                      data-nominee="{{ nominee.shortName }}">
-                  <img class="fakeBorder" src="/2016images/votebox_foreground.png">
-                  <img class="fakeBorder locked" src="/2016images/votebox_foreground_locked.png">
+                  <img class="fakeBorder" src="{{ asset('2016images/votebox_foreground.png') }}">
+                  <img class="fakeBorder locked" src="{{ asset('2016images/votebox_foreground_locked.png') }}">
                   <div class="info">
                     <div class="innerInfo">{{ nominee.flavorText | nl2br }}</div>
                   </div>
@@ -95,7 +95,7 @@
 
         {% if votingOpen or votingClosed %}
           <div id="voteColumn" class="column">
-            <img src="/2016images/dragAndDrop.png" width="307" height="70" alt="Drag and drop to vote"/>
+            <img src="{{ asset('2016images/dragAndDrop.png') }}" width="307" height="70" alt="Drag and drop to vote"/>
             {% for nominee in award.nominees %}
               <div id="voteBox{{ loop.index }}" class="voteBox">
               </div>

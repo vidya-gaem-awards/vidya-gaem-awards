@@ -17,7 +17,7 @@
       height: 235px;
       text-align: center;
       color: #1f1f1f;
-      background: #EEE url('/img/no-image-available.png') bottom right no-repeat;
+      background: #EEE url('{{ asset('img/no-image-available.png') }}') bottom right no-repeat;
       transition: 0.2s all;
     }
 
@@ -200,7 +200,7 @@
       margin: 0 50px;
       padding-top: 24px;
       height: 106px;
-      background: url(/2016images/title_bg.png) center center no-repeat;
+      background: url('{{ asset('2016images/title_bg.png') }}') center center no-repeat;
       text-align: center;
     }
 
@@ -234,7 +234,7 @@
 
   <div class="row">
     <div class="col-md-5" style="text-align: center;">
-      <img src="/2016images/vga_logo.png" alt="Logo of the 2016 Vidya Gaem Awards">
+      <img src="{{ asset('2016images/vga_logo.png') }}" alt="Logo of the 2016 Vidya Gaem Awards">
     </div>
     <div class="col-md-7" style="text-align: center; padding-top: 30px;">
       <h1>Winners of the 2017 Vidya&nbsp;Gaem&nbsp;Awards</h1>
