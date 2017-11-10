@@ -119,7 +119,7 @@ class UserListener
 
             $access
                 ->setCookieID($user->getRandomID())
-                ->setRoute($request->attributes->get('_route'))
+                ->setRoute($request->attributes->get('_route', ''))
                 ->setController($request->attributes->get('_controller'))
                 ->setRequestMethod($request->server->get('REQUEST_METHOD'))
                 ->setRequestString($request->server->get('REQUEST_URI'))
