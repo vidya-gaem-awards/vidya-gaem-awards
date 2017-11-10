@@ -382,7 +382,7 @@ class GameRelease
     /**
      * @return bool
      */
-    public function isSwitch(): bool
+    public function getSwitch(): bool
     {
         return $this->switch;
     }
