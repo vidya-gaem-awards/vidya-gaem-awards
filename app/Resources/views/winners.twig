@@ -12,6 +12,55 @@
       border-color: #f5e8c4;
       box-shadow:  0 0 15px rgb(247, 208, 89);
     }
+
+    .empty-image {
+      height: 235px;
+      text-align: center;
+      color: #1f1f1f;
+      background: #EEE url('/img/no-image-available.png') bottom right no-repeat;
+      transition: 0.2s all;
+    }
+
+    .empty-image.inactive {
+      display: none;
+    }
+
+    .uploadable .empty-image:hover {
+      color: #1565C0;
+    }
+
+    .uploadable .empty-image:hover .glyphicon {
+      animation: move 0.4s forwards;
+    }
+
+    .empty-image .glyphicon-cog {
+      animation: spin 2s infinite linear;
+    }
+
+    @keyframes move {
+      0% {
+        transform: translate(0px);
+      }
+      100% {
+        transform: translate(0px, -5px);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(359deg);
+      }
+    }
+
+    .empty-image .glyphicon {
+      font-size: 80px;
+      margin-top: 35px;
+      margin-bottom: 10px;
+      position: relative;
+    }
   </style>
 
   <script type="text/javascript">
@@ -19,16 +68,33 @@
       var fileUploadTarget;
 
       $('.uploadable').click(function (event) {
-        fileUploadTarget = $(event.target);
+        fileUploadTarget = $(event.currentTarget);
+
+        // The uploadable class is removed while the upload is in progress
+        if (!fileUploadTarget.hasClass('uploadable')) {
+            return;
+        }
+
         $('#fileInput').click();
       });
 
       $('#fileInput').change(function () {
         var target = fileUploadTarget;
-        var id = target.attr('data-id');
+        var image = fileUploadTarget.find('img');
+        var icon = fileUploadTarget.find('.glyphicon');
+        var emptyImage = fileUploadTarget.find('.empty-image');
 
+        if (image) {
+            image.remove();
+            emptyImage.removeClass('inactive');
+            emptyImage.find('.upload-help').text('Uploading...');
+        }
+
+        icon.removeClass('glyphicon-upload');
+        icon.addClass('glyphicon-cog');
+
+        var id = target.attr('data-id');
         $('#uploadAwardID').val(id);
-        target.attr('src', '/img/uploadImageHappening.png');
         target.removeClass('uploadable');
 
         var form = $('#fileForm')[0];
@@ -44,12 +110,21 @@
           dataType: 'json',
           success: function (response) {
             if (response.success) {
-              target.attr('src', response.filePath + '?t=' + new Date().getTime());
+                image = $('<img class="img-responsive center-block">');
+                image.appendTo(target);
+                image.hide();
+                image.attr('src', response.filePath + '?t=' + new Date().getTime());
+
+                image.bind('load', function () {
+                    emptyImage.addClass('inactive');
+                    image.show();
+                    target.addClass('uploadable');
+                });
             } else {
               alert('File upload error: ' + response.error);
-              target.attr('src', '/img/uploadImage.png');
+              image.attr('src', '/img/uploadImage.png');
+              target.addClass('uploadable');
             }
-            target.addClass('uploadable');
           }
         });
 
@@ -182,12 +257,24 @@
         <div class="award">
           <div class="row">
             <div class="col-md-4">
-              {% if award.winnerImage %}
-                <img class="winner img-responsive center-block {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}"
-                     src="{{ award.winnerImage | e('html_attr') }}" data-id="{{ award.id }}">
-              {% elseif is_granted('ROLE_AWARDS_EDIT') %}
-                <img class="winner img-responsive center-block uploadable" src="/img/uploadImage.png"
-                     data-id="{{ award.id }}">
+              {% if award.winnerImage or is_granted('ROLE_AWARDS_EDIT') %}
+              <div class="winner {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}"
+                   title="{{ is_granted('ROLE_AWARDS_EDIT') ? 'Click here to upload an image for this award winner' : '' }}"
+                   data-id="{{ award.id }}">
+                {% if award.winnerImage %}
+                  <img class="img-responsive center-block" src="{{ award.winnerImage | e('html_attr') }}">
+                {% endif %}
+                {% if is_granted('ROLE_AWARDS_EDIT') %}
+                  <div class="empty-image {{ award.winnerImage ? 'inactive' : '' }}" >
+                    <div class="glyphicon glyphicon-upload"></div>
+                    <div style="font-weight: bold; font-size: 18px;" class="upload-help">
+                      Click here to upload an image
+                    </div>
+                    <div>Minimum dimensions: 345 x 245</div>
+                    <div>Image will scale as needed</div>
+                  </div>
+                {% endif %}
+              </div>
               {% endif %}
             </div>
             <div class="col-md-8">
