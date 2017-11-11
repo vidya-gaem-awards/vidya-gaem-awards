@@ -29,6 +29,8 @@ class ReferrerController extends Controller
         // Due to the magic of the internet, multiple URLs can resolve to one website.
         // Here we try and combine those URLs as much as possible to get more accurate data.
         foreach ($result as $referer) {
+            $referer['latest'] = new \DateTime($referer['latest']);
+
             // Remove the http and www prefixes, as well as the trailing slash
             $key = rtrim(preg_replace('{https?://(www\.)?}', '', $referer['referer']), '/');
 
