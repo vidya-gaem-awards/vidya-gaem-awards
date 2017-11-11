@@ -52,6 +52,10 @@
     .animate-in {
       animation: 2s ease-out 6s forwards appear;
     }
+
+    .animate-in-delay {
+      animation: 2s ease-out 7s forwards appear;
+    }
   </style>
 
   <script type="text/javascript">
@@ -77,8 +81,11 @@
           TO BE<br>
           /v/GAs.
         </div>
-        <div style="font-size: 30px; margin-top: 80px; margin-bottom: 80px; opacity: 0;" class="animate-in">
+        <div style="font-size: 30px; margin-top: 80px; opacity: 0;" class="animate-in">
           Nominations open December&nbsp;8.
+        </div>
+        <div style="font-size: 20px; margin-top: 20px; margin-bottom: 80px; opacity: 0;" class="animate-in-delay">
+          <a href="{{ path('awards') }}">Rate the award categories now.</a>
         </div>
       </div>
       <div class="col-xs-6" style="opacity: 0.5; font-weight: 400; text-align: right;" id="awardList">
