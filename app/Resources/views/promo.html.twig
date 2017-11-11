@@ -8,7 +8,59 @@
       font-family: 'Roboto', sans-serif;
       font-weight: 300;
     }
+
+    @keyframes title {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes appear {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes award {
+      0% {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #title {
+      opacity: 0;
+      animation: 2s ease-out forwards title;
+    }
+
+    #awardList .award {
+      opacity: 0;
+    }
+
+    .animate-in {
+      animation: 2s ease-out 6s forwards appear;
+    }
   </style>
+
+  <script type="text/javascript">
+      $('.award').each(function(index){
+          $(this).css({
+              'animation': '1s ease-out ' + (index * 75 + 2000) + 'ms forwards award'
+          });
+      });
+  </script>
 {% endblock %}
 
 {% block css %}
@@ -19,19 +71,19 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-6">
-        <div style="font-size: 80px; line-height: 77px; font-weight: 100;">
+        <div style="font-size: 80px; line-height: 77px; font-weight: 100;" id="title">
           IT'S<br>
           OKAY<br>
           TO BE<br>
           /v/GAs.
         </div>
-        <div style="font-size: 30px; margin-top: 80px; margin-bottom: 80px;">
+        <div style="font-size: 30px; margin-top: 80px; margin-bottom: 80px; opacity: 0;" class="animate-in">
           Nominations open December&nbsp;8.
         </div>
       </div>
-      <div class="col-xs-6" style="opacity: 0.5; font-weight: 400; text-align: right;">
+      <div class="col-xs-6" style="opacity: 0.5; font-weight: 400; text-align: right;" id="awardList">
         {% for award in awards %}
-          <div><em>{{ award.name }}</em></div>
+          <div class="award" id="award-{{ award.id }}"><em>{{ award.name }}</em></div>
         {% endfor %}
       </div>
     </div>
