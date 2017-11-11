@@ -3,6 +3,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Action;
 use AppBundle\Service\AuditService;
+use AppBundle\Service\ConfigService;
 use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -160,18 +161,23 @@ class ResultController extends Controller
         ]);
     }
 
-    public function winnerImageUploadAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, AuditService $auditService)
+    public function winnerImageUploadAction(EntityManagerInterface $em, Request $request, AuditService $auditService, ConfigService $configService)
     {
+        if ($configService->isReadOnly()) {
+            return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
+        }
+
         $id = $request->request->get('id') ?? false;
 
         /** @var Award $award */
         $award = $em->getRepository(Award::class)->find($id);
 
-        if (!$award || ($award->isSecret() && !$authChecker->isGranted('ROLE_AWARDS_SECRET'))) {
+        if (!$award) {
             return $this->json(['error' => 'Invalid award specified.']);
         }
 
         try {
+            // TODO: use symfony request object for the file
             $imagePath = FileSystem::handleUploadedFile($_FILES['file'], 'winners', $award->getId());
         } catch (\Exception $e) {
             return $this->json(['error' => $e->getMessage()]);

@@ -91,6 +91,7 @@
         }
 
         icon.removeClass('glyphicon-upload');
+        icon.removeClass('glyphicon-alert');
         icon.addClass('glyphicon-cog');
 
         var id = target.attr('data-id');
@@ -121,9 +122,11 @@
                     target.addClass('uploadable');
                 });
             } else {
-              alert('File upload error: ' + response.error);
-              image.attr('src', '/img/uploadImage.png');
-              target.addClass('uploadable');
+                alert('File upload error: ' + response.error);
+                emptyImage.find('.upload-help').text('Upload failed, click to try again');
+                icon.removeClass('glyphicon-cog');
+                icon.addClass('glyphicon-alert');
+                target.addClass('uploadable');
             }
           }
         });
