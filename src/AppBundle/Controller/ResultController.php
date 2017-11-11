@@ -8,7 +8,6 @@ use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 use VGA\FileSystem;
 use AppBundle\Entity\Award;
@@ -177,8 +176,7 @@ class ResultController extends Controller
         }
 
         try {
-            // TODO: use symfony request object for the file
-            $imagePath = FileSystem::handleUploadedFile($_FILES['file'], 'winners', $award->getId());
+            $imagePath = FileSystem::handleUploadedFile($request->files->get('file'), 'winners', $award->getId());
         } catch (\Exception $e) {
             return $this->json(['error' => $e->getMessage()]);
         }
