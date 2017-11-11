@@ -13,6 +13,7 @@ class Config
         'countdown' => 'Stream countdown',
         'stream' => 'Stream page',
         'finished' => 'Post-stream "thank you" page',
+        'promo' => 'Special promo page',
     ];
 
     const DEFAULT_TIMEZONE = 'America/New_York';

@@ -1,0 +1,39 @@
+{% extends 'base/master.html.twig' %}
+
+{% block fullTitle '2017 Vidya Gaem Awards' %}
+
+{% block head %}
+  <style type="text/css">
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+    }
+  </style>
+{% endblock %}
+
+{% block css %}
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6">
+        <div style="font-size: 80px; line-height: 77px; font-weight: 100;">
+          IT'S<br>
+          OKAY<br>
+          TO BE<br>
+          /v/GAs.
+        </div>
+        <div style="font-size: 30px; margin-top: 80px; margin-bottom: 80px;">
+          Nominations open December&nbsp;8.
+        </div>
+      </div>
+      <div class="col-xs-6" style="opacity: 0.5; font-weight: 400; text-align: right;">
+        {% for award in awards %}
+          <div><em>{{ award.name }}</em></div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Award;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\News;
@@ -22,6 +23,24 @@ class IndexController extends Controller
         return $this->render('index.html.twig', [
             'title' => 'Home',
             'news' => $news
+        ]);
+    }
+
+    public function promoAction(EntityManagerInterface $em)
+    {
+        $awards = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a')
+            ->where('a.secret = false')
+            ->andWhere('a.enabled = true')
+            ->orderBy('a.order', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        shuffle($awards);
+
+        return $this->render('promo.html.twig', [
+            'awards' => $awards
         ]);
     }
 }

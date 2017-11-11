@@ -28,6 +28,12 @@ $routes->add('home', new Route(
     ['_controller' => 'AppBundle:Index:index']
 ));
 
+$routes->add('promo', new Route(
+    '/promo',
+    ['_controller' => 'AppBundle:Index:promo']
+));
+
+
 //
 // NEWS
 //
