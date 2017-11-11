@@ -1,8 +1,12 @@
 <?php
 namespace VGA\Controllers;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use VGA\FileSystem;
+use VGA\Model\Action;
 use VGA\Model\Category;
+use VGA\Model\TableHistory;
 
 class ResultController extends BaseController
 {
@@ -130,5 +134,56 @@ class ResultController extends BaseController
             'pairwise' => $pairwise
         ]));
         $response->send();
+    }
+
+    public function winnerImageUploadAction()
+    {
+        $response = new JsonResponse();
+        if ($this->config->isReadOnly()) {
+            $response->setData(['error' => 'The site is currently in read-only mode. No changes can be made.']);
+            $response->send();
+            return;
+        }
+
+        $post = $this->request->request;
+        $id = $post->get('id') ?? false;
+
+        /** @var Category $award */
+        $award = $this->em->getRepository(Category::class)->find($id);
+
+        if (!$award) {
+            $response->setData(['error' => 'Invalid award specified.']);
+            $response->send();
+            return;
+        }
+
+        try {
+            $imagePath = FileSystem::handleUploadedFile($_FILES['file'], 'winners', $award->getId());
+        } catch (\Exception $e) {
+            $response->setData(['error' => $e->getMessage()]);
+            $response->send();
+            return;
+        }
+
+        $award->setWinnerImage($imagePath);
+        $this->em->persist($award);
+
+        $action = new Action('winner-image-updated');
+        $action->setUser($this->user)
+            ->setPage(__CLASS__)
+            ->setData1($post->get('id'));
+        $this->em->persist($action);
+
+        $history = new TableHistory();
+        $history->setUser($this->user)
+            ->setTable('Category')
+            ->setEntry($post->get('id'))
+            ->setValues(['image' => $imagePath]);
+        $this->em->persist($history);
+        $this->em->flush();
+
+        $response->setData(['success' => true, 'filePath' => $imagePath]);
+        $response->send();
+        return;
     }
 }

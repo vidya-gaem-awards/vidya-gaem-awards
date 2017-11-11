@@ -401,14 +401,24 @@ $routes->add('voteWithCode', new Route(
         'action' => 'codeEntry'
     ]
 ));
-$routes->add('simpleResults', new Route(
+$routes->add('simpleResults', (new Route(
     '/winners',
     [
         'controller' => Controllers\ResultController::class,
         'action' => 'simple',
 //        'permission' => 'voting-results'
     ]
-));
+))->setMethods('GET'));
+
+$routes->add('winnerImageUpload', (new Route(
+    '/winners',
+    [
+        'controller' => Controllers\ResultController::class,
+        'action' => 'winnerImageUpload',
+        'permission' => 'categories-edit'
+    ]
+))->setMethods('POST'));
+
 $routes->add('detailedResults', new Route(
     '/results/{all}',
     [

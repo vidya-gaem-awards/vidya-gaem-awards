@@ -4,6 +4,63 @@
 
 {% block content %}
   <style type="text/css">
+    .uploadable {
+      cursor: pointer;
+    }
+
+    .uploadable:hover {
+      box-shadow:  0 0 15px rgb(245, 91, 245);
+    }
+
+    .empty-image {
+      height: 235px;
+      text-align: center;
+      color: #1f1f1f;
+      background: #EEE url('/img/no-image-available.png') bottom right no-repeat;
+      transition: 0.2s all;
+    }
+
+    .empty-image.inactive {
+      display: none;
+    }
+
+    .uploadable .empty-image:hover {
+      color: #1565C0;
+    }
+
+    .uploadable .empty-image:hover .glyphicon {
+      animation: move 0.4s forwards;
+    }
+
+    .empty-image .glyphicon-cog {
+      animation: spin 2s infinite linear;
+    }
+
+    @keyframes move {
+      0% {
+        transform: translate(0px);
+      }
+      100% {
+        transform: translate(0px, -5px);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(359deg);
+      }
+    }
+
+    .empty-image .glyphicon {
+      font-size: 80px;
+      margin-top: 35px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
     @font-face {
       font-family: 'modern typewriter';
       src: url('/fonts/modern typewriter.eot');
@@ -69,6 +126,7 @@
     .category ul {
       list-style-type: none;
       margin: 0;
+      padding-left: 0;
       font-size: 24px;
     }
 
@@ -173,6 +231,84 @@
     }
   </style>
 
+  <script type="text/javascript">
+      $(document).ready(function () {
+          var fileUploadTarget;
+
+          $('.uploadable').click(function (event) {
+              fileUploadTarget = $(event.currentTarget);
+
+              // The uploadable class is removed while the upload is in progress
+              if (!fileUploadTarget.hasClass('uploadable')) {
+                  return;
+              }
+
+              $('#fileInput').click();
+          });
+
+          $('#fileInput').change(function () {
+              var target = fileUploadTarget;
+              var image = fileUploadTarget.find('img');
+              var icon = fileUploadTarget.find('.glyphicon');
+              var emptyImage = fileUploadTarget.find('.empty-image');
+
+              if (image) {
+                  image.remove();
+                  emptyImage.removeClass('inactive');
+                  emptyImage.find('.upload-help').text('Uploading...');
+              }
+
+              icon.removeClass('glyphicon-upload');
+              icon.removeClass('glyphicon-alert');
+              icon.addClass('glyphicon-cog');
+
+              var id = target.attr('data-id');
+              $('#uploadAwardID').val(id);
+              target.removeClass('uploadable');
+
+              var form = $('#fileForm')[0];
+              var data = new FormData(form);
+
+              $.ajax({
+                  type: 'post',
+                  url: '/winners',
+                  data: data,
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  dataType: 'json',
+                  success: function (response) {
+                      if (response.success) {
+                          image = $('<img class="img-responsive center-block">');
+                          image.appendTo(target);
+                          image.hide();
+                          image.attr('src', response.filePath + '?t=' + new Date().getTime());
+
+                          image.bind('load', function () {
+                              emptyImage.addClass('inactive');
+                              image.show();
+                              target.addClass('uploadable');
+                          });
+                      } else {
+                          alert('File upload error: ' + response.error);
+                          emptyImage.find('.upload-help').text('Upload failed, click to try again');
+                          icon.removeClass('glyphicon-cog');
+                          icon.addClass('glyphicon-alert');
+                          target.addClass('uploadable');
+                      }
+                  }
+              });
+
+              $('#fileInput').val('');
+          });
+      });
+  </script>
+
+  <form enctype="multipart/form-data" id="fileForm" style="display: none;">
+    <input type="hidden" name="id" id="uploadAwardID">
+    <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif">
+  </form>
+
     <div class="zig"></div>
 
     <div class="row">
@@ -200,8 +336,24 @@
         <div class="category">
           <div class="row">
             <div class="col-md-4">
-              {% if category.winnerImage %}
-                <img class="winner img-responsive center-block" src="{{ category.winnerImage | e('html_attr') }}">
+              {% if category.winnerImage or user.canDo('categories-edit') %}
+                <div class="winner {{ user.canDo('categories-edit') ? 'uploadable' : '' }}"
+                     title="{{ user.canDo('categories-edit') ? 'Click here to upload an image for this award winner' : '' }}"
+                     data-id="{{ category.id }}">
+                  {% if category.winnerImage %}
+                    <img class="img-responsive center-block" src="{{ category.winnerImage | e('html_attr') }}">
+                  {% endif %}
+                  {% if user.canDo('categories-edit') %}
+                    <div class="empty-image {{ category.winnerImage ? 'inactive' : '' }}" >
+                      <div class="glyphicon glyphicon-upload"></div>
+                      <div style="font-weight: bold; font-size: 18px;" class="upload-help">
+                        Click here to upload an image
+                      </div>
+                      <div>Minimum dimensions: 345 x 245</div>
+                      <div>Image will scale as needed</div>
+                    </div>
+                  {% endif %}
+                </div>
               {% endif %}
             </div>
             <div class="col-md-8">
