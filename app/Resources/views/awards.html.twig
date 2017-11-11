@@ -19,7 +19,7 @@
     }
 
     #video-game-collage .top {
-      top: 0;
+      /*top: 0;*/
     }
 
     #video-game-collage .bottom {
@@ -161,14 +161,21 @@
       </div>
     </div>
 
-    <div class="col-md-6" id="video-games">
-      <a href="{{ path('videoGames') }}">
-        <div id="video-game-collage">
-          <img class="img-responsive" src="{{ asset('img/collage.jpg') }}">
-          <div class="top">Forgotten what vidya you played earlier this year?</div>
-          <div class="bottom">Click here for a list of video&nbsp;games from 2017.</div>
-        </div>
-      </a>
+    <div class="col-md-6">
+      <div class="alert alert-info">
+        <strong>Note:</strong> awards may be added, removed, or renamed in response to nominations and feedback.
+        The awards are not final until the voting page goes live.
+      </div>
+
+      <div id="video-games">
+        <a href="{{ path('videoGames') }}">
+          <div id="video-game-collage">
+            <div class="top">Forgotten what vidya you played earlier this year?</div>
+            <img class="img-responsive" src="{{ asset('img/collage.jpg') }}">
+            <div class="bottom">Click here for a list of video&nbsp;games from 2017.</div>
+          </div>
+        </a>
+      </div>
     </div>
 
     <div class="col-md-6" id="award-info" style="display: none;">
