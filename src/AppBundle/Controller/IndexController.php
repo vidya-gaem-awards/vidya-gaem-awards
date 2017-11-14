@@ -5,6 +5,7 @@ use AppBundle\Entity\Award;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\News;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class IndexController extends Controller
 {
@@ -26,7 +27,7 @@ class IndexController extends Controller
         ]);
     }
 
-    public function promoAction(EntityManagerInterface $em)
+    public function promoAction(EntityManagerInterface $em, SessionInterface $session)
     {
         $awards = $em->createQueryBuilder()
             ->select('a')
@@ -39,8 +40,16 @@ class IndexController extends Controller
 
         shuffle($awards);
 
+        // The full animation takes 10 seconds to run. This gets really tedious, so show a much shorter animation
+        // on every subsequent page load.
+        $fastAnimations = $session->get('fastPromoAnimations', false);
+        if (!$fastAnimations) {
+            $session->set('fastPromoAnimations', true);
+        }
+
         return $this->render('promo.html.twig', [
-            'awards' => $awards
+            'awards' => $awards,
+            'fastAnimations' => $fastAnimations,
         ]);
     }
 }

@@ -42,7 +42,7 @@
 
     #title {
       opacity: 0;
-      animation: 2s ease-out forwards title;
+      animation: {{ fastAnimations ? '2s' : '2s' }} ease-out forwards title;
     }
 
     #awardList .award {
@@ -50,18 +50,20 @@
     }
 
     .animate-in {
-      animation: 2s ease-out 6s forwards appear;
+      opacity: 0;
+      animation: {{ fastAnimations ? '1s' : '2s' }} ease-out {{ fastAnimations ? '0ms' : '6s' }} forwards appear;
     }
 
     .animate-in-delay {
-      animation: 2s ease-out 7s forwards appear;
+      opacity: 0;
+      animation: {{ fastAnimations ? '1s' : '2s' }} ease-out {{ fastAnimations ? '0s': '7s' }} forwards appear;
     }
   </style>
 
   <script type="text/javascript">
       $('.award').each(function(index){
           $(this).css({
-              'animation': '1s ease-out ' + (index * 75 + 2000) + 'ms forwards award'
+              'animation': '1s ease-out ' + (index * {{ fastAnimations ? 0 : 75 }} + {{ fastAnimations ? 1000 : 2000 }}) + 'ms forwards award'
           });
       });
   </script>
@@ -81,10 +83,10 @@
           TO BE<br>
           /v/GAs.
         </div>
-        <div style="font-size: 30px; margin-top: 80px; opacity: 0;" class="animate-in">
+        <div style="font-size: 30px; margin-top: 80px;" class="animate-in">
           Nominations open December&nbsp;8.
         </div>
-        <div style="font-size: 20px; margin-top: 20px; margin-bottom: 80px; opacity: 0;" class="animate-in-delay">
+        <div style="font-size: 20px; margin-top: 20px; margin-bottom: 80px;" class="animate-in-delay">
           <a href="{{ path('awards') }}">Rate the award categories now.</a>
         </div>
       </div>
