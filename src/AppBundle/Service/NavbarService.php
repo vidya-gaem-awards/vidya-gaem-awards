@@ -12,17 +12,15 @@ use Symfony\Component\Security\Http\AccessMapInterface;
 class NavbarService
 {
     private $configService;
-    private $navbarItems;
     private $router;
     private $accessMap;
     private $authChecker;
     private $tokenStorage;
 
-    public function __construct($navbarItems, ConfigService $configService, RouterInterface $router, AccessMapInterface $accessMap, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
+    public function __construct(ConfigService $configService, RouterInterface $router, AccessMapInterface $accessMap, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
     {
-        $this->navbarItems = $navbarItems;      // Parameter containing the menu items to show
         $this->router = $router;                // Used to get the RouteCollection which we use to fetch the route for each item
-        $this->configService = $configService;  // Used to determine which pages should be public
+        $this->configService = $configService;  // Used to get the list of navbar items, and to determine which pages should be public
         $this->accessMap = $accessMap;          // Used to get role restrictions from security.yml
         $this->authChecker = $authChecker;      // Used to get roles for the current user
         $this->tokenStorage = $tokenStorage;    // Used to check if the user is logged in (authChecker throws exceptions if not)
@@ -31,7 +29,7 @@ class NavbarService
     public function getItems()
     {
         $navbar = [];
-        foreach ($this->navbarItems as $routeName => $title) {
+        foreach ($this->configService->getConfig()->getNavbarItems() as $routeName => $title) {
             if ($route = $this->router->getRouteCollection()->get($routeName)) {
                 if ($this->canAccessRoute($routeName)) {
                     $navbar[$routeName] = $title;

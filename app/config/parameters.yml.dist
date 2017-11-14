@@ -17,6 +17,3 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
-
-    # This can be changed to a multi-line yaml array in parameters.yml
-    app.navbar_items: { home: 'Home', videoGames: 'Vidya in 2017', awards: 'Awards and Nominations', config: 'Config' }

@@ -33,3 +33,6 @@ AppBundle\Entity\Config:
       type: string
       length: 50
       nullable: false
+    navbarItems:
+      type: json_array
+      nullable: false

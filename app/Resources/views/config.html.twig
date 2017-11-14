@@ -29,7 +29,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="votingStart" class="col-sm-4 control-label">Voting Start</label>
+              <label for="votingStart" class="col-sm-4 control-label">Voting start</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="votingStart" name="votingStart"
                        value="{{ config.votingStart ? config.votingStart | date('Y-m-d H:i:s') : '' }}"
@@ -38,7 +38,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="votingEnd" class="col-sm-4 control-label">Voting End</label>
+              <label for="votingEnd" class="col-sm-4 control-label">Voting end</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="votingEnd" name="votingEnd"
                        value="{{ config.votingEnd ? config.votingEnd | date('Y-m-d H:i:s') : '' }}"
@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="streamTime" class="col-sm-4 control-label">Stream Time</label>
+              <label for="streamTime" class="col-sm-4 control-label">Stream time</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="streamTime" name="streamTime"
                        value="{{ config.streamTime ? config.streamTime | date('Y-m-d H:i:s') : '' }}"
@@ -56,7 +56,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="defaultPage" class="col-sm-4 control-label">Default Page</label>
+              <label for="defaultPage" class="col-sm-4 control-label">Default page</label>
               <div class="col-sm-8">
                 <select class="form-control" id="defaultPage" name="defaultPage">
                   {% for page, title in config.allowedDefaultPages %}
@@ -70,10 +70,22 @@
                 </p>
               </div>
             </div>
+            <div class="form-group">
+              <label for="navigationMenu" class="col-sm-4 control-label">Navigation menu</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" rows="9" id="navigationMenu" name="navigationMenu">
+                  {{- navigationBarConfig -}}
+                </textarea>
+                <p class="help-block">
+                  This controls the links that appear in the top navigation bar.<br>
+                  A link will only be shown if the user has access to it.
+                </p>
+              </div>
+            </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="col-sm-4 control-label">Public Access</label>
+              <label class="col-sm-4 control-label">Public access</label>
               <div class="col-sm-8">
                 <p class="help-block">The pages listed below will not be publicly accessible unless they are
                   checked.</p>
@@ -160,6 +172,21 @@
                     </p>
                   </label>
                 </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="availableRoutes" class="col-sm-4 control-label">Available routes</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="availableRoutes">
+                  {% for routeName, route in routes %}
+                    <option>{{ routeName }} ({{ route.path }})</option>
+                  {% endfor %}
+                </select>
+                <p class="help-block">
+                  This is a list of routes you can use in the navigation menu.<br>
+                  The dropdown doesn't do anything, it's just for reference.
+                </p>
               </div>
             </div>
           </div>

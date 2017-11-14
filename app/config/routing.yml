@@ -159,6 +159,8 @@ votingSubmission:
 voteWithCode:
     path:     /vote/v/{code}
     defaults: { _controller: AppBundle:Voting:codeEntry }
+    requirements:
+        code: '.+'
 
 #
 # RESULTS

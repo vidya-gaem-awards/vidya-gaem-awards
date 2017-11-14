@@ -38,9 +38,6 @@ services:
         resource: '../../src/AppBundle/Service'
         public: true
 
-    AppBundle\Service\NavbarService:
-        arguments: ['%app.navbar_items%']
-
     AppBundle\EventListener\UserListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request }

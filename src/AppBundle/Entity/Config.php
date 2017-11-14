@@ -42,6 +42,9 @@ class Config
     /** @var string */
     private $timezone = self::DEFAULT_TIMEZONE;
 
+    /** @var array */
+    private $navbarItems = ['home' => 'Home', 'config' => 'Config'];
+
     /**
      * @return \DateTime
      */
@@ -259,5 +262,23 @@ class Config
     public function getId(): string
     {
         return $this->id;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNavbarItems(): array
+    {
+        return $this->navbarItems;
+    }
+
+    /**
+     * @param array $navbarItems
+     * @return Config
+     */
+    public function setNavbarItems(array $navbarItems): Config
+    {
+        $this->navbarItems = $navbarItems;
+        return $this;
     }
 }

@@ -9,10 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\TableHistory;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouterInterface;
 
 class ConfigController extends Controller
 {
-    public function indexAction(ConfigService $config)
+    public function indexAction(ConfigService $config, RouterInterface $router)
     {
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
         $timezonesByArea = [];
@@ -21,14 +24,22 @@ class ConfigController extends Controller
             $timezonesByArea[$area][$timezone] = str_replace('_', ' ', $timezone);
         }
 
+        $navbarItems = $config->getConfig()->getNavbarItems();
+        $navbarConfig = [];
+        foreach ($navbarItems as $routeName => $label) {
+            $navbarConfig[] = "$routeName: $label";
+        }
+
         return $this->render('config.html.twig', [
             'title' => 'Config',
             'config' => $config->getConfig(),
+            'navigationBarConfig' => implode("\n", $navbarConfig),
+            'routes' => $this->getValidNavbarRoutes($router->getRouteCollection()),
             'timezones' => $timezonesByArea,
         ]);
     }
 
-    public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService)
+    public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService, RouterInterface $router)
     {
         $config = $configService->getConfig();
         
@@ -94,6 +105,30 @@ class ConfigController extends Controller
         $config->setDefaultPage($post->get('defaultPage'));
         $config->setPublicPages(array_keys($post->get('publicPages', [])));
 
+        $navbarItems = explode("\n", $post->get('navigationMenu'));
+        $navbarItems = array_map(function ($line) {
+            $elements = explode(":", trim($line));
+            return array_map('trim', $elements);
+        }, $navbarItems);
+        $navbarItems = array_column($navbarItems, 1, 0);
+
+        $navbarError = false;
+        $validRoutes = $this->getValidNavbarRoutes($router->getRouteCollection());
+        foreach ($navbarItems as $routeName => $label) {
+            if (!isset($validRoutes[$routeName])) {
+                $this->addFlash('error', 'Invalid route specified in the navigation menu config (' . $routeName . ').');
+                $navbarError = $error = true;
+            }
+            if (empty($label)) {
+                $this->addFlash('error', 'No label provided for route ' . $routeName . ' in the navigation menu config.');
+                $navbarError = $error = true;
+            }
+        }
+
+        if (!$navbarError) {
+            $config->setNavbarItems($navbarItems);
+        }
+
         $em->persist($config);
         $em->flush();
 
@@ -107,5 +142,37 @@ class ConfigController extends Controller
         }
 
         return $this->redirectToRoute('config');
+    }
+
+    /**
+     * Gets an array of routes that can be used in the top navigation bar.
+     * @param RouteCollection $routeCollection
+     * @return Route[] An array of routes, indexed by the route name.
+     */
+    private function getValidNavbarRoutes(RouteCollection $routeCollection)
+    {
+        $routes = array_filter($routeCollection->all(), function (Route $route, $routeName) {
+            // Ignore internal routes (includes the web profiler routes and login/logout)
+            if ($routeName[0] === '_' || !$route->getDefault('_controller')) {
+                return false;
+            }
+
+            // Ignore POST-only routes
+            if ($route->getMethods() === ['POST']) {
+                return false;
+            }
+
+            // Ignore any routes with required URL parameters
+            foreach ($route->getRequirements() as $parameter => $requirement) {
+                if (!array_key_exists($parameter, $route->getDefaults())) {
+                    return false;
+                }
+            }
+
+            return true;
+        }, ARRAY_FILTER_USE_BOTH);
+
+        ksort($routes);
+        return $routes;
     }
 }
