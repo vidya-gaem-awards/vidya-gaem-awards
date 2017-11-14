@@ -42,17 +42,17 @@ security:
         - { path: ^/news/delete, roles: ROLE_NEWS_MANAGE }
         - { path: ^/vidya-in-2017, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }
         - { path: ^/vidya-in-2017, roles: ROLE_ADD_VIDEO_GAME, methods: [POST] }
-        - { path: ^/crew, roles: ROLE_PROFILE_VIEW }
+        - { path: ^/crew/.+/edit, roles: ROLE_PROFILE_EDIT_DETAILS }
         - { path: ^/crew/new, roles: ROLE_PROFILE_ADD_USER }
         - { path: ^/crew/search, roles: ROLE_PROFILE_ADD_USER }
-        - { path: ^/crew/.+/edit, roles: ROLE_PROFILE_EDIT_DETAILS }
-        - { path: ^/awards, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/crew, roles: ROLE_PROFILE_VIEW }
         - { path: ^/awards/manage, roles: ROLE_AWARDS_FEEDBACK, methods: [GET] }
         - { path: ^/awards/manage, roles: ROLE_AWARDS_EDIT, methods: [POST] }
+        - { path: ^/awards, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/nominees, roles: ROLE_NOMINATIONS_VIEW, methods: [GET] }
         - { path: ^/nominees, roles: ROLE_NOMINATIONS_EDIT, methods: [POST] }
-        - { path: ^/vote, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/vote/code, roles: ROLE_VOTING_VIEW }
+        - { path: ^/vote, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/winners, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }
         - { path: ^/winners, roles: ROLE_AWARDS_EDIT, methods: [POST] }
         - { path: ^/results, roles: IS_AUTHENTICATED_ANONYMOUSLY }
