@@ -159,7 +159,7 @@
         <div
             style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
           Official Nominees: <span id="official-count">{{ award.nominees | length }}</span>
-          {% if is_granted('ROLE_NOMINATIONS_EDIT') %}
+          {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
             <button class="btn btn-default btn-xs" type="button" id="new" style="margin-left: 15px;">
               <span class="glyphicon glyphicon-plus"></span> New Nominee
             </button>
@@ -173,7 +173,7 @@
               <header>
                 <p>ID: {{ nominee.shortName }}</p>
               </header>
-              {% if is_granted('ROLE_NOMINATIONS_EDIT') %}
+              {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
                 <form>
                   <button class="btn btn-default" type="button" name="edit">Edit</button>
                   <button class="btn btn-default" type="button" name="delete">Delete</button>

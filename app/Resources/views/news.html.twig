@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  {% if is_granted('ROLE_NEWS_MANAGE') %}
+  {% if is_granted('ROLE_NEWS_MANAGE') and not configService.isReadOnly %}
     <div class="row">
       <div class="col-md-8">
         <div class="well">
@@ -47,7 +47,7 @@
             {% if is_granted('ROLE_NEWS_VIEW_USER') %}
               &ndash; <a href="https://steamcommunity.com/profiles/{{ item.user.steamID }}">{{ item.user.name }}</a>
             {% endif %}
-            {% if is_granted('ROLE_NEWS_MANAGE') %}
+            {% if is_granted('ROLE_NEWS_MANAGE') and not configService.isReadOnly %}
               <button type="submit" class="btn btn-danger btn-xs" title="Delete this news item"
                       onclick="return confirm('Are you sure you want to delete this news item?')">
                 <span class="glyphicon glyphicon-trash"></span>

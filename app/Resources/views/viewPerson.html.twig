@@ -31,7 +31,7 @@
       </li>
     </ul>
 
-    {% if is_granted('ROLE_PROFILE_EDIT_DETAILS') %}
+    {% if is_granted('ROLE_PROFILE_EDIT_DETAILS') and not configService.isReadOnly %}
       <a class="btn btn-primary" href="{{ path('editPerson', {'steamID': user.steamID}) }}">Edit user information</a>
     {% endif %}
 
@@ -40,18 +40,23 @@
         <h2>Permissions</h2>
 
         {% if user.permissions | length > 0 %}
-          <p>Click on a permission to remove it. Hover over the permission for more details.</p>
+          <p>
+            {% if not configService.isReadOnly %}
+              Click on a permission to remove it.
+            {% endif %}
+            Hover over the permission for more details.</p>
           <form method="POST" action="{{ path('editPerson', {'steamID': user.steamID}) }}"
                 style="margin-bottom: 25px;">
             {% for permission in user.permissions %}
               <button class="btn btn-danger" name="RemoveGroup" value="{{ permission.id }}"
-                      title="{{ permission.description }}">
+                      title="{{ permission.description }}" {{ configService.isReadOnly ? 'disabled' : '' }}>
                 {{ permission.id }}
               </button>&nbsp;
             {% endfor %}
           </form>
         {% endif %}
 
+        {% if not configService.isReadOnly %}
         <form method="POST" action="{{ path('editPerson', {'steamID': user.steamID}) }}">
           <select class="input-small" name="GroupName" style="margin-bottom: 3px;">
             {% for permission in permissions if permission not in user.permissions %}
@@ -66,12 +71,13 @@
           <input type="submit" class="btn btn-success" name="AddGroup" value="Add permission"
                  style="margin-bottom: 5px;">
         </form>
+        {% endif %}
       </div>
     {% endif %}
   </div>
 
   <div class="col-md-6">
-    {% if is_granted('ROLE_PROFILE_EDIT_NOTES') %}
+    {% if is_granted('ROLE_PROFILE_EDIT_NOTES') and not configService.isReadOnly %}
       <h2>
         Notes
         <small><a href="#" id="notes-edit"

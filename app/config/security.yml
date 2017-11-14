@@ -43,8 +43,8 @@ security:
         - { path: ^/vidya-in-2017, roles: [CONDITIONALLY_PUBLIC, ROLE_ADD_VIDEO_GAME], methods: [GET] }
         - { path: ^/vidya-in-2017, roles: ROLE_ADD_VIDEO_GAME, methods: [POST] }
         - { path: ^/crew/.+/edit, roles: ROLE_PROFILE_EDIT_DETAILS }
-        - { path: ^/crew/new, roles: ROLE_PROFILE_ADD_USER }
-        - { path: ^/crew/search, roles: ROLE_PROFILE_ADD_USER }
+        - { path: ^/crew/new, roles: ROLE_ADD_USER }
+        - { path: ^/crew/search, roles: ROLE_ADD_USER }
         - { path: ^/crew, roles: ROLE_PROFILE_VIEW }
         - { path: ^/awards/manage, roles: ROLE_AWARDS_FEEDBACK, methods: [GET] }
         - { path: ^/awards/manage, roles: ROLE_AWARDS_EDIT, methods: [POST] }

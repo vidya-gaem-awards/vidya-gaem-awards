@@ -187,8 +187,8 @@
 
         <div style="text-align: center; margin-bottom: 10px;">
           <div class="btn-group" id="award-voting">
-            <button class="btn btn-default" id="thumbs-up">This award is good</button>
-            <button class="btn btn-default" id="thumbs-down">This award is shit</button>
+            <button class="btn btn-default" id="thumbs-up" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is good</button>
+            <button class="btn btn-default" id="thumbs-down" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is shit</button>
           </div>
         </div>
 
@@ -213,9 +213,15 @@
           <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
         </div>
 
-        <div id="nominations-closed" style="display: none; text-align: center;">
-          Nominations for this award are not currently open.
-        </div>
+        {% if not configService.isReadOnly %}
+          <div id="nominations-closed" style="display: none; text-align: center;">
+            Nominations for this award are not currently open.
+          </div>
+        {% else %}
+          <div style="text-align: center;">
+            Nominations for this award have closed.
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>

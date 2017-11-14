@@ -40,6 +40,7 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         navbar: '@AppBundle\Service\NavbarService'
+        configService: '@AppBundle\Service\ConfigService'
 
 # Doctrine Configuration
 doctrine:

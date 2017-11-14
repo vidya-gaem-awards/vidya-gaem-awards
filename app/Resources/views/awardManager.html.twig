@@ -218,7 +218,7 @@
           </span>
         </th>
         <th style="width: 130px;">Status</th>
-        {% if is_granted('ROLE_AWARDS_EDIT') %}
+        {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
           <th style="width: 80px;">Controls</th>
         {% endif %}
       </tr>
@@ -265,7 +265,7 @@
               <span class="label label-default">Nominations Closed</span>
             {% endif %}
           </td>
-          {% if is_granted('ROLE_AWARDS_EDIT') %}
+          {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
             <td class="aligned">
               <button class="btn btn-primary" title="Edit award" data-toggle="modal" data-target="#dialog-edit"
                 data-id="{{ award.id }}">
@@ -284,7 +284,7 @@
     {% endif %}
   </div>
 
-  {% if is_granted('ROLE_AWARDS_EDIT') %}
+  {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
     <div class="panel">
       <div class="panel-body">
         <form method="POST" action="{{ path('awardManagerPost') }}" id="massChangeNominations">

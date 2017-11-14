@@ -22,7 +22,7 @@
     <li>
       <a href="{{ path('permissions') }}">View group and permission information</a>
     </li>
-    {% if is_granted('ROLE_ADD_USER') %}
+    {% if is_granted('ROLE_ADD_USER') and not configService.isReadOnly %}
       <li>
         <a href="{{ path('addPerson') }}">Add new user</a>
       </li>
