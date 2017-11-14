@@ -79,3 +79,7 @@ services:
         resource: '../../src/AppBundle/Twig'
         tags:
             - { name: twig.extension }
+
+    AppBundle\Security\ConditionallyPublicVoter:
+        tags:
+            - { name: security.voter }

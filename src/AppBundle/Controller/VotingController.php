@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
-use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -23,12 +22,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class VotingController extends Controller
 {
-    public function indexAction(?string $awardID, NavbarService $navbar, EntityManagerInterface $em, ConfigService $configService, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user)
+    public function indexAction(?string $awardID, EntityManagerInterface $em, ConfigService $configService, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user)
     {
-        if (!$navbar->canAccessRoute('voting')) {
-            throw $this->createAccessDeniedException();
-        }
-
         /** @var User $user */
 
         /** @var Award[] $awards */
@@ -154,12 +149,8 @@ class VotingController extends Controller
         ]);
     }
 
-    public function postAction($awardID, NavbarService $navbar, ConfigService $configService, AuthorizationCheckerInterface $authChecker, EntityManagerInterface $em, Request $request, UserInterface $user, AuditService $auditService)
+    public function postAction($awardID, ConfigService $configService, AuthorizationCheckerInterface $authChecker, EntityManagerInterface $em, Request $request, UserInterface $user, AuditService $auditService)
     {
-        if (!$navbar->canAccessRoute('voting')) {
-            throw $this->createAccessDeniedException();
-        }
-
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'Voting has closed.']);
         }
@@ -246,12 +237,8 @@ class VotingController extends Controller
         return $this->json(['success' => true]);
     }
 
-    public function codeEntryAction($code, NavbarService $navbar, ConfigService $configService, Request $request, EntityManagerInterface $em, UserInterface $user, SessionInterface $session)
+    public function codeEntryAction($code, ConfigService $configService, Request $request, EntityManagerInterface $em, UserInterface $user, SessionInterface $session)
     {
-        if (!$navbar->canAccessRoute('voting')) {
-            throw $this->createAccessDeniedException();
-        }
-
         $session->set('votingCode', $code);
 
         if (!$configService->isReadOnly()) {

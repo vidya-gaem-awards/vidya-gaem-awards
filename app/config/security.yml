@@ -40,7 +40,7 @@ security:
         - { path: ^/config, roles: ROLE_EDIT_CONFIG }
         - { path: ^/news/add, roles: ROLE_NEWS_MANAGE }
         - { path: ^/news/delete, roles: ROLE_NEWS_MANAGE }
-        - { path: ^/vidya-in-2017, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }
+        - { path: ^/vidya-in-2017, roles: [CONDITIONALLY_PUBLIC, ROLE_ADD_VIDEO_GAME], methods: [GET] }
         - { path: ^/vidya-in-2017, roles: ROLE_ADD_VIDEO_GAME, methods: [POST] }
         - { path: ^/crew/.+/edit, roles: ROLE_PROFILE_EDIT_DETAILS }
         - { path: ^/crew/new, roles: ROLE_PROFILE_ADD_USER }
@@ -48,21 +48,21 @@ security:
         - { path: ^/crew, roles: ROLE_PROFILE_VIEW }
         - { path: ^/awards/manage, roles: ROLE_AWARDS_FEEDBACK, methods: [GET] }
         - { path: ^/awards/manage, roles: ROLE_AWARDS_EDIT, methods: [POST] }
-        - { path: ^/awards, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/awards, roles: [CONDITIONALLY_PUBLIC, ROLE_AWARDS_EDIT] }
         - { path: ^/nominees, roles: ROLE_NOMINATIONS_VIEW, methods: [GET] }
         - { path: ^/nominees, roles: ROLE_NOMINATIONS_EDIT, methods: [POST] }
         - { path: ^/vote/code, roles: ROLE_VOTING_VIEW }
-        - { path: ^/vote, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/winners, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }
+        - { path: ^/vote, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_VIEW] }
+        - { path: ^/winners, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_RESULTS], methods: [GET] }
         - { path: ^/winners, roles: ROLE_AWARDS_EDIT, methods: [POST] }
-        - { path: ^/results, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/results, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_RESULTS] }
         - { path: ^/referrers, roles: ROLE_REFERRERS_VIEW }
         - { path: ^/audit-log, roles: ROLE_AUDIT_LOG_VIEW }
-        - { path: ^/countdown, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/stream, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/finished, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/credits, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/videos, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/soundtrack, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/countdown, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/stream, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/finished, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/credits, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/videos, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/soundtrack, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
 
 

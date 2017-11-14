@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Action;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
-use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +14,8 @@ use AppBundle\Entity\TableHistory;
 
 class ResultController extends Controller
 {
-    public function simpleAction(EntityManagerInterface $em, NavbarService $navbar)
+    public function simpleAction(EntityManagerInterface $em)
     {
-        if (!$navbar->canAccessRoute('results')) {
-            throw $this->createAccessDeniedException();
-        }
-
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
             ->select('a')
@@ -56,12 +51,8 @@ class ResultController extends Controller
         ]);
     }
 
-    public function detailedAction(?string $all, EntityManagerInterface $em, NavbarService $navbar)
+    public function detailedAction(?string $all, EntityManagerInterface $em)
     {
-        if (!$navbar->canAccessRoute('results')) {
-            throw $this->createAccessDeniedException();
-        }
-
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
             ->select('a')
@@ -133,12 +124,8 @@ class ResultController extends Controller
         ]);
     }
 
-    public function pairwiseAction(EntityManagerInterface $em, NavbarService $navbar)
+    public function pairwiseAction(EntityManagerInterface $em)
     {
-        if (!$navbar->canAccessRoute('results')) {
-            throw $this->createAccessDeniedException();
-        }
-
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
             ->select('a')

@@ -2,7 +2,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\ConfigService;
-use AppBundle\Service\NavbarService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -16,27 +15,18 @@ class StaticController extends Controller
         return $this->forward($defaultRoute->getDefault('_controller'), $defaultRoute->getDefaults());
     }
 
-    public function videosAction(NavbarService $navbar)
+    public function videosAction()
     {
-        if (!$navbar->canAccessRoute('videos')) {
-            throw $this->createAccessDeniedException();
-        }
         return $this->render('videos.html.twig');
     }
 
-    public function soundtrackAction(NavbarService $navbar)
+    public function soundtrackAction()
     {
-        if (!$navbar->canAccessRoute('soundtrack')) {
-            throw $this->createAccessDeniedException();
-        }
         return $this->render('soundtrack.html.twig');
     }
 
-    public function creditsAction(NavbarService $navbar)
+    public function creditsAction()
     {
-        if (!$navbar->canAccessRoute('credits')) {
-            throw $this->createAccessDeniedException();
-        }
         return $this->render('credits.html.twig');
     }
 }

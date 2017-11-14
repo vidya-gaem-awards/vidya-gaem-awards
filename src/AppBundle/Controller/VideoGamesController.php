@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\TableHistory;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
-use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +12,8 @@ use AppBundle\Entity\GameRelease;
 
 class VideoGamesController extends Controller
 {
-    public function indexAction(EntityManagerInterface $em, NavbarService $navbar)
+    public function indexAction(EntityManagerInterface $em)
     {
-        if (!$navbar->canAccessRoute('videoGames')) {
-            throw $this->createAccessDeniedException();
-        }
-
         $query = $em->createQueryBuilder()
             ->from(GameRelease::class, 'gr')
             ->select('gr')

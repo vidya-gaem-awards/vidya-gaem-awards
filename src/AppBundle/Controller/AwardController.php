@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
-use AppBundle\Service\NavbarService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,14 +17,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AwardController extends Controller
 {
-    public function indexAction(NavbarService $navbar, EntityManagerInterface $em, UserInterface $user)
+    public function indexAction(EntityManagerInterface $em, UserInterface $user)
     {
         /** @var User $user */
 
-        if (!$navbar->canAccessRoute('awards')) {
-            throw $this->createAccessDeniedException();
-        }
-        
         $awards = $em->createQueryBuilder()
             ->select('a')
             ->from(Award::class, 'a', 'a.id')
@@ -121,12 +116,8 @@ class AwardController extends Controller
         ]);
     }
 
-    public function postAction(NavbarService $navbar, Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user, AuditService $auditService)
+    public function postAction(Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user, AuditService $auditService)
     {
-        if (!$navbar->canAccessRoute('awards')) {
-            throw $this->createAccessDeniedException();
-        }
-
         /** @var User $user */
         
         $post = $request->request;

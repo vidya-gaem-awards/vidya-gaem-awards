@@ -7,7 +7,6 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Http\AccessMapInterface;
 
 class NavbarService
@@ -50,25 +49,7 @@ class NavbarService
         $route = $this->router->getRouteCollection()->get($routeName);
         $roles = $this->getRoles($route->getPath());
 
-        // We use 'IS_AUTHENTICATED_ANONYMOUSLY' to indicate pages that are hidden at first but become public later.
-        // There is almost certainly a better way of doing this.
-        if (in_array(AuthenticatedVoter::IS_AUTHENTICATED_ANONYMOUSLY, $roles)) {
-            if ($this->configService->getConfig()->isPagePublic($routeName)) {
-                return true;
-            }
-
-            // Not logged in
-            if (!$this->tokenStorage->getToken()) {
-                return false;
-            }
-
-            if ($this->authChecker->isGranted($route->getDefault('permission'))) {
-                return true;
-            }
-
-            return false;
-        }
-
+        // If the list of roles is empty, there are no access restrictions.
         if (empty($roles)) {
             return true;
         }
@@ -78,10 +59,8 @@ class NavbarService
             return false;
         }
 
-        foreach ($roles as $role) {
-            if ($this->authChecker->isGranted($role)) {
-                return true;
-            }
+        if ($this->authChecker->isGranted($roles, $routeName)) {
+            return true;
         }
 
         return false;

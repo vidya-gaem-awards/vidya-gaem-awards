@@ -2,17 +2,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\ConfigService;
-use AppBundle\Service\NavbarService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class LauncherController extends Controller
 {
-    public function countdownAction(ConfigService $configService, NavbarService $navbar)
+    public function countdownAction(ConfigService $configService)
     {
-        if (!$navbar->canAccessRoute('countdown')) {
-            throw $this->createAccessDeniedException();
-        }
-
         $streamDate = $configService->getConfig()->getStreamTime();
 
         $timezones = [
@@ -46,12 +41,8 @@ class LauncherController extends Controller
         ]);
     }
 
-    public function streamAction(ConfigService $configService, NavbarService $navbar)
+    public function streamAction(ConfigService $configService)
     {
-        if (!$navbar->canAccessRoute('stream')) {
-            throw $this->createAccessDeniedException();
-        }
-
         $streamDate = $configService->getConfig()->getStreamTime();
         $showCountdown = ($streamDate > new \DateTime());
 
@@ -61,12 +52,8 @@ class LauncherController extends Controller
         ]);
     }
 
-    public function finishedAction(NavbarService $navbar)
+    public function finishedAction()
     {
-        if (!$navbar->canAccessRoute('finished')) {
-            throw $this->createAccessDeniedException();
-        }
-
         return $this->render('finished.html.twig');
     }
 }

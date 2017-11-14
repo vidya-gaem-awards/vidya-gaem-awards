@@ -50,7 +50,7 @@ newsDelete:
 #
 videoGames:
     path:     /vidya-in-2017
-    defaults: { _controller: AppBundle:VideoGames:index, permission: 'ROLE_ADD_VIDEO_GAME' }
+    defaults: { _controller: AppBundle:VideoGames:index }
     methods:  [GET]
 
 addVideoGame:
@@ -106,12 +106,12 @@ editPersonPost:
 awards:
     path:     /awards
     methods:  [GET]
-    defaults: { _controller: AppBundle:Award:index, permission: 'ROLE_AWARDS_EDIT' }
+    defaults: { _controller: AppBundle:Award:index }
 
 awardFrontendPost:
     path:     /awards
     methods:  [POST]
-    defaults: { _controller: AppBundle:Award:post, permission: 'ROLE_AWARDS_EDIT' }
+    defaults: { _controller: AppBundle:Award:post }
 
 awardManager:
     path:     /awards/manage
@@ -131,7 +131,7 @@ awardManagerPostAjax:
 nomineeManager:
     path:     /nominees/{awardID}
     methods:  [GET]
-    defaults: { _controller: AppBundle:Nominee:index, 'awardID': null }
+    defaults: { _controller: AppBundle:Nominee:index, awardID: null }
 
 nomineePost:
     path:     /nominees/{awardID}
@@ -149,16 +149,16 @@ viewVotingCode:
 voting:
     path:     /vote/{awardID}
     methods:  [GET]
-    defaults: { _controller: AppBundle:Voting:index, 'awardID': null, permission: 'ROLE_VOTING_VIEW' }
+    defaults: { _controller: AppBundle:Voting:index, awardID: null }
 
 votingSubmission:
     path:     /vote/{awardID}
     methods:  [POST]
-    defaults: { _controller: AppBundle:Voting:post, permission: 'ROLE_VOTING_VIEW' }
+    defaults: { _controller: AppBundle:Voting:post }
 
 voteWithCode:
     path:     /vote/v/{code}
-    defaults: { _controller: AppBundle:Voting:codeEntry, permission: 'ROLE_VOTING_VIEW' }
+    defaults: { _controller: AppBundle:Voting:codeEntry }
 
 #
 # RESULTS
@@ -167,7 +167,7 @@ voteWithCode:
 winners:
     path:     /winners
     methods:  [GET]
-    defaults: { _controller: AppBundle:Result:simple, permission: 'ROLE_VOTING_RESULTS' }
+    defaults: { _controller: AppBundle:Result:simple }
 
 winnerImageUpload:
     path:     /winners
@@ -176,13 +176,13 @@ winnerImageUpload:
 
 results:
     path:     /results/{all}
-    defaults: { _controller: AppBundle:Result:detailed, 'all': null, permission: 'ROLE_VOTING_RESULTS' }
+    defaults: { _controller: AppBundle:Result:detailed, 'all': null }
     requirements:
         all: '(all)?'
 
 pairwiseResults:
     path:     /results/pairwise
-    defaults: { _controller: AppBundle:Result:pairwise, permission: 'ROLE_VOTING_RESULTS' }
+    defaults: { _controller: AppBundle:Result:pairwise }
 
 #
 # REFERRERS
@@ -206,15 +206,15 @@ auditLog:
 
 countdown:
     path:     /countdown
-    defaults: { _controller: AppBundle:Launcher:countdown, permission: 'ROLE_VIEW_UNFINISHED_PAGES' }
+    defaults: { _controller: AppBundle:Launcher:countdown }
 
 stream:
     path:     /stream
-    defaults: { _controller: AppBundle:Launcher:stream, permission: 'ROLE_VIEW_UNFINISHED_PAGES' }
+    defaults: { _controller: AppBundle:Launcher:stream }
 
 finished:
     path:     /finished
-    defaults: { _controller: AppBundle:Launcher:finished, permission: 'ROLE_VIEW_UNFINISHED_PAGES' }
+    defaults: { _controller: FrameworkBundle:Template:template, template: 'finished.html.twig' }
 
 #
 # STATIC PAGES
@@ -226,15 +226,15 @@ privacy:
 
 videos:
     path:     /videos
-    defaults: { _controller: AppBundle:Static:videos, permission: 'ROLE_VIEW_UNFINISHED_PAGES' }
+    defaults: { _controller: FrameworkBundle:Template:template, template: 'videos.html.twig' }
 
 soundtrack:
     path:     /soundtrack
-    defaults: { _controller: AppBundle:Static:soundtrack, permission: 'ROLE_VIEW_UNFINISHED_PAGES' }
+    defaults: { _controller: FrameworkBundle:Template:template, template: 'soundtrack.html.twig' }
 
 credits:
     path:     /credits
-    defaults: { _controller: AppBundle:Static:credits, permission: 'ROLE_VIEW_UNFINISHED_PAGES' }
+    defaults: { _controller: FrameworkBundle:Template:template, template: 'credits.html.twig' }
 
 resultRedirect:
     path:     /voting/results
