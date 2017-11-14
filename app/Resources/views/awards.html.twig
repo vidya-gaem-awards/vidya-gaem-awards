@@ -162,10 +162,12 @@
     </div>
 
     <div class="col-md-6">
-      <div class="alert alert-info">
-        <strong>Note:</strong> awards may be added, removed, or renamed in response to nominations and feedback.
-        The awards are not final until the voting page goes live.
-      </div>
+      {% if not configService.config.isPagePublic('voting') %}
+        <div class="alert alert-info">
+          <strong>Note:</strong> awards may be added, removed, or renamed in response to nominations and feedback.
+          The awards are not final until the voting page goes live.
+        </div>
+      {% endif %}
 
       <div id="video-games">
         <a href="{{ path('videoGames') }}">
