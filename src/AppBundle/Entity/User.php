@@ -417,11 +417,9 @@ class User implements SteamUserInterface, UserInterface
     {
         $permissions = new Collections\ArrayCollection();
         foreach ($this->getPermissions() as $permission) {
-            if (substr($permission->getId(), 0, 5) !== 'level') {
-                $permissions->add($permission);
-            }
+            $permissions->add($permission);
             foreach ($permission->getChildrenRecurvise() as $child) {
-                if (substr($child->getId(), 0, 5) !== 'level') {
+                if (substr($child->getId(), 0, 5) !== 'LEVEL') {
                     $permissions->add($child);
                 }
             }
@@ -605,15 +603,14 @@ class User implements SteamUserInterface, UserInterface
      */
     public function getRoles()
     {
-        $roles[] = 'ROLE_EVERYONE';
-        $roles[] = 'ROLE_LOGGED_IN';
+        $roles = [];
 
         if ($this->permissionCache === null) {
             $this->populatePermissionCache();
         }
 
         foreach ($this->permissionCache as $permission) {
-            $roles[] = 'ROLE_' . strtoupper(str_replace('-', '_', $permission->getId()));
+            $roles[] = 'ROLE_' . strtoupper($permission->getId());
         }
 
         return $roles;

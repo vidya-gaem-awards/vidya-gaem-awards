@@ -9,6 +9,9 @@ class ConfigService
     /** @var EntityManagerInterface */
     private $em;
 
+    /** @var Config */
+    private $config;
+
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -20,11 +23,15 @@ class ConfigService
      */
     public function getConfig()
     {
-        $config = $this->em->getRepository(Config::class)->findOneBy([]);
-        if (!$config) {
+        if (!isset($this->config)) {
+            $this->config = $this->em->getRepository(Config::class)->findOneBy([]);
+        }
+
+        if (!$this->config) {
             throw new \Exception('The configuration couldn\'t be loaded from the database.');
         }
-        return $config;
+
+        return $this->config;
     }
 
     /**

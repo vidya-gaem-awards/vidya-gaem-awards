@@ -201,7 +201,7 @@ class PeopleController extends Controller
             // Make the user special and give them level 1 access
             $user->setSpecial(true);
             /** @var Permission $permission */
-            $permission = $em->getRepository(Permission::class)->find('level1');
+            $permission = $em->getRepository(Permission::class)->find('LEVEL_1');
             $user->addPermission($permission);
             $em->persist($user);
             $em->flush();

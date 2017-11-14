@@ -62,7 +62,7 @@
             {% for permission in permissions if permission not in user.permissions %}
               <option value="{{ permission.id }}">
                 {{ permission.id }} &ndash; {{ permission.description }}
-                {% if permission.id[0:5] != 'level' %}
+                {% if permission.id[0:5] != 'LEVEL' %}
                   ({{ permission.parents | join(', ') }})
                 {% endif %}
               </option>

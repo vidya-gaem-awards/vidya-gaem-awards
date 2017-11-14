@@ -11,41 +11,41 @@ use Doctrine\Common\Collections\Collection;
 class Permission
 {
     const STANDARD_PERMISSIONS = [
-        'add-user' => 'Add a new level 1 user',
-        'add-video-game' => 'Add a game to the autocomplete list',
-        'audit-log-view' => 'View the website\'s audit log',
-        'awards-delete' => 'Delete awards',
-        'awards-edit' => 'Edit award information',
-        'awards-feedback' => 'View award voting feedback',
-        'awards-secret' => 'View secret awards',
-        'edit-config' => 'Edit site config, such as voting times',
-        'level1' => 'Provides limited access to non-secret data',
-        'level2' => 'Provides additional read-only access to slightly more information',
-        'level3' => 'Gives edit access to a number of things',
-        'level4' => 'Gives access to everything except for critical areas',
-        'level5' => 'Gives complete admin access',
-        'news-manage' => 'Add and delete news items',
-        'news-view-user' => 'View the user that posted each news item',
-        'nominations-edit' => 'Edit official nominees',
-        'nominations-view' => 'View nominees and user nominations',
-        'profile-edit-details' => 'Edit user details',
-        'profile-edit-groups' => 'Edit user groups',
-        'profile-edit-notes' => 'Edit notes attached to user profile',
-        'profile-view' => 'View user profiles',
-        'referrers-view' => 'View where site visitors are coming from',
-        'view-debug-output' => 'Show detailed error messages when something goes wrong',
-        'view-unfinished-pages' => 'View some pages before they are ready for the public',
-        'voting-code' => 'View voting codes',
-        'voting-results' => 'View voting results',
-        'voting-view' => 'View the voting page',
+        'add_user' => 'Add a new level 1 user',
+        'add_video_game' => 'Add a game to the autocomplete list',
+        'audit_log_view' => 'View the website\'s audit log',
+        'awards_delete' => 'Delete awards',
+        'awards_edit' => 'Edit award information',
+        'awards_feedback' => 'View award voting feedback',
+        'awards_secret' => 'View secret awards',
+        'edit_config' => 'Edit site config, such as voting times',
+        'LEVEL_1' => 'Provides limited access to non-secret data',
+        'LEVEL_2' => 'Provides additional read-only access to slightly more information',
+        'LEVEL_3' => 'Gives edit access to a number of things',
+        'LEVEL_4' => 'Gives access to everything except for critical areas',
+        'LEVEL_5' => 'Gives complete admin access',
+        'news_manage' => 'Add and delete news items',
+        'news_view_user' => 'View the user that posted each news item',
+        'nominations_edit' => 'Edit official nominees',
+        'nominations_view' => 'View nominees and user nominations',
+        'profile_edit_details' => 'Edit user details',
+        'profile_edit_groups' => 'Edit user groups',
+        'profile_edit_notes' => 'Edit notes attached to user profile',
+        'profile_view' => 'View user profiles',
+        'referrers_view' => 'View where site visitors are coming from',
+        'view_debug_output' => 'Show detailed error messages when something goes wrong',
+        'view_unfinished_pages' => 'View some pages before they are ready for the public',
+        'voting_code' => 'View voting codes',
+        'voting_results' => 'View voting results',
+        'voting_view' => 'View the voting page',
     ];
 
     const STANDARD_PERMISSION_INHERITANCE = [
-        'level1' => ['add-video-game', 'awards-feedback', 'nominations-view', 'view-unfinished-pages', 'voting-view'],
-        'level2' => ['level1', 'awards-secret', 'news-view-user', 'profile-view', 'voting-code'],
-        'level3' => ['level2', 'awards-edit', 'nominations-edit', 'profile-edit-notes'],
-        'level4' => ['level3', 'add-user', 'audit-log-view', 'news-manage', 'profile-edit-details', 'referrers-view', 'voting-results'],
-        'level5' => ['level4', 'awards-delete', 'edit-config', 'profile-edit-groups']
+        'LEVEL_1' => ['add_video_game', 'awards_feedback', 'nominations_view', 'view_unfinished_pages', 'voting_view'],
+        'LEVEL_2' => ['LEVEL_1', 'awards_secret', 'news_view_user', 'profile_view', 'voting_code'],
+        'LEVEL_3' => ['LEVEL_2', 'awards_edit', 'nominations_edit', 'profile_edit_notes'],
+        'LEVEL_4' => ['LEVEL_3', 'add_user', 'audit_log_view', 'news_manage', 'profile_edit_details', 'referrers_view', 'voting_results'],
+        'LEVEL_5' => ['LEVEL_4', 'awards_delete', 'edit_config', 'profile_edit_groups']
     ];
 
     /**
@@ -156,17 +156,19 @@ class Permission
     }
 
     /**
-     * Get children
-     *
-     * @return Collection
+     * To avoid unnecessary database calls, we assume a permission can only have children if it's a LEVEL permission.
+     * @return ArrayCollection|Permission[]
      */
     public function getChildren()
     {
+        if (substr($this->getId(), 0, 5) !== 'LEVEL') {
+            return new ArrayCollection();
+        }
         return $this->children;
     }
 
     /**
-     * @return ArrayCollection|Permission
+     * @return ArrayCollection|Permission[]
      */
     public function getChildrenRecurvise()
     {

@@ -104,7 +104,7 @@ class InitialiseDatabaseCommand extends ContainerAwareCommand
                 ->setSpecial(true);
 
             /** @var Permission $permission */
-            $permission = $this->em->getRepository(Permission::class)->find('level5');
+            $permission = $this->em->getRepository(Permission::class)->find('LEVEL_5');
             $user->addPermission($permission);
             $this->em->persist($user);
             $this->em->flush();
