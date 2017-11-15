@@ -213,6 +213,18 @@ class Config
      */
     public function isPagePublic(string $page): bool
     {
+        // Some conditionally public pages have multiple routes with the same permission.
+        // For these alternate routes, just check the main route.
+        $alternateRoutes = [
+            'awardFrontendPost' => 'awards',
+            'votingSubmission' => 'voting',
+            'voteWithCode' => 'voting',
+        ];
+
+        if (isset($alternateRoutes[$page])) {
+            $page = $alternateRoutes[$page];
+        }
+
         return in_array($page, $this->getPublicPages(), true);
     }
 
