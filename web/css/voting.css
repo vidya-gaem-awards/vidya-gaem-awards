@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+html {
+  background: linear-gradient(to bottom, rgba(6,76,226,1) 0%, rgb(121, 136, 219) 100%);
+}
+
 a, a:hover {
   text-decoration: none;
 }
@@ -34,13 +38,22 @@ img {
 }
 
 header {
-  width: 960px;
-  height: 150px;
-  margin: 0 auto 30px;
+  height: 80px;
+  margin: 0 auto;
+  text-align: center;
+
 }
 
 .zig {
-  margin: 50px 0;
+  margin: 20px 0;
+  background: linear-gradient(to bottom,
+    rgba(255,255,0,0) 0%,
+    rgba(255,255,0,0.3) 40%,
+    rgba(255,255,0,1) 40%,
+    rgba(255,255,0,1) 60%,
+    rgba(255,255,0,0.3) 60%,
+    rgba(255,255,0,0) 100%
+  );
 }
 
 p {
@@ -48,19 +61,21 @@ p {
 }
 
 header h1 {
-  float: right;
-  width: 600px;
-  font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
-  font-size: 1.7em;
-  text-align: center;
-  margin-top: 50px;
+  /*font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;*/
+  font-family: Arial, sans-serif;
+  color: yellow;
+  text-shadow: black 2px 2px;
+  font-style: italic;
+  font-size: 30px;
+  margin-top: 25px;
   font-weight: normal;
 }
 
 header h2 {
-  float: right;
-  width: 600px;
-  text-align: center;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-shadow: black 2px 2px;
+  font-size: 20px;
 }
 
 #thelogo {
@@ -69,9 +84,9 @@ header h2 {
 }
 
 #wrapper {
-  width: 988px;
+  width: 100%;
   position: relative;
-  margin: 0 auto 90px;
+  margin: 0 auto 5px;
 }
 
 /* Award Header */
@@ -79,30 +94,33 @@ header h2 {
 .awardHeader {
   text-align: center;
   position: relative;
-  margin-bottom: 45px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .awardHeaderContainer {
-  margin: 0 50px;
-  padding-top: 24px;
-  height: 106px;
-  background: url(/2016images/title_bg.png) center center no-repeat;
+  margin: 0 50px 20px 50px;
+  padding: 20px;
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 10%,rgba(0,0,0,0.3) 90%,rgba(0,0,0,0) 100%);
+  /*background: url(/2016images/title_bg.png) center center no-repeat;*/
 }
 
 .awardName {
-  font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;
+  font-family: Arial, sans-serif;
   font-weight: normal;
-  font-style: normal;
+  font-style: italic;
   text-transform: uppercase;
-  font-size: 2.6em;
+  font-size: 36px;
   line-height: 40px;
-  color: #00ebdb;
+  color: yellow;
+  text-shadow: black 2px 2px;
 }
 
 .awardSubtitle {
-  font-family: 'FixedSystem', Calibri, sans-serif;
-  color: #00ebdb;
-  width: 888px;
+  font-family: Arial, sans-serif;
+  color: white;
+  font-size: 25px;
+  text-shadow: black 2px 2px;
 }
 
 .navigation {
@@ -172,41 +190,52 @@ footer .navigation {
   margin-left: 160px;
 }
 
+footer {
+  display: flex;
+  justify-content: center;
+}
+
 /* Nominee Box */
 
 .aNominee {
   position: relative;
-  background: white;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background: #262f5c;
+  border: 2px solid white;
+  width: 100%;
+  height: 100%;
 }
 
 .nomineeImage {
-  width: 473px;
-  height: 126px;
+  width: 100%;
+  height: 100%;
 }
 
 .info {
   width: 25px;
   height: 25px;
   position: absolute;
-  top: 4px;
-  left: 4px;
-  z-index: 55;
-  background: url("/2016images/info.png") center top no-repeat;
-  cursor: help;
+  right: 6px;
+  bottom: 7px;
+  z-index: 155;
+  /*background: url("/2016images/info.png") center top no-repeat;*/
+  /*cursor: help;*/
 }
 
 .info:hover {
-  background-position: center bottom;
+  /*background-position: center bottom;*/
 }
 
 .innerInfo {
   display: none;
   background-color: rgba(0, 0, 0, 0.6);
-  position: relative;
-  top: 0;
-  left: 30px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
   padding: 3px;
-  width: 433px;
+  width: calc(100% - 4px);
   height: auto;
   font-family: Calibri, sans-serif;
   font-size: 0.81em;
@@ -214,7 +243,7 @@ footer .navigation {
   color: white;
 }
 
-.info:hover .innerInfo {
+.aNominee:hover .innerInfo {
   display: block;
 }
 
@@ -244,23 +273,40 @@ footer .navigation {
   bottom: 2px;
   left: 2px;
   width: 469px;
-  background: url("/2015voting/blackbar.png");
+  /*height: 36px;*/
+  /*background: url("/2015voting/blackbar.png");*/
+  /*background: rgba(0, 0, 0, 0.5);*/
   z-index: 99;
 }
 
-.nomineeInfo .nomineeName {
-  color: #f85898;
-  font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
+.nomineeName {
+  color: white;
+  background-color: rgb(251, 68, 7);
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  /*font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;*/
   text-transform: uppercase;
-  font-size: 1em;
-  padding: 4px 0 0 5px;
+  font-size: 14px;
+  display: inline-block;
+  padding: 3px 10px;
+  position: absolute;
+  bottom: 23px;
+  left: 3px;
 }
 
-.nomineeInfo .nomineeSubtitle {
-  font-family: "Calibri", arial, sans-serif;
-  color: #00ebdb;
-  font-size: 0.85em;
-  padding: 0 0 0 4px;
+.nomineeSubtitle {
+  font-family: Arial, sans-serif;
+  display: inline-block;
+  /*font-family: "Calibri", arial, sans-serif;*/
+  color: rgb(251, 68, 7);
+  background-color: white;
+  border-radius: 10px;
+  font-size: 12px;
+  padding: 3px 10px;
+  position: absolute;
+  bottom: 3px;
+  left: 12px;
 }
 
 .nomineeSubtitle a {
@@ -274,14 +320,62 @@ footer .navigation {
 
 /* Vote Box */
 
+.flexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.voteGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-basis: 35%;
+  justify-content: center;
+}
+
+.voteGroup label {
+  margin-bottom: auto;
+  font-weight: inherit;
+}
+
 .voteBox {
-  clear: both;
-  float: left;
-  position: relative;
-  width: 100%;
+  /*clear: both;*/
+  /*float: left;*/
+  /*position: relative;*/
+  width: 473px;
   height: 126px;
   background: rgba(246, 231, 190, 0.5) url("/2016images/votebox_background.png");
-  margin-bottom: 4px;
+}
+
+.inputBox {
+  /*clear: both;*/
+  /*float: right;*/
+  /*position: relative;*/
+  width: 116px;
+  height: 116px;
+  background: #262f5c;
+  color: yellow;
+  border-color: white;
+  /*border: 2px solid silver;*/
+  border-width: 4px;
+  text-align: center;
+  font-size: 60px;
+  line-height: 116px;
+  padding-left: 16px;
+  margin-right: 15px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.inputBox:invalid {
+  border-color: red;
+  color: red;
+  background-color: #5c2626;
+}
+
+.inputBox.static {
+  background: url('https://vignette.wikia.nocookie.net/memory-gamma/images/1/17/Static.gif') center #37255c;
 }
 
 /*.voteBox.locked {
@@ -307,35 +401,57 @@ footer .navigation {
 /**************/
 
 #containerAwards {
-  clear: both;
-  width: 1000px;
   margin: 0 auto;
-  padding-bottom: 30px;
   overflow: auto;
+  max-width: 1200px;
 }
 
 #containerAwards h2, #limitsDrag h2 {
   height: 52px;
 }
 
+.awardList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .award {
   display: block;
-  position: relative;
   padding: 5px;
   border-top: none;
-  width: 48%;
-  float: left;
   margin-left: 14px;
+  min-width: 300px;
+  flex-basis: 45%;
+  flex-grow: 1;
+}
+
+.goBackLink a {
+  background-color: rgb(251, 68, 7);
+  border-radius: 15px;
+  color: white;
+  padding: 5px 15px;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
 }
 
 .award:hover {
   background: rgba(0, 0, 0, 0.20);
 }
 
+h1 {
+  font-family: Arial, sans-serif;
+  color: yellow;
+  text-shadow: black 2px 2px;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
 .award h3 {
-  color: #f0f1a3;
+  color: yellow;
   text-decoration: none;
-  font-family: Calibri, sans-serif;
+  font-family: Arial, sans-serif;
+  text-shadow: black 1px 1px;
   font-weight: bold;
   font-size: 1em;
   line-height: 0.95em;
@@ -346,10 +462,11 @@ footer .navigation {
 
 .award p {
   text-decoration: none;
-  color: #00ebdb;
-  font-family: Calibri, sans-serif;
+  color: white;
+  font-family: Arial, sans-serif;
   font-size: 0.9em;
   padding: 0;
+  text-shadow: black 1px 1px;
   margin: 0;
   display: inline;
 }
@@ -379,21 +496,22 @@ footer .navigation {
 
 .btnSubmit {
   cursor: pointer;
-  margin-top: 10px;
-  float: left;
+  /*margin-top: 10px;*/
+  /*float: left;*/
   height: 49px;
   position: relative;
 }
 
 #btnResetVotes {
-  margin-left: 311px;
+  /*margin-left: 311px;*/
   width: 166px;
   height: 40px;
   background: url("/2016images/btn_reset.png") 0 0;
+  margin-right: 50px;
 }
 
 #btnLockVotes {
-  margin-left: 34px;
+  /*margin-left: 34px;*/
   width: 175px;
   height: 40px;
   background: url("/2016images/btn_submit.png") 0 0;
@@ -424,13 +542,13 @@ footer .navigation {
 }
 
 #topAwards {
-  color: #00ebdb;
+  /*color: #00ebdb;*/
 }
 
 #secondaryAwards {
-  color: #00ebdb;
+  /*color: #00ebdb;*/
   font-size: 30px;
-  clear: both;
+  /*clear: both;*/
   padding-top: 20px;
 }
 
@@ -513,6 +631,38 @@ footer .navigation {
 }
 
 /**************/
+
+@media (max-width: 768px) {
+  .inputBox {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-width: 3px;
+    padding-left: 0;
+  }
+
+  .voteBox {
+    width: calc(100% - 5px);
+  }
+
+  .voteGroup {
+    width: 100%;
+    flex-basis: 100%;
+    margin-bottom: 5px;
+  }
+
+  .voteGroup label {
+    width: 100%;
+  }
+}
+
+@media (pointer:coarse) {
+  .inputBox {
+    padding-left: 0;
+  }
+}
 
 @media screen and (max-width: 1090px) {
   #dontforget {

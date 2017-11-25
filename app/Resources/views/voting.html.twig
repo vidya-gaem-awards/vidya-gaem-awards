@@ -29,7 +29,7 @@
   {% if votingOpen %}
     <style type="text/css">
       .aNominee {
-        cursor: move;
+        /*cursor: move;*/
       }
     </style>
   {% endif %}
@@ -38,7 +38,7 @@
 {% block body %}
   <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
   <header>
-    <a href="{{ path('voting') }}"><img src="{{ asset('2016images/vga_logo.png') }}" id="thelogo" alt="oh god it's happening again"/></a>
+    {#<a href="{{ path('voting') }}"><img src="{{ asset('2016images/vga_logo.png') }}" id="thelogo" alt="oh god it's happening again"/></a>#}
     <h1>The 2017 Vidya Gaem Awards</h1>
     <h2>{{ voteText }}</h2>
   </header>
@@ -54,59 +54,106 @@
         <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
       </div>
       {% if votingOpen %}
-        <img src="{{ asset('2016images/dontForget.png') }}" id="dontforget" alt="Don't forget to hit submit"/>
+        {#<img src="{{ asset('2016images/dontForget.png') }}" id="dontforget" alt="Don't forget to hit submit"/>#}
       {% endif %}
     {% endif %}
 
     {% if award %}
-      <div id="limitsDrag">
-        <div id="nomineeColumn" class="column">
+      {#<div id="limitsDrag">#}
+      <div>
 
-          <img src="{{ asset('2016images/pickYourNominees.png') }}" width="204" height="70" alt="Pick your nominees">
-
+        <div class="flexContainer">
           {% for nominee in award.nominees | shuffle %}
+            <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}">
+            <input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="inputBox" min="1" max="{{ award.nominees | length }}">
 
             {% spaceless %}
+              <label for="voteBox{{ loop.index }}">
               <div class="voteBox">
-                <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
-                     data-nominee="{{ nominee.shortName }}">
-                  <img class="fakeBorder" src="{{ asset('2016images/votebox_foreground.png') }}">
-                  <img class="fakeBorder locked" src="{{ asset('2016images/votebox_foreground_locked.png') }}">
-                  <div class="info">
-                    <div class="innerInfo">{{ nominee.flavorText | nl2br }}</div>
-                  </div>
-                  <img class="nomineeImage" src="{{ nominee.image }}">
-                  <div class="nomineeInfo">
-                    <div class="number"></div>
-                    <div class="nomineeName">{{ nominee.name }}</div>
-                    <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
-                  </div>
+                <div class="aNominee" style="background-image: url('{{ nominee.image }}'); background-size: cover">
+                {#<div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"#}
+                     {#data-nominee="{{ nominee.shortName }}">#}
+                  {#<img class="fakeBorder" src="{{ asset('2016images/votebox_foreground.png') }}">#}
+                  {#<img class="fakeBorder locked" src="{{ asset('2016images/votebox_foreground_locked.png') }}">#}
+                  <div class="innerInfo">{{ nominee.flavorText | nl2br }}</div>
+                  {#<div class="info">#}
+                  {#</div>#}
+                  {#<img class="nomineeImage" src="{{ nominee.image }}">#}
+                  <div class="nomineeName">{{ nominee.name }}</div>
+                  <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                  {#<div class="nomineeInfo">#}
+                    {#<div class="number"></div>#}
+                    {##}
+                  {#</div>#}
                 </div>
               </div>
+              </label>
             {% endspaceless %}
+
+            </div>
 
           {% endfor %}
 
         </div>
 
-        <div id="spacerColumn" class="column">
-          &nbsp;
-        </div>
 
         {% if votingOpen or votingClosed %}
-          <div id="voteColumn" class="column">
-            <img src="{{ asset('2016images/dragAndDrop.png') }}" width="307" height="70" alt="Drag and drop to vote"/>
-            {% for nominee in award.nominees %}
-              <div id="voteBox{{ loop.index }}" class="voteBox">
-              </div>
-            {% endfor %}
-          </div>
+          {#<div id="voteColumn" class="column">#}
+            {#<img src="{{ asset('2016images/dragAndDrop.png') }}" width="307" height="70" alt="Drag and drop to vote"/>#}
+            {#{% for nominee in award.nominees %}#}
+              {#<input type="number" id="voteBox{{ loop.index }}" class="inputBox" placeholder="--" min="1" max="{{ award.nominees | length }}">#}
+            {#{% endfor %}#}
+          {#</div>#}
         {% endif %}
+
+
+        {#<div id="spacerColumn" class="column">#}
+          &nbsp;
+        {#</div>#}
+
+        {#<div id="nomineeColumn" class="column">#}
+
+          {#<img src="{{ asset('2016images/pickYourNominees.png') }}" width="204" height="70" alt="Pick your nominees">#}
+
+          {% for nominee in award.nominees | shuffle %}
+
+            {#{% spaceless %}#}
+              {#<div class="voteBox">#}
+                {#<div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"#}
+                     {#data-nominee="{{ nominee.shortName }}">#}
+                  {#<img class="fakeBorder" src="{{ asset('2016images/votebox_foreground.png') }}">#}
+                  {#<img class="fakeBorder locked" src="{{ asset('2016images/votebox_foreground_locked.png') }}">#}
+                  {#<div class="info">#}
+                    {#<div class="innerInfo">{{ nominee.flavorText | nl2br }}</div>#}
+                  {#</div>#}
+                  {#<img class="nomineeImage" src="{{ nominee.image }}">#}
+                  {#<div class="nomineeInfo">#}
+                    {#<div class="number"></div>#}
+                    {#<div class="nomineeName">{{ nominee.name }}</div>#}
+                    {#<div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>#}
+                  {#</div>#}
+                {#</div>#}
+              {#</div>#}
+            {#{% endspaceless %}#}
+
+          {% endfor %}
+
+        {#</div>#}
+
+        {#{% if votingOpen or votingClosed %}#}
+          {#<div id="voteColumn" class="column">#}
+            {#<img src="{{ asset('2016images/dragAndDrop.png') }}" width="307" height="70" alt="Drag and drop to vote"/>#}
+            {#{% for nominee in award.nominees %}#}
+              {#<div id="voteBox{{ loop.index }}" class="voteBox">#}
+              {#</div>#}
+            {#{% endfor %}#}
+          {#</div>#}
+        {#{% endif %}#}
 
       </div>
 
       {% if votingOpen %}
-        <footer style='position: relative; clear: both;'>
+        <footer>
           <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
           <div id="votesAreNotLocked">
             <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
@@ -163,29 +210,33 @@
       The Awards
     </h1>
 
-    {% for _award in awards[0:25] %}
-      <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
-         class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
-        <h3>{{ _award.name }}</h3>
-        <p>{{ _award.subtitle }}</p>
-      </a>
-    {% endfor %}
+    <div class="awardList">
+      {% for _award in awards[0:25] %}
+        <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
+           class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
+          <h3>{{ _award.name }}</h3>
+          <p>{{ _award.subtitle }}</p>
+        </a>
+      {% endfor %}
+    </div>
 
     <h1 id="secondaryAwards">
       Website-Only Awards
     </h1>
 
-    {% for _award in awards[25:] %}
-      <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
-         class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
-        <h3>{{ _award.name }}</h3>
-        <p>{{ _award.subtitle }}</p>
-      </a>
-    {% endfor %}
+    <div class="awardList">
+      {% for _award in awards[25:] %}
+        <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
+           class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
+          <h3>{{ _award.name }}</h3>
+          <p>{{ _award.subtitle }}</p>
+        </a>
+      {% endfor %}
+    </div>
 
     {% if app.user.loggedIn %}
-      <h3 style='clear:both; padding-top: 50px;'>
-        <a href="{{ path('home') }}" style="color: #80d7d1;">Back to the main part of the site</a>
+      <h3 class="goBackLink">
+        <a href="{{ path('home') }}">Back to the main part of the site</a>
       </h3>
     {% endif %}
   </div>
