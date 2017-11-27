@@ -1,35 +1,23 @@
-/* TODO: move this to theme.css */
-html {
-  background: linear-gradient(to bottom, rgba(6,76,226,1) 0%, rgb(121, 136, 219) 100%);
+/* Assorted page elements */
+.meme {
+  width: 160px;
+  height: 600px;
+  border: 1px dashed black;
+  position: absolute;
+  top: 260px;
 }
 
-/* TODO: move this to theme.css */
+#dontforget {
+  position: absolute;
+  top: 218px;
+  right: -40px;
+}
+
 .zig {
   margin: 20px 0;
-  background: linear-gradient(to bottom,
-  rgba(255,255,0,0) 0%,
-  rgba(255,255,0,0.3) 40%,
-  rgba(255,255,0,1) 40%,
-  rgba(255,255,0,1) 60%,
-  rgba(255,255,0,0.3) 60%,
-  rgba(255,255,0,0) 100%
-  );
-}
-
-a, a:hover {
-  text-decoration: none;
-}
-
-a img {
-  border: none;
-}
-
-img {
-  display: block;
 }
 
 /* Page Header */
-/* TODO: some of this should go in theme.css */
 .pageHeader {
   height: 80px;
   margin: 0 auto;
@@ -37,19 +25,11 @@ img {
 }
 
 .pageHeader h1 {
-  font-family: Arial, sans-serif;
-  color: yellow;
-  text-shadow: black 2px 2px;
-  font-style: italic;
   font-size: 30px;
   margin-top: 25px;
-  font-weight: normal;
 }
 
 .pageHeader h2 {
-  font-family: Arial, sans-serif;
-  color: white;
-  text-shadow: black 2px 2px;
   font-size: 20px;
 }
 
@@ -135,7 +115,6 @@ img {
   padding: 3px;
   width: calc(100% - 0px);
   height: auto;
-  font-family: Calibri, sans-serif;
   font-size: 0.81em;
   line-height: 13px;
   color: white;
@@ -512,19 +491,13 @@ img {
   background: rgba(0, 0, 0, 0.20);
 }
 
-/* TODO: move this to theme.css */
-h1 {
-  font-family: Arial, sans-serif;
-  color: yellow;
-  text-shadow: black 2px 2px;
-  font-style: italic;
+.award h1 {
   margin-bottom: 5px;
 }
 
 .award h3 {
   color: yellow;
   text-decoration: none;
-  font-family: Arial, sans-serif;
   text-shadow: black 1px 1px;
   font-weight: bold;
   font-size: 1em;
@@ -534,10 +507,13 @@ h1 {
   display: inline;
 }
 
+.award a, .award a:hover {
+  text-decoration: none;
+}
+
 .award p {
   text-decoration: none;
   color: white;
-  font-family: Arial, sans-serif;
   font-size: 0.9em;
   padding: 0;
   text-shadow: black 1px 1px;
@@ -569,7 +545,6 @@ h1 {
   border-radius: 15px;
   color: white;
   padding: 5px 15px;
-  font-family: Arial, sans-serif;
   font-size: 18px;
 }
 
@@ -595,21 +570,6 @@ h1 {
   100% {
     top: -200px;
   }
-}
-
-/* Other page elements */
-.meme {
-  width: 160px;
-  height: 600px;
-  border: 1px dashed black;
-  position: absolute;
-  top: 260px;
-}
-
-#dontforget {
-  position: absolute;
-  top: 218px;
-  right: -40px;
 }
 
 /* Instruction page (appears when no awards are selected) */
