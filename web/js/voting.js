@@ -28,7 +28,7 @@ $(document).ready(function () {
 
     // Only used in the "click to choose number" layout
     var numberPopup = $('#numberPopup');
-    var nomineeSquares = $('.inputBox');
+    var preferenceButtons = $('.preferenceButton');
 
     // Only used in the "type in your number" layout
     var preferenceInputs = $('.preferenceInput');
@@ -78,7 +78,7 @@ $(document).ready(function () {
     // Only used in the "type in your number" layout.
     function checkForDuplicates() {
         var allNumbers = {};
-        $('.inputBox').each(function () {
+        preferenceInputs.each(function () {
             var element = $(this);
             var number = element.val();
 
@@ -184,7 +184,7 @@ $(document).ready(function () {
 
     // Shows the number popup upon clicking the preference square.
     // Only used in the "click to choose number" layout.
-    nomineeSquares.click(function () {
+    preferenceButtons.click(function () {
         var element = $(this);
 
         numberPopup.show();
@@ -198,7 +198,7 @@ $(document).ready(function () {
     numberPopup.find('button').click(function () {
         var element = $(this);
         var nominee = numberPopup.attr('data-nominee');
-        var button = $('#nominee-' + nominee).find('.inputBox');
+        var button = $('#nominee-' + nominee).find('.preferenceButton');
         var value = element.attr('data-value');
 
         var currentSelection = button.attr('data-value');

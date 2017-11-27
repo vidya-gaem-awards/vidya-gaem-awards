@@ -1,10 +1,19 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
+/* TODO: move this to theme.css */
 html {
   background: linear-gradient(to bottom, rgba(6,76,226,1) 0%, rgb(121, 136, 219) 100%);
+}
+
+/* TODO: move this to theme.css */
+.zig {
+  margin: 20px 0;
+  background: linear-gradient(to bottom,
+  rgba(255,255,0,0) 0%,
+  rgba(255,255,0,0.3) 40%,
+  rgba(255,255,0,1) 40%,
+  rgba(255,255,0,1) 60%,
+  rgba(255,255,0,0.3) 60%,
+  rgba(255,255,0,0) 100%
+  );
 }
 
 a, a:hover {
@@ -19,49 +28,15 @@ img {
   display: block;
 }
 
-article, aside, figcaption, figure, footer, header, nav, section {
-  display: block;
-}
-
-*, :before, :after {
-  box-sizing: border-box;
-}
-
-body {
-  font-size: 16px;
-  line-height: 16px;
-  padding-top: 10px;
-}
-
-img {
-  max-width: none;
-}
-
-header {
+/* Page Header */
+/* TODO: some of this should go in theme.css */
+.pageHeader {
   height: 80px;
   margin: 0 auto;
   text-align: center;
-
 }
 
-.zig {
-  margin: 20px 0;
-  background: linear-gradient(to bottom,
-    rgba(255,255,0,0) 0%,
-    rgba(255,255,0,0.3) 40%,
-    rgba(255,255,0,1) 40%,
-    rgba(255,255,0,1) 60%,
-    rgba(255,255,0,0.3) 60%,
-    rgba(255,255,0,0) 100%
-  );
-}
-
-p {
-  padding: 10px;
-}
-
-header h1 {
-  /*font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;*/
+.pageHeader h1 {
   font-family: Arial, sans-serif;
   color: yellow;
   text-shadow: black 2px 2px;
@@ -71,35 +46,19 @@ header h1 {
   font-weight: normal;
 }
 
-header h2 {
+.pageHeader h2 {
   font-family: Arial, sans-serif;
   color: white;
   text-shadow: black 2px 2px;
   font-size: 20px;
 }
 
-#thelogo {
+.pageHeader .logo {
   float: left;
   margin-top: 18px;
 }
 
-#wrapper {
-  width: 100%;
-  max-width: 1480px;
-  position: relative;
-  margin: 0 auto 5px;
-}
-
-.meme {
-  width: 160px;
-  height: 600px;
-  border: 1px dashed black;
-  position: absolute;
-  top: 260px;
-}
-
-/* Award Header */
-
+/* Award Header (including left/right navigation buttons) */
 .awardHeader {
   text-align: center;
   position: relative;
@@ -111,7 +70,6 @@ header h2 {
   margin: 0 50px 20px 50px;
   padding: 20px;
   background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 10%,rgba(0,0,0,0.3) 90%,rgba(0,0,0,0) 100%);
-  /*background: url(/2016images/title_bg.png) center center no-repeat;*/
 }
 
 .awardName {
@@ -159,87 +117,16 @@ header h2 {
   background-position: 0 bottom;
 }
 
-footer .navigation {
-  top: 8px;
-  display: none;
-}
-
-#dontforget {
-  position: absolute;
-  top: 218px;
-  right: -40px;
-}
-
-/* Column layout */
-
-#limitsDrag {
-  padding-left: 14px;
-  float: left;
-  overflow: hidden;
-}
-
-.column {
+/* Nominee Box - inner elements */
+.nominee {
   position: relative;
-  float: left;
-}
-
-#nomineeColumn {
-  width: 473px;
-}
-
-#spacerColumn {
-  width: 14px;
-}
-
-#voteColumn {
-  width: 473px;
-}
-
-#voteColumn > img {
-  margin-left: 160px;
-}
-
-footer {
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-
-/* Nominee Box */
-
-.aNominee {
-  position: relative;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background: #262f5c;
   border: 2px solid white;
   width: 350px;
   height: 140px;
   transition: 0.3s linear all;
 }
 
-.nomineeImage {
-  width: 100%;
-  height: 100%;
-}
-
-.info {
-  width: 25px;
-  height: 25px;
-  position: absolute;
-  right: 6px;
-  bottom: 7px;
-  z-index: 155;
-  /*background: url("/2016images/info.png") center top no-repeat;*/
-  /*cursor: help;*/
-}
-
-.info:hover {
-  /*background-position: center bottom;*/
-}
-
-.innerInfo {
+.flavorText {
   display: none;
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
@@ -254,40 +141,16 @@ footer {
   color: white;
 }
 
-.aNominee:hover .innerInfo {
+.nominee:hover .flavorText {
   display: block;
 }
 
-.aNominee .fakeBorder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 41;
-}
-
-.aNominee img.locked {
+.nominee img.locked {
   display: none;
 }
 
-.aNominee.locked img.locked {
+.nominee.locked img.locked {
   display: block;
-}
-
-#nomineeColumn .number {
-  display: none;
-}
-
-/* Nominee Box - Info Panel */
-
-.nomineeInfo {
-  position: absolute;
-  bottom: 2px;
-  left: 2px;
-  width: 469px;
-  /*height: 36px;*/
-  /*background: url("/2015voting/blackbar.png");*/
-  /*background: rgba(0, 0, 0, 0.5);*/
-  z-index: 99;
 }
 
 .nomineeName {
@@ -296,7 +159,6 @@ footer {
   border-radius: 10px;
   font-weight: bold;
   font-family: Arial, sans-serif;
-  /*font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;*/
   text-transform: uppercase;
   font-size: 14px;
   display: inline-block;
@@ -309,7 +171,6 @@ footer {
 .nomineeSubtitle {
   font-family: Arial, sans-serif;
   display: inline-block;
-  /*font-family: "Calibri", arial, sans-serif;*/
   color: rgb(251, 68, 7);
   background-color: white;
   border-radius: 10px;
@@ -318,24 +179,34 @@ footer {
   position: absolute;
   bottom: 3px;
   left: 12px;
+  z-index: 31;
 }
 
 .nomineeSubtitle a {
-  color: white;
+  color: blue;
 }
 
 .nomineeSubtitle a:hover {
-  color: white;
+  color: blue;
   text-decoration: underline;
 }
 
-/* Vote Box */
+/* Shown on mobile, hidden on desktop */
+.realHandle {
+  display: none;
+}
 
-.flexContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+/* Shown on desktop, hidden on mobile */
+.fakeHandle {
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  position: absolute;
+}
+
+/* Nominee Box - outer elements that encompass the nominee box */
+.voteBox {
+  transition: 0.3s linear all;
 }
 
 .voteGroup {
@@ -344,7 +215,6 @@ footer {
   margin-bottom: 5px;
   margin-left: 5px;
   margin-right: 5px;
-  /*flex-basis: 35%;*/
   justify-content: center;
 }
 
@@ -353,19 +223,153 @@ footer {
   font-weight: inherit;
 }
 
-.voteGroup.beingDragged .aNominee {
-  border-style: dashed;
-  opacity: 0.5;
+/* Nominee Box - extra elements that are tied to the nominee box, but are near it instead of inside it */
+.preferenceButton {
+  width: 116px;
+  height: 116px;
+  background: #262f5c;
+  color: yellow;
+  border: 4px white inset;
+  text-align: center;
+  font-size: 60px;
+  margin-right: 15px;
+  font-family: Arial, sans-serif;
 }
 
-.voteBox {
-  transition: 0.3s linear all;
-  /*clear: both;*/
-  /*float: left;*/
-  /*position: relative;*/
-  /*width: 350px;*/
-  /*height: 140px;*/
-  /*background: rgba(246, 231, 190, 0.5) url("/2016images/votebox_background.png");*/
+.preferenceInput {
+  width: 116px;
+  height: 116px;
+  background: #262f5c;
+  color: yellow;
+  border: 4px white inset;
+  text-align: center;
+  font-size: 60px;
+  line-height: 116px;
+  padding-left: 16px;
+  margin-right: 15px;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.preferenceInput:invalid, .preferenceInput.invalid {
+  border-color: red;
+  color: red;
+  background-color: #5c2626;
+}
+
+.preferenceInput.static {
+  background: url('https://vignette.wikia.nocookie.net/memory-gamma/images/1/17/Static.gif') center #37255c;
+}
+
+.number {
+  background: rgb(251,68,7);
+  color: white;
+  font-family: Arial,sans-serif;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.sortable-ghost .number, .sortable-chosen .number, .sortable-drag .number, .locked .number {
+  background: black;
+}
+
+.locked .number:after {
+  content: ' - SAVED';
+}
+
+/* Preference number popup */
+.numberPopup {
+  border: 4px inset white;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.5) 4px 4px;
+  position: absolute;
+  z-index: 300;
+  max-width: 100%;
+}
+
+.numberPopup.height2 {
+  height: 220px;
+}
+
+.numberPopup.height3 {
+  height: 320px;
+}
+
+.numberPopup.width2 {
+  width: 240px;
+}
+
+.numberPopup.width3 {
+  width: 340px;
+}
+
+.numberPopup.width4 {
+  width: 440px;
+}
+
+.numberPopup.width5 {
+  width: 540px;
+}
+
+.numberButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.numberButton {
+  width: 100px;
+  height: 100px;
+  background: rgb(251, 68, 7);
+  color: white;
+  border-radius: 100%;
+  border: none;
+  box-shadow: black 2px 2px;
+  text-align: center;
+  font-size: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.numberButton:hover, .numberButton:focus {
+  background: rgb(221, 70, 7);
+}
+
+.numberButton:disabled {
+  background: grey;
+  color: silver;
+  box-shadow: none;
+  position: relative;
+  top: 1px;
+  left: 1px;
+}
+
+.numberButton:active {
+  position: relative;
+  top: 4px;
+  box-shadow: black 2px -2px;
+}
+
+/* Top and bottom voting panes */
+#wrapper {
+  width: 100%;
+  max-width: 1480px;
+  position: relative;
+  margin: 0 auto 5px;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .voteDropArea {
@@ -375,10 +379,6 @@ footer {
   padding: 5px;
   min-height: 175px;
   border: 2px dashed transparent;
-  transition: 0.2s all;
-}
-
-.voteDropArea h2 {
   transition: 0.2s all;
 }
 
@@ -399,10 +399,6 @@ footer {
 
 #dragLimit.dragActive #voteDropAreaBottom {
   background: rgba(255, 255, 255, 0.5);
-}
-
-#voteDropAreaBottom.active h2 {
-  display: none;
 }
 
 #voteDropAreaTop:empty:after {
@@ -431,7 +427,7 @@ footer {
   line-height: 30px;
 }
 
-.voteDropArea.flash .aNominee {
+.voteDropArea.flash .nominee {
   opacity: 0;
 }
 
@@ -439,85 +435,60 @@ footer {
   background: white;
 }
 
-.inputBox {
-  /*clear: both;*/
-  /*float: right;*/
-  /*position: relative;*/
-  width: 116px;
-  height: 116px;
-  background: #262f5c;
-  color: yellow;
-  border-color: white;
-  /*border: 2px solid silver;*/
-  border-width: 4px;
-  text-align: center;
-  font-size: 60px;
-  /*line-height: 116px;*/
-  /*padding-left: 16px;*/
-  margin-right: 15px;
-  font-family: Arial, sans-serif;
-  transition: background-color 0.2s, color 0.2s;
+/* Reset and submit buttons */
+.buttons {
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
-.inputBox:invalid, .inputBox.invalid {
-  border-color: red;
-  color: red;
-  background-color: #5c2626;
+.buttons .navigation {
+  top: 8px;
+  display: none;
 }
 
-.inputBox.static {
-  background: url('https://vignette.wikia.nocookie.net/memory-gamma/images/1/17/Static.gif') center #37255c;
+.btnSubmit {
+  cursor: pointer;
+  height: 49px;
+  position: relative;
 }
 
-/*.voteBox.locked {
-  background: none;
-  background: none;
-}*/
-
-.voteBox.dragging {
-  /*background-image: url("/votebox_background_drag.png");*/
+#btnResetVotes {
+  width: 166px;
+  height: 40px;
+  background: url("/2016images/btn_reset.png") 0 0;
+  margin-right: 50px;
 }
 
-.sortable-ghost .number, .sortable-chosen .number, .sortable-drag .number {
-  background: black;
+#btnResetVotes:hover {
+  background-position: 0 bottom;
 }
 
-.locked .number {
-  background: black;
+#btnLockVotes {
+  width: 175px;
+  height: 40px;
+  background: url("/2016images/btn_submit.png") 0 0;
 }
 
-.locked .number:after {
-  content: ' - SAVED';
+#btnLockVotes:hover {
+  background-position: 0 center;
 }
 
-.number {
-  /*position: absolute;*/
-  /* bottom: 10px; */
-  /* right: 10px; */
-  background: rgb(251,68,7);
-  color: white;
-  /* border-radius: 100%; */
-  font-family: Arial,sans-serif;
-  /* padding: 0px; */
-  /* font-size: 1.8em; */
-  width: 100%;
-  height: 20px;
-  text-align: center;
-  line-height: 20px;
-  font-weight: bold;
-  font-size: 12px;
+.iVoted {
+  background-position: 0 bottom !important;
+  cursor: default;
 }
 
-/**************/
-
+/* Awards List */
 #containerAwards {
   margin: 0 auto;
   overflow: auto;
   max-width: 1200px;
 }
 
-#containerAwards h2, #limitsDrag h2 {
-  height: 52px;
+#secondaryAwards {
+  font-size: 30px;
+  padding-top: 20px;
 }
 
 .awardList {
@@ -537,19 +508,11 @@ footer {
   flex-grow: 1;
 }
 
-.goBackLink a {
-  background-color: rgb(251, 68, 7);
-  border-radius: 15px;
-  color: white;
-  padding: 5px 15px;
-  font-family: Arial, sans-serif;
-  font-size: 18px;
-}
-
 .award:hover {
   background: rgba(0, 0, 0, 0.20);
 }
 
+/* TODO: move this to theme.css */
 h1 {
   font-family: Arial, sans-serif;
   color: yellow;
@@ -601,77 +564,16 @@ h1 {
   background: url("/2016images/check.png") 0 center no-repeat;
 }
 
-.voteBoxUsed {
-  background: green;
+.goBackLink a {
+  background-color: rgb(251, 68, 7);
+  border-radius: 15px;
+  color: white;
+  padding: 5px 15px;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
 }
 
-.btnSubmit {
-  cursor: pointer;
-  /*margin-top: 10px;*/
-  /*float: left;*/
-  height: 49px;
-  position: relative;
-}
-
-#btnResetVotes {
-  /*margin-left: 311px;*/
-  width: 166px;
-  height: 40px;
-  background: url("/2016images/btn_reset.png") 0 0;
-  margin-right: 50px;
-}
-
-#btnLockVotes {
-  /*margin-left: 34px;*/
-  width: 175px;
-  height: 40px;
-  background: url("/2016images/btn_submit.png") 0 0;
-}
-
-#btnResetVotes:hover {
-  background-position: 0 bottom;
-}
-
-#btnLockVotes:hover {
-  background-position: 0 center;
-}
-
-.iVoted {
-  background-position: 0 bottom !important;
-  cursor: default;
-}
-
-#arrow_left {
-  float: left;
-  margin-left: 216px;
-  margin-top: 10px;
-}
-
-#arrow_right {
-  float: left;
-  margin-top: 10px;
-}
-
-#topAwards {
-  /*color: #00ebdb;*/
-}
-
-#secondaryAwards {
-  /*color: #00ebdb;*/
-  font-size: 30px;
-  /*clear: both;*/
-  padding-top: 20px;
-}
-
-#overlay {
-  cursor: pointer;
-  width: 650px;
-  height: 471px;
-  -moz-box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.4);
-  -webkit-box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.4);
-}
-
+/* Easter egg */
 .shit {
   position: absolute;
   z-index: 999;
@@ -695,16 +597,22 @@ h1 {
   }
 }
 
-#test {
-  color: red;
-  text-align: center;
+/* Other page elements */
+.meme {
+  width: 160px;
+  height: 600px;
+  border: 1px dashed black;
+  position: absolute;
+  top: 260px;
 }
 
-.title h2 {
-  margin-top: 40px;
-  text-shadow: black 1px 1px 2px;
+#dontforget {
+  position: absolute;
+  top: 218px;
+  right: -40px;
 }
 
+/* Instruction page (appears when no awards are selected) */
 #startMessage {
   float: left;
   width: 880px;
@@ -741,96 +649,9 @@ h1 {
   background-position: bottom center;
 }
 
-.numberPopup {
-  border: 4px inset white;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.5) 4px 4px;
-  position: absolute;
-  z-index: 300;
-  max-width: 100%;
-}
-
-.numberButtons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  align-content: space-around;
-  width: 100%;
-  height: 100%;
-}
-
-.numberPopup.height2 {
-  height: 220px;
-}
-
-.numberPopup.height3 {
-  height: 320px;
-}
-
-.numberPopup.width2 {
-  width: 240px;
-}
-
-.numberPopup.width3 {
-  width: 340px;
-}
-
-.numberPopup.width4 {
-  width: 440px;
-}
-
-.numberPopup.width5 {
-  width: 540px;
-}
-
-.numberButton {
-  width: 100px;
-  height: 100px;
-  background: rgb(251, 68, 7);
-  color: white;
-  border-radius: 100%;
-  border: none;
-  box-shadow: black 2px 2px;
-  text-align: center;
-  font-size: 40px;
-  font-family: Arial, sans-serif;
-}
-
-.numberButton:hover, .numberButton:focus {
-  background: rgb(221, 70, 7);
-}
-
-.numberButton:disabled {
-  background: grey;
-  color: silver;
-  box-shadow: none;
-  position: relative;
-  top: 1px;
-  left: 1px;
-}
-
-.numberButton:active {
-  position: relative;
-  top: 4px;
-  box-shadow: black 2px -2px;
-}
-
-.realHandle {
-  display: none;
-}
-
-.fakeHandle {
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  position: absolute;
-}
-
-/**************/
-
+/* Changes for mobile */
 @media (max-width: 768px) {
-  .aNominee {
+  .nominee {
     width: 100%;
     height: 75px;
   }
@@ -839,7 +660,7 @@ h1 {
     min-height: 100px;
   }
 
-  .inputBox {
+  .preferenceButton {
     margin-left: 5px;
     margin-right: 5px;
     width: 80px;
@@ -879,22 +700,8 @@ h1 {
   }
 }
 
-/*@media (pointer:coarse) {*/
-  /*.inputBox {*/
-    /*padding-left: 0;*/
-  /*}*/
-/*}*/
-
 @media screen and (max-width: 1090px) {
   #dontforget {
     display: none;
-  }
-}
-
-@media only screen and (max-device-width: 1080px) {
-  .award {
-    float: none;
-    width: 600px;
-    font-size: 1em;
   }
 }
