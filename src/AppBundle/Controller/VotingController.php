@@ -134,6 +134,19 @@ class VotingController extends Controller
             }
         }
 
+        $voteDialogMapping = [
+            6 => 'height2 width3',
+            7 => 'height2 width4',
+            8 => 'height2 width4',
+            9 => 'height2 width5',
+            10 => 'height2 width5',
+            11 => 'height3 width4',
+            12 => 'height3 width4',
+            13 => 'height3 width5',
+            14 => 'height3 width5',
+            15 => 'height3 width5',
+        ];
+
         return $this->render('voting.html.twig', [
             'title' => 'Voting',
             'awards' => $awards,
@@ -145,7 +158,8 @@ class VotingController extends Controller
             'prevAward' => $prevAward,
             'nextAward' => $nextAward,
             'votes' => $voteJSON,
-            'allVotes' => $simpleVotes
+            'allVotes' => $simpleVotes,
+            'voteButtonSizeMap' => $voteDialogMapping,
         ]);
     }
 

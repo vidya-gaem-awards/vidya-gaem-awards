@@ -1,321 +1,246 @@
-//var _gaq = _gaq || [];
-//_gaq.push(['_setAccount', 'UA-36466872-1']);
-//_gaq.push(['_trackPageview']);
-//
-//(function() {
-//  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-//  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-//  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-//})();
-
-// var votingEnabled;
-// var previousLockExists = false;
-// var currentAward;
-// var lastVotes = [null];
-// var votesChanged = false;
-// var postURL;
-//
-// dumbshit = new Dumbshit();
-// dumbshit.code = function () {
-//     $(".shit").show();
-//     $("body").css("background-image", "url(/2015voting/bg2.gif)");
-//     $("body").css("background-repeat", "repeat");
-// 	var audio = new Audio('/2015voting/woah.mp3');
-// 	audio.play();
-// };
-// dumbshit.load();
-
-// Position the popup at the center of the page
-// function positionPopup() {
-//     var overlay = $('#overlay');
-//
-//     if (overlay.is(':visible')) {
-//         return;
-//     }
-//     overlay.css({
-//         left: ($(window).width() - overlay.width()) / 2,
-//         top: ($(window).width() - overlay.width()) / 7,
-//         position: 'absolute'
-//     });
-// }
-
-// Keep the popup in the center when the browser is resized
-// $(window).bind('resize', positionPopup);
+// OwO what's this?
+onDumbShit(function () {
+    $(".shit").show();
+    $("html").css({
+        'background-image': 'url(/2015voting/bg2.gif)',
+        'background-repeat': 'repeat'
+    });
+    var audio = new Audio('/2015voting/woah.mp3');
+    audio.play();
+});
 
 $(document).ready(function () {
-    var nomineeCount = $('.aNominee').length;
+    // If there's no award currently selected, none of this code is relevant.
+    if (!currentAward) {
+        return;
+    }
 
-    $('.inputBox').blur(function () {
+    var previousLockExists = lastVotes.length > 1;
+    var votesChanged = false;
+    var nomineeCount = $('.voteGroup').length;
+
+    var resetButton = $('#btnResetVotes');
+    var submitButton = $('#btnLockVotes');
+
+    // Only used in the "drag from top to bottom" layout
+    var topArea = $('#voteDropAreaTop');
+    var bottomArea = $('#voteDropAreaBottom');
+
+    // Only used in the "click to choose number" layout
+    var numberPopup = $('#numberPopup');
+    var nomineeSquares = $('.inputBox');
+
+    // Only used in the "type in your number" layout
+    var preferenceInputs = $('.preferenceInput');
+
+    var sortableOptions = {
+        group: 'omega',
+        draggable: '.voteGroup',
+        handle: '.handle',
+        animation: 100,
+        dataIdAttr: 'data-order',
+        onStart: function (event) {
+            $("#dragLimit").addClass("dragActive");
+            $(event.item).find('.number').show().text('Drop this nominee in your preferred position');
+        },
+        onEnd: function (event) {
+            $("#dragLimit").removeClass("dragActive");
+            updateNumbers();
+            unlockVotes();
+        },
+        scroll: true,
+        scrollSensitivity: 100,
+        scrollSpeed: 20
+    };
+
+    new Sortable(document.getElementById('voteDropAreaTop'), sortableOptions);
+    new Sortable(document.getElementById('voteDropAreaBottom'), sortableOptions);
+
+    moveNomineesBackToLastVotes();
+
+    // Update interface to indicate that the votes have been succesfully submitted and changed.
+    function lockVotes() {
+        bottomArea.addClass("locked");
+        submitButton.addClass('iVoted').attr('title', 'Saved!');
+        previousLockExists = true;
+        votesChanged = false;
+        $(".navigation").show();
+    }
+
+    // Update interface to indicate that there have been changes since the last submitted vote.
+    function unlockVotes() {
+        bottomArea.removeClass("locked");
+        submitButton.removeClass('iVoted').attr('title', 'Submit Votes');
+        votesChanged = true;
+    }
+
+    // Checks for duplicate preferences, and marks any duplicates as invalid.
+    // Only used in the "type in your number" layout.
+    function checkForDuplicates() {
+        var allNumbers = {};
+        $('.inputBox').each(function () {
+            var element = $(this);
+            var number = element.val();
+
+            element.removeClass('invalid');
+            if (number === "") {
+                return;
+            }
+            if (!allNumbers[number]) {
+                allNumbers[number] = [];
+            }
+            allNumbers[number].push(element);
+        });
+
+        $.each(allNumbers, function (index, elements) {
+            if (elements.length > 1) {
+                $.each(elements, function (index, element) {
+                    element.addClass('invalid');
+                });
+            }
+        });
+    }
+
+    // Updates the preference numbers displayed on each nominee in the bottom pane.
+    // Only used in the "drag and drop" layout.
+    function updateNumbers() {
+        bottomArea.find(".voteGroup").each(function (index) {
+            index = index + 1;
+            var ordinal = ['st', 'nd', 'rd'][((index+90) % 100 - 10) % 10 - 1] || 'th';
+            var text = 'Your ' + index + ordinal + ' preference';
+            if (index === 1) {
+                text = text + ' (the one you want to win)';
+            }
+            $(this).find(".number").show().html(text);
+        });
+
+        topArea.find(".number").hide();
+    }
+
+    // Resets all nominees back to the user's last submitted vote.
+    // If there is no last submitted vote, will move all nominees back into the top pane.
+    // Only used in the "drag and drop" layout.
+    function moveNomineesBackToLastVotes() {
+        bottomArea.find('.voteGroup').each(function () {
+            var element = $(this);
+            element.detach().appendTo(topArea);
+        });
+
+        for (var i = 1; i < lastVotes.length; i++) {
+            var element = $("#nominee-" + lastVotes[i]);
+            element.detach().appendTo(bottomArea);
+        }
+
+        updateNumbers();
+
+        if (previousLockExists) {
+            lockVotes();
+        }
+    }
+
+    // Resets the top nominee pane to its original configuration.
+    // Only used in the "drag and drop" layout.
+    function resetTopArea() {
+        var nominees = topArea.find(".voteGroup").detach();
+
+        nominees = $(nominees).sort(function (a, b) {
+            var contentA = parseInt($(a).attr('data-order'));
+            var contentB = parseInt($(b).attr('data-order'));
+            return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+        });
+
+        topArea.append(nominees);
+    }
+
+    // Checks for invalid preferences when an input is unfocused.
+    // Only used in the "type in your preference" layout.
+    preferenceInputs.blur(function () {
         var element = $(this);
         var number = element.val();
+
         if (number > nomineeCount) {
             element.addClass('static');
             element.val('');
             setTimeout(function () {
                 element.val(nomineeCount);
                 element.removeClass('static');
+                checkForDuplicates();
             }, 300);
         } else if (element.is(':invalid')) {
             element.addClass('static');
             element.val('');
             setTimeout(function () {
                 element.removeClass('static');
+                checkForDuplicates();
             }, 300);
         }
     });
 
-    // var resetButton = $('#btnResetVotes');
-    // var cancelButton = $('#btnCancelVotes');
-    // var submitButton = $('#btnLockVotes');
-    //
-    // var voteColumnBoxes = $('#voteColumn').find('.voteBox');
-    //
-    // previousLockExists = lastVotes.length > 1;
-    //
-    // //empty voteBoxes
-    // voteColumnBoxes.each(function () {
-    //     $(this).html("");
-    // });
-    //
-    // //global variables for future use
-    // var dragged;
-    // var draggedFrom;
-    //
-    // //set the height/width of the nomineeColumn depending on how many nominees there are
-    // $("#nomineeColumn").height($("#voteColumn").height());
-    //
-    // //be able to drag nominees
-    // if (votingEnabled) {
-    //     $(".aNominee").draggable({
-    //         containment: "#limitsDrag",
-    //         distance: 20,
-    //         opacity: 0.75,
-    //         zIndex: 100,
-    //         revert: "invalid",
-    //         revertDuration: 200,
-    //         start: function (event, ui) {
-    //             voteColumnBoxes.addClass("dragging");
-    //         },
-    //         stop: function (event, ui) {
-    //             voteColumnBoxes.removeClass("dragging");
-    //         }
-    //     })
-    //     //when you start dragging, it puts the elements in variables
-    //     .bind('dragstart', function (event) {
-    //         dragged = $(this);
-    //         draggedFrom = $(this).parent();
-    //
-    //         //put their margins to 0
-    //         //$(this).css("margin","0px 0px 0px 0px");
-    //     });
-    // }
-    //
-    // //be able to drop nominees in voteBoxes
-    // voteColumnBoxes.droppable({
-    //     drop: function (event, ui) {
-    //         var dropped = ui.draggable;
-    //         var droppedOn = $(this);
-    //
-    //         //if you're dropping the nominee exactly where you took it from, it cancels the drop
-    //         if (droppedOn.attr("id") === draggedFrom.attr("id")) {
-    //             $(dragged).draggable("option", "revert", true);
-    //             return
-    //         }
-    //
-    //         votesWereUnlocked();
-    //
-    //         //put the content of the box you're voting over in a variable (.detach keeps the draggable)
-    //         var stuffDeleted = droppedOn.contents().detach();
-    //
-    //         //add your dragged vote to the box
-    //         $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn);
-    //
-    //         //put what you deleted back where your vote came from
-    //         draggedFrom.append(stuffDeleted);
-    //
-    //         //put their margins back to normal
-    //         //$(stuffDeleted).css("margin","10px 0 0 10px");
-    //
-    //         updateNumbers();
-    //     }
-    // });
-    //
-    // //be able to drop nominees back in the original container
-    // $("#nomineeColumn").find(".voteBox").droppable({
-    //     drop: function (event, ui) {
-    //         var dropped = ui.draggable;
-    //         var droppedOn = $(this);
-    //
-    //         //if you're dropping the nominee exactly where you took it from, it cancels the drop
-    //         if (droppedOn.attr("id") === draggedFrom.attr("id")) {
-    //             $(dragged).draggable("option", "revert", true);
-    //
-    //             //put their margins back to normal
-    //             //$(dropped).css("margin","10px 0 0 10px");
-    //
-    //             return
-    //         }
-    //
-    //         votesWereUnlocked();
-    //
-    //         //add your dragged vote to the container
-    //         $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn);
-    //
-    //         //put their margins back to normal
-    //         //$(dropped).css("margin","10px 0 0 10px");
-    //
-    //         //empty the number
-    //         dropped.find(".number").html("");
-    //     }
-    // });
-    //
-    // moveNomineesBackToLastVotes();
-    //
-    // //if you click on Reset Votes
-    // resetButton.click(function () {
-    //     votesWereUnlocked();
-    //     voteColumnBoxes.each(function () {
-    //         //delete what's in every voteBox and put them back in the container on the left
-    //         var stuffDeleted = $(this).contents().detach();
-    //         for (var i = 0; i < stuffDeleted.length; i++) {
-    //             $('#nomineeColumn').find('.voteBox:empty:first').append(stuffDeleted[i]);
-    //         }
-    //     });
-    //     sortLeftSide();
-    //     if (!previousLockExists) {
-    //         $("#btnCancelVotes").hide();
-    //     }
-    // });
-    //
-    // cancelButton.click(function () {
-    //     moveNomineesBackToLastVotes();
-    //     sortLeftSide();
-    // });
-    //
-    // //if you click on Lock Votes
-    // submitButton.click(function () {
-    //     sortVotes();
-    //     updateNumbers();
-    //     votesWereLocked();
-    //
-    //     var preferences = [null];
-    //
-    //     voteColumnBoxes.each(function () {
-    //         var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
-    //         var nomineeID = $(this).find(".aNominee").attr("data-nominee");
-    //
-    //         if (nomineeID != undefined) {
-    //             preferences[onlyTheNumber] = nomineeID;
-    //         }
-    //
-    //     });
-    //
-    //     lastVotes = preferences;
-    //
-    //     $.post(postURL, {preferences: preferences}, function (data) {
-    //         console.log(data);
-    //         if (data.error) {
-    //             alert("An error occurred:\n" + data.error + "\nYour vote has not been saved.");
-    //         } else {
-    //             $("#" + currentAward).addClass("complete");
-    //         }
-    //     }, "json");
-    // });
+    // Checks for duplicate preferences when an input is changed.
+    // Only used in the "type in your preference" layout.
+    preferenceInputs.change(function () {
+        checkForDuplicates();
+    });
+
+    // Shows the number popup upon clicking the preference square.
+    // Only used in the "click to choose number" layout.
+    nomineeSquares.click(function () {
+        var element = $(this);
+
+        numberPopup.show();
+        numberPopup.attr('data-nominee', element.parent('.voteGroup').attr('data-nominee'));
+        numberPopup.css('left', element.offset().left);
+        numberPopup.css('top', element.offset().top - element.outerHeight());
+    });
+
+    // Handle the selection of a preference from the popup dialog.
+    // Only used in the "click to choose number" layout.
+    numberPopup.find('button').click(function () {
+        var element = $(this);
+        var nominee = numberPopup.attr('data-nominee');
+        var button = $('#nominee-' + nominee).find('.inputBox');
+        var value = element.attr('data-value');
+
+        var currentSelection = button.attr('data-value');
+        if (currentSelection !== undefined) {
+            $('#numberButton' + currentSelection).removeAttr('disabled');
+        }
+
+        button.text(value);
+        button.attr('data-value', value);
+        element.attr('disabled', 'disabled');
+        numberPopup.hide();
+    });
+
+    // Reset Votes
+    resetButton.click(function () {
+        unlockVotes();
+        moveNomineesBackToLastVotes();
+        resetTopArea();
+
+        $('.voteDropArea').addClass('flash');
+        setTimeout(function () {
+            $('.voteDropArea').removeClass('flash');
+        }, 200);
+    });
+
+    // Submit Votes
+    submitButton.click(function () {
+        lockVotes();
+        var preferences = [null];
+
+        bottomArea.find('.voteGroup').each(function (index) {
+            preferences[index + 1] = $(this).attr('data-nominee');
+        });
+
+        lastVotes = preferences;
+
+        $.post(postURL, {preferences: preferences}, function (data) {
+            if (data.error) {
+                alert("An error occurred:\n" + data.error + "\nYour vote has not been saved.");
+            } else {
+                $('#' + currentAward).addClass('complete');
+            }
+        }, 'json');
+    });
 });
-
-// function sortVotes() {
-//     //variable that I'm using to know which voteBox the loop is at
-//     var currentVoteBox = 0;
-//     var listVoteBox = [];
-//
-//     //pass through every voteBox, empty them while placing the vote in the array, ignoring the empty voteBoxes
-//     $("#voteColumn").find(".voteBox").each(function () {
-//         currentVoteBox++;
-//
-//         if ($(this).contents().attr("id") != undefined) {
-//             listVoteBox.push($(this).contents().detach());
-//         }
-//     });
-//
-//     //put the votes back in the voteBoxes
-//     for (var i = 0; i < currentVoteBox; i++) {
-//         if (listVoteBox[i]) { //if it exists
-//             listVoteBox[i].appendTo($("#voteBox" + (i + 1)));
-//         }
-//     }
-// }
-
-// function updateNumbers() {
-//     //for every voteBox, look at its ID, keep the number and show it in the nominee div
-//     $("#voteColumn").find(".voteBox").each(function () {
-//         var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
-//         $(this).find(".number").html("#" + onlyTheNumber);
-//
-//         //put their margins back to normal
-//         //$(this).find(".aNominee").css("margin","0 0 0 0");
-//     });
-// }
-//
-// function votesWereLocked() {
-//     $(".voteBox").addClass("locked");
-//     $(".aNominee").addClass("locked");
-//     $("#votesAreLocked").show();
-//     $("#votesAreNotLocked").hide();
-//     $("#btnCancelVotes").hide();
-//     previousLockExists = true;
-//     votesChanged = false;
-//     $(".navigation").show();
-// }
-//
-// function votesWereUnlocked() {
-//     $(".voteBox").removeClass("locked");
-//     $(".aNominee").removeClass("locked");
-//     $("#votesAreLocked").hide();
-//     $("#votesAreNotLocked").show();
-//     $("#btnCancelVotes").show();
-//     votesChanged = true;
-// }
-//
-// function moveNomineesBackToLastVotes() {
-//     var haveVotedFor = [];
-//
-//     for (var i = 1; i < lastVotes.length; i++) {
-//         haveVotedFor.push($("#nominee-" + lastVotes[i]).detach());
-//     }
-//
-//     var theRest = $(".aNominee").detach();
-//
-//     for (i = 0; i < lastVotes.length; i++) {
-//         $("#voteBox" + (i + 1)).append(haveVotedFor[i]);
-//     }
-//
-//     var voteBoxes = $("#nomineeColumn").find(".voteBox");
-//
-//     for (i = 0; i < theRest.length; i++) {
-//         $(voteBoxes[i + lastVotes.length - 1]).append(theRest[i]);
-//     }
-//
-//     updateNumbers();
-//
-//     if (previousLockExists) {
-//         votesWereLocked();
-//     }
-//
-//     $("#btnCancelVotes").hide();
-// }
-//
-// function sortLeftSide() {
-//     var muhNominees = $("#nomineeColumn").find(".aNominee").detach();
-//
-//     muhNominees = $(muhNominees).sort(function (a, b) {
-//         var contentA = parseInt($(a).attr('data-order'));
-//         var contentB = parseInt($(b).attr('data-order'));
-//         return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
-//     });
-//
-//     var voteBoxes = $('#nomineeColumn').find('.voteBox');
-//
-//     for (var i = 0; i < muhNominees.length; i++) {
-//         $(voteBoxes[i]).append(muhNominees[i]);
-//     }
-// }

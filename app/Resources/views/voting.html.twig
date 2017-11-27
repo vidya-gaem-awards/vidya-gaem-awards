@@ -9,11 +9,9 @@
 
 {% block js %}
   {{ parent() }}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-  {% if award %}
-    <script src='{{ asset('js/voting.js') }}'></script>
-  {% endif %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
   <script src='{{ asset('js/dumbshit.js') }}'></script>
+  <script src='{{ asset('js/voting.js') }}'></script>
 {% endblock %}
 
 {% block head %}
@@ -60,42 +58,45 @@
 
     {% if award %}
       {#<div id="limitsDrag">#}
-      <div>
 
-        <div class="flexContainer">
+      {#<div class="numberPopup {{ voteButtonSizeMap[award.nominees | length] }}" style="display: none;" id="numberPopup">#}
+        {#<div class="numberButtons">#}
+          {#{% for i in 1..award.nominees | length %}#}
+            {#<button id="numberButton{{ i }}" class="numberButton" data-value="{{ i }}">#{{ i }}</button>#}
+          {#{% endfor %}#}
+        {#</div>#}
+      {#</div>#}
+
+      <div id="dragLimit">
+
+        {% spaceless %}
+        <div class="flexContainer voteDropArea" id="voteDropAreaTop">
           {% for nominee in award.nominees | shuffle %}
-            <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}">
-            <input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="inputBox" min="1" max="{{ award.nominees | length }}">
-
-            {% spaceless %}
-              <label for="voteBox{{ loop.index }}">
+            <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}" data-order="{{ loop.index }}">
+            {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="inputBox"}">+</button>#}
+            {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
+              {#<label for="voteBox{{ loop.index }}">#}
               <div class="voteBox">
+                <div class="number" style="display: none;">{{ loop.index }}</div>
                 <div class="aNominee" style="background-image: url('{{ nominee.image }}'); background-size: cover">
-                {#<div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"#}
-                     {#data-nominee="{{ nominee.shortName }}">#}
+                  <div class="handle fakeHandle"></div>
                   {#<img class="fakeBorder" src="{{ asset('2016images/votebox_foreground.png') }}">#}
                   {#<img class="fakeBorder locked" src="{{ asset('2016images/votebox_foreground_locked.png') }}">#}
                   <div class="innerInfo">{{ nominee.flavorText | nl2br }}</div>
-                  {#<div class="info">#}
-                  {#</div>#}
                   {#<img class="nomineeImage" src="{{ nominee.image }}">#}
                   <div class="nomineeName">{{ nominee.name }}</div>
                   <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
-                  {#<div class="nomineeInfo">#}
-                    {#<div class="number"></div>#}
-                    {##}
-                  {#</div>#}
+                  <div class="handle realHandle">
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                  </div>
                 </div>
               </div>
-              </label>
-            {% endspaceless %}
-
+              {#</label>#}
             </div>
 
           {% endfor %}
-
         </div>
-
+        {% endspaceless %}
 
         {% if votingOpen or votingClosed %}
           {#<div id="voteColumn" class="column">#}
@@ -150,17 +151,16 @@
           {#</div>#}
         {#{% endif %}#}
 
+      {#<div class="zig" style="margin-top: 0;"></div>#}
+
+      <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
+
       </div>
 
       {% if votingOpen %}
         <footer>
           <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
-          <div id="votesAreNotLocked">
-            <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
-          </div>
-          <div id="votesAreLocked" style="display: none;">
-            <div id="btnLockVotes" class="btnSubmit iVoted" title="Saved!"></div>
-          </div>
+          <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
           <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right" title="Next award"></a>
         </footer>
       {% endif %}

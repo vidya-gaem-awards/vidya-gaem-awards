@@ -85,8 +85,17 @@ header h2 {
 
 #wrapper {
   width: 100%;
+  max-width: 1480px;
   position: relative;
   margin: 0 auto 5px;
+}
+
+.meme {
+  width: 160px;
+  height: 600px;
+  border: 1px dashed black;
+  position: absolute;
+  top: 260px;
 }
 
 /* Award Header */
@@ -193,6 +202,7 @@ footer .navigation {
 footer {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 /* Nominee Box */
@@ -204,8 +214,9 @@ footer {
   background-position: center;
   background: #262f5c;
   border: 2px solid white;
-  width: 100%;
-  height: 100%;
+  width: 350px;
+  height: 140px;
+  transition: 0.3s linear all;
 }
 
 .nomineeImage {
@@ -232,10 +243,10 @@ footer {
   display: none;
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 0;
+  left: 0;
   padding: 3px;
-  width: calc(100% - 4px);
+  width: calc(100% - 0px);
   height: auto;
   font-family: Calibri, sans-serif;
   font-size: 0.81em;
@@ -330,8 +341,10 @@ footer {
 .voteGroup {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
-  flex-basis: 35%;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  /*flex-basis: 35%;*/
   justify-content: center;
 }
 
@@ -340,13 +353,90 @@ footer {
   font-weight: inherit;
 }
 
+.voteGroup.beingDragged .aNominee {
+  border-style: dashed;
+  opacity: 0.5;
+}
+
 .voteBox {
+  transition: 0.3s linear all;
   /*clear: both;*/
   /*float: left;*/
   /*position: relative;*/
-  width: 473px;
-  height: 126px;
-  background: rgba(246, 231, 190, 0.5) url("/2016images/votebox_background.png");
+  /*width: 350px;*/
+  /*height: 140px;*/
+  /*background: rgba(246, 231, 190, 0.5) url("/2016images/votebox_background.png");*/
+}
+
+.voteDropArea {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  padding: 5px;
+  min-height: 175px;
+  border: 2px dashed transparent;
+  transition: 0.2s all;
+}
+
+.voteDropArea h2 {
+  transition: 0.2s all;
+}
+
+#dragLimit.dragActive #voteDropAreaTop, #voteDropAreaTop:empty {
+  border: 2px dashed white;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#voteDropAreaBottom {
+  border: 2px dashed white;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+#voteDropAreaBottom.locked {
+  border: 2px solid white;
+}
+
+#dragLimit.dragActive #voteDropAreaBottom {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+#voteDropAreaBottom.active h2 {
+  display: none;
+}
+
+#voteDropAreaTop:empty:after {
+  content: "You've ordered all the nominees! Nice work!";
+  font-family: Arial, sans-serif;
+  color: white;
+  font-style: italic;
+  font-size: 30px;
+  text-shadow: black 2px 2px;
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+  line-height: 30px;
+}
+
+#voteDropAreaBottom:empty:after {
+  content: "Drag nominees here to vote for them!";
+  font-family: Arial, sans-serif;
+  color: white;
+  font-style: italic;
+  font-size: 30px;
+  text-shadow: black 2px 2px;
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+  line-height: 30px;
+}
+
+.voteDropArea.flash .aNominee {
+  opacity: 0;
+}
+
+.voteDropArea.flash .voteBox {
+  background: white;
 }
 
 .inputBox {
@@ -362,13 +452,14 @@ footer {
   border-width: 4px;
   text-align: center;
   font-size: 60px;
-  line-height: 116px;
-  padding-left: 16px;
+  /*line-height: 116px;*/
+  /*padding-left: 16px;*/
   margin-right: 15px;
+  font-family: Arial, sans-serif;
   transition: background-color 0.2s, color 0.2s;
 }
 
-.inputBox:invalid {
+.inputBox:invalid, .inputBox.invalid {
   border-color: red;
   color: red;
   background-color: #5c2626;
@@ -380,22 +471,41 @@ footer {
 
 /*.voteBox.locked {
   background: none;
+  background: none;
 }*/
 
 .voteBox.dragging {
   /*background-image: url("/votebox_background_drag.png");*/
 }
 
+.sortable-ghost .number, .sortable-chosen .number, .sortable-drag .number {
+  background: black;
+}
+
+.locked .number {
+  background: black;
+}
+
+.locked .number:after {
+  content: ' - SAVED';
+}
+
 .number {
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  color: #f85898;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;
-  font-size: 1.8em;
-  line-height: 1em;
+  /*position: absolute;*/
+  /* bottom: 10px; */
+  /* right: 10px; */
+  background: rgb(251,68,7);
+  color: white;
+  /* border-radius: 100%; */
+  font-family: Arial,sans-serif;
+  /* padding: 0px; */
+  /* font-size: 1.8em; */
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 /**************/
@@ -417,6 +527,7 @@ footer {
 }
 
 .award {
+  position: relative;
   display: block;
   padding: 5px;
   border-top: none;
@@ -630,9 +741,104 @@ h1 {
   background-position: bottom center;
 }
 
+.numberPopup {
+  border: 4px inset white;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.5) 4px 4px;
+  position: absolute;
+  z-index: 300;
+  max-width: 100%;
+}
+
+.numberButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.numberPopup.height2 {
+  height: 220px;
+}
+
+.numberPopup.height3 {
+  height: 320px;
+}
+
+.numberPopup.width2 {
+  width: 240px;
+}
+
+.numberPopup.width3 {
+  width: 340px;
+}
+
+.numberPopup.width4 {
+  width: 440px;
+}
+
+.numberPopup.width5 {
+  width: 540px;
+}
+
+.numberButton {
+  width: 100px;
+  height: 100px;
+  background: rgb(251, 68, 7);
+  color: white;
+  border-radius: 100%;
+  border: none;
+  box-shadow: black 2px 2px;
+  text-align: center;
+  font-size: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.numberButton:hover, .numberButton:focus {
+  background: rgb(221, 70, 7);
+}
+
+.numberButton:disabled {
+  background: grey;
+  color: silver;
+  box-shadow: none;
+  position: relative;
+  top: 1px;
+  left: 1px;
+}
+
+.numberButton:active {
+  position: relative;
+  top: 4px;
+  box-shadow: black 2px -2px;
+}
+
+.realHandle {
+  display: none;
+}
+
+.fakeHandle {
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  position: absolute;
+}
+
 /**************/
 
 @media (max-width: 768px) {
+  .aNominee {
+    width: 100%;
+    height: 75px;
+  }
+
+  .voteDropArea {
+    min-height: 100px;
+  }
+
   .inputBox {
     margin-left: 5px;
     margin-right: 5px;
@@ -641,6 +847,7 @@ h1 {
     line-height: 80px;
     border-width: 3px;
     padding-left: 0;
+    font-size: 40px;
   }
 
   .voteBox {
@@ -656,13 +863,27 @@ h1 {
   .voteGroup label {
     width: 100%;
   }
-}
 
-@media (pointer:coarse) {
-  .inputBox {
-    padding-left: 0;
+  .fakeHandle {
+    display: none;
+  }
+
+  .realHandle {
+    display: block;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background: rgb(251, 68, 7);
+    padding: 25px 5px 5px 5px;
+    text-align: center;
   }
 }
+
+/*@media (pointer:coarse) {*/
+  /*.inputBox {*/
+    /*padding-left: 0;*/
+  /*}*/
+/*}*/
 
 @media screen and (max-width: 1090px) {
   #dontforget {
