@@ -141,7 +141,11 @@ class Schulze extends AbstractResultCalculator
 
         // Scaling formula from http://stackoverflow.com/a/31687097
         foreach ($sweepPoints as &$point) {
-            $point = $max * ($point - $min) / ($max - $min);
+            if ($max - $min === 0) {
+                $point = 0;
+            } else {
+                $point = $max * ($point - $min) / ($max - $min);
+            }
         }
 
         $this->warnings = $warnings;
