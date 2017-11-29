@@ -205,15 +205,16 @@
           {% endif %}
         </td>
         <td class='divider'>
-          {% if game.wii %}
-            <strong class='yes nintendo'>✓</strong>
-          {% endif %}
-        </td>
-        <td>
           {% if game.wiiu %}
             <strong class='yes nintendo'>✓</strong>
           {% endif %}
         </td>
+        <td>
+            {% if game.switch %}
+              <strong class='yes nintendo'>✓</strong>
+            {% endif %}
+        </td>
+
         <td>
           {% if game.n3ds %}
             <strong class='yes nintendo'>✓</strong>
