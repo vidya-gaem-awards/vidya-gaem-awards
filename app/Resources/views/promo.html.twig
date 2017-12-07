@@ -61,11 +61,13 @@
   </style>
 
   <script type="text/javascript">
-      $('.award').each(function(index){
-          $(this).css({
-              'animation': '1s ease-out ' + (index * {{ fastAnimations ? 0 : 75 }} + {{ fastAnimations ? 1000 : 2000 }}) + 'ms forwards award'
-          });
-      });
+    $(document).ready(function () {
+        $('.award').each(function(index){
+            $(this).css({
+                'animation': '1s ease-out ' + (index * {{ fastAnimations ? 0 : 75 }} + {{ fastAnimations ? 1000 : 2000 }}) + 'ms forwards award'
+            });
+        });
+    });
   </script>
 {% endblock %}
 
@@ -76,12 +78,11 @@
 {% block body %}
   <div class="container">
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col-xs-10">
         <div style="font-size: 80px; line-height: 77px; font-weight: 100;" id="title">
-          IT'S<br>
-          OKAY<br>
-          TO BE<br>
-          /v/GAs.
+          YOU THINK<br>
+          YOU WANT IT,<br>
+          BUT YOU DON'T
         </div>
         <div style="font-size: 30px; margin-top: 80px;" class="animate-in">
           Nominations open December&nbsp;8.
@@ -90,7 +91,7 @@
           <a href="{{ path('awards') }}">Rate the award categories now.</a>
         </div>
       </div>
-      <div class="col-xs-6" style="opacity: 0.5; font-weight: 400; text-align: right;" id="awardList">
+      <div class="col-xs-2" style="opacity: 0.5; font-weight: 400; text-align: right;" id="awardList">
         {% for award in awards %}
           <div class="award" id="award-{{ award.id }}"><em>{{ award.name }}</em></div>
         {% endfor %}
