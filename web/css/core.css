@@ -2,11 +2,11 @@ body {
   padding-top: 60px;
   padding-bottom: 20px;
   background: #EEF2FF top center repeat-x;
-  font-family: 'Titillium Web', arial, helvetica, sans-serif;
+  font-family: Arial, helvetica, sans-serif;
 }
 
 .page-header.fancy {
-  font-family: 'Bungee', sans-serif;
+  font-family: 'Asap', sans-serif;
   text-align: center;
   margin-top: 5px;
 }
@@ -54,7 +54,7 @@ input, select, textarea {
 
 .jumbotron {
   position: relative;
-  font-family: 'Bungee', sans-serif;
+  font-family: 'Asap', sans-serif;
 }
 
 .masthead {
