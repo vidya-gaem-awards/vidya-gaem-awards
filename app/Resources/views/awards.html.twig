@@ -226,10 +226,14 @@
               <a href="#{{ award.id }}">
                 <span class="opinion-icon">[{{ userNominations[award.id] | length }}]</span>
                 <strong>{{ award.name }}</strong> {{ award.subtitle }}
-                <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
               </a>
             </li>
           {% endfor %}
+          <li class="awardClickTarget" data-id="new-award">
+            <a href="#new-award">
+              <strong>Suggest a new award</strong>
+            </a>
+          </li>
         </ul>
       </div>
 
