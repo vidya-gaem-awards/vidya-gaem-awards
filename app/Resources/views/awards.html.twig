@@ -38,13 +38,12 @@
     }
 
     .impressive-title {
-      /*text-shadow: #000 1px 1px 2px;*/
       text-align: center;
       color: #789922;
-      text-transform: uppercase;
       font-family: 'Asap', sans-serif;
-      font-size: 2.0em;
+      font-size: 2.5em;
       line-height: 1em;
+      font-weight: bold;
     }
 
     .impressive-subtitle {
@@ -53,13 +52,28 @@
       color: #1F1F1F;
       font-weight: bold;
       font-size: 1.1em;
-      margin-bottom: 10px;
+    }
+
+    .impressive-description {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 1.1em;
+      font-family: 'Asap', sans-serif;
     }
 
     .award-container {
       border: 1px solid #BBB;
       background-color: #f5f5f5;
-      padding: 15px 15px 15px 15px;
+    }
+
+    .award-container-middle {
+      background-color: #eaeaea;
+      box-shadow: rgba(0,0,0,0.1) 0 2px 1px;
+    }
+
+    .award-container-padding {
+      padding: 15px;
+      border-bottom: 1px solid #BBB;
     }
 
     #user-nomination-list {
@@ -80,7 +94,7 @@
 
     #awardDropdownButton {
       width: 100%;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
     }
 
     #awardDropdown .dropdown-menu > li > a {
@@ -89,6 +103,55 @@
 
     .affix {
       width: 100%;
+    }
+
+    .awardContainer {
+      display: none;
+      flex-wrap: wrap;
+    }
+
+    .awardBox {
+      background: white;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+      transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+      padding: 10px 20px 10px 10px;
+      width: calc(50% - 5px);
+      margin-bottom: 5px;
+      margin-right: 5px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .awardBox .glyphicon-chevron-right {
+      position: absolute;
+      right: 5px;
+      top: calc(50% - 7px);
+    }
+
+    .awardBox.active {
+      background-color: #337ab7;
+      color: white;
+    }
+
+    .awardBox .emoji {
+      width: 16px;
+    }
+
+    .awardBox:hover {
+      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    .awardBox .awardName {
+      font-weight: bold;
+    }
+
+    .awardBox .awardSubtitle {
+      font-style: italic;
+      font-size: smaller;
+    }
+
+    #awardDropdown {
+      display: block;
     }
 
     @media (min-width: 1200px) {
@@ -108,6 +171,7 @@
       }
 
       #awardDropdown {
+        display: none;
         position: static;
       }
 
@@ -118,6 +182,10 @@
         left: auto;
         float: none;
         border: none;
+      }
+
+      .awardContainer {
+        display: flex;
       }
     }
   </style>
@@ -142,7 +210,7 @@
 
   <div class="row">
     <div class="col-md-6" id="award-selector">
-      <div class="dropdown" id="awardDropdown">
+       <div class="dropdown" id="awardDropdown">
         <button class="btn btn-default dropdown-toggle" type="button" id="awardDropdownButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="true">
           Select an award
@@ -150,15 +218,25 @@
         </button>
         <ul class="nav nav-list custom-navigation-pane dropdown-menu" aria-labelledby="awardDropdownButton">
           {% for award in awards %}
-            <li data-id="{{ award.id }}">
+            <li data-id="{{ award.id }}" class="awardClickTarget">
               <a href="#{{ award.id }}">
-                <span id="opinion-icon">[{{ userNominations[award.id] | length }}]</span>
+                <span class="opinion-icon">[{{ userNominations[award.id] | length }}]</span>
                 <strong>{{ award.name }}</strong> {{ award.subtitle }}
                 <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
               </a>
             </li>
           {% endfor %}
         </ul>
+      </div>
+
+      <div class="awardContainer">
+        {% for award in awards %}
+          <div class="awardBox awardClickTarget" data-id="{{ award.id }}">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+            <div class="awardName">{{ award.name }}</div>
+            <div class="awardSubtitle">{{ award.subtitle }}</div>
+          </div>
+        {% endfor %}
       </div>
     </div>
 
@@ -183,48 +261,55 @@
 
     <div class="col-md-6" id="award-info" style="display: none;">
       <div data-spy="affix" data-offset-top="90" class="award-container">
-        <div id="award-name" class="impressive-title"></div>
-        <div id="award-subtitle" class="impressive-subtitle"></div>
+        <div class="award-container-top award-container-padding">
+          <div id="award-name" class="impressive-title"></div>
+          <div id="award-subtitle" class="impressive-subtitle"></div>
+          <div id="award-description" class="impressive-description"></div>
+        </div>
 
-        <p id="description" style="text-align: center;"></p>
-
-        <div style="text-align: center; margin-bottom: 10px;">
+        <div class="award-container-middle award-container-padding" style="text-align: center;">
           <div class="btn-group" id="award-voting">
             <button class="btn btn-default" id="thumbs-up" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is good</button>
             <button class="btn btn-default" id="thumbs-down" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is shit</button>
           </div>
+          <div class="btn-group" style="margin-left: 40px;">
+            <button class="btn btn-default" style="float: none; border-radius: 4px;" id="suggest-name" {{ configService.isReadOnly ? 'disabled' : '' }}>Suggest a new name</button>
+            <div id="suggestion-count" style="font-size: small; clear: both;"></div>
+          </div>
         </div>
 
-        <div class="well" style="background-color: #fafafa;" id="user-nomination-list"></div>
+        <div class="award-container-padding">
+          <div class="well" style="background-color: white;" id="user-nomination-list"></div>
 
-        <div id="nomination-section">
-          <form class="form-inline" style="text-align: center;" id="nomination-form">
-            <div class="form-group">
-              <label class="sr-only" for="tags">Add a nomination:</label>
-              <div class="input-group">
-                <div class="input-group-addon">Add a nomination:</div>
-                <input class="form-control" id="tags" name="nomination" type="text" required>
+          <div id="nomination-section">
+            <form class="form-inline" style="text-align: center;" id="nomination-form">
+              <div class="form-group">
+                <label class="sr-only" for="tags">Add a nomination:</label>
+                <div class="input-group">
+                  <div class="input-group-addon">Add a nomination:</div>
+                  <input class="form-control" id="tags" name="nomination" type="text" required>
+                </div>
               </div>
+              <button class="btn" type="submit">Submit</button>
+              <p class="help-block" style="font-style: italic; margin-top: 10px;">
+                <span id="autocomplete"></span><br>
+                You can make nominations for things that aren't in the dropdown.
+              </p>
+            </form>
+
+            <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
+          </div>
+
+          {% if not configService.isReadOnly %}
+            <div id="nominations-closed" style="display: none; text-align: center;">
+              Nominations for this award are not currently open.
             </div>
-            <button class="btn" type="submit">Submit</button>
-            <p class="help-block" style="font-style: italic;">
-              <span id="autocomplete"></span><br>
-              You can make nominations for things that aren't in the dropdown.
-            </p>
-          </form>
-
-          <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
+          {% else %}
+            <div style="text-align: center;">
+              Nominations for this award have closed.
+            </div>
+          {% endif %}
         </div>
-
-        {% if not configService.isReadOnly %}
-          <div id="nominations-closed" style="display: none; text-align: center;">
-            Nominations for this award are not currently open.
-          </div>
-        {% else %}
-          <div style="text-align: center;">
-            Nominations for this award have closed.
-          </div>
-        {% endif %}
       </div>
     </div>
   </div>
@@ -232,6 +317,7 @@
   <script type="text/javascript">
     var awards = {{ awards | json_encode() | raw }};
     var userNominations = {{ userNominations | json_encode() | raw }};
+    var userSuggestions = {{ userSuggestions | json_encode() | raw }};
     var opinions = {{ userOpinions | json_encode() | raw }};
     var autocompleters = {{ autocompleters | json_encode() | raw }};
 
@@ -244,23 +330,36 @@
       } else {
         $('#user-nomination-list').html(userNominations[award].join(', '));
       }
+
+      var suggestionCount = userSuggestions[award].length;
+      var title = userSuggestions[award].join(', ');
+      if (suggestionCount > 0) {
+          $('#suggestion-count').show().html('You\'ve suggested <abbr title="' + title + '">' + suggestionCount + ' name' + (suggestionCount === 1 ? '' : 's') + '</abbr>');
+      } else {
+          $('#suggestion-count').hide();
+      }
     }
 
-    $('#award-selector').find('li').click(function (event) {
+    $('#award-selector').find('.awardClickTarget').click(function (event) {
 
       $("#video-games").hide();
 
       var thus = this;
 
-      $('#award-info').fadeOut('fast', function () {
+      $('#award-info').fadeOut(100, function () {
 
         award = $(thus).attr('data-id');
-        $('#award-selector').find('li').removeClass("active");
+        $('#award-selector').find('.awardClickTarget').removeClass("active");
         $(thus).addClass("active");
 
-        $('#award-info').find('#award-name').html(awards[award]['name']);
-        $('#award-info').find('#award-subtitle').html(awards[award]['subtitle']);
-        $('#award-info').find('#description').html(awards[award]['comments']);
+        $('#award-info').find('.impressive-title').html(awards[award]['name']);
+        $('#award-info').find('.impressive-subtitle').html(awards[award]['subtitle']);
+        $('#award-info').find('.impressive-description').html(awards[award]['comments']);
+        if (awards[award]['comments']) {
+            $('#award-info').find('.impressive-description').show();
+        } else {
+            $('#award-info').find('.impressive-description').hide();
+        }
         if (awards[award]['nominationsEnabled']) {
           $('#nomination-section').show();
           $('#nominations-closed').hide();
@@ -275,11 +374,11 @@
           $('#thumbs-down').addClass("selected btn-danger");
         }
 
-        {#<if:allowedToNominate>#}
-        updateNominations(award);
-        {#</if:allowedToNominate>#}
+        window.location.hash = award;
 
-        $('#award-info').fadeIn('fast');
+        updateNominations(award);
+
+        $('#award-info').fadeIn(100);
         $('#nomination-status').hide();
 
         $('html').scroll();
@@ -334,7 +433,7 @@
       $.post("{{ path('awardFrontendPost') }}", {id: award, opinion: opinion}, function (data) {
         if (data.success) {
 
-          var icon = $('[data-id="' + formAward + '"] #opinion-icon');
+          var icon = $('[data-id="' + formAward + '"] .opinion-icon');
           if (opinion === -1) {
             if (formAward === award) {
               $(selected).addClass("btn-danger");
@@ -367,6 +466,40 @@
       }, "json");
     });
 
+    $('#suggest-name').click(function (event) {
+        var suggestion = prompt('Recommend a new name for the ' + awards[award]['name'] + ':');
+        if (!suggestion) {
+            return;
+        }
+
+        var formAward = award;
+        var button = $(event.currentTarget);
+        var originalLabel = button.text();
+
+        $('#suggest-succeed').hide();
+        button.text('Saving...');
+        button.attr('disabled', 'disabled');
+
+        $.post("{{ path('awardFrontendPost') }}", {id: award, suggestedName: suggestion}, null, 'json')
+            .done(function (data) {
+              if (data.error) {
+                  alert('An error occurred: ' + data.error);
+              } else {
+                  userSuggestions[formAward].push(suggestion);
+                  if (award === formAward) {
+                      updateNominations();
+                  }
+              }
+            })
+            .fail(function (xhr, textStatus, error) {
+              alert('HTTP error: ' + xhr.status + " " + xhr.statusText);
+            })
+            .always(function () {
+                button.text(originalLabel);
+                button.removeAttr('disabled');
+            });
+    });
+
     var currentlySubmitting = false;
 
     $('#nomination-form').submit(function (event) {
@@ -396,7 +529,7 @@
               $("#nomination-status").html("<span style='color: green;'>Success!</span>");
               $("#nomination-status").fadeOut(3000);
             }
-            var icon = $('[data-id="' + formAward + '"] #opinion-icon');
+            var icon = $('[data-id="' + formAward + '"] .opinion-icon');
             icon.text("[" + userNominations[formAward].length + "]");
           } else {
             if (formAward === award) {

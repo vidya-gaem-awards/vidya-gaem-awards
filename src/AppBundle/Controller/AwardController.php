@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\AwardSuggestion;
 use AppBundle\Entity\User;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
@@ -60,6 +61,21 @@ class AwardController extends Controller
             $opinions[$cf->getAward()->getId()] = $cf->getOpinion();
         }
 
+        $userSuggestions = $em->createQueryBuilder()
+            ->select('s')
+            ->from(AwardSuggestion::class, 's')
+            ->where('s.user = :user')
+            ->setParameter('user', $user->getFuzzyID())
+            ->getQuery()
+            ->getResult();
+
+        $suggestions = array_fill_keys(array_keys($awards), []);
+
+        /** @var AwardSuggestion $suggestion */
+        foreach ($userSuggestions as $suggestion) {
+            $suggestions[$suggestion->getAward()->getId()][] = $suggestion->getSuggestion();
+        }
+
         $autocompleterRepo = $em->getRepository(Autocompleter::class);
         $result = $autocompleterRepo->findAll();
 
@@ -112,6 +128,7 @@ class AwardController extends Controller
             'awards' => $awards,
             'userNominations' => $nominations,
             'userOpinions' => $opinions,
+            'userSuggestions' => $suggestions,
             'autocompleters' => $autocompleters
         ]);
     }
@@ -151,6 +168,30 @@ class AwardController extends Controller
 
             $auditService->add(
                 new Action('opinion-given', $award->getId(), $opinion)
+            );
+        }
+
+        $suggestedName = $post->get('suggestedName');
+        if ($suggestedName !== null) {
+            if ($configService->isReadOnly()) {
+                return $this->json(['error' => 'Name suggestions can no longer be made for this award.']);
+            }
+
+            $suggestedName = trim($suggestedName);
+            if ($suggestedName === '') {
+                return $this->json(['error' => 'Suggested award name cannot be blank.']);
+            }
+
+            $suggestion = new AwardSuggestion();
+            $suggestion
+                ->setAward($award)
+                ->setSuggestion($suggestedName)
+                ->setUser($user);
+
+            $em->persist($suggestion);
+
+            $auditService->add(
+                new Action('award-name-suggested', $award->getId(), $suggestedName)
             );
         }
 

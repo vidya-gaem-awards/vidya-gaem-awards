@@ -52,6 +52,11 @@ AppBundle\Entity\Award:
       targetEntity: AwardFeedback
       mappedBy: award
       cascade: ['remove']
+    suggestions:
+      targetEntity: AwardSuggestion
+      mappedBy: award
+      cascade: ['remove']
+      orderBy: { 'suggestion': 'ASC' }
     nominees:
       targetEntity: Nominee
       mappedBy: award

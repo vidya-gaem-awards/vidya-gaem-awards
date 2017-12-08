@@ -82,6 +82,9 @@ class Award implements \JsonSerializable
 
     /** @var string */
     private $winnerImage;
+    
+    /** @var AwardSuggestion */
+    private $suggestions;
 
     /**
      * Constructor
@@ -93,6 +96,7 @@ class Award implements \JsonSerializable
         $this->userNominations = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->resultCache = new ArrayCollection();
+        $this->suggestions = new ArrayCollection();
     }
 
     /**
@@ -611,6 +615,40 @@ class Award implements \JsonSerializable
     {
         $this->winnerImage = $winnerImage ?: null;
         return $this;
+    }
+
+    /**
+     * Add suggestion
+     *
+     * @param AwardSuggestion $suggestion
+     *
+     * @return Award
+     */
+    public function addSuggestion(AwardSuggestion $suggestion)
+    {
+        $this->suggestions[] = $suggestion;
+
+        return $this;
+    }
+
+    /**
+     * Remove suggestion
+     *
+     * @param AwardSuggestion $suggestion
+     */
+    public function removeSuggestion(AwardSuggestion $suggestion)
+    {
+        $this->suggestions->removeElement($suggestion);
+    }
+
+    /**
+     * Get suggestions
+     *
+     * @return ArrayCollection
+     */
+    public function getSuggestions()
+    {
+        return $this->suggestions;
     }
 }
 
