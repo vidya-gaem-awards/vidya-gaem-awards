@@ -241,6 +241,12 @@
             <div class="awardSubtitle">{{ award.subtitle }}</div>
           </div>
         {% endfor %}
+        {% if not configService.isReadOnly %}
+          <div class="awardBox awardClickTarget" data-id="new-award" style="flex-basis: 100%; margin-top: 15px;">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+            <div class="awardName">Suggest a new award</div>
+          </div>
+        {% endif %}
       </div>
     </div>
 
@@ -316,6 +322,47 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-6" id="new-award" style="display: none;">
+      <div data-spy="affix" data-offset-top="90" class="award-container">
+        <div class="award-container-top award-container-padding">
+          <div class="impressive-title">Suggest a new award</div>
+          <div class="impressive-description" style="font-size: 1em;">
+            We're incredibly uncreative, so we'd love to hear your suggestions on what new awards we could add to the
+            show this year (or in years to come).
+          </div>
+        </div>
+
+        <div class="award-container-middle award-container-padding">
+          <strong>Guidelines:</strong>
+          <ul style="margin-top: 5px; margin-bottom: 0;">
+            <li>Don't submit awards we've done in previous years.</li>
+            <li>Awards should have at least 5 viable nominees, preferably more.</li>
+            <li>Make sure it's clear what the award is actually for.</li>
+          </ul>
+
+          <div style="margin-top: 15px; display: none;" id="new-award-idea-list">
+            <strong>Ideas you've submitted:</strong>
+            <ul style="margin-top: 5px; margin-bottom: 0;">
+
+            </ul>
+          </div>
+        </div>
+
+        <div class="award-container-padding">
+          <form id="new-award-form">
+            <div class="form-group">
+              <label for="suggestion-box">Your award idea</label>
+              <input class="form-control" id="suggestion-box" name="suggestion" type="text" required>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-default" type="submit">Submit</button>
+            </div>
+            <span id="new-award-status"></span>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script type="text/javascript">
@@ -328,7 +375,19 @@
     var award = false;
 
     function updateNominations() {
-//            $('#user-nomination-count').html(userNominations[award].length);
+      if (award === 'new-award') {
+          if (userSuggestions['new-award'].length > 0) {
+              $('#new-award-idea-list').show();
+              var list = $('#new-award-idea-list').find('ul');
+              list.empty();
+
+              $.each(userSuggestions['new-award'], function (index, idea) {
+                  list.append($('<li><em>' + idea + '</em></li>'));
+              });
+          }
+          return;
+      }
+
       if (userNominations[award].length === 0) {
         $('#user-nomination-list').html("You haven't nominated anything for this award.");
       } else {
@@ -350,11 +409,25 @@
 
       var thus = this;
 
-      $('#award-info').fadeOut(100, function () {
+      if (award === 'new-award') {
+          elementToHide = $('#new-award');
+      } else {
+          elementToHide = $('#award-info');
+      }
+
+      elementToHide.fadeOut(100, function () {
 
         award = $(thus).attr('data-id');
         $('#award-selector').find('.awardClickTarget').removeClass("active");
         $(thus).addClass("active");
+
+        window.location.hash = award;
+
+        if (award === 'new-award') {
+          $('#new-award').fadeIn(100);
+          updateNominations();
+          return;
+        }
 
         $('#award-info').find('.impressive-title').html(awards[award]['name']);
         $('#award-info').find('.impressive-subtitle').html(awards[award]['subtitle']);
@@ -377,8 +450,6 @@
         } else if (opinions[award] === -1) {
           $('#thumbs-down').addClass("selected btn-danger");
         }
-
-        window.location.hash = award;
 
         updateNominations(award);
 
@@ -547,6 +618,39 @@
           $("#nomination-status").html("<span style='color: red;'>HTTP error: " + xhr.status + " " + xhr.statusText + ". Try again.</span>");
           console.log(xhr);
         });
+    });
+
+    $('#new-award-form').submit(function (event) {
+        event.preventDefault();
+
+        if (currentlySubmitting) {
+            return;
+        }
+
+        currentlySubmitting = true;
+
+        $("#new-award-status").show().html("Submitting your idea...");
+        var suggestion = $('#new-award-form').find('input[type=text]').val();
+
+        $.post("{{ path('awardFrontendPost') }}", {awardSuggestion: suggestion}, null, 'json')
+            .done(function (data) {
+                if (data.success) {
+                    var safeValue = $('<div></div>').text($.trim(suggestion)).html();
+                    userSuggestions['new-award'].push(safeValue);
+                    $('#new-award-form').find('input[type=text]').val('');
+                    updateNominations();
+                    $("#new-award-status").html("<span style='color: green;'>Success!</span>");
+                    $("#new-award-status").fadeOut(3000);
+                } else {
+                  $("#new-award-status").html("<span style='color: red;'>" + data.error + "</span>");
+                }
+            })
+            .fail(function (xhr, textStatus, error) {
+                $("#new-award-status").html("<span style='color: red;'>HTTP error: " + xhr.status + " " + xhr.statusText + ". Try again.</span>");
+            })
+            .always(function () {
+                currentlySubmitting = false;
+            });
     });
 
     if (window.location.hash) {

@@ -73,7 +73,12 @@ class AwardController extends Controller
 
         /** @var AwardSuggestion $suggestion */
         foreach ($userSuggestions as $suggestion) {
-            $suggestions[$suggestion->getAward()->getId()][] = $suggestion->getSuggestion();
+            if ($suggestion->getAward()) {
+                $key = $suggestion->getAward()->getId();
+            } else {
+                $key = 'new-award';
+            }
+            $suggestions[$key][] = $suggestion->getSuggestion();
         }
 
         $autocompleterRepo = $em->getRepository(Autocompleter::class);
@@ -140,6 +145,47 @@ class AwardController extends Controller
         $post = $request->request;
         $repo = $em->getRepository(Award::class);
 
+        $awardSuggestion = $post->get('awardSuggestion');
+        if ($awardSuggestion !== null) {
+            if ($configService->isReadOnly()) {
+                return $this->json(['error' => 'New awards can no longer be suggested.']);
+            }
+
+            $awardSuggestion = trim($awardSuggestion);
+            if ($awardSuggestion === '') {
+                return $this->json(['error' => 'Your award idea cannot be blank.']);
+            }
+
+            $result = $em->createQueryBuilder()
+                ->select('s')
+                ->from(AwardSuggestion::class, 's')
+                ->where('s.user = :fuzzyUser')
+                ->andWhere('s.award IS NULL')
+                ->andWhere('LOWER(s.suggestion) = :suggestion')
+                ->setParameter('fuzzyUser', $user->getFuzzyID())
+                ->setParameter('suggestion', strtolower($awardSuggestion))
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if ($result) {
+                return $this->json(['error' => 'You\'ve already suggested that award.']);
+            }
+
+            $suggestion = new AwardSuggestion();
+            $suggestion
+                ->setSuggestion($awardSuggestion)
+                ->setUser($user);
+
+            $em->persist($suggestion);
+
+            $auditService->add(
+                new Action('new-award-suggested', $awardSuggestion)
+            );
+
+            $em->flush();
+            return $this->json(['success' => true]);
+        }
+
         /** @var Award $award */
         $award = $repo->find($post->get('id'));
 
@@ -169,6 +215,9 @@ class AwardController extends Controller
             $auditService->add(
                 new Action('opinion-given', $award->getId(), $opinion)
             );
+
+            $em->flush();
+            return $this->json(['success' => true]);
         }
 
         $suggestedName = $post->get('suggestedName');
@@ -209,6 +258,9 @@ class AwardController extends Controller
             $auditService->add(
                 new Action('award-name-suggested', $award->getId(), $suggestedName)
             );
+
+            $em->flush();
+            return $this->json(['success' => true]);
         }
 
         $nomination = $post->get('nomination');
@@ -248,10 +300,11 @@ class AwardController extends Controller
             $auditService->add(
                 new Action('nomination-made', $award->getId(), $nomination)
             );
+
+            $em->flush();
+            return $this->json(['success' => true]);
         }
 
-        $em->flush();
-
-        return $this->json(['success' => true]);
+        return $this->json(['error' => 'An unexpected error occurred.']);
     }
 }
