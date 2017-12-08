@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Autocompleter;
 use AppBundle\Entity\Award;
+use AppBundle\Entity\AwardSuggestion;
 use AppBundle\Entity\TableHistory;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
@@ -41,10 +42,13 @@ class AwardAdminController extends Controller
         
         $autocompleters = $em->getRepository(Autocompleter::class)->findAll();
 
+        $awardSuggestions = $em->getRepository(AwardSuggestion::class)->findBy(['award' => null], ['suggestion' => 'ASC']);
+
         return $this->render('awardManager.html.twig', [
             'title' => 'Award Manager',
             'awards' => $awards,
-            'autocompleters' => $autocompleters
+            'autocompleters' => $autocompleters,
+            'awardSuggestions' => $awardSuggestions,
         ]);
     }
 

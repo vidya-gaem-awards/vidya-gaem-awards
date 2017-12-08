@@ -287,129 +287,162 @@
     {% endif %}
   </div>
 
-  {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
-    <div class="panel">
-      <div class="panel-body">
-        <form method="POST" action="{{ path('awardManagerPost') }}" id="massChangeNominations">
-          <input type="hidden" id="action" name="action" value="massChangeNominations"/>
-          <button class="btn btn-success" type="submit" name="todo" value="open">Open all nominations</button>
-          <button class="btn btn-danger" type="submit" name="todo" value="close">Close all nominations</button>
-          <button class="btn btn-primary pull-right" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
-            <span class="glyphicon glyphicon-plus"></span> Add a new award
+  <div class="panel">
+    <div class="panel-body">
+      {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
+        <div class="btn-group">
+          <form method="POST" action="{{ path('awardManagerPost') }}" id="massChangeNominations">
+            <input type="hidden" id="action" name="action" value="massChangeNominations"/>
+            <button class="btn btn-success" type="submit" name="todo" value="open">Open all nominations</button>
+            <button class="btn btn-danger" type="submit" name="todo" value="close">Close all nominations</button>
+          </form>
+        </div>
+      {% endif %}
+        <div class="btn-group pull-right">
+          <button class="btn btn-default" id="view-award-suggestions" data-toggle="modal" data-target="#dialog-award-suggestions" {{ awardSuggestions | length == 0 ? 'disabled' : '' }}>
+            View award suggestions ({{ awardSuggestions | length }})
           </button>
+          {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
+            <button class="btn btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
+              <span class="glyphicon glyphicon-plus"></span> Add a new award
+            </button>
+          {% endif %}
+        </div>
+    </div>
+  </div>
+
+  <div id="dialog-award-suggestions" class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form class="form-horizontal" id="dialog-edit-form">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+            <h4 class="modal-title">Award suggestions</h4>
+          </div>
+
+          <div class="modal-body">
+            <ul style="margin-bottom: 0;">
+              {% for suggestion in awardSuggestions %}
+                <li>{{ suggestion.suggestion }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+          </div>
         </form>
       </div>
     </div>
+  </div>
 
-    <div id="dialog-edit" class="modal" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <form class="form-horizontal" id="dialog-edit-form">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-              <h4 class="modal-title" id="dialog-edit-header">Add new award</h4>
+  <div id="dialog-edit" class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form class="form-horizontal" id="dialog-edit-form">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+            <h4 class="modal-title" id="dialog-edit-header">Add new award</h4>
+          </div>
+
+          <div class="modal-body">
+            <div class="alert alert-danger" style="display: none;">
+              <span id="dialog-edit-error"></span>
+              <a class="close" href="#">&times;</a>
             </div>
 
-            <div class="modal-body">
-              <div class="alert alert-danger" style="display: none;">
-                <span id="dialog-edit-error"></span>
-                <a class="close" href="#">&times;</a>
-              </div>
+            <script>
+              $('.alert-danger .close').on('click', function () {
+                $(this).parent().fadeOut("fast");
+              });
+            </script>
 
-              <script>
-                $('.alert-danger .close').on('click', function () {
-                  $(this).parent().fadeOut("fast");
-                });
-              </script>
-
-              <div class="form-group">
-                <label class="col-xs-3 control-label" for="info-id">ID</label>
-                <div class="col-xs-7">
-                  <input class="form-control" type="text" id="info-id" placeholder="best-writing" required
-                         name="id" pattern="[0-9a-zA-Z-]+">
-                  <span class="help-block">ID can only include letters, numbers, and dashes</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-xs-3 control-label" for="info-name">Name</label>
-                <div class="col-xs-7">
-                  <input class="form-control" type="text" id="info-name" placeholder="Discworld Award" required
-                         name="name">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-xs-3 control-label" for="info-subtitle">Subtitle</label>
-                <div class="col-xs-7">
-                  <input class="form-control" type="text" id="info-subtitle" placeholder="for best writing / story"
-                         name="subtitle" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-xs-3 control-label" for="info-comments">Extra Details</label>
-                <div class="col-xs-7">
-                  <input class="form-control" type="text" id="info-comments" name="comments">
-                  <span class="help-block">This will appear on the nominations page</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-xs-3 control-label" for="info-autocomplete">Autocomplete</label>
-                <div class="col-xs-7">
-                  <select name="autocompleter" id="info-autocomplete" class="form-control">
-                    <option></option>
-                    {% for autocompleter in autocompleters %}
-                      <option value="{{ autocompleter.id }}">
-                        {{ autocompleter.name }}
-                      </option>
-                    {% endfor %}
-                  </select>
-                  <span class="help-block">Determines what will be suggested when users are adding nominations</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-xs-3 control-label" for="info-order">Position</label>
-                <div class="col-xs-7">
-                  <input class="form-control" type="number" min="1" max="10000" id="info-order" name="order" required>
-                  <span class="help-block">Awards with a lower position will be sorted first</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-xs-offset-3 col-xs-7">
-                  <label class="checkbox">
-                   <input type="checkbox" id="info-enabled" name="enabled" checked> Award enabled?
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-xs-offset-3 col-xs-7">
-                  <label class="checkbox">
-                    <input type="checkbox" id="info-nominations" name="nominationsEnabled"> Nominations enabled?
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-xs-offset-3 col-xs-7">
-                  <label class="checkbox">
-                    <input type="checkbox" id="info-secret" name="secret"> Secret award?
-                  </label>
-                  <span class="help-block">Secret awards don't show up until the voting stage</span>
-                </div>
+            <div class="form-group">
+              <label class="col-xs-3 control-label" for="info-id">ID</label>
+              <div class="col-xs-7">
+                <input class="form-control" type="text" id="info-id" placeholder="best-writing" required
+                       name="id" pattern="[0-9a-zA-Z-]+">
+                <span class="help-block">ID can only include letters, numbers, and dashes</span>
               </div>
             </div>
-            <div class="modal-footer">
-              {% if is_granted('ROLE_AWARDS_DELETE') %}
-                <button class="btn btn-danger pull-left" type="button" id="deleteAward">Delete award</button>
-              {% endif %}
-              <span id="dialog-edit-status" style="display: none;">
-                <img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> saving...&nbsp;
-              </span>
-              <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-              <button class="btn btn-primary" type="submit">Submit</button>
+            <div class="form-group">
+              <label class="col-xs-3 control-label" for="info-name">Name</label>
+              <div class="col-xs-7">
+                <input class="form-control" type="text" id="info-name" placeholder="Discworld Award" required
+                       name="name">
+              </div>
             </div>
-          </form>
-        </div>
+            <div class="form-group">
+              <label class="col-xs-3 control-label" for="info-subtitle">Subtitle</label>
+              <div class="col-xs-7">
+                <input class="form-control" type="text" id="info-subtitle" placeholder="for best writing / story"
+                       name="subtitle" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-3 control-label" for="info-comments">Extra Details</label>
+              <div class="col-xs-7">
+                <input class="form-control" type="text" id="info-comments" name="comments">
+                <span class="help-block">This will appear on the nominations page</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-3 control-label" for="info-autocomplete">Autocomplete</label>
+              <div class="col-xs-7">
+                <select name="autocompleter" id="info-autocomplete" class="form-control">
+                  <option></option>
+                  {% for autocompleter in autocompleters %}
+                    <option value="{{ autocompleter.id }}">
+                      {{ autocompleter.name }}
+                    </option>
+                  {% endfor %}
+                </select>
+                <span class="help-block">Determines what will be suggested when users are adding nominations</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-3 control-label" for="info-order">Position</label>
+              <div class="col-xs-7">
+                <input class="form-control" type="number" min="1" max="10000" id="info-order" name="order" required>
+                <span class="help-block">Awards with a lower position will be sorted first</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-offset-3 col-xs-7">
+                <label class="checkbox">
+                 <input type="checkbox" id="info-enabled" name="enabled" checked> Award enabled?
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-offset-3 col-xs-7">
+                <label class="checkbox">
+                  <input type="checkbox" id="info-nominations" name="nominationsEnabled"> Nominations enabled?
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-offset-3 col-xs-7">
+                <label class="checkbox">
+                  <input type="checkbox" id="info-secret" name="secret"> Secret award?
+                </label>
+                <span class="help-block">Secret awards don't show up until the voting stage</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            {% if is_granted('ROLE_AWARDS_DELETE') %}
+              <button class="btn btn-danger pull-left" type="button" id="deleteAward">Delete award</button>
+            {% endif %}
+            <span id="dialog-edit-status" style="display: none;">
+              <img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> saving...&nbsp;
+            </span>
+            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
-  {% endif %}
+  </div>
 
   <script type="text/javascript">
     var awards = {{ awards | json_encode | raw }};

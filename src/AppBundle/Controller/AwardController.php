@@ -70,6 +70,7 @@ class AwardController extends Controller
             ->getResult();
 
         $suggestions = array_fill_keys(array_keys($awards), []);
+        $suggestions['new-award'] = [];
 
         /** @var AwardSuggestion $suggestion */
         foreach ($userSuggestions as $suggestion) {
