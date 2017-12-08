@@ -173,7 +173,7 @@
         <a href="{{ path('videoGames') }}">
           <div id="video-game-collage">
             <div class="top">Forgotten what vidya you played earlier this year?</div>
-            <img class="img-responsive" src="{{ asset('img/collage.jpg') }}">
+            <img class="img-responsive" src="{{ asset('img/collage.png') }}">
             <div class="bottom">Click here for a list of video&nbsp;games from 2017.</div>
           </div>
         </a>
@@ -287,7 +287,9 @@
 
         var autocompleteCat = awards[award]['autocompleter'];
         if (autocompleteCat === "video-game") {
-          $('#autocomplete').html("This award provides suggestions using a list of video games.");
+          $('#autocomplete').html(
+              "This award provides suggestions using a list of video games.<br>" +
+              "<a href='{{ path('videoGames') }}' target='_blank'>View a list of all video games released in 2017.</a>");
         } else if (autocompleteCat === award) {
           $('#autocomplete').html("This award provides suggestions based on nominations from other users.");
         } else {
