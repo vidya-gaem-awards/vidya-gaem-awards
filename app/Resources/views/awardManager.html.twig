@@ -314,23 +314,21 @@
   <div id="dialog-award-suggestions" class="modal" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form class="form-horizontal" id="dialog-edit-form">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-            <h4 class="modal-title">Award suggestions</h4>
-          </div>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+          <h4 class="modal-title">Award suggestions</h4>
+        </div>
 
-          <div class="modal-body">
-            <ul style="margin-bottom: 0;">
-              {% for suggestion in awardSuggestions %}
-                <li>{{ suggestion.suggestion }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-          </div>
-        </form>
+        <div class="modal-body">
+          <ul style="margin-bottom: 0;">
+            {% for suggestion in awardSuggestions %}
+              <li>{{ suggestion.suggestion }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
