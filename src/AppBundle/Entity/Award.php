@@ -646,9 +646,45 @@ class Award implements \JsonSerializable
      *
      * @return ArrayCollection
      */
-    public function getSuggestions()
+    public function getRawSuggestions()
     {
         return $this->suggestions;
+    }
+
+    /**
+     * @param bool $sortAlphabetically
+     * @return array
+     */
+    public function getNameSuggestions($sortAlphabetically = false)
+    {
+        $suggestions = [];
+
+        /** @var AwardSuggestion $suggestion */
+        foreach ($this->suggestions as $suggestion) {
+            $normalised = trim(strtolower($suggestion->getSuggestion()));
+            if (!isset($suggestions[$normalised])) {
+                $suggestions[$normalised] = [
+                    'count' => 0,
+                    'title' => $suggestion->getsuggestion()
+                ];
+            }
+            $suggestions[$normalised]['count']++;
+        }
+
+        if ($sortAlphabetically) {
+            usort($suggestions, function ($a, $b) {
+                return strtolower($a['title']) <=> strtolower($b['title']);
+            });
+        } else {
+            usort($suggestions, function ($a, $b) {
+                if ($b['count'] === $a['count']) {
+                    return strtolower($a['title']) <=> strtolower($b['title']);
+                }
+                return $b['count'] <=> $a['count'];
+            });
+        }
+
+        return $suggestions;
     }
 }
 

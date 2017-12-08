@@ -182,6 +182,22 @@ class AwardController extends Controller
                 return $this->json(['error' => 'Suggested award name cannot be blank.']);
             }
 
+            $result = $em->createQueryBuilder()
+                ->select('s')
+                ->from(AwardSuggestion::class, 's')
+                ->where('s.user = :fuzzyUser')
+                ->andWhere('IDENTITY(s.award) = :award')
+                ->andWhere('LOWER(s.suggestion) = :suggestion')
+                ->setParameter('fuzzyUser', $user->getFuzzyID())
+                ->setParameter('award', $award->getId())
+                ->setParameter('suggestion', strtolower($suggestedName))
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if ($result) {
+                return $this->json(['error' => 'You\'ve already suggested that name.']);
+            }
+
             $suggestion = new AwardSuggestion();
             $suggestion
                 ->setAward($award)

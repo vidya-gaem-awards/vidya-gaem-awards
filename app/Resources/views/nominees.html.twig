@@ -228,6 +228,20 @@
           </ul>
 
         </div>
+
+        <div class="well">
+
+          <div
+              style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
+            Award Name Suggestions: {{ award.rawSuggestions | length }}
+          </div>
+
+          <ul class="nominations">
+            {% for suggestion in award.getNameSuggestions(alphabeticalSort) %}
+              <li><strong>{{ suggestion.count }} x</strong> {{ suggestion.title }}</li>
+            {% endfor %}
+          </ul>
+        </div>
       {% endif %}
       {% endif %}
     </div>
