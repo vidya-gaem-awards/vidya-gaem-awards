@@ -242,6 +242,9 @@
             {% else %}
               {{ award.nominees|length }}
             {% endif %}
+            {% if award.rawSuggestions | length > 0 %}
+              <div class="text-muted" style="font-size: x-small;">{{ award.rawSuggestions | length }} names</div>
+            {% endif %}
           </td>
           <td>
             <div class="sparkbar">
