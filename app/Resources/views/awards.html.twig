@@ -392,8 +392,8 @@
         var autocompleteCat = awards[award]['autocompleter'];
         if (autocompleteCat === "video-game") {
           $('#autocomplete').html(
-              "This award provides suggestions using a list of video games.<br>" +
-              "<a href='{{ path('videoGames') }}' target='_blank'>View a list of all video games released in 2017.</a>");
+              "This award provides suggestions using a list of <a href='{{ path('videoGames') }}' target='_blank'>video games released in 2017</a>."
+          );
         } else if (autocompleteCat === award) {
           $('#autocomplete').html("This award provides suggestions based on nominations from other users.");
         } else {
