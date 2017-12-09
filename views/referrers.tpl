@@ -1,4 +1,25 @@
-<h1>Top referrers in the past 7 days</h1>
+<h1>Top referrers <tag:data[].Days /></h1>
+
+<ul class="breadcrumb">
+  <li class="active">
+    Change time period:
+  </li>
+  <li>
+    <a href="?days=1">1 day</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="?days=7">7 days</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="?days=14">14 days</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="?days=30">30 days</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="?days=0">All time</a>
+  </li>
+</ul>
 
 <p>Internal links, blank referrers, Google searches and sites with less than 5 hits are not included in the tally.</p>
 
