@@ -4,19 +4,32 @@ namespace AppBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Access;
+use Symfony\Component\HttpFoundation\Request;
 
 class ReferrerController extends Controller
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em, Request $request)
     {
-        $result = $em->createQueryBuilder()
+        $days = $request->query->get('days');
+        if (!ctype_digit($days)) {
+            $days = 7;
+        }
+
+        $query = $em->createQueryBuilder()
             ->select('MAX(a.timestamp) as latest')
             ->from(Access::class, 'a')
             ->addSelect('COUNT(a.id) as total')
             ->addSelect('a.referer')
-            ->where("a.referer NOT LIKE '%vidyagaemawards.com%'")
-            ->andWhere('a.timestamp > :timeLimit')
-            ->setParameter('timeLimit', (new \DateTime('-7 days'))->format('Y-m-d H:i:s'))
+            ->where("a.referer NOT LIKE '%vidyagaemawards.com%'");
+
+        if ($days) {
+            $date = new \DateTime('-' . $days . ' days');
+            $query
+                ->andWhere('a.timestamp > :timeLimit')
+                ->setParameter('timeLimit', $date->format('Y-m-d H:i:s'));
+        }
+
+        $result = $query
             ->groupBy('a.referer')
             ->having('total >= 1')
             ->orderBy('total', 'DESC')
@@ -73,7 +86,8 @@ class ReferrerController extends Controller
 
         return $this->render('referrers.html.twig', [
             'title' => 'Referrers',
-            'referrers' => $referrers
+            'referrers' => $referrers,
+            'days' => $days,
         ]);
     }
 

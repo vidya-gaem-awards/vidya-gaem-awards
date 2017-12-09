@@ -1,7 +1,30 @@
 {% extends 'base/standard.html.twig' %}
 
 {% block content %}
-  <h1 class="page-header">Top referrers in the past 7 days</h1>
+  <h1 class="page-header">
+    Top referrers {{ days ? 'in the past ' ~ days ~ ' days' : 'of all time' }}
+  </h1>
+
+  <ul class="breadcrumb">
+    <li class="active">
+      Change time period:
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=1">1 day</a>
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=7">7 days</a>
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=14">14 days</a>
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=30">30 days</a>
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=0">All time</a>
+    </li>
+  </ul>
 
   <table class="table table-bordered" style="background-color: white;">
     <tr>
