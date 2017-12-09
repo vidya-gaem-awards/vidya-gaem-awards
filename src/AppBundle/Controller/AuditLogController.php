@@ -15,6 +15,7 @@ class AuditLogController extends Controller
             'profile-group-removed' => 'Removed a permission from a user',
             'profile-notes-updated' => 'Updated user notes',
             'profile-details-updated' => 'Updated user details',
+            'user-added' => 'Added a user to the crew list',
             'award-added' => 'Created an award',
             'award-delete' => 'Deleted an award',
             'award-edited' => 'Edited an award',

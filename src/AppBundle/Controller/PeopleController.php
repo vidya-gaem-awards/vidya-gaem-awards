@@ -158,7 +158,7 @@ class PeopleController extends Controller
         return $this->render('addPerson.html.twig');
     }
 
-    public function searchAction(EntityManagerInterface $em, Request $request, ConfigService $configService)
+    public function searchAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService)
     {
         $post = $request->request;
 
@@ -205,6 +205,10 @@ class PeopleController extends Controller
             $user->addPermission($permission);
             $em->persist($user);
             $em->flush();
+
+            $auditService->add(
+                new Action('user-added', $user->getId())
+            );
 
             return $this->json(['success' => true]);
         }
