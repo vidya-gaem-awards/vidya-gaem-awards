@@ -1,22 +1,62 @@
 {% extends 'master.twig' %}
 
 {% block content %}
-  <h1 class="page-header">Top referrers in the past 7 days</h1>
+  <h1 class="page-header">
+    Top referrers {{ days ? 'in the past ' ~ days ~ ' days' : 'of all time' }}
+  </h1>
+
+  <ul class="breadcrumb">
+    <li class="active">
+      Change time period:
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=1">1 day</a>
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=7">7 days</a>
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=14">14 days</a>
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=30">30 days</a>
+    </li>
+    <li>
+      <a href="{{ path('referrers') }}?days=0">All time</a>
+    </li>
+  </ul>
 
   <table class="table table-bordered" style="background-color: white;">
-  <tr>
-    <th class="col-md-1">Total hits</th>
-    <th class="col-md-2">Latest hit</th>
-    <th class="col-md-2">Link</th>
-    <th>Referrer</th>
-  </tr>
-  {% for referrer in referrers %}
-  <tr class="{{ referrer.class }}">
-    <td><strong>{{ referrer.total }}</strong></td>
-    <td><abbr title="{{ referrer.latest | date('D d/m/Y - H:i:s') }}">{{ referrer.latest | time_diff }}</abbr></td>
-    <td><a href="{{ referrer.referer | escape('html_attr') }}">Follow link</a></td>
-    <td>{{ referrer.referer }}</td>
-  </tr>
-  {% endfor %}
+    <tr>
+      <th class="col-md-1">Total hits</th>
+      <th style="width: 120px;">Latest hit</th>
+      <th style="width: 110px;">Link</th>
+      <th>Referrer</th>
+    </tr>
+    {% for referrer in referrers %}
+      <tr class="{{ referrer.class }}">
+        <td><strong>{{ referrer.total }}</strong></td>
+        <td><abbr title="{{ referrer.latest | date('D d/m/Y - H:i:s') }}">{{ referrer.latest | time_diff }}</abbr></td>
+        <td>
+          {% if referrer.type == 'android' %}
+            <a href="https://play.google.com/store/apps/details?id={{ referrer.referer | escape('html_attr') }}">Play Store</a>
+          {% elseif referrer.type == 'twitter' %}
+            <a href="https://twitter.com/search?q={{ referrer.referer | url_encode }}">Twitter search</a>
+          {% elseif referrer.referer starts with 'http' %}
+            <a href="{{ referrer.referer | escape('html_attr') }}">Follow link</a>
+          {% endif %}
+        </td>
+        <td>
+          {% if referrer.type == 'android' %}
+            <strong>Android app:</strong>
+          {% endif %}
+          {% if referrer.referer | length > 100 %}
+            {{ referrer.referer | slice(0,100) ~ '…' }}
+          {% else %}
+            {{ referrer.referer }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
   </table>
 {% endblock %}
