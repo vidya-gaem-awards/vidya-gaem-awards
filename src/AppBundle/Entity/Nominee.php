@@ -105,7 +105,7 @@ class Nominee implements \JsonSerializable
      */
     public function getImage()
     {
-        return $this->image ?: (self::DEFAULT_IMAGE_DIRECTORY . $this->getShortName() . '.png');
+        return $this->image;
     }
 
     /**

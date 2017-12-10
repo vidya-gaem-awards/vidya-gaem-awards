@@ -24,7 +24,7 @@ AppBundle\Entity\Nominee:
       length: 255
     image:
       type: string
-      nullable: false
+      nullable: true
       length: 255
     flavorText:
       type: text

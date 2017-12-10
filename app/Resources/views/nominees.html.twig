@@ -1,5 +1,10 @@
 {% extends 'base/standard.html.twig' %}
 
+{% block css %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
+{% endblock %}
+
 {% block content %}
   <style>
     .ui-autocomplete {
@@ -114,6 +119,14 @@
     ol.nominations li {
       line-height: 1.2;
     }
+
+    .nominee {
+      border-color: #333;
+    }
+
+    .modal-body .nominee {
+      margin: 0 auto 10px auto;
+    }
   </style>
 
   <h1 class="page-header fancy">Nominee Manager</h1>
@@ -127,6 +140,10 @@
     Here's where nominees are assigned awards.
     Official nominees are the ones that will show up on the <a href="{{ path('voting') }}">voting page</a>.
   </p>
+
+  <div class="alert alert-warning">
+    <strong>Warning:</strong> this page hasn't been updated in a long time. It's still functional, but don't be surprised if weird things occur.
+  </div>
 
 
   <div class="row">
@@ -179,7 +196,9 @@
                   <button class="btn btn-default" type="button" name="delete">Delete</button>
                 </form>
               {% endif %}
-              <img src="{{ nominee.image | escape('html_attr') }}">
+              {% if nominee.image %}
+                <img src="{{ nominee.image | escape('html_attr') }}">
+              {% endif %}
               <footer>
                 <h3>{{ nominee.name }}</h3>
                 <p>{{ nominee.subtitle | raw }}</p>
@@ -289,18 +308,11 @@
                 Note: the design of the nominee box is not final.<br>Image dimensions are subject to change.
               </div>
 
-              <div class="aNominee" style="margin-left: auto; margin-right: auto; margin-bottom: 10px;">
-                <header>
-                  <p>ID: <span class="dialog-edit-id"></span></p>
-                </header>
-                <form style="color: red; text-align: center; display: none;">
-                  refresh page for controls
-                </form>
-                <img src="" id="dialog-edit-image">
-                <footer>
-                  <h3 id="dialog-edit-name"></h3>
-                  <p id="dialog-edit-subtitle"></p>
-                </footer>
+              <div class="nominee" id="dialog-edit-image" style="background-size: cover">
+                <div class="handle fakeHandle"></div>
+                <div class="flavorText" id="dialog-edit-flavor"></div>
+                <div class="nomineeName" id="dialog-edit-name"></div>
+                <div class="nomineeSubtitle" id="dialog-edit-subtitle"></div>
               </div>
 
               <input type="hidden" name="action" id="form-action">
@@ -434,7 +446,7 @@
         $(".dialog-edit-id").text("");
         $("#dialog-edit-name").text("");
         $("#dialog-edit-subtitle").text("");
-        $("#dialog-edit-image").removeAttr("src");
+        $("#dialog-edit-image").css("background-image", "");
 
         $("#info-id").val("");
         $("#info-name").val("");
@@ -465,10 +477,11 @@
         $("#dialog-edit-name").text(nominees[nomineeID].name);
         $("#dialog-edit-subtitle").html(nominees[nomineeID].subtitle);
         if (nominees[nomineeID].image) {
-          $("#dialog-edit-image").attr("src", nominees[nomineeID].image);
+          $("#dialog-edit-image").css("background-image", "url('" + nominees[nomineeID].image + "')");
         } else {
-          $("#dialog-edit-image").attr("src", "/img/nominees/" + nomineeID + ".png");
+          $("#dialog-edit-image").css("background-image", "url('{{ asset('img/no-image-available.png') }}'");
         }
+        console.log(nominees[nomineeID].image);
 
         $("#info-id").val(nomineeID);
         $("#info-name").val(nominees[nomineeID].name);
@@ -492,7 +505,7 @@
 
         lastImageValue = "";
         lastID = "";
-        editDialogInterval = setInterval(updateDialogNominee, 200);
+        editDialogInterval = setInterval(updateDialogNominee, 500);
       });
 
       // When the dialog is closed, clear it
@@ -505,6 +518,7 @@
         $(".dialog-edit-id").text($("#info-id").val());
         $("#dialog-edit-name").text($("#info-name").val());
         $("#dialog-edit-subtitle").html($("#info-subtitle").val());
+        $("#dialog-edit-flavor").html($("#info-flavor").val());
 
 //        if ($("#info-image").val() != lastImageValue || (lastImageValue === "" && $("#info-id").val() != lastID)) {
 //          lastImageValue = $("#info-image").val();

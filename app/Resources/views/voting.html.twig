@@ -4,7 +4,8 @@
 
 {% block css %}
   {{ parent() }}
-  <link rel="stylesheet" href="/css/voting.css">
+  <link rel="stylesheet" href="{{ asset('css/voting.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
 {% endblock %}
 
 {% block js %}
@@ -77,7 +78,9 @@
                 <div class="number" style="display: none;">{{ loop.index }}</div>
                 <div class="nominee" style="background-image: url('{{ nominee.image }}'); background-size: cover">
                   <div class="handle fakeHandle"></div>
-                  <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
+                  {% if nominee.flavorText %}
+                    <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
+                  {% endif %}
                   <div class="nomineeName">{{ nominee.name }}</div>
                   <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
                   <div class="handle realHandle">

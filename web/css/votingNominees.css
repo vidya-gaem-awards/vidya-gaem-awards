@@ -1,0 +1,71 @@
+.nominee {
+  position: relative;
+  border: 2px solid white;
+  width: 350px;
+  height: 140px;
+  transition: 0.3s linear all;
+}
+
+.flavorText {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3px;
+  width: calc(100% - 0px);
+  height: auto;
+  font-size: 0.81em;
+  line-height: 13px;
+  color: white;
+}
+
+.nominee:hover .flavorText {
+  display: block;
+}
+
+.nominee img.locked {
+  display: none;
+}
+
+.nominee.locked img.locked {
+  display: block;
+}
+
+.nomineeName {
+  color: white;
+  background-color: rgb(251, 68, 7);
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
+  display: inline-block;
+  padding: 3px 10px;
+  position: absolute;
+  bottom: 23px;
+  left: 3px;
+}
+
+.nomineeSubtitle {
+  font-family: Arial, sans-serif;
+  display: inline-block;
+  color: rgb(251, 68, 7);
+  background-color: white;
+  border-radius: 10px;
+  font-size: 12px;
+  padding: 3px 10px;
+  position: absolute;
+  bottom: 3px;
+  left: 12px;
+  z-index: 31;
+}
+
+.nomineeSubtitle a {
+  color: blue;
+}
+
+.nomineeSubtitle a:hover {
+  color: blue;
+  text-decoration: underline;
+}
