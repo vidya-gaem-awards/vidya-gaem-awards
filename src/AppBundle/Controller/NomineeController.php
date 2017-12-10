@@ -11,6 +11,7 @@ use AppBundle\Entity\Award;
 use AppBundle\Entity\Nominee;
 use AppBundle\Entity\TableHistory;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use VGA\FileSystem;
 
 class NomineeController extends Controller
 {
@@ -124,14 +125,23 @@ class NomineeController extends Controller
             return $this->json(['error' => 'You need to enter a name.']);
         }
 
-        if (substr($post->get('image', ''), 0, 7) === 'http://') {
-            return $this->json(['error' => 'Image URL must start with https://.']);
+        if ($request->files->get('image')) {
+            try {
+                $imagePath = FileSystem::handleUploadedFile(
+                    $request->files->get('image'),
+                    'nominees',
+                    $award->getId() . '--' . $nominee->getShortName()
+                );
+            } catch (\Exception $e) {
+                return $this->json(['error' => $e->getMessage()]);
+            }
+
+            $nominee->setImage($imagePath);
         }
 
         $nominee
             ->setName($post->get('name'))
             ->setSubtitle($post->get('subtitle'))
-            ->setImage($post->get('image'))
             ->setFlavorText($post->get('flavorText'));
         $em->persist($nominee);
         $em->flush();

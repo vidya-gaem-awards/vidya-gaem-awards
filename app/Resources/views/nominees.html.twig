@@ -266,43 +266,46 @@
 
     <div id="dialog-edit" class="modal" role="dialog">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-            <h4 class="modal-title" id="dialog-edit-header">Add new nominee</h4>
-          </div>
-
-          <div class="modal-body">
-            <div class="alert alert-danger" style="display: none;">
-              <span id="dialog-edit-error"></span>
-              <a class="close" href="#">&times;</a>
+        <form class="form-horizontal" id="dialog-edit-form" enctype="multipart/form-data">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+              <h4 class="modal-title" id="dialog-edit-header">Add new nominee</h4>
             </div>
 
-            <script>
-              $('.alert-error .close').on('click', function () {
-                $(this).parent().fadeOut("fast");
-              });
-            </script>
+            <div class="modal-body">
+              <div class="alert alert-danger" style="display: none;">
+                <span id="dialog-edit-error"></span>
+                <a class="close" href="#">&times;</a>
+              </div>
 
-            <div style="text-align: center; padding-bottom: 5px;  ">
-              Note: the design of the nominee box is not final.<br>Image dimensions are subject to change.
-            </div>
+              <script>
+                $('.alert-error .close').on('click', function () {
+                  $(this).parent().fadeOut("fast");
+                });
+              </script>
 
-            <div class="aNominee" style="margin-left: auto; margin-right: auto; margin-bottom: 10px;">
-              <header>
-                <p>ID: <span class="dialog-edit-id"></span></p>
-              </header>
-              <form style="color: red; text-align: center; display: none;">
-                refresh page for controls
-              </form>
-              <img src="" id="dialog-edit-image">
-              <footer>
-                <h3 id="dialog-edit-name"></h3>
-                <p id="dialog-edit-subtitle"></p>
-              </footer>
-            </div>
+              <div style="text-align: center; padding-bottom: 5px;  ">
+                Note: the design of the nominee box is not final.<br>Image dimensions are subject to change.
+              </div>
 
-            <form class="form-horizontal" id="dialog-edit-form">
+              <div class="aNominee" style="margin-left: auto; margin-right: auto; margin-bottom: 10px;">
+                <header>
+                  <p>ID: <span class="dialog-edit-id"></span></p>
+                </header>
+                <form style="color: red; text-align: center; display: none;">
+                  refresh page for controls
+                </form>
+                <img src="" id="dialog-edit-image">
+                <footer>
+                  <h3 id="dialog-edit-name"></h3>
+                  <p id="dialog-edit-subtitle"></p>
+                </footer>
+              </div>
+
+              <input type="hidden" name="action" id="form-action">
+              <input type="hidden" name="id" id="form-id">
+
               <div class="form-group">
                 <label class="col-sm-3 control-label" for="info-id">ID</label>
                 <div class="col-sm-8">
@@ -327,11 +330,9 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-3 control-label" for="info-image">Image URL</label>
+                <label class="col-sm-3 control-label" for="info-image">Image</label>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" id="info-image" name="image" autocomplete="off">
-                  <span class="help-block">If left blank, the webserver will look for the
-                  image locally at <strong>/img/nominees/<span class="dialog-edit-id"></span>.png</strong></span>
+                  <input class="form-control" type="file" id="info-image" name="image" autocomplete="off">
                 </div>
               </div>
               <div class="form-group">
@@ -340,17 +341,16 @@
                   <textarea class="form-control" id="info-flavor" name="flavorText"></textarea>
                 </div>
               </div>
-            </form>
-
+            </div>
+            <div class="modal-footer">
+              <span id="dialog-edit-status" style="display: none;">
+                <img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> saving...&nbsp;
+              </span>
+              <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-primary" id="dialog-edit-submit" type="submit">Submit</button>
+            </div>
           </div>
-          <div class="modal-footer">
-            <span id="dialog-edit-status" style="display: none;">
-              <img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> saving...&nbsp;
-            </span>
-            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" id="dialog-edit-submit">Submit</button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
 
@@ -425,7 +425,8 @@
       // When the new nominee button is clicked
       $("#new").click(function () {
         // Update the dialog action
-        $("#dialog-edit").attr("data-action", "new");
+        $("#form-id").removeAttr("name");
+        $("#form-action").attr("value", "new");
         $("#dialog-edit").removeAttr("data-nominee");
         $("#dialog-edit-header").text("Add new nominee");
 
@@ -453,7 +454,9 @@
         var nomineeID = $(this).parents(".aNominee").attr("data-nominee");
 
         // Update the dialog action
-        $("#dialog-edit").attr("data-action", "edit");
+        $("#form-id").attr("value", nomineeID);
+        $("#form-id").attr("name", "id");
+        $("#form-action").attr("value", "edit");
         $("#dialog-edit").attr("data-nominee", nomineeID);
         $("#dialog-edit-header").text("Editing " + nominees[nomineeID].name);
 
@@ -470,7 +473,8 @@
         $("#info-id").val(nomineeID);
         $("#info-name").val(nominees[nomineeID].name);
         $("#info-subtitle").val(nominees[nomineeID].subtitle);
-        $("#info-image").val(nominees[nomineeID].image);
+        $("#info-image").val("");
+//        $("#info-image").val(nominees[nomineeID].image);
         $("#info-flavor").val(nominees[nomineeID].flavorText);
 
         $("#info-id").attr("disabled", "disabled");
@@ -502,20 +506,22 @@
         $("#dialog-edit-name").text($("#info-name").val());
         $("#dialog-edit-subtitle").html($("#info-subtitle").val());
 
-        if ($("#info-image").val() != lastImageValue || (lastImageValue === "" && $("#info-id").val() != lastID)) {
-          lastImageValue = $("#info-image").val();
-          lastID = $("#info-id").val();
-          if (lastImageValue) {
-            $("#dialog-edit-image").attr("src", lastImageValue);
-          } else {
-            $("#dialog-edit-image").attr("src", "/img/nominees/" + $("#info-id").val() + ".png");
-          }
-        }
+//        if ($("#info-image").val() != lastImageValue || (lastImageValue === "" && $("#info-id").val() != lastID)) {
+//          lastImageValue = $("#info-image").val();
+//          lastID = $("#info-id").val();
+//          if (lastImageValue) {
+//            $("#dialog-edit-image").attr("src", lastImageValue);
+//          } else {
+//            $("#dialog-edit-image").attr("src", "/img/nominees/" + $("#info-id").val() + ".png");
+//          }
+//        }
 
       }
 
       // When the confirm button is clicked in the edit dialog
-      $("#dialog-edit-submit").click(function () {
+      $("#dialog-edit-form").submit(function (event) {
+        event.preventDefault();
+
         if (currentlySubmitting) {
           return;
         }
@@ -528,16 +534,20 @@
 
         // Grab the nomineeID and action from the dialog
         var nomineeID = $("#dialog-edit").attr("data-nominee");
-        var action = $("#dialog-edit").attr("data-action");
+        var action = $("#form-action").attr("value");
 
         // Send through the AJAX request to do the actual editing
-        var ajaxData = $("#dialog-edit-form").serializeArray();
-        console.log(ajaxData);
-        ajaxData.push({name: "action", value: action});
-        if (action === "edit") {
-          ajaxData.push({name: "id", value: nomineeID});
-        }
-        $.post("{{ path('nomineePost', {'awardID': award.id}) }}", ajaxData, function (data) {
+//        var ajaxData = $("#dialog-edit-form").serializeArray();
+        var formData = new FormData(this);
+        console.log(formData);
+
+        $.ajax({
+            url: "{{ path('nomineePost', {'awardID': award.id}) }}",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false
+        }).success(function (data) {
           currentlySubmitting = false;
 
           if (data.success) {
@@ -565,15 +575,15 @@
             var nomineeBox = $("#nominee-" + nomineeID);
             nomineeBox.find("h3").text($("#info-name").val());
             nomineeBox.find("footer p").html($("#info-subtitle").val());
-            if ($("#info-image")) {
-              nomineeBox.find("img").attr("src", $("#info-image").val());
-            } else {
-              nomineeBox.find("img").attr("src", "/img/nominees/" + nomineeID + ".png");
-            }
+//            if ($("#info-image")) {
+//              nomineeBox.find("img").attr("src", $("#info-image").val());
+//            } else {
+//              nomineeBox.find("img").attr("src", "/img/nominees/" + nomineeID + ".png");
+//            }
 
             nominees[nomineeID].name = $("#info-name").val();
             nominees[nomineeID].subtitle = $("#info-subtitle").val();
-            nominees[nomineeID].image = $("#info-image").val();
+//            nominees[nomineeID].image = $("#info-image").val();
             nominees[nomineeID].flavorText = $("#info-flavor").val();
 
             // Close the dialog
