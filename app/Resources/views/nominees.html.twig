@@ -165,7 +165,7 @@
     <div class="col-md-4" id="award-selector">
       <ul class="nav nav-list custom-navigation-pane dropdown-menu">
         {% for _award in awards %}
-          <li class="{{ _award == award ? 'active' : '' }} {{ award.enabled ? '' : 'disabled' }}">
+          <li class="{{ _award == award ? 'active' : '' }} {{ _award.enabled ? '' : 'disabled' }}">
             <a href="{{ path('nomineeManager', {'awardID': _award.id}) }}">
               <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
               <strong>{{ _award.name }}</strong><div class="subtitle {{ _award == award ? '' : 'hoverShow' }}"><small>{{ _award.subtitle }}</small></div>
