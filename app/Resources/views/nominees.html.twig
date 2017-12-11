@@ -145,6 +145,13 @@
       overflow: hidden;
       max-width: calc(100% - 10px);
     }
+
+    img.delete-this {
+      margin: -11px 7px -8px -14px;
+      width: 34px;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
   </style>
 
   <h1 class="page-header fancy">Nominee Manager</h1>
@@ -366,7 +373,7 @@
             </div>
             <div class="modal-footer">
               <button class="btn btn-danger" id="dialog-edit-delete" style="float: left;" type="button">
-                <img src="{{ asset('img/delete-this.png') }}" style="margin: -11px 3px -8px -8px; width: 34px;">
+                <img src="{{ asset('img/delete-this.png') }}" class="delete-this">
                 Delete this
               </button>
               <span id="dialog-edit-status" style="display: none;">
