@@ -17,107 +17,21 @@
       z-index: 100000;
     }
 
-    #award-name {
-      text-shadow: #000 1px 1px 2px;
-      text-align: center;
-      color: #789922;
-      text-transform: uppercase;
-      font-family: "Century Gothic", arial, sans-serif;
-      font-weight: bold;
-      font-size: 2.3em;
-      line-height: 1em;
+    #nominee-container .nominee {
+      background-color: rgba(255,255,255,0.8);
+      cursor: pointer;
+      transition: 200ms linear all;
+      margin: 0 auto 3px auto;
     }
 
-    #award-subtitle {
-      text-align: center;
-      color: #1f1f1f;
-      font-family: "Lucida Sans Unicode", arial, sans-serif;
-      font-size: 0.95em;
-      line-height: 1.95em;
-      margin: 0;
-      font-weight: bold;
-    }
-
-    .aNominee {
-      position: relative;
-      background: lightblue;
-      border: 1px solid black;
-      width: 428px;
-      height: 100px;
-      margin-bottom: 5px;
-    }
-
-    .aNominee form {
-      position: absolute;
-      left: 435px;
-      width: 90px;
-    }
-
-    .aNominee form button {
-      width: 100%;
-      margin-bottom: 5px;
-    }
-
-    .aNominee header {
-      position: absolute;
-      color: white;
-      font-size: 12px;
-      padding-left: 5px;
-      padding-right: 5px;
-      background-color: black;
-    }
-
-    .aNominee header p {
-      padding: 0;
-      margin: 0;
-    }
-
-    .aNominee footer {
-      position: absolute;
-      top: 56px;
-      left: 0;
-      height: 42px;
-      width: 426px;
-      background: black;
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    .aNominee footer h3 {
-      color: white;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-family: "Century Gothic", arial, sans-serif;
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 1em;
-      padding: 0;
-      margin: 5px 0 0 5px;
-    }
-
-    .aNominee footer p {
-      text-decoration: none;
-      color: #cacaca;
-      font-family: "Lucida Sans Unicode", arial, sans-serif;
-      font-size: 13px;
-      padding: 0;
-      margin: 0 0 0 5px;
-    }
-
-    .aNominee img {
-      max-width: 426px;
-      max-height: 98px;
+    #nominee-container .nominee .flavorText {
+      display: block;
     }
 
     ol.nominations, ul.nominations {
-      margin-right: 35px;
-    }
-
-    ol.nominations {
-      font-size: 120%;
-    }
-
-    ol.nominations li {
-      line-height: 1.2;
+      margin-right: 5px;
+      list-style-type: none;
+      padding-left: 0;
     }
 
     .nominee {
@@ -126,6 +40,110 @@
 
     .modal-body .nominee {
       margin: 0 auto 10px auto;
+    }
+
+    #award-selector .subtitle.hoverShow {
+      display: none;
+    }
+
+    #award-selector li:hover .subtitle.hoverShow {
+      display: block;
+    }
+
+    #award-selector li.disabled {
+      text-decoration: line-through;
+    }
+
+    #award-selector .emoji {
+      max-height: 18px;
+      width: auto;
+    }
+
+    #award-selector .dropdown-menu {
+      position: static;
+      display: block;
+      top: auto;
+      left: auto;
+      float: none;
+      border: none;
+    }
+
+    .impressive-title {
+      text-align: center;
+      color: #789922;
+      font-family: 'Asap', sans-serif;
+      font-size: 2.4em;
+      line-height: 1em;
+      font-weight: bold;
+    }
+
+    .impressive-title .emoji {
+      width: 36px;
+    }
+
+    .impressive-subtitle {
+      text-align: center;
+      font-family: 'Asap', sans-serif;
+      color: #1F1F1F;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .impressive-description {
+      text-align: center;
+      margin-top: 10px;
+      font-family: 'Asap', sans-serif;
+    }
+
+    .award-container {
+      border: 1px solid #BBB;
+      background-color: #f5f5f5;
+    }
+
+    .award-container-middle {
+      background-color: #eaeaea;
+      box-shadow: rgba(0,0,0,0.1) 0 2px 1px;
+    }
+
+    .award-container-padding {
+      padding: 15px;
+      border-bottom: 1px solid #BBB;
+    }
+
+    .hoverOverlay {
+      width: 100%;
+      height: 100%;
+      z-index: 50;
+      position: absolute;
+      opacity: 0;
+      background-color: rgba(0,0,0,0.8);
+      color: white;
+      transition: 200ms linear all;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #nominee-container .nominee:hover .hoverOverlay {
+      opacity: 1;
+    }
+
+    #nominee-container.inaccurate .nominee {
+      height: 60px;
+      width: 100%;
+      border-width: 1px;
+    }
+
+    #nominee-container.inaccurate .flavorText {
+      opacity: 0;
+    }
+
+    #nominee-container.inaccurate .nomineeName, #nominee-container.inaccurate .nomineeSubtitle {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: calc(100% - 10px);
     }
   </style>
 
@@ -136,24 +154,14 @@
     <li><a href="{{ path('awardManager') }}">Manage awards</a></li>
   </ul>
 
-  <p class="lead">
-    Here's where nominees are assigned awards.
-    Official nominees are the ones that will show up on the <a href="{{ path('voting') }}">voting page</a>.
-  </p>
-
-  <div class="alert alert-warning">
-    <strong>Warning:</strong> this page hasn't been updated in a long time. It's still functional, but don't be surprised if weird things occur.
-  </div>
-
-
   <div class="row">
-    <div class="col-md-6" id="award-selector">
-      <ul class="nav nav-list custom-navigation-pane">
-        {% for award in awards %}
-          <li>
-            <a href="{{ path('nomineeManager', {'awardID': award.id}) }}">
-              <strong>{{ award.name }}</strong> {{ award.subtitle }}
+    <div class="col-md-4" id="award-selector">
+      <ul class="nav nav-list custom-navigation-pane dropdown-menu">
+        {% for _award in awards %}
+          <li class="{{ _award == award ? 'active' : '' }} {{ award.enabled ? '' : 'disabled' }}">
+            <a href="{{ path('nomineeManager', {'awardID': _award.id}) }}">
               <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
+              <strong>{{ _award.name }}</strong><div class="subtitle {{ _award == award ? '' : 'hoverShow' }}"><small>{{ _award.subtitle }}</small></div>
             </a>
           </li>
         {% endfor %}
@@ -161,113 +169,116 @@
     </div>
 
     {% if award %}
-    <div class="col-md-6">
+    <div class="col-md-8">
 
-      <div id="award-name">{{ award.name }}</div>
-      <div id="award-subtitle">{{ award.subtitle }}</div>
+      <div class="award-container">
+        <div class="award-container-top award-container-padding">
+          <div id="award-name" class="impressive-title">{{ award.name }}</div>
+          <div id="award-subtitle" class="impressive-subtitle">{{ award.subtitle }}</div>
+          {% if award.comments %}
+            <div id="award-description" class="impressive-description">{{ award.comments | raw }}</div>
+          {% endif %}
+          {% if award.secret %}
+            <div class="impressive-description"><em>This is a secret award. It won't be visible until the voting
+                phase.</em></div>
+          {% endif %}
+        </div>
+        <div class="award-container-middle award-container-padding" style="text-align: center;">
+          <strong class="impressive-subtitle">
+            <span id="official-count">{{ award.nominees | length }}</span>
+            nominee{{ award.nominees | length == 1 ? '' : 's' }}
+          </strong>
 
-      {% if award.secret %}
-        <p style='text-align: center; margin-top: 8px;'>This is a secret award. It won't be visible until the voting
-          phase.</p>
-      {% endif %}
-
-      <div class="well" style="margin-top: 15px;">
-
-        <div
-            style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
-          Official Nominees: <span id="official-count">{{ award.nominees | length }}</span>
           {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
-            <button class="btn btn-default btn-xs" type="button" id="new" style="margin-left: 15px;">
-              <span class="glyphicon glyphicon-plus"></span> New Nominee
+            <button class="btn btn-default" type="button" id="new" style="margin-left: 15px;">
+              <span class="glyphicon glyphicon-plus"></span> Add Nominee
             </button>
           {% endif %}
         </div>
-
-        <div id="nominee-container">
-
-          {% for nominee in award.nominees %}
-            <div class="aNominee" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}">
-              <header>
-                <p>ID: {{ nominee.shortName }}</p>
-              </header>
-              {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
-                <form>
-                  <button class="btn btn-default" type="button" name="edit">Edit</button>
-                  <button class="btn btn-default" type="button" name="delete">Delete</button>
-                </form>
-              {% endif %}
-              {% if nominee.image %}
-                <img src="{{ nominee.image | escape('html_attr') }}">
-              {% endif %}
-              <footer>
-                <h3>{{ nominee.name }}</h3>
-                <p>{{ nominee.subtitle | raw }}</p>
-              </footer>
-            </div>
-          {% endfor %}
-
-        </div>
-
       </div>
 
-      {% if not award.secret %}
-        <div class="well">
-
-          <div
-              style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
-            User Nominations: {{ award.rawUserNominations | length }}
+      <div class="row" style="margin-top: 15px;">
+        <div class="col-lg-6">
+          <div class="award-container award-container-padding">
+            <div style="font-size: small; text-align: center;">
+              <input type="checkbox" id="accurateDimensions"> <label for="accurateDimensions">Show accurate dimensions</label>
+            </div>
+            <div id="nominee-container" class="inaccurate">
+              {% for nominee in award.nominees %}
+                <div class="nominee" id="dialog-edit-image" style="background-size: cover; background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}')"
+                     data-nominee="{{ nominee.shortName }}">
+                  {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
+                    <div class="hoverOverlay">
+                      <span>Click to edit nominee<br><code>{{ nominee.shortName }}</code></span>
+                    </div>
+                  {% endif %}
+                  {% if nominee.flavorText %}
+                    <div class="flavorText">{{ nominee.flavorText }}</div>
+                  {% endif %}
+                  <div class="nomineeName">{{ nominee.name }}</div>
+                  <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                </div>
+              {% endfor %}
+            </div>
           </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="award-container">
+            <div class="award-container-middle award-container-padding impressive-subtitle" style="text-align: center;">
+              {{ award.rawUserNominations | length ?: 'No' }} user nomination{{ award.rawUserNominations | length == 1 ? '' : 's' }}
+            </div>
+            {% if award.userNominations | length > 0 %}
+              <div class="award-container-padding">
+                {% if award.areNominationsEnabled %}
+                  <p style="font-weight: bold; text-align: center;">
+                    Nominations for this award are currently open.
+                  </p>
+                {% endif %}
 
-          {% if award.areNominationsEnabled %}
-            <p style="font-weight: bold; text-align: center; font-size: 120%;">
-              Nominations are currently open.
-            </p>
-          {% endif %}
+                <p style="text-align: center; font-size: small;">
+                  {% if alphabeticalSort %}
+                    Currently sorted alphabetically <a href="?sort=total">(sort by total)</a>
+                  {% else %}
+                    Currently sorted by total <a href="?sort=alphabetical">(sort alphabetically)</a>
+                  {% endif %}
+                </p>
 
-          <p style="text-align: center; font-size: small;">
-            {% if alphabeticalSort %}
-              Currently sorted alphabetically <a href="?sort=total">(sort by total)</a>
-            {% else %}
-              Currently sorted by total <a href="?sort=alphabetical">(sort alphabetically)</a>
+                <ol class="nominations">
+                  {% for nomination in award.getUserNominations(alphabeticalSort)[:15] %}
+                    <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
+                  {% endfor %}
+                </ol>
+
+                <a href="#" id="show-more">show the rest</a>
+
+                <ul id="more-nominations" style='display: none;' class="nominations">
+                  {% for nomination in award.getUserNominations(alphabeticalSort)[15:] %}
+                    <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
             {% endif %}
-          </p>
-
-          <ol class="nominations">
-            {% for nomination in award.getUserNominations(alphabeticalSort)[:15] %}
-              <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
-            {% endfor %}
-          </ol>
-
-          <a href="#" id="show-more">show the rest</a>
-
-          <ul id="more-nominations" style='display: none;' class="nominations">
-            {% for nomination in award.getUserNominations(alphabeticalSort)[15:] %}
-              <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
-            {% endfor %}
-          </ul>
-
-        </div>
-
-        <div class="well">
-
-          <div
-              style="background-color: #08C; color: white; font-size: 20px; line-height: 1.5em; text-align: center; margin-bottom: 10px;">
-            Award Name Suggestions: {{ award.rawSuggestions | length }}
+            <div class="award-container-middle award-container-padding impressive-subtitle" style="text-align: center;">
+              {{ award.rawSuggestions | length ?: 'No' }} award name suggestion{{ award.rawSuggestions | length == 1 ? '' : 's' }}
+            </div>
+            {% if award.nameSuggestions | length > 0 %}
+              <div class="award-container-padding">
+                <ul class="nominations">
+                  {% for suggestion in award.getNameSuggestions(alphabeticalSort) %}
+                    <li><strong>{{ suggestion.count }} x</strong> {{ suggestion.title }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
           </div>
-
-          <ul class="nominations">
-            {% for suggestion in award.getNameSuggestions(alphabeticalSort) %}
-              <li><strong>{{ suggestion.count }} x</strong> {{ suggestion.title }}</li>
-            {% endfor %}
-          </ul>
         </div>
-      {% endif %}
+      </div>
       {% endif %}
     </div>
   </div>
 
   {% if is_granted('ROLE_NOMINATIONS_EDIT') and award %}
-    <div id="dialog-delete" class="modal" role="dialog">
+    <div id="dialog-delete" class="modal" role="dialog" style="z-index: 1099">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
@@ -283,7 +294,7 @@
       </div>
     </div>
 
-    <div id="dialog-edit" class="modal" role="dialog">
+    <div id="dialog-edit" class="modal" role="dialog" style="z-index: 1098" taxindex="-1">
       <div class="modal-dialog" role="document">
         <form class="form-horizontal" id="dialog-edit-form" enctype="multipart/form-data">
           <div class="modal-content">
@@ -309,7 +320,6 @@
               </div>
 
               <div class="nominee" id="dialog-edit-image" style="background-size: cover">
-                <div class="handle fakeHandle"></div>
                 <div class="flavorText" id="dialog-edit-flavor"></div>
                 <div class="nomineeName" id="dialog-edit-name"></div>
                 <div class="nomineeSubtitle" id="dialog-edit-subtitle"></div>
@@ -355,6 +365,10 @@
               </div>
             </div>
             <div class="modal-footer">
+              <button class="btn btn-danger" id="dialog-edit-delete" style="float: left;" type="button">
+                <img src="{{ asset('img/delete-this.png') }}" style="margin: -11px 3px -8px -8px; width: 34px;">
+                Delete this
+              </button>
               <span id="dialog-edit-status" style="display: none;">
                 <img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> saving...&nbsp;
               </span>
@@ -380,11 +394,14 @@
 
       var currentlySubmitting = false;
 
-      // When a delete button is clicked
-      $("button[name=delete]").click(function () {
+      $('#accurateDimensions').change(function () {
+          $('#nominee-container').toggleClass('inaccurate');
+      });
 
+      // When a delete button is clicked
+      $("#dialog-edit-delete").click(function () {
         // Get the nominee name and ID from the contents of the nominee box
-        var nomineeID = $(this).parents(".aNominee").attr("data-nominee");
+        var nomineeID = $("#form-id").attr("value");
         var nomineeName = nominees[nomineeID].name;
 
         // Set up the dialog elements for this nominee
@@ -395,6 +412,7 @@
 
         // Finally, show the dialog
         $("#dialog-delete").modal("show");
+        $("#dialog-delete-nominee-confirm").focus();
       });
 
       // When the confirm button is clicked in the delete dialog
@@ -425,8 +443,9 @@
             alert("An error occurred: " + data.error);
           }
 
-          // Close the dialog
+          // Close the dialogs
           $("#dialog-delete").modal("hide");
+          $("#dialog-edit").modal("hide");
         }, "json");
       });
 
@@ -461,9 +480,9 @@
       });
 
       // When an edit button is clicked
-      $("button[name=edit]").click(function () {
+      $("#nominee-container").find(".nominee").click(function () {
         // Grab the ID
-        var nomineeID = $(this).parents(".aNominee").attr("data-nominee");
+        var nomineeID = $(this).attr("data-nominee");
 
         // Update the dialog action
         $("#form-id").attr("value", nomineeID);
@@ -481,7 +500,6 @@
         } else {
           $("#dialog-edit-image").css("background-image", "url('{{ asset('img/no-image-available.png') }}'");
         }
-        console.log(nominees[nomineeID].image);
 
         $("#info-id").val(nomineeID);
         $("#info-name").val(nominees[nomineeID].name);
