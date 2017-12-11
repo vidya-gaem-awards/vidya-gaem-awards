@@ -205,28 +205,35 @@
                 </button>
               {% endif %}
             </div>
-            <div class="award-container-padding">
-              <div style="font-size: small; text-align: center;">
-                <input type="checkbox" id="accurateDimensions"> <label for="accurateDimensions">Show accurate dimensions</label>
+            {% if award.nominees | length > 0 %}
+              <div class="award-container-padding">
+                <div style="font-size: small; text-align: center;">
+                  <input type="checkbox" id="accurateDimensions"> <label for="accurateDimensions">Show accurate dimensions</label>
+                </div>
+                <div id="nominee-container" class="inaccurate">
+                  {% for nominee in award.nominees %}
+                    <div class="nominee" id="dialog-edit-image" style="background-size: cover; background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}')"
+                         data-nominee="{{ nominee.shortName }}">
+                      {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
+                        <div class="hoverOverlay">
+                          <span>Click to edit nominee<br><code>{{ nominee.shortName }}</code></span>
+                        </div>
+                      {% endif %}
+                      {% if nominee.flavorText %}
+                        <div class="flavorText">{{ nominee.flavorText }}</div>
+                      {% endif %}
+                      <div class="nomineeName">{{ nominee.name }}</div>
+                      <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                    </div>
+                  {% endfor %}
+                </div>
               </div>
-              <div id="nominee-container" class="inaccurate">
-                {% for nominee in award.nominees %}
-                  <div class="nominee" id="dialog-edit-image" style="background-size: cover; background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}')"
-                       data-nominee="{{ nominee.shortName }}">
-                    {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
-                      <div class="hoverOverlay">
-                        <span>Click to edit nominee<br><code>{{ nominee.shortName }}</code></span>
-                      </div>
-                    {% endif %}
-                    {% if nominee.flavorText %}
-                      <div class="flavorText">{{ nominee.flavorText }}</div>
-                    {% endif %}
-                    <div class="nomineeName">{{ nominee.name }}</div>
-                    <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
-                  </div>
-                {% endfor %}
-              </div>
+            {% endif %}
+            {% if navbar.canAccessRoute('voting') %}
+            <div class="award-container-middle award-container-padding" style="text-align: center;">
+              <a href="{{ path('voting', {'awardID': award.id}) }}">View the voting page for this award</a>
             </div>
+            {% endif %}
           </div>
         </div>
         <div class="col-lg-6">
