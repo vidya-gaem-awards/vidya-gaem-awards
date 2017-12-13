@@ -3,9 +3,36 @@
   width: 160px;
   height: 600px;
   border: 1px dashed black;
-  position: absolute;
-  top: 260px;
+    margin-top: 5px;
+  /*position: absolute;*/
+  /*top: 250px;*/
 }
+
+.leftMeme {
+    margin-left: 10px;
+}
+
+.rightMeme {
+    margin-right: 10px;
+}
+
+/*@media (max-width: 1840px) {*/
+    /*.rightMeme {*/
+        /*display: none;*/
+    /*}*/
+    /*#wrapper {*/
+        /*margin-right: 10px !important;*/
+    /*}*/
+/*}*/
+/**/
+/*@media (max-width: 1680px) {*/
+    /*.leftMeme {*/
+        /*display: none;*/
+    /*}*/
+    /*#wrapper {*/
+        /*margin-right: auto !important;*/
+    /*}*/
+/*}*/
 
 #dontforget {
   position: absolute;
@@ -111,11 +138,18 @@
   height: 100%;
   z-index: 30;
   position: absolute;
+    top: 0;
 }
 
 /* Nominee Box - outer elements that encompass the nominee box */
 .voteBox {
   transition: 0.3s linear all;
+  width: 100%;
+}
+
+.fakeElement {
+    height: 0;
+    padding-top: calc(1 / 2.5 * 100%);
 }
 
 .voteGroup {
@@ -125,6 +159,7 @@
   margin-left: 5px;
   margin-right: 5px;
   justify-content: center;
+  width: calc(25% - 10px);
 }
 
 .voteGroup label {
@@ -268,10 +303,16 @@
 
 /* Top and bottom voting panes */
 #wrapper {
-  width: 100%;
+  /*width: 100%;*/
   max-width: 1480px;
   position: relative;
-  margin: 0 auto 5px;
+    flex-grow: 1;
+  /*margin: 0 auto 5px;*/
+}
+
+.memeContainer {
+    display: flex;
+    justify-content: center;
 }
 
 .flexContainer {
@@ -539,8 +580,29 @@
   background-position: bottom center;
 }
 
+@media (max-width: 1400px) {
+    .rightMeme {
+        display: none;
+    }
+}
+
+@media (max-width: 1250px) {
+    .leftMeme {
+        display: none;
+    }
+}
+
+@media (max-width: 1100px) {
+    .voteGroup {
+        width: calc(100% / 3 - 10px);
+    }
+}
+
 /* Changes for mobile */
 @media (max-width: 768px) {
+    .fakeElement {
+        display: none;
+    }
   .nominee {
     width: 100%;
     height: 75px;
@@ -587,6 +649,11 @@
     background: rgb(251, 68, 7);
     padding: 25px 5px 5px 5px;
     text-align: center;
+      width: 25px;
+  }
+
+  .flavorText {
+      margin-right: 25px;
   }
 }
 

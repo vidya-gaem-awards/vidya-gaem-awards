@@ -1,8 +1,8 @@
 .nominee {
   position: relative;
   border: 2px solid white;
-  width: 350px;
-  height: 140px;
+  /*width: 350px;*/
+  /*height: 140px;*/
   transition: 0.3s linear all;
 }
 
@@ -18,6 +18,13 @@
   font-size: 0.81em;
   line-height: 13px;
   color: white;
+  z-index: 40;
+}
+
+@media (max-width: 768px) {
+  .flavorText {
+    width: calc(100% - 25px);
+  }
 }
 
 .nominee:hover .flavorText {

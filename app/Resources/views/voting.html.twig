@@ -30,119 +30,163 @@
       .handle {
         cursor: move;
       }
+
+        .pageHeader input {
+            width: 50px;
+            color: black;
+        }
+
+        .nominee {
+            background-position: center;
+        }
     </style>
   {% endif %}
 {% endblock %}
 
 {% block body %}
   <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
+
   <div class="pageHeader">
     {#<a href="{{ path('voting') }}"><img src="{{ asset('2016images/vga_logo.png') }}" class="logo" alt="oh god it's happening again"/></a>#}
     <h1>The 2017 Vidya Gaem Awards</h1>
     <h2>{{ voteText }}</h2>
   </div>
 
-  <div id="wrapper">
-    {% if award %}
-      <div class="awardHeader">
-        <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
-        <div class="awardHeaderContainer">
-          <div class="awardName">{{ award.name }}</div>
-          <h2 class="awardSubtitle">{{ award.subtitle }}</h2>
-        </div>
-        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
-      </div>
-      {% if votingOpen %}
-        {#<img src="{{ asset('2016images/dontForget.png') }}" id="dontforget" alt="Don't forget to hit submit"/>#}
-      {% endif %}
-    {% endif %}
+  {#<div class="pageHeader" style="text-align: center; height: 110px;">#}
+  {#<label>Width <input type="number" value="350" id="debugWidth"></label>#}
+  {#<label>Height <input type="number" value="140" id="debugHeight"></label>#}
+  {#<label>Title <input type="number" value="14" id="debugTitle"></label>#}
+  {#<label>Subtitle <input type="number" value="12" id="debugSubtitle"></label>#}
+  {#</div>#}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var val;
+            $('#debugWidth').change(function () {
+                val = $(this).val();
+//                $('.nominee').css('width', val);
+            });
+            $('#debugHeight').change(function () {
+                val = $(this).val();
+                $('.nominee').css('height', val);
+            });
+            $('#debugTitle').change(function () {
+                val = $(this).val();
+                $('.nomineeName').css('fontSize', val);
+            });
+            $('#debugSubtitle').change(function () {
+                val = $(this).val();
+                $('.nomineeSubtitle').css('fontSize', val);
+            });
+        });
+    </script>
 
     {% if award %}
-      {#<div class="numberPopup {{ voteButtonSizeMap[award.nominees | length] }}" style="display: none;" id="numberPopup">#}
-        {#<div class="numberButtons">#}
-          {#{% for i in 1..award.nominees | length %}#}
-            {#<button id="numberButton{{ i }}" class="numberButton" data-value="{{ i }}">#{{ i }}</button>#}
-          {#{% endfor %}#}
-        {#</div>#}
-      {#</div>#}
-
-      <div id="dragLimit">
-        {% spaceless %}
-        <div class="flexContainer voteDropArea" id="voteDropAreaTop">
-          {% for nominee in award.nominees | shuffle %}
-            <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}" data-order="{{ loop.index }}">
-            {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}
-            {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
-              {#<label for="voteBox{{ loop.index }}">#}
-              <div class="voteBox">
-                <div class="number" style="display: none;">{{ loop.index }}</div>
-                <div class="nominee" style="background-image: url('{{ nominee.image }}'); background-size: cover">
-                  <div class="handle fakeHandle"></div>
-                  {% if nominee.flavorText %}
-                    <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
-                  {% endif %}
-                  <div class="nomineeName">{{ nominee.name }}</div>
-                  <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
-                  <div class="handle realHandle">
-                    <span class="glyphicon glyphicon-menu-hamburger"></span>
-                  </div>
-                </div>
-              </div>
-              {#</label>#}
+        <div class="awardHeader">
+            <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
+            <div class="awardHeaderContainer">
+                <div class="awardName">{{ award.name }}</div>
+                <h2 class="awardSubtitle">{{ award.subtitle }}</h2>
             </div>
-
-          {% endfor %}
+            <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
         </div>
-
-        <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
-        {% endspaceless %}
-      </div>
-
-      {% if votingOpen %}
-        <div class="buttons">
-          <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
-          <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
-          <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right" title="Next award"></a>
-        </div>
-      {% endif %}
-
-    {% else %}
-      <div id="startMessage">
-
-        {% if votingNotYetOpen %}
-          <!-- Before votes open -->
-          <h2>How to vote:</h2>
-          <p>Despite the new look, voting is the same as last year. Vote for as many nominees as you want, and put
-            them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call
-            it a day.</p>
-          <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can
-            use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
-        {% endif %}
-
         {% if votingOpen %}
-          <!-- While votes are open -->
-          <h2>How to vote:</h2>
-          <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them
-            in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a
-            day.</p>
-          <p>You can use the award list at the bottom to navigate, or just use the arrows that appear after you
-            click submit.</p>
-
-          <a href="{{ path('voting', {'awardID': (awards|first).id}) }}" id="btnStart"></a>
+            {#<img src="{{ asset('2016images/dontForget.png') }}" id="dontforget" alt="Don't forget to hit submit"/>#}
         {% endif %}
-
-        {% if votingClosed %}
-          <!-- After votes close -->
-          <h2>Thanks to everybody who voted.</h2>
-          <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>
-        {% endif %}
-
-        <h2>Stream information:</h2>
-        <p>We're aiming to stream at the end of January.</p>
-
-      </div>
     {% endif %}
-  </div>
+
+    <div class="memeContainer">
+        <div class="meme leftMeme"></div>
+        <div id="wrapper">
+            {% if award %}
+                {#<div class="numberPopup {{ voteButtonSizeMap[award.nominees | length] }}" style="display: none;" id="numberPopup">#}
+                {#<div class="numberButtons">#}
+                {#{% for i in 1..award.nominees | length %}#}
+                {#<button id="numberButton{{ i }}" class="numberButton" data-value="{{ i }}">#{{ i }}</button>#}
+                {#{% endfor %}#}
+                {#</div>#}
+                {#</div>#}
+
+                <div id="dragLimit">
+                    {% spaceless %}
+                        <div class="flexContainer voteDropArea" id="voteDropAreaTop">
+                            {% for nominee in award.nominees | shuffle %}
+                                <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}" data-order="{{ loop.index }}">
+                                    {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}
+                                    {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
+                                    {#<label for="voteBox{{ loop.index }}">#}
+                                    <div class="voteBox">
+                                        <div class="number" style="display: none;">{{ loop.index }}</div>
+                                        <div class="nominee" style="background-image: url('{{ nominee.image }}'); background-size: cover">
+                                            <div class="fakeElement"></div>
+                                            <div class="handle fakeHandle"></div>
+                                            {% if nominee.flavorText %}
+                                                <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
+                                            {% endif %}
+                                            <div class="nomineeName">{{ nominee.name }}</div>
+                                            <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                                            <div class="handle realHandle">
+                                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {#</label>#}
+                                </div>
+
+                            {% endfor %}
+                        </div>
+
+                        <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
+                    {% endspaceless %}
+                </div>
+
+                {% if votingOpen %}
+                    <div class="buttons">
+                        <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
+                        <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
+                        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right" title="Next award"></a>
+                    </div>
+                {% endif %}
+
+            {% else %}
+                <div id="startMessage">
+
+                    {% if votingNotYetOpen %}
+                        <!-- Before votes open -->
+                        <h2>How to vote:</h2>
+                        <p>Despite the new look, voting is the same as last year. Vote for as many nominees as you want, and put
+                            them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call
+                            it a day.</p>
+                        <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can
+                            use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
+                    {% endif %}
+
+                    {% if votingOpen %}
+                        <!-- While votes are open -->
+                        <h2>How to vote:</h2>
+                        <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them
+                            in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a
+                            day.</p>
+                        <p>You can use the award list at the bottom to navigate, or just use the arrows that appear after you
+                            click submit.</p>
+
+                        <a href="{{ path('voting', {'awardID': (awards|first).id}) }}" id="btnStart"></a>
+                    {% endif %}
+
+                    {% if votingClosed %}
+                        <!-- After votes close -->
+                        <h2>Thanks to everybody who voted.</h2>
+                        <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>
+                    {% endif %}
+
+                    <h2>Stream information:</h2>
+                    <p>We're aiming to stream at the end of January.</p>
+
+                </div>
+            {% endif %}
+        </div>
+        <div class="meme rightMeme"></div>
+    </div>
 
   <div class="zig"></div>
 
