@@ -37,11 +37,12 @@ $(document).ready(function () {
         group: 'omega',
         draggable: '.voteGroup',
         handle: '.handle',
-        animation: 100,
+        animation: 0,
         dataIdAttr: 'data-order',
         onStart: function (event) {
             $("#dragLimit").addClass("dragActive");
-            $(event.item).find('.number').show().text('Drop this nominee in your preferred position');
+            $(event.item).find('.number').hide();
+            // $(event.item).find('.number').show().text('Drop this nominee in your preferred position');
         },
         onEnd: function (event) {
             $("#dragLimit").removeClass("dragActive");
@@ -108,9 +109,6 @@ $(document).ready(function () {
             index = index + 1;
             var ordinal = ['st', 'nd', 'rd'][((index+90) % 100 - 10) % 10 - 1] || 'th';
             var text = 'Your ' + index + ordinal + ' preference';
-            if (index === 1) {
-                text = text + ' (the one you want to win)';
-            }
             $(this).find(".number").show().html(text);
         });
 
@@ -130,6 +128,12 @@ $(document).ready(function () {
             var element = $("#nominee-" + lastVotes[i]);
             element.detach().appendTo(bottomArea);
         }
+
+        // var placeholder = $('#dropPlaceholder').clone().show();
+        // placeholder.prependTo(bottomArea);
+        // if (lastVotes.length > 0) {
+        //     placeholder.clone().appendTo(bottomArea);
+        // }
 
         updateNumbers();
 

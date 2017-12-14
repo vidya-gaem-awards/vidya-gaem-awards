@@ -3,8 +3,6 @@ function onDumbShit(cb) {
     var key = '38384040373937396665';
     document.addEventListener('keydown', function (e) {
         input += ("" + e.keyCode);
-
-        console.log(input);
         if (input === key) {
             return cb();
         }

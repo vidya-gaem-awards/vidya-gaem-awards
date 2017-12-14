@@ -136,9 +136,9 @@
 .fakeHandle {
   width: 100%;
   height: 100%;
-  z-index: 30;
+  z-index: 50;
   position: absolute;
-    top: 0;
+  top: 0;
 }
 
 /* Nominee Box - outer elements that encompass the nominee box */
@@ -160,11 +160,16 @@
   margin-right: 5px;
   justify-content: center;
   width: calc(25% - 10px);
+  position: relative;
 }
 
 .voteGroup label {
   margin-bottom: auto;
   font-weight: inherit;
+}
+
+#voteDropAreaBottom .voteGroup {
+  margin-top: 20px;
 }
 
 /* Nominee Box - extra elements that are tied to the nominee box, but are near it instead of inside it */
@@ -215,6 +220,8 @@
   line-height: 20px;
   font-weight: bold;
   font-size: 12px;
+  position: absolute;
+  top: -20px;
 }
 
 .sortable-ghost .number, .sortable-chosen .number, .sortable-drag .number, .locked .number {
@@ -223,6 +230,10 @@
 
 .locked .number:after {
   content: ' - SAVED';
+}
+
+.placeholder .nominee {
+  border: 2px dashed rgba(255, 255, 255, 0.8);
 }
 
 /* Preference number popup */
@@ -327,7 +338,7 @@
   margin-right: 10px;
   margin-bottom: 20px;
   padding: 5px;
-  min-height: 175px;
+  min-height: 185px;
   border: 2px dashed transparent;
   transition: 0.2s all;
 }
@@ -338,7 +349,7 @@
 }
 
 #voteDropAreaBottom {
-  border: 2px dashed white;
+  /*border: 2px dashed white;*/
   background: rgba(255, 255, 255, 0.2);
   position: relative;
 }
