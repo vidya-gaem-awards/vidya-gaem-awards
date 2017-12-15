@@ -4,6 +4,7 @@
   /*width: 350px;*/
   /*height: 140px;*/
   transition: 0.3s linear all;
+  background-position: center;
 }
 
 .flavorText {
@@ -21,13 +22,17 @@
   z-index: 40;
 }
 
+.aNominee .flavorText {
+  padding: 5px;
+}
+
 @media (max-width: 768px) {
   .flavorText {
     width: calc(100% - 25px);
   }
 }
 
-.nominee:hover .flavorText {
+.nominee:hover .flavorText, .voteBox:hover .flavorText {
   display: block;
 }
 

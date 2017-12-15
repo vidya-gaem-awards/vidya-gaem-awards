@@ -16,6 +16,151 @@
     margin-right: 10px;
 }
 
+#todd img {
+  max-width: 100%;
+}
+
+/*#todd .modal-dialog {*/
+  /*width: 602px;*/
+/*}*/
+
+#todd .modal-header {
+  background: transparent;
+  padding: 3px;
+  border: none;
+}
+
+#todd .close {
+  color: white;
+  text-shadow: none;
+  opacity: 1;
+}
+
+#todd .modal-body {
+  padding: 0;
+  background: #262626;
+  border: 1px solid #4d4b49;
+}
+
+#todd .modal-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.game_purchase_action_bg {
+  height: 42px;
+  background-color: #3c3d3e;
+  padding: 3px 3px 3px 0;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+
+.game_purchase_action .game_purchase_price {
+  background-color: #000000;
+  font-size: 13px;
+  padding-top: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 35px;
+}
+
+.game_purchase_action .game_purchase_price, .game_purchase_action .game_purchase_discount, .game_purchase_action .btn_addtocart, .game_purchase_action .btn_packageinfo, .game_purchase_action .game_purchase_action_bg
+.game_purchase_action .game_purchase_action_qty {
+  float: left;
+  margin-left: 3px;
+}
+
+.price, .match_price {
+  font-family: tahoma, helvetica, arial, trebuchet ms, sans-serif;
+  font-size: 11px;
+  color: #b0aeac;
+}
+
+.btn_addtocart {
+  position: relative;
+  height: 34px;
+}
+
+.btn_addtocart .btn_addtocart_left, .btn_addtocart .btn_addtocart_right {
+  position: absolute;
+  width: 2px;
+  height: 34px;
+  top: 0px;
+  background-image: url('https://steamstore-a.akamaihd.net/public/images/v5/btn_addtocart_corners.gif');
+}
+
+.btn_addtocart .btn_addtocart_left {
+  background-position: left;
+  left: 0px;
+}
+
+.game_purchase_action {
+  position: absolute;
+  bottom: -20px;
+  right: 10px;
+}
+
+.btn_addtocart .btn_addtocart_content {
+  display: inline-block;
+  height: 34px;
+  font-size: 11px;
+  color: #ffffff;
+  text-align: center;
+  padding: 0px 11px;
+  line-height: 34px;
+  background-image: url('https://steamstore-a.akamaihd.net/public/images/v5/btn_addtocart_repeat.gif');
+  background-repeat: repeat-x;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+}
+
+.btn_addtocart .btn_addtocart_right {
+  background-position: right;
+  right: 0px;
+}
+
+.buy_my_game {
+  padding: 10px 0 30px 15px;
+  border-top: 1px solid #4d4b49;
+}
+
+.buy_my_game a .tail {
+  color: #9e9e9e;
+  font-weight: 300;
+}
+
+.buy_my_game a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.buy_my_game .desc {
+  margin: 5px 10px 0 0;
+  font-size: 13px;
+  color: #c9c9c9;
+  line-height: 16px;
+  max-height: 96px;
+  overflow: hidden;
+}
+
+@keyframes shake{2%{transform:translate(-.5px, .5px) rotate(-.5deg)}4%{transform:translate(2.5px, .5px) rotate(-.5deg)}6%{transform:translate(-.5px, 1.5px) rotate(1.5deg)}8%{transform:translate(.5px, .5px) rotate(-.5deg)}10%{transform:translate(-.5px, -1.5px) rotate(-.5deg)}12%{transform:translate(.5px, -.5px) rotate(1.5deg)}14%{transform:translate(1.5px, 2.5px) rotate(-.5deg)}16%{transform:translate(-.5px, -.5px) rotate(.5deg)}18%{transform:translate(2.5px, .5px) rotate(.5deg)}20%{transform:translate(.5px, -1.5px) rotate(-.5deg)}22%{transform:translate(2.5px, 2.5px) rotate(-.5deg)}24%{transform:translate(2.5px, 1.5px) rotate(1.5deg)}26%{transform:translate(.5px, 1.5px) rotate(-.5deg)}28%{transform:translate(1.5px, .5px) rotate(.5deg)}30%{transform:translate(-1.5px, 2.5px) rotate(1.5deg)}32%{transform:translate(.5px, .5px) rotate(.5deg)}34%{transform:translate(.5px, 1.5px) rotate(1.5deg)}36%{transform:translate(2.5px, -.5px) rotate(1.5deg)}38%{transform:translate(.5px, 1.5px) rotate(1.5deg)}40%{transform:translate(2.5px, 1.5px) rotate(1.5deg)}42%{transform:translate(2.5px, -1.5px) rotate(.5deg)}44%{transform:translate(.5px, -.5px) rotate(.5deg)}46%{transform:translate(1.5px, -1.5px) rotate(.5deg)}48%{transform:translate(-1.5px, -.5px) rotate(.5deg)}50%{transform:translate(2.5px, -1.5px) rotate(1.5deg)}52%{transform:translate(.5px, 1.5px) rotate(.5deg)}54%{transform:translate(2.5px, -.5px) rotate(.5deg)}56%{transform:translate(2.5px, 2.5px) rotate(.5deg)}58%{transform:translate(2.5px, 1.5px) rotate(-.5deg)}60%{transform:translate(1.5px, 1.5px) rotate(-.5deg)}62%{transform:translate(-.5px, .5px) rotate(-.5deg)}64%{transform:translate(2.5px, 1.5px) rotate(-.5deg)}66%{transform:translate(-1.5px, .5px) rotate(1.5deg)}68%{transform:translate(1.5px, -1.5px) rotate(.5deg)}70%{transform:translate(.5px, .5px) rotate(-.5deg)}72%{transform:translate(-.5px, 1.5px) rotate(1.5deg)}74%{transform:translate(-1.5px, 1.5px) rotate(1.5deg)}76%{transform:translate(2.5px, -.5px) rotate(.5deg)}78%{transform:translate(2.5px, 2.5px) rotate(.5deg)}80%{transform:translate(-1.5px, 2.5px) rotate(.5deg)}82%{transform:translate(-1.5px, -.5px) rotate(.5deg)}84%{transform:translate(.5px, 1.5px) rotate(-.5deg)}86%{transform:translate(-.5px, 2.5px) rotate(.5deg)}88%{transform:translate(2.5px, 2.5px) rotate(1.5deg)}90%{transform:translate(-.5px, -1.5px) rotate(-.5deg)}92%{transform:translate(1.5px, .5px) rotate(.5deg)}94%{transform:translate(-.5px, -.5px) rotate(.5deg)}96%{transform:translate(1.5px, .5px) rotate(1.5deg)}98%{transform:translate(.5px, -.5px) rotate(1.5deg)}0%,100%{transform:translate(0, 0) rotate(0)}}
+
+.shake {
+  animation-name: shake;
+  animation-duration: 100ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.bigShake {
+
+}
+
 /*@media (max-width: 1840px) {*/
     /*.rightMeme {*/
         /*display: none;*/
@@ -142,7 +287,7 @@
 }
 
 /* Nominee Box - outer elements that encompass the nominee box */
-.voteBox {
+.flexContainer .voteBox {
   transition: 0.3s linear all;
   width: 100%;
 }
@@ -210,7 +355,7 @@
   background: url('https://vignette.wikia.nocookie.net/memory-gamma/images/1/17/Static.gif') center #37255c;
 }
 
-.number {
+.voteGroup .number {
   background: rgb(251,68,7);
   color: white;
   font-family: Arial,sans-serif;
@@ -228,7 +373,7 @@
   background: black;
 }
 
-.locked .number:after {
+.locked .voteGroup .number:after {
   content: ' - SAVED';
 }
 
@@ -552,6 +697,139 @@
   100% {
     top: -200px;
   }
+}
+
+/* Legacy voting page */
+#limitsDrag {
+  padding-left: 14px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.legacyStyle #wrapper {
+  max-width: 1100px;
+}
+
+.column {
+  position: relative;
+}
+
+#nomineeColumn {
+  width: 473px;
+}
+
+#spacerColumn {
+  width: 14px;
+}
+
+#voteColumn {
+  width: 473px;
+}
+
+#voteColumn > img {
+  margin-left: 160px;
+}
+
+.aNominee {
+  position: relative;
+  background: white;
+}
+
+.nomineeImage {
+  width: 473px;
+  height: 126px;
+}
+
+/*.info{*/
+  /*width: 25px;*/
+  /*height: 25px;*/
+  /*position: absolute;*/
+  /*top: 4px;*/
+  /*left: 4px;*/
+  /*z-index: 55;*/
+  /*background: url("/2016images/info.png") center top no-repeat;*/
+  /*cursor: help;*/
+/*}*/
+/*.info:hover{*/
+  /*background-position: center bottom;*/
+/*}*/
+/*.innerInfo {*/
+  /*display: none;*/
+  /*background-color: rgba(0,0,0,0.6);*/
+  /*position: relative;*/
+  /*top: 0px;*/
+  /*left: 30px;*/
+  /*padding: 3px;*/
+  /*width: 433px;*/
+  /*height: auto;*/
+  /*font-family: Calibri,sans-serif;*/
+  /*font-size: 0.81em;*/
+  /*line-height: 13px;*/
+  /*color: white;*/
+/*}*/
+/*.info:hover .innerInfo {*/
+  /*display: block;*/
+/*}*/
+
+.aNominee .fakeBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 41;
+}
+
+.aNominee img.locked {
+  display: none;
+}
+
+.aNominee.locked img.locked {
+  display: block;
+}
+
+#nomineeColumn .number {
+  display: none;
+}
+
+.nomineeInfo {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  width: 469px;
+  background: url("/2015voting/blackbar.png");
+  z-index: 99;
+}
+
+.column .voteBox {
+  clear:both;
+  float:left;
+  position: relative;
+  width: 100%;
+  height: 126px;
+  background: rgba(246, 231, 190, 0.5) url("/2016images/votebox_background.png");
+  margin-bottom: 4px;
+}
+
+/*.voteBox.locked {
+  background: none;
+}*/
+
+.column .voteBox.dragging {
+  /*background-image: url("/votebox_background_drag.png");*/
+}
+
+.column .number {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: rgb(251, 68, 7);
+  color: white;
+  font-size: 1.8em;
+  line-height: 1em;
+  border-radius: 20px;
+  display: block;
+  padding: 7px;
 }
 
 /* Instruction page (appears when no awards are selected) */

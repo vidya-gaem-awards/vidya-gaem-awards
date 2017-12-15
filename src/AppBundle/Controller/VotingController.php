@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class VotingController extends Controller
 {
-    public function indexAction(?string $awardID, EntityManagerInterface $em, ConfigService $configService, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user)
+    public function indexAction(?string $awardID, EntityManagerInterface $em, ConfigService $configService, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, SessionInterface $session)
     {
         /** @var User $user */
 
@@ -147,6 +147,12 @@ class VotingController extends Controller
             15 => 'height3 width5',
         ];
 
+        if ($request->query->get('legacy') == 1) {
+            $session->set('legacyVotingPage', true);
+        } elseif ($request->query->get('legacy') == 0) {
+            $session->set('legacyVotingPage', false);
+        }
+
         return $this->render('voting.html.twig', [
             'title' => 'Voting',
             'awards' => $awards,
@@ -160,6 +166,7 @@ class VotingController extends Controller
             'votes' => $voteJSON,
             'allVotes' => $simpleVotes,
             'voteButtonSizeMap' => $voteDialogMapping,
+            'votingStyle' => $session->get('legacyVotingPage', false) ? 'legacy' : 'new',
         ]);
     }
 

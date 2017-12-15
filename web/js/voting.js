@@ -9,11 +9,73 @@ onDumbShit(function () {
     audio.play();
 });
 
+var dragCounter;
+var toddDialog;
+
+function incrementDragCounter() {
+    dragCounter++;
+
+    if (dragCounter === 2) {
+        showTodd(1);
+    } else if (dragCounter === 5) {
+        showTodd(2);
+    } else if (dragCounter === 10) {
+        showTodd(3);
+    } else if (dragCounter === 20) {
+        showTodd(4);
+    }
+}
+
+function showTodd(toddCounter) {
+    window.navigator.vibrate(toddCounter * 500);
+
+    var text = [
+        'Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail.',
+        'What are doing, Anon? Buy my game.',
+        '<strong>JUST FUCKING BUY IT!</strong>',
+        '<em><strong>IT\'S NOT TOO LATE. PURCHASE CREATION CLUB CREDITS AND YOU WILL BE SPARED.</strong></em>'
+    ];
+
+    var prices = [
+        39.95,
+        59.95,
+        99.95,
+        299.95
+    ];
+
+    toddDialog.find('img').attr('src', '/img/todd' + toddCounter + '.jpg');
+    toddDialog.find('.theprice').text(prices[toddCounter - 1]);
+    toddDialog.find('.desc').html(text[toddCounter - 1]);
+
+    if (toddCounter === 3) {
+        toddDialog.find('.game_purchase_action').addClass('shake');
+    } else if (toddCounter === 4) {
+        toddDialog.find('.modal-content').addClass('shake');
+    }
+
+    toddDialog.modal('show');
+    return true;
+}
+
 $(document).ready(function () {
     // If there's no award currently selected, none of this code is relevant.
     if (!currentAward) {
         return;
     }
+
+    toddDialog = $('#todd');
+    toddDialog.modal({
+        show: false
+    });
+    toddDialog.find('.close').click(function () {
+        toddDialog.modal('hide');
+    });
+
+    // Rev up those Todds
+    (new Image()).src = '/img/todd1.jpg';
+    (new Image()).src = '/img/todd2.jpg';
+    (new Image()).src = '/img/todd3.jpg';
+    (new Image()).src = '/img/todd4.jpg';
 
     var previousLockExists = lastVotes.length > 1;
     var votesChanged = false;
@@ -21,6 +83,13 @@ $(document).ready(function () {
 
     var resetButton = $('#btnResetVotes');
     var submitButton = $('#btnLockVotes');
+
+    // Only used in the "drag from left to right" layout
+    var nomineeColumn = $('#nomineeColumn');
+    var voteColumn = $('#voteColumn');
+    var voteColumnBoxes = voteColumn.find('.voteBox');
+    var dragged;
+    var draggedFrom;
 
     // Only used in the "drag from top to bottom" layout
     var topArea = $('#voteDropAreaTop');
@@ -43,6 +112,7 @@ $(document).ready(function () {
             $("#dragLimit").addClass("dragActive");
             $(event.item).find('.number').hide();
             // $(event.item).find('.number').show().text('Drop this nominee in your preferred position');
+            setTimeout(incrementDragCounter, 100);
         },
         onEnd: function (event) {
             $("#dragLimit").removeClass("dragActive");
@@ -54,13 +124,101 @@ $(document).ready(function () {
         scrollSpeed: 20
     };
 
-    new Sortable(document.getElementById('voteDropAreaTop'), sortableOptions);
-    new Sortable(document.getElementById('voteDropAreaBottom'), sortableOptions);
+    if (topArea.length > 0) {
+        new Sortable(document.getElementById('voteDropAreaTop'), sortableOptions);
+        new Sortable(document.getElementById('voteDropAreaBottom'), sortableOptions);
+    }
+
+    // Legacy
+    voteColumnBoxes.each(function () {
+        $(this).html("");
+    });
+
+    nomineeColumn.height(voteColumn.height());
+
+    $(".aNominee").draggable({
+        containment: "#limitsDrag",
+        distance: 20,
+        opacity: 0.75,
+        zIndex: 100,
+        revert: "invalid",
+        revertDuration: 200,
+        start: function (event, ui) {
+            voteColumnBoxes.addClass("dragging");
+            setTimeout(incrementDragCounter, 100);
+        },
+        stop: function (event, ui) {
+            voteColumnBoxes.removeClass("dragging");
+        }
+    })
+    //when you start dragging, it puts the elements in variables
+        .bind('dragstart', function (event) {
+            dragged = $(this);
+            draggedFrom = $(this).parent();
+
+            //put their margins to 0
+            //$(this).css("margin","0px 0px 0px 0px");
+        });
+
+    //be able to drop nominees in voteBoxes
+    voteColumnBoxes.droppable({
+        drop: function (event, ui) {
+            var dropped = ui.draggable;
+            var droppedOn = $(this);
+
+            //if you're dropping the nominee exactly where you took it from, it cancels the drop
+            if (droppedOn.attr("id") === draggedFrom.attr("id")) {
+                $(dragged).draggable("option", "revert", true);
+                return
+            }
+
+            unlockVotes();
+
+            //put the content of the box you're voting over in a variable (.detach keeps the draggable)
+            var stuffDeleted = droppedOn.contents().detach();
+
+            //add your dragged vote to the box
+            $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn);
+
+            //put what you deleted back where your vote came from
+            draggedFrom.append(stuffDeleted);
+
+            //put their margins back to normal
+            //$(stuffDeleted).css("margin","10px 0 0 10px");
+
+            updateNumbers();
+        }
+    });
+
+    //be able to drop nominees back in the original container
+    nomineeColumn.find(".voteBox").droppable({
+        drop: function (event, ui) {
+            var dropped = ui.draggable;
+            var droppedOn = $(this);
+
+            //if you're dropping the nominee exactly where you took it from, it cancels the drop
+            if (droppedOn.attr("id") === draggedFrom.attr("id")) {
+                $(dragged).draggable("option", "revert", true);
+                return;
+            }
+
+            unlockVotes();
+
+            //add your dragged vote to the container
+            $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn);
+
+            //empty the number
+            dropped.find(".number").html("");
+        }
+    });
 
     moveNomineesBackToLastVotes();
 
     // Update interface to indicate that the votes have been succesfully submitted and changed.
     function lockVotes() {
+        $(".voteBox").addClass("locked");
+        $(".aNominee").addClass("locked");
+
         bottomArea.addClass("locked");
         submitButton.addClass('iVoted').attr('title', 'Saved!');
         previousLockExists = true;
@@ -70,6 +228,9 @@ $(document).ready(function () {
 
     // Update interface to indicate that there have been changes since the last submitted vote.
     function unlockVotes() {
+        $(".voteBox").removeClass("locked");
+        $(".aNominee").removeClass("locked");
+
         bottomArea.removeClass("locked");
         submitButton.removeClass('iVoted').attr('title', 'Submit Votes');
         votesChanged = true;
@@ -112,6 +273,11 @@ $(document).ready(function () {
             $(this).find(".number").show().html(text);
         });
 
+        voteColumnBoxes.each(function () {
+            var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
+            $(this).find(".number").html("#" + onlyTheNumber);
+        });
+
         topArea.find(".number").hide();
     }
 
@@ -119,26 +285,75 @@ $(document).ready(function () {
     // If there is no last submitted vote, will move all nominees back into the top pane.
     // Only used in the "drag and drop" layout.
     function moveNomineesBackToLastVotes() {
-        bottomArea.find('.voteGroup').each(function () {
-            var element = $(this);
-            element.detach().appendTo(topArea);
-        });
+        if (votingStyle === 'legacy') {
+            var haveVotedFor = [];
+            for (i = 1; i < lastVotes.length; i++) {
+                haveVotedFor.push($("#nominee-" + lastVotes[i]).detach());
+            }
+            var theRest = $(".aNominee").detach();
+            for (i = 0; i < lastVotes.length; i++) {
+                $("#voteBox" + (i + 1)).append(haveVotedFor[i]);
+            }
+            var voteBoxes = $("#nomineeColumn").find(".voteBox");
+            for (i = 0; i < theRest.length; i++) {
+                $(voteBoxes[i + lastVotes.length - 1]).append(theRest[i]);
+            }
+            resetLeftSide();
 
-        for (var i = 1; i < lastVotes.length; i++) {
-            var element = $("#nominee-" + lastVotes[i]);
-            element.detach().appendTo(bottomArea);
+        } else {
+            bottomArea.find('.voteGroup').each(function () {
+                var element = $(this);
+                element.detach().appendTo(topArea);
+            });
+
+            for (var i = 1; i < lastVotes.length; i++) {
+                var element = $("#nominee-" + lastVotes[i]);
+                element.detach().appendTo(bottomArea);
+            }
         }
-
-        // var placeholder = $('#dropPlaceholder').clone().show();
-        // placeholder.prependTo(bottomArea);
-        // if (lastVotes.length > 0) {
-        //     placeholder.clone().appendTo(bottomArea);
-        // }
 
         updateNumbers();
 
         if (previousLockExists) {
             lockVotes();
+        }
+    }
+
+    function resetLeftSide() {
+        var muhNominees = nomineeColumn.find(".aNominee").detach();
+
+        muhNominees = $(muhNominees).sort(function (a, b) {
+            var contentA = parseInt($(a).attr('data-order'));
+            var contentB = parseInt($(b).attr('data-order'));
+            return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+        });
+
+        var voteBoxes = nomineeColumn.find('.voteBox');
+
+        for (var i = 0; i < muhNominees.length; i++) {
+            $(voteBoxes[i]).append(muhNominees[i]);
+        }
+    }
+
+    function sortRightSide() {
+        //variable that I'm using to know which voteBox the loop is at
+        var currentVoteBox = 0;
+        var listVoteBox = [];
+
+        //pass through every voteBox, empty them while placing the vote in the array, ignoring the empty voteBoxes
+        voteColumnBoxes.each(function () {
+            currentVoteBox++;
+
+            if ($(this).contents().attr("id") !== undefined) {
+                listVoteBox.push($(this).contents().detach());
+            }
+        });
+
+        //put the votes back in the voteBoxes
+        for (var i = 0; i < currentVoteBox; i++) {
+            if (listVoteBox[i]) { //if it exists
+                listVoteBox[i].appendTo($("#voteBox" + (i + 1)));
+            }
         }
     }
 
@@ -221,6 +436,7 @@ $(document).ready(function () {
         unlockVotes();
         moveNomineesBackToLastVotes();
         resetTopArea();
+        resetLeftSide();
 
         $('.voteDropArea').addClass('flash');
         setTimeout(function () {
@@ -231,11 +447,26 @@ $(document).ready(function () {
     // Submit Votes
     submitButton.click(function () {
         lockVotes();
+        if (votingStyle === 'legacy') {
+            sortRightSide();
+            updateNumbers();
+        }
+
         var preferences = [null];
 
-        bottomArea.find('.voteGroup').each(function (index) {
-            preferences[index + 1] = $(this).attr('data-nominee');
-        });
+        if (votingStyle === 'legacy') {
+            voteColumnBoxes.each(function () {
+                var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
+                var nomineeID = $(this).find(".aNominee").attr("data-nominee");
+                if (nomineeID !== undefined) {
+                    preferences[onlyTheNumber] = nomineeID;
+                }
+            });
+        } else {
+            bottomArea.find('.voteGroup').each(function (index) {
+                preferences[index + 1] = $(this).attr('data-nominee');
+            });
+        }
 
         lastVotes = preferences;
 

@@ -22,23 +22,16 @@
       var lastVotes = {{ votes | json_encode | raw }};
       var currentAward = "{{ award.id }}";
       var postURL = "{{ path('votingSubmission', {'awardID': award.id}) }}";
+      var dragCounter = 0;
+      var votingStyle = "{{ votingStyle }}";
     </script>
   {% endif %}
 
   {% if votingOpen %}
     <style type="text/css">
-      .handle {
+      .handle, .aNominee {
         cursor: move;
       }
-
-        .pageHeader input {
-            width: 50px;
-            color: black;
-        }
-
-        .nominee {
-            background-position: center;
-        }
     </style>
   {% endif %}
 {% endblock %}
@@ -95,58 +88,106 @@
         {% endif %}
     {% endif %}
 
-    <div class="memeContainer">
+    <div class="memeContainer {{ votingStyle }}Style">
         <div class="meme leftMeme"></div>
         <div id="wrapper">
             {% if award %}
-                {#<div class="numberPopup {{ voteButtonSizeMap[award.nominees | length] }}" style="display: none;" id="numberPopup">#}
-                {#<div class="numberButtons">#}
-                {#{% for i in 1..award.nominees | length %}#}
-                {#<button id="numberButton{{ i }}" class="numberButton" data-value="{{ i }}">#{{ i }}</button>#}
-                {#{% endfor %}#}
-                {#</div>#}
-                {#</div>#}
+                {% if votingStyle == 'legacy' %}
+                  <div id="limitsDrag">
+                    <div id="nomineeColumn" class="column">
 
-                <div id="dragLimit">
-                    {% spaceless %}
-                        <div class="flexContainer voteDropArea" id="voteDropAreaTop">
-                            {% for nominee in award.nominees | shuffle %}
-                                <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}" data-order="{{ loop.index }}">
-                                    {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}
-                                    {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
-                                    {#<label for="voteBox{{ loop.index }}">#}
-                                    <div class="voteBox">
-                                        <div class="number" style="display: none;">{{ loop.index }}</div>
-                                        <div class="nominee" style="background-image: url('{{ nominee.image }}'); background-size: cover">
-                                            <div class="fakeElement"></div>
-                                            <div class="handle fakeHandle"></div>
-                                            {% if nominee.flavorText %}
-                                                <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
-                                            {% endif %}
-                                            <div class="nomineeName">{{ nominee.name }}</div>
-                                            <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
-                                            <div class="handle realHandle">
-                                                <span class="glyphicon glyphicon-menu-hamburger"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {#</label>#}
-                                </div>
+                      <img src="/2016images/pickYourNominees.png" width="204" height="70" alt="Pick your nominees">
 
-                            {% endfor %}
-                        </div>
+                      {% for nominee in award.nominees | shuffle %}
 
-                        <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
-                    {% endspaceless %}
-                </div>
+                        {% spaceless %}
+                          <div class="voteBox">
+                            <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
+                                 data-nominee="{{ nominee.shortName }}">
+                              <img class="fakeBorder" src="/2016images/votebox_foreground.png">
+                              <img class="fakeBorder locked" src="/2016images/votebox_foreground_locked.png">
+                              {% if nominee.flavorText %}
+                                <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
+                              {% endif %}
+                              <img class="nomineeImage" src="{{ nominee.image }}">
+                              <div class="nomineeInfo">
+                                <div class="number"></div>
+                                <div class="nomineeName">{{ nominee.name }}</div>
+                                <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                              </div>
+                            </div>
+                          </div>
+                        {% endspaceless %}
 
-                <div class="voteGroup placeholder" style="display: none;" id="dropPlaceholder">
-                  <div class="voteBox">
-                    <div class="nominee">
-                      <div class="fakeElement"></div>
+                      {% endfor %}
+
+                    </div>
+
+                    <div id="spacerColumn" class="column">
+                      &nbsp;
+                    </div>
+
+                    {% if votingOpen or votingClosed %}
+                      <div id="voteColumn" class="column">
+                        <img src="/2016images/dragAndDrop.png" width="307px" height="70px" alt="Drag and drop to vote"/>
+                        {% for nominee in award.nominees %}
+                          <div id="voteBox{{ loop.index }}" class="voteBox">
+                          </div>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+
+                  </div>
+                {% else %}
+                  {#<div class="numberPopup {{ voteButtonSizeMap[award.nominees | length] }}" style="display: none;" id="numberPopup">#}
+                  {#<div class="numberButtons">#}
+                  {#{% for i in 1..award.nominees | length %}#}
+                  {#<button id="numberButton{{ i }}" class="numberButton" data-value="{{ i }}">#{{ i }}</button>#}
+                  {#{% endfor %}#}
+                  {#</div>#}
+                  {#</div>#}
+
+                  <div id="dragLimit">
+                      {% spaceless %}
+                          <div class="flexContainer voteDropArea" id="voteDropAreaTop">
+                              {% for nominee in award.nominees | shuffle %}
+                                  <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}" data-order="{{ loop.index }}">
+                                      {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}
+                                      {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
+                                      {#<label for="voteBox{{ loop.index }}">#}
+                                      <div class="voteBox">
+                                          <div class="number" style="display: none;">{{ loop.index }}</div>
+                                          <div class="nominee" style="background-image: url('{{ nominee.image }}'); background-size: cover">
+                                              <div class="fakeElement"></div>
+                                              <div class="handle fakeHandle"></div>
+                                              {% if nominee.flavorText %}
+                                                  <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
+                                              {% endif %}
+                                              <div class="nomineeName">{{ nominee.name }}</div>
+                                              <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                                              <div class="handle realHandle">
+                                                  <span class="glyphicon glyphicon-menu-hamburger"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      {#</label>#}
+                                  </div>
+
+                              {% endfor %}
+                          </div>
+
+                          <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
+                      {% endspaceless %}
+                  </div>
+
+                  <div class="voteGroup placeholder" style="display: none;" id="dropPlaceholder">
+                    <div class="voteBox">
+                      <div class="nominee">
+                        <div class="fakeElement"></div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                {% endif %}
 
                 {% if votingOpen %}
                     <div class="buttons">
@@ -232,5 +273,49 @@
         <a href="{{ path('home') }}">Back to the main part of the site</a>
       </h3>
     {% endif %}
+  </div>
+
+  <div id="todd" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
+            <img src="/img/todd1.jpg">
+          </a>
+
+          <div class="buy_my_game">
+            <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
+              Buy The Elder Scrolls V: Skyrim Special Edition <span class="tail">on Steam</span>
+            </a>
+            <div class="desc">Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail.</div>
+          </div>
+
+          <div class="game_purchase_action">
+            <form name="add_to_cart_110687" action="https://store.steampowered.com/cart/" method="POST" target="_blank" style="position: relative;">
+              <input type="hidden" name="snr" value="1_5_1100_">
+              <input type="hidden" name="sessionid" value="37f5dea779e28dbaef40f8c5">
+              <input type="hidden" name="action" value="add_to_cart">
+              <input type="hidden" name="subid" value="110687">
+              <div class="game_purchase_action_bg">
+                <div class="game_purchase_price price">
+                  $<span class="theprice">39.95</span> USD
+                </div>
+                <div class="btn_addtocart">
+                  <div class="btn_addtocart_left"></div>
+                  <button class="btn_addtocart_content" type="submit">
+                    Buy on Steam
+                  </button>
+                  <div class="btn_addtocart_right"></div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}
