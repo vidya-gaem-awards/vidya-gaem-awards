@@ -60,6 +60,14 @@
             {% endif %}
           </div>
         {% endif %}
+        {% if action.action starts with 'advert' %}
+          <div style="margin-left: 31px; margin-top: 5px;">
+            {% if entity and action.action != 'advert-delete' %}
+              {{ entity.name }} :
+            {% endif %}
+            <code>{{ action.data1 }}</code>
+          </div>
+        {% endif %}
       </td>
     </tr>
   {% endfor %}
