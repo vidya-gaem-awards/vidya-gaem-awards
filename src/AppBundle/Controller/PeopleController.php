@@ -90,7 +90,7 @@ class PeopleController extends Controller
             $this->addFlash('formSuccess', 'Group successfully removed.');
 
             $auditService->add(
-                new Action('profile-group-removed', $steamID, $groupName)
+                new Action('profile-group-removed', $user->getId(), $groupName)
             );
             $em->flush();
         }
@@ -108,7 +108,7 @@ class PeopleController extends Controller
             } else {
                 $user->addPermission($group);
                 $auditService->add(
-                    new Action('profile-group-added', $steamID, $groupName)
+                    new Action('profile-group-added', $user->getId(), $groupName)
                 );
                 $em->flush();
 
