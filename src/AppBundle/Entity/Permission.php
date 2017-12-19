@@ -13,6 +13,7 @@ class Permission
     const STANDARD_PERMISSIONS = [
         'add_user' => 'Add a new level 1 user',
         'add_video_game' => 'Add a game to the autocomplete list',
+        'adverts_manage' => 'View and manage the fake voting page ads',
         'audit_log_view' => 'View the website\'s audit log',
         'awards_delete' => 'Delete awards',
         'awards_edit' => 'Edit award information',
@@ -44,7 +45,7 @@ class Permission
         'LEVEL_1' => ['add_video_game', 'awards_feedback', 'nominations_view', 'view_unfinished_pages', 'voting_view'],
         'LEVEL_2' => ['LEVEL_1', 'awards_secret', 'news_view_user', 'profile_view', 'voting_code'],
         'LEVEL_3' => ['LEVEL_2', 'awards_edit', 'nominations_edit', 'profile_edit_notes'],
-        'LEVEL_4' => ['LEVEL_3', 'add_user', 'audit_log_view', 'news_manage', 'profile_edit_details', 'referrers_view', 'voting_results'],
+        'LEVEL_4' => ['LEVEL_3', 'add_user', 'audit_log_view', 'news_manage', 'profile_edit_details', 'referrers_view', 'voting_results', 'adverts_manage'],
         'LEVEL_5' => ['LEVEL_4', 'awards_delete', 'edit_config', 'profile_edit_groups']
     ];
 

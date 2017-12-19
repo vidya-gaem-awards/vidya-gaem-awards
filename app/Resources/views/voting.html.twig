@@ -90,9 +90,11 @@
 
     <div class="memeContainer {{ votingStyle }}Style">
         <div class="meme leftMeme">
-          <a href="{{ ad1.link | escape('html_attr') }}" target="_blank">
-            <img src="{{ ad1.image | escape('html_attr') }}">
-          </a>
+          {% if ad1 %}
+            <a href="{{ ad1.link | escape('html_attr') }}" target="_blank">
+              <img src="{{ ad1.image | escape('html_attr') }}">
+            </a>
+          {% endif %}
         </div>
         <div id="wrapper">
             {% if award %}
@@ -239,9 +241,11 @@
             {% endif %}
         </div>
         <div class="meme rightMeme">
-          <a href="{{ ad2.link | escape('html_attr') }}" target="_blank">
-            <img src="{{ ad2.image | escape('html_attr') }}">
-          </a>
+          {% if ad2 %}
+            <a href="{{ ad2.link | escape('html_attr') }}" target="_blank">
+              <img src="{{ ad2.image | escape('html_attr') }}">
+            </a>
+          {% endif %}
         </div>
     </div>
 
