@@ -255,3 +255,17 @@ configPost:
     path:     /config
     methods:  [POST]
     defaults: { _controller: AppBundle:Config:post }
+
+#
+# SPECIAL
+#
+
+advertManager:
+    path:     /adverts
+    defaults: { _controller: AppBundle:AdvertManager:index }
+    methods:  [GET]
+
+advertPost:
+    path:     /adverts
+    methods:  [POST]
+    defaults: { _controller: AppBundle:AdvertManager:post }

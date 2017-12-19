@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Advertisement;
 use AppBundle\Entity\User;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
@@ -153,6 +154,10 @@ class VotingController extends Controller
             $session->set('legacyVotingPage', false);
         }
 
+        $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
+        $ad1 = $adverts[array_rand($adverts)];
+        $ad2 = $adverts[array_rand($adverts)];
+
         return $this->render('voting.html.twig', [
             'title' => 'Voting',
             'awards' => $awards,
@@ -167,6 +172,8 @@ class VotingController extends Controller
             'allVotes' => $simpleVotes,
             'voteButtonSizeMap' => $voteDialogMapping,
             'votingStyle' => $session->get('legacyVotingPage', false) ? 'legacy' : 'new',
+            'ad1' => $ad1,
+            'ad2' => $ad2,
         ]);
     }
 

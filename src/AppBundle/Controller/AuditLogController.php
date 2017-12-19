@@ -27,6 +27,9 @@ class AuditLogController extends Controller
             'nominee-delete' => 'Removed a nominee from an award',
             'nominee-edit' => 'Edited an award nominee',
             'winner-image-upload' => 'Uploaded an image for an award winner',
+            'advert-new' => 'Created an advert',
+            'advert-edited' => 'Edited an advert',
+            'advert-delete' => 'Deleted an advert',
         ];
 
         $result = $em->createQueryBuilder()

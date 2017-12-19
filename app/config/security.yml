@@ -64,5 +64,6 @@ security:
         - { path: ^/credits, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
         - { path: ^/videos, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
         - { path: ^/soundtrack, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/adverts, roles: ROLE_ADVERTS_MANAGE }
 
 

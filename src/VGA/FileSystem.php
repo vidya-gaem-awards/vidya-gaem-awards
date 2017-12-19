@@ -45,6 +45,11 @@ class FileSystem
         return '/uploads/' . $directory . '/' . $filename_to_use;
     }
 
+    public static function deleteFile(string $directory, string $filename)
+    {
+        unlink(__DIR__ . '/../../public/uploads/' . $directory . '/' . $filename);
+    }
+
     /**
      * Converts a number of bytes into a human-readable filesize.
      * This implementation is efficient, but will sometimes return a value that's less than one due

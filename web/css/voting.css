@@ -2,8 +2,7 @@
 .meme {
   width: 160px;
   height: 600px;
-  border: 1px dashed black;
-    margin-top: 5px;
+  margin-top: 5px;
   /*position: absolute;*/
   /*top: 250px;*/
 }
