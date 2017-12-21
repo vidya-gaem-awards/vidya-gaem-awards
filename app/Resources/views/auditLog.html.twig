@@ -15,8 +15,9 @@
   <table class="table table-bordered table-striped" style="background-color: white;">
     <thead>
       <tr>
-        <th>Time</th>
-        <th>Action</th>
+        <th style="width: 160px;">Time</th>
+        <th style="width: 540px;">Action</th>
+        <th>Data</th>
       </tr>
     </thead>
   {% for action in actions %}
@@ -65,7 +66,17 @@
             {% if entity and action.action != 'advert-delete' %}
               {{ entity.name }} :
             {% endif %}
-            <code>{{ action.data1 }}</code>
+            <code>{{ action.data1 }}</code><br>
+          </div>
+        {% endif %}
+      </td>
+      <td>
+        {% if action.tableHistory %}
+          <a class="btn btn-default" onclick="$('#data{{ action.id }}').show();$(this).hide();">Show data</a>
+          <div id="data{{ action.id }}" style="display: none;">
+          {% for key, value in action.tableHistory.values %}
+            <div><strong>{{ key }}:</strong> {{ value is iterable ? value | json_encode : value }}</div>
+          {% endfor %}
           </div>
         {% endif %}
       </td>
