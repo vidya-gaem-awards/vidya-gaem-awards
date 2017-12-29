@@ -22,7 +22,6 @@
       var lastVotes = {{ votes | json_encode | raw }};
       var currentAward = "{{ award.id }}";
       var postURL = "{{ path('votingSubmission', {'awardID': award.id}) }}";
-      var dragCounter = 0;
       var votingStyle = "{{ votingStyle }}";
     </script>
   {% endif %}

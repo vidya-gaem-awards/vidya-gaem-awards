@@ -12,8 +12,14 @@ onDumbShit(function () {
 var dragCounter;
 var toddDialog;
 
+if (localStorage.getItem('dragCounter')) {
+    dragCounter = localStorage.getItem('dragCounter');
+}
+
 function incrementDragCounter() {
     dragCounter++;
+
+    localStorage.setItem('dragCounter', dragCounter);
 
     if (dragCounter === 2) {
         showTodd(1);
