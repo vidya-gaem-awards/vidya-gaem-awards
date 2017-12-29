@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Entity;
 
+use RandomLib\Factory;
+
 class Advertisement implements \JsonSerializable
 {
     /**
@@ -24,9 +26,26 @@ class Advertisement implements \JsonSerializable
     private $image;
 
     /**
+     * @var string
+     */
+    private $token;
+
+    /**
      * @var boolean
      */
     private $special;
+
+    /**
+     * @return integer
+     */
+    private $clicks = 0;
+
+    public function __construct()
+    {
+        $factory = new Factory;
+        $generator = $factory->getLowStrengthGenerator();
+        $this->token = hash('sha1', $generator->generate(64));
+    }
 
     public function getId(): int
     {
@@ -127,6 +146,51 @@ class Advertisement implements \JsonSerializable
     public function isSpecial()
     {
         return $this->special;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     * @return Advertisement
+     */
+    public function setToken(string $token): Advertisement
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClicks()
+    {
+        return $this->clicks;
+    }
+
+    /**
+     * @param int $clicks
+     * @return Advertisement
+     */
+    public function setClicks(int $clicks): Advertisement
+    {
+        $this->clicks = $clicks;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function incrementClicks(): Advertisement
+    {
+        $this->clicks++;
+        return $this;
     }
 
     /**

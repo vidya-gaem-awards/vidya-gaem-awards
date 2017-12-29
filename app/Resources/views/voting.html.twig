@@ -91,7 +91,7 @@
     <div class="memeContainer {{ votingStyle }}Style">
         <div class="meme leftMeme">
           {% if ad1 %}
-            <a href="{{ ad1.link | escape('html_attr') }}" target="_blank">
+            <a href="{{ path('advertRedirect', {'advertToken': ad1.token}) }}" target="_blank">
               <img src="{{ ad1.image | escape('html_attr') }}">
             </a>
           {% endif %}
@@ -242,7 +242,7 @@
         </div>
         <div class="meme rightMeme">
           {% if ad2 %}
-            <a href="{{ ad2.link | escape('html_attr') }}" target="_blank">
+            <a href="{{ path('advertRedirect', {'advertToken': ad2.token}) }}" target="_blank">
               <img src="{{ ad2.image | escape('html_attr') }}">
             </a>
           {% endif %}

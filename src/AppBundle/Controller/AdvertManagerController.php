@@ -4,11 +4,14 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Advertisement;
 use AppBundle\Entity\TableHistory;
+use AppBundle\Entity\User;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 use VGA\FileSystem;
 
 class AdvertManagerController extends Controller
@@ -81,7 +84,7 @@ class AdvertManagerController extends Controller
             if ($advert->getImage()) {
                 FileSystem::deleteFile(
                     'memes',
-                    sha1($advert->getName() . ' ' . $advert->getLink()) . substr($advert->getImage(), -4)
+                    $advert->getToken() . substr($advert->getImage(), -4)
                 );
             }
 
@@ -89,7 +92,7 @@ class AdvertManagerController extends Controller
                 $imagePath = FileSystem::handleUploadedFile(
                     $request->files->get('image'),
                     'memes',
-                    sha1($advert->getName() . ' ' . $advert->getLink())
+                    $advert->getToken()
                 );
             } catch (\Exception $e) {
                 return $this->json(['error' => $e->getMessage()]);
@@ -108,5 +111,22 @@ class AdvertManagerController extends Controller
         $em->flush();
 
         return $this->json(['success' => true]);
+    }
+
+    public function redirectAction(string $advertToken, EntityManagerInterface $em, UserInterface $user)
+    {
+        $advert = $em->getRepository(Advertisement::class)->findOneBy(['token' => $advertToken]);
+        if (!$advert) {
+            throw $this->createNotFoundException();
+        }
+
+        /** @var User $user */
+        if (!$user->isSpecial()) {
+            $advert->incrementClicks();
+            $em->persist($advert);
+            $em->flush();
+        }
+
+        return new RedirectResponse($advert->getLink());
     }
 }

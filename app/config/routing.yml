@@ -269,3 +269,9 @@ advertPost:
     path:     /adverts
     methods:  [POST]
     defaults: { _controller: AppBundle:AdvertManager:post }
+
+advertRedirect:
+    path:     /link/{advertToken}
+    defaults: { _controller: AppBundle:AdvertManager:redirect }
+    requirements:
+        advertToken: '^[0-9a-f]+$'

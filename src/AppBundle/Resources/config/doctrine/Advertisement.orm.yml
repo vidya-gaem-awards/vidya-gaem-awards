@@ -16,6 +16,12 @@ AppBundle\Entity\Advertisement:
     image:
       type: string
       nullable: true
+    token:
+      type: string
+      nullable: false
     special:
       type: boolean
+      nullable: false
+    clicks:
+      type: integer
       nullable: false
