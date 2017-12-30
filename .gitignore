@@ -2,6 +2,7 @@
 /vendor
 /src/VGA/Proxies
 /public/uploads
+/web/uploads
 
 /.web-server-pid
 /app/config/parameters.yml
