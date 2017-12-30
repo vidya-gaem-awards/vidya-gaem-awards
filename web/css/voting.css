@@ -188,6 +188,20 @@
   margin: 20px 0;
 }
 
+.mobileInstructions {
+  background: rgb(251,68,7);
+  color: white;
+  font-family: Arial,sans-serif;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 12px;
+  margin: 0 5px 5px 5px;
+  display: none;
+}
+
 /* Page Header */
 .pageHeader {
   height: 80px;
@@ -312,32 +326,7 @@
 }
 
 /* Nominee Box - outer elements that encompass the nominee box */
-.flexContainer .voteBox {
-  transition: 0.3s linear all;
-  width: 100%;
-}
-
-.fakeElement {
-    height: 0;
-    padding-top: calc(1 / 2.5 * 100%);
-}
-
-.voteGroup {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
-  justify-content: center;
-  width: calc(25% - 10px);
-  position: relative;
-}
-
-.voteGroup label {
-  margin-bottom: auto;
-  font-weight: inherit;
-}
-
+/* See votingNominee.css */
 #voteDropAreaBottom .voteGroup {
   margin-top: 20px;
 }
@@ -545,12 +534,8 @@
   line-height: 30px;
 }
 
-#voteDropAreaBottom:empty {
-  display: none;
-}
-
 #voteDropAreaBottom:empty:after {
-  content: "Drag nominees here to vote for them!";
+  content: "You haven't yet voted for this award";
   font-family: Arial, sans-serif;
   color: white;
   font-style: italic;
@@ -967,11 +952,27 @@
     background: rgb(251, 68, 7);
     padding: 25px 5px 5px 5px;
     text-align: center;
-      width: 25px;
+    width: 25px;
   }
 
   .flavorText {
-      margin-right: 25px;
+    display: none !important;
+  }
+
+  .hoverOverlay {
+    display: none !important;
+  }
+
+  .mobileInstructions {
+    display: block;
+  }
+
+  .voteGroup .number:after {
+    content: ' - tap to remove or drag to reorder';
+  }
+
+  .locked .voteGroup .number:after {
+    content: ' - tap to remove or drag to reorder';
   }
 }
 

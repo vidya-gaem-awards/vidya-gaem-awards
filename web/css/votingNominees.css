@@ -1,3 +1,4 @@
+/** Inner elements */
 .nominee {
   position: relative;
   border: 2px solid white;
@@ -20,6 +21,7 @@
   line-height: 13px;
   color: white;
   z-index: 40;
+  user-select: all;
 }
 
 .aNominee .flavorText {
@@ -78,4 +80,32 @@
 .nomineeSubtitle a:hover {
   color: blue;
   text-decoration: underline;
+}
+
+/** Other */
+.flexContainer .voteBox {
+  transition: 0.3s linear all;
+  width: 100%;
+}
+
+.fakeElement {
+  height: 0;
+  padding-top: calc(1 / 2.5 * 100%);
+}
+
+.voteGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  justify-content: center;
+  width: calc(25% - 10px);
+  position: relative;
+  user-select: none;
+}
+
+.voteGroup label {
+  margin-bottom: auto;
+  font-weight: inherit;
 }

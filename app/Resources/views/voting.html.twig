@@ -158,6 +158,9 @@
                   <div id="dragLimit">
                       {% spaceless %}
                           <div class="flexContainer voteDropArea" id="voteDropAreaTop">
+                            <div class="mobileInstructions">
+                              Tap on any nominee to make them your <span class="nextPreference">1st</span> preference.
+                            </div>
                               {% for nominee in award.nominees | shuffle %}
                                   <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}" data-order="{{ loop.index }}">
                                       {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}

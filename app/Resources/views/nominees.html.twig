@@ -135,6 +135,11 @@
       border-width: 1px;
     }
 
+    #nominee-container.accurate .nominee, .modal-dialog .nominee {
+      width: 351px;
+      height: 143px;
+    }
+
     #nominee-container.inaccurate .flavorText {
       opacity: 0;
     }
@@ -212,7 +217,7 @@
                 </div>
                 <div id="nominee-container" class="inaccurate">
                   {% for nominee in award.nominees %}
-                    <div class="nominee" id="dialog-edit-image" style="background-size: cover; background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}')"
+                    <div class="nominee" style="background-size: cover; background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}')"
                          data-nominee="{{ nominee.shortName }}">
                       {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
                         <div class="hoverOverlay">
@@ -411,6 +416,7 @@
 
       $('#accurateDimensions').change(function () {
           $('#nominee-container').toggleClass('inaccurate');
+          $('#nominee-container').toggleClass('accurate');
       });
 
       // When a delete button is clicked
@@ -511,7 +517,7 @@
         $("#dialog-edit-name").text(nominees[nomineeID].name);
         $("#dialog-edit-subtitle").html(nominees[nomineeID].subtitle);
         if (nominees[nomineeID].image) {
-          $("#dialog-edit-image").css("background-image", "url('" + nominees[nomineeID].image + "')");
+          $("#dialog-edit-image").css("background-image", "url(" + nominees[nomineeID].image + ")");
         } else {
           $("#dialog-edit-image").css("background-image", "url('{{ asset('img/no-image-available.png') }}'");
         }
