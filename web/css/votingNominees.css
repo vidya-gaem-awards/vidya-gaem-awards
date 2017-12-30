@@ -46,30 +46,28 @@
 
 .nomineeName {
   color: white;
-  background-color: rgb(251, 68, 7);
+  background-color: rgb(251,68,7);
   border-radius: 10px;
-  font-weight: bold;
-  font-family: Arial, sans-serif;
+  font-family: Arial,sans-serif;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 10px;
   display: inline-block;
-  padding: 3px 10px;
+  padding: 2px 7px;
   position: absolute;
-  bottom: 23px;
-  left: 3px;
+  bottom: 20px;
+  left: 0px;
 }
-
 .nomineeSubtitle {
-  font-family: Arial, sans-serif;
+  font-family: Arial,sans-serif;
   display: inline-block;
-  color: rgb(251, 68, 7);
+  color: rgb(251,68,7);
   background-color: white;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 10px;
   padding: 3px 10px;
   position: absolute;
-  bottom: 3px;
-  left: 12px;
+  bottom: 0px;
+  left: 10px;
   z-index: 31;
 }
 

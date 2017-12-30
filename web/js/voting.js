@@ -109,7 +109,10 @@ $(document).ready(function () {
     var preferenceInputs = $('.preferenceInput');
 
     var sortableOptions = {
-        group: 'omega',
+        group: {
+            name: 'omega',
+            pull: false
+        },
         draggable: '.voteGroup',
         handle: '.handle',
         animation: 0,
@@ -130,10 +133,24 @@ $(document).ready(function () {
         scrollSpeed: 20
     };
 
+    var topSortableOptions = Object.assign({}, sortableOptions);
+    topSortableOptions.sort = false;
+
     if (topArea.length > 0) {
-        new Sortable(document.getElementById('voteDropAreaTop'), sortableOptions);
+        // new Sortable(document.getElementById('voteDropAreaTop'), topSortableOptions);
         new Sortable(document.getElementById('voteDropAreaBottom'), sortableOptions);
     }
+
+    $('.voteBox').click(function (event) {
+        if (!$.contains(topArea[0], this)) {
+            $(this).parent().detach().appendTo(topArea);
+        } else {
+            $(this).parent().detach().appendTo(bottomArea);
+        }
+
+        updateNumbers();
+        unlockVotes();
+    });
 
     // Legacy
     voteColumnBoxes.each(function () {
@@ -218,7 +235,7 @@ $(document).ready(function () {
         }
     });
 
-    moveNomineesBackToLastVotes();
+    moveNomineesBack(false);
 
     // Update interface to indicate that the votes have been succesfully submitted and changed.
     function lockVotes() {
@@ -269,15 +286,21 @@ $(document).ready(function () {
         });
     }
 
+    function getOrdinal(number) {
+        return number + (['st', 'nd', 'rd'][((number+90) % 100 - 10) % 10 - 1] || 'th');
+    }
+
     // Updates the preference numbers displayed on each nominee in the bottom pane.
     // Only used in the "drag and drop" layout.
     function updateNumbers() {
         bottomArea.find(".voteGroup").each(function (index) {
             index = index + 1;
-            var ordinal = ['st', 'nd', 'rd'][((index+90) % 100 - 10) % 10 - 1] || 'th';
-            var text = 'Your ' + index + ordinal + ' preference';
+            var text = 'Your ' + getOrdinal(index) + ' preference';
             $(this).find(".number").show().html(text);
         });
+
+        var boxesInBottom = bottomArea.find(".voteGroup").length;
+        $('.nextPreference').text(getOrdinal(boxesInBottom + 1));
 
         voteColumnBoxes.each(function () {
             var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
@@ -288,21 +311,31 @@ $(document).ready(function () {
     }
 
     // Resets all nominees back to the user's last submitted vote.
-    // If there is no last submitted vote, will move all nominees back into the top pane.
-    // Only used in the "drag and drop" layout.
-    function moveNomineesBackToLastVotes() {
+    // If there is no last submitted vote, or if resetAll is set to true, will move all nominees back into the top pane.
+    function moveNomineesBack(resetAll) {
         if (votingStyle === 'legacy') {
-            var haveVotedFor = [];
-            for (i = 1; i < lastVotes.length; i++) {
-                haveVotedFor.push($("#nominee-" + lastVotes[i]).detach());
-            }
-            var theRest = $(".aNominee").detach();
-            for (i = 0; i < lastVotes.length; i++) {
-                $("#voteBox" + (i + 1)).append(haveVotedFor[i]);
-            }
             var voteBoxes = $("#nomineeColumn").find(".voteBox");
-            for (i = 0; i < theRest.length; i++) {
-                $(voteBoxes[i + lastVotes.length - 1]).append(theRest[i]);
+            if (resetAll || lastVotes.length === 0) {
+                var allNominees = [];
+                $('.aNominee').each(function () {
+                    allNominees.push($(this).detach());
+                });
+
+                for (i = 0; i < allNominees.length; i++) {
+                    $(voteBoxes[i]).append(allNominees[i]);
+                }
+            } else {
+                var haveVotedFor = [];
+                for (i = 1; i < lastVotes.length; i++) {
+                    haveVotedFor.push($("#nominee-" + lastVotes[i]).detach());
+                }
+                var theRest = $(".aNominee").detach();
+                for (i = 0; i < lastVotes.length; i++) {
+                    $("#voteBox" + (i + 1)).append(haveVotedFor[i]);
+                }
+                for (i = 0; i < theRest.length; i++) {
+                    $(voteBoxes[i + lastVotes.length - 1]).append(theRest[i]);
+                }
             }
             resetLeftSide();
 
@@ -312,10 +345,13 @@ $(document).ready(function () {
                 element.detach().appendTo(topArea);
             });
 
-            for (var i = 1; i < lastVotes.length; i++) {
-                var element = $("#nominee-" + lastVotes[i]);
-                element.detach().appendTo(bottomArea);
+            if (!resetAll) {
+                for (var i = 1; i < lastVotes.length; i++) {
+                    var element = $("#nominee-" + lastVotes[i]);
+                    element.detach().appendTo(bottomArea);
+                }
             }
+            resetTopArea();
         }
 
         updateNumbers();
@@ -440,7 +476,7 @@ $(document).ready(function () {
     // Reset Votes
     resetButton.click(function () {
         unlockVotes();
-        moveNomineesBackToLastVotes();
+        moveNomineesBack(true);
         resetTopArea();
         resetLeftSide();
 

@@ -155,8 +155,13 @@ class VotingController extends Controller
         }
 
         $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
-        $ad1 = $adverts[array_rand($adverts)];
-        $ad2 = $adverts[array_rand($adverts)];
+
+        if (empty($adverts)) {
+            $ad1 = $ad2 = false;
+        } else {
+            $ad1 = $adverts[array_rand($adverts)];
+            $ad2 = $adverts[array_rand($adverts)];
+        }
 
         return $this->render('voting.html.twig', [
             'title' => 'Voting',

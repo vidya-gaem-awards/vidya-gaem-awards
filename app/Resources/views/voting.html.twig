@@ -28,8 +28,11 @@
 
   {% if votingOpen %}
     <style type="text/css">
-      .handle, .aNominee {
+      .aNominee {
         cursor: move;
+      }
+      .voteBox {
+        cursor: pointer;
       }
     </style>
   {% endif %}
@@ -165,6 +168,18 @@
                                           <div class="nominee" style="background-image: url('{{ nominee.image }}'); background-size: cover">
                                               <div class="fakeElement"></div>
                                               <div class="handle fakeHandle"></div>
+                                              <div class="hoverOverlay overlayWhenTop">
+                                                <span>
+                                                  Click to make <strong style="color: rgb(251,68,7);">{{ nominee.name }}</strong>
+                                                  your&nbsp;<span class="nextPreference">1st</span>&nbsp;preference
+                                                </span>
+                                              </div>
+                                              <div class="hoverOverlay overlayWhenBottom">
+                                                  <span>
+                                                    Click to remove <strong style="color: rgb(251,68,7);">{{ nominee.name }}</strong>
+                                                    from your votes
+                                                  </span>
+                                              </div>
                                               {% if nominee.flavorText %}
                                                   <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
                                               {% endif %}
