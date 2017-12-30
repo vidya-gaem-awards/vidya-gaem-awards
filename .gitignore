@@ -2,7 +2,8 @@
 /vendor
 /src/VGA/Proxies
 /public/uploads
-/web/uploads
+/public/app.php
+/public/bundles
 
 /.web-server-pid
 /app/config/parameters.yml
@@ -19,6 +20,3 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-/web/bundles/
-
-/web/app.php
