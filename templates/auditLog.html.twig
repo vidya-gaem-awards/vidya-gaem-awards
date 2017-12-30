@@ -63,10 +63,20 @@
         {% endif %}
         {% if action.action starts with 'advert' %}
           <div style="margin-left: 31px; margin-top: 5px;">
-            {% if entity and action.action != 'advert-delete' %}
-              {{ entity.name }} :
+            {% if action.tableHistory %}
+              {{ action.tableHistory.values.name }} :
             {% endif %}
             <code>{{ action.data1 }}</code><br>
+          </div>
+        {% endif %}
+        {% if action.action == 'user-added' %}
+          <div style="margin-left: 31px; margin-top: 5px;">
+            <a href="{{ path('viewPerson', {'steamID': entity.username}) }}">{{ entity.getName() }}</a>
+            {% if action.data2 %}
+              : <small>permission <code>{{ action.data2 }}</code></small>
+            {% else %}
+              : <small>no permissions given</small>
+            {% endif %}
           </div>
         {% endif %}
       </td>

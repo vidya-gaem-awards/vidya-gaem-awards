@@ -50,7 +50,7 @@ class AuditService
                 return null;
             }
             return $this->em->getRepository($class)->find($id);
-        } elseif (substr($action->getAction(), 0, 7) === 'profile') {
+        } elseif (substr($action->getAction(), 0, 7) === 'profile' || $action->getAction() === 'user-added') {
             return $this->em->getRepository(User::class)->find($action->getData1());
         } else {
             return null;

@@ -153,9 +153,13 @@ class PeopleController extends Controller
         return $this->render('permissions.html.twig');
     }
 
-    public function newAction()
+    public function newAction(EntityManagerInterface $em)
     {
-        return $this->render('addPerson.html.twig');
+        $permissions = $em->getRepository(Permission::class)->findAll();
+
+        return $this->render('addPerson.html.twig', [
+            'permissions' => $permissions
+        ]);
     }
 
     public function searchAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService)
@@ -208,16 +212,22 @@ class PeopleController extends Controller
                 return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
             }
 
-            // Make the user special and give them level 1 access
+            // Make the user special and give them the starting permission
             $user->setSpecial(true);
-            /** @var Permission $permission */
-            $permission = $em->getRepository(Permission::class)->find('LEVEL_1');
-            $user->addPermission($permission);
+
+            if ($post->get('permission')) {
+                /** @var Permission $permission */
+                $permission = $em->getRepository(Permission::class)->find($post->get('permission'));
+                if (!$permission) {
+                    return $this->json(['error' => 'Invalid permission specified.']);
+                }
+                $user->addPermission($permission);
+            }
             $em->persist($user);
             $em->flush();
 
             $auditService->add(
-                new Action('user-added', $user->getId())
+                new Action('user-added', $user->getId(), $post->get('permission') ?: null)
             );
 
             return $this->json(['success' => true]);
