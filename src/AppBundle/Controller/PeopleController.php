@@ -174,6 +174,16 @@ class PeopleController extends Controller
             return $this->json(['error' => 'no matches']);
         }
 
+        // Annoyingly, when you link a Steam account with Discord, the steam ID it gives back is incorrect.
+        // See https://github.com/discordapp/discord-api-docs/issues/271.
+        // Specifically, the 32nd bit (representing the instance of the account) is 0 when it should be 1.
+        // If we detect the issue, we flip the bit and refetch the user using the correct ID.
+        $binary = str_pad(decbin($steam->getSteamId64()), 64, '0', STR_PAD_LEFT);
+        if ($binary[31] === '0') {
+            $binary[31] = '1';
+            $steam = \SteamId::create(bindec($binary));
+        }
+
         $repo = $em->getRepository(User::class);
 
         /** @var User $user */
