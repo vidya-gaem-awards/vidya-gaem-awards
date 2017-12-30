@@ -9,32 +9,32 @@ class TasksController extends Controller
 {
     public function indexAction(EntityManagerInterface $em)
     {
-        $noFlavourText = $em->createQueryBuilder()
-            ->select('n')
+        $flavourTextCount = $em->createQueryBuilder()
+            ->select('COUNT(n)')
             ->from(Nominee::class, 'n')
             ->join('n.award', 'a')
             ->where('a.enabled = true')
-            ->andWhere('n.flavorText = \'\'')
+            ->andWhere('n.flavorText != \'\'')
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
 
-        $noImage = $em->createQueryBuilder()
-            ->select('n')
+        $imageCount = $em->createQueryBuilder()
+            ->select('COUNT(n)')
             ->from(Nominee::class, 'n')
             ->join('n.award', 'a')
             ->where('a.enabled = 1')
-            ->andWhere('n.image IS NULL')
+            ->andWhere('n.image IS NOT NULL')
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
 
-        $noSubtitle = $em->createQueryBuilder()
-            ->select('n')
+        $subtitleCount = $em->createQueryBuilder()
+            ->select('COUNT(n)')
             ->from(Nominee::class, 'n')
             ->join('n.award', 'a')
             ->where('a.enabled = true')
-            ->andWhere('n.subtitle = \'\'')
+            ->andWhere('n.subtitle != \'\'')
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
 
         $totalNominees = $em->createQueryBuilder()
             ->select('COUNT(n)')
@@ -45,15 +45,32 @@ class TasksController extends Controller
             ->getSingleScalarResult();
 
         $tasks = [
-            'Nominees with a subtitle' => $totalNominees - count($noSubtitle),
-            'Nominees with flavour text' => $totalNominees - count($noFlavourText),
-            'Nominees with an image' => $totalNominees - count($noImage),
+            'Nominee subtitles' => [$subtitleCount, $totalNominees],
+            'Nominee flavour text' => [$flavourTextCount, $totalNominees],
+            'Nominee images' => [$imageCount, $totalNominees],
         ];
+
+        foreach ($tasks as $name => $raw) {
+            $data = [
+                'count' => $raw[0],
+                'total' => $raw[1],
+                'percent' => $raw[0] / $raw[1] * 100,
+            ];
+
+            if ($data['percent'] < 50) {
+                $data['class'] = 'danger';
+            } elseif ($data['percent'] < 90) {
+                $data['class'] = 'warning';
+            } else {
+                $data['class'] = 'success';
+            }
+
+            $tasks[$name] = $data;
+        }
 
         return $this->render('tasks.html.twig', [
             'title' => 'Tasks',
-            'tasks' => $tasks,
-            'totalNominees' => $totalNominees
+            'tasks' => $tasks
         ]);
     }
 }

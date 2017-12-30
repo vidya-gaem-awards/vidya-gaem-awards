@@ -1,23 +1,44 @@
 {% extends 'base/standard.html.twig' %}
 
 {% block content %}
-<div class="row">
-  <div class="col-xs-12">
-    <h1 class="page-header">
-      Remaining Tasks
-    </h1>
-    {% for name, count in tasks %}
-      <div class="col-xs-4">
-        <p>
-          <strong>{{ name }}</strong>
-        </p>
-        <div class="progress">
-          <div class="progress-bar progress-bar-success" style="width: {{ count / totalNominees * 100 }}%">
-            {{ count }} / {{ totalNominees }} ({{ (count / totalNominees * 100) | round(1) }}%)
+  <style type="text/css">
+    .progress {
+      height: 30px;
+      margin-bottom: 30px;
+      line-height: 30px;
+      font-size: 14px;
+    }
+
+    .progress-bar {
+      line-height: 30px;
+      font-size: 14px;
+    }
+  </style>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="page-header">
+        Remaining Tasks
+      </h1>
+      {% for name, data in tasks %}
+        <div class="col-xs-4">
+          <p>
+            <strong>{{ name }}</strong>
+          </p>
+          <div class="progress">
+            <div class="progress-bar progress-bar-{{ data.class }}" style="width: {{ data.percent }}%">
+              {% if data.percent >= 30 %}
+                {{ data.count }} / {{ data.total }} ({{ data.percent | round(1) }}%)
+              {% endif %}
+            </div>
+            {% if data.percent < 30 %}
+              <span style="margin-left: 10px;" class="text-{{ data.class }}">
+                {{ data.count }} / {{ data.total }} ({{ data.percent | round(1) }}%)
+              </span>
+            {% endif %}
           </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
-</div>
 {% endblock %}
