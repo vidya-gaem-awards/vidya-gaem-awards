@@ -136,21 +136,23 @@ $(document).ready(function () {
     var topSortableOptions = Object.assign({}, sortableOptions);
     topSortableOptions.sort = false;
 
-    if (topArea.length > 0) {
-        // new Sortable(document.getElementById('voteDropAreaTop'), topSortableOptions);
-        new Sortable(document.getElementById('voteDropAreaBottom'), sortableOptions);
-    }
-
-    $('.voteBox').click(function (event) {
-        if (!$.contains(topArea[0], this)) {
-            $(this).parent().detach().appendTo(topArea);
-        } else {
-            $(this).parent().detach().appendTo(bottomArea);
+    if (votingEnabled) {
+        if (topArea.length > 0) {
+            // new Sortable(document.getElementById('voteDropAreaTop'), topSortableOptions);
+            new Sortable(document.getElementById('voteDropAreaBottom'), sortableOptions);
         }
 
-        updateNumbers();
-        unlockVotes();
-    });
+        $('.voteBox').click(function (event) {
+            if (!$.contains(topArea[0], this)) {
+                $(this).parent().detach().appendTo(topArea);
+            } else {
+                $(this).parent().detach().appendTo(bottomArea);
+            }
+
+            updateNumbers();
+            unlockVotes();
+        });
+    }
 
     // Legacy
     voteColumnBoxes.each(function () {
