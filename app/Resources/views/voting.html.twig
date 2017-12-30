@@ -34,6 +34,11 @@
       .voteBox {
         cursor: pointer;
       }
+
+      #voteDropAreaBottom:empty:after {
+        content: 'You haven\'t yet voted for this award - click on any number of nominees in the order you want them to win';
+      }
+
     </style>
   {% endif %}
 {% endblock %}
