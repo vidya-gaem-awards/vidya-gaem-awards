@@ -6,8 +6,12 @@ index:
     path:     /
     defaults: { _controller: AppBundle:Static:index }
 
-login_check:
+login:
     path:     /login
+    defaults: { _controller: AppBundle:Auth:login }
+
+login_check:
+    path:     /login/check
 
 logout:
     path:     /logout

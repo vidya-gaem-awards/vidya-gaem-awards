@@ -1,11 +1,9 @@
 <?php
 namespace AppBundle\Service;
 
-use Ehesp\SteamLogin\SteamLogin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -68,14 +66,6 @@ class NavbarService
         }
 
         return false;
-    }
-
-    public function getLoginLink()
-    {
-        $returnLink = $this->router->generate('login_check', [], UrlGenerator::ABSOLUTE_URL);
-
-        $steam = new SteamLogin();
-        return $steam->url($returnLink);
     }
 
     public function getRoles($path)

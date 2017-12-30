@@ -34,7 +34,7 @@
             <li class="hidden-sm hidden-xs"><img src="{{ app.user.avatar }}" style='height: 50px;'></li>
           {% else %}
             <li>
-              <a href="{{ navbar.getLoginLink() }}">
+              <a href="{{ path('login', {'redirect': app.request.requestUri}) }}">
                 <img src="{{ asset('img/sign_in_with_steam.png') }}" class="hidden-sm hidden-xs" alt="Login">
                 <span class="visible-sm visible-xs">Login</span>
               </a>
