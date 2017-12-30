@@ -7,6 +7,11 @@
     <div class="col-xs-12">
       <h2>401 - Unauthorized</h2>
       <p>This page is not currently accessible to the public. Please sign in to view this page.</p>
+      <p>
+        <a href="{{ path('login', {'redirect': app.request.requestUri}) }}">
+          <img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png">
+        </a>
+      </p>
     </div>
   </div>
 {% endblock %}
