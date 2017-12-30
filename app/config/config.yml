@@ -38,6 +38,7 @@ twig:
 #    debug: '%kernel.debug%'
     debug: true
     strict_variables: '%kernel.debug%'
+    paths: ['%kernel.project_dir%/templates']
     globals:
         navbar: '@AppBundle\Service\NavbarService'
         configService: '@AppBundle\Service\ConfigService'
