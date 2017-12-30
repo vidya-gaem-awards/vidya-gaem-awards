@@ -27,12 +27,12 @@
           </p>
           <div class="progress">
             <div class="progress-bar progress-bar-{{ data.class }}" style="width: {{ data.percent }}%">
-              {% if data.percent >= 30 %}
+              {% if data.percent >= 35 %}
                 {{ data.count }} / {{ data.total }} ({{ data.percent | round(1) }}%)
               {% endif %}
             </div>
-            {% if data.percent < 30 %}
-              <span style="margin-left: 10px;" class="text-{{ data.class }}">
+            {% if data.percent < 35 %}
+              <span style="margin-left: 7px;" class="text-{{ data.class }}">
                 {{ data.count }} / {{ data.total }} ({{ data.percent | round(1) }}%)
               </span>
             {% endif %}
