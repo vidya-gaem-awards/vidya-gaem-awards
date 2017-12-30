@@ -143,6 +143,14 @@ nomineePost:
     defaults: { _controller: AppBundle:Nominee:post }
 
 #
+# TASKS
+#
+
+tasks:
+    path:     /tasks
+    defaults: { _controller: AppBundle:Tasks:index }
+
+#
 # VOTING
 #
 

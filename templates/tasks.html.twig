@@ -1,0 +1,23 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <h1 class="page-header">
+      Remaining Tasks
+    </h1>
+    {% for name, count in tasks %}
+      <div class="col-xs-4">
+        <p>
+          <strong>{{ name }}</strong>
+        </p>
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" style="width: {{ count / totalNominees * 100 }}%">
+            {{ count }} / {{ totalNominees }} ({{ (count / totalNominees * 100) | round(1) }}%)
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
