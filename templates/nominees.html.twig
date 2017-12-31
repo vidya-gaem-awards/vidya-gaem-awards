@@ -164,6 +164,9 @@
   <ul class="breadcrumb fancy">
     <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
     <li><a href="{{ path('awardManager') }}">Manage awards</a></li>
+    {% if is_granted('ROLE_TASKS_VIEW') %}
+      <li><a href="{{ path('tasks') }}"></a></li>
+    {% endif %}
   </ul>
 
   <div class="row">
