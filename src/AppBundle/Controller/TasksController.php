@@ -9,32 +9,28 @@ class TasksController extends Controller
 {
     public function indexAction(EntityManagerInterface $em)
     {
-        $flavourTextCount = $em->createQueryBuilder()
-            ->select('COUNT(n)')
-            ->from(Nominee::class, 'n')
-            ->join('n.award', 'a')
-            ->where('a.enabled = true')
-            ->andWhere('n.flavorText != \'\'')
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        $imageCount = $em->createQueryBuilder()
-            ->select('COUNT(n)')
+        $query = $em->createQueryBuilder()
+            ->select('n')
             ->from(Nominee::class, 'n')
             ->join('n.award', 'a')
             ->where('a.enabled = 1')
-            ->andWhere('n.image IS NOT NULL')
-            ->getQuery()
-            ->getSingleScalarResult();
+            ->addOrderBy('a.order', 'ASC')
+            ->addOrderBy('n.id', 'ASC');
 
-        $subtitleCount = $em->createQueryBuilder()
-            ->select('COUNT(n)')
-            ->from(Nominee::class, 'n')
-            ->join('n.award', 'a')
-            ->where('a.enabled = true')
-            ->andWhere('n.subtitle != \'\'')
+        $flavourText = (clone $query)
+            ->andWhere('n.flavorText = \'\'')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getResult();
+
+        $images = (clone $query)
+            ->andWhere('n.image IS NULL')
+            ->getQuery()
+            ->getResult();
+
+        $subtitles = (clone $query)
+            ->andWhere('n.subtitle = \'\'')
+            ->getQuery()
+            ->getResult();
 
         $totalNominees = $em->createQueryBuilder()
             ->select('COUNT(n)')
@@ -45,24 +41,39 @@ class TasksController extends Controller
             ->getSingleScalarResult();
 
         $tasks = [
-            'Nominee subtitles' => [$subtitleCount, $totalNominees],
-            'Nominee flavour text' => [$flavourTextCount, $totalNominees],
-            'Nominee images' => [$imageCount, $totalNominees],
+            'Missing subtitles' => [$subtitles, $totalNominees],
+            'Flavor text needed' => [$flavourText, $totalNominees],
+            'Nominee images needed' => [$images, $totalNominees],
         ];
 
         foreach ($tasks as $name => $raw) {
             $data = [
-                'count' => $raw[0],
-                'total' => $raw[1],
-                'percent' => $raw[0] / $raw[1] * 100,
+                'id' => str_replace(' ', '-', strtolower($name)),
+                'count' => count($raw[0]),
+                'total' => $raw[1]
             ];
+            $data['percent'] = $data['count'] / $data['total'] * 100;
 
-            if ($data['percent'] < 50) {
-                $data['class'] = 'danger';
-            } elseif ($data['percent'] < 90) {
+            if ($data['percent'] < 10) {
+                $data['class'] = 'success';
+            } elseif ($data['percent'] < 50) {
                 $data['class'] = 'warning';
             } else {
-                $data['class'] = 'success';
+                $data['class'] = 'danger';
+            }
+
+            $data['awards'] = [];
+
+            /** @var Nominee $nominee */
+            foreach ($raw[0] as $nominee) {
+                $award = $nominee->getAward();
+                if (!isset($data['awards'][$award->getId()])) {
+                    $data['awards'][$award->getId()] = [
+                        'award' => $award,
+                        'nominees' => [],
+                    ];
+                }
+                $data['awards'][$award->getId()]['nominees'][] = $nominee;
             }
 
             $tasks[$name] = $data;
