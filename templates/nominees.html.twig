@@ -329,7 +329,7 @@
               </div>
 
               <script>
-                $('.alert-error .close').on('click', function () {
+                $('.alert-danger .close').on('click', function () {
                   $(this).parent().fadeOut("fast");
                 });
               </script>
@@ -558,17 +558,6 @@
         $("#dialog-edit-name").text($("#info-name").val());
         $("#dialog-edit-subtitle").html($("#info-subtitle").val());
         $("#dialog-edit-flavor").html($("#info-flavor").val());
-
-//        if ($("#info-image").val() != lastImageValue || (lastImageValue === "" && $("#info-id").val() != lastID)) {
-//          lastImageValue = $("#info-image").val();
-//          lastID = $("#info-id").val();
-//          if (lastImageValue) {
-//            $("#dialog-edit-image").attr("src", lastImageValue);
-//          } else {
-//            $("#dialog-edit-image").attr("src", "/img/nominees/" + $("#info-id").val() + ".png");
-//          }
-//        }
-
       }
 
       // When the confirm button is clicked in the edit dialog
@@ -590,7 +579,6 @@
         var action = $("#form-action").attr("value");
 
         // Send through the AJAX request to do the actual editing
-//        var ajaxData = $("#dialog-edit-form").serializeArray();
         var formData = new FormData(this);
         console.log(formData);
 
@@ -628,15 +616,9 @@
             var nomineeBox = $("#nominee-" + nomineeID);
             nomineeBox.find("h3").text($("#info-name").val());
             nomineeBox.find("footer p").html($("#info-subtitle").val());
-//            if ($("#info-image")) {
-//              nomineeBox.find("img").attr("src", $("#info-image").val());
-//            } else {
-//              nomineeBox.find("img").attr("src", "/img/nominees/" + nomineeID + ".png");
-//            }
 
             nominees[nomineeID].name = $("#info-name").val();
             nominees[nomineeID].subtitle = $("#info-subtitle").val();
-//            nominees[nomineeID].image = $("#info-image").val();
             nominees[nomineeID].flavorText = $("#info-flavor").val();
 
             // Close the dialog

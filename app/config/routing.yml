@@ -148,7 +148,13 @@ nomineePost:
 
 tasks:
     path:     /tasks
+    methods:  [GET]
     defaults: { _controller: AppBundle:Tasks:index }
+
+tasksPost:
+    path:     /tasks
+    methods:  [POST]
+    defaults: { _controller: AppBundle:Tasks:post }
 
 #
 # VOTING
