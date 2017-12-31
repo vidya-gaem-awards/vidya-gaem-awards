@@ -77,8 +77,22 @@
                   {{- navigationBarConfig -}}
                 </textarea>
                 <p class="help-block">
-                  This controls the links that appear in the top navigation bar.<br>
+                  This controls the links that appear in the navigation bar.<br>
                   A link will only be shown if the user has access to it.
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="availableRoutes" class="col-sm-4 control-label">Available routes</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="availableRoutes">
+                  {% for routeName, route in routes %}
+                    <option>{{ routeName }} ({{ route.path }})</option>
+                  {% endfor %}
+                </select>
+                <p class="help-block">
+                  This is a list of routes you can use in the navigation menu.<br>
+                  The dropdown doesn't do anything, it's just for reference.
                 </p>
               </div>
             </div>
@@ -174,19 +188,16 @@
                 </div>
               </div>
             </div>
-
             <div class="form-group">
-              <label for="availableRoutes" class="col-sm-4 control-label">Available routes</label>
+              <label class="col-sm-4 control-label">Other settings</label>
               <div class="col-sm-8">
-                <select class="form-control" id="availableRoutes">
-                  {% for routeName, route in routes %}
-                    <option>{{ routeName }} ({{ route.path }})</option>
-                  {% endfor %}
-                </select>
-                <p class="help-block">
-                  This is a list of routes you can use in the navigation menu.<br>
-                  The dropdown doesn't do anything, it's just for reference.
-                </p>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"
+                           name="awardSuggestions" {{ config.getAwardSuggestions ? 'checked' : '' }}>
+                    Allow suggestions for new awards and award names
+                  </label>
+                </div>
               </div>
             </div>
           </div>

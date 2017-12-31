@@ -33,6 +33,9 @@ class Config
     /** @var string */
     private $defaultPage = 'home';
 
+    /** @var boolean */
+    private $awardSuggestions = true;
+
     /** @var string[] */
     private $publicPages = [];
 
@@ -291,6 +294,24 @@ class Config
     public function setNavbarItems(array $navbarItems): Config
     {
         $this->navbarItems = $navbarItems;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAwardSuggestions(): bool
+    {
+        return $this->awardSuggestions;
+    }
+
+    /**
+     * @param bool $awardSuggestions
+     * @return Config
+     */
+    public function setAwardSuggestions(bool $awardSuggestions): Config
+    {
+        $this->awardSuggestions = $awardSuggestions;
         return $this;
     }
 }

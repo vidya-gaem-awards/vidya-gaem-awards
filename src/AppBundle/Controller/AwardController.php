@@ -148,7 +148,7 @@ class AwardController extends Controller
 
         $awardSuggestion = $post->get('awardSuggestion');
         if ($awardSuggestion !== null) {
-            if ($configService->isReadOnly()) {
+            if ($configService->isReadOnly() || !$configService->getConfig()->getAwardSuggestions()) {
                 return $this->json(['error' => 'New awards can no longer be suggested.']);
             }
 

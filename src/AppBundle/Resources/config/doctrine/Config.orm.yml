@@ -23,6 +23,9 @@ AppBundle\Entity\Config:
       type: string
       nullable: false
       length: 30
+    awardSuggestions:
+      type: boolean
+      nullable: false
     publicPages:
       type: json_array
       nullable: false

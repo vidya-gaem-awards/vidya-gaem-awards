@@ -54,6 +54,7 @@ class ConfigController extends Controller
         $error = false;
 
         if ($post->get('readOnly')) {
+            $config->setAwardSuggestions(false);
             $config->setReadOnly(true);
             $em->persist($config);
             $em->flush();
@@ -128,6 +129,8 @@ class ConfigController extends Controller
         if (!$navbarError) {
             $config->setNavbarItems($navbarItems);
         }
+
+        $config->setAwardSuggestions($post->getBoolean('awardSuggestions'));
 
         $em->persist($config);
         $em->flush();
