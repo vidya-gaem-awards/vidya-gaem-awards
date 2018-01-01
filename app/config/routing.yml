@@ -151,6 +151,10 @@ tasks:
     methods:  [GET]
     defaults: { _controller: AppBundle:Tasks:index }
 
+tasksImageCheck:
+    path:     /tasks/check-images
+    defaults: { _controller: AppBundle:Tasks:imageCheck }
+
 tasksPost:
     path:     /tasks
     methods:  [POST]

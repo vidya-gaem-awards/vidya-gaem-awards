@@ -18,13 +18,9 @@ class ImageCheckCommand extends ContainerAwareCommand
     /** @var EntityManagerInterface */
     private $em;
 
-    /** @var ConfigService */
-    private $configService;
-
-    public function __construct(EntityManagerInterface $em, ConfigService $configService)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->configService = $configService;
 
         parent::__construct();
     }

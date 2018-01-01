@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Command\ImageCheckCommand;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Nominee;
 use AppBundle\Entity\TableHistory;
@@ -8,7 +9,11 @@ use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use VGA\FileSystem;
 
@@ -166,4 +171,22 @@ class TasksController extends Controller
 
         return $this->json(['success' => true, 'nominee' => $nominee]);
     }
+
+    public function imageCheckAction(KernelInterface $kernel, EntityManagerInterface $em)
+    {
+        $input = new ArrayInput([]);
+        $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true);
+
+        $command = new ImageCheckCommand($em);
+        $command->setContainer($this->container);
+        $command->run($input, $output);
+
+        $ansi = $output->fetch();
+
+        return $this->render('tasksImageCheck.twig', [
+            'title' => 'Image Check',
+            'ansi' => $ansi,
+        ]);
+    }
+
 }

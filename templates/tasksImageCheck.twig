@@ -1,0 +1,27 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block content %}
+  <style>
+    .output {
+      background-color: black;
+      border-color: #777;
+      border-radius: 0;
+      padding: 5px;
+    }
+  </style>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="page-header">
+        Image Check
+      </h1>
+
+      <div class="alert alert-warning">
+        <strong>Warning:</strong> loading this page is processor and disk intensive. Please limit the number of times you refresh it.
+      </div>
+
+      <pre class="output">
+        {{ ansi | ansi_to_html }}
+      </pre>
+    </div>
+  </div>
+{% endblock %}

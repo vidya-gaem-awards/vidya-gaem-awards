@@ -29,6 +29,10 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    AppBundle\Command\ImageCheckCommand:
+        public: true
+        tags: ['console.command']
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:
@@ -69,6 +73,11 @@ services:
 
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.ansi:
+        class: SensioLabs\AnsiConverter\Bridge\Twig\AnsiExtension
         tags:
             - { name: twig.extension }
 

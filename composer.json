@@ -21,6 +21,7 @@
         "koraktor/steam-condenser": "^1.3.10",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "sensiolabs/ansi-to-html": "^1.1.3",
         "sirwaddles/steamauth": "dev-forkfix",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
