@@ -196,7 +196,7 @@
                                                   <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
                                               {% endif %}
                                               <div class="nomineeName">{{ nominee.name }}</div>
-                                              <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                                              <div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>
                                               <div class="handle realHandle">
                                                   <span class="glyphicon glyphicon-menu-hamburger"></span>
                                               </div>
