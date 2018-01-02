@@ -179,13 +179,13 @@
                                               <div class="fakeElement"></div>
                                               <div class="handle fakeHandle"></div>
                                               {% if votingOpen %}
-                                                <div class="hoverOverlay overlayWhenTop">
+                                                <div class="hoverOverlay overlayWhenTop {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
                                                   <span>
                                                     Click to make <strong style="color: rgb(251,68,7);">{{ nominee.name }}</strong>
                                                     your&nbsp;<span class="nextPreference">1st</span>&nbsp;preference
                                                   </span>
                                                 </div>
-                                                <div class="hoverOverlay overlayWhenBottom">
+                                                <div class="hoverOverlay overlayWhenBottom {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
                                                     <span>
                                                       Click to remove <strong style="color: rgb(251,68,7);">{{ nominee.name }}</strong>
                                                       from your votes

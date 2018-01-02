@@ -143,6 +143,11 @@ $(document).ready(function () {
         }
 
         $('.voteBox').click(function (event) {
+
+            if (event.originalEvent.target.localName === 'a') {
+                return;
+            }
+
             if (!$.contains(topArea[0], this)) {
                 $(this).parent().detach().appendTo(topArea);
             } else {
