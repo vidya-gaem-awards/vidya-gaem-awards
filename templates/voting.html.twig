@@ -240,24 +240,34 @@
             {% else %}
                 <div id="startMessage">
 
+                    {% if votingNotYetOpen or votingOpen %}
+                      <h2>How to vote:</h2>
+                      <p style="margin-top: 5px; margin-bottom: 15px;">
+                        <img src="{{ asset('2017images/virgin.png') }}" style="width: 40px; margin-right: 5px;">
+                        <strong>The Virgin Vote:</strong> click on the nominee you want to win, then hit submit.
+                      </p>
+                      <p>
+                        <img src="{{ asset('2017images/chad.png') }}" style="width: 40px; margin-right: 5px;">
+                        <strong>The Chad Choice:</strong> click on multiple nominees in the order you want them to win.
+                      </p>
+                      <p>
+                        Click on the nominee you want to win most first, followed by the nominee you want to win second, etc.
+                        You can preference as many or as few nominees as you want.
+                      </p>
+                    {% endif %}
+
                     {% if votingNotYetOpen %}
                         <!-- Before votes open -->
-                        <h2>How to vote:</h2>
-                        <p>Despite the new look, voting is the same as last year. Vote for as many nominees as you want, and put
-                            them in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call
-                            it a day.</p>
                         <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can
                             use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
                     {% endif %}
 
                     {% if votingOpen %}
                         <!-- While votes are open -->
-                        <h2>How to vote:</h2>
-                        <p>Despite the new look, voting is still the same. Vote for as many nominees as you want, and put them
-                            in the order you'd like to see them win. Too much effort for you? Vote for one nominee and call it a
-                            day.</p>
-                        <p>You can use the award list at the bottom to navigate, or just use the arrows that appear after you
-                            click submit.</p>
+                        <p>
+                          Use the award list at the bottom to navigate, the arrows at the top of the page, or the arrow that appears after you
+                          click submit.
+                        </p>
 
                         <a href="{{ path('voting', {'awardID': (awards|first).id}) }}" id="btnStart"></a>
                     {% endif %}
@@ -269,7 +279,7 @@
                     {% endif %}
 
                     <h2>Stream information:</h2>
-                    <p>We're aiming to stream at the end of January.</p>
+                    <p style="margin-top: 5px;">We're aiming to stream in February.</p>
 
                 </div>
             {% endif %}
