@@ -265,6 +265,49 @@
   color: #333;
 }
 
+.inventory-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.inventory-item img {
+  width: 100%;
+}
+
+.inventory-item {
+  width: 150px;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  font-weight: bold;
+}
+
+.item-name {
+  margin-top: 10px;
+  text-align: center;
+  flex-grow: 1;
+  color: black;
+  text-shadow: white 2px 2px;
+  font-size: 18px;
+}
+
+.deus-ex-hr {
+  background: linear-gradient(to right, rgb(249, 253, 68) 0%, rgb(255, 255, 253) 50%, rgb(249, 253, 68) 100%);
+  padding-top: 15px;
+}
+
+#inventory h1 {
+  color: rgb(255, 0, 11);
+  text-shadow: white 2px 2px;
+}
+
+body {
+  padding-bottom: 0;
+}
+
 /*@media (max-width: 1840px) {*/
     /*.rightMeme {*/
         /*display: none;*/
@@ -720,7 +763,7 @@
 }
 
 /* Awards List */
-#containerAwards {
+#containerAwards, #inventory {
   margin: 0 auto;
   overflow: auto;
   max-width: 1200px;

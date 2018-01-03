@@ -291,21 +291,7 @@
     </h1>
 
     <div class="awardList">
-      {% for _award in awards[0:25] %}
-        <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
-           class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
-          <h3>{{ _award.name }}</h3>
-          <p>{{ _award.subtitle }}</p>
-        </a>
-      {% endfor %}
-    </div>
-
-    <h1 id="secondaryAwards">
-      Website-Only Awards
-    </h1>
-
-    <div class="awardList">
-      {% for _award in awards[25:] %}
+      {% for _award in awards %}
         <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
            class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
           <h3>{{ _award.name }}</h3>
@@ -319,6 +305,27 @@
         <a href="{{ path('home') }}">Back to the main part of the site</a>
       </h3>
     {% endif %}
+  </div>
+
+  <div class="zig" style="margin-bottom: -6px;"></div>
+
+  <div class="deus-ex-hr">
+    <div id="inventory">
+      <h1>
+        Your Inventory
+      </h1>
+
+      <div class="inventory-container">
+        <div class="inventory-item" id="shekelCount">
+          <img src="{{ asset('img/dosh.png') }}">
+          <div class="item-name">-1 shekels</div>
+        </div>
+        <div class="inventory-item" id="item-template" style="display: none;">
+          <img>
+          <div class="item-name"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="todd" class="modal fade" role="dialog">

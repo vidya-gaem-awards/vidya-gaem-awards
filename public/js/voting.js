@@ -11,11 +11,7 @@ onDumbShit(function () {
 
 var dragCounter;
 var toddDialog;
-var showRewardsOnSubmit = true;
-
-if (localStorage.getItem('ignoreRewards')) {
-    showRewardsOnSubmit = false;
-}
+var showRewardsOnSubmit = false;
 
 if (localStorage.getItem('dragCounter')) {
     dragCounter = localStorage.getItem('dragCounter');
@@ -100,13 +96,67 @@ $(document).ready(function () {
     (new Image()).src = '/img/todd4.jpg';
 
     // Lootbox
+    if (!localStorage.getItem('inventory')) {
+        localStorage.setItem('inventory', JSON.stringify({
+            'shekels': 0,
+            'unlocks': [],
+            'unlockKeys': []
+        }));
+    }
+
+    var inventory = JSON.parse(localStorage.getItem('inventory'));
+    function updateInventory() {
+        localStorage.setItem('inventory', JSON.stringify(inventory));
+        $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' shekels');
+
+        $('.kebab').remove();
+
+        for (var i = 0; i < inventory.unlocks.length; i++) {
+            var reward = inventory.unlocks[i];
+            var element = $('#item-template').clone();
+            element.addClass('kebab');
+            element.find('img').attr('src', '/img/reward-' + reward.id + '.png');
+            element.find('.item-name').text(reward.name);
+            element.show();
+            element.appendTo('.inventory-container');
+        }
+    }
+    updateInventory();
+
+    if (!localStorage.getItem('ignoreRewards') && lastVotes.length === 0) {
+        showRewardsOnSubmit = true;
+    }
+
     var lootboxSound = new Audio("/ogg/open-box.ogg");
 
     var showNewLoot = function showNewLoot(i) {
         var lootbox = $($('.lootbox').get(i));
         lootbox.removeClass('animate').addClass('animate-back');
         var title = lootbox.find('.lootbox-title');
-        title.text(getRandomInt(1,1000) + " shekels");
+        var image = lootbox.find('img');
+
+        var rewards = [
+            {id: 'straya', name: 'The Power of Shitposting'}
+        ];
+
+        var specialReward = (getRandomInt(0, 100) + 1) > 95;
+        if (specialReward) {
+            var reward = rewards[getRandomInt(0, rewards.length)];
+
+            if (!$.inArray(reward, inventory['unlocks'])) {
+                inventory['unlocks'].push(reward);
+            }
+
+            image.attr('src', '/img/reward-' + reward.id + '.png');
+            title.text(reward.name);
+        } else {
+            var shekelCount = getRandomInt(2, 1000);
+            inventory['shekels'] += shekelCount;
+            image.attr('src', '/img/dosh.png');
+            title.text(shekelCount + " shekels");
+        }
+        updateInventory();
+
     };
 
     $('#unboxButton').click(function () {
@@ -115,6 +165,10 @@ $(document).ready(function () {
         $('.lootbox').addClass('animate');
 
         $(this).hide();
+
+        setTimeout(function () {
+            $('.lootbox').find('img').removeAttr('src');
+        }, 1100);
 
         for (var i = 0; i < 3; i++) {
             setTimeout(showNewLoot, 2000 + i * 300, i);
