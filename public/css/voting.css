@@ -370,11 +370,12 @@ body {
 .pageHeader h1 {
   font-size: 30px;
   margin-top: 30px;
+  margin-bottom: 10px;
   font-weight: bold;
 }
 
 .pageHeader h2 {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 
@@ -1136,6 +1137,37 @@ body {
 
   .locked .voteGroup .number:after {
     content: ' - tap to remove or drag to reorder';
+  }
+
+  .pageHeaderLogo {
+    float: none;
+  }
+
+  .pageHeaderLogo img {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+
+  .pageHeaderTitle {
+    float: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  .pageHeaderTitle h1 {
+    display: none;
+  }
+
+  .pageHeaderTitle h2 {
+    font-size: 20px;
+  }
+
+  .buttons a.navigation.right {
+    position: static;
+  }
+
+  #btnResetVotes {
+    margin-right: 0;
   }
 }
 
