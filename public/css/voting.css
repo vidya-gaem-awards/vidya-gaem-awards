@@ -194,7 +194,6 @@
   border: 2px solid white;
   overflow: hidden;
   transition: 500ms ease-in-out;
-  min-height: 435px;
 }
 
 #rewards .modal-footer {
