@@ -204,24 +204,32 @@
 
 /* Page Header */
 .pageHeader {
-  height: 80px;
+  height: 140px;
   margin: 0 auto;
   text-align: center;
+  max-width: 1000px;
+  margin-top: 10px;
+}
+
+.pageHeaderLogo{
+  float: left;
+  width: 20%;
+}
+.pageHeaderTitle{
+  float: left;
+  width: 80%;
 }
 
 .pageHeader h1 {
   font-size: 30px;
-  margin-top: 25px;
+  margin-top: 30px;
+  font-weight: bold;
 }
 
 .pageHeader h2 {
   font-size: 20px;
 }
 
-.pageHeader .logo {
-  float: left;
-  margin-top: 18px;
-}
 
 /* Award Header (including left/right navigation buttons) */
 .awardHeader {
@@ -234,7 +242,7 @@
 .awardHeaderContainer {
   margin: 0 50px 20px 50px;
   padding: 20px;
-  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 10%,rgba(0,0,0,0.3) 90%,rgba(0,0,0,0) 100%);
+  background: linear-gradient(to right, rgba(0,0,0,0) 5%,rgba(0,0,0,0.2) 20%,rgba(0,0,0,0.2) 80%,rgba(0,0,0,0) 95%)
 }
 
 .awardName {
@@ -256,17 +264,17 @@
 }
 
 .navigation {
-  width: 25px;
-  height: 25px;
+  width: 102px;
+  height: 84px;
   position: absolute;
-  top: 36px;
+  top: 12px;
   cursor: pointer;
   display: block;
 }
 
 .navigation.left {
   left: 0;
-  background: url("/2016images/btnNav_left.png") 0 0;
+  background: url("/2017images/btnNav_left.png") 0 0;
 }
 
 .left:hover {
@@ -275,7 +283,7 @@
 
 .navigation.right {
   right: 0;
-  background: url("/2016images/btnNav_right.png") 0 0;
+  background: url("/2017images/btnNav_right.png") 0 0;
 }
 
 .right:hover {
@@ -287,7 +295,7 @@
 
 .hoverOverlay {
   width: 100%;
-  height: 50px;
+  height: 40px;
   z-index: 301;
   position: absolute;
   background-color: rgba(0,0,0,0.8);
@@ -299,7 +307,7 @@
   text-align: center;
   bottom: 0;
   font-size: 0.9em;
-  /*line-height: 13px;*/
+  line-height: 16px;
   padding: 3px;
 }
 
@@ -497,6 +505,11 @@
   flex-wrap: wrap;
 }
 
+.yourVotes{
+	margin-bottom: -8px;
+    margin-left: 10px;
+}
+
 .voteDropArea {
   margin-left: 10px;
   margin-right: 10px;
@@ -580,8 +593,8 @@
 
 #btnResetVotes {
   width: 166px;
-  height: 40px;
-  background: url("/2016images/btn_reset.png") 0 0;
+  height: 95px;
+  background: url("/2017images/btnReset.png") 0 0;
   margin-right: 50px;
 }
 
@@ -590,9 +603,9 @@
 }
 
 #btnLockVotes {
-  width: 175px;
-  height: 40px;
-  background: url("/2016images/btn_submit.png") 0 0;
+  width: 191px;
+  height: 96px;
+  background: url("/2017images/btnSubmit.png") 0 0;
 }
 
 #btnLockVotes:hover {
@@ -680,10 +693,10 @@
   display: block;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 5;
   width: 26px;
   height: 100%;
-  background: url("/2016images/check.png") 0 center no-repeat;
+  background: url("/2017images/check.png") 0 center no-repeat;
 }
 
 .goBackLink a {
@@ -853,8 +866,8 @@
 
 /* Instruction page (appears when no awards are selected) */
 #startMessage {
-  float: left;
-  width: 880px;
+  max-width: 880px;
+  margin: 0 auto;
   margin-bottom: 25px;
 }
 
@@ -877,11 +890,11 @@
 }
 
 #btnStart {
-  width: 233px;
-  height: 63px;
+  width: 264px;
+  height: 103px;
   margin: 0 auto;
   display: block;
-  background: url("/2015voting/btnStart.gif") top center no-repeat;
+  background: url("/2017images/btnStart.png") top center no-repeat;
 }
 
 #btnStart:hover {

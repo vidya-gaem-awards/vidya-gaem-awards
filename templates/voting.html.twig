@@ -47,9 +47,11 @@
   <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
 
   <div class="pageHeader">
-    {#<a href="{{ path('voting') }}"><img src="{{ asset('2016images/vga_logo.png') }}" class="logo" alt="oh god it's happening again"/></a>#}
-    <h1>The 2017 Vidya Gaem Awards</h1>
-    <h2>{{ voteText }}</h2>
+    <a class="pageHeaderLogo" href="{{ path('voting') }}"><img src="{{ asset('2017images/vga_logo.png') }}" class="logo" alt="oh god it's happening again"/></a>
+    <div class="pageHeaderTitle">
+		<h1>The 2017 Vidya Gaem Awards</h1>
+		<h2>{{ voteText }}</h2>
+	</div>	
   </div>
 
   {#<div class="pageHeader" style="text-align: center; height: 110px;">#}
@@ -159,8 +161,9 @@
                   {#{% endfor %}#}
                   {#</div>#}
                   {#</div>#}
-
-                  <div id="dragLimit">
+				
+				
+                <div id="dragLimit">
                       {% spaceless %}
                           <div class="flexContainer voteDropArea" id="voteDropAreaTop">
                             {% if votingOpen %}
@@ -208,17 +211,22 @@
                               {% endfor %}
                           </div>
 
+						  
+						  <div class="yourVotes">
+							<img src="{{ asset('2017images/yourVotes.png') }}" alt="Those votes? They're yours."/>
+						  </div>
+						  
                           <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
                       {% endspaceless %}
-                  </div>
+                </div>
 
-                  <div class="voteGroup placeholder" style="display: none;" id="dropPlaceholder">
+                <div class="voteGroup placeholder" style="display: none;" id="dropPlaceholder">
                     <div class="voteBox">
                       <div class="nominee">
                         <div class="fakeElement"></div>
                       </div>
                     </div>
-                  </div>
+                </div>
                 {% endif %}
 
                 {% if votingOpen %}
