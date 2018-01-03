@@ -307,106 +307,108 @@
     {% endif %}
   </div>
 
-  <div class="zig" style="margin-bottom: -6px;"></div>
+  {% if award %}
+    <div class="zig" style="margin-bottom: -6px;"></div>
 
-  <div class="deus-ex-hr">
-    <div id="inventory">
-      <h1>
-        Your Inventory
-      </h1>
+    <div class="deus-ex-hr">
+      <div id="inventory">
+        <h1>
+          Your Inventory
+        </h1>
 
-      <div class="inventory-container">
-        <div class="inventory-item" id="shekelCount">
-          <img src="{{ asset('img/dosh.png') }}">
-          <div class="item-name">-1 shekels</div>
-        </div>
-        <div class="inventory-item" id="item-template" style="display: none;">
-          <img>
-          <div class="item-name"></div>
+        <div class="inventory-container">
+          <div class="inventory-item" id="shekelCount">
+            <img src="{{ asset('img/dosh.png') }}">
+            <div class="item-name">-1 shekels</div>
+          </div>
+          <div class="inventory-item" id="item-template" style="display: none;">
+            <img>
+            <div class="item-name"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="todd" class="modal fade" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close">&times;</button>
-        </div>
+    <div id="todd" class="modal fade" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close">&times;</button>
+          </div>
 
-        <div class="modal-body">
-          <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
-            <img src="/img/todd1.jpg">
-          </a>
-
-          <div class="buy_my_game">
+          <div class="modal-body">
             <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
-              Buy The Elder Scrolls V: Skyrim Special Edition <span class="tail">on Steam</span>
+              <img src="/img/todd1.jpg">
             </a>
-            <div class="desc">Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail.</div>
-          </div>
 
-          <div class="game_purchase_action">
-            <form name="add_to_cart_110687" action="https://store.steampowered.com/cart/" method="POST" target="_blank" style="position: relative;">
-              <input type="hidden" name="snr" value="1_5_1100_">
-              <input type="hidden" name="sessionid" value="37f5dea779e28dbaef40f8c5">
-              <input type="hidden" name="action" value="add_to_cart">
-              <input type="hidden" name="subid" value="110687">
-              <div class="game_purchase_action_bg">
-                <div class="game_purchase_price price">
-                  $<span class="theprice">39.95</span> USD
+            <div class="buy_my_game">
+              <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
+                Buy The Elder Scrolls V: Skyrim Special Edition <span class="tail">on Steam</span>
+              </a>
+              <div class="desc">Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail.</div>
+            </div>
+
+            <div class="game_purchase_action">
+              <form name="add_to_cart_110687" action="https://store.steampowered.com/cart/" method="POST" target="_blank" style="position: relative;">
+                <input type="hidden" name="snr" value="1_5_1100_">
+                <input type="hidden" name="sessionid" value="37f5dea779e28dbaef40f8c5">
+                <input type="hidden" name="action" value="add_to_cart">
+                <input type="hidden" name="subid" value="110687">
+                <div class="game_purchase_action_bg">
+                  <div class="game_purchase_price price">
+                    $<span class="theprice">39.95</span> USD
+                  </div>
+                  <div class="btn_addtocart">
+                    <div class="btn_addtocart_left"></div>
+                    <button class="btn_addtocart_content" type="submit">
+                      Buy on Steam
+                    </button>
+                    <div class="btn_addtocart_right"></div>
+                  </div>
                 </div>
-                <div class="btn_addtocart">
-                  <div class="btn_addtocart_left"></div>
-                  <button class="btn_addtocart_content" type="submit">
-                    Buy on Steam
-                  </button>
-                  <div class="btn_addtocart_right"></div>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body" style="text-align: center;">
-          <img src="{{ asset('img/your-rewards.png') }}" id="youre" style="max-width: 100%;">
-          <div class="lootboxbox">
-            <div class="lootbox">
-              <img src="" class="lootbox-image">
-              <div class="lootbox-title">
-                &nbsp;
+    <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body" style="text-align: center;">
+            <img src="{{ asset('img/your-rewards.png') }}" id="youre" style="max-width: 100%;">
+            <div class="lootboxbox">
+              <div class="lootbox">
+                <img src="" class="lootbox-image">
+                <div class="lootbox-title">
+                  &nbsp;
+                </div>
+              </div>
+              <div class="lootbox">
+                <img src="" class="lootbox-image">
+                <div class="lootbox-title">
+                  &nbsp;
+                </div>
+              </div>
+              <div class="lootbox">
+                <img src="" class="lootbox-image">
+                <div class="lootbox-title">
+                  &nbsp;
+                </div>
               </div>
             </div>
-            <div class="lootbox">
-              <img src="" class="lootbox-image">
-              <div class="lootbox-title">
-                &nbsp;
-              </div>
-            </div>
-            <div class="lootbox">
-              <img src="" class="lootbox-image">
-              <div class="lootbox-title">
-                &nbsp;
-              </div>
-            </div>
+
           </div>
-
-        </div>
-        <div class="modal-footer" style="text-align: center;">
-          <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot! ($2.49)</button>
-          <div id="closeRewards" style="display: none;">
-            <button type="button" class="btn btn-lootbox btn-lg" data-dismiss="modal">Claim rewards ($0.99)</button><br>
-            <button type="button" class="btn btn-lootbox btn-xs" id="neverShowAgain" style="margin-top: 5px;">Don't show this again ($19.99)</button>
+          <div class="modal-footer" style="text-align: center;">
+            <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot! ($2.49)</button>
+            <div id="closeRewards" style="display: none;">
+              <button type="button" class="btn btn-lootbox btn-lg" data-dismiss="modal">Claim rewards ($0.99)</button><br>
+              <button type="button" class="btn btn-lootbox btn-xs" id="neverShowAgain" style="margin-top: 5px;">Don't show this again ($19.99)</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  {% endif %}
 {% endblock %}
