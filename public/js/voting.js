@@ -482,10 +482,10 @@ $(document).ready(function () {
 
     // Reset Votes
     resetButton.click(function () {
-        unlockVotes();
         moveNomineesBack(true);
         resetTopArea();
         resetLeftSide();
+        unlockVotes();
 
         $('.voteDropArea').addClass('flash');
         setTimeout(function () {
