@@ -160,6 +160,112 @@
 
 }
 
+.lootboxbox {
+  display: flex;
+  justify-content: center;
+}
+
+.lootbox img {
+  width: 100%;
+}
+
+.lootbox {
+  width: 30%;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  font-weight: bold;
+}
+
+.lootbox-title {
+  margin-top: 10px;
+  text-align: center;
+  flex-grow: 1;
+  color: white;
+  text-shadow: black 2px 2px;
+  font-size: 18px;
+}
+
+#rewards .modal-content {
+  background: linear-gradient(to bottom, rgb(0, 51, 255) 0%, rgb(94,126,255) 70%);
+  border: 2px solid white;
+  overflow: hidden;
+  transition: 500ms ease-in-out;
+  min-height: 435px;
+}
+
+#rewards .modal-footer {
+  border-top: none;
+  padding-top: 0;
+}
+
+.lootbox.animate {
+  animation-duration: 1s;
+  animation-name: lootboxOut;
+  animation-fill-mode: forwards;
+}
+
+.lootbox.animate-back {
+  animation-duration: 1s;
+  animation-name: lootboxIn;
+  animation-fill-mode: forwards;
+}
+
+@keyframes lootboxIn {
+  from {
+    transform: translateY(-300px);
+  }
+
+  75% {
+    transform: translateY(20px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes lootboxOut {
+  from {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(20px);
+  }
+
+  to {
+    transform: translateY(-300px);
+  }
+}
+
+.btn-lootbox, .btn-lootbox:focus {
+  background-color: rgb(251,68,7);
+  border-color: rgb(232, 65, 7);
+  color: white;
+  text-shadow: black 2px 2px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.btn-lootbox:active {
+  transform: translateY(3px);
+}
+
+.btn-lootbox:hover {
+  background-color: rgb(215, 61, 6);
+  border-color: rgb(167, 47, 5);
+  color: yellow;
+}
+
+.modal {
+  color: #333;
+}
+
 /*@media (max-width: 1840px) {*/
     /*.rightMeme {*/
         /*display: none;*/
@@ -546,7 +652,6 @@
   font-style: italic;
   font-size: 30px;
   text-shadow: black 2px 2px;
-  position: absolute;
   z-index: -1;
   text-align: center;
   line-height: 30px;
@@ -559,7 +664,6 @@
   font-style: italic;
   font-size: 30px;
   text-shadow: black 2px 2px;
-  position: absolute;
   z-index: -1;
   text-align: center;
   line-height: 30px;

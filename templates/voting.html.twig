@@ -364,4 +364,42 @@
       </div>
     </div>
   </div>
+
+  <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body" style="text-align: center;">
+          <img src="{{ asset('img/your-rewards.png') }}" id="youre">
+          <div class="lootboxbox">
+            <div class="lootbox">
+              <img src="" class="lootbox-image">
+              <div class="lootbox-title">
+                &nbsp;
+              </div>
+            </div>
+            <div class="lootbox">
+              <img src="" class="lootbox-image">
+              <div class="lootbox-title">
+                &nbsp;
+              </div>
+            </div>
+            <div class="lootbox">
+              <img src="" class="lootbox-image">
+              <div class="lootbox-title">
+                &nbsp;
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer" style="text-align: center;">
+          <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot! ($2.49)</button>
+          <div id="closeRewards" style="display: none;">
+            <button type="button" class="btn btn-lootbox btn-lg" data-dismiss="modal">Claim rewards ($0.99)</button><br>
+            <button type="button" class="btn btn-lootbox btn-xs" id="neverShowAgain" style="margin-top: 5px;">Don't show this again ($19.99)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

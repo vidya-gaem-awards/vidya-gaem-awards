@@ -11,6 +11,11 @@ onDumbShit(function () {
 
 var dragCounter;
 var toddDialog;
+var showRewardsOnSubmit = true;
+
+if (localStorage.getItem('ignoreRewards')) {
+    showRewardsOnSubmit = false;
+}
 
 if (localStorage.getItem('dragCounter')) {
     dragCounter = localStorage.getItem('dragCounter');
@@ -63,6 +68,17 @@ function showTodd(toddCounter) {
     return true;
 }
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function reset() {
+    localStorage.removeItem('ignoreRewards');
+    localStorage.removeItem('dragCounter');
+}
+
 $(document).ready(function () {
     // If there's no award currently selected, none of this code is relevant.
     if (!currentAward) {
@@ -82,6 +98,61 @@ $(document).ready(function () {
     (new Image()).src = '/img/todd2.jpg';
     (new Image()).src = '/img/todd3.jpg';
     (new Image()).src = '/img/todd4.jpg';
+
+    // Lootbox
+    var lootboxSound = new Audio("/ogg/open-box.ogg");
+
+    var showNewLoot = function showNewLoot(i) {
+        var lootbox = $($('.lootbox').get(i));
+        lootbox.removeClass('animate').addClass('animate-back');
+        var title = lootbox.find('.lootbox-title');
+        title.text(getRandomInt(1,1000) + " shekels");
+    };
+
+    $('#unboxButton').click(function () {
+        lootboxSound.volume = 0.25;
+        lootboxSound.play();
+        $('.lootbox').addClass('animate');
+
+        $(this).hide();
+
+        for (var i = 0; i < 3; i++) {
+            setTimeout(showNewLoot, 2000 + i * 300, i);
+        }
+
+        setTimeout(function () {
+            $('#closeRewards').show();
+        }, 3600);
+    });
+
+    $('#neverShowAgain').click(function () {
+        localStorage.setItem('ignoreRewards', true);
+        $('#rewards').modal('hide');
+    });
+
+    function openLootboxRewards() {
+        if (!showRewardsOnSubmit) {
+            return;
+        }
+
+        var lootboxes = ['pubg', 'ow', 'tf2', 'csgo'];
+
+        $('.lootbox-image').each(function () {
+            $(this).attr('src', '/img/lootbox-' + lootboxes[getRandomInt(0, lootboxes.length)] + '.png');
+        });
+
+        if (getRandomInt(1,7) === 6) {
+            $('#youre').attr('src', '/img/youre-rewards.png');
+        }
+
+        $('#rewards').modal('show');
+
+        var audio = new Audio('/ogg/tf2.ogg');
+        audio.volume = 0.10;
+        audio.play();
+
+        showRewardsOnSubmit = false;
+    }
 
     var previousLockExists = lastVotes.length > 1;
     var votesChanged = false;
@@ -156,6 +227,7 @@ $(document).ready(function () {
 
             updateNumbers();
             unlockVotes();
+            setTimeout(incrementDragCounter, 100);
         });
     }
 
@@ -495,6 +567,10 @@ $(document).ready(function () {
 
     // Submit Votes
     submitButton.click(function () {
+        if (!votesChanged) {
+            return;
+        }
+
         lockVotes();
         if (votingStyle === 'legacy') {
             sortRightSide();
@@ -526,5 +602,7 @@ $(document).ready(function () {
                 $('#' + currentAward).addClass('complete');
             }
         }, 'json');
+
+        openLootboxRewards();
     });
 });
