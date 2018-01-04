@@ -15,12 +15,18 @@ var showRewardsOnSubmit = false;
 
 if (localStorage.getItem('dragCounter')) {
     dragCounter = localStorage.getItem('dragCounter');
+    if (isNaN(dragCounter)) {
+        localStorage.setItem('dragCounter', JSON.stringify(0));
+        dragCounter = 0;
+    } else {
+        dragCounter = JSON.parse(dragCounter);
+    }
 }
 
 function incrementDragCounter() {
     dragCounter++;
 
-    localStorage.setItem('dragCounter', dragCounter);
+    localStorage.setItem('dragCounter', JSON.stringify(dragCounter));
 
     if (dragCounter === 2) {
         showTodd(1);
