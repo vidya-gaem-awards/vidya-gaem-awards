@@ -22,3 +22,6 @@ AppBundle\Entity\InventoryItem:
     image:
       type: string
       nullable: true
+    type:
+      type: string
+      nullable: false

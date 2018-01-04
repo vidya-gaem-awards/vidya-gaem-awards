@@ -86,7 +86,8 @@ class ItemManagerController extends Controller
         $item
             ->setShortName($post->get('short-name'))
             ->setName($post->get('name'))
-            ->setRarity($post->get('rarity'));
+            ->setRarity($post->get('rarity'))
+            ->setType($post->get('type'));
 
         $em->persist($item);
         $em->flush();

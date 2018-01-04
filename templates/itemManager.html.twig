@@ -75,6 +75,7 @@
                   $("#info-id").val("");
                   $("#info-action").val("new");
                   editDialog.find("input[type=text]").val("");
+                  $("#info-type").val("none").change();
                   $("#dialog-edit-delete").hide();
 
               } else {
@@ -89,6 +90,7 @@
                   $("#info-short-name").val(item.shortName);
                   $("#info-name").val(item.name);
                   $("#info-rarity").val(item.rarity);
+                  $("#info-type").val(item.type).change();
               }
           });
 
@@ -233,6 +235,18 @@
                 <input class="form-control" type="number" id="info-rarity" name="rarity" min="0" max="10" placeholder="10" required
                  style="width: 100px;">
                 <span class="help-block">Chance is linear and is between 0 and 10. An item of chance 0 will never be shown.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-3 control-label" for="info-type">Type</label>
+              <div class="col-xs-8">
+                <select class="form-control" id="info-type" name="type" required>
+                  <option value="none">None (no effect)</option>
+                  <option value="css">CSS</option>
+                  <option value="buddie">Buddie</option>
+                  <option value="music">Music</option>
+                </select>
+                <span class="help-block">Before adding a CSS, buddie, or music reward, contact Clamburger to have it implemented.</span>
               </div>
             </div>
             <div class="form-group">

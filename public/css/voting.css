@@ -1186,3 +1186,50 @@ body {
     display: none;
   }
 }
+
+/** SPECIAL REWARD CSS **/
+html.reward-daily-dose {
+  background: linear-gradient(to bottom, rgb(34, 177, 76) 0%, rgb(163,73,164) 100%);
+}
+
+html.reward-daily-dose .pageHeaderTitle h1 {
+  color: rgb(35, 201, 79);
+}
+
+html.reward-daily-dose .pageHeaderTitle h2 {
+  color: rgb(206, 82, 207);
+}
+
+html.reward-daily-dose .awardName {
+  color: rgb(35, 201, 79);
+}
+
+html.reward-daily-dose .awardSubtitle {
+  color: rgb(206, 82, 207);
+}
+
+html.reward-daily-dose .award h3 {
+  color: rgb(34, 177, 76);
+}
+
+html.reward-daily-dose .award p {
+  color: rgb(206, 82, 207);
+}
+
+html.reward-daily-dose .deus-ex-hr {
+  background: linear-gradient(to right, rgba(249, 253, 68, 0.3) 0%, rgba(255, 255, 253, 0.3) 50%, rgba(249, 253, 68, 0.3) 100%);
+}
+
+html.reward-daily-dose .item-name {
+  color: white;
+  text-shadow: black 2px 2px;
+}
+
+html.reward-daily-dose .item-quantity {
+  color: white;
+}
+
+html.reward-daily-dose #inventory h1 {
+  color: rgb(35, 201, 79);
+  text-shadow: black 2px 2px;
+}

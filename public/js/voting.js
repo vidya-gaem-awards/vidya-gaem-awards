@@ -144,11 +144,41 @@ $(document).ready(function () {
             element.find('img').attr('src', '/uploads/rewards/' + reward.id + '.png');
             element.find('.item-name').text(reward.name);
             element.find('.item-quantity').text('Quantity: ' + quantity);
+            if (reward.type === 'none' && reward.shortName !== 'nothing') {
+                element.find('.item-button').hide();
+            } else {
+                element.find('.item-button').show().attr('data-type', reward.type).attr('data-id', reward.shortName);
+            }
             element.show();
             element.appendTo('.inventory-container');
         }
     }
     updateInventory();
+
+    if (localStorage.getItem('activeCSS')) {
+        $('html').addClass('reward-' + localStorage.getItem('activeCSS'));
+    }
+
+    $('#inventory').on('click', '.item-button', function () {
+        var type = $(this).attr('data-type');
+        var id = $(this).attr('data-id');
+        if (type === undefined) {
+            return;
+        }
+
+        if (type === 'none') {
+            if (localStorage.getItem('activeCSS')) {
+                $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
+                localStorage.removeItem('activeCSS');
+            }
+        } else if (type === 'css') {
+            if (localStorage.getItem('activeCSS')) {
+                $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
+            }
+            localStorage.setItem('activeCSS', id);
+            $('html').addClass('reward-' + id);
+        }
+    });
 
     $('#buy-lootbox').click(function () {
         if (inventory['shekels'] < lootboxCost) {

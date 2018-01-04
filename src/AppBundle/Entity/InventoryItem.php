@@ -30,6 +30,11 @@ class InventoryItem implements \JsonSerializable
     private $image;
 
     /**
+     * @var string
+     */
+    private $type = 'none';
+
+    /**
      * Get id
      *
      * @return integer
@@ -130,6 +135,24 @@ class InventoryItem implements \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return InventoryItem
+     */
+    public function setType(string $type): InventoryItem
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -144,6 +167,7 @@ class InventoryItem implements \JsonSerializable
             'name' => $this->getName(),
             'rarity' => $this->getRarity(),
             'image' => $this->getImage(),
+            'type' => $this->getType(),
         ];
     }
 }
