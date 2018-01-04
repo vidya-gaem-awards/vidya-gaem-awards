@@ -69,6 +69,14 @@
             <code>{{ action.data1 }}</code><br>
           </div>
         {% endif %}
+        {% if action.action starts with 'item' %}
+          <div style="margin-left: 31px; margin-top: 5px;">
+            {% if action.tableHistory %}
+              {{ action.tableHistory.values.name }} :
+            {% endif %}
+            <code>{{ action.tableHistory.values['short-name'] }}</code><br>
+          </div>
+        {% endif %}
         {% if action.action == 'user-added' %}
           <div style="margin-left: 31px; margin-top: 5px;">
             <a href="{{ path('viewPerson', {'steamID': entity.username}) }}">{{ entity.getName() }}</a>
