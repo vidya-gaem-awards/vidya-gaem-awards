@@ -300,6 +300,10 @@
   width: 100%;
 }
 
+.item-button {
+  margin: 5px auto 0 auto;
+}
+
 .deus-ex-hr {
   background: linear-gradient(to right, rgb(249, 253, 68) 0%, rgb(255, 255, 253) 50%, rgb(249, 253, 68) 100%);
   padding-top: 15px;

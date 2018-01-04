@@ -53,6 +53,7 @@
       font-weight: normal;
       font-style: italic;
       padding-top: 5px;
+      width: 100%;
     }
   </style>
 
@@ -180,7 +181,7 @@
           <div class="inventory-item" data-toggle="modal" data-target="#dialog-edit" data-id="{{ item.id }}">
             <img src="{{ item.image }}">
             <div class="item-name">{{ item.name }}</div>
-            <div class="item-rarity">Rarity: {{ item.rarity }}</div>
+            <div class="item-rarity">Change: {{ item.rarity }}</div>
           </div>
         {% endfor %}
       </div>
@@ -227,11 +228,11 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-rarity">Rarity</label>
+              <label class="col-xs-3 control-label" for="info-rarity">Chance</label>
               <div class="col-xs-8">
                 <input class="form-control" type="number" id="info-rarity" name="rarity" min="0" max="10" placeholder="10" required
                  style="width: 100px;">
-                <span class="help-block">Rarity is between 0 and 10. An item of rarity 0 will never be shown.</span>
+                <span class="help-block">Chance is linear and is between 0 and 10. An item of chance 0 will never be shown.</span>
               </div>
             </div>
             <div class="form-group">

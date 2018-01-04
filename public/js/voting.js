@@ -111,6 +111,7 @@ $(document).ready(function () {
     }
 
     var inventory = JSON.parse(localStorage.getItem('inventory'));
+    var lootboxCost = 5000;
 
     function updateInventory() {
         if (inventory.version === undefined) {
@@ -126,6 +127,12 @@ $(document).ready(function () {
 
         localStorage.setItem('inventory', JSON.stringify(inventory));
         $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' shekels');
+
+        if (inventory['shekels'] > lootboxCost) {
+            $('#buy-lootbox').removeAttr('disabled');
+        } else {
+            $('#buy-lootbox').attr('disabled', 'disabled');
+        }
 
         $('.kebab').remove();
 
@@ -143,9 +150,33 @@ $(document).ready(function () {
     }
     updateInventory();
 
+    $('#buy-lootbox').click(function () {
+        if (inventory['shekels'] < lootboxCost) {
+            return;
+        }
+
+        openLootboxRewards(true);
+        inventory['shekels'] -= 5000;
+        updateInventory();
+    });
+
+    if (localStorage.getItem('ignoreRewards')) {
+        $('#restoreDrops').show();
+    }
+
     if (!localStorage.getItem('ignoreRewards') && lastVotes.length === 0) {
         showRewardsOnSubmit = true;
     }
+
+    $('#restoreDrops').click(function (event) {
+        event.preventDefault();
+        $(this).remove();
+        localStorage.removeItem('ignoreRewards');
+        if (lastVotes.length === 0) {
+            showRewardsOnSubmit = true;
+        }
+        alert('Transaction successful! You will now receive crate drops when submitting votes.');
+    });
 
     var lootboxSound = new Audio("/ogg/open-box.ogg");
 
@@ -156,7 +187,6 @@ $(document).ready(function () {
         var image = lootbox.find('img');
 
         var choice = itemChoiceArray[getRandomInt(0, itemChoiceArray.length)];
-        console.log(choice);
 
         if (choice === 'shekels') {
             var shekelCount = getRandomInt(2, 1000);
@@ -165,7 +195,6 @@ $(document).ready(function () {
             title.text(shekelCount + " shekels");
         } else {
             var reward = rewards[choice];
-            console.log(reward);
             if ($.inArray(reward.shortName, inventory['unlockKeys']) === -1) {
                 inventory['unlocks'][reward.shortName] = 1;
                 inventory['unlockKeys'].push(reward.shortName);
@@ -201,12 +230,18 @@ $(document).ready(function () {
     $('#neverShowAgain').click(function () {
         localStorage.setItem('ignoreRewards', true);
         $('#rewards').modal('hide');
+        $('#restoreDrops').show();
     });
 
-    function openLootboxRewards() {
-        if (!showRewardsOnSubmit) {
+    function openLootboxRewards(force) {
+        if (!force && !showRewardsOnSubmit) {
             return;
         }
+
+        $('#unboxButton').show();
+        $('#closeRewards').hide();
+        $('.lootbox').removeClass('animate-back');
+        $('.lootbox-title').text('');
 
         var lootboxes = ['pubg', 'ow', 'tf2', 'csgo'];
 
@@ -676,6 +711,6 @@ $(document).ready(function () {
             }
         }, 'json');
 
-        openLootboxRewards();
+        openLootboxRewards(false);
     });
 });

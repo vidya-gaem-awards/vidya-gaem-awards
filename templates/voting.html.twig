@@ -327,6 +327,8 @@
 
     <div class="deus-ex-hr">
       <div id="inventory">
+        <button class="btn btn-lootbox" style="float: right; display: none;" id="restoreDrops">Restore drops ($4.49)</button>
+
         <h1>
           Your Inventory
         </h1>
@@ -336,6 +338,7 @@
             <img src="{{ asset('img/dosh.png') }}">
             <div class="item-name">-1 shekels</div>
             <div class="item-quantity"></div>
+            <button type="button" class="btn btn-lootbox btn-sm item-button" id="buy-lootbox">Buy lootbox<br>5000 shekels</button>
           </div>
           <div class="inventory-item" id="item-template" style="display: none;">
             <img>
