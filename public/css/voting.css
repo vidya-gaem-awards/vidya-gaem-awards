@@ -1323,3 +1323,30 @@ html.reward-cacodemon .item-name {
 html.reward-cacodemon .item-quantity {
   color: white;
 }
+
+html.reward-pumpkinhill {
+  background: linear-gradient(to bottom,rgb(69,22,100) 0%,rgb(201,57,30) 13%,rgb(255,183,30) 25%,rgb(138,11,4) 45%,rgb(70, 27, 7) 55%);
+}
+html.reward-pumpkinhill body {
+  background: url('/img/reward-pumpkinhill.png') no-repeat;
+  background-size: contain;
+  background-attachment: fixed;
+  background-position: bottom center;
+}
+html.reward-pumpkinhill .item-name {
+  color: white;
+  text-shadow: black 2px 2px;
+}
+html.reward-pumpkinhill .deus-ex-hr {
+  background: linear-gradient(to right,rgb(19,8,5) 0%,rgb(48,30,16) 50%,rgb(19,8,5) 100%);
+  padding-top: 15px;
+}
+html.reward-pumpkinhill .item-quantity {
+  color: #888;
+}
+html.reward-pumpkinhill .awardName {
+  color: orange;
+}
+html.reward-pumpkinhill .h1 {
+  color: orange;
+}
