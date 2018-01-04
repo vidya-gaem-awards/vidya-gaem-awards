@@ -1188,6 +1188,12 @@ body {
 }
 
 /** SPECIAL REWARD CSS **/
+#reward-buddie {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
 html.reward-daily-dose {
   background: linear-gradient(to bottom, rgb(34, 177, 76) 0%, rgb(163,73,164) 100%);
 }

@@ -80,7 +80,9 @@ function getRandomInt(min, max) {
 function reset() {
     localStorage.removeItem('ignoreRewards');
     localStorage.removeItem('dragCounter');
+}
 
+function resetRewards() {
     if (localStorage.getItem('activeCSS')) {
         $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
         localStorage.removeItem('activeCSS');
@@ -91,6 +93,10 @@ function reset() {
     }
     if (localStorage.getItem('activeMusic')) {
         localStorage.removeItem('activeMusic');
+    }
+    $('#reward-buddie').hide();
+    if (localStorage.getItem('activeBuddie')) {
+        localStorage.removeItem('activeBuddie');
     }
 }
 
@@ -176,6 +182,10 @@ $(document).ready(function () {
         playMusic(localStorage.getItem('activeMusic'));
     }
 
+    if (localStorage.getItem('activeBuddie')) {
+        activateBuddie(localStorage.getItem('activeBuddie'));
+    }
+
     $('#inventory').on('click', '.item-button', function () {
         var type = $(this).attr('data-type');
         var id = $(this).attr('data-id');
@@ -184,23 +194,18 @@ $(document).ready(function () {
         }
 
         if (type === 'none') {
-            if (localStorage.getItem('activeCSS')) {
-                $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
-                localStorage.removeItem('activeCSS');
-            }
-            if (music) {
-                music.pause();
-                music.currentTime = 0;
-            }
-            if (localStorage.getItem('activeMusic')) {
-                localStorage.removeItem('activeMusic');
-            }
+            resetRewards();
         } else if (type === 'css') {
             if (localStorage.getItem('activeCSS')) {
                 $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
             }
             localStorage.setItem('activeCSS', id);
             $('html').addClass('reward-' + id);
+        }
+
+        if (type === 'buddie') {
+            activateBuddie(id);
+            localStorage.setItem('activeBuddie', id);
         }
 
         if (type === 'music' || id === 'straya') {
@@ -218,6 +223,11 @@ $(document).ready(function () {
         music = new Audio("/ogg/reward-" + id + ".ogg");
         music.volume = 0.25;
         music.play();
+    }
+
+    function activateBuddie(id) {
+        $('#reward-buddie').attr('src', rewards[id].image);
+        $('#reward-buddie').show();
     }
 
     $('#buy-lootbox').click(function () {
