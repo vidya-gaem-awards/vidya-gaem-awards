@@ -210,7 +210,7 @@ $(document).ready(function () {
             localStorage.setItem('activeBuddie', id);
         }
 
-        if (type === 'music' || id === 'straya' || id === 'cacodemon') {
+        if (type === 'music' || id === 'straya' || id === 'cacodemon' || id === 'harmony') {
             playMusic(id, true);
             localStorage.setItem('activeMusic', id);
         }
