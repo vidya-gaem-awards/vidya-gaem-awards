@@ -1350,3 +1350,7 @@ html.reward-pumpkinhill .awardName {
 html.reward-pumpkinhill .h1 {
   color: orange;
 }
+
+html.reward-harmony {
+  background: url('/img/reward-harmony.gif');
+}
