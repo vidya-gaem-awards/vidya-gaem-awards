@@ -80,6 +80,18 @@ function getRandomInt(min, max) {
 function reset() {
     localStorage.removeItem('ignoreRewards');
     localStorage.removeItem('dragCounter');
+
+    if (localStorage.getItem('activeCSS')) {
+        $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
+        localStorage.removeItem('activeCSS');
+    }
+    if (music) {
+        music.pause();
+        music.currentTime = 0;
+    }
+    if (localStorage.getItem('activeMusic')) {
+        localStorage.removeItem('activeMusic');
+    }
 }
 
 $(document).ready(function () {
@@ -160,6 +172,10 @@ $(document).ready(function () {
         $('html').addClass('reward-' + localStorage.getItem('activeCSS'));
     }
 
+    if (localStorage.getItem('activeMusic')) {
+        playMusic(localStorage.getItem('activeMusic'));
+    }
+
     $('#inventory').on('click', '.item-button', function () {
         var type = $(this).attr('data-type');
         var id = $(this).attr('data-id');
@@ -189,6 +205,7 @@ $(document).ready(function () {
 
         if (type === 'music' || id === 'straya') {
             playMusic(id);
+            localStorage.setItem('activeMusic', 'straya');
         }
     });
 

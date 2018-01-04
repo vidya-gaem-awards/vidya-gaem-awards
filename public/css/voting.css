@@ -1239,5 +1239,31 @@ html.reward-straya {
 }
 
 html.reward-straya #reward-image-straya {
-  transform: scale(-2,2) rotate(180deg);
+  transform: scale(-1,1) rotate(180deg);
+  animation-name: straya;
+  animation-duration: 120s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+html.reward-straya #inventory {
+  overflow: visible;
+}
+
+@keyframes straya {
+  from {
+    transform: scale(-1,1) rotate(180deg);
+  }
+
+  to {
+    transform: scale(-10,10) rotate(180deg);
+  }
+}
+
+html.reward-pinkpaint {
+  background: linear-gradient(to bottom,rgb(222,100,222) 0%,rgb(138, 93, 138) 40%,rgb(222,100,222) 90%);
+}
+
+html.reward-rainbowpaint {
+  background: linear-gradient(to bottom,rgb(228, 15, 15) 0%,rgb(136, 47, 136) 15%,rgb(76, 37, 171) 30%,rgb(46, 152, 140) 45%,rgb(43, 154, 29) 60%,rgb(195, 140, 0) 80%);
 }
