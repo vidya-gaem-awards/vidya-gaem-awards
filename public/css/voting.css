@@ -1233,3 +1233,11 @@ html.reward-daily-dose #inventory h1 {
   color: rgb(35, 201, 79);
   text-shadow: black 2px 2px;
 }
+
+html.reward-straya {
+  transform: rotateX(180deg) scaleX(-1);
+}
+
+html.reward-straya #reward-image-straya {
+  transform: scale(-2,2) rotate(180deg);
+}

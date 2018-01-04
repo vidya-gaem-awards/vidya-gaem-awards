@@ -12,6 +12,7 @@ onDumbShit(function () {
 var dragCounter;
 var toddDialog;
 var showRewardsOnSubmit = false;
+var music = false;
 
 if (localStorage.getItem('dragCounter')) {
     dragCounter = localStorage.getItem('dragCounter');
@@ -141,7 +142,7 @@ $(document).ready(function () {
             var quantity = inventory.unlocks[reward.shortName];
             var element = $('#item-template').clone();
             element.addClass('kebab');
-            element.find('img').attr('src', '/uploads/rewards/' + reward.id + '.png');
+            element.find('img').attr('src', '/uploads/rewards/' + reward.id + '.png').attr('id', 'reward-image-' + reward.shortName);
             element.find('.item-name').text(reward.name);
             element.find('.item-quantity').text('Quantity: ' + quantity);
             if (reward.type === 'none' && reward.shortName !== 'nothing') {
@@ -171,6 +172,13 @@ $(document).ready(function () {
                 $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
                 localStorage.removeItem('activeCSS');
             }
+            if (music) {
+                music.pause();
+                music.currentTime = 0;
+            }
+            if (localStorage.getItem('activeMusic')) {
+                localStorage.removeItem('activeMusic');
+            }
         } else if (type === 'css') {
             if (localStorage.getItem('activeCSS')) {
                 $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
@@ -178,7 +186,22 @@ $(document).ready(function () {
             localStorage.setItem('activeCSS', id);
             $('html').addClass('reward-' + id);
         }
+
+        if (type === 'music' || id === 'straya') {
+            playMusic(id);
+        }
     });
+
+    function playMusic(id) {
+        if (music) {
+            music.pause();
+            music.currentTime = 0;
+        }
+
+        music = new Audio("/ogg/reward-" + id + ".ogg");
+        music.volume = 0.25;
+        music.play();
+    }
 
     $('#buy-lootbox').click(function () {
         if (inventory['shekels'] < lootboxCost) {
