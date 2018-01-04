@@ -211,13 +211,23 @@ $(document).ready(function () {
         if (type === 'music' || id === 'straya') {
             playMusic(id);
             localStorage.setItem('activeMusic', 'straya');
+            $('#resetRewardsButton').show();
         }
+    });
+
+    $('#resetRewardsButton').click(function () {
+        resetRewards();
+        $(this).hide();
     });
 
     function playMusic(id) {
         if (music) {
             music.pause();
             music.currentTime = 0;
+        }
+
+        if (id === 'straya') {
+            $('#resetRewardsButton').show();
         }
 
         music = new Audio("/ogg/reward-" + id + ".ogg");

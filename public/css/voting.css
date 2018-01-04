@@ -1260,6 +1260,10 @@ html.reward-straya .modal-open {
   overflow-y: scroll;
 }
 
+html.reward-straya #resetRewardsButton {
+  transform: rotate(180deg);
+}
+
 @keyframes straya {
   from {
     transform: scale(-1,1) rotate(180deg);
