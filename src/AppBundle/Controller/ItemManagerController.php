@@ -116,7 +116,7 @@ class ItemManagerController extends Controller
         }
 
         $auditService->add(
-            new Action('advert-' . $action, $item->getId()),
+            new Action('item-' . $action, $item->getId()),
             new TableHistory(InventoryItem::class, $item->getId(), $post->all())
         );
 
