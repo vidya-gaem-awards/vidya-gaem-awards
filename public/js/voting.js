@@ -143,8 +143,9 @@ $(document).ready(function () {
         if (specialReward) {
             var reward = rewards[getRandomInt(0, rewards.length)];
 
-            if (!$.inArray(reward, inventory['unlocks'])) {
+            if ($.inArray(reward.id, inventory['unlockKeys']) === -1) {
                 inventory['unlocks'].push(reward);
+                inventory['unlockKeys'].push(reward.id);
             }
 
             image.attr('src', '/img/reward-' + reward.id + '.png');
