@@ -162,7 +162,7 @@ $(document).ready(function () {
             var quantity = inventory.unlocks[reward.shortName];
             var element = $('#item-template').clone();
             element.addClass('kebab');
-            element.find('img').attr('src', '/uploads/rewards/' + reward.id + '.png').attr('id', 'reward-image-' + reward.shortName);
+            element.find('img').attr('src', reward.image).attr('id', 'reward-image-' + reward.shortName);
             element.find('.item-name').text(reward.name);
             element.find('.item-quantity').text('Quantity: ' + quantity);
             if (reward.type === 'none' && reward.shortName !== 'nothing') {
@@ -181,7 +181,7 @@ $(document).ready(function () {
     }
 
     if (localStorage.getItem('activeMusic')) {
-        playMusic(localStorage.getItem('activeMusic'));
+        playMusic(localStorage.getItem('activeMusic'), true);
     }
 
     if (localStorage.getItem('activeBuddie')) {
@@ -205,19 +205,18 @@ $(document).ready(function () {
             $('html').addClass('reward-' + id);
         }
 
-        if (type === 'buddie') {
+        if (type === 'buddie' || id === 'cacodemon') {
             activateBuddie(id);
             localStorage.setItem('activeBuddie', id);
         }
 
-        if (type === 'music' || id === 'straya') {
-            playMusic(id);
-            localStorage.setItem('activeMusic', 'straya');
-            $('#resetRewardsButton').show();
+        if (type === 'music' || id === 'straya' || id === 'cacodemon') {
+            playMusic(id, true);
+            localStorage.setItem('activeMusic', id);
         }
 
         if (id === 'whirr') {
-            playMusic(id);
+            playMusic(id, false);
         }
     });
 
@@ -226,14 +225,23 @@ $(document).ready(function () {
         $(this).hide();
     });
 
-    function playMusic(id) {
+    function playMusic(id, showButton) {
         if (music) {
             music.pause();
             music.currentTime = 0;
         }
 
-        if (id === 'straya') {
-            $('#resetRewardsButton').show();
+        if (showButton) {
+            var text;
+            if (id === 'straya') {
+                text = 'Ban Australians ($99.99 AUD)';
+            } else if (id === 'cacodemon') {
+                text = 'Rip and tear (beserk powerup)';
+            } else {
+                text = 'Mute music ($10.00)'
+            }
+
+            $('#resetRewardsButton').show().text(text);
         }
 
         music = new Audio("/ogg/reward-" + id + ".ogg");
@@ -297,7 +305,7 @@ $(document).ready(function () {
             } else {
                 inventory['unlocks'][reward.shortName]++;
             }
-            image.attr('src', '/uploads/rewards/' + reward.id + '.png');
+            image.attr('src', reward.image);
             title.text(reward.name);
         }
         updateInventory();

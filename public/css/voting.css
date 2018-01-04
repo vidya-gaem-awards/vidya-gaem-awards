@@ -1281,3 +1281,45 @@ html.reward-pinkpaint {
 html.reward-rainbowpaint {
   background: linear-gradient(to bottom,rgb(228, 15, 15) 0%,rgb(136, 47, 136) 15%,rgb(76, 37, 171) 30%,rgb(46, 152, 140) 45%,rgb(43, 154, 29) 60%,rgb(195, 140, 0) 80%);
 }
+
+html.reward-cacodemon {
+  background: linear-gradient(to bottom,rgb(124, 13, 16) 0%, rgb(42, 16, 20) 70%);
+}
+
+html.reward-cacodemon .pageHeaderTitle h1 {
+  color: #ec3e06;
+}
+
+html.reward-cacodemon .awardName {
+  color: #ec3e06;
+}
+
+html.reward-cacodemon #topAwards {
+  color: #ec3e06;
+}
+
+html.reward-cacodemon .award h3 {
+  color: #ec3e06;
+}
+
+html.reward-cacodemon .zig {
+  background: linear-gradient(to bottom,rgba(232,62,6,0) 0%,rgba(232,62,6,0.3) 40%,rgba(232,62,6,1) 40%,rgba(232,62,6,1) 60%,rgba(232,62,6,0.3) 60%,rgba(232,62,6,0) 100% );
+}
+
+html.reward-cacodemon .deus-ex-hr {
+  background: black;
+}
+
+html.reward-cacodemon #inventory h1 {
+  color: red;
+  text-shadow: none;
+}
+
+html.reward-cacodemon .item-name {
+  color: red;
+  text-shadow: none;
+}
+
+html.reward-cacodemon .item-quantity {
+  color: white;
+}
