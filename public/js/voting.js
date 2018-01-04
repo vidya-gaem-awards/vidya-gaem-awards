@@ -130,7 +130,9 @@ $(document).ready(function () {
     }
 
     var inventory = JSON.parse(localStorage.getItem('inventory'));
-    var lootboxCost = 1;
+    var lootboxCost = 1500;
+
+    $('#lootboxCostText').text(lootboxCost);
 
     function updateInventory() {
         if (inventory.version === undefined) {

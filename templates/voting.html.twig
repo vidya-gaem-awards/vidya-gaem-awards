@@ -4,7 +4,7 @@
 
 {% block css %}
   {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('css/voting.css') }}?v=9">
+  <link rel="stylesheet" href="{{ asset('css/voting.css') }}?v=10">
   <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
 {% endblock %}
 
@@ -12,7 +12,7 @@
   {{ parent() }}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
   <script src='{{ asset('js/dumbshit.js') }}'></script>
-  <script src='{{ asset('js/voting.js') }}?v=9'></script>
+  <script src='{{ asset('js/voting.js') }}?v=10'></script>
 {% endblock %}
 
 {% block head %}
@@ -341,7 +341,7 @@
             <img src="{{ asset('img/dosh.png') }}">
             <div class="item-name">-1 shekels</div>
             <div class="item-quantity"></div>
-            <button type="button" class="btn btn-lootbox btn-sm item-button" id="buy-lootbox">Buy lootbox<br>5000 shekels</button>
+            <button type="button" class="btn btn-lootbox btn-sm item-button" id="buy-lootbox">Buy lootbox<br><span id="lootboxCostText"></span> shekels</button>
           </div>
           <div class="inventory-item" id="item-template" style="display: none;">
             <img>
