@@ -1189,7 +1189,7 @@ body {
 
 /** SPECIAL REWARD CSS **/
 #reward-buddie {
-  position: absolute;
+  position: fixed;
   right: 5px;
   bottom: 5px;
 }
