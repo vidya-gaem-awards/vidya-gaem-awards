@@ -179,8 +179,7 @@ class VotingController extends Controller
             $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, $item->getRarity(), $item->getShortName()));
         }
 
-        $shekelChance = 50; // percent
-
+        $shekelChance = 80; // percent
         $shekelChance = round(1 / ((100 - $shekelChance) / 100) - 1);
 
         $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, count($itemChoiceArray) * $shekelChance, 'shekels'));
