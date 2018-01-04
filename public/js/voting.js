@@ -130,7 +130,7 @@ $(document).ready(function () {
     }
 
     var inventory = JSON.parse(localStorage.getItem('inventory'));
-    var lootboxCost = 5000;
+    var lootboxCost = 1;
 
     function updateInventory() {
         if (inventory.version === undefined) {
@@ -236,7 +236,7 @@ $(document).ready(function () {
         }
 
         openLootboxRewards(true);
-        inventory['shekels'] -= 5000;
+        inventory['shekels'] -= lootboxCost;
         updateInventory();
     });
 

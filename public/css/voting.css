@@ -1256,6 +1256,10 @@ html.reward-straya #inventory {
   overflow: visible;
 }
 
+html.reward-straya .modal-open {
+  overflow-y: scroll;
+}
+
 @keyframes straya {
   from {
     transform: scale(-1,1) rotate(180deg);
