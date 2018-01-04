@@ -399,7 +399,7 @@ body {
 
 .awardHeaderContainer {
   margin: 0 50px 20px 50px;
-  padding: 20px;
+  padding: 20px 40px;
   background: linear-gradient(to right, rgba(0,0,0,0) 5%,rgba(0,0,0,0.2) 20%,rgba(0,0,0,0.2) 80%,rgba(0,0,0,0) 95%)
 }
 
