@@ -7,6 +7,8 @@ onDumbShit(function () {
     });
     var audio = new Audio('/2015voting/woah.mp3');
     audio.play();
+
+    $('#cheat-code').show();
 });
 
 var dragCounter;
@@ -129,10 +131,12 @@ $(document).ready(function () {
         }));
     }
 
-    var inventory = JSON.parse(localStorage.getItem('inventory'));
+    inventory = JSON.parse(localStorage.getItem('inventory'));
     var lootboxCost = 1500;
 
     $('#lootboxCostText').text(lootboxCost);
+
+    var inventory;
 
     function updateInventory() {
         if (inventory.version === undefined) {
@@ -225,6 +229,31 @@ $(document).ready(function () {
         $(this).hide();
     });
 
+    $('#cheat-code').submit(function (event) {
+        event.preventDefault();
+        var code = $('#cheat-code-input').val();
+
+        $('#cheat-code-input').val('');
+        if (code === 'rosebud') {
+            inventory['shekels'] += 1000;
+            playCheatMusic();
+            $('#cheat-code-input').val('rosebud');
+        } else if (code === 'motherlode') {
+            inventory['shekels'] += 50000;
+            playCheatMusic();
+        } else if (code === 'idkfa') {
+            addRewardToInventory('cacodemon');
+            playCheatMusic();
+        }
+        updateInventory();
+    });
+
+    function playCheatMusic() {
+        var sound = new Audio("/ogg/tf2.ogg");
+        sound.volume = 0.25;
+        sound.play();
+    }
+
     function playMusic(id, showButton) {
         if (music) {
             music.pause();
@@ -299,17 +328,22 @@ $(document).ready(function () {
             title.text(shekelCount + " shekels");
         } else {
             var reward = rewards[choice];
-            if ($.inArray(reward.shortName, inventory['unlockKeys']) === -1) {
-                inventory['unlocks'][reward.shortName] = 1;
-                inventory['unlockKeys'].push(reward.shortName);
-            } else {
-                inventory['unlocks'][reward.shortName]++;
-            }
+            addRewardToInventory(choice);
             image.attr('src', reward.image);
             title.text(reward.name);
         }
         updateInventory();
     };
+
+    function addRewardToInventory(choice) {
+        var reward = rewards[choice];
+        if ($.inArray(reward.shortName, inventory['unlockKeys']) === -1) {
+            inventory['unlocks'][reward.shortName] = 1;
+            inventory['unlockKeys'].push(reward.shortName);
+        } else {
+            inventory['unlocks'][reward.shortName]++;
+        }
+    }
 
     $('#unboxButton').click(function () {
         lootboxSound.volume = 0.25;

@@ -4,7 +4,7 @@
 
 {% block css %}
   {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('css/voting.css') }}?v=15">
+  <link rel="stylesheet" href="{{ asset('css/voting.css') }}?v=17">
   <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
 {% endblock %}
 
@@ -12,7 +12,7 @@
   {{ parent() }}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
   <script src='{{ asset('js/dumbshit.js') }}'></script>
-  <script src='{{ asset('js/voting.js') }}?v=15'></script>
+  <script src='{{ asset('js/voting.js') }}?v=17'></script>
 {% endblock %}
 
 {% block head %}
@@ -329,6 +329,15 @@
 
     <div class="deus-ex-hr">
       <div id="inventory">
+
+        <form class="form-inline" id="cheat-code" style="margin-bottom: 10px; display: none;">
+          <div class="form-group" style="width: 400px;">
+            <label for="cheat-code-input" class="item-quantity">Enter cheat code:</label>
+            <input type="text" class="form-control" id="cheat-code-input">
+            <button type="submit" class="btn btn-default btn-lootbox">Activate</button>
+          </div>
+        </form>
+
         <button class="btn btn-lootbox" style="float: right; display: none;" id="resetRewardsButton">Mute music ($10.00)</button>
         <button class="btn btn-lootbox" style="float: right; display: none;" id="restoreDrops">Restore drops ($4.49)</button>
 
