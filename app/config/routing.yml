@@ -282,6 +282,16 @@ configPost:
 # SPECIAL
 #
 
+itemManager:
+    path:     /lootboxes
+    methods:  [GET]
+    defaults: { _controller: AppBundle:ItemManager:index }
+
+itemPost:
+    path:     /lootboxes
+    methods:  [POST]
+    defaults: { _controller: AppBundle:ItemManager:post }
+
 advertManager:
     path:     /adverts
     defaults: { _controller: AppBundle:AdvertManager:index }

@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Advertisement;
+use AppBundle\Entity\InventoryItem;
 use AppBundle\Entity\User;
 use AppBundle\Service\AuditService;
 use AppBundle\Service\ConfigService;
@@ -154,6 +155,7 @@ class VotingController extends Controller
             $session->set('legacyVotingPage', false);
         }
 
+        // Fake ads
         $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
 
         if (empty($adverts)) {
@@ -162,6 +164,26 @@ class VotingController extends Controller
             $ad1 = $adverts[array_rand($adverts)];
             $ad2 = $adverts[array_rand($adverts)];
         }
+
+        // Lootbox items
+        $items = $em->createQueryBuilder()
+            ->select('i')
+            ->from(InventoryItem::class, 'i')
+            ->indexBy('i', 'i.shortName')
+            ->getQuery()
+            ->getResult();
+
+        $itemChoiceArray = [];
+        /** @var InventoryItem $item */
+        foreach ($items as $item) {
+            $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, $item->getRarity(), $item->getShortName()));
+        }
+
+        $shekelChance = 50; // percent
+
+        $shekelChance = round(1 / ((100 - $shekelChance) / 100) - 1);
+
+        $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, count($itemChoiceArray) * $shekelChance, 'shekels'));
 
         return $this->render('voting.html.twig', [
             'title' => 'Voting',
@@ -179,6 +201,8 @@ class VotingController extends Controller
             'votingStyle' => $session->get('legacyVotingPage', false) ? 'legacy' : 'new',
             'ad1' => $ad1,
             'ad2' => $ad2,
+            'items' => $items,
+            'itemChoiceArray' => $itemChoiceArray,
         ]);
     }
 

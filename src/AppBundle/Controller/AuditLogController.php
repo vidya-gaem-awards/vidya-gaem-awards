@@ -30,6 +30,9 @@ class AuditLogController extends Controller
             'advert-new' => 'Created an advert',
             'advert-edit' => 'Edited an advert',
             'advert-delete' => 'Deleted an advert',
+            'item-new' => 'Created a lootbox reward',
+            'item-edit' => 'Edited a lootbox reward',
+            'item-delete' => 'Deleted a lootbox reward',
         ];
 
         $result = $em->createQueryBuilder()

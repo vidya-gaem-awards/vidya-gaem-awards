@@ -26,6 +26,11 @@
     </script>
   {% endif %}
 
+  <script type="text/javascript">
+      var rewards = {{ items | json_encode | raw }};
+      var itemChoiceArray = {{ itemChoiceArray | json_encode | raw }};
+  </script>
+
   {% if votingOpen %}
     <style type="text/css">
       .aNominee {
@@ -330,10 +335,12 @@
           <div class="inventory-item" id="shekelCount">
             <img src="{{ asset('img/dosh.png') }}">
             <div class="item-name">-1 shekels</div>
+            <div class="item-quantity"></div>
           </div>
           <div class="inventory-item" id="item-template" style="display: none;">
             <img>
             <div class="item-name"></div>
+            <div class="item-quantity"></div>
           </div>
         </div>
       </div>

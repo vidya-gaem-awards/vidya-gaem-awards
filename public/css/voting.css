@@ -288,10 +288,16 @@
 .item-name {
   margin-top: 10px;
   text-align: center;
-  flex-grow: 1;
   color: black;
   text-shadow: white 2px 2px;
   font-size: 18px;
+  width: 100%;
+}
+
+.item-quantity {
+  color: #333;
+  font-style: italic;
+  width: 100%;
 }
 
 .deus-ex-hr {

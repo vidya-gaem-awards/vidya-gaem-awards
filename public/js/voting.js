@@ -111,18 +111,32 @@ $(document).ready(function () {
     }
 
     var inventory = JSON.parse(localStorage.getItem('inventory'));
+
     function updateInventory() {
+        if (inventory.version === undefined) {
+            inventory.version = 2;
+            var temp = inventory.unlocks;
+            inventory.unlocks = {};
+            inventory.unlockKeys = [];
+            for (var i = 0; i < temp.length; i++) {
+                inventory.unlocks[temp[i].id] = 1;
+                inventory.unlockKeys.push(temp[i].id);
+            }
+        }
+
         localStorage.setItem('inventory', JSON.stringify(inventory));
         $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' shekels');
 
         $('.kebab').remove();
 
-        for (var i = 0; i < inventory.unlocks.length; i++) {
-            var reward = inventory.unlocks[i];
+        for (var i = 0; i < inventory.unlockKeys.length; i++) {
+            var reward = rewards[inventory.unlockKeys[i]];
+            var quantity = inventory.unlocks[reward.shortName];
             var element = $('#item-template').clone();
             element.addClass('kebab');
-            element.find('img').attr('src', '/img/reward-' + reward.id + '.png');
+            element.find('img').attr('src', '/uploads/rewards/' + reward.id + '.png');
             element.find('.item-name').text(reward.name);
+            element.find('.item-quantity').text('Quantity: ' + quantity);
             element.show();
             element.appendTo('.inventory-container');
         }
@@ -141,29 +155,27 @@ $(document).ready(function () {
         var title = lootbox.find('.lootbox-title');
         var image = lootbox.find('img');
 
-        var rewards = [
-            {id: 'straya', name: 'The Power of Shitposting'}
-        ];
+        var choice = itemChoiceArray[getRandomInt(0, itemChoiceArray.length)];
+        console.log(choice);
 
-        var specialReward = (getRandomInt(0, 100) + 1) > 95;
-        if (specialReward) {
-            var reward = rewards[getRandomInt(0, rewards.length)];
-
-            if ($.inArray(reward.id, inventory['unlockKeys']) === -1) {
-                inventory['unlocks'].push(reward);
-                inventory['unlockKeys'].push(reward.id);
-            }
-
-            image.attr('src', '/img/reward-' + reward.id + '.png');
-            title.text(reward.name);
-        } else {
+        if (choice === 'shekels') {
             var shekelCount = getRandomInt(2, 1000);
             inventory['shekels'] += shekelCount;
             image.attr('src', '/img/dosh.png');
             title.text(shekelCount + " shekels");
+        } else {
+            var reward = rewards[choice];
+            console.log(reward);
+            if ($.inArray(reward.shortName, inventory['unlockKeys']) === -1) {
+                inventory['unlocks'][reward.shortName] = 1;
+                inventory['unlockKeys'].push(reward.shortName);
+            } else {
+                inventory['unlocks'][reward.shortName]++;
+            }
+            image.attr('src', '/uploads/rewards/' + reward.id + '.png');
+            title.text(reward.name);
         }
         updateInventory();
-
     };
 
     $('#unboxButton').click(function () {
