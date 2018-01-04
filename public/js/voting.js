@@ -215,6 +215,10 @@ $(document).ready(function () {
             localStorage.setItem('activeMusic', 'straya');
             $('#resetRewardsButton').show();
         }
+
+        if (id === 'whirr') {
+            playMusic(id);
+        }
     });
 
     $('#resetRewardsButton').click(function () {
