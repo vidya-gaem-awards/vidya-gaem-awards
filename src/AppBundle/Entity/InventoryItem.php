@@ -30,9 +30,24 @@ class InventoryItem implements \JsonSerializable
     private $image;
 
     /**
+     * @var boolean
+     */
+    private $css = false;
+
+    /**
+     * @var boolean
+     */
+    private $buddie = false;
+
+    /**
+     * @var boolean
+     */
+    private $music = false;
+
+    /**
      * @var string
      */
-    private $type = 'none';
+    private $musicFile;
 
     /**
      * Get id
@@ -135,20 +150,74 @@ class InventoryItem implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getType(): string
+    public function hasCss(): bool
     {
-        return $this->type;
+        return $this->css;
     }
 
     /**
-     * @param string $type
+     * @param bool $css
      * @return InventoryItem
      */
-    public function setType(string $type): InventoryItem
+    public function setCss(bool $css): InventoryItem
     {
-        $this->type = $type;
+        $this->css = $css;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBuddie(): bool
+    {
+        return $this->buddie;
+    }
+
+    /**
+     * @param bool $buddie
+     * @return InventoryItem
+     */
+    public function setBuddie(bool $buddie): InventoryItem
+    {
+        $this->buddie = $buddie;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMusic(): bool
+    {
+        return $this->music;
+    }
+
+    /**
+     * @param bool $music
+     * @return InventoryItem
+     */
+    public function setMusic(bool $music): InventoryItem
+    {
+        $this->music = $music;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMusicFile()
+    {
+        return $this->musicFile;
+    }
+
+    /**
+     * @param string $musicFile
+     * @return InventoryItem
+     */
+    public function setMusicFile(string $musicFile): InventoryItem
+    {
+        $this->musicFile = $musicFile;
         return $this;
     }
 
@@ -167,7 +236,10 @@ class InventoryItem implements \JsonSerializable
             'name' => $this->getName(),
             'rarity' => $this->getRarity(),
             'image' => $this->getImage(),
-            'type' => $this->getType(),
+            'css' => $this->hasCss(),
+            'buddie' => $this->isBuddie(),
+            'music' => $this->hasMusic(),
+            'musicFile' => $this->getMusicFile(),
         ];
     }
 }

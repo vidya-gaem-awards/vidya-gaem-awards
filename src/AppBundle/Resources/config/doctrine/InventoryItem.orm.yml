@@ -22,6 +22,15 @@ AppBundle\Entity\InventoryItem:
     image:
       type: string
       nullable: true
-    type:
-      type: string
+    css:
+      type: boolean
       nullable: false
+    buddie:
+      type: boolean
+      nullable: false
+    music:
+      type: boolean
+      nullable: false
+    musicFile:
+      type: string
+      nullable: true

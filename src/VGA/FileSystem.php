@@ -5,7 +5,14 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileSystem
 {
-    const FILESIZE_LIMIT = 1024 * 1024 * 2;
+    const FILESIZE_LIMIT = 1024 * 1024 * 5;
+
+    const EXTENSION_MAPPING = [
+        'image/png' => '.png',
+        'image/jpeg' => '.jpg',
+        'image/gif' => '.gif',
+        'audio/ogg' => '.ogg',
+    ];
 
     /**
      * This function does not adhere to security best practices (maybe?)
@@ -23,7 +30,7 @@ class FileSystem
             throw new \Exception('No file was uploaded');
         } elseif (!$file->isValid()) {
             throw new \Exception($file->getErrorMessage());
-        } elseif (!in_array($file->getClientMimeType(), ['image/png', 'image/jpeg', 'image/gif'], true)) {
+        } elseif (!in_array($file->getClientMimeType(), array_keys(self::EXTENSION_MAPPING), true)) {
             throw new \Exception('Invalid MIME type.');
         } elseif ($file->getClientSize() > self::FILESIZE_LIMIT) {
             throw new \Exception('Filesize of ' . self::humanFilesize($file->getClientSize()) . ' exceeds limit of ' . self::humanFilesize(self::FILESIZE_LIMIT));
@@ -33,13 +40,7 @@ class FileSystem
             mkdir(__DIR__ . '/../../public/uploads/' . $directory, 0777, true);
         }
 
-        $extensions = [
-            'image/png' => '.png',
-            'image/jpeg' => '.jpg',
-            'image/gif' => '.gif'
-        ];
-
-        $filename_to_use = $filename . $extensions[$file->getClientMimeType()];
+        $filename_to_use = $filename . self::EXTENSION_MAPPING[$file->getClientMimeType()];
 
         $file->move(__DIR__ . '/../../public/uploads/' . $directory . '/', $filename_to_use);
         return '/uploads/' . $directory . '/' . $filename_to_use;

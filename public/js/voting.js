@@ -172,7 +172,7 @@ $(document).ready(function () {
             if (reward.type === 'none' && reward.shortName !== 'nothing') {
                 element.find('.item-button').hide();
             } else {
-                element.find('.item-button').show().attr('data-type', reward.type).attr('data-id', reward.shortName);
+                element.find('.item-button').show().attr('data-id', reward.shortName);
             }
             element.show();
             element.appendTo('.inventory-container');
@@ -197,15 +197,14 @@ $(document).ready(function () {
     }
 
     $('#inventory').on('click', '.item-button', function () {
-        var type = $(this).attr('data-type');
         var id = $(this).attr('data-id');
-        if (type === undefined) {
-            return;
+        var reward = rewards[id];
+
+        if (id === 'nothing') {
+            resetRewards();
         }
 
-        if (type === 'none') {
-            resetRewards();
-        } else if (type === 'css') {
+        if (reward.css) {
             if (localStorage.getItem('activeCSS')) {
                 $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
             }
@@ -213,23 +212,31 @@ $(document).ready(function () {
             $('html').addClass('reward-' + id);
         }
 
-        if (type === 'buddie' || id === 'cacodemon') {
+        if (reward.buddie) {
             activateBuddie(id);
             localStorage.setItem('activeBuddie', id);
         }
 
-        if (type === 'music' || id === 'straya' || id === 'cacodemon' || id === 'harmony') {
+        if (reward.music) {
             playMusic(id, true);
-            localStorage.setItem('activeMusic', id);
-        }
-
-        if (id === 'whirr') {
-            playMusic(id, false);
+            if (id === 'whirr') {
+                localStorage.removeItem('activeMusic');
+            } else {
+                localStorage.setItem('activeMusic', id);
+            }
         }
     });
 
     $('#resetRewardsButton').click(function () {
-        resetRewards();
+        if (music) {
+            music.pause();
+            music.currentTime = 0;
+        }
+
+        if (localStorage.getItem('activeCSS') === 'straya') {
+            resetRewards();
+        }
+
         $(this).hide();
     });
 
@@ -262,6 +269,11 @@ $(document).ready(function () {
     }
 
     function playMusic(id, showButton) {
+        var reward = rewards[id];
+        if (!reward.music) {
+            return;
+        }
+
         if (music) {
             music.pause();
             music.currentTime = 0;
@@ -271,8 +283,6 @@ $(document).ready(function () {
             var text;
             if (id === 'straya') {
                 text = 'Ban Australians ($99.99 AUD)';
-            } else if (id === 'cacodemon') {
-                text = 'Rip and tear (beserk powerup)';
             } else {
                 text = 'Mute music ($10.00)'
             }
@@ -280,7 +290,7 @@ $(document).ready(function () {
             $('#resetRewardsButton').show().text(text);
         }
 
-        music = new Audio("/ogg/reward-" + id + ".ogg");
+        music = new Audio(reward.musicFile);
         music.volume = 0.25;
         music.play();
     }

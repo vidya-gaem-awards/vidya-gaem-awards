@@ -87,7 +87,9 @@ class ItemManagerController extends Controller
             ->setShortName($post->get('short-name'))
             ->setName($post->get('name'))
             ->setRarity($post->get('rarity'))
-            ->setType($post->get('type'));
+            ->setCss($post->getBoolean('css'))
+            ->setBuddie($post->getBoolean('buddie'))
+            ->setMusic($post->getBoolean('music'));
 
         $em->persist($item);
         $em->flush();
@@ -111,6 +113,29 @@ class ItemManagerController extends Controller
             }
 
             $item->setImage($imagePath);
+            $em->persist($item);
+            $em->flush();
+        }
+
+        if ($request->files->get('musicFile')) {
+            if ($item->getMusicFile()) {
+                FileSystem::deleteFile(
+                    'music',
+                    $item->getID() . substr($item->getMusicFile(), -4)
+                );
+            }
+
+            try {
+                $musicPath = FileSystem::handleUploadedFile(
+                    $request->files->get('musicFile'),
+                    'music',
+                    $item->getID()
+                );
+            } catch (\Exception $e) {
+                return $this->json(['error' => $e->getMessage()]);
+            }
+
+            $item->setMusicFile($musicPath);
             $em->persist($item);
             $em->flush();
         }
