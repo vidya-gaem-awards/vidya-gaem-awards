@@ -18,8 +18,8 @@
 
     .inventory-item {
       width: 150px;
-      margin: 10px;
-      padding: 10px;
+      margin: 5px;
+      padding: 5px;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
@@ -41,7 +41,7 @@
     }
 
     .item-name {
-      margin-top: 10px;
+      margin-top: 5px;
       text-align: center;
       flex-grow: 1;
       color: black;
@@ -53,6 +53,12 @@
       font-weight: normal;
       font-style: italic;
       padding-top: 5px;
+      width: 100%;
+    }
+
+    .item-type {
+      margin-top: 5px;
+      text-align: center;
       width: 100%;
     }
   </style>
@@ -185,6 +191,20 @@
         {% for item in items %}
           <div class="inventory-item" data-toggle="modal" data-target="#dialog-edit" data-id="{{ item.id }}">
             <img src="{{ item.image }}">
+              <div class="item-type">
+                  {% if item.css %}
+                      <div class="label label-primary">CSS</div>
+                  {% endif %}
+                  {% if item.buddie %}
+                      <div class="label label-success">Buddie</div>
+                  {% endif %}
+                  {% if item.music %}
+                      <div class="label label-danger">Music</div>
+                  {% endif %}
+                  {% if not item.css and not item.buddie and not item.music %}
+                    <div class="label label-default">None</div>
+                  {% endif %}
+              </div>
             <div class="item-name">{{ item.name }}</div>
             <div class="item-rarity">Chance: {{ item.rarity }}</div>
           </div>
