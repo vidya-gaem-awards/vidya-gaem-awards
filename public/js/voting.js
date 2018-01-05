@@ -184,7 +184,7 @@ $(document).ready(function () {
         $('html').addClass('reward-' + localStorage.getItem('activeCSS'));
     }
 
-    if (localStorage.getItem('activeMusic')) {
+    if (localStorage.getItem('activeMusic') && !localStorage.getItem('muteMusic')) {
         playMusic(localStorage.getItem('activeMusic'), true);
     }
 
@@ -223,6 +223,7 @@ $(document).ready(function () {
                 localStorage.removeItem('activeMusic');
             } else {
                 localStorage.setItem('activeMusic', id);
+                localStorage.removeItem('muteMusic');
             }
         }
     });
@@ -235,6 +236,8 @@ $(document).ready(function () {
 
         if (localStorage.getItem('activeCSS') === 'straya') {
             resetRewards();
+        } else {
+            localStorage.setItem('muteMusic', '1');
         }
 
         $(this).hide();
