@@ -192,6 +192,10 @@ $(document).ready(function () {
         activateBuddie(localStorage.getItem('activeBuddie'));
     }
 
+    if (localStorage.getItem('casual')) {
+        $('#inventory').find('h1').text('Filthy casual detected');
+    }
+
     $('#inventory').on('click', '.item-button', function () {
         var type = $(this).attr('data-type');
         var id = $(this).attr('data-id');
@@ -252,6 +256,9 @@ $(document).ready(function () {
         var sound = new Audio("/ogg/tf2.ogg");
         sound.volume = 0.25;
         sound.play();
+
+        localStorage.setItem('casual', '1');
+        $('#inventory').find('h1').text('Filthy casual detected');
     }
 
     function playMusic(id, showButton) {
