@@ -1354,3 +1354,27 @@ html.reward-pumpkinhill .h1 {
 html.reward-harmony {
   background: url('/img/reward-harmony.gif');
 }
+
+html.reward-bido-gams {
+  filter: saturate(3);
+  animation-name: rocking;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+
+html.reward-bido-gams #reward-buddie {
+  bottom: 0;
+  right: 0;
+}
+
+@keyframes rocking {
+  from {
+    transform: rotate(-2deg);
+  }
+
+  to {
+    transform: rotate(2deg);
+  }
+}
