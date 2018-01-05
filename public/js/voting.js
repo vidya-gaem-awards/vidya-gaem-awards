@@ -204,6 +204,12 @@ $(document).ready(function () {
             resetRewards();
         }
 
+        if (id === 'half-life-three') {
+            $(this).text('NEVER EVER').attr('disabled', 'disabled');
+            $('#reward-image-half-life-three').attr('src', '/img/reward-half-life-three.png');
+            $(this).parent().find('.item-quantity').text('Quantity: 0');
+        }
+
         if (reward.css) {
             if (localStorage.getItem('activeCSS')) {
                 $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
@@ -250,25 +256,30 @@ $(document).ready(function () {
         $('#cheat-code-input').val('');
         if (code === 'rosebud') {
             inventory['shekels'] += 1000;
-            playCheatMusic();
+            playCheatMusic(true);
             $('#cheat-code-input').val('rosebud');
         } else if (code === 'motherlode') {
             inventory['shekels'] += 50000;
-            playCheatMusic();
+            playCheatMusic(true);
         } else if (code === 'idkfa') {
             addRewardToInventory('cacodemon');
-            playCheatMusic();
+            playCheatMusic(true);
+        } else if (code === 'impulse 101') {
+            addRewardToInventory('half-life-three');
+            playCheatMusic(true);
         }
         updateInventory();
     });
 
-    function playCheatMusic() {
+    function playCheatMusic(markAsCheater) {
         var sound = new Audio("/ogg/tf2.ogg");
         sound.volume = 0.25;
         sound.play();
 
-        localStorage.setItem('casual', '1');
-        $('#inventory').find('h1').text('Filthy casual detected');
+        if (markAsCheater) {
+            localStorage.setItem('casual', '1');
+            $('#inventory').find('h1').text('Filthy casual detected');
+        }
     }
 
     function playMusic(id, showButton) {

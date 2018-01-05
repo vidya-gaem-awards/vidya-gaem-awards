@@ -1378,3 +1378,13 @@ html.reward-bido-gams #reward-buddie {
     transform: rotate(2deg);
   }
 }
+
+html.reward-soy-milk {
+  filter: saturate(0.2);
+  background: linear-gradient(to bottom, rgb(84, 90, 113) 0%, rgb(174, 178, 203) 70%);
+  font-family: serif !important;
+}
+
+html.reward-soy-milk * {
+  font-family: serif !important;
+}

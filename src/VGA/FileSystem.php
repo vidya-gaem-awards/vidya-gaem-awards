@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileSystem
 {
-    const FILESIZE_LIMIT = 1024 * 1024 * 5;
+    const FILESIZE_LIMIT = 1024 * 1024 * 10;
 
     const EXTENSION_MAPPING = [
         'image/png' => '.png',
