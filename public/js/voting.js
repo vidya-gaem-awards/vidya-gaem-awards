@@ -207,7 +207,7 @@ $(document).ready(function () {
         if (id === 'half-life-three') {
             $(this).text('NEVER EVER').attr('disabled', 'disabled');
             $('#reward-image-half-life-three').attr('src', '/img/reward-half-life-three.png');
-            $(this).parent().find('.item-quantity').text('Quantity: 0');
+            $(this).parent().find('.item-quantity').text('Chance: 0');
         }
 
         if (reward.css) {
@@ -266,7 +266,7 @@ $(document).ready(function () {
             playCheatMusic(true);
         } else if (code === 'impulse 101') {
             addRewardToInventory('half-life-three');
-            playCheatMusic(true);
+            playCheatMusic(false);
         }
         updateInventory();
     });
