@@ -87,15 +87,19 @@ class ResultController extends Controller
                 '19-google' => 'Google',
                 '15-facepunch' => 'Facepunch',
                 '18-facebook' => 'Facebook',
-
+                '12-twitter' => 'Twitter',
             ],
             [
-                '17-twitch' => 'Twitch',
+//                '17-twitch' => 'Twitch',
                 '11-reddit' => 'Reddit',
-                '14-neogaf' => 'NeoGAF',
-
-
+                '21-kiwifarms' => 'Kiwifarms',
+//                '14-neogaf' => 'NeoGAF',
+//                '13-something-awful' => 'Something Awful',
             ],
+//            [
+//                '20-yandex' => 'Yandex',
+
+//            ]
         ];
 
         $nominees = [];

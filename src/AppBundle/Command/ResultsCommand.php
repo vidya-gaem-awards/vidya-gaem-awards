@@ -77,7 +77,9 @@ class ResultsCommand extends ContainerAwareCommand
             '18-facebook' => 'BIT_AND(v.number, 256) > 0',
             '19-google' => 'BIT_AND(v.number, 512) > 0',
             '02-voting-code' => 'BIT_AND(v.number, 1024) > 0',
-            '03-null' => 'BIT_AND(v.number, 2048) > 0'
+            '03-null' => 'BIT_AND(v.number, 2048) > 0',
+            '20-yandex' => 'BIT_AND(v.number, 4096) > 0',
+            '21-kiwifarms' => 'BIT_AND(v.number, 8192) > 0',
         ];
 
         // Now we can start grabbing votes.

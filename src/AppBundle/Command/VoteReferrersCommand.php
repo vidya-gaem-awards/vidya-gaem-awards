@@ -109,7 +109,9 @@ class VoteReferrersCommand extends ContainerAwareCommand
             'l.facebook.com' => 2 ** 8,
             'google.' => 2 ** 9,
             // voting code: 2 ** 10
-            // no referer: 2 ** 11
+            // no referer: 2 ** 11,
+            'yandex.ru' => 2 ** 12,
+            'kiwifarms.net' => 2 ** 13,
         ];
 
         foreach ($voters as $id => &$info) {
