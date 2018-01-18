@@ -180,7 +180,7 @@
             <div class="advert-name">{{ advert.name }}</div>
             <div class="advert-link"><a href="{{ advert.link | escape('html_attr') }}">Follow link</a></div>
             <img src="{{ advert.image }}">
-            <div class="advert-special">{{ advert.special ? 'Special advert' : 'Standard rotation' }}</div>
+            <div class="advert-special">{{ advert.clicks }} clicks</div>
           </div>
         {% endfor %}
       </div>
