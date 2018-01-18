@@ -102,6 +102,32 @@ function resetRewards() {
     }
 }
 
+function getTextNodesIn(el) {
+    return $(el).find(":not(iframe)").addBack().contents().filter(function() {
+        return this.nodeType === 3;
+    });
+}
+
+String.prototype.shuffle = function () {
+    var a = this.split(""),
+        n = a.length;
+
+    for(var i = n - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+    return a.join("");
+};
+
+function shuffleTextNodes(el) {
+    var nodes = getTextNodesIn(el);
+    $.each(nodes, function () {
+        this.textContent = this.textContent.shuffle();
+    });
+}
+
 $(document).ready(function () {
     // If there's no award currently selected, none of this code is relevant.
     if (!currentAward) {
@@ -169,10 +195,10 @@ $(document).ready(function () {
             element.find('img').attr('src', reward.image).attr('id', 'reward-image-' + reward.shortName);
             element.find('.item-name').text(reward.name);
             element.find('.item-quantity').text('Quantity: ' + quantity);
-            if (reward.type === 'none' && reward.shortName !== 'nothing') {
-                element.find('.item-button').hide();
-            } else {
+            if (reward.css || reward.buddie || reward.music || reward.shortName === 'nothing' || reward.shortName === 'clamburger') {
                 element.find('.item-button').show().attr('data-id', reward.shortName);
+            } else {
+                element.find('.item-button').hide();
             }
             element.show();
             element.appendTo('.inventory-container');
@@ -202,6 +228,10 @@ $(document).ready(function () {
 
         if (id === 'nothing') {
             resetRewards();
+        }
+
+        if (id === 'clamburger') {
+            shuffleTextNodes($('div'));
         }
 
         if (id === 'half-life-three') {
