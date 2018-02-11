@@ -1,12 +1,14 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Advertisement;
 use AppBundle\Service\ConfigService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class LauncherController extends Controller
 {
-    public function countdownAction(ConfigService $configService)
+    public function countdownAction(ConfigService $configService, EntityManagerInterface $em)
     {
         $streamDate = $configService->getConfig()->getStreamTime();
 
@@ -34,10 +36,22 @@ class LauncherController extends Controller
             $streamDate ? $streamDate->format("Y-m-d\TH:i:s") : ''
         );
 
+        // Fake ads
+        $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
+
+        if (empty($adverts)) {
+            $ad1 = $ad2 = false;
+        } else {
+            $ad1 = $adverts[array_rand($adverts)];
+            $ad2 = $adverts[array_rand($adverts)];
+        }
+
         return $this->render('countdown.html.twig', [
             'streamDate' => $streamDate,
             'timezones' => $timezones,
-            'otherTimezonesLink' => $otherTimezonesLink
+            'otherTimezonesLink' => $otherTimezonesLink,
+            'ad1' => $ad1,
+            'ad2' => $ad2,
         ]);
     }
 
