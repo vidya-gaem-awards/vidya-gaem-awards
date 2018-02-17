@@ -222,6 +222,7 @@ class Config
             'awardFrontendPost' => 'awards',
             'votingSubmission' => 'voting',
             'voteWithCode' => 'voting',
+            'winners' => 'results',
         ];
 
         if (isset($alternateRoutes[$page])) {
