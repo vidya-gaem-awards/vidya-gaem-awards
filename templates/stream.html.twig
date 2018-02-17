@@ -140,11 +140,11 @@
     }
 
     .controls {
-      font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
-      margin-left: 5px;
       margin-bottom: 0;
       padding-top: 10px;
-      color: silver;
+      text-shadow: 1px 1px black;
+      text-transform: uppercase;
+      font-style: italic;
     }
 
     .controls li {
@@ -155,8 +155,8 @@
 
     .controls a, .controls a:hover {
       text-decoration: none;
-      color: #f85898;
       padding: 5px;
+      color: yellow;
     }
 
     .controls a:hover {
@@ -193,7 +193,7 @@
           <div class="scroll-content-contain" style="right: 0;">
             <div class="scroll-content">
               <h1 id="title">
-                The Vidya Gaem Awards Marathon Special
+                2017 Vidya Gaem Awards
               </h1>
               <div id="live_player">
                 <div class="live_site_player_container swf_container" id="standard_holder"
@@ -210,23 +210,23 @@
                 </div>
               </div>
 
-              <h3 class="goBackLink">
-                <a href="{{ path('voting') }}">
-                  {% if configService.config.isVotingOpen %}
-                    Everything must go! Votes close at {{ configService.config.votingEnd.format('g:ia T') }}!
-                  {% else %}
-                    Voting has now closed.
-                  {% endif %}
-                </a>
-              </h3>
+              {#<h3 class="goBackLink">#}
+                {#<a href="{{ path('voting') }}">#}
+                  {#{% if configService.config.isVotingOpen %}#}
+                    {#Everything must go! Votes close at {{ configService.config.votingEnd.format('g:ia T') }}!#}
+                  {#{% else %}#}
+                    {#Voting has now closed.#}
+                  {#{% endif %}#}
+                {#</a>#}
+              {#</h3>#}
 
-              {#<ul class="controls">#}
-                {#<li><a href="https://discord.gg/Fx5wf7x" target="_blank">Discord</a> &ndash;</li>#}
-                {#<li><a href="https://twitch.tv/vidyagaemawards" target="_blank">Twitch</a> &ndash;</li>#}
-                {#<li><a href="https://youtube.com/user/vidyagaemawards" target="_blank">YouTube</a> &ndash;</li>#}
-                {#<li>IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net <span class="gap">|</span></li>#}
-                {#<li><a href="https://boards.4chan.org/v/catalog#s=vidyagaemawards" target="_blank">/v/</a></li>#}
-              {#</ul>#}
+              <h3 class="goBackLink">
+                <a href="https://discord.gg/Fx5wf7x" target="_blank">Discord</a>
+                <a href="https://twitch.tv/vidyagaemawards" target="_blank">Twitch</a>
+                <a href="https://youtube.com/user/vidyagaemawards" target="_blank">YouTube</a>
+                {#IRC: <a href="irc://irc.rizon.net//v/ga">#/v/ga</a> @ rizon.net <span class="gap">|</span></li>#}
+                <a href="https://boards.4chan.org/v/catalog#s=vidyagaemawards" target="_blank">/v/</a>
+              </h3>
             </div>
           </div>
         </div>
@@ -293,16 +293,15 @@
         var ss = secs - mins * 60;
 
         if (diff === 0) {
-          document.getElementById("title").innerHTML = 'The 2017 Vidya Gaem Awards';
+          document.getElementById("title").innerHTML = '2017 Vidya Gaem Awards';
         } else {
-          var string = '';
+          var string = 'Main show begins in ';
           if (hh > 0) {
-            string = string.concat(hh + ' hour' + (hh === 1 ? ', ' : 's, '));
+            string = string.concat(hh + ' hr' + (hh === 1 ? ', ' : 's, '));
           }
           if (mm > 0) {
-            string = string.concat(mm + ' minute' + (mm === 1 ? ', ' : 's, '));
+            string = string.concat(mm + ' min' + (mm === 1 ? '' : 's'));
           }
-          string = string.concat(ss + ' second' + (ss === 1 ? '' : 's'));
           document.getElementById('title').innerHTML = string;
         }
       }
