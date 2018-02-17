@@ -4,65 +4,107 @@
 
 {% block head %}
   <style type="text/css">
+    html, body {
+      min-height: 100%;
+    }
+
     .logo {
-      border: 2px solid #af3a81;
-      box-shadow: 0 0 10px #af3a81;
-      margin: 10px;
-      background: black;
+      background-color: black;
+      /*border: 2px solid #af3a81;*/
+      margin-bottom: 30px;
+      height: 462px;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.32), 0 0 0 1px rgba(0,0,0,0.16);
     }
 
     .title {
       text-align: center;
     }
 
-    .title h1 {
-      font-weight: normal;
-      font-size: 55px;
-      line-height: 1em;
-      color: #00ebdb;
-      text-shadow: 0 0 10px #00ebdb;
-      background: url('{{ asset('2016images/title_bg.png') }}') center center no-repeat;
-      margin-bottom: 0;
-      padding: 20px 0 10px 0;
+    h2 {
+      margin-top: 10px;
     }
 
-    .title h2 {
-      font-family: "Annapolis", Tahoma, sans-serif;
-      color: #f7d059;
-      font-size: 38px;
-      font-weight: normal;
-      line-height: 0.95em;
-      margin-top: 0;
-      text-shadow: 0 0 3px #f7d059;
-    }
+    /*.title h1 {*/
+      /*font-weight: normal;*/
+      /*font-size: 55px;*/
+      /*line-height: 1em;*/
+      /*color: #00ebdb;*/
+      /*text-shadow: 0 0 10px #00ebdb;*/
+      {#background: url('{{ asset('2016images/title_bg.png') }}') center center no-repeat;#}
+      /*margin-bottom: 0;*/
+      /*padding: 20px 0 10px 0;*/
+    /*}*/
 
-    .subtitle {
+    /*.title h2 {*/
+      /*font-family: "Annapolis", Tahoma, sans-serif;*/
+      /*color: #f7d059;*/
+      /*font-size: 38px;*/
+      /*font-weight: normal;*/
+      /*line-height: 0.95em;*/
+      /*margin-top: 0;*/
+      /*text-shadow: 0 0 3px #f7d059;*/
+    /*}*/
+
+    /*.subtitle {*/
+      /*text-align: center;*/
+      /*font-size: 50px;*/
+      /*line-height: 0.5em;*/
+      /*margin: 20px;*/
+      /*font-family: "FixedSystem", "Courier New", monospace;*/
+      /*color: silver;*/
+    /*}*/
+
+    .links {
       text-align: center;
-      font-size: 50px;
-      line-height: 0.5em;
-      margin: 20px;
-      font-family: "FixedSystem", "Courier New", monospace;
-      color: silver;
+      max-width: 900px;
+      margin: 15px auto 0 auto;
     }
 
-    .subtitle .main {
-      font-size: 40px;
-      line-height: 1em;
+    .links.main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    .subtitle .soon {
-      padding: 3px;
+    .links.bottom {
+      margin-top: 40px;
+    }
+
+    .link {
+      margin: 6px;
+    }
+
+    .link.disabled {
+      background: #686868;
+      border-radius: 15px;
+      color: #dedede;
+      padding: 5px 15px;
+      font-size: 18px;
       display: inline-block;
+      width: 270px;
     }
 
-    a, a:hover {
-      text-decoration: none;
-      color: #f85898;
-      padding: 3px;
+    .link a {
+      background-color: rgb(251,68,7);
+      border-radius: 15px;
+      color: white;
+      padding: 5px 15px;
+      font-size: 18px;
       display: inline-block;
+      width: 270px;
+      box-shadow: 2px 2px black;
     }
 
-    a:hover {
+    .link .soon {
+      font-size: small;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+      box-shadow: 1px 1px black;
+    }
+
+    .link .soon {
       color: white;
     }
   </style>
@@ -81,19 +123,47 @@
           <h1>The 2017 Vidya Gaem Awards</h1>
           <h2 id="countdown">Thanks for watching!</h2>
         </div>
-        <div class="subtitle">
-          <a href="https://www.twitch.tv/videos/119869333">Watch it on Twitch</a> <span style="font-size: 30px;">(feat. chat replay)</span><br>
-          <a href="https://www.youtube.com/watch?v=Gh9DdRKk_4I">Watch it on YouTube</a><br>
-          <a href="https://mega.nz/#!qgxSFYjb!K8KYREg8PjnwkDOWAKEWVOeFDBoi-fWk6sa4NdxKQZc">Direct download</a> <span
-              style="font-size: 30px;">(6.29 GB)</span><br>
-          <a href="{{ path('winners') }}">See the winners</a><br>
-          <a href="{{ path('results') }}">See the detailed results</a><br>
-          <a href="{{ path('credits') }}">See the credits</a><br>
-          <a href="{{ path('soundtrack') }}">Get the soundtrack</a> <span
-              style="font-size: 30px; color: #f7d059">(new!)</span><br>
-          <br>
-          <a href="https://vidyagaemawards.com/previous-years">View previous /v/GAs</a><br>
-          <a href="{{ path('home') }}" style="font-size: 30px;">Continue to the home page</a>
+        <div class="links main">
+          <div class="link disabled">
+            {#<a href="https://www.twitch.tv/videos/119869333">Watch it on Twitch</a>#}
+            Watch it on Twitch
+            <span class="soon">&ndash; soon&trade;</span>
+          </div>
+          <div class="link disabled">
+            {#<a href="https://www.youtube.com/watch?v=Gh9DdRKk_4I">Watch it on YouTube</a>#}
+            Watch it on YouTube
+            <span class="soon">&ndash; soon&trade;</span>
+          </div>
+          <div class="link disabled">
+            {#<a href="https://mega.nz/#!qgxSFYjb!K8KYREg8PjnwkDOWAKEWVOeFDBoi-fWk6sa4NdxKQZc">Direct download</a>#}
+            Direct download
+            <span class="soon">&ndash; soon&trade;</span>
+          </div>
+          <div class="link">
+            <a href="{{ path('winners') }}">See the winners</a>
+          </div>
+          <div class="link">
+            <a href="{{ path('results') }}">See the detailed results</a>
+          </div>
+          <div class="link disabled">
+            {#<a href="{{ path('credits') }}">See the credits</a>#}
+            See the credits
+            <span class="soon">&ndash; soon&trade;</span>
+          </div>
+          <div class="link disabled">
+            {#<a href="{{ path('soundtrack') }}">Get the soundtrack</a>#}
+            Get the soundtrack
+            <span class="soon">&ndash; soon&trade;</span>
+          </div>
+        </div>
+
+        <div class="links bottom">
+          <div class="link">
+            <a href="https://vidyagaemawards.com/previous-years">View previous /v/GAs</a>
+          </div>
+          <div class="link">
+            <a href="{{ path('home') }}" style="font-size: 30px; width: auto;">Continue to the home page</a>
+          </div>
         </div>
       </div>
     </div>

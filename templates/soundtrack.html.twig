@@ -9,46 +9,39 @@
 {% block content %}
   <style type="text/css">
     h1 {
-      text-shadow: rgba(0, 235, 219, 0.5) 1px 1px 5px;
+      /*text-shadow: rgba(0, 235, 219, 0.5) 1px 1px 5px;*/
       text-align: center;
       margin-top: 10px;
     }
 
-    a, a:visited {
-      color: #bf6bff;
+    #mainContainer a {
+      background-color: rgb(251,68,7);
+      border-radius: 15px;
+      color: white;
+      padding: 5px 15px;
+      box-shadow: 2px 2px black;
+      text-shadow: 1px 1px black;
     }
 
-    a:hover, a:active {
-      color: #bf6bff;
+    #mainContainer a:hover {
+      text-decoration: underline;
     }
 
     .album-art {
-      box-shadow: 0 0 10px rgba(145, 30, 209, 0.8);
       width: 300px;
       max-width: 300px;
-      margin: 0 auto;
+      margin: 0 auto 10px auto;
       transition: all 0.3s ease-in-out;
     }
 
-    .album-art:hover {
-      box-shadow: 0 3px 15px rgba(145, 30, 209, 0.5);
+    .download-now {
+      margin: 20px;
     }
 
     .download-now a {
-      font-family: "Annapolis", Tahoma, sans-serif;
-      color: #bf6bff;
       font-size: 38px;
       font-weight: normal;
       line-height: 0.95em;
-      margin-top: 0;
-      text-shadow: 0 0 3px #b124ff;
-      border-bottom: 3px dotted #bf6bff;
-    }
-
-    .download-now a:hover {
-      color: #a223ee;
-      border-bottom: 3px solid #a223ee;
-      text-decoration: none;
     }
 
     #track-list {
@@ -58,6 +51,7 @@
 
     #track-list td {
       border: none;
+      text-shadow: 1px 1px black;
     }
 
     #track-list td:nth-child(1) {
@@ -86,10 +80,8 @@
 
   <div class="row" style="margin-top: 20px;">
     <div class="col-xs-12">
-      <div style="display: block; margin: 0 auto; max-width: 300px;">
-        <a href="https://drive.google.com/file/d/0B-ozeoDbB_HzRlNkTmRKRURHS28/view" target="_blank">
-          <img src="{{ asset('2016images/album.jpg') }}" alt="Album art" class="img-responsive album-art">
-        </a>
+      <div style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px; max-width: 300px;">
+        <img src="{{ asset('2016images/album.jpg') }}" alt="Album art" class="img-responsive album-art">
       </div>
       <p class="download-now text-center" style="margin-top: 10px;">
         <a href="https://drive.google.com/file/d/0B-ozeoDbB_HzRlNkTmRKRURHS28/view" target="_blank">Download Now</a>
