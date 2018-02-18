@@ -84,7 +84,7 @@ class ResultController extends Controller
 //                '10-null-without-voting-code' => 'NULL without code',
 //            ],
             [
-                '19-google' => 'Trident Gaming',
+                '19-google' => 'Google',
                 '15-facepunch' => 'Facepunch',
                 '18-facebook' => 'Facebook',
                 '12-twitter' => 'Twitter',
