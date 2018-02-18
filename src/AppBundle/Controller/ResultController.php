@@ -36,7 +36,7 @@ class ResultController extends Controller
             $rankings = array_values($award->getOfficialResults() ? $award->getOfficialResults()->getResults() : []);
 
             foreach ($rankings as $key => &$value) {
-                $value = $ranks[$key] . '. ' . $award->getNominee($value)->getName();
+                $value = '<span class="rank">' . $ranks[$key] . '.</span> ' . $award->getNominee($value)->getName();
             }
             $theOthers = implode(', ', array_slice($rankings, 5));
             $rankings = array_slice($rankings, 0, 5);

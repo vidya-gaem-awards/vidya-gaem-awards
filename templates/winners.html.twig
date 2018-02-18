@@ -146,21 +146,48 @@
   <style type="text/css">
     p {
       font-size: 22px;
-      line-height: 1.3em;
-      color: #f7d059;
+      line-height: 1.5em;
+      color: white;
+    }
+
+    p a {
+      background-color: rgb(251,68,7);
+      border-radius: 15px;
+      color: white;
+      padding: 5px 15px;
+      box-shadow: 2px 2px black;
+      text-shadow: 1px 1px black;
+    }
+
+    p a:hover {
+      text-decoration: underline;
+      color: white;
     }
 
     .award {
       margin: 0 auto 35px auto;
       padding: 20px;
       background: black;
-      border: 2px solid #af3a81;
-      box-shadow: 0 0 10px #af3a81;
+      border: 2px solid white;
+      /*text-shadow: 1px 1px black;*/
+      /*box-shadow: 0 0 10px #af3a81;*/
     }
 
     .winner {
-      border: 1px solid #f7d059;
-      box-shadow: 0 0 5px rgb(247, 208, 89);
+      border: 2px solid white;
+    }
+
+    .awardName a {
+      color: yellow;
+      text-shadow: 2px 2px black;
+      font-style: italic;
+    }
+
+    .awardSubtitle {
+      color: white;
+      font-size: 18px;
+      margin-top: 5px;
+      /*line-height: 20px;*/
     }
 
     .award ul {
@@ -173,18 +200,28 @@
     .award ul li {
       line-height: 1.5em;
       /*font-family: "modern typewriter", Calibri, sans-serif;*/
-      color: #00ebdb;
+      color: yellow;
     }
 
     .award ul li:first-child {
-      font-size: 36px;
-      font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;
-      color: #f7d059;
+      font-size: 24px;
+      display: block;
+      text-align: center;
+      background-color: rgb(251, 68, 7);
+      color: white;
+      border-radius: 20px;
+      padding: 5px;
+      /*color: yellow;*/
       line-height: 1em;
+      margin-bottom: 10px;
+    }
+
+    .rank {
+      font-size: 70%;
     }
 
     .award ul li:last-child {
-      color: #f85898;
+      color: white;
       font-size: 18px;
       /*font-family: "modern typewriter", Tahoma, sans-serif;*/
     }
@@ -208,28 +245,21 @@
     }
 
     .awardName {
-      font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;
-      font-weight: normal;
-      font-style: normal;
+      /*font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;*/
+      /*font-weight: normal;*/
+      /*font-style: normal;*/
       text-transform: uppercase;
       font-size: 2.6em;
       line-height: 40px;
-      color: #00ebdb;
+      /*color: #00ebdb;*/
     }
 
     a, a:visited {
-      color: #00ebdb;
+
     }
 
     a:hover, a:active {
-      color: #f85898;
-    }
 
-    .awardSubtitle {
-      color: #00ebdb;
-      font-family: 'FixedSystem', Calibri, sans-serif;
-      font-size: 32px !important;
-      line-height: 20px;
     }
   </style>
 
@@ -283,7 +313,7 @@
             <div class="col-md-8">
               <ul>
                 {% for result in results[award.id] %}
-                  <li>{{ result }}</li>
+                  <li>{{ result | raw }}</li>
                 {% endfor %}
               </ul>
             </div>
@@ -304,8 +334,8 @@
       <p>
         The results shown above are the same as those shown during the show and are based only on the votes from /v/.
         For more details, including vote counts and votes that we filtered out, see the
-        <a href="{{ path('results') }}">detailed results</a> and
-        <a href="{{ path('pairwiseResults') }}">pairwise comparison</a> pages.
+        <a href="{{ path('results') }}">detailed&nbsp;results</a> and
+        <a href="{{ path('pairwiseResults') }}">pairwise&nbsp;comparison</a> pages.
       </p>
     </div>
   </div>
