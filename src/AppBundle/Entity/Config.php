@@ -222,6 +222,7 @@ class Config
             'awardFrontendPost' => 'awards',
             'votingSubmission' => 'voting',
             'voteWithCode' => 'voting',
+            'pairwiseResults' => 'results',
             'winners' => 'results',
         ];
 
