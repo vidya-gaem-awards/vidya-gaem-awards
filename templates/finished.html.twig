@@ -82,6 +82,7 @@
       font-size: 18px;
       display: inline-block;
       width: 270px;
+      transform: translate(1px, 1px);
     }
 
     .link a {
@@ -95,13 +96,26 @@
       box-shadow: 2px 2px black;
     }
 
+    .link.special a {
+      background-color: rgb(7, 168, 64);
+    }
+
+    .link a:hover {
+      background-color: rgb(207, 62, 7);
+    }
+
+    .link.special a:hover {
+      background-color: rgb(7, 134, 55);
+    }
+
     .link .soon {
       font-size: small;
     }
 
     .link a:hover {
-      text-decoration: underline;
       box-shadow: 1px 1px black;
+      text-decoration: none;
+      transform: translate(1px, 1px);
     }
 
     .link .soon {
@@ -124,13 +138,13 @@
           <h2 id="countdown">Thanks for watching!</h2>
         </div>
         <div class="links main">
-          <div class="link">
+          <div class="link special">
             <a href="https://www.twitch.tv/videos/230073331">Watch it on Twitch</a>
           </div>
-          <div class="link">
+          <div class="link special">
             <a href="https://www.youtube.com/watch?v=1hyRHdEteto">Watch it on YouTube</a>
           </div>
-          <div class="link disabled">
+          <div class="link special disabled">
             {#<a href="https://mega.nz/#!qgxSFYjb!K8KYREg8PjnwkDOWAKEWVOeFDBoi-fWk6sa4NdxKQZc">Direct download</a>#}
             Direct download
             <span class="soon">&ndash; soon&trade;</span>
