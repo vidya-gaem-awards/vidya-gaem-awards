@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a90258f9b580f3e8fa2e43d79aa68264",
+    "content-hash": "f33ebb12985d42041a66424f92413294",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2267,12 +2267,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/clamburger/SteamAuthBundle.git",
-                "reference": "986042a3eeaf654a5b39fe937a799ef54afc85bc"
+                "reference": "047d8cd8cd3707d3d1043171f663364dcdb19ece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clamburger/SteamAuthBundle/zipball/986042a3eeaf654a5b39fe937a799ef54afc85bc",
-                "reference": "986042a3eeaf654a5b39fe937a799ef54afc85bc",
+                "url": "https://api.github.com/repos/clamburger/SteamAuthBundle/zipball/047d8cd8cd3707d3d1043171f663364dcdb19ece",
+                "reference": "047d8cd8cd3707d3d1043171f663364dcdb19ece",
                 "shasum": ""
             },
             "require": {
@@ -2306,7 +2306,7 @@
             "support": {
                 "source": "https://github.com/clamburger/SteamAuthBundle/tree/forkfix"
             },
-            "time": "2017-11-04T04:36:30+00:00"
+            "time": "2018-04-18T02:41:01+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
