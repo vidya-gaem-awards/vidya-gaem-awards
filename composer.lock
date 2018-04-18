@@ -607,16 +607,16 @@
         },
         {
             "name": "ehesp/steam-login",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ehesp/Steam-Login.git",
-                "reference": "a126370d9befb103dcee2c75b70890543b365709"
+                "reference": "f7dd893ef2089ec51cd962c68ecba869be2f7e09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ehesp/Steam-Login/zipball/a126370d9befb103dcee2c75b70890543b365709",
-                "reference": "a126370d9befb103dcee2c75b70890543b365709",
+                "url": "https://api.github.com/repos/Ehesp/Steam-Login/zipball/f7dd893ef2089ec51cd962c68ecba869be2f7e09",
+                "reference": "f7dd893ef2089ec51cd962c68ecba869be2f7e09",
                 "shasum": ""
             },
             "require": {
@@ -645,7 +645,7 @@
             "keywords": [
                 "steam"
             ],
-            "time": "2016-04-14T16:24:31+00:00"
+            "time": "2018-04-06T07:13:23+00:00"
         },
         {
             "name": "fightbulc/moment",
