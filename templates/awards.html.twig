@@ -196,7 +196,7 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="page-header fancy">Nominate Games for the 2017&nbsp;/v/GAs</h1>
+  <h1 class="page-header fancy">Nominate Games for the 2018&nbsp;/v/GAs</h1>
   {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') %}
     <ul class="breadcrumb fancy">
       {% if is_granted('ROLE_AWARDS_EDIT') %}
@@ -269,7 +269,7 @@
           <div id="video-game-collage">
             <div class="top">Forgotten what vidya you played earlier this year?</div>
             <img class="img-responsive" src="{{ asset('img/collage.png') }}">
-            <div class="bottom">Click here for a list of video&nbsp;games from 2017.</div>
+            <div class="bottom">Click here for a list of video&nbsp;games from 2018.</div>
           </div>
         </a>
       </div>
@@ -477,7 +477,7 @@
         var autocompleteCat = awards[award]['autocompleter'];
         if (autocompleteCat === "video-game") {
           $('#autocomplete').html(
-              "This award provides suggestions using a list of <a href='{{ path('videoGames') }}' target='_blank'>video games released in 2017</a>."
+              "This award provides suggestions using a list of <a href='{{ path('videoGames') }}' target='_blank'>video games released in 2018</a>."
           );
         } else if (autocompleteCat === award) {
           $('#autocomplete').html("This award provides suggestions based on nominations from other users.");

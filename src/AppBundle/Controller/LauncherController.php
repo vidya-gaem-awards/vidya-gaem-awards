@@ -32,7 +32,7 @@ class LauncherController extends Controller
         ];
 
         $otherTimezonesLink = sprintf(
-            'https://www.timeanddate.com/worldclock/fixedtime.html?msg=2017+Vidya+Gaem+Awards&iso=%s&p1=179',
+            'https://www.timeanddate.com/worldclock/fixedtime.html?msg=2018+Vidya+Gaem+Awards&iso=%s&p1=179',
             $streamDate ? $streamDate->format("Y-m-d\TH:i:s") : ''
         );
 

@@ -53,12 +53,12 @@ newsDelete:
 # VIDEO GAMES
 #
 videoGames:
-    path:     /vidya-in-2017
+    path:     /vidya
     defaults: { _controller: AppBundle:VideoGames:index }
     methods:  [GET]
 
 addVideoGame:
-    path:     /vidya-in-2017
+    path:     /vidya
     defaults: { _controller: AppBundle:VideoGames:add }
     methods:  [POST]
 
