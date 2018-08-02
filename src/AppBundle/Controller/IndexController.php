@@ -42,7 +42,7 @@ class IndexController extends Controller
 
         // The full animation takes 10 seconds to run. This gets really tedious, so show a much shorter animation
         // on every subsequent page load.
-        $fastAnimations = $session->get('fastPromoAnimations', false);
+        $fastAnimations = $session->get('fastPromoAnimations', true); // currently defaulted to true
         if (!$fastAnimations) {
             $session->set('fastPromoAnimations', true);
         }
