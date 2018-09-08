@@ -32,6 +32,8 @@ security:
             remember_me:
                 secret: '%secret%'
 
+            logout_on_user_change: true
+
             logout:
                 path: /logout
                 target: /

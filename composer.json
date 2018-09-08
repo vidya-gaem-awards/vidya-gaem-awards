@@ -15,24 +15,25 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5.3",
         "ehesp/steam-login": "^1.0.2",
+        "eightpoints/guzzle-bundle": "^7.3.1",
         "fightbulc/moment": "^1.17.1",
         "incenteev/composer-parameter-handler": "^2.0",
         "paragonie/random-lib": "^2.0.0",
         "koraktor/steam-condenser": "^1.3.10",
         "sensio/distribution-bundle": "^5.0.19",
-        "sensio/framework-extra-bundle": "^3.0.2",
+        "sensio/framework-extra-bundle": "^5.2.0",
         "sensiolabs/ansi-to-html": "^1.1.3",
-        "sirwaddles/steamauth": "dev-forkfix",
+        "sirwaddles/steamauth": "dev-master",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
-        "symfony/swiftmailer-bundle": "^2.3.10",
+        "symfony/swiftmailer-bundle": "^3.2.3",
         "symfony/symfony": "^3.3",
         "twig/extensions": "^1.3.0",
         "twig/twig": "^2.0.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^4.1.4"
     },
     "scripts": {
         "symfony-scripts": [
