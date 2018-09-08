@@ -1,0 +1,8 @@
+twig:
+    paths: ['%kernel.project_dir%/templates']
+#    debug: '%kernel.debug%'
+    debug: true
+    strict_variables: '%kernel.debug%'
+    globals:
+        navbar: '@App\Service\NavbarService'
+        configService: '@App\Service\ConfigService'

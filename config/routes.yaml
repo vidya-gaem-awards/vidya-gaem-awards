@@ -1,0 +1,325 @@
+#
+# INTERNAL SYSTEM STUFF
+#
+
+index:
+    path:       /
+    controller: App\Controller\StaticController::indexAction
+
+login:
+    path:       /login
+    controller: App\Controller\AuthController::loginAction
+
+login_check:
+    path:       /login/check
+
+login_redirect:
+    path:       /login/success
+    controller: App\Controller\AuthController::loginRedirectAction
+
+logout:
+    path:       /logout
+
+#
+# FRONT PAGE
+#
+
+home:
+    path:       /home
+    controller: App\Controller\IndexController::indexAction
+
+promo:
+    path:       /promo
+    controller: App\Controller\IndexController::promoAction
+
+
+#
+# NEWS
+#
+
+news:
+    path:       /news
+    controller: App\Controller\NewsController::indexAction
+
+newsAdd:
+    path:       /news/add
+    controller: App\Controller\NewsController::addAction
+    methods:    [POST]
+
+newsDelete:
+    path:       /news/delete/{id}
+    controller: App\Controller\NewsController::deleteAction
+    methods:    [POST]
+    requirements:
+        id: '\d+'
+
+#
+# VIDEO GAMES
+#
+videoGames:
+    path:       /vidya
+    controller: App\Controller\VideoGamesController::indexAction
+    methods:    [GET]
+
+addVideoGame:
+    path:       /vidya
+    controller: App\Controller\VideoGamesController::addAction
+    methods:    [POST]
+
+#
+# CREW
+#
+
+people:
+    path:       /crew
+    controller: App\Controller\PeopleController::indexAction
+
+permissions:
+    path:       /crew/permissions
+    controller: App\Controller\PeopleController::permissionsAction
+
+addPerson:
+    path:       /crew/new
+    controller: App\Controller\PeopleController::newAction
+
+userSearch:
+    path:       /crew/search
+    methods:    [POST]
+    controller: App\Controller\PeopleController::searchAction
+
+viewPerson:
+    path:       /crew/{steamID}
+    controller: App\Controller\PeopleController::viewAction
+    requirements:
+        steamID: '\d+'
+
+editPerson:
+    path:       /crew/{steamID}/edit
+    methods:    [GET]
+    controller: App\Controller\PeopleController::editAction
+    requirements:
+        steamID: '\d+'
+
+editPersonPost:
+    path:       /crew/{steamID}/edit
+    methods:    [POST]
+    controller: App\Controller\PeopleController::postAction
+    requirements:
+        steamID: '\d+'
+
+#
+# AWARDS
+#
+
+awards:
+    path:       /awards
+    methods:    [GET]
+    controller: App\Controller\AwardController::indexAction
+
+awardFrontendPost:
+    path:       /awards
+    methods:    [POST]
+    controller: App\Controller\AwardController::postAction
+
+awardManager:
+    path:       /awards/manage
+    methods:    [GET]
+    controller: App\Controller\AwardAdminController::managerListAction
+
+awardManagerPost:
+    path:       /awards/manage
+    methods:    [POST]
+    controller: App\Controller\AwardAdminController::managerPostAction
+
+awardManagerPostAjax:
+    path:       /awards/manage/ajax
+    methods:    [POST]
+    controller: App\Controller\AwardAdminController::managerPostAjaxAction
+
+nomineeManager:
+    path:       /nominees/{awardID?}
+    methods:    [GET]
+    controller: App\Controller\NomineeController::indexAction
+
+nomineePost:
+    path:       /nominees/{awardID}
+    methods:    [POST]
+    controller: App\Controller\NomineeController::postAction
+
+#
+# TASKS
+#
+
+tasks:
+    path:       /tasks
+    methods:    [GET]
+    controller: App\Controller\TasksController::indexAction
+
+tasksImageCheck:
+    path:       /tasks/check-images
+    controller: App\Controller\TasksController::imageCheckAction
+
+tasksPost:
+    path:       /tasks
+    methods:    [POST]
+    controller: App\Controller\TasksController::postAction
+
+#
+# VOTING
+#
+
+viewVotingCode:
+    path:       /vote/code
+    controller: App\Controller\VotingController::codeViewerAction
+
+voting:
+    path:       /vote/{awardID?}
+    methods:    [GET]
+    controller: App\Controller\VotingController::indexAction
+
+votingSubmission:
+    path:       /vote/{awardID}
+    methods:    [POST]
+    controller: App\Controller\VotingController::postAction
+
+voteWithCode:
+    path:       /vote/v/{code}
+    controller: App\Controller\VotingController::codeEntryAction
+    requirements:
+        code: '.+'
+
+#
+# RESULTS
+#
+
+winners:
+    path:       /winners
+    methods:    [GET]
+    controller: App\Controller\ResultController::simpleAction
+
+winnerImageUpload:
+    path:       /winners
+    methods:    [POST]
+    controller: App\Controller\ResultController::winnerImageUploadAction
+
+results:
+    path:       /results/{all?}
+    controller: App\Controller\ResultController::detailedAction
+    requirements:
+        all: '(all)?'
+
+pairwiseResults:
+    path:       /results/pairwise
+    controller: App\Controller\ResultController::pairwiseAction
+
+#
+# REFERRERS
+#
+
+referrers:
+    path:       /referrers
+    controller: App\Controller\ReferrerController::indexAction
+
+#
+# AUDIT LOG
+#
+
+auditLog:
+    path:       /audit-log
+    controller: App\Controller\AuditLogController::indexAction
+
+#
+# LAUNCHER
+#
+
+countdown:
+    path:       /countdown
+    controller: App\Controller\LauncherController::countdownAction
+
+stream:
+    path:       /stream
+    controller: App\Controller\LauncherController::streamAction
+
+finished:
+    path:       /finished
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    defaults:
+        template: 'finished.html.twig'
+
+#
+# STATIC PAGES
+#
+
+privacy:
+    path:       /privacy
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    defaults:
+        template: 'privacy.html.twig'
+
+videos:
+    path:       /videos
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    defaults:
+        template: 'videos.html.twig'
+
+soundtrack:
+    path:       /soundtrack
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    defaults:
+        template: 'soundtrack.html.twig'
+
+credits:
+    path:       /credits
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    defaults:
+        template: 'credits.html.twig'
+
+resultRedirect:
+    path:       /voting/results
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: 'results'
+
+#
+# CONFIG
+#
+
+config:
+    path:       /config
+    methods:    [GET]
+    controller: App\Controller\ConfigController::indexAction
+
+configPost:
+    path:       /config
+    methods:    [POST]
+    controller: App\Controller\ConfigController::postAction
+
+#
+# SPECIAL
+#
+
+itemManager:
+    path:       /lootboxes
+    methods:    [GET]
+    controller: App\Controller\ItemManagerController::indexAction
+
+itemPost:
+    path:       /lootboxes
+    methods:    [POST]
+    controller: App\Controller\ItemManagerController::postAction
+
+advertManager:
+    path:       /adverts
+    controller: App\Controller\AdvertManagerController::indexAction
+    methods:    [GET]
+
+advertPost:
+    path:       /adverts
+    methods:    [POST]
+    controller: App\Controller\AdvertManagerController::postAction
+
+advertRedirect:
+    path:       /link/{advertToken}
+    controller: App\Controller\AdvertManagerController::redirectAction
+    requirements:
+        advertToken: '^[0-9a-f]+$'

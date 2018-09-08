@@ -1,0 +1,68 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory: { memory: ~ }
+
+        steam_user_provider:
+            id: Knojector\SteamAuthenticationBundle\Security\User\SteamUserProvider
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+            provider: steam_user_provider
+            steam: true
+            logout:
+                path:   /logout
+                target: /
+
+#            steam:
+#                default_route: index
+#            remember_me:
+#                secret: '%secret%'
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/config, roles: ROLE_EDIT_CONFIG }
+        - { path: ^/news/add, roles: ROLE_NEWS_MANAGE }
+        - { path: ^/news/delete, roles: ROLE_NEWS_MANAGE }
+        - { path: ^/vidya, roles: [CONDITIONALLY_PUBLIC, ROLE_ADD_VIDEO_GAME], methods: [GET] }
+        - { path: ^/vidya, roles: ROLE_ADD_VIDEO_GAME, methods: [POST] }
+        - { path: ^/crew/.+/edit, roles: ROLE_PROFILE_EDIT_DETAILS }
+        - { path: ^/crew/new, roles: ROLE_ADD_USER }
+        - { path: ^/crew/search, roles: ROLE_ADD_USER }
+        - { path: ^/crew, roles: ROLE_PROFILE_VIEW }
+        - { path: ^/awards/manage, roles: ROLE_AWARDS_FEEDBACK, methods: [GET] }
+        - { path: ^/awards/manage, roles: ROLE_AWARDS_EDIT, methods: [POST] }
+        - { path: ^/awards, roles: [CONDITIONALLY_PUBLIC, ROLE_AWARDS_EDIT] }
+        - { path: ^/nominees, roles: ROLE_NOMINATIONS_VIEW, methods: [GET] }
+        - { path: ^/nominees, roles: ROLE_NOMINATIONS_EDIT, methods: [POST] }
+        - { path: ^/tasks, roles: ROLE_TASKS_VIEW }
+        - { path: ^/vote/code, roles: ROLE_VOTING_VIEW }
+        - { path: ^/vote, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_VIEW] }
+        - { path: ^/winners, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_RESULTS], methods: [GET] }
+        - { path: ^/winners, roles: ROLE_AWARDS_EDIT, methods: [POST] }
+        - { path: ^/results, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_RESULTS] }
+        - { path: ^/referrers, roles: ROLE_REFERRERS_VIEW }
+        - { path: ^/audit-log, roles: ROLE_AUDIT_LOG_VIEW }
+        - { path: ^/countdown, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/stream, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/finished, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/credits, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/videos, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/soundtrack, roles: [CONDITIONALLY_PUBLIC, ROLE_VIEW_UNFINISHED_PAGES] }
+        - { path: ^/lootboxes, roles: ROLE_ITEMS_MANAGE }
+        - { path: ^/adverts, roles: ROLE_ADVERTS_MANAGE }
