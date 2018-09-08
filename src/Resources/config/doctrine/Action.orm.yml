@@ -1,0 +1,50 @@
+App\Entity\Action:
+  type: entity
+  table: actions
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    ip:
+      type: string
+      nullable: false
+      length: 45
+    timestamp:
+      type: datetime
+      nullable: false
+    page:
+      type: string
+      nullable: false
+      length: 100
+    action:
+      type: string
+      nullable: false
+      length: 40
+    data1:
+      type: string
+      nullable: true
+      length: 50
+    data2:
+      type: string
+      nullable: true
+      length: 50
+  manyToOne:
+    user:
+      targetEntity: App\Entity\User
+      nullable: true
+      joinColumn:
+        name: userID
+        referencedColumnName: id
+        nullable: true
+  oneToOne:
+    tableHistory:
+        targetEntity: App\Entity\TableHistory
+        joinColumn:
+          name: history_id
+          referencedColumnName: id
+          nullable: true

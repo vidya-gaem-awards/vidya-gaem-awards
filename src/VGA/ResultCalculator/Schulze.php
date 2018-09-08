@@ -1,7 +1,7 @@
 <?php
-namespace VGA\ResultCalculator;
+namespace App\VGA\ResultCalculator;
 
-use VGA\AbstractResultCalculator;
+use App\VGA\AbstractResultCalculator;
 
 class Schulze extends AbstractResultCalculator
 {

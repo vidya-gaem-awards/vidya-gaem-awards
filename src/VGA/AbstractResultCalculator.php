@@ -1,7 +1,7 @@
 <?php
-namespace VGA;
+namespace App\VGA;
 
-use AppBundle\Entity\Nominee;
+use App\Entity\Nominee;
 
 abstract class AbstractResultCalculator
 {

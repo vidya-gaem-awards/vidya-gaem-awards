@@ -1,22 +1,18 @@
 /.idea
-/vendor
 /src/VGA/Proxies
 /public/uploads
-/public/app.php
-/public/bundles
 
 /.web-server-pid
-/app/config/parameters.yml
 /build/
+
+###> symfony/framework-bundle ###
+/.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
 /phpunit.xml
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
+###< symfony/phpunit-bridge ###

@@ -1,0 +1,24 @@
+App\Entity\Login:
+  type: entity
+  table: logins
+  options:
+    collate: utf8mb4_unicode_ci
+    charset: utf8mb4
+  id:
+    id:
+      type: integer
+      nullable: false
+      generator:
+        strategy: AUTO
+  fields:
+    timestamp:
+      type: datetime
+      nullable: false
+  manyToOne:
+    user:
+      targetEntity: User
+      inversedBy: logins
+      joinColumn:
+        name: userID
+        referencedColumnName: id
+        nullable: false

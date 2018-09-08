@@ -1,5 +1,5 @@
 <?php
-namespace VGA;
+namespace App\VGA;
 
 class Timer
 {

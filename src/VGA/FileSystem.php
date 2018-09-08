@@ -1,5 +1,5 @@
 <?php
-namespace VGA;
+namespace App\VGA;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -42,13 +42,13 @@ class FileSystem
 
         $filename_to_use = $filename . self::EXTENSION_MAPPING[$file->getClientMimeType()];
 
-        $file->move(__DIR__ . '/../../public/uploads/' . $directory . '/', $filename_to_use);
+        $file->move(__DIR__ . '/../../public/uploads/', $filename_to_use);
         return '/uploads/' . $directory . '/' . $filename_to_use;
     }
 
     public static function deleteFile(string $directory, string $filename)
     {
-        unlink(__DIR__ . '/../../public/uploads/' . $directory . '/' . $filename);
+        unlink(__DIR__ . '/../../public/uploads/' . $filename);
     }
 
     /**

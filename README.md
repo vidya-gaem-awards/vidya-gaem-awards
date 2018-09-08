@@ -17,12 +17,12 @@ In the extremely unlikely event that you decide to use it anyway, here's what yo
 
 ### Requirements
 
- * PHP 7.1
+ * PHP 7.2
  * A MySQL or MariaDB database
  * [Composer](https://getcomposer.org/)
 
 ### Installation
 
  * Clone the repo to a server of your choice and run `composer install`.
- * Copy `app/config/parameters.yml.dist` to `app/config/parameters.yml` and adjust as needed.
+ * Copy `.env.dist` to `.env` and adjust as needed.
  * Once you've got a database created, run `bin/console app:db-init` to set up the database.
