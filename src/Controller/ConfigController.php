@@ -116,6 +116,9 @@ class ConfigController extends Controller
         $navbarError = false;
         $validRoutes = $this->getValidNavbarRoutes($router->getRouteCollection());
         foreach ($navbarItems as $routeName => $label) {
+            if (substr($routeName, 0, 8) === 'dropdown') {
+                continue;
+            }
             if (!isset($validRoutes[$routeName])) {
                 $this->addFlash('error', 'Invalid route specified in the navigation menu config (' . $routeName . ').');
                 $navbarError = $error = true;

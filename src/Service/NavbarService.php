@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\VGA\NavbarItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -30,11 +31,31 @@ class NavbarService
 
     public function getItems()
     {
+        /** @var NavbarItem[] $navbar */
         $navbar = [];
         foreach ($this->configService->getConfig()->getNavbarItems() as $routeName => $title) {
+            if (substr($routeName, 0, 8) === 'dropdown') {
+                $navbar[$routeName] = new NavbarItem($title);
+                continue;
+            }
+
+            $title = explode('/', $title, 2);
+            if (count($title) === 2) {
+                $dropdown = $title[0];
+                $title = $title[1];
+            } else {
+                $dropdown = false;
+                $title = $title[0];
+            }
+
             if ($route = $this->router->getRouteCollection()->get($routeName)) {
                 if ($this->canAccessRoute($routeName)) {
-                    $navbar[$routeName] = $title;
+                    $item = new NavbarItem($title, $routeName);
+                    if ($dropdown) {
+                        $navbar[$dropdown]->addChild($item);
+                    } else {
+                        $navbar[$routeName] = $item;
+                    }
                 }
             } elseif ($this->authChecker->isGranted('ROLE_EDIT_CONFIG')) {
                 /** @var Session $session */
