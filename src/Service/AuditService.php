@@ -45,7 +45,10 @@ class AuditService
     {
         if ($history = $action->getTableHistory()) {
             $class = $history->getTable();
+            // The namespace AppBundle was renamed to App in the 2018 release
+            $class = str_replace('AppBundle', 'App', $class);
             $id = $history->getEntry();
+
             if (!class_exists($class)) {
                 return null;
             }

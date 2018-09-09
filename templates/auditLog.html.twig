@@ -36,7 +36,11 @@
         </div>
         {% if action.action starts with 'profile' %}
           <div style="margin-left: 31px; margin-top: 5px;">
-            <a href="{{ path('viewPerson', {'steamID': entity.steamId}) }}">{{ entity.getName() }}</a>
+            {% if entity %}
+              <a href="{{ path('viewPerson', {'steamID': entity.steamId}) }}">{{ entity.getName() }}</a>
+            {% else %}
+              unknown user ({{ action.data1 }})
+            {% endif %}
             {% if action.data2 %}
             : <code>{{ action.data2 }}</code>
             {% endif %}
@@ -73,8 +77,8 @@
           <div style="margin-left: 31px; margin-top: 5px;">
             {% if action.tableHistory %}
               {{ action.tableHistory.values.name }} :
+              <code>{{ action.tableHistory.values['short-name'] }}</code><br>
             {% endif %}
-            <code>{{ action.tableHistory.values['short-name'] }}</code><br>
           </div>
         {% endif %}
         {% if action.action == 'user-added' %}
