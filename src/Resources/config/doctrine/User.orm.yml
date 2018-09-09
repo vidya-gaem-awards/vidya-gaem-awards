@@ -67,5 +67,5 @@ App\Entity\User:
           permissionID:
             referencedColumnName: id
   uniqueConstraints:
-    steamId:
-      columns: [ steamId ]
+    steam_id:
+      columns: [ steam_id ]

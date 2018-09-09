@@ -106,7 +106,7 @@ class User extends AbstractSteamUser implements UserInterface
         $this->logins = new Collections\ArrayCollection();
     }
 
-    public function setSteamID($steamID)
+    public function setSteamID(int $steamID)
     {
         $this->steamId = $steamID;
         return $this;
@@ -311,7 +311,7 @@ class User extends AbstractSteamUser implements UserInterface
      *
      * @return User
      */
-    public function setAvatar($avatar)
+    public function setAvatar(string $avatar)
     {
         $this->avatar = $avatar;
 

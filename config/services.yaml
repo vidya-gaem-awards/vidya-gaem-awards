@@ -70,4 +70,3 @@ services:
     App\Security\ConditionallyPublicVoter:
         tags:
         - { name: security.voter }
-
