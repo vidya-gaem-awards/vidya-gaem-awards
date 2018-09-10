@@ -40,7 +40,7 @@ class ConfigController extends Controller
         ]);
     }
 
-    public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService, RouterInterface $router)
+    public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService, RouterInterface $router, CronJobService $cron)
     {
         $config = $configService->getConfig();
         
@@ -59,6 +59,11 @@ class ConfigController extends Controller
             $config->setReadOnly(true);
             $em->persist($config);
             $em->flush();
+
+            // It's extremely likely that the cron job will already be disabled prior to the site being put into
+            // read-only mode. Nonetheless, we make absolutely sure that it is disabled anyway, because once read-only
+            // mode is active, the controls for the cron job become unavailable.
+            $cron->disableCronJob();
 
             $this->addFlash('success', 'Read-only mode has been successfully enabled.');
             return $this->redirectToRoute('config');
