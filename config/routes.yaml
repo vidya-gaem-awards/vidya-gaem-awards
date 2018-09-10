@@ -203,10 +203,8 @@ winnerImageUpload:
     controller: App\Controller\ResultController::winnerImageUploadAction
 
 results:
-    path:       /results/{all?}
+    path:       /results
     controller: App\Controller\ResultController::detailedAction
-    requirements:
-        all: '(all)?'
 
 pairwiseResults:
     path:       /results/pairwise

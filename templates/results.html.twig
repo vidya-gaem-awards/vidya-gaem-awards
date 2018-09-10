@@ -2,153 +2,106 @@
 
 {% block content %}
   <style type="text/css">
-    .breadcrumb.fancy {
-      margin-top: 0;
-      border-top: 1px solid #BBB;
-      border-radius: 0;
+    .table {
+      background: white;
     }
 
-    .thumbnail {
-      background-color: white;
+    .position-1 {
+      color: #c2a939;
     }
 
-    .filter-02-voting-code {
-      background-color: #FFF9C4;
+    .position-2 {
+      color: #a9acc3;
     }
 
-    .filter-04-4chan {
-      background-color: #C8E6C9;
+    .position-3 {
+      color: #a77334;
     }
 
-    .filter-08-4chan-or-null-with-voting-code {
-      border: 2px solid black;
-      background-color: #A5D6A7;
-    }
-
-    .filter-14-neogaf, .filter-17-twitch, .filter-11-reddit, .filter-18-facebook, .filter-19-google, .filter-15-facepunch {
-      background-color: #ffcdd2;
-    }
-
-    .filter-16-8chan {
-      background-color: #EEEEEE;
-    }
-
-    .infobox {
-      border: 3px solid lightblue;
-    }
-
-    .results .thumbnail {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow-x: hidden;
-    }
-
-    .results ol {
-      padding-left: 35px;
-    }
-
-    .results li:first-child {
-      color: green;
-      font-weight: bold;
-    }
-
-    .sweepPoints {
-      font-size: 10px;
-      float: right;
-      padding-top: 3px;
-    }
-
-    .voteCount {
-      float: right;
+    .table-success .position {
       color: black;
-      font-weight: bold;
     }
   </style>
 
-  <h1 class="page-header fancy">Detailed Results</h1>
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <p>
-            Here are the detailed results for the 2018 /v/GAs. Although we only use votes from 4chan in our official
-            results, we include the results of other websites here for your amusement.
-          </p>
-          <p>
-            If all you want is the official results for each award, you can get those on the
-            <a href="{{ path('winners') }}">winners&nbsp;page</a>. If you want to see the results in even <em>more</em>
-            detail, you can view the <a href="{{ path('pairwiseResults') }}">pairwise voting results</a>.</p>
-        </div>
+  <h1 class="display-4">Detailed results</h1>
+  <hr>
+
+  <div class="card-deck mb-4">
+    <div class="card">
+      <h5 class="card-header">The results you've been waiting for</h5>
+      <div class="card-body">
+        <p>
+          Here are the detailed results for the 2018 /v/GAs. Although we only use votes from 4chan in our official
+          results, we include the results of other websites here for your amusement.
+        </p>
+        <p class="mb-0">
+          If all you want is the official results for each award, you can get those on the
+          <a href="{{ path('winners') }}">winners&nbsp;page</a>. If you want to see the results in even <em>more</em>
+          detail, you can view the <a href="{{ path('pairwiseResults') }}">pairwise voting results</a>.
+        </p>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><strong>What are Sweep Points™?</strong></h3>
-        </div>
-        <div class="panel-body">
-          <p>
-            The Schulze method doesn't allow for exact vote counts for each nominee, so instead we calculate Sweep
-            Points™ as a way to see how much the winners won by.
-            It may give unexpected results for low vote counts.
-          </p>
-          <p>
-            <a href="https://youtu.be/i_UG-IKNzIQ">Watch the video</a> for more details.
-          </p>
-        </div>
+    <div class="card">
+      <h5 class="card-header">What are Sweep Points™?</h5>
+      <div class="card-body">
+        The Schulze method doesn't allow for exact vote counts for each nominee, so instead we calculate Sweep
+        Points™ as a way to see how much the winners won by.
+        It may give unexpected results for low vote counts.
+      </div>
+      <div class="card-footer">
+        <a href="https://youtu.be/i_UG-IKNzIQ" target="_blank">Watch the tutorial <i class="fas fa-external-link-alt fa-xs"></i></a>
+        <small class="text-muted">a sweep point is a sweep point, you can't say it's only half</small>
       </div>
     </div>
   </div>
 
-  <ul class="breadcrumb fancy">
-    {% if all %}
-      <li class="active">Currently viewing the complete rankings.</li>
-      <li><a href="{{ path('results') }}">Show the top 5 positions only</a></li>
-    {% else %}
-      <li class="active">Currently viewing the top 5 nominees for each award only.</li>
-      <li><a href="{{ path('results', {all: 'all'}) }}">Show complete rankings</a></li>
-    {% endif %}
-  </ul>
-
   {% for award in awards %}
-    <h2 id="{{ award.id }}"><a href="#{{ award.id }}">{{ award.name }}</a>
-      <small>{{ award.subtitle }}</small>
+    <h2 id="{{ award.id }}">
+      {{ award.name }}
+      <small class="text-muted">
+        {{ award.subtitle }}
+      </small>
+      <div class="float-right">
+        <a href="#{{ award.id }}" title="Direct link to this result"><i class="fas fa-link fa-xs"></i></a>
+      </div>
     </h2>
 
-    {% set limit = (all ? 100 : 5) %}
-
     {% if not results[award.id] %}
-      <div class="alert alert-warning">
-        Results for this award have not yet been generated.
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle mr-1"></i> Results for this award are not yet available.
       </div>
     {% else %}
-      {% for filterCollection in filters %}
-        <div class="row results">
-          {% for filter, filterName in filterCollection %}
-            {% set result = results[award.id][filter] %}
+
+      <div class="table-responsive mb-2">
+        <table class="table">
+          <thead class="thead-light">
+          <tr>
+            <th style="width: 18%;"></th>
+            <th>1<sup>st</sup> Place</th>
+            <th>2<sup>nd</sup> Place</th>
+            <th>3<sup>rd</sup> Place</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for filter, result in results[award.id] %}
             {% if result.votes > 0 %}
-              <div class="col-xs-6 col-sm-4 col-md-3">
-                <div class="thumbnail filter-{{ filter }}">
-                  <strong>{{ filterName }}</strong>
-                  <span class="voteCount">{{ result.votes }} votes</span>
-                  <ol>
-                    {% for nominee in result.results[:limit] %}
-                      <li style="clear: both;">
-                        {{ nominees[award.id][nominee].name }}
-                        {% if result.steps['sweepPoints'][nominee] %}
-                          <span class="sweepPoints"
-                                title="{{ result.steps['sweepPoints'][nominee] | round(2, 'floor') | number_format(2) }} Sweep Points&trade;">{{ result.steps['sweepPoints'][nominee] | round(0, 'floor') }}
-                            pts</span>
-                        {% endif %}
-                      </li>
-                    {% endfor %}
-                  </ol>
-                </div>
-              </div>
+              <tr class="{{ filters[filter] == '4chan' ? 'table-success' : '' }}">
+                <th>
+                  {{ filters[filter] }}<br>
+                  <small>{{ result.votes }} votes {{ filters[filter] == '4chan' ? '&ndash; official results' : '' }}</small>
+                </th>
+                {% for nominee in result.results[:3] %}
+                  <td>
+                    {{ nominees[award.id][nominee].name }}<br>
+                    <small class="position position-{{ loop.index }}">{{ result.steps['sweepPoints'][nominee] | round(0, 'floor') }} Sweep Points™</small>
+                  </td>
+                {% endfor %}
+              </tr>
             {% endif %}
           {% endfor %}
-        </div>
-      {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% endif %}
   {% endfor %}
 {% endblock %}
