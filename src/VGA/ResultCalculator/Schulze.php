@@ -19,8 +19,8 @@ class Schulze extends AbstractResultCalculator
         $pairwise = [];
         // for every nominee
 
-        echo "Number of candidates: " . count($candidates) . "\n";
-        echo "Number of votes: " . count($votes) . "\n";
+//        echo "Number of candidates: " . count($candidates) . "\n";
+//        echo "Number of votes: " . count($votes) . "\n";
 
         $candidateKeys = array_keys($candidates);
 

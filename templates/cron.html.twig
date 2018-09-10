@@ -1,0 +1,27 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block title %}Result Generator &ndash; Config{% endblock %}
+
+{% block content %}
+  <h1 class="display-4">Result generator</h1>
+  <hr>
+  <p>
+    It can take up the five minutes to calculate Sweep Points&trade; and determine all of the award winners.
+    This makes it impractical to display live results, so instead, an automated process calculates the results every
+    30 minutes and saves the results to the database.
+  </p>
+  <p>
+    This process must be manually started, but once started, it will continue to run until a day after voting closes.
+  </p>
+  <div class="card">
+    <div class="card-body">
+      The result generation process is currently <strong class="text-{{ enabled ? 'success' : 'dark' }}">{{ enabled ? 'active' : 'disabled' }}</strong>.
+    </div>
+    <div class="card-footer">
+      <form action="{{ path('cronPost') }}" method="post">
+        <input type="hidden" name="enable" value="{{ enabled ? '0' : '1' }}">
+        <button class="btn btn-default">{{ enabled ? 'Deactivate' : 'Activate' }} result generator</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

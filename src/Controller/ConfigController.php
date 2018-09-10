@@ -1,14 +1,15 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Action;
 use App\Entity\Config;
+use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\CronJobService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Action;
-use App\Entity\TableHistory;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
@@ -180,5 +181,50 @@ class ConfigController extends Controller
 
         ksort($routes);
         return $routes;
+    }
+
+    public function cronAction(CronJobService $cron)
+    {
+        return $this->render('cron.html.twig', [
+            'enabled' => $cron->isCronJobEnabled()
+        ]);
+    }
+
+    public function cronPostAction(Request $request, CronJobService $cron, ConfigService $configService, AuditService $auditService)
+    {
+        $config = $configService->getConfig();
+        $post = $request->request;
+        $enable = $post->getBoolean('enable');
+
+        if ($config->isReadOnly()) {
+            $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
+            return $this->redirectToRoute('cron');
+        }
+
+        $currentlyEnabled = $cron->isCronJobEnabled();
+        if (!$currentlyEnabled && $enable) {
+            $cron->enableCronJob();
+            $auditService->add(
+                new Action('cron-results-enabled')
+            );
+        } elseif ($currentlyEnabled && !$enable) {
+            $cron->disableCronJob();
+            $auditService->add(
+                new Action('cron-results-disabled')
+            );
+        }
+
+        if ($currentlyEnabled === $enable) {
+            $this->addFlash(
+                'success',
+                'The result generator ' . ($currentlyEnabled ? 'is already active.' : 'has already been deactivated.')
+            );
+        } else {
+            $this->addFlash(
+                'success',
+                'The result generator has been successfully ' . ($enable ? 'activated.' : 'deactivated.')
+            );
+        }
+        return $this->redirectToRoute('cron');
     }
 }

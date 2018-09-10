@@ -33,6 +33,8 @@ class AuditLogController extends Controller
             'item-new' => 'Created a lootbox reward',
             'item-edit' => 'Edited a lootbox reward',
             'item-delete' => 'Deleted a lootbox reward',
+            'cron-results-enabled' => 'Enabled the result generator process',
+            'cron-results-disabled' => 'Disabled the result generator process',
         ];
 
         $result = $em->createQueryBuilder()

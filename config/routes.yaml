@@ -292,6 +292,16 @@ configPost:
     methods:    [POST]
     controller: App\Controller\ConfigController::postAction
 
+cron:
+    path:       /config/cron
+    methods:    [GET]
+    controller: App\Controller\ConfigController::cronAction
+
+cronPost:
+    path:       /config/cron
+    methods:    [POST]
+    controller: App\Controller\ConfigController::cronPostAction
+
 #
 # SPECIAL
 #

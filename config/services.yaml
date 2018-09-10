@@ -38,6 +38,9 @@ services:
         resource: '../src/Service'
         public: true
 
+    App\Service\CronJobService:
+        arguments: ['%kernel.project_dir%']
+
     App\EventListener\UserListener:
         tags:
         - { name: kernel.event_listener, event: kernel.request }
