@@ -1,243 +1,250 @@
 {% extends 'base/standard.html.twig' %}
 
+{% block js %}
+  <script src="https://moment.github.io/luxon/global/luxon.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+          var datetime = $('#time');
+          var update = function () {
+              var date = luxon.DateTime.local().setZone('{{ config.timezone }}');
+              datetime.html(date.toFormat('yyyy-MM-dd hh:mm:ss a ZZZZ'));
+          };
+
+          update();
+          setInterval(update, 1000);
+      });
+  </script>
+{% endblock %}
+
+{% block css %}
+  <style type="text/css">
+    .voting-time input {
+      width: 200px;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
-  <h1 class="page-header">Website Config</h1>
+  <kbd class="float-right" id="time"></kbd>
+  <h1 class="display-4">
+    Site configuration
+  </h1>
 
-  <div class="row">
-    <div class="col-xs-12">
-      <p style="margin-bottom: 20px;">
-        In the selected timezone, it is currently <strong>{{ 'now' | date('D, d M Y H:i:s') }}</strong>
-        ({{ 'now' | date('P') }} UTC)
-      </p>
-      <form class="form-horizontal" action="{{ path('configPost') }}" method="post">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="timezone" class="col-sm-4 control-label">Timezone</label>
-              <div class="col-sm-8">
-                <select class="form-control" id="timezone" name="timezone" disabled>
-                  {% for area, timezoneArray in timezones %}
-                    <optgroup label="{{ area }}">
-                      {% for id, timezone in timezoneArray %}
-                        <option value="{{ id }}" {{ id == config.timezone ? 'selected' : '' }}>{{ timezone }}</option>
-                      {% endfor %}
-                    </optgroup>
-                  {% endfor %}
-                </select>
-                {# <p class="help-block">The timezone that 4chan uses is <em>America/New York</em>.</p> #}
-                <p class="help-block">This can't currently be changed. It's the same timezone that 4chan uses.</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="votingStart" class="col-sm-4 control-label">Voting start</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="votingStart" name="votingStart"
-                       value="{{ config.votingStart ? config.votingStart | date('Y-m-d H:i:s') : '' }}"
-                       placeholder="yyyy-mm-dd hh:mm:ss">
-                <p class="help-block">Leaving this blank will result in votes never opening</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="votingEnd" class="col-sm-4 control-label">Voting end</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="votingEnd" name="votingEnd"
-                       value="{{ config.votingEnd ? config.votingEnd | date('Y-m-d H:i:s') : '' }}"
-                       placeholder="yyyy-mm-dd hh:mm:ss">
-                <p class="help-block">Leaving this blank will keep voting open indefinitely</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="streamTime" class="col-sm-4 control-label">Stream time</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="streamTime" name="streamTime"
-                       value="{{ config.streamTime ? config.streamTime | date('Y-m-d H:i:s') : '' }}"
-                       placeholder="yyyy-mm-dd hh:mm:ss">
-                <p class="help-block">This is shown on the countdown page</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="defaultPage" class="col-sm-4 control-label">Default page</label>
-              <div class="col-sm-8">
-                <select class="form-control" id="defaultPage" name="defaultPage">
-                  {% for page, title in config.allowedDefaultPages %}
-                    <option {{ (config.defaultPage == page) ? 'selected' : '' }}
-                        value="{{ page }}">{{ page }} &ndash; {{ title }}</option>
-                  {% endfor %}
-                </select>
-                <p class="help-block">
-                  The first page that appears when accessing the website.<br>
-                  Make sure that you've turned on public access for that page.
-                </p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="navigationMenu" class="col-sm-4 control-label">Navigation menu</label>
-              <div class="col-sm-8">
-                <textarea class="form-control" rows="9" id="navigationMenu" name="navigationMenu">
-                  {{- navigationBarConfig -}}
-                </textarea>
-                <p class="help-block">
-                  This controls the links that appear in the navigation bar.<br>
-                  A link will only be shown if the user has access to it.
-                </p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="availableRoutes" class="col-sm-4 control-label">Available routes</label>
-              <div class="col-sm-8">
-                <select class="form-control" id="availableRoutes">
-                  {% for routeName, route in routes %}
-                    <option>{{ routeName }} ({{ route.path }})</option>
-                  {% endfor %}
-                </select>
-                <p class="help-block">
-                  This is a list of routes you can use in the navigation menu.<br>
-                  The dropdown doesn't do anything, it's just for reference.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-sm-4 control-label">Public access</label>
-              <div class="col-sm-8">
-                <p class="help-block">The pages listed below will not be publicly accessible unless they are
-                  checked.</p>
-                {# Note: parameters to isPagePublic must match the route name for those pages. #}
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[videoGames]" {{ config.isPagePublic('videoGames') ? 'checked' : '' }}>
-                    <a href="{{ path('videoGames') }}" target="_blank">2018 in Vidya</a>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[awards]" {{ config.isPagePublic('awards') ? 'checked' : '' }}>
-                    <a href="{{ path('awards') }}" target="_blank">Awards and Nominations</a>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[videos]" {{ config.isPagePublic('videos') ? 'checked' : '' }}>
-                    <a href="{{ path('videos') }}" target="_blank">Videos page</a>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>
-                    <a href="{{ path('voting') }}" target="_blank">Voting page</a>
-                    <p class="help-block">
-                      <small>Checking this box does not open voting: use the settings on the left for that.</small>
-                    </p>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[countdown]" {{ config.isPagePublic('countdown') ? 'checked' : '' }}>
-                    <a href="{{ path('countdown') }}" target="_blank">Stream countdown</a>
-                    <p class="help-block">
-                      <small>Set the countdown timer on the left.</small>
-                    </p>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[stream]" {{ config.isPagePublic('stream') ? 'checked' : '' }}>
-                    <a href="{{ path('stream') }}" target="_blank">Stream page</a>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[finished]" {{ config.isPagePublic('finished') ? 'checked' : '' }}>
-                    <a href="{{ path('finished') }}" target="_blank">Post-stream "thank you" page</a>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[credits]" {{ config.isPagePublic('credits') ? 'checked' : '' }}>
-                    <a href="{{ path('credits') }}" target="_blank">Credits</a>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="publicPages[soundtrack]" {{ config.isPagePublic('soundtrack') ? 'checked' : '' }}>
-                    <a href="{{ path('soundtrack') }}" target="_blank">Soundtrack</a>
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label class="dangerous">
-                    <input type="checkbox"
-                           name="publicPages[results]" {{ config.isPagePublic('results') ? 'checked' : '' }}>
-                    <a href="{{ path('results') }}" target="_blank">Voting results</a>
-                    and the <a href="{{ path('winners') }}" target="_blank">winners page</a>
-                    <p class="help-block text-danger">
-                      <small class="text-danger">
-                        <strong>Warning:</strong> this will reveal the results to everybody!
-                      </small>
-                    </p>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-4 control-label">Other settings</label>
-              <div class="col-sm-8">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="awardSuggestions" {{ config.getAwardSuggestions ? 'checked' : '' }}>
-                    Allow suggestions for new awards and award names
-                  </label>
-                </div>
-                <a href="{{ path('cron') }}">View result generator details</a>
-              </div>
-            </div>
-          </div>
-        </div>
+  <hr>
 
-        <div class="form-group">
-          <div class="col-sm-8 col-sm-offset-2">
-            <button type="submit" class="btn btn-primary" {{ config.isReadOnly ? 'disabled' : '' }}>Save config</button>
-          </div>
-        </div>
-      </form>
+  {% if ultraAlerts %}
+    <div class="alert bg-danger">
+      <strong>Configuration alert:</strong>
+      <ul class="mb-0">
+        {% for alert in ultraAlerts %}
+          <li>{{ alert }}</li>
+        {% endfor %}
+      </ul>
     </div>
-  </div>
+  {% endif %}
 
-  <h2>Read-Only Mode</h2>
+  <form class="form-horizontal" action="{{ path('configPost') }}" method="post">
+    <div class="form-row">
+      <div class="col-lg-5 col-md-12 mb-4">
+        <label for="votingStart" class="h5">Voting times</label>
+        <div class="input-group voting-time">
+          <input type="text" class="form-control" id="votingStart" name="votingStart"
+                 value="{{ config.votingStart ? config.votingStart | date('Y-m-d H:i') : '' }}"
+                 placeholder="yyyy-mm-dd hh:mm">
+
+          <div class="input-group-prepend input-group-append">
+            <span class="input-group-text" id="inputGroupPrepend2">to</span>
+          </div>
+
+          <input type="text" class="form-control" id="votingEnd" name="votingEnd"
+                 value="{{ config.votingEnd ? config.votingEnd | date('Y-m-d H:i') : '' }}"
+                 placeholder="yyyy-mm-dd hh:mm">
+        </div>
+        <small class="form-text text-muted">Leaving the end date blank will leave voting open indefinitely.</small>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+          <label for="streamTime" class="h5">Stream time</label>
+          <input type="text" class="form-control" id="streamTime" name="streamTime"
+                 value="{{ config.streamTime ? config.streamTime | date('Y-m-d H:i') : '' }}"
+                 placeholder="yyyy-mm-dd hh:mm">
+          <small class="form-text text-muted">This is shown on the countdown page.</small>
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <label for="defaultPage" class="h5">Default page</label>
+        <select class="form-control" id="defaultPage" name="defaultPage">
+          {% for page, title in config.allowedDefaultPages %}
+            <option {{ (config.defaultPage == page) ? 'selected' : '' }}
+                value="{{ page }}">{{ page }} &ndash; {{ title }}</option>
+          {% endfor %}
+        </select>
+        <small class="form-text text-muted">
+          The first page that appears when accessing the website.
+        </small>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-5 mb-4">
+        <label class="h5" for="navigationMenu">Navigation menu</label>
+        <textarea class="form-control" rows="12" id="navigationMenu" name="navigationMenu">
+          {{- navigationBarConfig -}}
+        </textarea>
+        <small class="form-text text-muted">
+          This controls the links that appear in the navigation bar.
+          A link will only be shown if the user has access to it.<br>
+          The admin tools dropdown is hacked in, don't mess with it too much.
+        </small>
+
+        <label for="availableRoutes" class="mt-4 h5">Available routes</label>
+        <select class="form-control" id="availableRoutes">
+          {% for routeName, route in routes %}
+            <option>{{ routeName }} ({{ route.path }})</option>
+          {% endfor %}
+        </select>
+        <small class="form-text text-muted">
+          This is a list of routes you can use in the navigation menu.<br>
+          The dropdown doesn't do anything, it's just for reference.
+        </small>
+      </div>
+      <div class="col-md-6 offset-md-1">
+        <label class="h5">Public access</label>
+
+        {# Note: parameters to isPagePublic must match the route name for those pages. #}
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[videoGames]" {{ config.isPagePublic('videoGames') ? 'checked' : '' }}>
+            <a href="{{ path('videoGames') }}" target="_blank">Video games list</a>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[awards]" {{ config.isPagePublic('awards') ? 'checked' : '' }}>
+            <a href="{{ path('awards') }}" target="_blank">Awards and Nominations</a>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[videos]" {{ config.isPagePublic('videos') ? 'checked' : '' }}>
+            <a href="{{ path('videos') }}" target="_blank">Videos page</a>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>
+            <a href="{{ path('voting') }}" target="_blank">Voting page</a>
+            <small class="form-text text-muted">
+              Checking this box does not open voting: use the voting time settings for that.
+            </small>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[countdown]" {{ config.isPagePublic('countdown') ? 'checked' : '' }}>
+            <a href="{{ path('countdown') }}" target="_blank">Stream countdown</a>
+            <small class="form-text text-muted">
+              Set the countdown timer on the left.
+            </small>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[stream]" {{ config.isPagePublic('stream') ? 'checked' : '' }}>
+            <a href="{{ path('stream') }}" target="_blank">Stream page</a>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[finished]" {{ config.isPagePublic('finished') ? 'checked' : '' }}>
+            <a href="{{ path('finished') }}" target="_blank">Post-stream "thank you" page</a>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[credits]" {{ config.isPagePublic('credits') ? 'checked' : '' }}>
+            <a href="{{ path('credits') }}" target="_blank">Credits</a>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="publicPages[soundtrack]" {{ config.isPagePublic('soundtrack') ? 'checked' : '' }}>
+            <a href="{{ path('soundtrack') }}" target="_blank">Soundtrack</a>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label class="dangerous">
+            <input type="checkbox"
+                   name="publicPages[results]" {{ config.isPagePublic('results') ? 'checked' : '' }}>
+            <a href="{{ path('results') }}" target="_blank">Voting results</a>
+            and the <a href="{{ path('winners') }}" target="_blank">winners page</a>
+            <small class="form-text text-danger">
+              <strong>Warning:</strong> this will reveal the results to everybody!
+            </small>
+          </label>
+        </div>
+        <label class="h5 mt-4">Other settings</label>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="awardSuggestions" {{ config.getAwardSuggestions ? 'checked' : '' }}>
+            Allow suggestions for new awards and award names
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row mt-5">
+      <div class="col">
+        <button type="submit" class="btn btn-primary btn-lg btn-block p-3" {{ config.isReadOnly ? 'disabled' : '' }}>Save configuration</button>
+      </div>
+    </div>
+  </form>
+
+  <h2 class="mt-5">Other tools</h2>
+  <hr>
 
   <div class="row">
-    <div class="col-xs-12">
-      {% if config.isReadOnly %}
-        <p style="font-size: 18px;">
-          <strong class="text-info">Read-only mode is currently active.</strong>
-        </p>
-        <p>
-          It can only be disabled by directly editing the database.
-        </p>
-      {% else %}
-        <div class="alert alert-danger">
-          <form action="{{ path('configPost') }}" method="post">
-            <p>
-              <strong>Warning:</strong> turning on read-only mode will lock the site and prevent any more changes from
-              being made. This can only be undone by directly editing the database.
-            </p>
-            <input type="hidden" name="readOnly" value="1">
-            <button type="submit" class="btn btn-danger btn-sm"
-                    onclick="return confirm('Are you sure you want to turn on read-only mode?')">Turn on read-only mode
-            </button>
-          </form>
+    <div class="col-md-6">
+      <div class="card">
+        <h5 class="card-header">Result generator</h5>
+        <div class="card-body">
+          <p>
+            The result generation process is currently <span class="text-{{ cronEnabled ? 'success' : '' }}">{{ cronEnabled ? 'active' : 'disabled' }}</span>.
+          </p>
+          <a href="{{ path('cron') }}">More information</a>
         </div>
-      {% endif %}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card {{ config.isReadOnly ? '' : 'border-danger' }}">
+        <h5 class="card-header">Read-only mode</h5>
+        <div class="card-body {{ config.isReadOnly ? '' : 'text-danger' }}">
+          {% if not config.isReadOnly %}
+            <form action="{{ path('configPost') }}" method="post">
+              <p>
+                <strong>Warning:</strong> turning on read-only mode will lock the site and prevent any more changes from
+                being made. This can only be undone by directly editing the database.
+              </p>
+              <input type="hidden" name="readOnly" value="1">
+              <button type="submit" class="btn btn-danger btn-sm"
+                      onclick="return confirm('Are you sure you want to turn on read-only mode?')">Turn on read-only mode
+              </button>
+            </form>
+          {% else %}
+            <p class="lead">Read-only mode has been enabled.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+
     </div>
   </div>
 {% endblock %}

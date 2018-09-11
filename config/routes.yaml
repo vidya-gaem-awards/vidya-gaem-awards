@@ -10,10 +10,10 @@ login:
     path:       /login
     controller: App\Controller\AuthController::loginAction
 
-login_check:
+loginCheck:
     path:       /login/check
 
-login_redirect:
+loginRedirect:
     path:       /login/success
     controller: App\Controller\AuthController::loginRedirectAction
 

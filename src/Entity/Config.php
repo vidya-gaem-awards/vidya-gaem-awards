@@ -216,6 +216,10 @@ class Config
      */
     public function isPagePublic(string $page): bool
     {
+        if ($page === 'home' || $page === 'promo') {
+            return true;
+        }
+
         // Some conditionally public pages have multiple routes with the same permission.
         // For these alternate routes, just check the main route.
         $alternateRoutes = [

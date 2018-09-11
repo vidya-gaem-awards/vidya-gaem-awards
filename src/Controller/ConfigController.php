@@ -16,27 +16,36 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ConfigController extends Controller
 {
-    public function indexAction(ConfigService $config, RouterInterface $router)
+    public function indexAction(ConfigService $configService, CronJobService $cron, RouterInterface $router)
     {
-        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
-        $timezonesByArea = [];
-        foreach ($timezones as $timezone) {
-            list($area, ) = explode('/', $timezone);
-            $timezonesByArea[$area][$timezone] = str_replace('_', ' ', $timezone);
+        $config = $configService->getConfig();
+
+        $navbarConfig = [];
+        foreach ($config->getNavbarItems() as $routeName => $label) {
+            $navbarConfig[] = "$routeName: $label";
         }
 
-        $navbarItems = $config->getConfig()->getNavbarItems();
-        $navbarConfig = [];
-        foreach ($navbarItems as $routeName => $label) {
-            $navbarConfig[] = "$routeName: $label";
+        // Ultra alerts are very important and appear with a blinding red background to encourage you to fix the issue ASAP
+        $ultraAlerts = [];
+        if ($config->getStreamTime()) {
+            if (new \DateTime() < $config->getStreamTime() && $config->isPagePublic('results')) {
+                $ultraAlerts[] = 'The results page is public, but the stream date hasn\'t passed yet.';
+            }
+            if (!$cron->isCronJobEnabled() && $config->isVotingOpen()) {
+                $ultraAlerts[] = 'Voting is open, but the results generator hasn\'t been activated.';
+            }
+            if (!$config->isPagePublic($config->getDefaultPage())) {
+                $ultraAlerts[] = 'The default page doesn\'t have public access turned on.';
+            }
         }
 
         return $this->render('config.html.twig', [
             'title' => 'Config',
-            'config' => $config->getConfig(),
+            'config' => $config,
             'navigationBarConfig' => implode("\n", $navbarConfig),
             'routes' => $this->getValidNavbarRoutes($router->getRouteCollection()),
-            'timezones' => $timezonesByArea,
+            'cronEnabled' => $cron->isCronJobEnabled(),
+            'ultraAlerts' => $ultraAlerts,
         ]);
     }
 
@@ -64,6 +73,10 @@ class ConfigController extends Controller
             // read-only mode. Nonetheless, we make absolutely sure that it is disabled anyway, because once read-only
             // mode is active, the controls for the cron job become unavailable.
             $cron->disableCronJob();
+
+            $auditService->add(
+                new Action('config-readonly-enabled')
+            );
 
             $this->addFlash('success', 'Read-only mode has been successfully enabled.');
             return $this->redirectToRoute('config');

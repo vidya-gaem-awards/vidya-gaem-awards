@@ -35,6 +35,7 @@ class AuditLogController extends Controller
             'item-delete' => 'Deleted a lootbox reward',
             'cron-results-enabled' => 'Enabled the result generator process',
             'cron-results-disabled' => 'Disabled the result generator process',
+            'config-readonly-enabled' => 'Turned on read-only mode',
         ];
 
         $result = $em->createQueryBuilder()

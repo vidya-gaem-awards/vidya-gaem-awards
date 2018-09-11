@@ -16,7 +16,7 @@ class AuthController extends Controller
         $session->set('_security.main.target_path', $request->query->get('redirect'));
 
         $returnLink = $router->generate(
-            'login_check',
+            'loginCheck',
             [],
             UrlGenerator::ABSOLUTE_URL
         );
