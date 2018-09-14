@@ -1,14 +1,51 @@
 {% extends 'base/standard.html.twig' %}
 
+{% block title %}{{ user.name }}{% endblock %}
+
+{% block css %}
+  <style type="text/css">
+    h1 {
+      display: flex;
+      align-items: center;
+    }
+    h1 img {
+      width: 60px;
+    }
+  </style>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    })
+  </script>
+{% endblock %}
+
 {% block content %}
-  <div class="page-header">
-    <h1>
-      <img src="{{ user.avatar }}" style='height: 40px; margin-bottom: 5px;'/>
-      {{ user.name }}
-      <small>{{ user.primaryRole }}</small>
-    </h1>
-    <p>Back to <a href="{{ path('people') }}">Cast and Crew</a></p>
-  </div>
+  <h1 class="display-4">
+    <img class="profile-pic mr-3" src="{{ user.avatar }}">
+    <span>{{ user.name }}</span>
+  </h1>
+
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item ">
+        <a href="{{ path('people') }}">Team members</a>
+      </li>
+      <li class="breadcrumb-item active">
+        <a href="{{ path('viewPerson', {steamID: user.steamId}) }}">{{ user.name }}</a>
+      </li>
+      <li class="breadcrumb-item ml-auto">
+        <a href="{{ path('permissions') }}">Your permissions</a>
+      </li>
+      {% if is_granted('ROLE_ADD_USER') and not configService.isReadOnly %}
+        <li class="breadcrumb-item">
+          <a href="{{ path('addPerson') }}">Add new team member</a>
+        </li>
+      {% endif %}
+    </ol>
+  </nav>
 
   {% for message in app.session.getFlashBag().get('formError') %}
     <div class="alert alert-danger" role="alert">

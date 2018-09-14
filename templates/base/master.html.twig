@@ -2,32 +2,37 @@
     This is the base template from which all others inherit.
     It contains HTML, CSS and JS common that is common to every page on the site.
 #}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#2C3E50">
 
   <title>{% block fullTitle %}{% block title title %} &ndash; Vidya Gaem Awards{% endblock %}</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Asap:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ asset('css/core.css') }}">
   {% block css %}{% endblock %}
+
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+  {% block body %}{% endblock %}
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/twemoji/11.1.0/2/twemoji.min.js'></script>
   {% block js %}{% endblock %}
 
   <script type="text/javascript">
-      $(document).on('ready', function () {
+      window.addEventListener('load', function () {
           twemoji.parse(document.body, {
               callback: function(icon, options, variant) {
                   switch ( icon ) {
@@ -41,12 +46,6 @@
           });
       });
   </script>
-
-  {% block head %}{% endblock %}
-</head>
-
-<body>
-  {% block body %}{% endblock %}
 </body>
 
 </html>

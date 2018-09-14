@@ -106,7 +106,19 @@ class User extends AbstractSteamUser implements UserInterface
         $this->logins = new Collections\ArrayCollection();
     }
 
-    public function setSteamID(int $steamID)
+    /*
+     * The getSteamId function provided by the AbstractSteamUser class returns the steam ID as an integer.
+     * This can result in a loss of precision if you're using a system or language that doesn't support 64 bit integers
+     * (as a Steam ID takes up a bit more than 56 bits). Unfortunately, one of these languages happens to be JavaScript,
+     * which only supports 53 bits of precision. Given that we use JavaScript extensively, we need a function that
+     * returns the steam ID as a string instead, which completely bypasses the issue.
+     */
+    public function getSteamIdString(): string
+    {
+        return $this->steamId;
+    }
+
+    public function setSteamId(int $steamID)
     {
         $this->steamId = $steamID;
         return $this;
@@ -505,7 +517,7 @@ class User extends AbstractSteamUser implements UserInterface
      */
     public function getFuzzyID()
     {
-        return $this->isLoggedIn() ? $this->getSteamID() : $this->getIP();
+        return $this->isLoggedIn() ? $this->getSteamIdString() : $this->getIP();
     }
 
     /**
@@ -555,7 +567,7 @@ class User extends AbstractSteamUser implements UserInterface
      */
     public function setUsername($username)
     {
-        $this->setSteamID($username);
+        $this->setSteamId($username);
     }
 
     /**
@@ -631,7 +643,7 @@ class User extends AbstractSteamUser implements UserInterface
      */
     public function getUsername()
     {
-        return $this->getSteamID();
+        return $this->getSteamIdString();
     }
 
     /**

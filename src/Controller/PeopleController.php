@@ -1,15 +1,15 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Action;
+use App\Entity\Permission;
+use App\Entity\TableHistory;
+use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Action;
-use App\Entity\Permission;
-use App\Entity\TableHistory;
-use App\Entity\User;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class PeopleController extends Controller
@@ -87,7 +87,7 @@ class PeopleController extends Controller
             $user->removePermission($group);
             $em->persist($user);
 
-            $this->addFlash('formSuccess', 'Group successfully removed.');
+            $this->addFlash('formSuccess', 'Permission ' . $groupName . ' successfully removed.');
 
             $auditService->add(
                 new Action('profile-group-removed', $user->getId(), $groupName)
@@ -112,7 +112,7 @@ class PeopleController extends Controller
                 );
                 $em->flush();
 
-                $this->addFlash('formSuccess', 'Permission successfully added.');
+                $this->addFlash('formSuccess', 'Permission ' . $groupName . ' successfully added.');
             }
         }
 
@@ -156,7 +156,6 @@ class PeopleController extends Controller
     public function newAction(EntityManagerInterface $em)
     {
         $permissions = $em->getRepository(Permission::class)->findAll();
-
         return $this->render('addPerson.html.twig', [
             'permissions' => $permissions
         ]);
@@ -195,7 +194,7 @@ class PeopleController extends Controller
         if (!$user) {
             $user = new User();
             $user
-                ->setSteamID($steam->getSteamId64())
+                ->setSteamId($steam->getSteamId64())
                 ->setName($steam->getNickname())
                 ->setAvatar($steam->getMediumAvatarUrl());
         }
@@ -237,7 +236,7 @@ class PeopleController extends Controller
             'success' => true,
             'name' => $user->getName(),
             'avatar' => $user->getAvatar(),
-            'steamID' => $user->getSteamID()
+            'steamID' => $user->getSteamIdString()
         ]);
     }
 }

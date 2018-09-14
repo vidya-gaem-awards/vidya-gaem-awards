@@ -98,7 +98,7 @@ class InitialiseDatabaseCommand extends ContainerAwareCommand
             /** @var \SteamId $steam */
             $user = new User();
             $user
-                ->setSteamID($steam->getSteamId64())
+                ->setSteamId($steam->getSteamId64())
                 ->setName($steam->getNickname())
                 ->setAvatar($steam->getMediumAvatarUrl())
                 ->setSpecial(true);

@@ -3,11 +3,22 @@
 {% block title 'Permissions' %}
 
 {% block content %}
-  <h1>Group and Permission Information</h1>
-
-  <ol class="breadcrumb">
-    <li><a href="{{ path('people') }}">Back to people page</a></li>
-  </ol>
+  <h1 class="display-4">Permissions</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{ path('people') }}">Team members</a>
+      </li>
+      <li class="breadcrumb-item active ml-auto">
+        <a href="{{ path('permissions') }}">Your permissions</a>
+      </li>
+      {% if is_granted('ROLE_ADD_USER') and not configService.isReadOnly %}
+        <li class="breadcrumb-item">
+          <a href="{{ path('addPerson') }}">Add new team member</a>
+        </li>
+      {% endif %}
+    </ol>
+  </nav>
 
   <div class="row">
     <div class="col-md-12">
@@ -19,20 +30,23 @@
     </div>
   </div>
 
-  <h2>This is what you can do:</h2>
+  <h2>Your permissions</h2>
 
-  <div class="row">
-    <div class="col-md-12">
-      <ul>
+  <dl class="row">
+
+
         {% for permission in app.user.allPermissions %}
-          <li>
-            <abbr title='{{ permission.id }}'>{{ permission.description ?: permission.id }}</abbr>
+          <dt class="col-sm-3">
+            {{ permission.id }}
             {% if permission.parents | length > 0 %}
-              <small class='text-muted'>({{ permission.parents | join(', ') }})</small>
+              <small class='text-muted ml-1'>{{ permission.parents | join(', ') }}</small>
             {% endif %}
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
+          </dt>
+          <dd class="col-sm-8">
+            {{ permission.description ?: '' }}
+          </dd>
+         {% endfor %}
+
+
+  </dl>
 {% endblock %}

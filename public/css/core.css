@@ -17,11 +17,27 @@ body {
   margin-top: 5px;
 }
 
+.breadcrumb {
+  border: 1px solid rgba(0,0,0,.125);
+}
+
+.breadcrumb .breadcrumb-item.active a {
+  color: #6c757d;
+}
+
+.breadcrumb-item.ml-auto::before {
+  display: none;
+}
+
 .breadcrumb.fancy {
   margin-top: -20px;
   text-align: center;
   border-bottom: 1px solid #BBB;
   border-radius: 0;
+}
+
+img.profile-pic {
+  border-radius: 100%;
 }
 
 input, select, textarea {
@@ -110,6 +126,10 @@ section {
   padding-top: 30px;
 }
 
+.table {
+  background: white;
+}
+
 table.tablesorter thead tr th {
   background: url("/img/sort.gif") no-repeat center right;
   cursor: pointer;
@@ -157,12 +177,6 @@ table.tablesorter thead tr .headerSortUp {
 
 ul.nav li.dropdown:hover ul.dropdown-menu {
   display: block;
-}
-
-/* See https://github.com/twbs/bootstrap/issues/22562 */
-abbr[title] {
-  border-bottom: none;
-  text-decoration: underline dotted;
 }
 
 /* 🤔 */

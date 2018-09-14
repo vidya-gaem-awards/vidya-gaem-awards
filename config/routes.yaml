@@ -71,37 +71,37 @@ addVideoGame:
 #
 
 people:
-    path:       /crew
+    path:       /team
     controller: App\Controller\PeopleController::indexAction
 
 permissions:
-    path:       /crew/permissions
+    path:       /team/permissions
     controller: App\Controller\PeopleController::permissionsAction
 
 addPerson:
-    path:       /crew/new
+    path:       /team/add
     controller: App\Controller\PeopleController::newAction
 
 userSearch:
-    path:       /crew/search
+    path:       /team/add/search
     methods:    [POST]
     controller: App\Controller\PeopleController::searchAction
 
 viewPerson:
-    path:       /crew/{steamID}
+    path:       /team/{steamID}
     controller: App\Controller\PeopleController::viewAction
     requirements:
         steamID: '\d+'
 
 editPerson:
-    path:       /crew/{steamID}/edit
+    path:       /team/{steamID}/edit
     methods:    [GET]
     controller: App\Controller\PeopleController::editAction
     requirements:
         steamID: '\d+'
 
 editPersonPost:
-    path:       /crew/{steamID}/edit
+    path:       /team/{steamID}/edit
     methods:    [POST]
     controller: App\Controller\PeopleController::postAction
     requirements:

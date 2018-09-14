@@ -41,9 +41,9 @@
         <ul class="navbar-nav">
           {% if app.user.loggedIn %}
             <li class="nav-item d-none d-lg-block">
-              <a class="nav-link py-0" href="https://steamcommunity.com/profiles/{{ app.user.steamID }}">
+              <a class="nav-link py-0" href="https://steamcommunity.com/profiles/{{ app.user.steamID }}" target="_blank">
                 {{ app.user.name }}
-                <img class="ml-2" src="{{ app.user.avatar }}" style='height: 40px;'>
+                <img class="profile-pic ml-2" src="{{ app.user.avatar }}" style='height: 40px;'>
               </a>
             </li>
           {% else %}

@@ -1,5 +1,7 @@
 {% extends 'base/standard.html.twig' %}
 
+{% block title %}Production team{% endblock %}
+
 {% block head %}
   <script type="text/javascript">
     $(document).ready(function () {
@@ -8,48 +10,63 @@
   </script>
 {% endblock %}
 
+{% block css %}
+<style type="text/css">
+  #users .profile-pic {
+    width: 40px;
+    margin-right: 0.85rem;
+  }
+  .permission {
+    margin-right: 0.75rem;
+  }
+  .permission:last-child {
+    margin-right: 0;
+  }
+  .LEVEL_5, .LEVEL_4, .LEVEL_3, .LEVEL_2, .LEVEL_1 {
+    font-weight: 500;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-  <h1>Cast and Crew of the /v/GAs</h1>
-
-  <div class="row">
-    <div class="col-xs-12">
-      <p>The list of everybody of importance involved in the creation, organization and production of the /v/GAs.</p>
-    </div>
-  </div>
-
-  <ul class="breadcrumb">
-    <li class="active">Admin tools:</li>
-    <li>
-      <a href="{{ path('permissions') }}">View group and permission information</a>
-    </li>
-    {% if is_granted('ROLE_ADD_USER') and not configService.isReadOnly %}
-      <li>
-        <a href="{{ path('addPerson') }}">Add new user</a>
+  <h1 class="display-4">Production team</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">
+        <a href="{{ path('people') }}">Team members</a>
       </li>
-    {% endif %}
-  </ul>
+      <li class="breadcrumb-item ml-auto">
+        <a href="{{ path('permissions') }}">Your permissions</a>
+      </li>
+      {% if is_granted('ROLE_ADD_USER') and not configService.isReadOnly %}
+        <li class="breadcrumb-item">
+          <a href="{{ path('addPerson') }}">Add new team member</a>
+        </li>
+      {% endif %}
+    </ol>
+  </nav>
 
-  <table class="table table-bordered table-striped form-table tablesorter" style="margin-top: 5px;" id="users">
+  <table class="table table-bordered table-striped tablesorter" id="users">
     <thead>
     <tr>
-      <th>&nbsp;</th>
-      <th>Name</th>
-      <th class="col-md-6">Groups</th>
-      <th class="col-md-3">Primary Role</th>
+      <th style="width: 230px;">Name</th>
+      <th>Permissions</th>
+      <th>Primary Role</th>
     </tr>
     </thead>
     <tbody>
     {% for user in users %}
       <tr>
-        <td style='padding: 0; width: 40px;'>
-          <a href="https://steamcommunity.com/profiles/{{ user.steamID }}">
-            <img src="{{ user.avatar }}" style="width: 40px;">
-          </a>
+        <td class="py-2">
+          <a href="{{ path('viewPerson', {'steamID': user.steamID}) }}"><img class="profile-pic" src="{{ user.avatar }}">{{ user.name }}</a>
         </td>
-        <td style='white-space: nowrap;"'>
-          <a href="{{ path('viewPerson', {'steamID': user.steamID}) }}">{{ user.name }}</a>
+        <td>
+          {% for permission in user.permissions %}
+            <span class="permission {{ permission }} {{ permission == 'LEVEL_5' ? 'text-success' : '' }}">{{ permission }}</span>
+          {% else %}
+            <em class="text-muted">No permissions</em>
+          {% endfor %}
         </td>
-        <td>{{ user.permissions.toArray | join(', ') }}</td>
         <td>{{ user.primaryRole }}</td>
       </tr>
     {% endfor %}
