@@ -1,38 +1,131 @@
 {% extends 'base/standard.html.twig' %}
 
+{% block css %}
+  <style type="text/css">
+    .jumbotron {
+      color: #AE1216;
+      font-family: Tahoma, sans-serif;
+      padding-bottom: 2rem;
+    }
+    .jumbotron h1 {
+      font-weight: 700;
+      font-size: 50px;
+    }
+    .jumbotron p {
+      font-size: 25px;
+    }
+    .masthead {
+      margin-bottom: 0;
+    }
+
+    .news li {
+      background-color: #d6daf0;
+      border: 1px solid #b7c5d9;
+      border-left: none;
+      border-top: none;
+      padding: 2px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      position: relative;
+      color: #000;
+    }
+
+    .news a, .news a:visited {
+      color: #34345c !important;
+    }
+
+    .news a:hover, .new {
+      color: #d00 !important;
+    }
+
+    .news .name.admin {
+      color: #FF0000;
+    }
+
+    .news .admin img {
+      margin-bottom: 4px;
+    }
+
+    .news .sticky {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+
+    .news li.redboard {
+      background-color: #f0e0d6;
+      border: 1px solid #d9bfb7;
+    }
+
+    .news .postInfo {
+      margin-left: 4px;
+    }
+
+    .news .name {
+      color: #117743;
+      font-weight: 700;
+    }
+
+    .news .postText {
+      margin: 1em 40px;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
-  <header class="jumbotron masthead">
+  <header class="jumbotron masthead text-center" style="background: none;">
     <h1>2018 Vidya Gaem Awards</h1>
-    <p class="implying">>implying you're opinion is worth shit</p>
+    <p>>implying you're opinion is worth shit</p>
   </header>
   <div class="row">
-    <div class="col-md-6">
-      <h1>News
-        <small><a href="{{ path('news') }}">view all</a></small>
-      </h1>
-      <ul class="news">
+    <div class="col-md-8 offset-md-2">
+      {#<h1>News#}
+        {#<small><a href="{{ path('news') }}">view all</a></small>#}
+      {#</h1>#}
+      <ul class="news list-unstyled">
+        <li class="redboard">
+          <img src="{{ asset('/img/sticky.gif') }}" class="sticky">
+          <div class="postInfo">
+            <span class="name admin">Anonymous ## Admin <img src="{{ asset('/img/adminicon.gif') }}"></span>
+          </div>
+          <div class="postText">
+          <h4>
+            Want to get involved?
+          </h4>
+          <p>
+            If you're interested in being involved with the production of the show
+            in some way, fill out our
+            <a href="https://goo.gl/forms/UZkcmR2mTdXvDhnU2" target="_blank">Talent Recruitment Form</a>.
+          </p>
+          <p>
+            If you'd like to be involved or just want to verbally shitpost, you can
+            also join our <a href="http://discord.gg/4e8JQB4" target="_blank">Discord channel</a>.
+          </p>
+          </div>
+        </li>
+
         {% for item in news %}
-          <li class="{{ item.old and not loop.first ? 'news-old' : '' }}">
-            {% if item.new %}
-              <span class="label label-info">New</span>
-            {% endif %}
-            <strong>{{ item.timestamp|date('M j, Y') }}</strong>: {{ item.text | raw }}
+          <li class="{{ item.old and not loop.first and 0 ? 'news-old' : '' }}">
+            <div class="postInfo">
+              <span class="name">{{ is_granted('ROLE_NEWS_VIEW_USER') ? item.user.name : 'Anonymous' }}</span>
+              <span>{{ item.timestamp|date('m/d/y(D)H:i:s') }}</span>
+              <span>No. {{ item.id }}</span>
+              {% if item.new %}
+                <span class="new float-right">(New)</span>
+              {% endif %}
+            </div>
+            <div class="postText">{{ item.text | raw }}</div>
           </li>
         {% endfor %}
       </ul>
+      {% if is_granted('ROLE_NEWS_MANAGE') and not configService.isReadOnly %}
+      <p>
+        <a href="{{ path('news') }}">Add news post</a>
+      </p>
+      {% endif %}
     </div>
     <div class="col-md-5">
-      <h1>Want to get involved?</h1>
-      <p>
-        If you're interested in being involved with the production of the show
-        in some way, fill out our <a
-            href="https://goo.gl/forms/UZkcmR2mTdXvDhnU2">Talent Recruitment
-          Form</a>.
-      </p>
-      <p>
-        If you'd like to be involved or just want to verbally shitpost, you can
-        also join our <a href="http://discord.gg/4e8JQB4">Discord channel</a>.
-      </p>
+
     </div>
   </div>
 

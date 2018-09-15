@@ -2,9 +2,9 @@
 namespace App\Controller;
 
 use App\Entity\Award;
+use App\Entity\News;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use App\Entity\News;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class IndexController extends Controller
@@ -16,7 +16,7 @@ class IndexController extends Controller
             ->from(News::class, 'n')
             ->where('n.visible = true')
             ->andWhere('n.timestamp < CURRENT_TIMESTAMP()')
-            ->setMaxResults(5)
+//            ->setMaxResults(5)
             ->orderBy('n.timestamp', 'DESC');
 
         $news = $query->getQuery()->getResult();

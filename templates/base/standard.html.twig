@@ -10,7 +10,7 @@
 #}
 
 {% block body %}
-  <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+  <nav class="navbar fixed-top navbar-expand-md navbar-light bg-yotsuba">
     <div class="container">
       <a class="navbar-brand" href="/">2018 /v/GAs</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +22,7 @@
           {% for item in navbar.getItems() %}
             {% if item.dropdown and item.children %}
               <li class="nav-item dropdown">
-                <a class="nav-link text-warning dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link text-primary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {{ item.title }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -79,7 +79,7 @@
 
   </div>
 
-  <nav class="navbar fixed-bottom navbar-expand-md navbar-dark bg-dark">
+  <nav class="navbar fixed-bottom navbar-expand-md navbar-light bg-yotsuba">
     <div class="container">
 
       <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarBottomCollapsed" aria-controls="navbarBottomCollapsed" aria-expanded="false" aria-label="Toggle bottom menu">
