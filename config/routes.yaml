@@ -303,6 +303,20 @@ cronPost:
     controller: App\Controller\ConfigController::cronPostAction
 
 #
+# PAGE EDITOR
+#
+
+editor:
+    path:       /config/editor
+    methods:    [GET]
+    controller: App\Controller\EditorController::indexAction
+
+editorPost:
+    path:       /config/editor
+    methods:    [POSt]
+    controller: App\Controller\EditorController::postAction
+
+#
 # SPECIAL
 #
 

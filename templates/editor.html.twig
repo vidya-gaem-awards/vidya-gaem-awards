@@ -1,0 +1,134 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block title %}Page Editor{% endblock %}
+
+{% block js %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/addon/mode/overlay.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/addon/edit/closebrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/addon/edit/matchbrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/mode/twig/twig.min.js"></script>
+
+  <script>
+      CodeMirror.defineMode("htmltwig", function(config, parserConfig) {
+          return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/html"), CodeMirror.getMode(config, "twig"));
+      });
+      let codeMirror = CodeMirror.fromTextArea(document.getElementById('codeMirror'), {
+          value: "",
+          lineNumbers: true,
+          autoCloseBrackets: true,
+          matchBrackets: true,
+          mode: "htmltwig"
+      });
+  </script>
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/codemirror.min.css" integrity="sha256-I8NyGs4wjbMuBSUE40o55W6k6P7tu/7G28/JGUUYCIs=" crossorigin="anonymous" />
+
+  <style>
+    .CodeMirror {
+      height: 40vh;
+      border: 1px solid #ced4da;
+      border-radius: .25rem;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h1 class="display-4">
+    Page editor
+  </h1>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-9">
+      {% if template %}
+        <form action="{{ path('editorPost') }}" method="post">
+          <p class="lead float-right">{{ template.filename }}</p>
+          <p class="lead"><strong>{{ template.name }}</strong></p>
+          {% if template.details %}
+            {{ template.details | raw }}
+          {% endif %}
+          <input type="hidden" name="template" value="{{ template.filename | e('html_attr') }}">
+          <textarea name="codeMirror" id="codeMirror">{{ template.source | e('html_attr') }}</textarea>
+          <button type="submit" class="btn btn-primary mt-2">Save changes</button>
+        </form>
+      {% else %}
+        <p class="lead">
+          The page editor is a powerful tool that allows you customise certain sections of the site.
+        </p>
+
+        <h4>Capabilities</h4>
+
+        <p class="text-justify">
+          The templates that you can edit are made up of HTML. You can use whatever HTML you like (as long as you follow
+          the three rules below). This website uses <a href="https://getbootstrap.com/docs/4.1/" target="_blank">Bootstrap 4</a>,
+          so feel free to make use of the classes that Bootstrap provides.
+        </p>
+
+        <p>
+          These templates are passed through the <a href="https://twig.symfony.com/" target="_blank">Twig templating engine</a>
+          before rendering. If there's a reason to make use of Twig functionality in a template, the template description will let you know
+          the details.
+        </p>
+
+        <h4 class="mt-4">Be careful</h4>
+
+        <p class="text-justify">
+          This is a new tool with minimal safety features. It will not syntax check your HTML or Twig syntax for you.
+          Getting it wrong will cause the page to look messed up, or the page may not even load at all.
+        </p>
+
+        <p class="text-justify">
+          There's no real "undo" feature, but in case you break something, all template edits are stored in the <a href="{{ path('auditLog') }}">audit log</a>,
+          so you can always go back and find the last good revision. If you can't find the last good revision because
+          the audit log is a giant goddamn mess, you can delete the entire contents of the template as a last resort.
+          This will cause it to use the built-in source for that template.
+        </p>
+
+        <h4 class="mt-4">Don't be stupid</h4>
+
+        <p class="text-justify">
+          If you prove to be incapable of using the editor sensibly (such as by embedding <a href="" onclick="event.preventDefault(); alert('Why would you click that?');">goatse</a> on every page),
+          it will just be removed from you. It's been provided to make both your life and my life easier, so don't be a dickhead, alright?
+        </p>
+
+        <h4 class="mt-4">Don't be too clever</h4>
+
+        <p class="text-justify">
+          Yes, it is possible to do things like embed CSS and JavaScript, and to "escape" the element that the template is in
+          with a complicated combination of closing and opening tags. The template system is not designed for that, so if you
+          find yourself having to be excessively clever, check with the developer, and they'll either provide you with a better option
+          or will let you know what level of clevernes is acceptable.
+        </p>
+
+        <p class="text-justify">
+
+        </p>
+      {% endif %}
+    </div>
+    <div class="col-sm-3">
+      <div class="card">
+        <h6 class="card-header">Templates</h6>
+          <div class="list-group list-group-flush">
+            <a class="list-group-item list-group-item-action {{ not template ? 'active' : '' }}" href="{{ path('editor') }}">
+              <i class="fas fa-book-open mr-1"></i> Instructions
+            </a>
+            {% for _template in templates %}
+              <a href="{{ path('editor', {'template': _template.filename}) }}" class="list-group-item list-group-item-action {{ _template is same as(template) ? 'active' : '' }}">
+                <span>{{ _template.name }}</span>
+                <small>{{ _template.filename }}</small>
+              </a>
+            {% endfor %}
+          </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

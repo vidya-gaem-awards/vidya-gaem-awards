@@ -5,3 +5,5 @@ twig:
     globals:
         navbar: '@App\Service\NavbarService'
         configService: '@App\Service\ConfigService'
+
+

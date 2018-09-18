@@ -36,6 +36,8 @@ class AuditLogController extends Controller
             'cron-results-enabled' => 'Enabled the result generator process',
             'cron-results-disabled' => 'Disabled the result generator process',
             'config-readonly-enabled' => 'Turned on read-only mode',
+            'template-added' => 'Added a new site template',
+            'template-edited' => 'Edited a site template',
         ];
 
         $result = $em->createQueryBuilder()

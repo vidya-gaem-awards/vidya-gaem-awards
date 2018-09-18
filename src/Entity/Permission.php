@@ -37,6 +37,7 @@ class Permission
         'referrers_view' => 'View where site visitors are coming from',
         'tasks_nominees' => 'Complete nominee tasks on the tasks page',
         'tasks_view' => 'View the Remaining Tasks page',
+        'template_edit' => 'Edit certain pages using the page editor',
         'view_debug_output' => 'Show detailed error messages when something goes wrong',
         'view_unfinished_pages' => 'View some pages before they are ready for the public',
         'voting_code' => 'View voting codes',
@@ -49,7 +50,7 @@ class Permission
         'LEVEL_2' => ['LEVEL_1', 'awards_secret', 'news_view_user', 'profile_view', 'tasks_nominees', 'voting_code'],
         'LEVEL_3' => ['LEVEL_2', 'awards_edit', 'nominations_edit', 'profile_edit_notes'],
         'LEVEL_4' => ['LEVEL_3', 'add_user', 'audit_log_view', 'news_manage', 'profile_edit_details', 'referrers_view', 'voting_results', 'adverts_manage', 'items_manage'],
-        'LEVEL_5' => ['LEVEL_4', 'awards_delete', 'edit_config', 'profile_edit_groups']
+        'LEVEL_5' => ['LEVEL_4', 'awards_delete', 'edit_config', 'template_edit', 'profile_edit_groups']
     ];
 
     /**

@@ -39,6 +39,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/config/editor, roles: ROLE_TEMPLATE_EDIT }
         - { path: ^/config, roles: ROLE_EDIT_CONFIG }
         - { path: ^/news/add, roles: ROLE_NEWS_MANAGE }
         - { path: ^/news/delete, roles: ROLE_NEWS_MANAGE }

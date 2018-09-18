@@ -91,10 +91,15 @@
             {% endif %}
           </div>
         {% endif %}
+        {% if action.action starts with 'template-' %}
+          <div style="margin-left: 31px; margin-top: 5px;">
+            {{ entity.name }} : <code>{{ entity.filename }}</code>
+          </div>
+        {% endif %}
       </td>
       <td>
         {% if action.tableHistory %}
-          <a class="btn btn-default" onclick="$('#data{{ action.id }}').show();$(this).hide();">Show data</a>
+          <button class="btn btn-secondary" onclick="$('#data{{ action.id }}').show();$(this).hide();">Show data</button>
           <div id="data{{ action.id }}" style="display: none;">
           {% for key, value in action.tableHistory.values %}
             <div><strong>{{ key }}:</strong> {{ value is iterable ? value | json_encode : value }}</div>

@@ -85,22 +85,8 @@
       <ul class="news list-unstyled">
         <li class="redboard">
           <img src="{{ asset('/img/sticky.gif') }}" class="sticky">
-          <div class="postInfo">
-            <span class="name admin">Anonymous ## Admin <img src="{{ asset('/img/adminicon.gif') }}"></span>
-          </div>
           <div class="postText">
-          <h4>
-            Want to get involved?
-          </h4>
-          <p>
-            If you're interested in being involved with the production of the show
-            in some way, fill out our
-            <a href="https://goo.gl/forms/UZkcmR2mTdXvDhnU2" target="_blank">Talent Recruitment Form</a>.
-          </p>
-          <p>
-            If you'd like to be involved or just want to verbally shitpost, you can
-            also join our <a href="http://discord.gg/4e8JQB4" target="_blank">Discord channel</a>.
-          </p>
+            {{ include('dynamic/home_static_panel.html.twig') }}
           </div>
         </li>
 

@@ -1,0 +1,26 @@
+App\Entity\Template:
+    type: entity
+    table: templates
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        filename:
+            type: string
+            length: 100
+            nullable: false
+        name:
+            type: string
+            length: 100
+            nullable: false
+        details:
+            type: text
+            nullable: true
+        source:
+            type: text
+            nullable: false
+        lastUpdated:
+            type: datetime
+            nullable: false

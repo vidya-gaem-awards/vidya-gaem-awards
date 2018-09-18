@@ -65,10 +65,13 @@ services:
         tags:
         - { name: twig.extension }
 
-    App\Twig\:
-        resource: '../src/Twig'
+    App\Twig\MomentExtension:
         tags:
         - { name: twig.extension }
+
+    App\Twig\DatabaseLoader:
+        tags:
+        - { name: twig.loader }
 
     App\Security\ConditionallyPublicVoter:
         tags:
