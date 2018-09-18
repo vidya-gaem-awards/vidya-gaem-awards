@@ -56,7 +56,7 @@
             {{ template.details | raw }}
           {% endif %}
           <input type="hidden" name="template" value="{{ template.filename | e('html_attr') }}">
-          <textarea name="codeMirror" id="codeMirror">{{ template.source | e('html_attr') }}</textarea>
+          <textarea name="codeMirror" id="codeMirror">{{ (source ?: template.source) | e('html_attr') }}</textarea>
           <button type="submit" class="btn btn-primary mt-2">Save changes</button>
         </form>
       {% else %}

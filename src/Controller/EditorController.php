@@ -9,6 +9,7 @@ use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Environment;
 
 class EditorController extends Controller
 {
@@ -30,11 +31,12 @@ class EditorController extends Controller
 
         return $this->render('editor.html.twig', [
             'templates' => $templates,
-            'template' => $template
+            'template' => $template,
+            'source' => $request->request->get('codeMirror')
         ]);
     }
 
-    public function postAction(EntityManagerInterface $em, ConfigService $config, Request $request, AuditService $auditService)
+    public function postAction(EntityManagerInterface $em, ConfigService $config, Request $request, AuditService $auditService, Environment $twig)
     {
         $post = $request->request;
         $templateName = $post->get('template');
@@ -53,6 +55,17 @@ class EditorController extends Controller
 
         $content = $post->get('codeMirror');
         $content = str_replace("\r\n", "\n", $content);
+
+        // Do a Twig syntax check of the source code before saving. This won't prevent all errors, but if provides
+        // a basic safety net.
+        try {
+            $twig->tokenize(new \Twig_Source($content, $templateName));
+        } catch (\Twig_Error_Syntax $e) {
+            $this->addFlash('error', 'Syntax error: ' . $e->getMessage());
+
+            $request->query->set('template', $templateName);
+            return $this->indexAction($em, $request);
+        }
 
         if ($content !== $template->getSource()) {
             $template->setSource($content);
