@@ -146,6 +146,16 @@ nomineePost:
     methods:    [POST]
     controller: App\Controller\NomineeController::postAction
 
+autocompleters:
+    path:       /awards/autocompleters
+    methods:    [GET]
+    controller: App\Controller\AutocompleterController::indexAction
+
+autocompleterAjax:
+    path:       /awards/autocompleters/ajax
+    methods:    [POST]
+    controller: App\Controller\AutocompleterController::ajax
+
 #
 # TASKS
 #

@@ -19,6 +19,10 @@ class CronJobService
 
     public function __construct(string $projectDir)
     {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            return;
+        }
+
         $this->crontab = new CrontabRepository(new CrontabAdapter());
         $this->commandLine = $projectDir . '/bin/console ' . ResultsCommand::COMMAND_NAME;
 

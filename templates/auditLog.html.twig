@@ -96,6 +96,14 @@
             {{ entity.name }} : <code>{{ entity.filename }}</code>
           </div>
         {% endif %}
+        {% if action.action starts with 'autocompleter-' %}
+          <div style="margin-left: 31px; margin-top: 5px;">
+            {% if entity and action.action != 'autocompleter-delete' %}
+              {{ entity.name }} :
+            {% endif %}
+            <code>{{ action.data1 }}</code>
+          </div>
+        {% endif %}
       </td>
       <td>
         {% if action.tableHistory %}

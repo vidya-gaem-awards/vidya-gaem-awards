@@ -91,7 +91,7 @@ class AwardController extends Controller
         foreach ($result as $autocompleter) {
             $strings = $autocompleter->getStrings();
             // The video-game autocompleter is a special case: its values are stored in another table
-            if ($autocompleter->getId() === 'video-game') {
+            if ($autocompleter->getId() === Autocompleter::VIDEO_GAMES) {
                 $gameRepo = $em->getRepository(GameRelease::class);
                 $games = $gameRepo->findAll();
                 /** @var GameRelease $game */

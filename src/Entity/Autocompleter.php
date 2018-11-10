@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Autocompleter
  */
 class Autocompleter
 {
+    const VIDEO_GAMES = 'video-games';
+
     /**
      * @var string
      */
@@ -22,6 +26,10 @@ class Autocompleter
      */
     private $strings = [];
 
+    /**
+     * @var ArrayCollection|Award[]
+     */
+    private $awards;
 
     /**
      * Set id
@@ -29,9 +37,14 @@ class Autocompleter
      * @param string $id
      *
      * @return Autocompleter
+     * @throws \Exception
      */
     public function setId($id)
     {
+        if (!preg_match('/^[A-Za-z0-9-]+$/', $id)) {
+            throw new \Exception('Invalid ID provided: autocompleter IDs can only consist of numbers, letters, and dashes.');
+        }
+
         $this->id = $id;
 
         return $this;
@@ -103,6 +116,14 @@ class Autocompleter
     {
         $this->strings[] = $string;
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Award[]
+     */
+    public function getAwards()
+    {
+        return $this->awards;
     }
 }
 

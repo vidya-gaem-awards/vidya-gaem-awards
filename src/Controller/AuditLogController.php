@@ -38,6 +38,9 @@ class AuditLogController extends Controller
             'config-readonly-enabled' => 'Turned on read-only mode',
             'template-added' => 'Added a new site template',
             'template-edited' => 'Edited a site template',
+            'autocompleter-added' => 'Created an autocompleter',
+            'autocompleter-edited' => 'Edited an autocompleter',
+            'autocompleter-deleted' => 'Deleted an autocompleter',
         ];
 
         $result = $em->createQueryBuilder()

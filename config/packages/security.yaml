@@ -54,6 +54,7 @@ security:
         - { path: ^/awards, roles: [CONDITIONALLY_PUBLIC, ROLE_AWARDS_EDIT] }
         - { path: ^/nominees, roles: ROLE_NOMINATIONS_VIEW, methods: [GET] }
         - { path: ^/nominees, roles: ROLE_NOMINATIONS_EDIT, methods: [POST] }
+        - { path: ^/awards/autocompleters, roles: ROLE_AUTOCOMPLETER_EDIT, methods: [GET] }
         - { path: ^/tasks, roles: ROLE_TASKS_VIEW }
         - { path: ^/vote/code, roles: ROLE_VOTING_VIEW }
         - { path: ^/vote, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_VIEW] }

@@ -475,7 +475,7 @@
         $("#tags").val("");
 
         var autocompleteCat = awards[award]['autocompleter'];
-        if (autocompleteCat === "video-game") {
+        if (autocompleteCat === "{{ constant('App\\Entity\\Autocompleter::VIDEO_GAMES') }}") {
           $('#autocomplete').html(
               "This award provides suggestions using a list of <a href='{{ path('videoGames') }}' target='_blank'>video games released in 2018</a>."
           );

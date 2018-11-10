@@ -16,3 +16,7 @@ App\Entity\Autocompleter:
     strings:
       type: json_array
       nullable: false
+  oneToMany:
+    awards:
+      targetEntity: Award
+      mappedBy: autocompleter

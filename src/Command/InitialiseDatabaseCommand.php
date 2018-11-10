@@ -50,7 +50,7 @@ class InitialiseDatabaseCommand extends ContainerAwareCommand
 
         // Add the special-case autocompleter
         $autocompleter = new Autocompleter();
-        $autocompleter->setId('video-game');
+        $autocompleter->setId(Autocompleter::VIDEO_GAMES);
         $autocompleter->setName('Video games in ' . date('Y'));
         $this->em->persist($autocompleter);
 

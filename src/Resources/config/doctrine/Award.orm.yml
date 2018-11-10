@@ -43,6 +43,7 @@ App\Entity\Award:
   manyToOne:
     autocompleter:
       targetEntity: Autocompleter
+      inversedBy: awards
       joinColumn:
         name: autocompleteID
         referencedColumnName: id

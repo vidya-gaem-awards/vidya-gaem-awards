@@ -303,7 +303,8 @@
             View award suggestions ({{ awardSuggestions | length }})
           </button>
           {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
-            <button class="btn btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
+            <button class="btn btn-primary" id="new-award" type="button" data-toggle="modal
+" data-target="#dialog-edit">
               <span class="glyphicon glyphicon-plus"></span> Add a new award
             </button>
           {% endif %}
