@@ -80,10 +80,6 @@
       border-bottom: 1px solid #BBB;
     }
 
-    #user-nomination-list {
-      margin-bottom: 10px;
-    }
-
     @media (max-width: 991px) {
       .affix {
         padding-top: 10px;
@@ -196,20 +192,30 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="page-header fancy">Nominate Games for the 2018&nbsp;/v/GAs</h1>
-  {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') %}
-    <ul class="breadcrumb fancy">
-      {% if is_granted('ROLE_AWARDS_EDIT') %}
-        <li>
-          <a href="{{ path('awardManager') }}">Manage awards</a>
+  <h1 class="display-4">Nominate games for the 2018 /v/GAs</h1>
+  {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') or is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+          <a href="{{ path('awards') }}">Main awards page</a>
         </li>
-      {% endif %}
-      {% if is_granted('ROLE_NOMINATIONS_VIEW') %}
-        <li>
-          <a href="{{ path('nomineeManager') }}">Manage nominees</a>
-        </li>
-      {% endif %}
-    </ul>
+        {% if is_granted('ROLE_AWARDS_EDIT') %}
+          <li class="breadcrumb-item ml-auto">
+            <a href="{{ path('awardManager') }}">Manage awards</a>
+          </li>
+        {% endif %}
+        {% if is_granted('ROLE_NOMINATIONS_VIEW') %}
+          <li class="breadcrumb-item">
+            <a href="{{ path('nomineeManager') }}">Manage nominees</a>
+          </li>
+        {% endif %}
+        {% if is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
+          <li class="breadcrumb-item">
+            <a href="{{ path('autocompleters') }}">Manage autocompleters</a>
+          </li>
+        {% endif %}
+      </ol>
+    </nav>
   {% endif %}
 
   <div class="row">
@@ -273,10 +279,8 @@
           </div>
         </a>
       </div>
-    </div>
 
-    <div class="col-md-6" id="award-info" style="display: none;">
-      <div data-spy="affix" data-offset-top="90" class="award-container">
+      <div id="award-info" style="display: none;" data-spy="affix" data-offset-top="90" class="award-container">
         <div class="award-container-top award-container-padding">
           <div id="award-name" class="impressive-title"></div>
           <div id="award-subtitle" class="impressive-subtitle"></div>
@@ -295,7 +299,10 @@
         </div>
 
         <div class="award-container-padding">
-          <div class="well" style="background-color: white;" id="user-nomination-list"></div>
+          <div class="card">
+            <div class="card-body" id="user-nomination-list">
+            </div>
+          </div>
 
           <div id="nomination-section">
             <form class="form-inline" style="text-align: center;" id="nomination-form">
@@ -327,11 +334,9 @@
           {% endif %}
         </div>
       </div>
-    </div>
 
-    {% if configService.config.awardSuggestions or userSuggestions['new-award'] | length > 0 %}
-      <div class="col-md-6" id="new-award" style="display: none;">
-        <div data-spy="affix" data-offset-top="90" class="award-container">
+      {% if configService.config.awardSuggestions or userSuggestions['new-award'] | length > 0 %}
+        <div id="new-award" style="display: none;" data-spy="affix" data-offset-top="90" class="award-container">
           <div class="award-container-top award-container-padding">
             <div class="impressive-title">Suggest a new award</div>
             <div class="impressive-description" style="font-size: 1em;">
@@ -375,9 +380,14 @@
             {% endif %}
           </div>
         </div>
-      </div>
-    {% endif %}
+
+      {% endif %}
+    </div>
   </div>
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
 
   <script type="text/javascript">
     var awards = {{ awards | json_encode() | raw }};

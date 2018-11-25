@@ -2,10 +2,6 @@
 
 {% block head %}
   <style type="text/css">
-    #dialog-edit-header {
-      font-weight: bold;
-    }
-
     #awards {
       background-color: white;
     }
@@ -49,140 +45,168 @@
       background: #AA4643;
     }
   </style>
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
 
   <script type="text/javascript">
-    $(document).ready(function () {
-      var editDialog = $("#dialog-edit");
-      var currentlySubmitting = false;
+      $(document).ready(function () {
+          var editDialog = $("#dialog-edit");
+          var currentlySubmitting = false;
 
-      editDialog.on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var id = button.attr('data-id');
+          editDialog.on('show.bs.modal', function (event) {
+              var button = $(event.relatedTarget);
+              var id = button.attr('data-id');
 
-        // New award
-        if (id == undefined) {
-          editDialog.removeAttr('data-id');
-          $("#dialog-edit-header").text("Add new award");
+              // New award
+              if (id == undefined) {
+                  editDialog.removeAttr('data-id');
+                  $("#dialog-edit-header").text("Add new award");
 
-          // Clear any existing information in the dialog
-          $("#info-id").removeAttr("disabled");
-          editDialog.find("input[type=text]").val("");
-          editDialog.find("input[type=number]").val("");
-          $("#info-enabled").prop("checked", true);
-          $("#info-nominations").prop("checked", false);
-          $("#info-secret").prop("checked", false);
-          $("#deleteAward").hide();
+                  // Clear any existing information in the dialog
+                  $("#info-id").removeAttr("disabled");
+                  editDialog.find("input[type=text]").val("");
+                  editDialog.find("input[type=number]").val("");
+                  $("#info-enabled").prop("checked", true);
+                  $("#info-nominations").prop("checked", false);
+                  $("#info-secret").prop("checked", false);
+                  $("#deleteAward").hide();
 
-        // Editing an existing award
-        } else {
-          editDialog.attr('data-id', id);
-          var award = awards[id];
+                  // Editing an existing award
+              } else {
+                  editDialog.attr('data-id', id);
+                  var award = awards[id];
 
-          $("#dialog-edit-header").text(award.name);
-          $("#deleteAward").show().text('Delete award (' + award.name + ')');
-          $("#info-id").val(id).attr('disabled', 'disabled');
-          $("#info-name").val(award.name);
-          $("#info-subtitle").val(award.subtitle);
-          $("#info-comments").val(award.comments);
-          if (award.autocompleter != id) {
-            $("#info-autocomplete").val(award.autocompleter).change();
-          } else {
-            $("#info-autocomplete").val("").change();
-          }
-          $("#info-order").val(award.order);
-          $("#info-enabled").prop("checked", award.enabled);
-          $("#info-nominations").prop("checked", award.nominationsEnabled);
-          $("#info-secret").prop("checked", award.secret);
-        }
+                  $("#dialog-edit-header").text(award.name);
+                  $("#deleteAward").show().text('Delete award (' + award.name + ')');
+                  $("#info-id").val(id).attr('disabled', 'disabled');
+                  $("#info-name").val(award.name);
+                  $("#info-subtitle").val(award.subtitle);
+                  $("#info-comments").val(award.comments);
+                  if (award.autocompleter != id) {
+                      $("#info-autocomplete").val(award.autocompleter).change();
+                  } else {
+                      $("#info-autocomplete").val("").change();
+                  }
+                  $("#info-order").val(award.order);
+                  $("#info-enabled").prop("checked", award.enabled);
+                  $("#info-nominations").prop("checked", award.nominationsEnabled);
+                  $("#info-secret").prop("checked", award.secret);
+              }
+          });
+
+          $("#dialog-edit-form").submit(function (event) {
+              event.preventDefault();
+
+              if (currentlySubmitting) {
+                  return;
+              }
+              currentlySubmitting = true;
+
+              // Show the "please wait" message and disable the submit button
+              $("#dialog-edit-status").show();
+              $('#dialog-edit').find("button").attr("disabled", "disabled");
+              $("#dialog-edit-error").parent().slideUp();
+
+              // Grab the award ID from the dialog
+              var id = editDialog.attr("data-id");
+              var action = id ? 'edit' : 'new';
+
+              // Send through the AJAX request
+              var data = $("#dialog-edit-form").serializeArray();
+              data.push({name: "action", value: action});
+              if (action === 'edit') {
+                  data.push({name: "id", value: id});
+              }
+
+              $.post("{{ path('awardManagerPostAjax') }}", data, function (response) {
+                  if (response.success) {
+                      window.location.reload();
+                  } else {
+                      $("#dialog-edit-status").hide();
+                      $("#dialog-edit").find("button").removeAttr("disabled");
+                      $("#dialog-edit-error")
+                          .html("<strong>Error:</strong> " + response.error)
+                          .parent().fadeIn("fast");
+
+                      currentlySubmitting = false;
+                  }
+              }, "json");
+          });
+
+          $("#massChangeNominations").submit(function () {
+              return confirm("Are you sure you want to just fuck this shit up?");
+          });
+
+          $("#deleteAward").click(function () {
+              if (currentlySubmitting) {
+                  return;
+              } else if (!confirm("Are you sure you want to just fuck this award up?")) {
+                  return;
+              }
+
+              currentlySubmitting = true;
+              // Show the "please wait" message and disable the submit button
+              $("#dialog-edit-status").show();
+              $("#dialog-edit").find("button").attr("disabled", "disabled");
+              $("#dialog-edit-error").parent().slideUp();
+
+              var data = [
+                  {name: "action", value: "delete"},
+                  {name: "id", value: editDialog.attr("data-id")}
+              ];
+
+              $.post("{{ path('awardManagerPostAjax') }}", data, function (response) {
+                  if (response.success) {
+                      window.location.reload();
+                  } else {
+                      $("#dialog-edit-status").hide();
+                      $("#dialog-edit").find("button").removeAttr("disabled");
+                      $("#dialog-edit-error")
+                          .html("<strong>Error:</strong> " + response.error)
+                          .parent().fadeIn("fast");
+
+                      currentlySubmitting = false;
+                  }
+              }, "json");
+
+          });
       });
 
-      $("#dialog-edit-form").submit(function (event) {
-        event.preventDefault();
-
-        if (currentlySubmitting) {
-          return;
-        }
-        currentlySubmitting = true;
-
-        // Show the "please wait" message and disable the submit button
-        $("#dialog-edit-status").show();
-        $('#dialog-edit').find("button").attr("disabled", "disabled");
-        $("#dialog-edit-error").parent().slideUp();
-
-        // Grab the award ID from the dialog
-        var id = editDialog.attr("data-id");
-        var action = id ? 'edit' : 'new';
-
-        // Send through the AJAX request
-        var data = $("#dialog-edit-form").serializeArray();
-        data.push({name: "action", value: action});
-        if (action === 'edit') {
-          data.push({name: "id", value: id});
-        }
-
-        $.post("{{ path('awardManagerPostAjax') }}", data, function (response) {
-          if (response.success) {
-            window.location.reload();
-          } else {
-            $("#dialog-edit-status").hide();
-            $("#dialog-edit").find("button").removeAttr("disabled");
-            $("#dialog-edit-error")
-              .html("<strong>Error:</strong> " + response.error)
-              .parent().fadeIn("fast");
-
-            currentlySubmitting = false;
-          }
-        }, "json");
+      $('.alert-danger .close').on('click', function () {
+          $(this).parent().fadeOut("fast");
       });
-
-      $("#massChangeNominations").submit(function () {
-        return confirm("Are you sure you want to just fuck this shit up?");
-      });
-
-      $("#deleteAward").click(function () {
-        if (currentlySubmitting) {
-          return;
-        } else if (!confirm("Are you sure you want to just fuck this award up?")) {
-          return;
-        }
-
-        currentlySubmitting = true;
-        // Show the "please wait" message and disable the submit button
-        $("#dialog-edit-status").show();
-        $("#dialog-edit").find("button").attr("disabled", "disabled");
-        $("#dialog-edit-error").parent().slideUp();
-
-        var data = [
-          {name: "action", value: "delete"},
-          {name: "id", value: editDialog.attr("data-id")}
-        ];
-
-        $.post("{{ path('awardManagerPostAjax') }}", data, function (response) {
-          if (response.success) {
-            window.location.reload();
-          } else {
-            $("#dialog-edit-status").hide();
-            $("#dialog-edit").find("button").removeAttr("disabled");
-            $("#dialog-edit-error")
-              .html("<strong>Error:</strong> " + response.error)
-              .parent().fadeIn("fast");
-
-            currentlySubmitting = false;
-          }
-        }, "json");
-
-      });
-    });
   </script>
 {% endblock %}
 
 {% block content %}
-  <h1 class="page-header fancy">Award Manager</h1>
+  <h1 class="display-4">Award manager</h1>
 
-  <ul class="breadcrumb fancy">
-    <li><a href="{{ path('awards') }}">Back to the main awards and nominations page</a></li>
-    <li><a href="{{ path('nomineeManager') }}">Manage nominees</a></li>
-  </ul>
+  {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') or is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{ path('awards') }}">Main awards page</a>
+        </li>
+        {% if is_granted('ROLE_AWARDS_EDIT') %}
+          <li class="breadcrumb-item active ml-auto">
+            <a href="{{ path('awardManager') }}">Manage awards</a>
+          </li>
+        {% endif %}
+        {% if is_granted('ROLE_NOMINATIONS_VIEW') %}
+          <li class="breadcrumb-item">
+            <a href="{{ path('nomineeManager') }}">Manage nominees</a>
+          </li>
+        {% endif %}
+        {% if is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
+          <li class="breadcrumb-item">
+            <a href="{{ path('autocompleters') }}">Manage autocompleters</a>
+          </li>
+        {% endif %}
+      </ol>
+    </nav>
+  {% endif %}
 
   {% for message in app.session.getFlashBag().get('formError') %}
     <div class="alert alert-danger" role="alert">
@@ -203,7 +227,7 @@
   {% endfor %}
 
   <div class="table-responsive">
-    <table class="table table-bordered table-hover form-table" id="awards">
+    <table class="table table-sm table-bordered table-striped form-table" id="awards">
       <thead>
       <tr>
         <th style="width: 60px;" class="hidden-sm">Order</th>
@@ -227,12 +251,16 @@
       {% for award in awards %}
         <tr class="{{ not award.enabled ? 'warning' : award.secret ? 'info' : '' }}">
           <td class="aligned hidden-sm">{{ award.order }}</td>
-          <td>
-            <div class="pull-right award-id hidden-sm">
+          <td class="align-middle p-2">
+            <div class="float-right award-id hidden-sm">
               <abbr title="The internal ID of the award. Visible in some places, such as URLs.">{{ award.id }}</abbr>
             </div>
-            <strong>{{ award.name }}</strong><br>
-            <small>{{ award.subtitle }}</small>
+            <div class="{{ award.enabled ? '' : 'text-muted' }}">
+              {{ award.enabled ? '' : '<s>' }}
+              <strong>{{ award.name }}</strong> <br>
+              <small>{{ award.subtitle }}</small>
+              {{ award.enabled ? '' : '</s>' }}
+            </div>
           </td>
           <td class="aligned">
             {% if is_granted("ROLE_NOMINATIONS_EDIT") %}
@@ -246,33 +274,41 @@
               <div class="text-muted" style="font-size: x-small;">{{ award.rawSuggestions | length }} names</div>
             {% endif %}
           </td>
-          <td>
-            <div class="sparkbar">
-              <div class="sparkbar-yes" style="width: {{ award.feedbackPercent.positive }}%"></div>
-              <div class="sparkbar-no" style="width: {{ award.feedbackPercent.negative }}%"></div>
-            </div>
-            {{ award.feedback | length }} votes
-            <abbr style="float: right;"
-                  title="{{ award.groupedFeedback.positive }} - {{ award.groupedFeedback.negative }} = {{ award.groupedFeedback.net }}">
-              {{ award.feedbackPercent.positive | round }}%
-            </abbr>
-          </td>
-          <td class="aligned">
-            {% if not award.enabled %}
-              <span class="label label-warning">Award Disabled</span>
-            {% elseif award.secret %}
-              <span class="label label-info">Secret Award!</span>
-            {% elseif award.areNominationsEnabled %}
-              <span class="label label-success">Nominations Open</span>
-            {% else %}
-              <span class="label label-default">Nominations Closed</span>
+          <td class="align-middle p-2">
+            {% if not award.secret %}
+              <div class="sparkbar">
+                <div class="sparkbar-yes" style="width: {{ award.feedbackPercent.positive }}%"></div>
+                <div class="sparkbar-no" style="width: {{ award.feedbackPercent.negative }}%"></div>
+              </div>
+              {{ award.feedback | length }} votes
+              <abbr style="float: right;"
+                    title="{{ award.groupedFeedback.positive }} - {{ award.groupedFeedback.negative }} = {{ award.groupedFeedback.net }}">
+                {{ award.feedbackPercent.positive | round }}%
+              </abbr>
             {% endif %}
           </td>
+          {% if not award.enabled %}
+            <td class="aligned bg-warning">
+              <span class="badge badge-warning">Award Disabled</span>
+            </td>
+          {% elseif award.secret %}
+            <td class="aligned bg-info">
+              <span class="badge badge-info">Secret Award!</span>
+            </td>
+          {% elseif award.areNominationsEnabled %}
+            <td class="aligned bg-success">
+              <span class="badge badge-success">Nominations Open</span>
+            </td>
+          {% else %}
+            <td class="aligned bg-default">
+              <span class="badge badge-default">Nominations Closed</span>
+            </td>
+          {% endif %}
           {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
             <td class="aligned">
               <button class="btn btn-primary" title="Edit award" data-toggle="modal" data-target="#dialog-edit"
                 data-id="{{ award.id }}">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> &nbsp;Edit
+                <i class="fal fa-edit"></i> &nbsp;Edit
               </button>
             </td>
           {% endif %}
@@ -303,9 +339,8 @@
             View award suggestions ({{ awardSuggestions | length }})
           </button>
           {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
-            <button class="btn btn-primary" id="new-award" type="button" data-toggle="modal
-" data-target="#dialog-edit">
-              <span class="glyphicon glyphicon-plus"></span> Add a new award
+            <button class="btn btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
+              <i class="fal fa-plus"></i> Add a new award
             </button>
           {% endif %}
         </div>
@@ -313,14 +348,18 @@
   </div>
 
   <div id="dialog-award-suggestions" class="modal" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
+          <h5 class="modal-title">Award suggestions</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-          <h4 class="modal-title">Award suggestions</h4>
         </div>
 
         <div class="modal-body">
+          <div class="alert alert-info">
+            <strong>Protip:</strong> if you have any hot ideas about how you can make this list easier to use, let Clamburger know.
+          </div>
+
           <ul style="margin-bottom: 0;">
             {% for suggestion in awardSuggestions %}
               <li>{{ suggestion.suggestion }}</li>
@@ -335,12 +374,12 @@
   </div>
 
   <div id="dialog-edit" class="modal" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <form class="form-horizontal" id="dialog-edit-form">
+        <form id="dialog-edit-form">
           <div class="modal-header">
+            <h5 class="modal-title" id="dialog-edit-header">Add new award</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-            <h4 class="modal-title" id="dialog-edit-header">Add new award</h4>
           </div>
 
           <div class="modal-body">
@@ -349,44 +388,38 @@
               <a class="close" href="#">&times;</a>
             </div>
 
-            <script>
-              $('.alert-danger .close').on('click', function () {
-                $(this).parent().fadeOut("fast");
-              });
-            </script>
-
-            <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-id">ID</label>
-              <div class="col-xs-7">
+            <div class="form-group row">
+              <label class="col-lg-2 col-sm-3 col-form-label" for="info-id">ID</label>
+              <div class="col-lg-10 col-sm-9">
                 <input class="form-control" type="text" id="info-id" placeholder="best-writing" required
                        name="id" pattern="[0-9a-zA-Z-]+">
-                <span class="help-block">ID can only include letters, numbers, and dashes</span>
+                <small class="form-text text-muted">ID can only include letters, numbers, and dashes</small>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-name">Name</label>
-              <div class="col-xs-7">
+            <div class="form-group row">
+              <label class="col-lg-2 col-sm-3 col-form-label" for="info-name">Name</label>
+              <div class="col-lg-10 col-sm-9">
                 <input class="form-control" type="text" id="info-name" placeholder="Discworld Award" required
                        name="name">
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-subtitle">Subtitle</label>
-              <div class="col-xs-7">
+            <div class="form-group row">
+              <label class="col-lg-2 col-sm-3 col-form-label" for="info-subtitle">Subtitle</label>
+              <div class="col-lg-10 col-sm-9">
                 <input class="form-control" type="text" id="info-subtitle" placeholder="for best writing / story"
                        name="subtitle" required>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-comments">Extra Details</label>
-              <div class="col-xs-7">
+            <div class="form-group row">
+              <label class="col-lg-2 col-sm-3 col-form-label" for="info-comments">Extra Details</label>
+              <div class="col-lg-10 col-sm-9">
                 <input class="form-control" type="text" id="info-comments" name="comments">
-                <span class="help-block">This will appear on the nominations page</span>
+                <small class="form-text text-muted">This will appear on the nominations page</small>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-autocomplete">Autocomplete</label>
-              <div class="col-xs-7">
+            <div class="form-group row">
+              <label class="col-lg-2 col-sm-3 col-form-label" for="info-autocomplete">Autocompleter</label>
+              <div class="col-lg-10 col-sm-9">
                 <select name="autocompleter" id="info-autocomplete" class="form-control">
                   <option></option>
                   {% for autocompleter in autocompleters %}
@@ -395,46 +428,61 @@
                     </option>
                   {% endfor %}
                 </select>
-                <span class="help-block">Determines what will be suggested when users are adding nominations</span>
+                <small class="form-text text-muted">
+                  Determines what will be suggested when users are adding nominations.
+                  {% if is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
+                    <a href="{{ path('autocompleters') }}" target="_blank">Edit autocompleters</a>
+                  {% endif %}
+                </small>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-order">Position</label>
-              <div class="col-xs-7">
+            <div class="form-group row">
+              <label class="col-lg-2 col-sm-3 col-form-label" for="info-order">Position</label>
+              <div class="col-lg-10 col-sm-9">
                 <input class="form-control" type="number" min="1" max="10000" id="info-order" name="order" required>
-                <span class="help-block">Awards with a lower position will be sorted first</span>
+                <small class="form-text text-muted">Awards with a lower position will be sorted first. When adding awards for the first time, leave a gap of 10 to make it easier to change the order later.</small>
               </div>
             </div>
-            <div class="form-group">
-              <div class="col-xs-offset-3 col-xs-7">
-                <label class="checkbox">
-                 <input type="checkbox" id="info-enabled" name="enabled" checked> Award enabled?
-                </label>
+            <div class="form-group row">
+              <div class="col-lg-10 col-sm-9 offset-lg-2 offset-sm-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="info-enabled" name="enabled" checked>
+                  <label class="form-check-label" for="info-enabled">
+                    Award enabled?
+                  </label>
+                </div>
               </div>
             </div>
-            <div class="form-group">
-              <div class="col-xs-offset-3 col-xs-7">
-                <label class="checkbox">
-                  <input type="checkbox" id="info-nominations" name="nominationsEnabled"> Nominations enabled?
-                </label>
+            <div class="form-group row">
+              <div class="col-lg-10 col-sm-9 offset-lg-2 offset-sm-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="info-nominations" name="nominationsEnabled" checked>
+                  <label class="form-check-label" for="info-nominations">
+                    Nominations enabled?
+                  </label>
+                </div>
               </div>
             </div>
-            <div class="form-group">
-              <div class="col-xs-offset-3 col-xs-7">
-                <label class="checkbox">
-                  <input type="checkbox" id="info-secret" name="secret"> Secret award?
-                </label>
-                <span class="help-block">Secret awards don't show up until the voting stage</span>
+            <div class="form-group row">
+              <div class="col-lg-10 col-sm-9 offset-lg-2 offset-sm-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="info-secret" name="secret" checked>
+                  <label class="form-check-label" for="info-secret">
+                    Secret award?
+                  </label>
+                  <small class="form-text text-muted">Secret awards don't show up until the voting stage</small>
+                </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
             {% if is_granted('ROLE_AWARDS_DELETE') %}
-              <button class="btn btn-danger pull-left" type="button" id="deleteAward">Delete award</button>
+              <button class="btn btn-danger mr-auto" type="button" id="deleteAward">Delete award</button>
             {% endif %}
-            <span id="dialog-edit-status" style="display: none;">
-              <img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> saving...&nbsp;
+            <span id="dialog-edit-status" class="saving mr-2" style="display: none;">
+              <i class="far fa-circle-notch fa-spin mr-1"></i> Saving...
             </span>
+
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
             <button class="btn btn-primary" type="submit">Submit</button>
           </div>
