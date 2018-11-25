@@ -10,12 +10,19 @@
       /* add padding to account for vertical scrollbar */
     }
 
+    #video-games img {
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+      transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+      max-width: 100%;
+    }
+
     #video-games img:hover {
-      box-shadow: 0 0 4px black;
+      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
     }
 
     #video-game-collage {
       background-color: #111;
+      position: relative;
     }
 
     #video-game-collage .top {
@@ -71,13 +78,12 @@
     }
 
     .award-container-middle {
-      background-color: #eaeaea;
-      box-shadow: rgba(0,0,0,0.1) 0 2px 1px;
+      background: white;
+      box-shadow: rgba(0,0,0,0.1) 0 0 1px;
     }
 
     .award-container-padding {
       padding: 15px;
-      border-bottom: 1px solid #BBB;
     }
 
     @media (max-width: 991px) {
@@ -287,49 +293,52 @@
           <div id="award-description" class="impressive-description"></div>
         </div>
 
-        <div class="award-container-middle award-container-padding" style="text-align: center;">
-          <div class="btn-group" id="award-voting">
-            <button class="btn btn-default" id="thumbs-up" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is good</button>
-            <button class="btn btn-default" id="thumbs-down" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is shit</button>
+        <div class="award-container-middle award-container-padding d-flex" style="text-align: center;">
+          <div class="btn-group" id="award-voting" style="flex-grow: 0">
+            <button class="btn btn-outline-success" id="thumbs-up" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is good</button>
+            <button class="btn btn-outline-danger" id="thumbs-down" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is shit</button>
           </div>
-          <div class="btn-group" style="margin-left: 40px;">
+          <div class="ml-auto">
             <button class="btn btn-default" style="float: none; border-radius: 4px;" id="suggest-name" {{ configService.config.awardSuggestions ? '' : 'disabled title="Award name suggestions are now closed."' }}>Suggest a new name</button>
-            <div id="suggestion-count" style="font-size: small; clear: both;"></div>
+            <div id="suggestion-count" style="font-size: small;"></div>
           </div>
         </div>
 
         <div class="award-container-padding">
-          <div class="card">
+          <div class="card mb-3">
             <div class="card-body" id="user-nomination-list">
             </div>
           </div>
 
           <div id="nomination-section">
-            <form class="form-inline" style="text-align: center;" id="nomination-form">
-              <div class="form-group">
+            <form class="form-inline" id="nomination-form">
+              <div class="form-group" style="flex-grow: 1">
                 <label class="sr-only" for="tags">Add a nomination:</label>
-                <div class="input-group">
-                  <div class="input-group-addon">Add a nomination:</div>
+                <div class="input-group" style="flex-grow: 1">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">Add a nomination:</div>
+                  </div>
                   <input class="form-control" id="tags" name="nomination" type="text" required>
                 </div>
               </div>
-              <button class="btn" type="submit">Submit</button>
-              <p class="help-block" style="font-style: italic; margin-top: 10px;">
-                <span id="autocomplete"></span><br>
-                You can make nominations for things that aren't in the dropdown.
-              </p>
+              <button class="btn btn-primary ml-2" type="submit">Submit</button>
             </form>
+
+            <small class="text-muted text-center mt-2 d-block">
+              <span id="autocomplete"></span><br>
+              You can make nominations for things that aren't in the dropdown.
+            </small>
 
             <p id="nomination-status" style="font-weight: bold; text-align: center; font-size: 120%;"></p>
           </div>
 
           {% if not configService.isReadOnly %}
-            <div id="nominations-closed" style="display: none; text-align: center;">
-              Nominations for this award are not currently open.
+            <div class="text-muted text-center mt-2" id="nominations-closed" style="display: none;">
+              <small>Nominations for this award are not currently open.</small>
             </div>
           {% else %}
-            <div style="text-align: center;">
-              Nominations for this award have closed.
+            <div class="text-muted text-center mt-2 d-block">
+              <small>Nominations for this award have closed.</small>
             </div>
           {% endif %}
         </div>
@@ -468,11 +477,11 @@
           $('#nomination-section').hide();
           $('#nominations-closed').show();
         }
-        $('#award-voting').find('button').removeClass("btn-success btn-danger selected");
+        $('#award-voting').find('button').removeClass("btn-success btn-danger active");
         if (opinions[award] === 1) {
-          $('#thumbs-up').addClass("selected btn-success");
+          $('#thumbs-up').addClass("active");
         } else if (opinions[award] === -1) {
-          $('#thumbs-down').addClass("selected btn-danger");
+          $('#thumbs-down').addClass("active");
         }
 
         updateNominations(award);
@@ -535,25 +544,25 @@
           var icon = $('[data-id="' + formAward + '"] .opinion-icon');
           if (opinion === -1) {
             if (formAward === award) {
-              $(selected).addClass("btn-danger");
-              $(opposite).removeClass("btn-success");
+              // $(selected).addClass("btn-danger");
+              // $(opposite).removeClass("btn-success");
             }
 //                        $(icon).html("&#x2718;");
           } else if (opinion === 1) {
             if (formAward === award) {
-              $(selected).addClass("btn-success");
-              $(opposite).removeClass("btn-danger");
+              // $(selected).addClass("btn-success");
+              // $(opposite).removeClass("btn-danger");
             }
 //                        $(icon).html("&#x2714;");
           } else {
             if (formAward === award) {
-              $(selected).removeClass("btn-success btn-danger");
+              // $(selected).removeClass("btn-success btn-danger");
             }
 //                        $(icon).html("");
           }
           if (formAward === award) {
-            $(selected).addClass("selected");
-            $(opposite).removeClass("selected");
+            $(selected).addClass("active");
+            $(opposite).removeClass("active");
           }
           opinions[formAward] = opinion;
           $('#award-voting').find('button').removeAttr('disabled');
