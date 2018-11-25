@@ -49,12 +49,12 @@ security:
         - { path: ^/crew/new, roles: ROLE_ADD_USER }
         - { path: ^/crew/search, roles: ROLE_ADD_USER }
         - { path: ^/crew, roles: ROLE_PROFILE_VIEW }
+        - { path: ^/awards/autocompleters, roles: ROLE_AUTOCOMPLETER_EDIT, methods: [GET] }
         - { path: ^/awards/manage, roles: ROLE_AWARDS_FEEDBACK, methods: [GET] }
         - { path: ^/awards/manage, roles: ROLE_AWARDS_EDIT, methods: [POST] }
         - { path: ^/awards, roles: [CONDITIONALLY_PUBLIC, ROLE_AWARDS_EDIT] }
         - { path: ^/nominees, roles: ROLE_NOMINATIONS_VIEW, methods: [GET] }
         - { path: ^/nominees, roles: ROLE_NOMINATIONS_EDIT, methods: [POST] }
-        - { path: ^/awards/autocompleters, roles: ROLE_AUTOCOMPLETER_EDIT, methods: [GET] }
         - { path: ^/tasks, roles: ROLE_TASKS_VIEW }
         - { path: ^/vote/code, roles: ROLE_VOTING_VIEW }
         - { path: ^/vote, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_VIEW] }
