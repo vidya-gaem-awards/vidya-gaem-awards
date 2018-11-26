@@ -198,7 +198,7 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="display-4">Nominate games for the 2018 /v/GAs</h1>
+  <h1 class="page-header board-header">Awards and Nominations</h1>
   {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') or is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
     <nav>
       <ol class="breadcrumb">
@@ -277,7 +277,7 @@
       {% endif %}
 
       <div id="video-games">
-        <a href="{{ path('videoGames') }}">
+        <a href="{{ path('videoGames') }}" target="_blank">
           <div id="video-game-collage">
             <div class="top">Forgotten what vidya you played earlier this year?</div>
             <img class="img-responsive" src="{{ asset('img/collage.png') }}">

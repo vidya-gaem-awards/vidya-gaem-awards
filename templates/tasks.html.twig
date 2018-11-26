@@ -45,56 +45,83 @@
     }
   </style>
 
+  <h1 class="page-header board-header">
+    Nominee Status
+  </h1>
+
+  {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') or is_granted('ROLE_AUTOCOMPLETER_EDIT') or is_granted('ROLE_TASKS_VIEW') %}
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{ path('awards') }}">Main awards page</a>
+        </li>
+        {% if is_granted('ROLE_TASKS_VIEW') %}
+          <li class="breadcrumb-item active">
+            <a href="{{ path('tasks') }}">View missing nominee data</a>
+          </li>
+        {% endif %}
+        {% if is_granted('ROLE_AWARDS_EDIT') %}
+          <li class="breadcrumb-item ml-auto">
+            <a href="{{ path('awardManager') }}">Manage awards</a>
+          </li>
+        {% endif %}
+        {% if is_granted('ROLE_NOMINATIONS_VIEW') %}
+          <li class="breadcrumb-item">
+            <a href="{{ path('nomineeManager') }}">Manage nominees</a>
+          </li>
+        {% endif %}
+        {% if is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
+          <li class="breadcrumb-item">
+            <a href="{{ path('autocompleters') }}">Manage autocompleters</a>
+          </li>
+        {% endif %}
+      </ol>
+    </nav>
+  {% endif %}
+
   <div class="row">
-    <div class="col-xs-12">
-      <h1 class="page-header">
-        Nominee Status
-      </h1>
-      <div class="row">
-      {% for name, data in tasks %}
-        <div class="col-xs-4">
-          <p class="lead" style="margin-bottom: 10px;">
-            <strong>{{ name }}</strong>
-          </p>
-          <div class="progress">
-            <div class="progress-bar progress-bar-{{ data.class }}" style="width: {{ data.percent }}%">
-              {% if data.percent >= 35 %}
-                {{ data.count }} / {{ data.total }} ({{ data.percent | round(1) }}%)
-              {% endif %}
-            </div>
-            {% if data.percent < 35 %}
-              <span style="margin-left: 7px;" class="text-{{ data.class }}">
-                {{ data.count }} / {{ data.total }} ({{ data.percent | round(1) }}%)
-              </span>
-            {% endif %}
-          </div>
-          {% for award in data.awards %}
-            <div class="award-name">
-              <a href="{{ path('nomineeManager', {awardID: award.award.id}) }}" target="_blank" title="View on nominees page">
-                {{ award.award.name }}
-              </a>
-              <span style="float: right;">{{ award.nominees | length }} / {{ award.award.nominees | length }}</span>
-            </div>
-            <div id="{{ data.id }}-{{ award.award.id }}" style="margin-bottom: 15px;">
-              <ul>
-                {% for nominee in award.nominees %}
-                  <li>
-                    {% if is_granted('ROLE_TASKS_NOMINEES') or is_granted('ROLE_NOMINATIONS_EDIT') %}
-                      <a href="#" data-award="{{ award.award.id }}" data-nominee="{{ nominee.id }}" class="nomineeLink">
-                        {{ nominee.name }}
-                      </a>
-                    {% else %}
-                      {{ nominee.name }}
-                    {% endif %}
-                  </li>
-                {% endfor %}
-              </ul>
-            </div>
-          {% endfor %}
+  {% for name, data in tasks %}
+    <div class="col-xs-4">
+      <p class="lead" style="margin-bottom: 10px;">
+        <strong>{{ name }}</strong>
+      </p>
+      <div class="progress">
+        <div class="progress-bar progress-bar-{{ data.class }}" style="width: {{ data.percent }}%">
+          {% if data.percent >= 35 %}
+            {{ data.count }} / {{ data.total }} ({{ data.percent | round(1) }}%)
+          {% endif %}
+        </div>
+        {% if data.percent < 35 %}
+          <span style="margin-left: 7px;" class="text-{{ data.class }}">
+            {{ data.count }} / {{ data.total }} ({{ data.percent | round(1) }}%)
+          </span>
+        {% endif %}
+      </div>
+      {% for award in data.awards %}
+        <div class="award-name">
+          <a href="{{ path('nomineeManager', {awardID: award.award.id}) }}" target="_blank" title="View on nominees page">
+            {{ award.award.name }}
+          </a>
+          <span style="float: right;">{{ award.nominees | length }} / {{ award.award.nominees | length }}</span>
+        </div>
+        <div id="{{ data.id }}-{{ award.award.id }}" style="margin-bottom: 15px;">
+          <ul>
+            {% for nominee in award.nominees %}
+              <li>
+                {% if is_granted('ROLE_TASKS_NOMINEES') or is_granted('ROLE_NOMINATIONS_EDIT') %}
+                  <a href="#" data-award="{{ award.award.id }}" data-nominee="{{ nominee.id }}" class="nomineeLink">
+                    {{ nominee.name }}
+                  </a>
+                {% else %}
+                  {{ nominee.name }}
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
         </div>
       {% endfor %}
-      </div>
     </div>
+  {% endfor %}
   </div>
 
   {% if is_granted('ROLE_TASKS_NOMINEES') or is_granted('ROLE_NOMINATIONS_EDIT') %}

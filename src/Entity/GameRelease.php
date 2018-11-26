@@ -4,6 +4,24 @@ namespace App\Entity;
 
 class GameRelease
 {
+    public const PLATFORMS = [
+        'pc' => 'PC',
+        'vr' => 'VR',
+        'ps3' => 'PS3',
+        'ps4' => 'PS4',
+        'vita' => 'Vita',
+        'psn' => 'PSN',
+        'x360' => '360',
+        'xb1' => 'XB1',
+        'xbla' => 'XBLA',
+        'wii' => 'Wii',
+        'wiiu' => 'Wii U',
+        'switch' => 'Switch',
+        'wiiware' => 'WiiWare',
+        'n3ds' => '3DS',
+        'mobile' => 'Mobile'
+    ];
+
     /** @var integer */
     private $id;
 
@@ -420,26 +438,8 @@ class GameRelease
 
     public function getPlatforms()
     {
-        $allPlatforms = [
-            'pc' => 'PC',
-            'vr' => 'VR',
-            'ps3' => 'PS3',
-            'ps4' => 'PS4',
-            'vita' => 'Vita',
-            'psn' => 'PSN',
-            'x360' => '360',
-            'xb1' => 'XB1',
-            'xbla' => 'XBLA',
-            'wii' => 'Wii',
-            'wiiu' => 'Wii U',
-            'switch' => 'Switch',
-            'wiiware' => 'WiiWare',
-            'n3ds' => '3DS',
-            'mobile' => 'Mobile'
-        ];
-
         $platforms = [];
-        foreach ($allPlatforms as $platformFunction => $platform) {
+        foreach (self::PLATFORMS as $platformFunction => $platform) {
             if ($this->{'get'.$platformFunction}()) {
                 $platforms[] = $platform;
             }

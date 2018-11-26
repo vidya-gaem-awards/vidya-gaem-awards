@@ -62,8 +62,13 @@ videoGames:
     methods:    [GET]
 
 addVideoGame:
-    path:       /vidya
-    controller: App\Controller\VideoGamesController::addAction
+    path:       /vidya/add
+    controller: App\Controller\VideoGamesController::add
+    methods:    [POST]
+
+removeVideoGame:
+    path:       /vidya/remove
+    controller: App\Controller\VideoGamesController::remove
     methods:    [POST]
 
 #

@@ -43,8 +43,9 @@ security:
         - { path: ^/config, roles: ROLE_EDIT_CONFIG }
         - { path: ^/news/add, roles: ROLE_NEWS_MANAGE }
         - { path: ^/news/delete, roles: ROLE_NEWS_MANAGE }
-        - { path: ^/vidya, roles: [CONDITIONALLY_PUBLIC, ROLE_ADD_VIDEO_GAME], methods: [GET] }
-        - { path: ^/vidya, roles: ROLE_ADD_VIDEO_GAME, methods: [POST] }
+        - { path: ^/vidya, roles: [CONDITIONALLY_PUBLIC, ROLE_ADD_VIDEO_GAME] }
+        - { path: ^/vidya/add, roles: ROLE_ADD_VIDEO_GAME }
+        - { path: ^/vidya/remove, roles: ROLE_ADD_VIDEO_GAME }
         - { path: ^/crew/.+/edit, roles: ROLE_PROFILE_EDIT_DETAILS }
         - { path: ^/crew/new, roles: ROLE_ADD_USER }
         - { path: ^/crew/search, roles: ROLE_ADD_USER }

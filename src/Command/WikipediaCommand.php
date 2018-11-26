@@ -95,6 +95,7 @@ class WikipediaCommand extends ContainerAwareCommand
             'htc vive' => ['pc', 'vr'],
             'ios' => 'mobile',
             'ios (apple)' => 'mobile',
+            'iphone os' => 'mobile',
             'ipod' => 'mobile',
             'java me' => null,
             'linux' => 'pc',
@@ -291,8 +292,10 @@ class WikipediaCommand extends ContainerAwareCommand
         // 2015 added a sources column
         if ($year <= 2014) {
             $modifier = -1;
-        } else {
+        } elseif ($year <= 2016) {
             $modifier = 0;
+        } else {
+            $modifier = 1;
         }
 
         $tables = $crawler->filter('.wikitable')->reduce(function (Crawler $node, $i) use ($year) {
@@ -308,7 +311,7 @@ class WikipediaCommand extends ContainerAwareCommand
                 $titleCell = 2;
             }
 
-            if (count($cells) < 3 || $cells->getNode($titleCell)->textContent !== 'Title') {
+            if (count($cells) < 3 || trim($cells->getNode($titleCell)->textContent) !== 'Title') {
                 return false;
             } else {
                 return true;

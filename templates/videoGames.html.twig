@@ -1,13 +1,6 @@
 {% extends 'base/standard.html.twig' %}
 
 {% block head %}
-  <script type="text/javascript">
-    $(document).ready(function () {
-        $("#games").tablesorter();
-      }
-    );
-  </script>
-
   <style type="text/css">
     #games td {
       text-align: center;
@@ -76,193 +69,215 @@
     #new-game td {
       vertical-align: middle;
     }
+
+    .game-container {
+      margin-left: 0;
+    }
+
+    .game-container .col-sm-2 {
+      display: flex;
+      padding-left: 0;
+    }
+
+    .game-container .card {
+      flex-grow: 1;
+    }
+
+    .title {
+      font-weight: 500;
+    }
+
+    .small-title {
+      font-size: small;
+    }
+
+    .game {
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fa-desktop, .fa-mobile {
+      color: #1D2026;
+    }
+
+    .fa-xbox {
+      color: #187B18;
+    }
+
+    .fa-playstation {
+      color: #2A32AD;
+    }
+
+    .fa-nintendo-switch {
+      color: #E50019;
+    }
+
+    .remove-game {
+      display: none;
+    }
+
+    .game:hover .remove-game {
+      display: block;
+    }
   </style>
 {% endblock %}
 
 {% block content %}
 
-  <h1 class="page-header">Vidya in 2018</h1>
-  <p class="lead">Need a reminder of what games were released in 2018?</p>
-  <p>
-    Click on the row headers to sort by platform. List is from
-    <a href="https://en.wikipedia.org/wiki/2018_in_video_gaming">Wikipedia</a>.
-  </p>
+  <h1 class="page-header board-header">/v/ - The Vidya</h1>
+  <p class="board-subheader">A reminder of all the games released in 2018.</p>
+
+  <div class="row game-container">
+    {% for game in games %}
+      <div class="col-sm-2">
+        <div class="card mb-2">
+          <div class="card-body game">
+            <div class="title {{ game.name | length > 30 ? 'small-title' : '' }} mb-3">
+              <a href="{{ game.url }}" target="_blank" class="text-dark">{{ game.name }}</a>
+            </div>
+
+            <div class="platforms mt-auto">
+              {% if game.pc %}<i class="far fa-fw fa-desktop"></i>{% endif %}
+              {% if game.x360 or game.xb1 %}<i class="fab fa-fw fa-xbox"></i>{% endif %}
+              {% if game.ps3 or game.ps4 or game.vita %}<i class="fab fa-fw fa-playstation"></i>{% endif %}
+              {% if game.switch %}<i class="fab fa-fw fa-nintendo-switch"></i>{% endif %}
+              {% if game.mobile %}<i class="far fa-fw fa-mobile"></i>{% endif %}
+
+              <a href="#" class="remove-game float-right" data-title="{{ game.name | e('html_attr') }}" data-id="{{ game.id }}">×</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 
   {% if is_granted('ROLE_ADD_VIDEO_GAME') and not configService.isReadOnly %}
-    <div class="row">
-      <div class="span12" style='text-align: center; margin-bottom: 8px;'>
-        <a class="btn btn-success btn-large" id="add-a-game">Add a Game</a>
-        <div class="alert alert-warning" id="add-a-game-msg" style="display: none; margin-bottom: 0;">
-          Please make sure you spell the game correctly. You won't be able to edit it afterwards and it will show up as
-          a suggestion when users are writing their nominations.
+    <button class="btn btn-primary my-3" type="button" data-toggle="modal" data-target="#addGameModal">
+      <i class="far fa-plus"></i> Add a video game
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addGameModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h5 class="modal-title">Add a video game</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-danger" style="display: none;">
+                <span class="alert-text"></span>
+                <a class="close" href="#">&times;</a>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-lg-2 col-sm-3 col-form-label" for="info-name">Title</label>
+                <div class="col-lg-10 col-sm-9">
+                  <input class="form-control" type="text" id="info-name" required name="name">
+                  <span class="form-text text-muted">Check your spelling before submitting!</span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-lg-2 col-sm-3 col-form-label">Platforms</div>
+                <div class="col-lg-10 col-sm-9 pt-2">
+                  {% for id, name in constant('App\\Entity\\GameRelease::PLATFORMS') %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="platform-{{ id }}" name="{{ id }}">
+                      <label class="form-check-label" for="platform-{{ id }}">
+                        {{ name }}
+                      </label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <span class="saving mr-2" style="display: none;">
+              <i class="far fa-circle-notch fa-spin mr-1"></i> Saving...
+            </span>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   {% endif %}
+{% endblock %}
 
-  <table class="table table-striped table-condensed tablesorter" id="games">
-    <thead>
-    <tr>
-      <th>Game Title</th>
-      <th width='50px' class='divider'>PC</th>
-      <th width='50px' class='divider'>VR</th>
-      <th width='50px' class='divider'>PS3</th>
-      <th width='50px'>PS4</th>
-      <th width='50px'>Vita</th>
-      <th width='50px' class='divider'>360</th>
-      <th width='50px'>XB1</th>
-      <th width='60px' class='divider'>Wii U</th>
-      <th width='60px'>Switch</th>
-      <th width='55px'>3DS</th>
-      <th width='70px' class='divider'>Mobile</th>
-      <th width='120px' class='divider'>Others</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% if is_granted('ROLE_ADD_VIDEO_GAME') and not configService.isReadOnly %}
-      <tr id="new-game" style="display: none;">
-        <form id="new-game-form">
-          <td class='divider' style='text-align: left;'>
-            <input type="text" class="form-control" required name="name" id="Game">
-          </td>
-          <td class='divider'>
-            <input type="checkbox" name="pc">
-          </td>
-          <td class='divider'>
-            <input type="checkbox" name="vr">
-          </td>
-          <td class='divider'>
-            <input type="checkbox" name="ps3">
-          </td>
-          <td>
-            <input type="checkbox" name="ps4">
-          </td>
-          <td>
-            <input type="checkbox" name="vita">
-          </td>
-          <td class='divider'>
-            <input type="checkbox" name="x360">
-          </td>
-          <td>
-            <input type="checkbox" name="xb1">
-          </td>
-          <td class='divider'>
-            <input type="checkbox" name="wiiu">
-          </td>
-          <td>
-            <input type="checkbox" name="switch">
-          </td>
-          <td>
-            <input type="checkbox" name="n3ds">
-          </td>
-          <td class='divider'>
-            <input type="checkbox" name="mobile">
-          </td>
-          <td class='divider'>
-            <input class="btn btn-default" type="submit" id="game-submit">
-          </td>
-        </form>
-      </tr>
-    {% endif %}
-    {% for game in games %}
-      <tr>
-        <td class='{{ game.notable ? 'notable' : '' }}' style='text-align: left;'>
-          <a href="{{ game.url }}">{{ game.name }}</a>
-        </td>
-        <td class='divider'>
-          {% if game.pc %}
-            <strong class='yes pc'>✓</strong>
-          {% endif %}
-        </td>
-        <td class='divider'>
-          {% if game.vr %}
-            <strong class='yes vr'>✓</strong>
-          {% endif %}
-        </td>
-        <td class='divider'>
-          {% if game.ps3 %}
-            <strong class='yes sony'>✓</strong>
-          {% endif %}
-        </td>
-        <td>
-          {% if game.ps4 %}
-            <strong class='yes sony'>✓</strong>
-          {% endif %}
-        </td>
-        <td>
-          {% if game.vita %}
-            <strong class='yes sony'>✓</strong>
-          {% endif %}
-        </td>
-        <td class='divider'>
-          {% if game.x360 %}
-            <strong class='yes microsoft'>✓</strong>
-          {% endif %}
-        </td>
-        <td>
-          {% if game.xb1 %}
-            <strong class='yes microsoft'>✓</strong>
-          {% endif %}
-        </td>
-        <td class='divider'>
-          {% if game.wiiu %}
-            <strong class='yes nintendo'>✓</strong>
-          {% endif %}
-        </td>
-        <td>
-            {% if game.switch %}
-              <strong class='yes nintendo'>✓</strong>
-            {% endif %}
-        </td>
-
-        <td>
-          {% if game.n3ds %}
-            <strong class='yes nintendo'>✓</strong>
-          {% endif %}
-        </td>
-        <td class='divider'>
-          {% if game.mobile %}
-            <strong class='yes'>✓</strong>
-          {% endif %}
-        </td>
-        <td class='divider'>
-          {{ game.others | join(', ') }}
-        </td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+{% block js %}
+  {{ parent() }}
 
   {% if is_granted('ROLE_ADD_VIDEO_GAME') %}
     <script type="text/javascript">
-      $("#add-a-game").click(function () {
-        $("#new-game").show();
-        $("#Game").focus();
-        $("#add-a-game").hide();
-        $("#add-a-game-msg").show();
-      });
-      $("#new-game-form").submit(function (e) {
-        e.preventDefault();
-        $("#game-submit").attr("disabled", "disabled");
+        $(document).ready(function () {
+            var dialog = $("#addGameModal");
+            var currentlySubmitting = false;
 
-        $.post("{{ path('addVideoGame') }}", $("#new-game-form").serialize(), function (data) {
-          var msg = $("#add-a-game-msg");
-          if (data.error) {
-            msg.html("<strong>Error:</strong> " + data.error);
-            msg.removeClass("alert-warning alert-success");
-            msg.addClass("alert-danger");
-          } else {
-            msg.text('Success! ' + data.success + ' has been added. It will show up after a refresh.');
-            msg.removeClass("alert-warning alert-danger");
-            msg.addClass("alert-success");
-            $("#Game").attr("value", "");
-            $("#new-game").find("input[type=checkbox]").prop("checked", false);
-            $("#Game").focus();
-          }
-          $("#game-submit").removeAttr("disabled");
-        }, "json");
+            $('.alert .close').on('click', function () {
+                $(this).parent().fadeOut("fast");
+            });
 
-      });
+            function handleError(error) {
+                dialog.find('.saving').hide();
+                dialog.find('button').removeAttr('disabled');
+                dialog.find('.alert-text')
+                    .html("<strong>Error:</strong> " + error)
+                    .parent().fadeIn("fast");
+
+                currentlySubmitting = false;
+            }
+
+            dialog.find('form').submit(function (event) {
+                event.preventDefault();
+
+                if (currentlySubmitting) {
+                    return;
+                }
+                currentlySubmitting = true;
+
+                dialog.find('.saving').show();
+                dialog.find('button').attr('disabled', 'disabled');
+                dialog.find('.alert').slideUp();
+
+                var data = $(this).serializeArray();
+
+                $.post("{{ path('addVideoGame') }}", data, function (response) {
+                    if (response.success) {
+                        window.location.reload();
+                    } else {
+                        handleError(response.error);
+                    }
+                }, 'json').fail(function (response) {
+                    handleError(response.status);
+                });
+            });
+
+            $('.remove-game').click(function (event) {
+                event.preventDefault();
+
+                var title = $(this).data('title');
+                var id = $(this).data('id');
+                if (!confirm('Are you sure you want to remove ' + title + ' from the list of video games?')) {
+                    return;
+                }
+
+                $.post("{{ path('removeVideoGame') }}", {id: id}, function (response) {
+                    if (response.success) {
+                        window.location.reload();
+                    } else {
+                        alert('An error occurred: ' + response.error);
+                    }
+                }, 'json').fail(function (response) {
+                    alert('An error occured: ' + response.status);
+                });
+            });
+        });
     </script>
   {% endif %}
 {% endblock %}

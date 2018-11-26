@@ -3,7 +3,7 @@
 {% block title %}Autocompleters &ndash; Award Manager{% endblock %}
 
 {% block content %}
-  <h1 class="display-4">Manage autocompleters</h1>
+  <h1 class="page-header board-header">Manage Autocompleters</h1>
 
   {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') or is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
     <nav>
@@ -79,59 +79,59 @@
   </table>
 
   <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#autocompleterModal">
-    <i class="far fa-plus"></i> Add a new autocompleter
-  </button>
+      <i class="far fa-plus"></i> Add a new autocompleter
+    </button>
 
-  <!-- Modal -->
-  <div class="modal fade" id="autocompleterModal" tabindex="-1" role="dialog" aria-labelledby="autocompleterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <form>
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="alert alert-danger" style="display: none;">
-              <span class="alert-text"></span>
-              <a class="close" href="#">&times;</a>
+    <!-- Modal -->
+    <div class="modal fade" id="autocompleterModal" tabindex="-1" role="dialog" aria-labelledby="autocompleterModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              <div class="alert alert-danger" style="display: none;">
+                <span class="alert-text"></span>
+                <a class="close" href="#">&times;</a>
+              </div>
 
-            <div class="form-group row">
-              <label class="col-lg-2 col-sm-3 col-form-label" for="info-id">ID</label>
-              <div class="col-lg-10 col-sm-9">
-                <input class="form-control" type="text" id="info-id" required name="id" pattern="[0-9a-zA-Z-]+">
-                <small class="form-text text-muted">ID can only include letters, numbers, and dashes</small>
+              <div class="form-group row">
+                <label class="col-lg-2 col-sm-3 col-form-label" for="info-id">ID</label>
+                <div class="col-lg-10 col-sm-9">
+                  <input class="form-control" type="text" id="info-id" required name="id" pattern="[0-9a-zA-Z-]+">
+                  <small class="form-text text-muted">ID can only include letters, numbers, and dashes</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-2 col-sm-3 col-form-label" for="info-name">Name</label>
+                <div class="col-lg-10 col-sm-9">
+                  <input class="form-control" type="text" id="info-name" required name="name">
+                  <small class="form-text text-muted">The name is only visible to those with award edit access</small>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-lg-2 col-sm-3 col-form-label" for="info-suggestions">Suggestions</label>
+                <div class="col-lg-10 col-sm-9">
+                  <textarea class="form-control" name="suggestions" id="info-suggestions" rows="10"></textarea>
+                  <small class="form-text text-muted">One suggestion per line</small>
+                </div>
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-lg-2 col-sm-3 col-form-label" for="info-name">Name</label>
-              <div class="col-lg-10 col-sm-9">
-                <input class="form-control" type="text" id="info-name" required name="name">
-                <small class="form-text text-muted">The name is only visible to those with award edit access</small>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-lg-2 col-sm-3 col-form-label" for="info-suggestions">Suggestions</label>
-              <div class="col-lg-10 col-sm-9">
-                <textarea class="form-control" name="suggestions" id="info-suggestions" rows="10"></textarea>
-                <small class="form-text text-muted">One suggestion per line</small>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="delete-autocompleter" class="btn btn-danger mr-auto">Delete autocompleter</button>
-            <span class="saving mr-2" style="display: none;">
+            <div class="modal-footer">
+              <button type="button" id="delete-autocompleter" class="btn btn-danger mr-auto">Delete autocompleter</button>
+              <span class="saving mr-2" style="display: none;">
               <i class="far fa-circle-notch fa-spin mr-1"></i> Saving...
             </span>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
   </div>
 {% endblock %}
 

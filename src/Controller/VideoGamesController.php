@@ -27,7 +27,7 @@ class VideoGamesController extends Controller
         ]);
     }
 
-    public function addAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService)
+    public function add(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -64,5 +64,28 @@ class VideoGamesController extends Controller
         $em->flush();
 
         return $this->json(['success' => $game->getName()]);
+    }
+
+    public function remove(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService)
+    {
+        if ($configService->isReadOnly()) {
+            return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
+        }
+
+        $post = $request->request;
+
+        $game = $em->getRepository(GameRelease::class)->find($post->get('id'));
+        if (!$game) {
+            return $this->json(['error' => 'Couldn\'t find the selected game. Perhaps it has already been removed?']);
+        }
+
+        $em->remove($game);
+
+        $auditService->add(
+            new Action('remove-video-game', $game->getName())
+        );
+        $em->flush();
+
+        return $this->json(['success' => true]);
     }
 }
