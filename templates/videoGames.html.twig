@@ -97,8 +97,12 @@
       flex-direction: column;
     }
 
-    .fa-desktop, .fa-mobile {
-      color: #1D2026;
+    .fa-windows {
+      color: #2BA8E1;
+    }
+
+    .fa-android {
+      color: #93C04A;
     }
 
     .fa-xbox {
@@ -138,11 +142,11 @@
             </div>
 
             <div class="platforms mt-auto">
-              {% if game.pc %}<i class="far fa-fw fa-desktop"></i>{% endif %}
+              {% if game.pc %}<i class="fab fa-fw fa-windows"></i>{% endif %}
               {% if game.x360 or game.xb1 %}<i class="fab fa-fw fa-xbox"></i>{% endif %}
               {% if game.ps3 or game.ps4 or game.vita %}<i class="fab fa-fw fa-playstation"></i>{% endif %}
               {% if game.switch %}<i class="fab fa-fw fa-nintendo-switch"></i>{% endif %}
-              {% if game.mobile %}<i class="far fa-fw fa-mobile"></i>{% endif %}
+              {% if game.mobile %}<i class="fab fa-fw fa-android"></i>{% endif %}
 
               <a href="#" class="remove-game float-right" data-title="{{ game.name | e('html_attr') }}" data-id="{{ game.id }}">×</a>
             </div>
