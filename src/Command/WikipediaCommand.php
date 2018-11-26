@@ -103,6 +103,7 @@ class WikipediaCommand extends ContainerAwareCommand
             'macos' => 'pc',
             'mac os' => 'pc',
             'mac os x' => 'pc',
+            'mega drive' => null,
             'microsoft windows' => 'pc',
             'mobile game' => 'mobile',
             'new nintendo 3ds' => 'n3ds',
