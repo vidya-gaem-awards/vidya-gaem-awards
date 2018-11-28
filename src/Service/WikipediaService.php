@@ -160,7 +160,7 @@ class WikipediaService
             throw new \Exception('Years before 1995 are not supported.');
         }
         if ($year >= 1997 && $year <= 2001) {
-            $this->output[] = '<bg=red>Warning:</> articles between 1997 and 2001 contain a small amount of games with platforms that were actually released in different years.';
+            $this->output[] = '<bg=red>Warning:</> articles between 1997 and 2001 contain a small number of games with incorrect platform data (the release date for some platforms is outside of ' . $year . ')';
         }
         if ($year > (int)date('Y')) {
             throw new \Exception('Future years are not supported.');
