@@ -21,6 +21,7 @@ class AuditLogController extends Controller
             'award-edited' => 'Edited an award',
             'add-video-game' => 'Added a video game to the main autocompleter',
             'remove-video-game' => 'Removed a video game from the main autocompleter',
+            'reload-video-games' => 'Reloaded the list of video game releases',
             'config-updated' => 'Updated the website config',
             'mass-nomination-open' => 'Opened nominations for all awards',
             'mass-nomination-close' => 'Closed nominations for all awards',

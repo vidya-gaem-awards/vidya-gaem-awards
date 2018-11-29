@@ -16,6 +16,9 @@ App\Entity\GameRelease:
     notable:
       type: boolean
       nullable: false
+    manuallyAdded:
+      type: boolean
+      nullable: false
     pc:
       type: boolean
       nullable: false

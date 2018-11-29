@@ -7,6 +7,7 @@ use App\Entity\GameRelease;
 use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\WikipediaService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,5 +101,19 @@ class AutocompleterController extends Controller
         } else {
             return $this->json(['error' => 'Invalid action specified.']);
         }
+    }
+
+    public function wikipedia(WikipediaService $wikipedia, Request $request)
+    {
+        $year = $request->query->get('year');
+
+        try {
+            $games = $wikipedia->getGames((int)$year);
+        } catch (\Exception $e) {
+            return $this->json(['error' => $e->getMessage()]);
+        }
+        $suggestions = $wikipedia->getStringListForAutocompleter($games);
+
+        return $this->json(['success' => true, 'suggestions' => $suggestions]);
     }
 }

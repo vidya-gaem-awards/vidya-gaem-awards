@@ -4,11 +4,13 @@ namespace App\Controller;
 use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\WikipediaService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Action;
 use App\Entity\GameRelease;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class VideoGamesController extends Controller
 {
@@ -42,6 +44,7 @@ class VideoGamesController extends Controller
         }
 
         $game = new GameRelease($game);
+        $game->setManuallyAdded(true);
 
         $platforms = ['pc', 'vr', 'ps3', 'ps4', 'vita', 'x360', 'xb1', 'wiiu', 'switch', 'n3ds', 'mobile'];
         foreach ($platforms as $platform) {
@@ -85,6 +88,29 @@ class VideoGamesController extends Controller
             new Action('remove-video-game', $game->getName())
         );
         $em->flush();
+
+        return $this->json(['success' => true]);
+    }
+
+    public function reload(EntityManagerInterface $em, WikipediaService $wikpedia, ConfigService $configService, AuditService $auditService, Session $session)
+    {
+        if ($configService->isReadOnly()) {
+            return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
+        }
+
+        try {
+            $games = $wikpedia->getGames(2018);
+        } catch (\Exception $e) {
+            return $this->json(['error' => $e->getMessage()]);
+        }
+
+        $wikpedia->addGamesToGameReleaseTable($games, true);
+        $auditService->add(
+            new Action('reload-video-games')
+        );
+        $em->flush();
+
+        $session->getFlashBag()->add('success', 'The list of 2018 video game releases has been successfully imported from Wikipedia.');
 
         return $this->json(['success' => true]);
     }

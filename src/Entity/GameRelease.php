@@ -30,6 +30,9 @@ class GameRelease
 
     /** @var boolean */
     private $notable = false;
+    
+    /** @var boolean */
+    private $manuallyAdded = false;
 
     /** @var boolean */
     private $pc = false;
@@ -125,9 +128,28 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getNotable()
+    public function isNotable()
     {
         return $this->notable;
+    }
+
+    /**
+     * @param boolean $manuallyAdded
+     * @return GameRelease
+     */
+    public function setManuallyAdded($manuallyAdded)
+    {
+        $this->manuallyAdded = $manuallyAdded;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isManuallyAdded()
+    {
+        return $this->manuallyAdded;
     }
 
     /**

@@ -120,6 +120,28 @@
                   <small class="form-text text-muted">One suggestion per line</small>
                 </div>
               </div>
+              <div class="form-group row">
+                <div class="col-lg-10 col-sm-9 offset-lg-2 offset-sm-3">
+
+                  <button class="btn btn-outline-secondary" type="button" onclick="$(this).hide(); $('#wikipedia-selection').show();" id="wikipedia-button">
+                    Import suggestions from Wikipedia article
+                  </button>
+
+                  <div class="input-group" id="wikipedia-selection" style="display: none; max-width: 300px;">
+                    <select class="form-control">
+                      <option value>Select a year</option>
+                      {% for year in ('now'|date("Y"))..1995 %}
+                        <option value="{{ year }}">{{ year }} in video gaming</option>
+                      {% endfor %}
+                    </select>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button">Import</button>
+                    </div>
+                  </div>
+
+                  <small class="form-text text-dark" id="wikipedia-message"></small>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" id="delete-autocompleter" class="btn btn-danger mr-auto">Delete autocompleter</button>
@@ -241,6 +263,31 @@
                   }
               }, "json").fail(function (response) {
                   handleError(response.status);
+              });
+          });
+
+          editDialog.find("#wikipedia-selection button").click(function () {
+              var year = editDialog.find("#wikipedia-selection select").val();
+              if (!year || !confirm('Import suggestions using the list of games in the "' + year + ' in video gaming" article? Any existing suggestions will be removed.')) {
+                  return;
+              }
+
+              var msg = editDialog.find("#wikipedia-message");
+              msg.text('Please wait...');
+              editDialog.find('button').attr('disabled', 'disabled');
+
+              $.get("{{ path('autocompleterWikipedia') }}", {year: year}, function (response) {
+                  if (response.success) {
+                      editDialog.find('button').removeAttr('disabled');
+                      msg.text(response.suggestions.length + ' suggestions successfully imported. Review the list of games before saving.');
+                      editDialog.find('textarea').val(response.suggestions.join("\r\n"));
+                  } else {
+                      handleError(response.error);
+                      msg.text('');
+                  }
+              }, "json").fail(function (response) {
+                  handleError(response.status);
+                  msg.text('');
               });
           });
       });

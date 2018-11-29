@@ -23,11 +23,13 @@ class WikipediaService
         '3dsvc' => ['3DS', 'n3ds'],
         'amazon fire' => ['Mobile', 'mobile'],
         'amazon fire tv' => ['Fire TV', 'mobile'],
+        'ami' => ['Amiga', null],
         'android' => ['Mobile', 'mobile'],
         'android (operating system)' => ['Mobile', 'mobile'],
         'apple watch' => ['Mobile', 'mobile'],
         'arcade' => ['Arcade', null],
         'dc' => ['DC', null],
+        'dos' => ['DOS', 'pc'],
         'dreamcast' => ['DC', null],
         'droid' => ['Mobile', 'mobile'],
         'ds' => ['DS', null],
@@ -45,6 +47,7 @@ class WikipediaService
         'ios (apple)' => ['Mobile', 'mobile'],
         'iphone os' => ['Mobile', 'mobile'],
         'ipod' => ['Mobile', 'mobile'],
+        'jag' => ['Jaguar', null],
         'jaguar' => ['Jaguar', null],
         'java me' => ['Java ME', null],
         'lin' => ['Linux', 'pc'],
@@ -54,7 +57,7 @@ class WikipediaService
         'macos' => ['macOS', 'pc'],
         'mac os' => ['macOS', 'pc'],
         'mac os x' => ['macOS', 'pc'],
-        'mega drive' => ['MD', null],
+        'mega drive' => ['SMD', null],
         'microsoft windows' => ['PC', 'pc'],
         'mobile' => ['Mobile', 'mobile'],
         'mobile game' => ['Mobile', 'mobile'],
@@ -63,6 +66,7 @@ class WikipediaService
         'nds' => ['DS', null],
         'new nintendo 3ds' => ['3DS', 'n3ds'],
         'neo' => ['Neo Geo', null],
+        'neocd' => ['Neo Geo', null],
         'ngp' => ['NGP', null],
         'nintendo 3ds' => ['3DS', 'n3ds'],
         'nintendo ds' => ['DS', null],
@@ -95,7 +99,10 @@ class WikipediaService
         'psn' => ['PSN', 'psn'],
         'psp' => ['PSP', null],
         'psvita' => ['Vita', 'vita'],
+        'r-zone' => ['R-Zone', null],
         'sat' => ['Saturn', null],
+        'saturn' => ['Saturn', null],
+        'smd' => ['SMD', null],
         'snes' => ['SNES', null],
         'super nintendo entertainment system' => ['SNES', null],
         'virtual console' => ['VC', null],
@@ -104,6 +111,7 @@ class WikipediaService
         'wiiware' => ['Wii', 'wiiware'],
         'wii u' => ['Wii U', 'wiiu'],
         'win' => ['PC', 'pc'],
+        'win95' => ['PC', 'pc'],
         'windows' => ['PC', 'pc'],
         'windows 10' => ['PC', 'pc'],
         'windows phone' => ['Mobile', 'mobile'],
@@ -246,7 +254,7 @@ class WikipediaService
                 if (empty($text) || $text === 'N/A') {
                     continue;
                 }
-                if ($i === 2) {
+                if ($i === 2 && $year >= 1997) {
                     $games[$title][] = 'pc';
                     continue;
                 } elseif ($i === 6) {
@@ -368,7 +376,9 @@ class WikipediaService
     {
         if ($deleteExisting) {
             foreach ($this->em->getRepository(GameRelease::class)->findAll() as $gameRelease) {
-                $this->em->remove($gameRelease);
+                if (!$gameRelease->isManuallyAdded()) {
+                    $this->em->remove($gameRelease);
+                }
             }
             $this->em->flush();
         }
@@ -403,7 +413,6 @@ class WikipediaService
         array_walk($games, function (&$value, $key) {
             $value = $this->normalisePlatforms($value, $this->getUserReadablePlatformMap());
         });
-        $games = $this->combineDuplicateGames($games);
 
         ksort($games);
 
