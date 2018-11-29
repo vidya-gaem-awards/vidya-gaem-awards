@@ -34,3 +34,7 @@ App\Entity\InventoryItem:
     musicFile:
       type: string
       nullable: true
+  oneToMany:
+    userItems:
+      targetEntity: App\Entity\UserInventoryItem
+      mappedBy: item

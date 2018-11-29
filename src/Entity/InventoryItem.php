@@ -50,6 +50,11 @@ class InventoryItem implements \JsonSerializable
     private $musicFile;
 
     /**
+     * @var UserInventoryItem[]
+     */
+    private $userItems;
+
+    /**
      * Get id
      *
      * @return integer
@@ -241,5 +246,13 @@ class InventoryItem implements \JsonSerializable
             'music' => $this->hasMusic(),
             'musicFile' => $this->getMusicFile(),
         ];
+    }
+
+    /**
+     * @return UserInventoryItem[]
+     */
+    public function getUserItems(): array
+    {
+        return $this->userItems;
     }
 }

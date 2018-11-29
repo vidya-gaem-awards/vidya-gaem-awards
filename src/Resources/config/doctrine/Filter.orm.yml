@@ -17,7 +17,7 @@ App\Entity\Filter:
     value:
       type: integer
       nullable: false
-  oneToMany:
-    resultCache:
-      targetEntity: ResultCache
-      mappedBy: filter
+#  oneToMany:
+#    resultCache:
+#      targetEntity: ResultCache
+#      mappedBy: filter
