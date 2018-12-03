@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de224216445ef536915ecb68ee8a1fb8",
+    "content-hash": "1de10c160ac1a36cc687a99d03eb3b9a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1554,16 +1554,16 @@
         },
         {
             "name": "knojector/steam-authentication-bundle",
-            "version": "1.0.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knojector/SteamAuthenticationBundle.git",
-                "reference": "55e2af8492c765d6845b35e2122c81f1d2643853"
+                "reference": "c8d5b259ff7d7b4d4d8c1c87058ed249d88ab290"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knojector/SteamAuthenticationBundle/zipball/55e2af8492c765d6845b35e2122c81f1d2643853",
-                "reference": "55e2af8492c765d6845b35e2122c81f1d2643853",
+                "url": "https://api.github.com/repos/knojector/SteamAuthenticationBundle/zipball/c8d5b259ff7d7b4d4d8c1c87058ed249d88ab290",
+                "reference": "c8d5b259ff7d7b4d4d8c1c87058ed249d88ab290",
                 "shasum": ""
             },
             "require": {
@@ -1588,11 +1588,11 @@
             "authors": [
                 {
                     "name": "Knojector",
-                    "email": "dev@404-labs.xyz"
+                    "email": "dev@knojector.xyz"
                 }
             ],
             "description": "Symfony Bundle to integrate Steam authentication",
-            "time": "2018-05-13T17:32:51+00:00"
+            "time": "2018-10-05T17:53:39+00:00"
         },
         {
             "name": "koraktor/steam-condenser",
@@ -5892,7 +5892,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "knojector/steam-authentication-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
