@@ -103,7 +103,7 @@
       margin-bottom: 5px;
     }
 
-    #awardDropdown .dropdown-menu > li > a {
+    #awardDropdown .dropdown-menu a {
       white-space: normal;
     }
 
@@ -225,30 +225,30 @@
   {% endif %}
 
   <div class="row">
-    <div class="col-md-6" id="award-selector">
+    <div class="col-lg-6 col-md-12" id="award-selector">
        <div class="dropdown" id="awardDropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="awardDropdownButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="true">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="awardDropdownButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" data-flip="false">
           Select an award
-          <span class="caret"></span>
         </button>
-        <ul class="nav nav-list custom-navigation-pane dropdown-menu" aria-labelledby="awardDropdownButton">
+        <div class="dropdown-menu" aria-labelledby="awardDropdownButton">
           {% for award in awards %}
-            <li data-id="{{ award.id }}" class="awardClickTarget">
-              <a href="#{{ award.id }}">
-                <span class="opinion-icon">[{{ userNominations[award.id] | length }}]</span>
-                <strong>{{ award.name }}</strong> {{ award.subtitle }}
+            <div data-id="{{ award.id }}" class="awardClickTarget dropdown-item">
+              <a href="#{{ award.id }}" class="dropdown-item">
+                {#<span class="opinion-icon">[{{ userNominations[award.id] | length }}]</span>#}
+                <span style="font-weight: 500;">{{ award.name }}</span>
+                <small>{{ award.subtitle }}</small>
               </a>
-            </li>
+            </div>
           {% endfor %}
           {% if configService.config.awardSuggestions or userSuggestions['new-award'] | length > 0 %}
-            <li class="awardClickTarget" data-id="new-award">
-              <a href="#new-award">
+            <div class="awardClickTarget dropdown-item" data-id="new-award">
+              <a href="#new-award" class="dropdown-item">
                 <strong>{{ configService.config.awardSuggestions ? 'Suggest a new award' : 'View your award suggestions' }}</strong>
               </a>
-            </li>
+            </div>
           {% endif %}
-        </ul>
+        </div>
       </div>
 
       <div class="awardContainer">
@@ -268,7 +268,7 @@
       </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-lg-6 col-md-12">
       {% if not configService.config.isPagePublic('voting') %}
         <div class="alert alert-info">
           <strong>Note:</strong> awards may be added, removed, or renamed in response to nominations and feedback.
@@ -293,12 +293,12 @@
           <div id="award-description" class="impressive-description"></div>
         </div>
 
-        <div class="award-container-middle award-container-padding d-flex" style="text-align: center;">
+        <div class="award-container-middle award-container-padding d-flex" style="text-align: center; flex-wrap: wrap; justify-content: space-around">
           <div class="btn-group" id="award-voting" style="flex-grow: 0">
             <button class="btn btn-outline-success" id="thumbs-up" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is good</button>
             <button class="btn btn-outline-danger" id="thumbs-down" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is shit</button>
           </div>
-          <div class="ml-auto">
+          <div>
             <button class="btn btn-default" style="float: none; border-radius: 4px;" id="suggest-name" {{ configService.config.awardSuggestions ? '' : 'disabled title="Award name suggestions are now closed."' }}>Suggest a new name</button>
             <div id="suggestion-count" style="font-size: small;"></div>
           </div>
