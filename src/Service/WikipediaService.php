@@ -185,7 +185,7 @@ class WikipediaService
 
         $crawler = new Crawler($html);
 
-        if ($year <= 2006 || $year === 2011) {
+        if ($year <= 2006 || $year === 2008 || $year === 2011) {
             $games = $this->parseSingleTableLayout($crawler, $year);
         } else {
             $games = $this->parseMultipleTableLayout($crawler, $year);
@@ -206,7 +206,7 @@ class WikipediaService
      */
     private function parseSingleTableLayout(Crawler $crawler, int $year): array
     {
-        if ($year <= 1996) {
+        if ($year <= 1996 || $year === 2008) {
             // 1995 and 1996 have tables with more detail, but all the information we need is in the first three columns
             $columns = 3;
         } elseif ($year <= 2000 || $year == 2002) {
@@ -220,13 +220,17 @@ class WikipediaService
         }
 
         $tables = $crawler->filter('.wikitable.sortable');
-        if ($tables->count() > 1) {
+
+        // 2008 is an extra long article with additional tables
+        $expectedTableCount = ($year === 2008 ? 3 : 1);
+
+        if ($tables->count() > $expectedTableCount) {
             throw new \RuntimeException('Unexpected table count: ' . $tables->count());
         }
 
         $games = [];
 
-        $rows = $tables->filter('tr');
+        $rows = $tables->first()->filter('tr');
         /** @var \DOMElement $row */
         foreach ($rows as $row) {
             $cells = $row->getElementsByTagName('td');
