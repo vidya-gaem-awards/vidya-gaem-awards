@@ -226,7 +226,7 @@
       </div>
     </nav>
 
-    <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4" style="padding-bottom: 50px;">
 
       <h1 class="page-header board-header mt-2 mb-3">/nm/ - Nominee Manager</h1>
 
@@ -380,12 +380,6 @@
                 <a class="close" href="#">&times;</a>
               </div>
 
-              <script>
-                $('.alert-danger .close').on('click', function () {
-                  $(this).parent().fadeOut("fast");
-                });
-              </script>
-
               <div style="text-align: center; padding-bottom: 5px;  ">
                 Note: the design of the nominee box may change over time.
               </div>
@@ -451,244 +445,255 @@
         </form>
       </div>
     </div>
+  {% endif %}
+{% endblock %}
 
+{% block js %}
+  {{ parent() }}
+
+  {% if award %}
     <script>
       var autocompleters = {{ autocompleters | json_encode() | raw }};
       var nominees = {{ nominees | json_encode() | raw }};
+      var currentlySubmitting = false;
 
       $(document).ready(function () {
+        $('.alert-danger .close').on('click', function () {
+          $(this).parent().fadeOut("fast");
+        });
+
         $("#info-name").autocomplete({
           source: autocompleters,
           minLength: 2,
           delay: 0
         });
-      });
 
-      var currentlySubmitting = false;
+        $('#accurateDimensions').change(function () {
+              $('#nominee-container').toggleClass('inaccurate');
+              $('#nominee-container').toggleClass('accurate');
+          });
 
-      $('#accurateDimensions').change(function () {
-          $('#nominee-container').toggleClass('inaccurate');
-          $('#nominee-container').toggleClass('accurate');
-      });
+          // When a delete button is clicked
+          $("#dialog-edit-delete").click(function () {
+              // Get the nominee name and ID from the contents of the nominee box
+              var nomineeID = $("#form-id").attr("value");
+              var nomineeName = nominees[nomineeID].name;
 
-      // When a delete button is clicked
-      $("#dialog-edit-delete").click(function () {
-        // Get the nominee name and ID from the contents of the nominee box
-        var nomineeID = $("#form-id").attr("value");
-        var nomineeName = nominees[nomineeID].name;
+              // Set up the dialog elements for this nominee
+              $("#dialog-delete-status").hide();
+              $("#dialog-delete-nominee-confirm").removeAttr("disabled");
+              $("#dialog-delete-nominee").html(nomineeName);
+              $("#dialog-delete").attr("data-nominee", nomineeID);
 
-        // Set up the dialog elements for this nominee
-        $("#dialog-delete-status").hide();
-        $("#dialog-delete-nominee-confirm").removeAttr("disabled");
-        $("#dialog-delete-nominee").html(nomineeName);
-        $("#dialog-delete").attr("data-nominee", nomineeID);
+              // Finally, show the dialog
+              $("#dialog-delete").modal("show");
+              $("#dialog-delete-nominee-confirm").focus();
+          });
 
-        // Finally, show the dialog
-        $("#dialog-delete").modal("show");
-        $("#dialog-delete-nominee-confirm").focus();
-      });
+          // When the confirm button is clicked in the delete dialog
+          $("#dialog-delete-nominee-confirm").click(function () {
+              if (currentlySubmitting) {
+                  return;
+              }
+              currentlySubmitting = true;
 
-      // When the confirm button is clicked in the delete dialog
-      $("#dialog-delete-nominee-confirm").click(function () {
-        if (currentlySubmitting) {
-          return;
-        }
-        currentlySubmitting = true;
+              // Show the "please wait" message and disable the submit button
+              $("#dialog-delete-status").show();
+              $("#dialog-delete-nominee-confirm").attr("disabled", "disabled");
 
-        // Show the "please wait" message and disable the submit button
-        $("#dialog-delete-status").show();
-        $("#dialog-delete-nominee-confirm").attr("disabled", "disabled");
+              // Grab the nomineeID from the attribute we set earlier
+              var nomineeID = $("#dialog-delete").attr("data-nominee");
 
-        // Grab the nomineeID from the attribute we set earlier
-        var nomineeID = $("#dialog-delete").attr("data-nominee");
+              // Send through the AJAX request to do the actual deleting
+              $.post("{{ path('nomineePost', {'awardID': award.id}) }}", {action: "delete", id: nomineeID}, function (data) {
+                  currentlySubmitting = false;
 
-        // Send through the AJAX request to do the actual deleting
-        $.post("{{ path('nomineePost', {'awardID': award.id}) }}", {action: "delete", id: nomineeID}, function (data) {
-          currentlySubmitting = false;
+                  if (data.success) {
+                      $("#nominee-" + nomineeID).slideUp(500, function () {
+                          $(this).remove();
+                          $("#official-count").text($("#official-count").text() - 1);
+                      });
+                      delete nominees[nomineeID];
+                  } else {
+                      alert("An error occurred: " + data.error);
+                  }
 
-          if (data.success) {
-            $("#nominee-" + nomineeID).slideUp(500, function () {
-              $(this).remove();
-              $("#official-count").text($("#official-count").text() - 1);
-            });
-            delete nominees[nomineeID];
-          } else {
-            alert("An error occurred: " + data.error);
+                  // Close the dialogs
+                  $("#dialog-delete").modal("hide");
+                  $("#dialog-edit").modal("hide");
+              }, "json");
+          });
+
+          var editDialogInterval;
+          var lastImageValue = "";
+          var lastID = "";
+
+          // When the new nominee button is clicked
+          $("#new").click(function () {
+              // Update the dialog action
+              $("#form-id").removeAttr("name");
+              $("#form-action").attr("value", "new");
+              $("#dialog-edit").removeAttr("data-nominee");
+              $("#dialog-edit-header").text("Add new nominee");
+
+              // Clear any existing information in the dialog
+              $(".dialog-edit-id").text("");
+              $("#dialog-edit-name").text("");
+              $("#dialog-edit-subtitle").text("");
+              $("#dialog-edit-image").css("background-image", "");
+
+              $("#info-id").val("");
+              $("#info-name").val("");
+              $("#info-subtitle").val("");
+              $("#info-image").val("");
+              $("#info-flavor").val("");
+
+              $("#info-id").removeAttr("disabled");
+
+              // Show the dialog
+              $("#dialog-edit").modal("show");
+          });
+
+          // When an edit button is clicked
+          $("#nominee-container").find(".nominee").click(function () {
+              // Grab the ID
+              var nomineeID = $(this).attr("data-nominee");
+
+              // Update the dialog action
+              $("#form-id").attr("value", nomineeID);
+              $("#form-id").attr("name", "id");
+              $("#form-action").attr("value", "edit");
+              $("#dialog-edit").attr("data-nominee", nomineeID);
+              $("#dialog-edit-header").text("Editing " + nominees[nomineeID].name);
+
+              // Grab all the relevant information
+              $(".dialog-edit-id").text(nomineeID);
+              $("#dialog-edit-name").text(nominees[nomineeID].name);
+              $("#dialog-edit-subtitle").html(nominees[nomineeID].subtitle);
+              if (nominees[nomineeID].image) {
+                  $("#dialog-edit-image").css("background-image", "url(" + nominees[nomineeID].image + ")");
+              } else {
+                  $("#dialog-edit-image").css("background-image", "url('{{ asset('img/no-image-available.png') }}'");
+              }
+
+              $("#info-id").val(nomineeID);
+              $("#info-name").val(nominees[nomineeID].name);
+              $("#info-subtitle").val(nominees[nomineeID].subtitle);
+              $("#info-image").val("");
+  //        $("#info-image").val(nominees[nomineeID].image);
+              $("#info-flavor").val(nominees[nomineeID].flavorText);
+
+              $("#info-id").attr("disabled", "disabled");
+
+              // Show the dialog
+              $("#dialog-edit").modal("show");
+          });
+
+
+          // When the dialog is opened, start the monitor
+          $("#dialog-edit").on("show.bs.modal", function () {
+              $("#dialog-edit-status").hide();
+              $("#dialog-edit-submit").removeAttr("disabled");
+              $("#dialog-edit-error").parent().hide();
+
+              lastImageValue = "";
+              lastID = "";
+              editDialogInterval = setInterval(updateDialogNominee, 500);
+          });
+
+          // When the dialog is closed, clear it
+          $("#dialog-edit").on("hide.bs.modal", function () {
+              clearInterval(editDialogInterval);
+          });
+
+          // Update the information in the template nominee box
+          function updateDialogNominee() {
+              $(".dialog-edit-id").text($("#info-id").val());
+              $("#dialog-edit-name").text($("#info-name").val());
+              $("#dialog-edit-subtitle").html($("#info-subtitle").val());
+              $("#dialog-edit-flavor").html($("#info-flavor").val());
           }
 
-          // Close the dialogs
-          $("#dialog-delete").modal("hide");
-          $("#dialog-edit").modal("hide");
-        }, "json");
-      });
+          // When the confirm button is clicked in the edit dialog
+          $("#dialog-edit-form").submit(function (event) {
+            event.preventDefault();
 
-      var editDialogInterval;
-      var lastImageValue = "";
-      var lastID = "";
-
-      // When the new nominee button is clicked
-      $("#new").click(function () {
-        // Update the dialog action
-        $("#form-id").removeAttr("name");
-        $("#form-action").attr("value", "new");
-        $("#dialog-edit").removeAttr("data-nominee");
-        $("#dialog-edit-header").text("Add new nominee");
-
-        // Clear any existing information in the dialog
-        $(".dialog-edit-id").text("");
-        $("#dialog-edit-name").text("");
-        $("#dialog-edit-subtitle").text("");
-        $("#dialog-edit-image").css("background-image", "");
-
-        $("#info-id").val("");
-        $("#info-name").val("");
-        $("#info-subtitle").val("");
-        $("#info-image").val("");
-        $("#info-flavor").val("");
-
-        $("#info-id").removeAttr("disabled");
-
-        // Show the dialog
-        $("#dialog-edit").modal("show");
-      });
-
-      // When an edit button is clicked
-      $("#nominee-container").find(".nominee").click(function () {
-        // Grab the ID
-        var nomineeID = $(this).attr("data-nominee");
-
-        // Update the dialog action
-        $("#form-id").attr("value", nomineeID);
-        $("#form-id").attr("name", "id");
-        $("#form-action").attr("value", "edit");
-        $("#dialog-edit").attr("data-nominee", nomineeID);
-        $("#dialog-edit-header").text("Editing " + nominees[nomineeID].name);
-
-        // Grab all the relevant information
-        $(".dialog-edit-id").text(nomineeID);
-        $("#dialog-edit-name").text(nominees[nomineeID].name);
-        $("#dialog-edit-subtitle").html(nominees[nomineeID].subtitle);
-        if (nominees[nomineeID].image) {
-          $("#dialog-edit-image").css("background-image", "url(" + nominees[nomineeID].image + ")");
-        } else {
-          $("#dialog-edit-image").css("background-image", "url('{{ asset('img/no-image-available.png') }}'");
-        }
-
-        $("#info-id").val(nomineeID);
-        $("#info-name").val(nominees[nomineeID].name);
-        $("#info-subtitle").val(nominees[nomineeID].subtitle);
-        $("#info-image").val("");
-//        $("#info-image").val(nominees[nomineeID].image);
-        $("#info-flavor").val(nominees[nomineeID].flavorText);
-
-        $("#info-id").attr("disabled", "disabled");
-
-        // Show the dialog
-        $("#dialog-edit").modal("show");
-      });
-
-
-      // When the dialog is opened, start the monitor
-      $("#dialog-edit").on("show.bs.modal", function () {
-        $("#dialog-edit-status").hide();
-        $("#dialog-edit-submit").removeAttr("disabled");
-        $("#dialog-edit-error").parent().hide();
-
-        lastImageValue = "";
-        lastID = "";
-        editDialogInterval = setInterval(updateDialogNominee, 500);
-      });
-
-      // When the dialog is closed, clear it
-      $("#dialog-edit").on("hide.bs.modal", function () {
-        clearInterval(editDialogInterval);
-      });
-
-      // Update the information in the template nominee box
-      function updateDialogNominee() {
-        $(".dialog-edit-id").text($("#info-id").val());
-        $("#dialog-edit-name").text($("#info-name").val());
-        $("#dialog-edit-subtitle").html($("#info-subtitle").val());
-        $("#dialog-edit-flavor").html($("#info-flavor").val());
-      }
-
-      // When the confirm button is clicked in the edit dialog
-      $("#dialog-edit-form").submit(function (event) {
-        event.preventDefault();
-
-        if (currentlySubmitting) {
-          return;
-        }
-        currentlySubmitting = true;
-
-        // Show the "please wait" message and disable the submit button
-        $("#dialog-edit-status").show();
-        $("#dialog-edit-submit").attr("disabled", "disabled");
-        $("#dialog-edit-error").parent().slideUp();
-
-        // Grab the nomineeID and action from the dialog
-        var nomineeID = $("#dialog-edit").attr("data-nominee");
-        var action = $("#form-action").attr("value");
-
-        // Send through the AJAX request to do the actual editing
-        var formData = new FormData(this);
-        console.log(formData);
-
-        $.ajax({
-            url: "{{ path('nomineePost', {'awardID': award.id}) }}",
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false
-        }).success(function (data) {
-          currentlySubmitting = false;
-
-          if (data.success) {
-
-            if (action === "new") {
-
-              nomineeID = $("#info-id").val();
-              var clone = $("#dialog-edit").find(".aNominee").clone(true, true);
-              clone.find("*").removeAttr("id");
-              clone.removeAttr("style");
-              clone.attr("id", "nominee" + nomineeID);
-              clone.attr("data-nominee", nomineeID);
-              clone.find("form").show();
-              clone.find("header p").text("ID: " + nomineeID);
-
-              $("#nominee-container").append(clone);
-
-              nominees[nomineeID] = {};
-              nominees[nomineeID].nomineeID = nomineeID;
-
-              $("#official-count").text(parseInt($("#official-count").text()) + 1);
-
+            if (currentlySubmitting) {
+              return;
             }
+            currentlySubmitting = true;
 
-            var nomineeBox = $("#nominee-" + nomineeID);
-            nomineeBox.find("h3").text($("#info-name").val());
-            nomineeBox.find("footer p").html($("#info-subtitle").val());
+            // Show the "please wait" message and disable the submit button
+            $("#dialog-edit-status").show();
+            $("#dialog-edit-submit").attr("disabled", "disabled");
+            $("#dialog-edit-error").parent().slideUp();
 
-            nominees[nomineeID].name = $("#info-name").val();
-            nominees[nomineeID].subtitle = $("#info-subtitle").val();
-            nominees[nomineeID].flavorText = $("#info-flavor").val();
+            // Grab the nomineeID and action from the dialog
+            var nomineeID = $("#dialog-edit").attr("data-nominee");
+            var action = $("#form-action").attr("value");
 
-            // Close the dialog
-            $("#dialog-edit").modal("hide");
-          } else {
-            // Something went wrong! Show the error message.
-            $("#dialog-edit-status").hide();
-            $("#dialog-edit-submit").removeAttr("disabled");
-            $("#dialog-edit-error").html("<strong>Error:</strong> " + data.error);
-            $("#dialog-edit-error").parent().fadeIn("fast");
-          }
-        }, "json");
-      });
+            // Send through the AJAX request to do the actual editing
+            var formData = new FormData(this);
+            console.log(formData);
 
-      $("#show-more").click(function (e) {
-        e.preventDefault();
-        $("#show-more").hide();
-        $("#more-nominations").show();
+            $.ajax({
+              url: "{{ path('nomineePost', {'awardID': award.id}) }}",
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false
+            }).done(function (data) {
+              currentlySubmitting = false;
+
+              console.log(data);
+
+              if (data.success) {
+
+                if (action === "new") {
+
+                  nomineeID = $("#info-id").val();
+                  var clone = $("#dialog-edit").find(".nominee").clone(true, true);
+                  clone.find("*").removeAttr("id");
+                  clone.removeAttr("style");
+                  clone.attr("id", "nominee" + nomineeID);
+                  clone.attr("data-nominee", nomineeID);
+                  clone.find("form").show();
+                  clone.find("header p").text("ID: " + nomineeID);
+
+                  $("#nominee-container").append(clone);
+
+                  nominees[nomineeID] = {};
+                  nominees[nomineeID].nomineeID = nomineeID;
+
+                  $("#official-count").text(parseInt($("#official-count").text()) + 1);
+
+                }
+
+                var nomineeBox = $("#nominee-" + nomineeID);
+                nomineeBox.find("h3").text($("#info-name").val());
+                nomineeBox.find("footer p").html($("#info-subtitle").val());
+
+                nominees[nomineeID].name = $("#info-name").val();
+                nominees[nomineeID].subtitle = $("#info-subtitle").val();
+                nominees[nomineeID].flavorText = $("#info-flavor").val();
+
+                // Close the dialog
+                $("#dialog-edit").modal("hide");
+              } else {
+                // Something went wrong! Show the error message.
+                $("#dialog-edit-status").hide();
+                $("#dialog-edit-submit").removeAttr("disabled");
+                $("#dialog-edit-error").html("<strong>Error:</strong> " + data.error);
+                $("#dialog-edit-error").parent().fadeIn("fast");
+              }
+            }, "json");
+          });
+
+          $("#show-more").click(function (e) {
+              e.preventDefault();
+              $("#show-more").hide();
+              $("#more-nominations").show();
+          });
       });
     </script>
   {% endif %}
