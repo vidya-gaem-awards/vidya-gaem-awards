@@ -60,7 +60,7 @@
 
   {% block beforeContainer %}{% endblock %}
 
-  <div class="container" role="main" id="mainContainer">
+  <div class="{% block containerClass %}container{% endblock %}" role="main" id="mainContainer">
     {% for message in app.session.getFlashBag().get('error') %}
       <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

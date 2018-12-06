@@ -92,10 +92,10 @@
         position: static;
       }
 
-      #awardDropdown .dropdown-menu {
-        width: 100%;
-        margin-bottom: 60px;
-      }
+      /*#awardDropdown .dropdown-menu {*/
+        /*width: 100%;*/
+        /*margin-bottom: 60px;*/
+      /*}*/
     }
 
     #awardDropdownButton {
@@ -112,31 +112,59 @@
     }
 
     .awardContainer {
-      display: none;
       flex-wrap: wrap;
+      display: flex;
+      max-height: 100px;
+      overflow-y: scroll;
+      background: #e2e7fd;
+      position: absolute;
+      z-index: 300;
+      padding: 2px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(199, 203, 225) rgb(199, 203, 225) rgb(184, 188, 210);
+    }
+
+    .awardContainer.forceShort {
+      max-height: 100px !important;
+    }
+
+    .awardContainer:hover {
+      max-height: 500px;
     }
 
     .awardBox {
-      background: white;
-      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+      /*background: white;*/
+      /*box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);*/
       transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
       padding: 10px 20px 10px 10px;
-      width: calc(50% - 5px);
-      margin-bottom: 5px;
-      margin-right: 5px;
+      /*width: 400px;*/
+      /*width: calc(50% - 5px);*/
+      /*margin-bottom: 5px;*/
+      /*margin-right: 5px;*/
       cursor: pointer;
       position: relative;
+      max-width: 500px;
+      min-width: 250px;
+
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(199, 203, 225) rgb(199, 203, 225) rgb(184, 188, 210);
+      background: linear-gradient(#E5E9FF, #D6DAF0) repeat scroll 0 0 transparent;
+      font-family: arial,helvetica,sans-serif;
+      flex: 1 1 0;
+      color: #34345c;
+      font-size: 14px;
+      margin: 2px;
     }
 
-    .awardBox .glyphicon-chevron-right {
-      position: absolute;
-      right: 5px;
-      top: calc(50% - 7px);
+    .awardBox.active, .awardBox.active:hover {
+      background: #EFDFD5;
+      border-color: #d9bfb7;
     }
 
-    .awardBox.active {
-      background-color: #337ab7;
-      color: white;
+    .awardBox.active .awardSubtitle {
+      /*color: white;*/
     }
 
     .awardBox .emoji {
@@ -144,7 +172,10 @@
     }
 
     .awardBox:hover {
-      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+      background: #D9DDF3;
+      color: #D00;
+      border-color: #D00 !important;
+      /*box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);*/
     }
 
     .awardBox .awardName {
@@ -152,8 +183,7 @@
     }
 
     .awardBox .awardSubtitle {
-      font-style: italic;
-      font-size: smaller;
+      color: #89A;
     }
 
     #awardDropdown {
@@ -172,27 +202,27 @@
         top: 85px;
       }
 
-      #awardDropdownButton {
-        display: none;
-      }
-
-      #awardDropdown {
-        display: none;
-        position: static;
-      }
-
-      #awardDropdown .dropdown-menu {
-        position: static;
-        display: block;
-        top: auto;
-        left: auto;
-        float: none;
-        border: none;
-      }
-
-      .awardContainer {
-        display: flex;
-      }
+      /*#awardDropdownButton {*/
+        /*display: none;*/
+      /*}*/
+      /**/
+      /*#awardDropdown {*/
+        /*display: none;*/
+        /*position: static;*/
+      /*}*/
+      /**/
+      /*#awardDropdown .dropdown-menu {*/
+        /*position: static;*/
+        /*display: block;*/
+        /*top: auto;*/
+        /*left: auto;*/
+        /*float: none;*/
+        /*border: none;*/
+      /*}*/
+      /**/
+      /*.awardContainer {*/
+        /*display: flex;*/
+      /*}*/
     }
   </style>
 {% endblock %}
@@ -205,9 +235,26 @@
 
   <h1 class="page-header board-header">Awards and Nominations</h1>
 
-  <div class="row">
-    <div class="col-lg-6 col-md-12" id="award-selector">
-       <div class="dropdown" id="awardDropdown">
+  <div style="height: 115px;">
+    <div class="position-relative">
+      <div class="awardContainer">
+        {% for award in awards %}
+          <div class="awardBox awardClickTarget" data-id="{{ award.id }}">
+            <div class="awardName">{{ award.name }}</div>
+            <div class="awardSubtitle">{{ award.subtitle }}</div>
+          </div>
+        {% endfor %}
+        {% if configService.config.awardSuggestions or userSuggestions['new-award'] | length > 0 %}
+          <div class="awardBox awardClickTarget" data-id="new-award">
+            <div class="awardName">{{ configService.config.awardSuggestions ? 'Suggest a new award' : 'View your award suggestions' }}</div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {#<div class="row">#}
+    {#<div class="col-lg-6 col-md-12" id="award-selector">#}
+      <div class="dropdown-menu d-lg-none" id="awardDropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="awardDropdownButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" data-flip="false">
           Select an award
@@ -231,25 +278,9 @@
           {% endif %}
         </div>
       </div>
+    {#</div>#}
 
-      <div class="awardContainer">
-        {% for award in awards %}
-          <div class="awardBox awardClickTarget" data-id="{{ award.id }}">
-            <i class="glyphicon glyphicon-chevron-right"></i>
-            <div class="awardName">{{ award.name }}</div>
-            <div class="awardSubtitle">{{ award.subtitle }}</div>
-          </div>
-        {% endfor %}
-        {% if configService.config.awardSuggestions or userSuggestions['new-award'] | length > 0 %}
-          <div class="awardBox awardClickTarget" data-id="new-award" style="flex-basis: 100%; margin-top: 15px;">
-            <i class="glyphicon glyphicon-chevron-right"></i>
-            <div class="awardName">{{ configService.config.awardSuggestions ? 'Suggest a new award' : 'View your award suggestions' }}</div>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-
-    <div class="col-lg-6 col-md-12">
+    {#<div class="col-lg-6 col-md-12">#}
       {% if not configService.config.isPagePublic('voting') %}
         <div class="alert alert-info">
           <strong>Note:</strong> awards may be added, removed, or renamed in response to nominations and feedback.
@@ -267,7 +298,7 @@
         </a>
       </div>
 
-      <div id="award-info" style="display: none;" data-spy="affix" data-offset-top="90" class="award-container">
+      <div id="award-info" style="display: none;" class="award-container">
         <div class="award-container-top award-container-padding">
           <div id="award-name" class="impressive-title"></div>
           <div id="award-subtitle" class="impressive-subtitle"></div>
@@ -372,8 +403,8 @@
         </div>
 
       {% endif %}
-    </div>
-  </div>
+    {#</div>#}
+  {#</div>#}
 {% endblock %}
 
 {% block js %}
@@ -417,7 +448,16 @@
       }
     }
 
-    $('#award-selector').find('.awardClickTarget').click(function (event) {
+    var awardContainer = $('.awardContainer');
+    awardContainer.find('.awardClickTarget').click(function (event) {
+        awardContainer.mouseleave(function () {
+            awardContainer.removeClass('forceShort');
+        });
+        awardContainer.addClass('forceShort');
+        awardContainer.scrollTop(awardContainer.scrollTop() + $(this).position().top - 2);
+    });
+
+    $('.awardClickTarget').click(function (event) {
 
       $("#video-games").hide();
 
@@ -429,13 +469,13 @@
           elementToHide = $('#award-info');
       }
 
+      $('.awardClickTarget').removeClass("active");
+      $(thus).addClass("active");
+
+      award = $(thus).attr('data-id');
+      window.location.hash = award;
+
       elementToHide.fadeOut(100, function () {
-
-        award = $(thus).attr('data-id');
-        $('#award-selector').find('.awardClickTarget').removeClass("active");
-        $(thus).addClass("active");
-
-        window.location.hash = award;
 
         if (award === 'new-award') {
           $('#new-award').fadeIn(100);
@@ -669,7 +709,9 @@
 
     if (window.location.hash) {
       var selected = window.location.hash.slice(1);
-      $('[data-id="' + selected + '"]').click();
+      var element = $('[data-id="' + selected + '"]:visible');
+      element.click();
+      awardContainer.removeClass('forceShort');
     }
   </script>
 {% endblock %}

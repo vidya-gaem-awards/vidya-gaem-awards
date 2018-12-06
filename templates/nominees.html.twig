@@ -155,6 +155,47 @@
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
     }
+
+    .sidebar-sticky {
+      height: calc(100vh - 56px - 56px - 38px);
+    }
+
+    .sidebar .nav-item .nav-link {
+      padding: 0.4rem 1rem;
+    }
+
+    .sidebar .award-name .emoji {
+      width: 20px;
+    }
+
+    .sidebar .award-name {
+      font-size: 0.9rem;
+    }
+
+    .sidebar .award-subtitle {
+      font-size: .75rem;
+    }
+
+    .blue-hr {
+      border-top: 1px solid #b7c5d9;
+    }
+
+    .award-title-container {
+      font-family: Tahoma, sans-serif;
+    }
+
+    .award-title-container .award-title {
+      color: #789922;
+      font-weight: 700;
+      letter-spacing: -1px;
+      font-size: 2.4rem;
+      line-height: 1em;
+    }
+
+    .award-title-container .award-subtitle {
+      letter-spacing: -1px;
+      font-weight: 700;
+    }
   </style>
 {% endblock %}
 
@@ -162,138 +203,149 @@
   {% include 'parts/awardAdminBar.twig' %}
 {% endblock %}
 
+{% block containerClass %}container-fluid{% endblock %}
+
 {% block content %}
 
-  <h1 class="page-header board-header mb-4">/nm/ - Nominee Manager</h1>
-
   <div class="row">
-    <div class="col-md-4" id="award-selector">
-      <ul class="nav nav-list custom-navigation-pane dropdown-menu">
-        {% for _award in awards %}
-          <li class="{{ _award == award ? 'active' : '' }} {{ _award.enabled ? '' : 'disabled' }}">
-            <a href="{{ path('nomineeManager', {'awardID': _award.id}) }}">
-              <i class="glyphicon glyphicon-chevron-right" style="float:right;"></i>
-              <strong>{{ _award.name }}</strong><div class="subtitle {{ _award == award ? '' : 'hoverShow' }}"><small>{{ _award.subtitle }}</small></div>
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    {% if award %}
-    <div class="col-md-8">
-
-      <div class="award-container">
-        <div class="award-container-top award-container-padding">
-          <div id="award-name" class="impressive-title">{{ award.name }}</div>
-          <div id="award-subtitle" class="impressive-subtitle">{{ award.subtitle }}</div>
-          {% if award.comments %}
-            <div id="award-description" class="impressive-description">{{ award.comments | raw }}</div>
-          {% endif %}
-          {% if award.secret %}
-            <div class="impressive-description"><em>This is a secret award. It won't be visible until the voting
-                phase.</em></div>
-          {% endif %}
-        </div>
+    <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-top-padding">
+        <h6 class="m-0">Award list</h6>
       </div>
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          {% for award in awards %}
+            <li class="nav-item">
+              <a class="nav-link {{ award == loop.parent.award ? 'active' : '' }}" href="{{ path('nomineeManager', {'awardID': award.id}) }}">
+                <div class="award-name">{{ award.name }}</div>
+                <div class="award-subtitle d-none d-md-block">{{ award.subtitle }}</div>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
 
-      <div class="row" style="margin-top: 15px;">
-        <div class="col-lg-6">
-          <div class="award-container">
-            <div class="award-container-middle award-container-padding impressive-subtitle">
-              <span id="official-count">{{ award.nominees | length }}</span>
-              nominee{{ award.nominees | length == 1 ? '' : 's' }}
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
-              {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
-                <button class="btn btn-default" type="button" id="new" style="margin: -12px 0 -10px 15px">
-                  <span class="glyphicon glyphicon-plus"></span> Add Nominee
-                </button>
-              {% endif %}
+      <h1 class="page-header board-header mt-2 mb-3">/nm/ - Nominee Manager</h1>
+
+      <hr class="blue-hr mb-3">
+
+      <div class="row">
+        <div class="col-xl-8 offset-xl-2">
+
+          {% if not award %}
+
+          <p class="text-center">
+            Welcome to the nominee manager. Select an award on the left to get started.
+          </p>
+
+          {% else %}
+            <div class="award-title-container text-center mb-3">
+              <div id="award-name" class="award-title">&gt;{{ award.name }}</div>
+              <div id="award-subtitle" class="award-subtitle">{{ award.subtitle }}</div>
             </div>
-            {% if award.nominees | length > 0 %}
-              <div class="award-container-padding">
-                <div style="font-size: small; text-align: center;">
-                  <input type="checkbox" id="accurateDimensions"> <label for="accurateDimensions">Show accurate dimensions</label>
-                </div>
-                <div id="nominee-container" class="inaccurate">
-                  {% for nominee in award.nominees %}
-                    <div class="nominee" style="background-size: cover; background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}')"
-                         data-nominee="{{ nominee.shortName }}">
-                      {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
-                        <div class="hoverOverlay">
-                          <span>Click to edit nominee<br><code>{{ nominee.shortName }}</code></span>
-                        </div>
-                      {% endif %}
-                      {% if nominee.flavorText %}
-                        <div class="flavorText">{{ nominee.flavorText }}</div>
-                      {% endif %}
-                      <div class="nomineeName">{{ nominee.name }}</div>
-                      <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+
+            <div class="row" style="margin-top: 15px;">
+              <div class="col-lg-6">
+                <div class="award-container">
+                  <div class="award-container-middle award-container-padding impressive-subtitle">
+                    <span id="official-count">{{ award.nominees | length }}</span>
+                    nominee{{ award.nominees | length == 1 ? '' : 's' }}
+
+                    {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
+                      <button class="btn btn-default" type="button" id="new" style="margin: -12px 0 -10px 15px">
+                        <span class="glyphicon glyphicon-plus"></span> Add Nominee
+                      </button>
+                    {% endif %}
+                  </div>
+                  {% if award.nominees | length > 0 %}
+                    <div class="award-container-padding">
+                      <div style="font-size: small; text-align: center;">
+                        <input type="checkbox" id="accurateDimensions"> <label for="accurateDimensions">Show accurate dimensions</label>
+                      </div>
+                      <div id="nominee-container" class="inaccurate">
+                        {% for nominee in award.nominees %}
+                          <div class="nominee" style="background-size: cover; background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}')"
+                               data-nominee="{{ nominee.shortName }}">
+                            {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
+                              <div class="hoverOverlay">
+                                <span>Click to edit nominee<br><code>{{ nominee.shortName }}</code></span>
+                              </div>
+                            {% endif %}
+                            {% if nominee.flavorText %}
+                              <div class="flavorText">{{ nominee.flavorText }}</div>
+                            {% endif %}
+                            <div class="nomineeName">{{ nominee.name }}</div>
+                            <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                          </div>
+                        {% endfor %}
+                      </div>
                     </div>
-                  {% endfor %}
+                  {% endif %}
+                  {% if navbar.canAccessRoute('voting') %}
+                    <div class="award-container-middle award-container-padding" style="text-align: center;">
+                      <a href="{{ path('voting', {'awardID': award.id}) }}">View the voting page for this award</a>
+                    </div>
+                  {% endif %}
                 </div>
               </div>
-            {% endif %}
-            {% if navbar.canAccessRoute('voting') %}
-            <div class="award-container-middle award-container-padding" style="text-align: center;">
-              <a href="{{ path('voting', {'awardID': award.id}) }}">View the voting page for this award</a>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="award-container">
-            <div class="award-container-middle award-container-padding impressive-subtitle" style="text-align: center;">
-              {{ award.rawUserNominations | length ?: 'No' }} user nomination{{ award.rawUserNominations | length == 1 ? '' : 's' }}
-            </div>
-            {% if award.userNominations | length > 0 %}
-              <div class="award-container-padding">
-                {% if award.areNominationsEnabled %}
-                  <p style="font-weight: bold; text-align: center;">
-                    Nominations for this award are currently open.
-                  </p>
-                {% endif %}
+              <div class="col-lg-6">
+                <div class="award-container">
+                  <div class="award-container-middle award-container-padding impressive-subtitle" style="text-align: center;">
+                    {{ award.rawUserNominations | length ?: 'No' }} user nomination{{ award.rawUserNominations | length == 1 ? '' : 's' }}
+                  </div>
+                  {% if award.userNominations | length > 0 %}
+                    <div class="award-container-padding">
+                      {% if award.areNominationsEnabled %}
+                        <p style="font-weight: bold; text-align: center;">
+                          Nominations for this award are currently open.
+                        </p>
+                      {% endif %}
 
-                <p style="text-align: center; font-size: small;">
-                  {% if alphabeticalSort %}
-                    Currently sorted alphabetically <a href="?sort=total">(sort by total)</a>
-                  {% else %}
-                    Currently sorted by total <a href="?sort=alphabetical">(sort alphabetically)</a>
+                      <p style="text-align: center; font-size: small;">
+                        {% if alphabeticalSort %}
+                          Currently sorted alphabetically <a href="?sort=total">(sort by total)</a>
+                        {% else %}
+                          Currently sorted by total <a href="?sort=alphabetical">(sort alphabetically)</a>
+                        {% endif %}
+                      </p>
+
+                      <ol class="nominations">
+                        {% for nomination in award.getUserNominations(alphabeticalSort)[:15] %}
+                          <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
+                        {% endfor %}
+                      </ol>
+
+                      <a href="#" id="show-more">show the rest</a>
+
+                      <ul id="more-nominations" style='display: none;' class="nominations">
+                        {% for nomination in award.getUserNominations(alphabeticalSort)[15:] %}
+                          <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
                   {% endif %}
-                </p>
-
-                <ol class="nominations">
-                  {% for nomination in award.getUserNominations(alphabeticalSort)[:15] %}
-                    <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
-                  {% endfor %}
-                </ol>
-
-                <a href="#" id="show-more">show the rest</a>
-
-                <ul id="more-nominations" style='display: none;' class="nominations">
-                  {% for nomination in award.getUserNominations(alphabeticalSort)[15:] %}
-                    <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
-                  {% endfor %}
-                </ul>
+                  <div class="award-container-middle award-container-padding impressive-subtitle" style="text-align: center;">
+                    {{ award.rawSuggestions | length ?: 'No' }} award name suggestion{{ award.rawSuggestions | length == 1 ? '' : 's' }}
+                  </div>
+                  {% if award.nameSuggestions | length > 0 %}
+                    <div class="award-container-padding">
+                      <ul class="nominations">
+                        {% for suggestion in award.getNameSuggestions(alphabeticalSort) %}
+                          <li><strong>{{ suggestion.count }} x</strong> {{ suggestion.title }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
+                </div>
               </div>
-            {% endif %}
-            <div class="award-container-middle award-container-padding impressive-subtitle" style="text-align: center;">
-              {{ award.rawSuggestions | length ?: 'No' }} award name suggestion{{ award.rawSuggestions | length == 1 ? '' : 's' }}
             </div>
-            {% if award.nameSuggestions | length > 0 %}
-              <div class="award-container-padding">
-                <ul class="nominations">
-                  {% for suggestion in award.getNameSuggestions(alphabeticalSort) %}
-                    <li><strong>{{ suggestion.count }} x</strong> {{ suggestion.title }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
-          </div>
+          {% endif %}
         </div>
       </div>
-      {% endif %}
-    </div>
+    </main>
   </div>
 
   {% if is_granted('ROLE_NOMINATIONS_EDIT') and award %}
