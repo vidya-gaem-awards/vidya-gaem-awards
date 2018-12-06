@@ -3,9 +3,7 @@
 {% block css %}
   {{ parent() }}
   <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
-{% endblock %}
 
-{% block content %}
   <style>
     .ui-autocomplete {
       max-height: 300px;
@@ -158,38 +156,15 @@
       border-bottom-left-radius: 4px;
     }
   </style>
+{% endblock %}
 
-  <h1 class="page-header board-header">Nominee Manager</h1>
+{% block beforeContainer %}
+  {% include 'parts/awardAdminBar.twig' %}
+{% endblock %}
 
-  {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') or is_granted('ROLE_AUTOCOMPLETER_EDIT') or is_granted('ROLE_TASKS_VIEW') %}
-    <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="{{ path('awards') }}">Main awards page</a>
-        </li>
-        {% if is_granted('ROLE_TASKS_VIEW') %}
-          <li class="breadcrumb-item">
-            <a href="{{ path('tasks') }}">View missing nominee data</a>
-          </li>
-        {% endif %}
-        {% if is_granted('ROLE_AWARDS_EDIT') %}
-          <li class="breadcrumb-item ml-auto">
-            <a href="{{ path('awardManager') }}">Manage awards</a>
-          </li>
-        {% endif %}
-        {% if is_granted('ROLE_NOMINATIONS_VIEW') %}
-          <li class="breadcrumb-item active">
-            <a href="{{ path('nomineeManager') }}">Manage nominees</a>
-          </li>
-        {% endif %}
-        {% if is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
-          <li class="breadcrumb-item">
-            <a href="{{ path('autocompleters') }}">Manage autocompleters</a>
-          </li>
-        {% endif %}
-      </ol>
-    </nav>
-  {% endif %}
+{% block content %}
+
+  <h1 class="page-header board-header mb-4">/nm/ - Nominee Manager</h1>
 
   <div class="row">
     <div class="col-md-4" id="award-selector">

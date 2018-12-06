@@ -197,32 +197,13 @@
   </style>
 {% endblock %}
 
+{% block beforeContainer %}
+  {% include 'parts/awardAdminBar.twig' %}
+{% endblock %}
+
 {% block content %}
+
   <h1 class="page-header board-header">Awards and Nominations</h1>
-  {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') or is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
-    <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active">
-          <a href="{{ path('awards') }}">Main awards page</a>
-        </li>
-        {% if is_granted('ROLE_AWARDS_EDIT') %}
-          <li class="breadcrumb-item ml-auto">
-            <a href="{{ path('awardManager') }}">Manage awards</a>
-          </li>
-        {% endif %}
-        {% if is_granted('ROLE_NOMINATIONS_VIEW') %}
-          <li class="breadcrumb-item">
-            <a href="{{ path('nomineeManager') }}">Manage nominees</a>
-          </li>
-        {% endif %}
-        {% if is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
-          <li class="breadcrumb-item">
-            <a href="{{ path('autocompleters') }}">Manage autocompleters</a>
-          </li>
-        {% endif %}
-      </ol>
-    </nav>
-  {% endif %}
 
   <div class="row">
     <div class="col-lg-6 col-md-12" id="award-selector">

@@ -210,3 +210,23 @@ ul.nav li.dropdown:hover ul.dropdown-menu {
 .emoji {
   width: 28px;
 }
+
+.admin-navbar {
+  top: -10px;
+  font-size: small;
+  padding-bottom: .25rem;
+  padding-top: 0;
+}
+
+.admin-navbar .navbar-brand {
+  font-size: small;
+}
+
+.admin-navbar .dropdown-menu {
+  padding: .25rem 0;
+}
+
+.admin-navbar .dropdown-menu .dropdown-item {
+  font-size: small;
+  padding: .25rem .5rem;
+}
