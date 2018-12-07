@@ -664,5 +664,14 @@ class User extends AbstractSteamUser implements UserInterface
     {
         return $this->id;
     }
+
+    /**
+     * The authentication API uses this function to set the name
+     * @param string $name
+     */
+    public function setProfileName(string $name)
+    {
+        $this->profileName = $this->name = $name;
+    }
 }
 
