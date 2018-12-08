@@ -4,10 +4,10 @@ namespace App\Controller;
 use App\Entity\Award;
 use App\Entity\News;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class IndexController extends Controller
+class IndexController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em)
     {

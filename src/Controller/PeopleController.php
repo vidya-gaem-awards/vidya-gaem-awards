@@ -8,11 +8,11 @@ use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class PeopleController extends Controller
+class PeopleController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em)
     {

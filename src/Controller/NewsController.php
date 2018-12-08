@@ -3,13 +3,13 @@ namespace App\Controller;
 
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\News;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class NewsController extends Controller
+class NewsController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker)
     {

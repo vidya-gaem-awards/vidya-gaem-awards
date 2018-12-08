@@ -6,21 +6,26 @@ use App\Entity\ResultCache;
 use App\Entity\Vote;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\VGA\ResultCalculator\Schulze;
 use App\VGA\Timer;
+use Symfony\Component\HttpKernel\KernelInterface;
 
-class ImageCheckCommand extends ContainerAwareCommand
+class ImageCheckCommand extends Command
 {
     /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /** @var KernelInterface */
+    private $kernel;
+
+    public function __construct(EntityManagerInterface $em, KernelInterface $kernel)
     {
         $this->em = $em;
+        $this->kernel = $kernel;
 
         parent::__construct();
     }
@@ -67,7 +72,7 @@ class ImageCheckCommand extends ContainerAwareCommand
                 }
 
                 if ($nominee->getImage()[0] === '/') {
-                    $file = $this->getContainer()->get('kernel')->getProjectDir() . '/public' . $nominee->getImage();
+                    $file = $this->kernel->getProjectDir() . '/public' . $nominee->getImage();
                     if (!file_exists($file)) {
                         $output->writeln('<error>broken image</error>');
                         continue;

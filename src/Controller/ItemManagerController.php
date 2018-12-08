@@ -8,13 +8,13 @@ use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\News;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\VGA\FileSystem;
 
-class ItemManagerController extends Controller
+class ItemManagerController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em)
     {

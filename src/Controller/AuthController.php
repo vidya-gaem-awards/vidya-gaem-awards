@@ -2,14 +2,14 @@
 namespace App\Controller;
 
 use Ehesp\SteamLogin\SteamLogin;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RouterInterface;
 
-class AuthController extends Controller
+class AuthController extends AbstractController
 {
     public function loginAction(RouterInterface $router, Request $request, SessionInterface $session)
     {

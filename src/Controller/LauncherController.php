@@ -4,9 +4,9 @@ namespace App\Controller;
 use App\Entity\Advertisement;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class LauncherController extends Controller
+class LauncherController extends AbstractController
 {
     public function countdownAction(ConfigService $configService, EntityManagerInterface $em)
     {

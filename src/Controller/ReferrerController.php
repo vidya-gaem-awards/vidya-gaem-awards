@@ -2,11 +2,11 @@
 namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Access;
 use Symfony\Component\HttpFoundation\Request;
 
-class ReferrerController extends Controller
+class ReferrerController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em, Request $request)
     {

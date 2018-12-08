@@ -7,11 +7,11 @@ use App\Entity\Template;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
-class EditorController extends Controller
+class EditorController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em, Request $request)
     {

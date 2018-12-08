@@ -9,11 +9,11 @@ use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class AwardAdminController extends Controller
+class AwardAdminController extends AbstractController
 {
     public function managerListAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authCheck, Request $request)
     {

@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Action;
 use App\Entity\Autocompleter;
@@ -16,7 +16,7 @@ use App\Entity\GameRelease;
 use App\Entity\UserNomination;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class AwardController extends Controller
+class AwardController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em, UserInterface $user)
     {

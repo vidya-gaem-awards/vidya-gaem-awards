@@ -8,7 +8,7 @@ use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use App\VGA\FileSystem;
 
-class TasksController extends Controller
+class TasksController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker)
     {
@@ -177,8 +177,7 @@ class TasksController extends Controller
         $input = new ArrayInput([]);
         $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true);
 
-        $command = new ImageCheckCommand($em);
-        $command->setContainer($this->container);
+        $command = new ImageCheckCommand($em, $kernel);
         $command->run($input, $output);
 
         $ansi = $output->fetch();

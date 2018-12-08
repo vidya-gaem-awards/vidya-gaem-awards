@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Action;
 use App\Entity\Award;
@@ -13,7 +13,7 @@ use App\Entity\TableHistory;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use App\VGA\FileSystem;
 
-class NomineeController extends Controller
+class NomineeController extends AbstractController
 {
     public function indexAction(?string $awardID, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request)
     {

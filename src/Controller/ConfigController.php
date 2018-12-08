@@ -8,13 +8,13 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\CronJobService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
-class ConfigController extends Controller
+class ConfigController extends AbstractController
 {
     public function indexAction(ConfigService $configService, CronJobService $cron, RouterInterface $router)
     {

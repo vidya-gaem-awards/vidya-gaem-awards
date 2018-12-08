@@ -8,13 +8,13 @@ use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\VGA\FileSystem;
 
-class AdvertManagerController extends Controller
+class AdvertManagerController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em)
     {

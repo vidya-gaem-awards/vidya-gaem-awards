@@ -6,14 +6,14 @@ use App\Entity\ResultCache;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\VGA\FileSystem;
 use App\Entity\Award;
 use App\Entity\TableHistory;
 
-class ResultController extends Controller
+class ResultController extends AbstractController
 {
     public function simpleAction(EntityManagerInterface $em)
     {

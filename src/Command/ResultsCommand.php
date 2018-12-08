@@ -11,11 +11,11 @@ use App\Service\CronJobService;
 use App\VGA\ResultCalculator\Schulze;
 use App\VGA\Timer;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ResultsCommand extends ContainerAwareCommand
+class ResultsCommand extends Command
 {
     const COMMAND_NAME = 'app:results';
 

@@ -6,14 +6,14 @@ use App\Entity\GameRelease;
 use App\Service\ConfigService;
 use App\Service\WikipediaService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
-class WikipediaCommand extends ContainerAwareCommand
+class WikipediaCommand extends Command
 {
     private $em;
     private $configService;

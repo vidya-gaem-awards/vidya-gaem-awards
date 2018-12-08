@@ -4,9 +4,9 @@ namespace App\Controller;
 use App\Entity\Action;
 use App\Service\AuditService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AuditLogController extends Controller
+class AuditLogController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em, AuditService $auditService)
     {

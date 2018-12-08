@@ -7,7 +7,7 @@ use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -22,7 +22,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class VotingController extends Controller
+class VotingController extends AbstractController
 {
     public function indexAction(?string $awardID, EntityManagerInterface $em, ConfigService $configService, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, SessionInterface $session)
     {

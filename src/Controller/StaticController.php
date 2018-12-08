@@ -2,10 +2,10 @@
 namespace App\Controller;
 
 use App\Service\ConfigService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\RouterInterface;
 
-class StaticController extends Controller
+class StaticController extends AbstractController
 {
     public function indexAction(RouterInterface $router, ConfigService $configService)
     {
