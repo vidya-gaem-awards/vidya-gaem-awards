@@ -32,8 +32,8 @@ class FileSystem
             throw new \Exception($file->getErrorMessage());
         } elseif (!in_array($file->getClientMimeType(), array_keys(self::EXTENSION_MAPPING), true)) {
             throw new \Exception('Invalid MIME type.');
-        } elseif ($file->getClientSize() > self::FILESIZE_LIMIT) {
-            throw new \Exception('Filesize of ' . self::humanFilesize($file->getClientSize()) . ' exceeds limit of ' . self::humanFilesize(self::FILESIZE_LIMIT));
+        } elseif ($file->getSize() > self::FILESIZE_LIMIT) {
+            throw new \Exception('Filesize of ' . self::humanFilesize($file->getSize()) . ' exceeds limit of ' . self::humanFilesize(self::FILESIZE_LIMIT));
         }
 
         if (!file_exists(__DIR__ . '/../../public/uploads/' . $directory)) {
@@ -42,7 +42,7 @@ class FileSystem
 
         $filename_to_use = $filename . self::EXTENSION_MAPPING[$file->getClientMimeType()];
 
-        $file->move(__DIR__ . '/../../public/uploads/', $filename_to_use);
+        $file->move(__DIR__ . '/../../public/uploads/' . $directory . '/', $filename_to_use);
         return '/uploads/' . $directory . '/' . $filename_to_use;
     }
 
