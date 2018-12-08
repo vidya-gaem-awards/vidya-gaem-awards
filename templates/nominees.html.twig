@@ -149,11 +149,18 @@
       max-width: calc(100% - 10px);
     }
 
+    #dialog-edit-delete {
+      position: relative;
+      padding-left: 46px;
+    }
+
     img.delete-this {
-      margin: -11px 7px -8px -14px;
-      width: 34px;
+      height: calc(100% + 2px);
+      top: -1px;
+      left: -1px;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
+      position: absolute;
     }
 
     .sidebar-sticky {
@@ -370,8 +377,8 @@
         <form class="form-horizontal" id="dialog-edit-form" enctype="multipart/form-data">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
               <h4 class="modal-title" id="dialog-edit-header">Add new nominee</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
             </div>
 
             <div class="modal-body">
@@ -393,50 +400,53 @@
               <input type="hidden" name="action" id="form-action">
               <input type="hidden" name="id" id="form-id">
 
-              <div class="form-group">
-                <label class="col-sm-3 control-label" for="info-id">ID</label>
-                <div class="col-sm-8">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="info-id">ID</label>
+                <div class="col-sm-9">
                   <input class="form-control" type="text" id="info-id" placeholder="monster-girl-quest" required
                          name="id"
                          autocomplete="off">
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label" for="info-name">Name</label>
-                <div class="col-sm-8">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="info-name">Name</label>
+                <div class="col-sm-9">
                   <input class="form-control" type="text" id="info-name" placeholder="Monster Girl Quest" required
                          name="name">
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label" for="info-subtitle">Subtitle</label>
-                <div class="col-sm-8">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="info-subtitle">Subtitle</label>
+                <div class="col-sm-9">
                   <input class="form-control" type="text" id="info-subtitle" placeholder="Toro Toro Resistance"
                          name="subtitle"
                          autocomplete="off">
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label" for="info-image">Image</label>
-                <div class="col-sm-8">
-                  <input class="form-control" type="file" id="info-image" name="image" autocomplete="off">
-                  <span class="help-block">Recommended image dimensions: <strong>700 x 280</strong></span>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="info-image">Image</label>
+                <div class="col-sm-9">
+                  <div class="custom-file" id="info-image-container">
+                    <input type="file" id="info-image" name="image" class="custom-file-input">
+                    <label class="custom-file-label" for="info-image">Choose file</label>
+                  </div>
+                  <small class="form-text">Recommended image dimensions: <strong>700 x 280</strong></small>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label" for="info-flavor">Flavor Text</label>
-                <div class="col-sm-8">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="info-flavor">Flavor Text</label>
+                <div class="col-sm-9">
                   <textarea class="form-control" id="info-flavor" name="flavorText"></textarea>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-danger" id="dialog-edit-delete" style="float: left;" type="button">
-                <img src="{{ asset('img/delete-this.png') }}" class="delete-this">
+              <button class="btn btn-danger mr-auto" id="dialog-edit-delete" type="button">
+                <img src="{{ asset('img/delete-this.png') }}" class="delete-this" alt="A picture of Counter pointing a gun at you, the viewer">
                 Delete this
               </button>
               <span id="dialog-edit-status" style="display: none;">
-                <img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> saving...&nbsp;
+                <i class="far fa-circle-notch fa-spin mr-1"></i> saving...&nbsp;
               </span>
               <button class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button class="btn btn-primary" id="dialog-edit-submit" type="submit">Submit</button>
@@ -460,6 +470,11 @@
       $(document).ready(function () {
         $('.alert-danger .close').on('click', function () {
           $(this).parent().fadeOut("fast");
+        });
+
+        $('.custom-file-input').on('change', function() {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
 
         $("#info-name").autocomplete({
@@ -546,6 +561,7 @@
               $("#info-name").val("");
               $("#info-subtitle").val("");
               $("#info-image").val("");
+              $("#info-image-container .custom-file-label").text("Choose file");
               $("#info-flavor").val("");
 
               $("#info-id").removeAttr("disabled");
@@ -579,8 +595,7 @@
               $("#info-id").val(nomineeID);
               $("#info-name").val(nominees[nomineeID].name);
               $("#info-subtitle").val(nominees[nomineeID].subtitle);
-              $("#info-image").val("");
-  //        $("#info-image").val(nominees[nomineeID].image);
+              $("#info-image-container .custom-file-label").text(nominees[nomineeID].image ? nominees[nomineeID].image.split('/').pop() : "Choose file");
               $("#info-flavor").val(nominees[nomineeID].flavorText);
 
               $("#info-id").attr("disabled", "disabled");

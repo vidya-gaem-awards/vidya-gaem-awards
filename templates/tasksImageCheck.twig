@@ -1,5 +1,9 @@
 {% extends 'base/standard.html.twig' %}
 
+{% block beforeContainer %}
+  {% include 'parts/awardAdminBar.twig' %}
+{% endblock %}
+
 {% block content %}
   <style>
     .output {
@@ -8,18 +12,18 @@
       border-radius: 0;
       padding: 5px;
     }
+
+    .alert-redboard {
+      background-color: #f0e0d6;
+      border: 1px solid #d9bfb7;
+      border-radius: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
   </style>
-  <div class="row">
-    <div class="col-xs-12">
-      <h1 class="page-header">
-        Image Check
-      </h1>
 
-      <div class="alert alert-warning">
-        <strong>Warning:</strong> loading this page is processor and disk intensive. Please limit the number of times you refresh it.
-      </div>
+  <h1 class="page-header board-header mb-4">
+    Nominee Image Optimisation
+  </h1>
 
-      <pre class="output">{{ ansi | ansi_to_html }}</pre>
-    </div>
-  </div>
+  <pre class="output">{{ ansi | ansi_to_html }}</pre>
 {% endblock %}
