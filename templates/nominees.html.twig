@@ -203,6 +203,58 @@
       letter-spacing: -1px;
       font-weight: 700;
     }
+
+    .nomination {
+      display: flex;
+      align-items: center;
+      border: 1px solid #BBB;
+      border-bottom: none;
+      padding-left: 10px;
+      flex-grow: 1;
+      background: #E9E9E9;
+      align-self: stretch;
+    }
+
+    .nominations .nomination-container:first-child .nomination {
+      border-top-left-radius: .25rem;
+      border-top-right-radius: .25rem;
+    }
+
+    .nomination-last-visible .nomination {
+      border-bottom-left-radius: .25rem;
+      border-bottom-right-radius: .25rem;
+      border-bottom: 1px solid #BBB;
+    }
+
+    .nomination-container {
+      display: flex;
+      align-items: center;
+      height: 30px;
+    }
+
+    .nomination-count {
+      width: 2em;
+      margin-right: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .nomination-title {
+      flex-grow: 1;
+    }
+
+    .nomination-index {
+      width: 16px;
+      margin-right: 1rem;
+      text-align: center;
+    }
+
+    .nomination-overflow {
+      display: none;
+    }
+
+    .nomination:hover {
+    }
   </style>
 {% endblock %}
 
@@ -319,19 +371,25 @@
                         {% endif %}
                       </p>
 
-                      <ol class="nominations">
-                        {% for nomination in award.getUserNominations(alphabeticalSort)[:15] %}
-                          <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
+                      <div class="nominations mb-2">
+                        {% for nomination in award.getUserNominations(alphabeticalSort) %}
+                          <div class="nomination-container {{ loop.index == 15 ? 'nomination-last-visible' : '' }} {{ loop.index > 15 ? 'nomination-overflow' : '' }}">
+                            {% if nomination.title in nomineeNames %}
+                              <span class="nomination-index text-success"><i class="fas fa-check"></i></span>
+                            {% else %}
+                              <small class="nomination-index text-muted">{{ loop.index }}</small>
+                            {% endif %}
+                            <div class="nomination">
+                              <div class="nomination-title">{{ nomination.title }}</div>
+                              <div class="nomination-count">{{ nomination.count }}</div>
+                            </div>
+                          </div>
                         {% endfor %}
-                      </ol>
+                      </div>
 
-                      <a href="#" id="show-more">show the rest</a>
-
-                      <ul id="more-nominations" style='display: none;' class="nominations">
-                        {% for nomination in award.getUserNominations(alphabeticalSort)[15:] %}
-                          <li><strong>{{ nomination.count }} x</strong> {{ nomination.title }}</li>
-                        {% endfor %}
-                      </ul>
+                      <small class="d-block text-center">
+                        <a href="#" id="show-more">Show more <i class="far fa-angle-down"></i></a>
+                      </small>
                     </div>
                   {% endif %}
                   <div class="award-container-middle award-container-padding impressive-subtitle" style="text-align: center;">
@@ -704,10 +762,20 @@
             }, "json");
           });
 
+          var numberToReveal = 15;
+
           $("#show-more").click(function (e) {
               e.preventDefault();
-              $("#show-more").hide();
-              $("#more-nominations").show();
+              $(".nomination-last-visible").removeClass('nomination-last-visible');
+              $(".nomination-overflow").slice(0, numberToReveal).removeClass('nomination-overflow');
+              $(".nomination-container:not(.nomination-overflow)").last().addClass('nomination-last-visible');
+
+              // Show twice as many nominees each time
+              numberToReveal *= 2;
+
+              if ($(".nomination-overflow").length === 0) {
+                  $(this).hide();
+              }
           });
       });
     </script>

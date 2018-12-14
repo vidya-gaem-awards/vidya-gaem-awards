@@ -55,10 +55,15 @@ class NomineeController extends AbstractController
                 $nomineesArray[$nominee->getShortName()] = $nominee;
             }
 
+            $nomineeNames = array_map(function (Nominee $nominee) {
+                return $nominee->getName();
+            }, $nomineesArray);
+
             $awardVariables = [
                 'alphabeticalSort' => $alphabeticalSort,
                 'autocompleters' => $autocompleters,
-                'nominees' => $nomineesArray
+                'nominees' => $nomineesArray,
+                'nomineeNames' => $nomineeNames,
             ];
         }
 
