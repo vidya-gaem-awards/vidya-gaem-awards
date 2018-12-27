@@ -3,14 +3,13 @@
 {% block title %}403{% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-xs-12">
-      <h2>403 - Forbidden</h2>
-      <p>You aren't allowed to access this page.</p>
-      <p>
-        If you think you should be able to, contact one of the producers on Discord.<br>
-        You'll need your Steam Community ID: {{ app.user.steamID }}
-      </p>
-    </div>
-  </div>
+  <h1 class="page-header board-header mb-4">/403/ - Forbidden</h1>
+
+  <p class="text-center">
+    You aren't allowed to access this page.
+  </p>
+  <p class="text-center">
+    If you think you should be able to, contact one of the producers on <a href="https://discord.gg/4e8JQB4">Discord</a>.<br>
+    You'll need your Steam Community ID: {{ app.user.steamID }}
+  </p>
 {% endblock %}

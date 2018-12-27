@@ -3,11 +3,11 @@
 {% block title %}{{ status_code }}{% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-xs-12">
-      <h2>{{ status_code }} - {{ status_text }}</h2>
-      <p>Something has gone terribly wrong.</p>
-      <p>Report this error in <code>#website</code> on <a href="https://discord.gg/4e8JQB4">Discord</a>.</p>
-    </div>
-  </div>
+  <h1 class="page-header board-header mb-4">/{{ status_code }}/ - {{ status_text }}</h1>
+  <p class="text-center">
+    Something has gone terribly wrong.
+  </p>
+  <p class="text-center">
+    Report this error in <code>#website</code> on <a href="https://discord.gg/4e8JQB4">Discord</a>.
+  </p>
 {% endblock %}

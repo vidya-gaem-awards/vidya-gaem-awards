@@ -3,15 +3,13 @@
 {% block title %}401{% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-xs-12">
-      <h2>401 - Unauthorized</h2>
-      <p>This page is not currently accessible to the public. Please sign in to view this page.</p>
-      <p>
-        <a href="{{ path('login', {'redirect': app.request.requestUri}) }}">
-          <img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png">
-        </a>
-      </p>
-    </div>
-  </div>
+  <h1 class="page-header board-header mb-4">/401/ - Authentication Required</h1>
+  <p class="text-center">
+    To view this page, you'll need to sign in with a Steam account that's been added to the /v/GA team.
+  </p>
+  <p class="text-center">
+    <a class="btn btn-dark" href="{{ path('login', {'redirect': app.request.requestUri}) }}">
+      <i class="fab fa-fw fa-steam"></i> Sign in with Steam
+    </a>
+  </p>
 {% endblock %}
