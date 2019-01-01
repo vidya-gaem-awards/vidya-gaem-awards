@@ -179,6 +179,17 @@ class VotingController extends AbstractController
             $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, $item->getRarity(), $item->getShortName()));
         }
 
+        $itemsWithCss = array_filter($items, function (InventoryItem $item) {
+            return $item->hasCss() && $item->getCssContents();
+        });
+
+        $customCss = '';
+        foreach ($itemsWithCss as $item) {
+            $customCss .= "/* Start CSS for {$item->getShortName()} */\n";
+            $customCss .= $item->getCssContents() . "\n";
+            $customCss .= "/* End CSS for {$item->getShortName()} */\n\n";
+        }
+
         $shekelChance = 66; // percent
         $shekelChance = round(1 / ((100 - $shekelChance) / 100) - 1);
 
@@ -202,6 +213,7 @@ class VotingController extends AbstractController
             'ad2' => $ad2,
             'items' => $items,
             'itemChoiceArray' => $itemChoiceArray,
+            'rewardCSS' => $customCss,
         ]);
     }
 

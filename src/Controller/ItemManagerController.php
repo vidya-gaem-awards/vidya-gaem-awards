@@ -89,7 +89,8 @@ class ItemManagerController extends AbstractController
             ->setRarity($post->get('rarity'))
             ->setCss($post->getBoolean('css'))
             ->setBuddie($post->getBoolean('buddie'))
-            ->setMusic($post->getBoolean('music'));
+            ->setMusic($post->getBoolean('music'))
+            ->setCssContents($post->get('cssContents'));
 
         $em->persist($item);
         $em->flush();

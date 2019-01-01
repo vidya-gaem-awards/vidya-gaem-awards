@@ -6,6 +6,10 @@
   {{ parent() }}
   <link rel="stylesheet" href="{{ asset('css/voting.css') }}?v=25">
   <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
+
+  <style type="text/css">
+{{ rewardCSS | raw }}
+  </style>
 {% endblock %}
 
 {% block js %}

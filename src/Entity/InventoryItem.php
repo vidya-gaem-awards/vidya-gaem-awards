@@ -50,6 +50,11 @@ class InventoryItem implements \JsonSerializable
     private $musicFile;
 
     /**
+     * @var string
+     */
+    private $cssContents;
+
+    /**
      * @var UserInventoryItem[]
      */
     private $userItems;
@@ -245,6 +250,7 @@ class InventoryItem implements \JsonSerializable
             'buddie' => $this->isBuddie(),
             'music' => $this->hasMusic(),
             'musicFile' => $this->getMusicFile(),
+            'cssContents' => $this->getCssContents(),
         ];
     }
 
@@ -255,4 +261,24 @@ class InventoryItem implements \JsonSerializable
     {
         return $this->userItems;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCssContents(): ?string
+    {
+        return $this->cssContents;
+    }
+
+    /**
+     * @param string|null $cssContents
+     * @return InventoryItem
+     */
+    public function setCssContents(?string $cssContents): InventoryItem
+    {
+        $this->cssContents = $cssContents;
+        return $this;
+    }
+
+
 }
