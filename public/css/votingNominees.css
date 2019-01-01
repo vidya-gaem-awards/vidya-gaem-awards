@@ -1,7 +1,7 @@
 /** Inner elements */
 .nominee {
   position: relative;
-  border: 2px solid white;
+  border: 1px solid #fec544;
   /*width: 350px;*/
   /*height: 140px;*/
   transition: 0.3s linear all;
@@ -46,31 +46,40 @@
   display: block;
 }
 
+.nomineeInfo {
+	position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 39px;
+    background: #00000085;
+    z-index: 300;
+}
+
 .nomineeName {
-  color: white;
-  background-color: rgb(251,68,7);
-  border-radius: 10px;
-  font-family: Arial,sans-serif;
-  text-transform: uppercase;
-  font-size: 10px;
-  display: inline-block;
-  padding: 2px 7px;
-  position: absolute;
-  bottom: 20px;
-  left: 0px;
+	color: #fec544;
+    font-family: "Trajan Pro 3", serif;
+    text-transform: uppercase;
+    font-size: 11px;
+    line-height: 15px;
+    display: inline-block;
+    padding: 2px 7px;
+    position: absolute;
+    top: 3px;
+    left: 0px;
+	text-shadow: #000000 2px 2px 2px;
 }
 .nomineeSubtitle {
-  font-family: Arial,sans-serif;
-  display: inline-block;
-  color: rgb(251,68,7);
-  background-color: white;
-  border-radius: 10px;
-  font-size: 10px;
-  padding: 3px 10px;
-  position: absolute;
-  bottom: 0px;
-  left: 10px;
-  z-index: 300;
+    font-family: Arial,sans-serif;
+    display: inline-block;
+    color: white;
+    font-size: 10px;
+    line-height: 10px;
+    padding: 1px 7px;
+    position: absolute;
+    top: 19px;
+    left: 0px;
+    z-index: 300;
 }
 
 .nomineeSubtitle a {

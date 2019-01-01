@@ -19,8 +19,31 @@
   /*font-style: normal;*/
 /*}*/
 
+@font-face {
+    font-family: 'Trajan Pro 3';
+    src: url('/fonts/TrajanPro3-Regular.woff2') format('woff2'),
+        url('/fonts/TrajanPro3-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Corbel';
+    src: url('/fonts/Corbel.woff2') format('woff2'),
+        url('/fonts/Corbel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
 html {
-  background: linear-gradient(to bottom, rgb(0, 51, 255) 0%, rgb(94,126,255) 70%);
+  background: 
+  url(/2018images/bg_dots.gif) fixed, 
+  url(/2018images/bg_stars.png) no-repeat fixed bottom center, 
+  url(/2018images/bg_crowd.jpg) no-repeat top center, 
+  linear-gradient(to bottom, rgb(17, 22, 42) 8%, rgb(50, 42, 63) 37%);
 }
 
 body {
@@ -32,15 +55,13 @@ body {
 .zig {
   clear: both;
   height: 15px;
-  margin: 30px 0;
-  background: linear-gradient(to bottom,
-    rgba(255,255,0,0) 0%,
-    rgba(255,255,0,0.3) 40%,
-    rgba(255,255,0,1) 40%,
-    rgba(255,255,0,1) 60%,
-    rgba(255,255,0,0.3) 60%,
-    rgba(255,255,0,0) 100%
-  );
+  margin: 20px 0;
+    background: linear-gradient(to right, 
+	rgba(254,197,68,0.1) 0%,
+	rgba(254,197,68,1) 15%,
+	rgba(254,197,68,0.3) 60%,
+	rgba(254,197,68,0.1) 100% );
+  }
 }
 
 /* Typography (headings) */
@@ -49,22 +70,21 @@ h1, h2 {
 }
 
 h1 {
-  font-family: Arial, sans-serif;
+  font-family: "Trajan Pro 3", serif;
   font-weight: normal;
-  font-style: italic;
   text-transform: uppercase;
-  text-shadow: black 2px 2px;
+  color: #fec544;
+  text-shadow: #00000075 5px 5px 5px;
   font-size: 3em;
   line-height: 100%;
-  color: yellow;
 }
 
 h2 {
-  font-family: Arial, sans-serif;
+  font-family: "Corbel", Arial, sans-serif;
   font-weight: normal;
-  font-size: 2em;
-  color: white;
-  text-shadow: black 2px 2px;
+  font-size: 1.5em;
+  color: #e7e7e7;
+  text-shadow: #00000075 5px 5px 5px;
 }
 
 /* Navbar */

@@ -52,7 +52,7 @@
   <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
 
   <div class="pageHeader">
-    <a class="pageHeaderLogo" href="{{ path('voting') }}"><img src="{{ asset('2017images/vga_logo2.png') }}" class="logo" alt="oh god it's happening again"/></a>
+    <a class="pageHeaderLogo" href="{{ path('voting') }}"><img src="{{ asset('2018images/vga2018_logo.png') }}" class="logo" alt="oh god it's happening again"/></a>
     <div class="pageHeaderTitle">
 		<h1>The 2018 Vidya Gaem Awards</h1>
 		<h2>{{ voteText }}</h2>
@@ -203,9 +203,11 @@
                                               {% if nominee.flavorText %}
                                                   <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
                                               {% endif %}
-                                              <div class="nomineeName">{{ nominee.name }}</div>
-                                              <div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>
-                                              <div class="handle realHandle">
+											  <div class="nomineeInfo">
+												<div class="nomineeName">{{ nominee.name }}</div>
+												<div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>
+                                              </div>
+											  <div class="handle realHandle">
                                                   <span class="glyphicon glyphicon-menu-hamburger"></span>
                                               </div>
                                           </div>
@@ -218,7 +220,7 @@
 
 						  
 						  <div class="yourVotes">
-							<img src="{{ asset('2017images/yourVotes.png') }}" alt="Those votes? They're yours."/>
+							<img src="{{ asset('2018images/yourVotes.png') }}" alt="Those votes? They're yours."/>
 						  </div>
 						  
                           <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
@@ -238,7 +240,7 @@
                     <div class="buttons">
                         <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
                         <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
-                        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right" title="Next award"></a>
+                        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award"></a>
                     </div>
                 {% endif %}
 
