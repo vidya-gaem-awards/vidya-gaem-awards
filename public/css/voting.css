@@ -402,9 +402,10 @@ body {
 }
 
 .awardHeaderContainer {
+  height: 121px;
   margin: 0 77px 20px 77px;
   padding: 30px 30px;
-  background: url(/2018images/btnNav_middle.png) no-repeat;
+  background: url(/2018images/btnNav_middle.png) no-repeat top center;
 }
 
 .awardName {
@@ -1089,6 +1090,15 @@ a:hover {
   .nominee {
     width: 100%;
     height: 75px;
+  }
+
+  .awardName {
+    font-size: 21px;
+    line-height: 22px;
+  }
+
+  .awardSubtitle {
+    font-size: 15px;
   }
 
   .voteDropArea {
