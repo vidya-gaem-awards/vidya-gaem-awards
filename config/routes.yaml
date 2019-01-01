@@ -190,6 +190,32 @@ tasksPost:
     controller: App\Controller\TasksController::postAction
 
 #
+# PREDICTIONS
+#
+
+predictions:
+    path:       /predictions
+    controller: App\Controller\PredictionController:index
+
+predictionRules:
+    path:       /predictions/rules
+    controller: App\Controller\PredictionController:rules
+
+predictionJoin:
+    path:       /predictions/join
+    controller: App\Controller\PredictionController:join
+
+predictionUpdatePick:
+    path:       /predictions/{id}/update
+    methods:    [POST]
+    controller: App\Controller\PredictionController:updatePick
+
+predictionUpdateDetails:
+    path:       /predictions/details
+    methods:    [POST]
+    controller: App\Controller\PredictionController:updateDetails
+
+#
 # VOTING
 #
 

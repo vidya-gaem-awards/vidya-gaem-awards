@@ -1,0 +1,400 @@
+{% extends 'predictionBase.twig' %}
+
+{% block title %}Fantasy League - Sign Up{% endblock %}
+
+{% block css %}
+  {{ parent() }}
+  <style>
+    .victory {
+      background-color: #d6daf0;
+      border: 1px solid #b7c5d9;
+      border-left: none;
+      border-top: none;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      position: relative;
+      color: #000;
+      text-align: left;
+      min-height: 6.8em;
+
+      display: flex;
+    }
+
+    .quotation {
+      font-size: 100px;
+      margin: 8px;
+      line-height: 1;
+      height: 45px;
+    }
+
+    .quotation:last-child {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: auto;
+    }
+
+    .quotation-mark {
+      height: 45px;
+    }
+
+    .victory-message {
+      margin: 8px 0;
+      flex-grow: 1;
+    }
+
+    .award-title {
+      font-size: 25px;
+    }
+
+    .award-row {
+      /*display: flex;*/
+      align-items: center;
+      margin-top: .5rem;
+      margin-bottom: .5rem;
+    }
+
+    .award-winner {
+      display: flex;
+      align-items: center;
+      background: white;
+      color: black;
+      padding-right: .75rem;
+      height: 80px;
+    }
+
+    .award-winner .image {
+      height: 80px;
+      width: 200px;
+      flex-shrink: 0;
+      background: silver;
+    }
+
+    .award-winner .image img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .nominee-name {
+      margin-left: .75rem;
+    }
+
+    .your-pick-container {
+      /*width: 30%;*/
+      /*margin-right: 3px;*/
+    }
+
+    .your-pick-container.unlocked {
+      /*width: 63%;*/
+    }
+
+    .status-icon {
+      display: flex;
+      align-items: center;
+      width: 45px;
+      font-size: 25px;
+    }
+
+    .pick-select {
+      height: 60px;
+      width: 100%;
+      padding: 10px;
+      font-size: 25px;
+      flex-grow: 1;
+    }
+
+    #victory-message-read {
+      padding: 6px;
+    }
+
+    #victory-message-edit {
+      width: 100%;
+      height: 5.3em;
+      padding: 5px;
+    }
+
+    #victory-message-counter {
+      text-align: right;
+      font-size: small;
+    }
+
+    #victory-message-counter.limited {
+      color: red;
+    }
+
+    .fantasy-name {
+      font-weight: bold;
+      font-size: 30px;
+    }
+
+    #name-edit {
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-left: -10px;
+    }
+
+    .empty-image {
+      height: 75px;
+      width: 75px;
+      border: 1px dashed white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.2);
+      font-size: 25px;
+    }
+  </style>
+{% endblock %}
+
+{% block subBody %}
+  <div class="awardHeaderContainer">
+    <div class="awardName text-center">Your Details</div>
+  </div>
+
+  <div class="container">
+    {% if not locked and app.user.roles | length > 0 %}
+      <div class="alert alert-dark text-center">
+        <strong>Notice:</strong> we've detected that you're a part of the /v/GA production team. You can still enter the league,
+        but depending on your role in the show, the website access you have, and the time at which you submit your picks,
+        you may not be eligible to win or appear on the leaderboard.
+      </div>
+    {% endif %}
+
+    <form method="post" action="{{ path('predictionUpdateDetails') }}" enctype="multipart/form-data">
+
+      {% for message in app.session.getFlashBag().get('formSuccess') %}
+        <div class="alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+      {% endfor %}
+      {% for message in app.session.getFlashBag().get('formError') %}
+        <div class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+      {% endfor %}
+
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <p>
+            How you'll appear on the leaderboard:
+          </p>
+
+          <div class="d-flex align-items-center my-3">
+            {% if app.user.fantasyUser.avatar %}
+              <img class="mr-3" src="{{ app.user.fantasyUser.avatar }}" style='height: 75px;'>
+            {% else %}
+              <div class="mr-3 empty-image"><i class="fas fa-question"></i></div>
+            {% endif %}
+            <span class="fantasy-name" id="name-read">{{ app.user.fantasyUser.name }}</span>
+            <input class="fantasy-name" name="name" type="text" id="name-edit" value="{{ app.user.fantasyUser.name | e('html_attr') }}" style="display: none;" maxlength="{{ constant('NAME_LIMIT', app.user.fantasyUser) }}">
+          </div>
+
+          <div id="select-file" style="display: none;" class="mt-2 mb-4">
+            <div><input type="file" name="avatar"></div>
+            <small>
+              Maximum filesize: 1 MB (gif, png, or jpeg)<br>
+              Image will be cropped to a square<br>
+              This is a Christian awards show, images must be janny-friendly (we do it for free)
+            </small>
+          </div>
+
+          {% if not locked %}
+            <p>
+              <button class="btn btn-dark" id="edit-details" type="button">Edit your name, avatar, or victory message</button>
+              <button class="btn btn-dark" id="save-details" type="submit" style="display: none;"><i class="fas fa-fw fa-save"></i> Save your name, avatar, and victory message</button>
+            </p>
+          {% endif %}
+        </div>
+        <div class="col-md-6">
+          <p>
+            Your victory message:
+          </p>
+
+          <div class="victory">
+            <div class="quotation">
+              <div class="quotation-mark">&ldquo;</div>
+            </div>
+            <div class="victory-message">
+              <div id="victory-message-read">{{ app.user.fantasyUser.victoryMessage }}</div>
+              <textarea name="victory-message" id="victory-message-edit" style="display: none;" maxlength="{{ victoryMessageLimit }}">{{ app.user.fantasyUser.victoryMessage }}</textarea>
+            </div>
+            <div class="quotation">
+              <div id="victory-message-counter" style="visibility: hidden;">{{ victoryMessageLimit - app.user.fantasyUser.victoryMessage | length }}</div>
+              <div class="quotation-mark">&rdquo;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="awardHeaderContainer">
+    <div class="awardName text-center">Your Picks</div>
+  </div>
+
+  <div class="container">
+
+    {% if locked and not showResults %}
+      <p class="text-center mb-4" style="font-size: 20px;">
+        Your picks have now been locked in! Tune in at {{ configService.config.streamTime.format('g:ia \\o\\n F jS') }} to find out if you've won!
+      </p>
+    {% elseif showResults %}
+      <p class="text-center mb-4" style="font-size: 20px;">
+        You picked 1 / {{ awards | length }} awards correct, and have ranked 1st out of 315 players!
+      </p>
+    {% endif %}
+
+    {% for award in awards %}
+      {% set pick = app.user.fantasyUser.getPredictionForAward(award) %}
+      <div class="row award-row">
+        <div class="{{ locked ? 'col-md-4' : 'col-md-5' }} award-name-and-subtitle">
+          <div class="award-title">
+            {{ award.name }}
+          </div>
+          <div class="award-subtitle">
+            {{ award.subtitle }}
+          </div>
+        </div>
+        <div class="your-pick-container {{ locked ? 'col-md-4' : 'unlocked col-md-7' }}">
+          {% if locked %}
+            <strong style="color: yellow;">YOUR PICK</strong>
+            <div class="award-winner">
+              {% if pick %}
+                <div class="image">
+                  {% if pick.nominee.image %}
+                    <img src="{{ pick.nominee.image | e('html_attr') }}" alt="{{ pick.nominee.name | e('html_attr') }}">
+                  {% endif %}
+                </div>
+                <div class="nominee-name">{{ pick.nominee.name }}</div>
+              {% else %}
+                <div class="nominee-name text-muted">
+                  You didn't make a pick for this award
+                </div>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="d-flex">
+              <div class="status-icon">
+                <i class="status-loading far fa-circle-notch fa-spin" style="display: none;"></i>
+                <i class="status-success far fa-check" style="display: none;"data-toggle="tooltip" title="Your pick has been saved"></i>
+                <i class="status-error far fa-exclamation-circle" style="display: none;" data-toggle="tooltip" title="Your pick could not be saved, try again"></i>
+              </div>
+              <select class="pick-select" data-award="{{ award.id | e('html_attr') }}">
+                <option value=""></option>
+                <optgroup label="Nominees">
+                  {% for nominee in award.nominees %}
+                    <option value="{{ nominee.id }}" {{ pick and pick.nominee is same as(nominee) ? 'selected' : '' }}>{{ nominee.name }}</option>
+                  {% endfor %}
+                </optgroup>
+              </select>
+            </div>
+          {% endif %}
+        </div>
+        {% if showResults %}
+          <div class="award-winner-container col-md-4">
+            {% if award.getOfficialResults %}
+              {% set winner = award.getNominee(award.getOfficialResults.results[1]) %}
+              <div class="d-flex justify-content-between">
+                <strong style="color: yellow;">WINNER</strong>
+                {% if pick and winner is same as(pick.nominee) %}
+                  <strong style="color: lime;">CORRECT PICK</strong>
+                {% endif %}
+              </div>
+              <div class="award-winner">
+                <div class="image">
+                  {% if winner.image %}
+                    <img src="{{ winner.image | e('html_attr') }}" alt="{{ winner.name | e('html_attr') }}">
+                  {% endif %}
+                </div>
+                <div class="nominee-name">{{ winner.name }}</div>
+              </div>
+            {% else %}
+              <div><strong style="color: yellow; visibility: hidden">WINNER</strong></div>
+              <button class="btn btn-dark">Change your pick</button>
+            {% endif %}
+          </div>
+        {% elseif locked %}
+          <div class="award-winner-container col-md-4">
+            <strong style="color: yellow;">WINNER</strong>
+            <div class="award-winner">
+              <div class="image"></div>
+              <div class="nominee-name">Coming soon</div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block js %}
+<script>
+  $(document).ready(function () {
+      $('.pick-select').change(function (event) {
+          event.preventDefault();
+
+          console.log(event);
+
+          var select = $(this);
+
+          select.attr('disabled', 'disabled');
+
+          var icon = select.siblings('.status-icon');
+          icon.find('i').hide();
+          icon.find('.status-loading').show();
+
+          var path = "{{ path('predictionUpdatePick', {id: 'award_id'}) }}".replace('award_id', $(this).data('award'));
+          console.log(path);
+
+          $.post(path, {nominee: $(this).val()}, null, 'json')
+              .done(function (data) {
+                  icon.find('i').hide();
+                  icon.find('.status-success').show();
+              })
+              .fail(function (xhr, textStatus, error) {
+                  icon.find('i').hide();
+                  icon.find('.status-error').show();
+
+                  if (xhr.responseJSON) {
+                      alert('Unable to save pick: ' + xhr.responseJSON.error)
+                  } else {
+                      alert('Unable to save pick: HTTP error ' + xhr.status);
+                  }
+              })
+              .always(function () {
+                  select.removeAttr('disabled');
+              });
+      });
+
+      $('#edit-details').click(function (event) {
+          $('#victory-message-edit').show();
+          $('#victory-message-read').hide();
+          $('#victory-message-counter').css('visibility', 'visible');
+          $('#name-edit').show();
+          $('#name-read').hide();
+          $('#edit-details').hide();
+          $('#save-details').show();
+          $('#select-file').show();
+          updateCharacterCount();
+      });
+
+      $('#victory-message-edit').on('input', updateCharacterCount);
+
+      function updateCharacterCount() {
+          var remaining = {{ victoryMessageLimit }} - $('#victory-message-edit').val().length;
+          var counter = $('#victory-message-counter');
+          counter.text(remaining);
+          counter.toggleClass('limited', remaining <= 10);
+      }
+
+      $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+{% endblock %}

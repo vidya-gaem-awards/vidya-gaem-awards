@@ -47,6 +47,10 @@ App\Entity\User:
     avatar:
       type: text
       nullable: true
+  oneToOne:
+    fantasyUser:
+      targetEntity: FantasyUser
+      mappedBy: user
   oneToMany:
     votes:
       targetEntity: Vote

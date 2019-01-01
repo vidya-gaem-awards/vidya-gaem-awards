@@ -43,6 +43,9 @@ class AuditLogController extends AbstractController
             'autocompleter-added' => 'Created an autocompleter',
             'autocompleter-edited' => 'Edited an autocompleter',
             'autocompleter-deleted' => 'Deleted an autocompleter',
+//            'fantasy-signed-up' => 'Signed up for the Fantasy League',
+//            'fantasy-picked' => 'Made a pick in the Fantasy League',
+//            'fantasy-updated-details' => 'Updated their details in the Fantasy League',
         ];
 
         $result = $em->createQueryBuilder()

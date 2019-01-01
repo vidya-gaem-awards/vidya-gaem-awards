@@ -1,0 +1,37 @@
+{% extends 'base/special.html.twig' %}
+
+{% block title %}Fantasy League - Rules{% endblock %}
+
+{% block css %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/voting.css') }}?v=25">
+  <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
+{% endblock %}
+
+{% block body %}
+  <div class="pageHeader">
+    <a class="pageHeaderLogo" href="{{ path('voting') }}">
+      <img src="{{ asset('2017images/vga_logo2.png') }}" class="logo" alt="oh god it's happening again"/>
+    </a>
+    <div class="pageHeaderTitle">
+		  <h1>The 2018 /v/GA Fantasy League</h1>
+      <div class="d-flex justify-content-around">
+        <a href="#" class="{{ page == 'picks' ? 'active' : '' }}"><h2>{{ app.user.fantasyUser ? 'Your Picks' : 'Sign Up' }}</h2></a>
+        {#<a href="#" class="{{ page == 'leaderboard' ? 'active' : '' }}"><h2>Leaderboard</h2></a>#}
+        <a href="{{ path('predictionRules') }}" class="{{ page == 'rules' ? 'active' : '' }}"><h2>Rules</h2></a>
+      </div>
+  	</div>
+  </div>
+
+  {#<div class="awardHeader">#}
+    {#<div class="awardHeaderContainer">#}
+      {#<div class="awardName">{% block fantasyTitle %}{% endblock %}</div>#}
+    {#</div>#}
+  {#</div>#}
+
+  <div class="memeContainer">
+    <div id="wrapper">
+      {% block subBody %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}

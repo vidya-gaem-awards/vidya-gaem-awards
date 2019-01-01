@@ -1,0 +1,67 @@
+{% extends 'predictionBase.twig' %}
+
+{% block title %}Fantasy League - Rules{% endblock %}
+
+{% block fantasyTitle %}The Rules{% endblock %}
+
+{% block subBody %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="awardHeaderContainer">
+          <div class="awardName text-center">How it works</div>
+        </div>
+        <p>
+          For each award, you can pick the nominee that you think you will win. The more you pick correctly, the
+          more points you get. Super simple stuff.
+        </p>
+        <p>
+          When you sign up, you'll be able to chooose your own name, avatar, and victory message. These will appear on
+          the leaderboard, and if you're good enough, on the show itself.
+        </p>
+      </div>
+
+      <div class="col-md-6">
+        <div class="awardHeaderContainer">
+          <div class="awardName text-center">Prizes</div>
+        </div>
+        <p>
+          The top 10 players will have their name and avatar immortalized on the leaderboard. The first place winner
+          will get their name, avatar, and victory message shown during the main show, and an opportunity to shitpost
+          about how fucking predictable /v/ truly is.
+        </p>
+        <p>
+          To avoid people changing their votes in the award voting itself, there are no prizes of actual value.
+        </p>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="awardHeaderContainer">
+          <div class="awardName text-center">Closing time</div>
+        </div>
+        <p>
+          Your details (name, avatar and victory message) and picks will be locked 14 days before the stream
+          is scheduled to air. This will give us time to determine the winner and add them into the show.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <div class="awardHeaderContainer">
+          <div class="awardName text-center">Boring shit</div>
+        </div>
+        <ul>
+          <li>
+            You'll need to sign in with Steam to participate (this is for authentication only, your Steam details will not be shown anywhere)
+          </li>
+          <li>
+            One entry per person (multiple accounts not permitted)
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a class="btn btn-lg btn-dark" href="{{ path('predictions') }}">Let's do this</a>
+  </div>
+{% endblock %}

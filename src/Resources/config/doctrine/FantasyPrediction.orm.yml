@@ -1,0 +1,20 @@
+App\Entity\FantasyPrediction:
+    type: entity
+    table: fantasy_predictions
+    id:
+        id:
+            type: integer
+            nullable: false
+            generator:
+                strategy: AUTO
+    fields:
+        lastUpdated:
+            type: datetime_immutable
+    manyToOne:
+        award:
+            targetEntity: Award
+        nominee:
+            targetEntity: Nominee
+        fantasyUser:
+            targetEntity: FantasyUser
+            inversedBy: predictions

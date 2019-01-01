@@ -99,6 +99,11 @@ class User extends AbstractSteamUser implements UserInterface
      */
     private $votingCode;
 
+    /**
+     * @var ?FantasyUser
+     */
+    private $fantasyUser;
+
     public function __construct()
     {
         $this->votes = new Collections\ArrayCollection();
@@ -672,6 +677,24 @@ class User extends AbstractSteamUser implements UserInterface
     public function setProfileName(string $name)
     {
         $this->profileName = $this->name = $name;
+    }
+
+    public function getFantasyUser(): ?FantasyUser
+    {
+        return $this->fantasyUser;
+    }
+
+    public function setFantasyUser(?FantasyUser $fantasyUser): self
+    {
+        $this->fantasyUser = $fantasyUser;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = $fantasyUser === null ? null : $this;
+        if ($newUser !== $fantasyUser->getUser()) {
+            $fantasyUser->setUser($newUser);
+        }
+
+        return $this;
     }
 }
 

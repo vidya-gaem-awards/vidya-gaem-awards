@@ -1,0 +1,38 @@
+App\Entity\FantasyUser:
+    type: entity
+    table: fantasy_users
+    id:
+        id:
+            type: integer
+            nullable: false
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 100
+        avatar:
+            type: string
+            nullable: true
+        imageToken:
+            type: string
+            nullable: true
+        victoryMessage:
+            type: text
+            nullable: true
+        score:
+            type: integer
+            nullable: true
+        lastUpdated:
+            type: datetime_immutable
+    oneToOne:
+        user:
+            targetEntity: User
+            inversedBy: fantasyUser
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+    oneToMany:
+        predictions:
+            targetEntity: FantasyPrediction
+            mappedBy: fantasyUser

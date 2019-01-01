@@ -48,7 +48,7 @@ class FileSystem
 
     public static function deleteFile(string $directory, string $filename)
     {
-        unlink(__DIR__ . '/../../public/uploads/' . $filename);
+        unlink(__DIR__ . '/../../public/uploads/' . $directory . '/' . $filename);
     }
 
     /**

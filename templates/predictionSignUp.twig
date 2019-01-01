@@ -1,0 +1,25 @@
+{% extends 'predictionBase.twig' %}
+
+{% block title %}Fantasy League - Sign Up{% endblock %}
+
+{% block subBody %}
+  <div class="awardHeaderContainer">
+    <div class="awardName text-center">Enter the League</div>
+  </div>
+
+  <p class="text-center">
+    {% if app.user.loggedIn %}
+      <a class="btn btn-lg btn-dark" href="{{ path('predictionJoin', {'nonce': nonce}) }}">
+        <i class="fal fa-fw fa-trophy-alt"></i> Sign up now
+      </a>
+    {% else %}
+      <a class="btn btn-lg btn-dark" href="{{ path('login', {'redirect': path('predictionJoin', {'nonce': nonce})}) }}">
+        <i class="fab fa-fw fa-steam"></i> Sign in with Steam
+      </a>
+    {% endif %}
+  </p>
+
+  <p class="text-center">
+    Your Steam details will not be shown publicly.
+  </p>
+{% endblock %}

@@ -226,6 +226,9 @@ class Config
             'awardFrontendPost' => 'awards',
             'votingSubmission' => 'voting',
             'voteWithCode' => 'voting',
+            'predictions' => 'voting',
+            'predictionRules' => 'voting',
+            'predictionJoin' => 'voting',
             'pairwiseResults' => 'results',
             'winners' => 'results',
         ];

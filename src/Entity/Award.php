@@ -362,15 +362,9 @@ class Award implements \JsonSerializable
      */
     public function getNominee($shortName)
     {
-        $criteria = Criteria::create()
-            ->where(Criteria::expr()->eq('shortName', $shortName));
-
-        $nominees = $this->getNominees()->matching($criteria);
-        if (count($nominees) === 0) {
-            return null;
-        } else {
-            return $nominees[0];
-        }
+        return $this->getNominees()->filter(function (Nominee $nominee) use ($shortName) {
+            return $nominee->getShortName() === $shortName;
+        })->first() ?: null;
     }
 
     /**
