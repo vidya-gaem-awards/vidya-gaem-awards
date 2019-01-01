@@ -17,6 +17,26 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
   <script src='{{ asset('js/dumbshit.js') }}'></script>
   <script src='{{ asset('js/voting.js') }}?v=25'></script>
+
+  <script>
+      var val;
+      $('#debugWidth').change(function () {
+          val = $(this).val();
+//                $('.nominee').css('width', val);
+      });
+      $('#debugHeight').change(function () {
+          val = $(this).val();
+          $('.nominee').css('height', val);
+      });
+      $('#debugTitle').change(function () {
+          val = $(this).val();
+          $('.nomineeName').css('fontSize', val);
+      });
+      $('#debugSubtitle').change(function () {
+          val = $(this).val();
+          $('.nomineeSubtitle').css('fontSize', val);
+      });
+  </script>
 {% endblock %}
 
 {% block head %}
@@ -69,28 +89,6 @@
   {#<label>Title <input type="number" value="14" id="debugTitle"></label>#}
   {#<label>Subtitle <input type="number" value="12" id="debugSubtitle"></label>#}
   {#</div>#}
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var val;
-            $('#debugWidth').change(function () {
-                val = $(this).val();
-//                $('.nominee').css('width', val);
-            });
-            $('#debugHeight').change(function () {
-                val = $(this).val();
-                $('.nominee').css('height', val);
-            });
-            $('#debugTitle').change(function () {
-                val = $(this).val();
-                $('.nomineeName').css('fontSize', val);
-            });
-            $('#debugSubtitle').change(function () {
-                val = $(this).val();
-                $('.nomineeSubtitle').css('fontSize', val);
-            });
-        });
-    </script>
 
     {% if award %}
         <div class="awardHeader">

@@ -297,6 +297,9 @@ $(document).ready(function () {
         } else if (code === 'impulse 101') {
             addRewardToInventory('half-life-three');
             playCheatMusic(false);
+        } else if (code.substring(0, 4) === 'gib ' && rewards[code.substring(4)]) {
+            addRewardToInventory(code.substring(4));
+            playCheatMusic(true);
         }
         updateInventory();
     });
