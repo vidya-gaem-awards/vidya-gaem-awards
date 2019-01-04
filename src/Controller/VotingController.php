@@ -191,7 +191,7 @@ class VotingController extends AbstractController
         }
 
         $shekelChance = 66; // percent
-        $shekelChance = round(1 / ((100 - $shekelChance) / 100) - 1) * 10;
+        $shekelChance = round(1 / ((100 - $shekelChance) / 100) - 1);
 
         $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, count($itemChoiceArray) * $shekelChance, 'shekels'));
 
