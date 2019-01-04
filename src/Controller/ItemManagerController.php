@@ -79,8 +79,8 @@ class ItemManagerController extends AbstractController
             return $this->json(['error' => 'You need to enter a rarity.']);
         }
 
-        if ($post->getInt('rarity') > 10) {
-            return $this->json(['error' => 'Rarity cannot be higher than 10.']);
+        if ($post->getInt('rarity') > 100) {
+            return $this->json(['error' => 'Rarity cannot be higher than 100.']);
         }
 
         $item
