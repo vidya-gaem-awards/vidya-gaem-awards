@@ -1,14 +1,33 @@
 {% extends 'base/standard.html.twig' %}
 
+{% block css %}
+  {{ parent() }}
+
+  <style>
+    .voting-code {
+      font-size: 16px;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
-  <h1 class="page-header">Voting code for {{ date }}:</h1>
+  <h1 class="page-header board-header">Voting Code</h1>
 
-  <p class="lead">
-    <code>{{ url }}<strong>{{ code }}</strong></code>
+  <p class="board-subheader">
+    Valid from {{ date.format('M jS Y g A T ') }}
   </p>
 
-  <p>
-    A new code is generated each hour. Previous codes are not immediately invalidated when the hour changes, so you can
-    continue to use an older code for a little while.
-  </p>
+  <div class="row">
+    <div class="offset-md-3 col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <code class="voting-code">{{ url }}<strong>{{ code }}</strong></code>
+        </div>
+        <div class="card-footer">
+          A new code is generated each hour. Codes are not automatically invalidated, so it's safe to use an older code
+          for a few hours.
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

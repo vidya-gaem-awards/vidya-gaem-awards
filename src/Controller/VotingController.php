@@ -334,14 +334,13 @@ class VotingController extends AbstractController
 
     public function codeViewerAction(RouterInterface $router)
     {
-        $date = new \DateTime();
-        $dateString = $date->format('M d Y, g A');
+        $date = new \DateTimeImmutable(date('Y-m-d H:00'));
 
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
         $code = '';
         for ($i = 0; $i < 4; $i++) {
-            $seedString = $this->getParameter('secret') . $date->format(' Y-m-d H:00 ') . $i;
+            $seedString = $this->getParameter('kernel.secret') . $date->format(' Y-m-d H:00 ') . $i;
             $code .= $characters[self::randomNumber($seedString, strlen($characters) - 1)];
         }
 
@@ -350,7 +349,7 @@ class VotingController extends AbstractController
 
         return $this->render('votingCode.html.twig', [
             'title' => 'Voting Code',
-            'date' => $dateString,
+            'date' => $date,
             'url' => $url,
             'code' => $code
         ]);
