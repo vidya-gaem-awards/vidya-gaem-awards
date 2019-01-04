@@ -32,13 +32,13 @@ function incrementDragCounter() {
     localStorage.setItem('dragCounter', JSON.stringify(dragCounter));
 
     if (dragCounter === 2) {
-        showTodd(1);
+        // showTodd(1);
     } else if (dragCounter === 5) {
-        showTodd(2);
+        // showTodd(2);
     } else if (dragCounter === 10) {
-        showTodd(3);
+        // showTodd(3);
     } else if (dragCounter === 20) {
-        showTodd(4);
+        // showTodd(4);
     }
 }
 
