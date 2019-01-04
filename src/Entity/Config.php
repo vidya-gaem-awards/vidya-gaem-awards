@@ -229,6 +229,8 @@ class Config
             'predictions' => 'voting',
             'predictionRules' => 'voting',
             'predictionJoin' => 'voting',
+            'predictionUpdatePick' => 'voting',
+            'predictionUpdateDetails' => 'voting',
             'pairwiseResults' => 'results',
             'winners' => 'results',
         ];
