@@ -4,6 +4,15 @@
 
 {% block fantasyTitle %}The Rules{% endblock %}
 
+{% block css %}
+  {{ parent() }}
+  <style>
+    p {
+      font-family: "Corbel", Arial, sans-serif;
+    }
+  </style>
+{% endblock %}
+
 {% block subBody %}
   <div class="container">
     <div class="row">
@@ -62,6 +71,6 @@
   </div>
 
   <div class="text-center mt-4">
-    <a class="btn btn-lg btn-dark" href="{{ path('predictions') }}">Let's do this</a>
+    <a class="btn btn-lg btn-themed" href="{{ path('predictions') }}">Let's do this</a>
   </div>
 {% endblock %}

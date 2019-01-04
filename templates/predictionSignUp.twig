@@ -9,7 +9,7 @@
 
   <p class="text-center">
     {% if app.user.loggedIn %}
-      <a class="btn btn-lg btn-dark" href="{{ path('predictionJoin', {'nonce': nonce}) }}">
+      <a class="btn btn-lg btn-themed" href="{{ path('predictionJoin', {'nonce': nonce}) }}">
         <i class="fal fa-fw fa-trophy-alt"></i> Sign up now
       </a>
     {% else %}

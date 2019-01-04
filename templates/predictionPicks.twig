@@ -6,18 +6,35 @@
   {{ parent() }}
   <style>
     .victory {
-      background-color: #d6daf0;
-      border: 1px solid #b7c5d9;
-      border-left: none;
-      border-top: none;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 16px;
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 1px solid #fec544;
       position: relative;
-      color: #000;
+
+      color: white;
+      text-decoration: none;
+      font-family: "Trajan Pro 3", serif;
+      text-shadow: #00000080 3px 3px 3px;
+      font-size: 0.9em;
+      line-height: 0.95em;
+
       text-align: left;
       min-height: 6.8em;
 
       display: flex;
+    }
+
+    .user-container {
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 1px solid #fec544;
+      padding: 10px;
+      font-family: "Trajan Pro 3", serif;
+    }
+
+    .file-container {
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 1px solid #fec544;
+      padding: 10px;
+      font-family: "Corbel", Arial, sans-serif;
     }
 
     .quotation {
@@ -37,6 +54,7 @@
 
     .quotation-mark {
       height: 45px;
+      line-height: 130px;
     }
 
     .victory-message {
@@ -45,7 +63,13 @@
     }
 
     .award-title {
-      font-size: 25px;
+      font-size: 20px;
+      font-family: "Trajan Pro 3", serif;
+      color: #fec544;
+    }
+
+    .award-subtitle {
+      font-family: "Corbel", Arial, sans-serif;
     }
 
     .award-row {
@@ -94,14 +118,20 @@
       align-items: center;
       width: 45px;
       font-size: 25px;
+      color: #fec544;
     }
 
     .pick-select {
       height: 60px;
       width: 100%;
       padding: 10px;
-      font-size: 25px;
+      font-size: 20px;
       flex-grow: 1;
+
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 1px solid #fec544;
+      color: white;
+      font-family: "Trajan Pro 3", serif;
     }
 
     #victory-message-read {
@@ -124,7 +154,7 @@
     }
 
     .fantasy-name {
-      font-weight: bold;
+      /*font-weight: bold;*/
       font-size: 30px;
     }
 
@@ -143,6 +173,13 @@
       justify-content: center;
       background: rgba(0,0,0,0.2);
       font-size: 25px;
+    }
+
+    .yellow {
+      color: #fec544;
+      text-decoration: none;
+      font-family: "Trajan Pro 3", serif;
+      text-shadow: #00000080 3px 3px 3px;
     }
   </style>
 {% endblock %}
@@ -182,11 +219,11 @@
 
       <div class="row mb-4">
         <div class="col-md-6">
-          <p>
+          <p class="yellow">
             How you'll appear on the leaderboard:
           </p>
 
-          <div class="d-flex align-items-center my-3">
+          <div class="d-flex align-items-center my-3 user-container">
             {% if app.user.fantasyUser.avatar %}
               <img class="mr-3" src="{{ app.user.fantasyUser.avatar }}" style='height: 75px;'>
             {% else %}
@@ -197,23 +234,29 @@
           </div>
 
           <div id="select-file" style="display: none;" class="mt-2 mb-4">
-            <div><input type="file" name="avatar"></div>
-            <small>
-              Maximum filesize: 1 MB (gif, png, or jpeg)<br>
-              Image will be cropped to a square<br>
-              This is a Christian awards show, images must be janny-friendly (we do it for free)
-            </small>
+            <p class="yellow mb-1">
+              Upload avatar:
+            </p>
+
+            <div class="file-container">
+              <div><input type="file" name="avatar"></div>
+              <small>
+                Maximum filesize: 1 MB (gif, png, or jpeg)<br>
+                Image will be cropped to a square<br>
+                This is a Christian awards show, images must be janny-friendly (we do it for free)
+              </small>
+            </div>
           </div>
 
           {% if not locked %}
             <p>
-              <button class="btn btn-dark" id="edit-details" type="button">Edit your name, avatar, or victory message</button>
-              <button class="btn btn-dark" id="save-details" type="submit" style="display: none;"><i class="fas fa-fw fa-save"></i> Save your name, avatar, and victory message</button>
+              <button class="btn btn-themed" id="edit-details" type="button">Edit your name, avatar, or victory message</button>
+              <button class="btn btn-themed" id="save-details" type="submit" style="display: none;"><i class="fas fa-fw fa-save"></i> Save your name, avatar, and victory message</button>
             </p>
           {% endif %}
         </div>
         <div class="col-md-6">
-          <p>
+          <p class="yellow">
             Your victory message:
           </p>
 
