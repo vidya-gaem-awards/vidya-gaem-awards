@@ -97,15 +97,17 @@ class PredictionController extends AbstractController
             return $this->redirectToRoute('predictions');
         }
 
-        $fantasyUser = new FantasyUser();
-        $fantasyUser->setUser($user);
-        $em->persist($fantasyUser);
+        if (!$this->getUser()->getFantasyUser()) {
+            $fantasyUser = new FantasyUser();
+            $fantasyUser->setUser($user);
+            $em->persist($fantasyUser);
 
-        $auditService->add(
-            new Action('fantasy-signed-up')
-        );
+            $auditService->add(
+                new Action('fantasy-signed-up')
+            );
 
-        $em->flush();
+            $em->flush();
+        }
 
         return $this->redirectToRoute('predictions');
     }
