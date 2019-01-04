@@ -31,7 +31,7 @@ class FileSystem
         } elseif (!$file->isValid()) {
             throw new \Exception($file->getErrorMessage());
         } elseif (!in_array($file->getClientMimeType(), array_keys(self::EXTENSION_MAPPING), true)) {
-            throw new \Exception('Invalid MIME type.');
+            throw new \Exception('Invalid MIME type (' . $file->getClientMimeType() . ')');
         } elseif ($file->getSize() > self::FILESIZE_LIMIT) {
             throw new \Exception('Filesize of ' . self::humanFilesize($file->getSize()) . ' exceeds limit of ' . self::humanFilesize(self::FILESIZE_LIMIT));
         }
