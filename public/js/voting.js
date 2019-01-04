@@ -158,7 +158,7 @@ $(document).ready(function () {
     }
 
     inventory = JSON.parse(localStorage.getItem('inventory'));
-    var lootboxCost = 500;
+    var lootboxCost = 1500;
 
     $('#lootboxCostText').text(lootboxCost);
 
