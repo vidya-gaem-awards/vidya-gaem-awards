@@ -30,4 +30,33 @@
       </div>
     </div>
   </div>
+
+  <table class="table table-bordered table-sm mt-4">
+    <thead>
+    <tr>
+      <th>Code</th>
+      <th>Times used</th>
+      <th>Code hour</th>
+      <th>First use</th>
+      <th>Last use</th>
+    </tr>
+    </thead>
+    {% for log in logs %}
+    <tr>
+      <td>{{ log.code }}</td>
+      <td>{{ log.count }}</td>
+      <td>
+        {% if validCodes[log.code] is defined %}
+          <span class="text-success">{{ validCodes[log.code].format('Y-m-d H:i') }}</span>
+        {% else %}
+          <span class="text-danger">Code not on record</span>
+        {% endif %}
+      </td>
+      <td>{{ log.firstUse }}</td>
+      <td>{{ log.lastUse }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
 {% endblock %}

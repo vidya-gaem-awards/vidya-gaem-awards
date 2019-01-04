@@ -6,6 +6,10 @@ use App\Entity\InventoryItem;
 use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use DateInterval;
+use DatePeriod;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -24,8 +28,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class VotingController extends AbstractController
 {
-    public function indexAction(?string $awardID, EntityManagerInterface $em, ConfigService $configService, Request $request, AuthorizationCheckerInterface $authChecker, UserInterface $user, SessionInterface $session)
-    {
+    public function indexAction(
+        ?string $awardID,
+        EntityManagerInterface $em,
+        ConfigService $configService,
+        Request $request,
+        AuthorizationCheckerInterface $authChecker,
+        UserInterface $user,
+        SessionInterface $session
+    ) {
         /** @var User $user */
 
         /** @var Award[] $awards */
@@ -193,7 +204,8 @@ class VotingController extends AbstractController
         $shekelChance = 66; // percent
         $shekelChance = round(1 / ((100 - $shekelChance) / 100) - 1);
 
-        $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, count($itemChoiceArray) * $shekelChance, 'shekels'));
+        $itemChoiceArray = array_merge($itemChoiceArray,
+            array_fill(0, count($itemChoiceArray) * $shekelChance, 'shekels'));
 
         return $this->render('voting.html.twig', [
             'title' => 'Voting',
@@ -217,8 +229,15 @@ class VotingController extends AbstractController
         ]);
     }
 
-    public function postAction($awardID, ConfigService $configService, AuthorizationCheckerInterface $authChecker, EntityManagerInterface $em, Request $request, UserInterface $user, AuditService $auditService)
-    {
+    public function postAction(
+        $awardID,
+        ConfigService $configService,
+        AuthorizationCheckerInterface $authChecker,
+        EntityManagerInterface $em,
+        Request $request,
+        UserInterface $user,
+        AuditService $auditService
+    ) {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'Voting has closed.']);
         }
@@ -305,8 +324,14 @@ class VotingController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function codeEntryAction($code, ConfigService $configService, Request $request, EntityManagerInterface $em, UserInterface $user, SessionInterface $session)
-    {
+    public function codeEntryAction(
+        $code,
+        ConfigService $configService,
+        Request $request,
+        EntityManagerInterface $em,
+        UserInterface $user,
+        SessionInterface $session
+    ) {
         $session->set('votingCode', $code);
 
         if (!$configService->isReadOnly()) {
@@ -332,27 +357,69 @@ class VotingController extends AbstractController
         return $response;
     }
 
-    public function codeViewerAction(RouterInterface $router)
+    public function codeViewerAction(RouterInterface $router, EntityManagerInterface $em, ConfigService $configService)
     {
-        $date = new \DateTimeImmutable(date('Y-m-d H:00'));
-
-        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
-        $code = '';
-        for ($i = 0; $i < 4; $i++) {
-            $seedString = $this->getParameter('kernel.secret') . $date->format(' Y-m-d H:00 ') . $i;
-            $code .= $characters[self::randomNumber($seedString, strlen($characters) - 1)];
-        }
+        $date = new DateTimeImmutable(date('Y-m-d H:00'));
+        $code = $this->getCode($date);
 
         $url = $router->generate('voteWithCode', ['code' => $code], UrlGenerator::ABSOLUTE_URL);
         $url = substr($url, 0, strrpos($url, '/') + 1);
+
+        $logs = $em->createQueryBuilder()
+            ->select(
+                'vcl.code',
+                'COUNT(DISTINCT vcl.cookieID) as count',
+                'MIN(vcl.timestamp) as firstUse',
+                'MAX(vcl.timestamp) as lastUse'
+            )
+            ->from(VotingCodeLog::class, 'vcl')
+            ->join(Vote::class, 'v', 'WITH', 'vcl.cookieID = v.cookieID')
+            ->groupBy('vcl.code')
+            ->orderBy('firstUse', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $votingStart = $configService->getConfig()->getVotingStart();
+        $votingStart = $votingStart->modify('-1 hour');
+        $votingStart->setTime($votingStart->format('H'), 0, 0);
+
+        $allValidCodes = [];
+
+        if ($votingStart) {
+            $votingEnd = $configService->getConfig()->getVotingEnd() ?: new DateTimeImmutable(date('Y-m-d H:00'));
+            $votingEnd = $votingEnd->modify('+1 hour');
+            $votingEnd->setTime($votingEnd->format('H'), 0, 0);
+
+            $interval = new DateInterval('PT1H');
+            $range = new DatePeriod($votingStart, $interval, $votingEnd);
+
+            foreach ($range as $date) {
+                $code = $this->getCode($date);
+                $allValidCodes[$code] = $date;
+            }
+        }
 
         return $this->render('votingCode.html.twig', [
             'title' => 'Voting Code',
             'date' => $date,
             'url' => $url,
-            'code' => $code
+            'code' => $code,
+            'logs' => $logs,
+            'validCodes' => $allValidCodes,
         ]);
+    }
+
+    private function getCode(DateTimeInterface $datetime): string
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+        $code = '';
+        for ($i = 0; $i < 4; $i++) {
+            $seedString = $this->getParameter('kernel.secret') . $datetime->format(' Y-m-d H:00 ') . $i;
+            $code .= $characters[self::randomNumber($seedString, strlen($characters) - 1)];
+        }
+
+        return $code;
     }
 
     /**
