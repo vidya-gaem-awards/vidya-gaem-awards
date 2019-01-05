@@ -360,10 +360,9 @@ class VotingController extends AbstractController
     public function codeViewerAction(RouterInterface $router, EntityManagerInterface $em, ConfigService $configService)
     {
         $currentDate= new DateTimeImmutable(date('Y-m-d H:00'));
+        $currentCode = $this->getCode($currentDate);
 
-        $code = $this->getCode($currentDate);
-
-        $url = $router->generate('voteWithCode', ['code' => $code], UrlGenerator::ABSOLUTE_URL);
+        $url = $router->generate('voteWithCode', ['code' => $currentCode], UrlGenerator::ABSOLUTE_URL);
         $url = substr($url, 0, strrpos($url, '/') + 1);
 
         $logs = $em->createQueryBuilder()
@@ -404,7 +403,7 @@ class VotingController extends AbstractController
             'title' => 'Voting Code',
             'date' => $currentDate,
             'url' => $url,
-            'code' => $code,
+            'code' => $currentCode,
             'logs' => $logs,
             'validCodes' => $allValidCodes,
         ]);
