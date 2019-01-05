@@ -12,6 +12,8 @@ class FileSystem
         'image/jpeg' => '.jpg',
         'image/gif' => '.gif',
         'audio/ogg' => '.ogg',
+        'video/ogg' => '.ogg',
+        'application/ogg' => '.ogg',
     ];
 
     /**
