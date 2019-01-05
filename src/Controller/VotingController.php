@@ -359,8 +359,9 @@ class VotingController extends AbstractController
 
     public function codeViewerAction(RouterInterface $router, EntityManagerInterface $em, ConfigService $configService)
     {
-        $date = new DateTimeImmutable(date('Y-m-d H:00'));
-        $code = $this->getCode($date);
+        $currentDate= new DateTimeImmutable(date('Y-m-d H:00'));
+
+        $code = $this->getCode($currentDate);
 
         $url = $router->generate('voteWithCode', ['code' => $code], UrlGenerator::ABSOLUTE_URL);
         $url = substr($url, 0, strrpos($url, '/') + 1);
@@ -401,7 +402,7 @@ class VotingController extends AbstractController
 
         return $this->render('votingCode.html.twig', [
             'title' => 'Voting Code',
-            'date' => $date,
+            'date' => $currentDate,
             'url' => $url,
             'code' => $code,
             'logs' => $logs,
