@@ -944,12 +944,12 @@
             "version": "v2.6.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/doctrine2.git",
+                "url": "https://github.com/doctrine/orm.git",
                 "reference": "434820973cadf2da2d66e7184be370084cc32ca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/434820973cadf2da2d66e7184be370084cc32ca8",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/434820973cadf2da2d66e7184be370084cc32ca8",
                 "reference": "434820973cadf2da2d66e7184be370084cc32ca8",
                 "shasum": ""
             },
@@ -1222,23 +1222,23 @@
         },
         {
             "name": "fightbulc/moment",
-            "version": "1.27.0",
+            "version": "1.28.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "91cd23f8eb7b5bfac99d7045adb09e5a6f38dd25"
+                "reference": "3ca8e74dffb683b7c89c609bf9d1cae497818689"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/91cd23f8eb7b5bfac99d7045adb09e5a6f38dd25",
-                "reference": "91cd23f8eb7b5bfac99d7045adb09e5a6f38dd25",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/3ca8e74dffb683b7c89c609bf9d1cae497818689",
+                "reference": "3ca8e74dffb683b7c89c609bf9d1cae497818689",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.36 || ^5.5 || ^6.5"
+                "phpunit/phpunit": "^4.8.36 || ^5.5 || ^6.5 || ^7.5"
             },
             "type": "library",
             "autoload": {
@@ -1251,16 +1251,6 @@
                 "MIT"
             ],
             "authors": [
-                {
-                    "name": "Ashish Tilara",
-                    "email": "ashish@itcutives.com",
-                    "role": "developer"
-                },
-                {
-                    "name": "Jaroslaw Kozak",
-                    "email": "jaroslaw.kozak68@gmail.com",
-                    "role": "developer"
-                },
                 {
                     "name": "Tino Ehrich",
                     "email": "tino@bigpun.me",
@@ -1281,7 +1271,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2018-11-22T08:56:35+00:00"
+            "time": "2018-12-15T19:07:09+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
