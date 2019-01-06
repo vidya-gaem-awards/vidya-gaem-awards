@@ -170,6 +170,10 @@ class PredictionController extends AbstractController
 
         $post = $request->request;
 
+        if (!$post->get('name')) {
+            return $this->redirectToRoute('predictions');
+        }
+
         /** @var User $user */
         $user = $this->getUser();
         $fantasyUser = $user->getFantasyUser();

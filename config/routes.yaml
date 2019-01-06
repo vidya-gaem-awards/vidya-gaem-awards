@@ -212,7 +212,6 @@ predictionUpdatePick:
 
 predictionUpdateDetails:
     path:       /predictions/details
-    methods:    [POST]
     controller: App\Controller\PredictionController:updateDetails
 
 #
