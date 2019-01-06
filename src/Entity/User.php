@@ -696,5 +696,10 @@ class User extends AbstractSteamUser implements UserInterface
 
         return $this;
     }
+
+    public function setProfileState(?int $state)
+    {
+        $this->profileState = $state;
+    }
 }
 
