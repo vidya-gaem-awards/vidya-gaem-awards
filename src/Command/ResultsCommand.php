@@ -15,6 +15,7 @@ use App\VGA\Timer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ResultsCommand extends Command
@@ -49,7 +50,8 @@ class ResultsCommand extends Command
     {
         $this
             ->setName(self::COMMAND_NAME)
-            ->setDescription('Calculates and stores the results for each award.');
+            ->setDescription('Calculates and stores the results for each award.')
+            ->addOption('predictions-only', null, InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -61,10 +63,15 @@ class ResultsCommand extends Command
         $this->output = $output;
         $this->timer = new Timer();
 
-        $this->updateVoteReferrers();
-        $this->updateResultCache();
+        if (!$input->hasOption('predictions-only')) {
+            $this->updateVoteReferrers();
+            $this->updateResultCache();
+        }
         $this->updatePredictionScores();
-        $this->disableCronJobIfNeeded();
+
+        if (!$input->hasOption('predictions-only')) {
+            $this->disableCronJobIfNeeded();
+        }
     }
     
     private function updateVoteReferrers()
@@ -304,13 +311,15 @@ class ResultsCommand extends Command
             $score = 0;
             foreach ($predictionUser->getPredictions() as $prediction) {
                 $award = $prediction->getAward();
-                $results = $award->getResultCache();
+
+                $results = $award->getOfficialResults()->getResults();
                 if (!$results) {
                     continue;
                 }
 
                 $winnerID = $results[1];
-                if ($winnerID === $prediction->getNominee()->getId()) {
+
+                if ($winnerID === $prediction->getNominee()->getShortName()) {
                     $score++;
                 }
             }
