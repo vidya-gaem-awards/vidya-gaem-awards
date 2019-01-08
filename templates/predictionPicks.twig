@@ -236,13 +236,13 @@
             </p>
 
             <div class="d-flex align-items-center my-3 user-container">
-              {% if app.user.fantasyUser.avatar %}
+              {% if fantasyUser.avatar %}
                 <img class="mr-3" src="{{ fantasyUser.avatar }}" style='height: 75px;'>
               {% else %}
                 <div class="mr-3 empty-image"><i class="fas fa-question"></i></div>
               {% endif %}
-              <span class="fantasy-name" id="name-read">{{ app.user.fantasyUser.name }}</span>
-              <input class="fantasy-name" name="name" type="text" id="name-edit" value="{{ fantasyUser.name | e('html_attr') }}" style="display: none;" maxlength="{{ constant('NAME_LIMIT', app.user.fantasyUser) }}">
+              <span class="fantasy-name" id="name-read">{{ fantasyUser.name }}</span>
+              <input class="fantasy-name" name="name" type="text" id="name-edit" value="{{ fantasyUser.name | e('html_attr') }}" style="display: none;" maxlength="{{ constant('NAME_LIMIT', fantasyUser) }}">
             </div>
 
             <div id="select-file" style="display: none;" class="mt-2 mb-4">
@@ -300,7 +300,7 @@
   {% else %}
     <div class="awardHeaderContainer d-flex justify-content-center">
       {% if fantasyUser.avatar %}
-        <img class="mr-3" src="{{ fantasyUser.avatar | e('html_attr')}}" style='height: 75px;'>
+        <img class="mr-4" src="{{ fantasyUser.avatar | e('html_attr')}}" style='height: 75px;'>
       {% endif %}
       <div class="text-center" style="margin-top: 8px;">
         <div class="awardName">{{ fantasyUser.name }}</div>
@@ -318,7 +318,7 @@
     {% endif %}
 
     {% for award in awards %}
-      {% set pick = app.user.fantasyUser.getPredictionForAward(award) %}
+      {% set pick = fantasyUser.getPredictionForAward(award) %}
       <div class="row award-row">
         <div class="{{ locked ? 'col-md-4' : 'col-md-5' }} award-name-and-subtitle">
           <div class="award-title">
