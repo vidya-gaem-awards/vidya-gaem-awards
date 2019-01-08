@@ -3,6 +3,8 @@ namespace App\Command;
 
 use App\Entity\Access;
 use App\Entity\Award;
+use App\Entity\FantasyPrediction;
+use App\Entity\FantasyUser;
 use App\Entity\ResultCache;
 use App\Entity\Vote;
 use App\Entity\VotingCodeLog;
@@ -61,6 +63,7 @@ class ResultsCommand extends Command
 
         $this->updateVoteReferrers();
         $this->updateResultCache();
+        $this->updatePredictionScores();
         $this->disableCronJobIfNeeded();
     }
     
@@ -290,6 +293,33 @@ class ResultsCommand extends Command
         }
 
         $this->writeln("Done.");
+    }
+
+    private function updatePredictionScores()
+    {
+        /** @var FantasyUser[] $predictionUser */
+        $predictionUsers = $this->em->getRepository(FantasyUser::class)->findAll();
+
+        foreach ($predictionUsers as $predictionUser) {
+            $score = 0;
+            foreach ($predictionUser->getPredictions() as $prediction) {
+                $award = $prediction->getAward();
+                $results = $award->getResultCache();
+                if (!$results) {
+                    continue;
+                }
+
+                $winnerID = $results[1];
+                if ($winnerID === $prediction->getNominee()->getId()) {
+                    $score++;
+                }
+            }
+
+            $predictionUser->setScore($score);
+            $this->em->persist($predictionUser);
+        }
+
+        $this->em->flush();
     }
 
     private function disableCronJobIfNeeded()
