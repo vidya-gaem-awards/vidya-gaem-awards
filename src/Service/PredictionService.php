@@ -30,7 +30,7 @@ class PredictionService
             return false;
         }
 
-        return new DateTime('+24 hours') > $this->config->getStreamTime();
+        return new DateTime('+14 days') > $this->config->getStreamTime();
     }
 
     public function areResultsAvailable()
