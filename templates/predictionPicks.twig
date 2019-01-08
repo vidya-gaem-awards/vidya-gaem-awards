@@ -82,17 +82,18 @@
     .award-winner {
       display: flex;
       align-items: center;
-      background: white;
-      color: black;
+      color: white;
       padding-right: .75rem;
       height: 80px;
+      border: 1px solid #fec544;
+      font-family: "Corbel", Arial, sans-serif;
+      background-color: rgba(0, 0, 0, 0.4);
     }
 
     .award-winner .image {
-      height: 80px;
+      height: 78px;
       width: 200px;
       flex-shrink: 0;
-      background: silver;
     }
 
     .award-winner .image img {
@@ -181,116 +182,138 @@
       font-family: "Trajan Pro 3", serif;
       text-shadow: #00000080 3px 3px 3px;
     }
+
+    .winner-text {
+      font-weight: bold;
+      color: white;
+    }
+
+    .no-pick {
+      opacity: 0.4;
+    }
   </style>
 {% endblock %}
 
 {% block subBody %}
-  <div class="awardHeaderContainer">
-    <div class="awardName text-center">Your Details</div>
-  </div>
 
-  <div class="container">
-    {% if not locked and app.user.roles | length > 0 %}
-      <div class="alert alert-dark text-center">
-        <strong>Notice:</strong> we've detected that you're a part of the /v/GA production team. You can still enter the league,
-        but depending on your role in the show, the website access you have, and the time at which you submit your picks,
-        you may not be eligible to win or appear on the leaderboard.
-      </div>
-    {% endif %}
+  {% if viewingOwn %}
+    <div class="awardHeaderContainer">
+      <div class="awardName text-center">Your Details</div>
+    </div>
 
-    <form method="post" action="{{ path('predictionUpdateDetails') }}" enctype="multipart/form-data">
-
-      {% for message in app.session.getFlashBag().get('formSuccess') %}
-        <div class="alert alert-success" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          {{ message }}
+    <div class="container">
+      {% if not locked and app.user.roles | length > 0 %}
+        <div class="alert alert-dark text-center">
+          <strong>Notice:</strong> we've detected that you're a part of the /v/GA production team. You can still enter the league,
+          but depending on your role in the show, the website access you have, and the time at which you submit your picks,
+          you may not be eligible to win or appear on the leaderboard.
         </div>
-      {% endfor %}
-      {% for message in app.session.getFlashBag().get('formError') %}
-        <div class="alert alert-danger" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          {{ message }}
-        </div>
-      {% endfor %}
+      {% endif %}
 
-      <div class="row mb-4">
-        <div class="col-md-6">
-          <p class="yellow">
-            How you'll appear on the leaderboard:
-          </p>
+      <form method="post" action="{{ path('predictionUpdateDetails') }}" enctype="multipart/form-data">
 
-          <div class="d-flex align-items-center my-3 user-container">
-            {% if app.user.fantasyUser.avatar %}
-              <img class="mr-3" src="{{ app.user.fantasyUser.avatar }}" style='height: 75px;'>
-            {% else %}
-              <div class="mr-3 empty-image"><i class="fas fa-question"></i></div>
+        {% for message in app.session.getFlashBag().get('formSuccess') %}
+          <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+          </div>
+        {% endfor %}
+        {% for message in app.session.getFlashBag().get('formError') %}
+          <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+          </div>
+        {% endfor %}
+
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <p class="yellow">
+              How you'll appear on the leaderboard:
+            </p>
+
+            <div class="d-flex align-items-center my-3 user-container">
+              {% if app.user.fantasyUser.avatar %}
+                <img class="mr-3" src="{{ fantasyUser.avatar }}" style='height: 75px;'>
+              {% else %}
+                <div class="mr-3 empty-image"><i class="fas fa-question"></i></div>
+              {% endif %}
+              <span class="fantasy-name" id="name-read">{{ app.user.fantasyUser.name }}</span>
+              <input class="fantasy-name" name="name" type="text" id="name-edit" value="{{ fantasyUser.name | e('html_attr') }}" style="display: none;" maxlength="{{ constant('NAME_LIMIT', app.user.fantasyUser) }}">
+            </div>
+
+            <div id="select-file" style="display: none;" class="mt-2 mb-4">
+              <p class="yellow mb-1">
+                Upload avatar:
+              </p>
+
+              <div class="file-container">
+                <div><input type="file" name="avatar"></div>
+                <small>
+                  Maximum filesize: 1 MB (gif, png, or jpeg)<br>
+                  Image will be cropped to a square<br>
+                  This is a Christian awards show, images must be janny-friendly (we do it for free)
+                </small>
+              </div>
+            </div>
+
+            {% if not locked %}
+              <p>
+                <button class="btn btn-themed" id="edit-details" type="button">Edit your name, avatar, or victory message</button>
+                <button class="btn btn-themed" id="save-details" type="submit" style="display: none;"><i class="fas fa-fw fa-save"></i> Save your name, avatar, and victory message</button>
+              </p>
             {% endif %}
-            <span class="fantasy-name" id="name-read">{{ app.user.fantasyUser.name }}</span>
-            <input class="fantasy-name" name="name" type="text" id="name-edit" value="{{ app.user.fantasyUser.name | e('html_attr') }}" style="display: none;" maxlength="{{ constant('NAME_LIMIT', app.user.fantasyUser) }}">
           </div>
-
-          <div id="select-file" style="display: none;" class="mt-2 mb-4">
-            <p class="yellow mb-1">
-              Upload avatar:
+          <div class="col-md-6">
+            <p class="yellow">
+              Your victory message:
             </p>
 
-            <div class="file-container">
-              <div><input type="file" name="avatar"></div>
-              <small>
-                Maximum filesize: 1 MB (gif, png, or jpeg)<br>
-                Image will be cropped to a square<br>
-                This is a Christian awards show, images must be janny-friendly (we do it for free)
-              </small>
-            </div>
-          </div>
-
-          {% if not locked %}
-            <p>
-              <button class="btn btn-themed" id="edit-details" type="button">Edit your name, avatar, or victory message</button>
-              <button class="btn btn-themed" id="save-details" type="submit" style="display: none;"><i class="fas fa-fw fa-save"></i> Save your name, avatar, and victory message</button>
-            </p>
-          {% endif %}
-        </div>
-        <div class="col-md-6">
-          <p class="yellow">
-            Your victory message:
-          </p>
-
-          <div class="victory">
-            <div class="quotation">
-              <div class="quotation-mark">&ldquo;</div>
-            </div>
-            <div class="victory-message">
-              <div id="victory-message-read">{{ app.user.fantasyUser.victoryMessage }}</div>
-              <textarea name="victory-message" id="victory-message-edit" style="display: none;" maxlength="{{ victoryMessageLimit }}">{{ app.user.fantasyUser.victoryMessage }}</textarea>
-            </div>
-            <div class="quotation">
-              <div id="victory-message-counter" style="visibility: hidden;">{{ victoryMessageLimit - app.user.fantasyUser.victoryMessage | length }}</div>
-              <div class="quotation-mark">&rdquo;</div>
+            <div class="victory">
+              <div class="quotation">
+                <div class="quotation-mark">&ldquo;</div>
+              </div>
+              <div class="victory-message">
+                <div id="victory-message-read">{{ fantasyUser.victoryMessage }}</div>
+                <textarea name="victory-message" id="victory-message-edit" style="display: none;" maxlength="{{ victoryMessageLimit }}">{{ fantasyUser.victoryMessage }}</textarea>
+              </div>
+              <div class="quotation">
+                <div id="victory-message-counter" style="visibility: hidden;">{{ victoryMessageLimit - fantasyUser.victoryMessage | length }}</div>
+                <div class="quotation-mark">&rdquo;</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
+  {% endif %}
 
+  {% if viewingOwn %}
   <div class="awardHeaderContainer">
-    <div class="awardName text-center">Your Picks</div>
+    <div class="awardName text-center">
+      Your Picks
+    </div>
   </div>
+  {% else %}
+    <div class="awardHeaderContainer d-flex justify-content-center">
+      {% if fantasyUser.avatar %}
+        <img class="mr-3" src="{{ fantasyUser.avatar | e('html_attr')}}" style='height: 75px;'>
+      {% endif %}
+      <div class="text-center" style="margin-top: 8px;">
+        <div class="awardName">{{ fantasyUser.name }}</div>
+        <h2 class="awardSubtitle">Score: {{ fantasyUser.score }} / {{ awards | length }}</h2>
+      </div>
+    </div>
+  {% endif %}
 
   <div class="container">
 
     {% if locked and not showResults %}
       <p class="text-center mb-4" style="font-size: 20px;">
         Your picks have now been locked in! Tune in at {{ configService.config.streamTime.format('g:ia \\o\\n F jS') }} to find out if you've won!
-      </p>
-    {% elseif showResults %}
-      <p class="text-center mb-4" style="font-size: 20px;">
-        You picked 1 / {{ awards | length }} awards correct, and have ranked 1st out of 315 players!
       </p>
     {% endif %}
 
@@ -307,21 +330,26 @@
         </div>
         <div class="your-pick-container {{ locked ? 'col-md-4' : 'unlocked col-md-7' }}">
           {% if locked %}
-            <strong style="color: yellow;">YOUR PICK</strong>
-            <div class="award-winner">
-              {% if pick %}
+            {% if pick %}
+              <span class="yellow">{{ viewingOwn ? 'Your pick' : 'Their pick' }}</span>
+              <div class="award-winner">
                 <div class="image">
                   {% if pick.nominee.image %}
                     <img src="{{ pick.nominee.image | e('html_attr') }}" alt="{{ pick.nominee.name | e('html_attr') }}">
                   {% endif %}
                 </div>
                 <div class="nominee-name">{{ pick.nominee.name }}</div>
-              {% else %}
-                <div class="nominee-name text-muted">
-                  You didn't make a pick for this award
+              </div>
+            {% else %}
+              <div class="no-pick">
+                <span class="yellow">{{ viewingOwn ? 'Your pick' : 'Their pick' }}</span>
+                <div class="award-winner">
+                  <div class="nominee-name">
+                    {{ viewingOwn ? 'You didn\'t make a pick for this award' : 'No pick made for this award' }}
+                  </div>
                 </div>
-              {% endif %}
-            </div>
+              </div>
+            {% endif %}
           {% else %}
             <div class="d-flex">
               <div class="status-icon">
@@ -345,9 +373,9 @@
             {% if award.getOfficialResults %}
               {% set winner = award.getNominee(award.getOfficialResults.results[1]) %}
               <div class="d-flex justify-content-between">
-                <strong style="color: yellow;">WINNER</strong>
+                <span class="yellow">Winner</span>
                 {% if pick and winner is same as(pick.nominee) %}
-                  <strong style="color: lime;">CORRECT PICK</strong>
+                  <span class="yellow winner-text">Correct pick</span>
                 {% endif %}
               </div>
               <div class="award-winner">

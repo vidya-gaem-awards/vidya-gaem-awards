@@ -194,8 +194,10 @@ tasksPost:
 #
 
 predictions:
-    path:       /predictions
+    path:       /predictions/{id?}
     controller: App\Controller\PredictionController:index
+    requirements:
+        id: '[0-9]+'
 
 predictionRules:
     path:       /predictions/rules

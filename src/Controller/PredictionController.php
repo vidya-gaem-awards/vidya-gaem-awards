@@ -32,7 +32,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class PredictionController extends AbstractController
 {
-    public function index(EntityManagerInterface $em, PredictionService $predictionService, SessionInterface $session, Request $request)
+    public function index(
+        ?FantasyUser $fantasyUser,
+        EntityManagerInterface $em,
+        PredictionService $predictionService,
+        SessionInterface $session,
+        Request $request,
+        ConfigService $configService,
+        AuthorizationCheckerInterface $authChecker)
     {
         $nonce = $session->get('nonce');
         if (!$nonce) {
@@ -42,11 +49,22 @@ class PredictionController extends AbstractController
 
         /** @var User $user */
         $user = $this->getUser();
-        if (!$user->getFantasyUser()) {
-            return $this->render('predictionSignUp.twig', [
-                'page' => 'picks',
-                'nonce' => $nonce
-            ]);
+
+        if ($fantasyUser) {
+            if (!$configService->getConfig()->isPagePublic('results') && !$authChecker->isGranted('ROLE_VOTING_RESULTS')) {
+                throw $this->createAccessDeniedException('Fantasy league results aren\'t yet publicly available.');
+            }
+            $viewingOwn = false;
+        } else {
+            if (!$user->getFantasyUser()) {
+                return $this->render('predictionSignUp.twig', [
+                    'page' => 'picks',
+                    'nonce' => $nonce
+                ]);
+            }
+
+            $fantasyUser = $user->getFantasyUser();
+            $viewingOwn = true;
         }
 
         /** @var Award[] $awards */
@@ -58,19 +76,12 @@ class PredictionController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $test = $request->get('test');
-        if ($test === 'unlocked') {
-            $showResults = false;
-            $locked = false;
-        } elseif ($test === 'locked') {
-            $showResults = false;
-            $locked = true;
-        } elseif ($test === 'results') {
-            $showResults = true;
-            $locked = true;
-        } else {
+        if ($viewingOwn) {
             $showResults = $predictionService->areResultsAvailable();
             $locked = $predictionService->arePredictionsLocked();
+        } else {
+            $showResults = true;
+            $locked = true;
         }
 
         return $this->render('predictionPicks.twig', [
@@ -78,7 +89,9 @@ class PredictionController extends AbstractController
             'awards' => $awards,
             'showResults' => $showResults,
             'locked' => $locked,
-            'victoryMessageLimit' => FantasyUser::VICTORY_MESSAGE_LIMIT
+            'victoryMessageLimit' => FantasyUser::VICTORY_MESSAGE_LIMIT,
+            'fantasyUser' => $fantasyUser,
+            'viewingOwn' => $viewingOwn,
         ]);
     }
 

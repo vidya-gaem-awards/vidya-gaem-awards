@@ -26,7 +26,9 @@
       <h1>The 2018 <span style="text-transform: none;">/v/GA</span> Fantasy League</h1>
       <div class="d-flex justify-content-around">
         <a href="{{ path('voting') }}"><h2>Back to the awards</h2></a>
-        <a href="{{ path('predictions') }}" class="{{ page == 'picks' ? 'active' : '' }}"><h2>{{ app.user.fantasyUser ? 'Your Picks' : 'Sign Up' }}</h2></a>
+        <a href="{{ path('predictions') }}" class="{{ page == 'picks' ? 'active' : '' }}">
+          <h2>{{ viewingOwn is defined and not viewingOwn ? 'Picks' : (app.user.fantasyUser ? 'Your Picks' : 'Sign Up') }}</h2>
+        </a>
         {#<a href="#" class="{{ page == 'leaderboard' ? 'active' : '' }}"><h2>Leaderboard</h2></a>#}
         <a href="{{ path('predictionRules') }}" class="{{ page == 'rules' ? 'active' : '' }}"><h2>Rules</h2></a>
       </div>
