@@ -292,7 +292,7 @@ class PredictionController extends AbstractController
             ->from(FantasyUser::class, 'fu')
             ->where('fu.score > 0')
             ->andWhere('fu.rank IS NOT NULL')
-            ->orderBy('fu.rank', 'DESC')
+            ->orderBy('fu.rank', 'ASC')
             ->getQuery()
             ->getResult();
 
