@@ -307,6 +307,8 @@ class ResultsCommand extends Command
         /** @var FantasyUser[] $predictionUser */
         $predictionUsers = $this->em->getRepository(FantasyUser::class)->findAll();
 
+        $uniqueScores = [];
+
         foreach ($predictionUsers as $predictionUser) {
             $score = 0;
             foreach ($predictionUser->getPredictions() as $prediction) {
@@ -324,8 +326,17 @@ class ResultsCommand extends Command
                 }
             }
 
+            $uniqueScores[] = $score;
+
             $predictionUser->setScore($score);
             $this->em->persist($predictionUser);
+        }
+
+        $uniqueScores = array_unique($uniqueScores);
+        rsort($uniqueScores);
+
+        foreach ($predictionUsers as $predictionUser) {
+            $predictionUser->setRank(array_search($predictionUser->getScore(), $uniqueScores) + 1);
         }
 
         $this->em->flush();
