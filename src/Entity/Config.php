@@ -231,6 +231,7 @@ class Config
             'predictionJoin' => 'voting',
             'predictionUpdatePick' => 'voting',
             'predictionUpdateDetails' => 'voting',
+            'predictionLeaderboard' => 'results',
             'pairwiseResults' => 'results',
             'winners' => 'results',
         ];

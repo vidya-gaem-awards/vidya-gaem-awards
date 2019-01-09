@@ -425,7 +425,7 @@ body {
 .awardName {
   font-family: "Trajan Pro 3", serif;
   font-weight: normal;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   font-size: 30px;
   line-height: 38px;
   color: #fec544;

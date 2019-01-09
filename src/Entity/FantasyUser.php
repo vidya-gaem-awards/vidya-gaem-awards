@@ -18,6 +18,7 @@ class FantasyUser
     private $avatar;
     private $victoryMessage;
     private $score;
+    private $rank;
     private $lastUpdated;
     private $imageToken;
 
@@ -154,5 +155,16 @@ class FantasyUser
         $factory = new Factory;
         $generator = $factory->getLowStrengthGenerator();
         return $this->imageToken = hash('sha1', $generator->generate(64));
+    }
+
+    public function getRank(): ?int
+    {
+        return $this->rank;
+    }
+
+    public function setRank(?int $rank): self
+    {
+        $this->rank = $rank;
+        return $this;
     }
 }

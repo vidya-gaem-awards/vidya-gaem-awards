@@ -12,6 +12,9 @@ class ConfigService
     /** @var Config */
     private $config;
 
+    /** @var PredictionService */
+    private $predictionService;
+
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;

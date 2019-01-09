@@ -23,6 +23,9 @@ App\Entity\FantasyUser:
         score:
             type: integer
             nullable: true
+        rank:
+            type: integer
+            nullable: true
         lastUpdated:
             type: datetime_immutable
     oneToOne:

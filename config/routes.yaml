@@ -216,6 +216,10 @@ predictionUpdateDetails:
     path:       /predictions/details
     controller: App\Controller\PredictionController:updateDetails
 
+predictionLeaderboard:
+    path:       /predictions/leaderboard
+    controller: App\Controller\PredictionController:leaderboard
+
 #
 # VOTING
 #

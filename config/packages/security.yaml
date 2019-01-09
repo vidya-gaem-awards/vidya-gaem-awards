@@ -59,6 +59,7 @@ security:
         - { path: ^/tasks, roles: ROLE_TASKS_VIEW }
         - { path: ^/vote/code, roles: ROLE_VOTING_VIEW }
         - { path: ^/vote, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_VIEW] }
+        - { path: ^/predictions/leaderboard, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_RESULTS] }
         - { path: ^/predictions, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_VIEW] }
         - { path: ^/winners, roles: [CONDITIONALLY_PUBLIC, ROLE_VOTING_RESULTS], methods: [GET] }
         - { path: ^/winners, roles: ROLE_AWARDS_EDIT, methods: [POST] }

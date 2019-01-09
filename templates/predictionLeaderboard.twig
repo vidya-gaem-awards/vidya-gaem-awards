@@ -1,0 +1,361 @@
+{% extends 'predictionBase.twig' %}
+
+{% block title %}Fantasy League - Sign Up{% endblock %}
+
+{% block css %}
+  {{ parent() }}
+  <style>
+    .victory {
+      /*background-color: rgba(0, 0, 0, 0.4);*/
+      /*border: 1px solid #fec544;*/
+      /*position: relative;*/
+
+      color: white;
+      text-decoration: none;
+      font-family: "Trajan Pro 3", serif;
+      text-shadow: #00000080 3px 3px 3px;
+      /*font-size: 0.9em;*/
+      /*line-height: 0.95em;*/
+
+      /*text-align: left;*/
+      /*min-height: 6.8em;*/
+
+      /*display: flex;*/
+    }
+
+    .almost .victory {
+      font-size: 0.8em;
+    }
+
+    .user-container {
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 1px solid #fec544;
+      padding: 10px;
+      font-family: "Trajan Pro 3", serif;
+    }
+
+    .champion.user-container {
+      background: rgba(254, 197, 68, 0.4);
+      border-width: 3px;
+    }
+
+    .champion .yellow {
+      text-shadow: none;
+    }
+
+    .champion .victory {
+      text-shadow: none;
+    }
+
+
+    .file-container {
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 1px solid #fec544;
+      padding: 10px;
+      font-family: "Corbel", Arial, sans-serif;
+    }
+
+    /*.quotation {*/
+      /*font-size: 100px;*/
+      /*margin: 8px;*/
+      /*line-height: 1;*/
+      /*height: 45px;*/
+    /*}*/
+
+    /*.quotation:last-child {*/
+      /*display: flex;*/
+      /*flex-direction: column;*/
+      /*align-items: center;*/
+      /*justify-content: space-between;*/
+      /*height: auto;*/
+    /*}*/
+
+    /*.quotation-mark {*/
+      /*height: 45px;*/
+      /*line-height: 130px;*/
+    /*}*/
+
+    .victory-message {
+      margin: 8px 0;
+      flex-grow: 1;
+    }
+
+    .award-title {
+      font-size: 20px;
+      font-family: "Trajan Pro 3", serif;
+      color: #fec544;
+    }
+
+    .award-subtitle {
+      font-family: "Corbel", Arial, sans-serif;
+    }
+
+    .award-row {
+      /*display: flex;*/
+      align-items: center;
+      margin-top: .5rem;
+      margin-bottom: .5rem;
+    }
+
+    .award-winner {
+      display: flex;
+      align-items: center;
+      color: white;
+      padding-right: .75rem;
+      height: 80px;
+      border: 1px solid #fec544;
+      font-family: "Corbel", Arial, sans-serif;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .award-winner .image {
+      height: 78px;
+      width: 200px;
+      flex-shrink: 0;
+    }
+
+    .award-winner .image img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .nominee-name {
+      margin-left: .75rem;
+    }
+
+    .your-pick-container {
+      /*width: 30%;*/
+      /*margin-right: 3px;*/
+    }
+
+    .your-pick-container.unlocked {
+      /*width: 63%;*/
+    }
+
+    .status-icon {
+      display: flex;
+      align-items: center;
+      width: 45px;
+      font-size: 25px;
+      color: #fec544;
+    }
+
+    .pick-select {
+      height: 60px;
+      width: 100%;
+      padding: 10px;
+      font-size: 20px;
+      flex-grow: 1;
+
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 1px solid #fec544;
+      color: white;
+      font-family: "Trajan Pro 3", serif;
+    }
+
+    #victory-message-read {
+      padding: 6px;
+    }
+
+    #victory-message-edit {
+      width: 100%;
+      height: 5.3em;
+      padding: 5px;
+    }
+
+    #victory-message-counter {
+      text-align: right;
+      font-size: small;
+    }
+
+    #victory-message-counter.limited {
+      color: red;
+    }
+
+    .champion .fantasy-name {
+      /*font-weight: bold;*/
+      font-size: 30px;
+    }
+
+    .almost .fantasy-name {
+      font-size: 20px;
+      margin-top: 5px;
+    }
+
+    #name-edit {
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-left: -10px;
+    }
+
+    .empty-image {
+      height: 75px;
+      width: 75px;
+      /*border: 1px dashed white;*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      font-size: 12px;
+      text-align: center;
+      font-family: "Trajan Pro 3", serif;
+      color: #fec544;
+      padding: 5px;
+    }
+
+    .almost .empty-image {
+      font-size: 10px;
+    }
+
+    .plebs .empty-image {
+      font-size: 8px;
+    }
+
+    .yellow {
+      color: #fec544;
+      text-decoration: none;
+      font-family: "Trajan Pro 3", serif;
+      text-shadow: #00000080 3px 3px 3px;
+    }
+
+    .winner-text {
+      font-weight: bold;
+      color: white;
+    }
+
+    .no-pick {
+      opacity: 0.4;
+    }
+
+    .avatar {
+      /*border: 1px solid #fec544;*/
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+
+    .almost .avatar {
+      height: 75px;
+      width: 75px;
+    }
+
+    .plebs .avatar {
+      height: 50px;
+      width: 50px;
+    }
+
+    .name-and-rank {
+      flex-grow: 1;
+    }
+
+    .plebs {
+      font-family: "Trajan Pro 3", serif;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid #fec544;
+    }
+
+    .plebs.table {
+      background: rgba(0,0,0,0.4);
+      border-bottom: 1px solid #fec544;
+    }
+
+    .plebs td {
+      vertical-align: middle;
+      border-color: #fec544;
+    }
+
+    .champion a, .almost a, .plebs a {
+      color: white;
+    }
+
+    .champion a:hover, .almost a:hover, .plebs a:hover {
+      background: rgba(0, 0, 0, 0.25);
+    }
+  </style>
+{% endblock %}
+
+{% block subBody %}
+
+  <div class="container">
+    <div class="awardHeaderContainer">
+      <div class="awardName text-center">
+        The Grand Champion{{ champions | length != 1 ? 's' : '' }}
+        {% if champions %}
+          <h2 class="awardSubtitle">Correctly predicted {{ champions[0].score }} / {{ awardCount }} awards</h2>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      {% for fantasyUser in champions %}
+        <div class="col-lg-10 col-xl-6 mb-3">
+          <div class="d-flex align-items-center user-container champion">
+            {% if fantasyUser.avatar %}
+              <img class="mr-3 avatar" src="{{ fantasyUser.avatar | e('html_attr') }}">
+            {% else %}
+              <div class="mr-3 avatar empty-image">No picture available</div>
+            {% endif %}
+            <div class="name-and-rank">
+              <div class="victory yellow">
+                Rank {{ fantasyUser.rank }}
+              </div>
+              <div class="fantasy-name"><a href="{{ path('predictions', {'id': fantasyUser.id}) }}">{{ fantasyUser.name }}</a></div>
+              {% if fantasyUser.victoryMessage %}
+                <div class="victory">
+                  “{{ fantasyUser.victoryMessage }}”
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="awardHeaderContainer" style="margin-top: 50px;">
+      <div class="awardName text-center">Almost Good Enough</div>
+    </div>
+
+    <div class="row justify-content-center">
+      {% for fantasyUser in almost %}
+        <div class="col-md-10 col-lg-6 col-xl-4 mb-3">
+          <div class="d-flex align-items-center user-container almost">
+            {% if fantasyUser.avatar %}
+              <img class="mr-3 avatar" src="{{ fantasyUser.avatar | e('html_attr') }}">
+            {% else %}
+              <div class="mr-3 avatar empty-image">No picture available</div>
+            {% endif %}
+            <div class="name-and-rank">
+              <div class="victory d-flex justify-content-between">
+                <span class="yellow">Rank {{ fantasyUser.rank }}</span>
+                <span class="yellow">{{ fantasyUser.score }} / {{ awardCount }} correct</span>
+              </div>
+              <div class="fantasy-name"><a href="{{ path('predictions', {'id': fantasyUser.id}) }}">{{ fantasyUser.name }}</a></div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="awardHeaderContainer" style="margin-top: 50px;">
+      <div class="awardName text-center">Participation Awards</div>
+    </div>
+
+    <div class="row plebs pt-4 mb-4">
+      {% for fantasyUser in plebs %}
+        <div class="col-lg-6 mb-3">
+          <div class="d-flex align-items-center pleb p-1">
+            <div class="mr-3 yellow">{{ fantasyUser.rank }}.</div>
+            {% if fantasyUser.avatar %}
+              <img class="mr-3 avatar" src="{{ fantasyUser.avatar | e('html_attr') }}">
+            {% else %}
+              <div class="mr-3 avatar empty-image d-inline-block">No picture available</div>
+            {% endif %}
+            <div class="fantasy-name"><a href="{{ path('predictions', {'id': fantasyUser.id}) }}">{{ fantasyUser.name }}</a></div>
+            <div class="ml-3 yellow">{{ fantasyUser.score }} / {{ awardCount }} correct</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

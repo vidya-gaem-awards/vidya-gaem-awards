@@ -284,4 +284,43 @@ class PredictionController extends AbstractController
         $fantasyUser->setAvatar($imagePath);
         return true;
     }
+
+    public function leaderboard(EntityManagerInterface $em)
+    {
+        $fantasyUsers = $em->createQueryBuilder()
+            ->select('fu')
+            ->from(FantasyUser::class, 'fu')
+            ->where('fu.score > 0')
+            ->andWhere('fu.rank IS NOT NULL')
+            ->orderBy('fu.rank', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $champions = array_values(array_filter($fantasyUsers, function (FantasyUser $fantasyUser) {
+            return $fantasyUser->getRank() === 1;
+        }));
+
+        $almost = array_values(array_filter($fantasyUsers, function (FantasyUser $fantasyUser) {
+            return $fantasyUser->getRank() > 1 && $fantasyUser->getRank() <= 5;
+        }));
+
+        $plebs = array_values(array_filter($fantasyUsers, function (FantasyUser $fantasyUser) {
+            return $fantasyUser->getRank() > 5;
+        }));
+
+        $awardCount = $em->createQueryBuilder()
+            ->select('COUNT(a.id)')
+            ->from(Award::class, 'a')
+            ->where('a.enabled = true')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $this->render('predictionLeaderboard.twig', [
+            'page' => 'leaderboard',
+            'awardCount' => $awardCount,
+            'champions' => $champions,
+            'almost' => $almost,
+            'plebs' => $plebs,
+        ]);
+    }
 }

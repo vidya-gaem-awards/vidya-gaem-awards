@@ -14,6 +14,10 @@
       margin: 0 0 20px 0;
       padding: 25px 0 20px;
     }
+
+    .pageHeader h2 {
+      padding: 0 40px;
+    }
   </style>
 {% endblock %}
 
@@ -25,11 +29,19 @@
     <div class="pageHeaderTitle">
       <h1>The 2018 <span style="text-transform: none;">/v/GA</span> Fantasy League</h1>
       <div class="d-flex justify-content-around">
-        <a href="{{ path('voting') }}"><h2>Back to the awards</h2></a>
-        <a href="{{ path('predictions') }}" class="{{ page == 'picks' ? 'active' : '' }}">
-          <h2>{{ viewingOwn is defined and not viewingOwn ? 'Picks' : (app.user.fantasyUser ? 'Your Picks' : 'Sign Up') }}</h2>
-        </a>
-        {#<a href="#" class="{{ page == 'leaderboard' ? 'active' : '' }}"><h2>Leaderboard</h2></a>#}
+        {% if configService.config.isPagePublic('results') %}
+          <a href="{{ path('winners') }}"><h2>Award Results</h2></a>
+        {% else %}
+          <a href="{{ path('voting') }}"><h2>Back to voting</h2></a>
+        {% endif %}
+        {% if app.user.fantasyUser or not predictionService.arePredictionsLocked %}
+          <a href="{{ path('predictions') }}" class="{{ page == 'picks' and viewingOwn ? 'active' : '' }}">
+            <h2>{{ app.user.fantasyUser ? 'Your picks' : 'Sign up' }}</h2>
+          </a>
+        {% endif %}
+        {% if is_granted('ROLE_VOTING_RESULTS') or configService.config.isPagePublic('predictionLeaderboard') %}
+          <a href="{{ path('predictionLeaderboard') }}" class="{{ page == 'leaderboard' ? 'active' : '' }}"><h2>Leaderboard</h2></a>
+        {% endif %}
         <a href="{{ path('predictionRules') }}" class="{{ page == 'rules' ? 'active' : '' }}"><h2>Rules</h2></a>
       </div>
   	</div>
