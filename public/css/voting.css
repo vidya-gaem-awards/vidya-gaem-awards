@@ -495,7 +495,7 @@ body {
 }
 
 .hoverOverlay.adjustForLink {
-  bottom: 20px;
+  bottom: 39px;
   z-index: 49;
 }
 
@@ -1067,11 +1067,11 @@ a:hover {
 }
 
 #btnStart {
-  width: 264px;
-  height: 103px;
+  width: 311px;
+  height: 121px;
   margin: 0 auto;
   display: block;
-  background: url("/2017images/btnStart.png") top center no-repeat;
+  background: url("/2018images/btnStart.png") top center no-repeat;
 }
 
 #btnStart:hover {

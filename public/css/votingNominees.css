@@ -83,11 +83,12 @@
 }
 
 .nomineeSubtitle a {
-  color: blue;
+  color: #93a7f5;
+  text-decoration: underline;
 }
 
 .nomineeSubtitle a:hover {
-  color: blue;
+  color: #fec544;
   text-decoration: underline;
 }
 
