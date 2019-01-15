@@ -11,7 +11,7 @@ class ReferrerController extends AbstractController
     public function indexAction(EntityManagerInterface $em, Request $request)
     {
         $days = $request->query->get('days');
-        if (!ctype_digit($days)) {
+        if ($days !== 'all' && !ctype_digit($days)) {
             $days = 7;
         }
 
@@ -20,9 +20,12 @@ class ReferrerController extends AbstractController
             ->from(Access::class, 'a')
             ->addSelect('COUNT(a.id) as total')
             ->addSelect('a.referer')
-            ->where("a.referer NOT LIKE '%vidyagaemawards.com%'");
+            ->where("REGEXP(a.referer, :regexp1) = false")
+            ->setParameter('regexp1', '^https?:\/\/(.{1,4}\.)?vidyagaemawards\.com')
+            ->andWhere("REGEXP(a.referer, :regexp2) = false")
+            ->setParameter('regexp2', '^https:\/\/steamcommunity\.com\/openid\/');
 
-        if ($days) {
+        if ($days !== 'all') {
             $date = new \DateTime('-' . $days . ' days');
             $query
                 ->andWhere('a.timestamp > :timeLimit')
@@ -51,7 +54,7 @@ class ReferrerController extends AbstractController
                 $class = 'info';
                 $referer['referer'] = str_replace('android-app://', '', $referer['referer']);
                 $referer['type'] = 'android';
-            } elseif (substr($key, 0, 16) === 'boards.4chan.org') {
+            } elseif (strpos($key, '4chan.org') !== false || strpos($key, '4channel.org') !== false) {
                 $class = 'success';
             } elseif (substr($key, 0, 10) === 'reddit.com') {
                 $class = 'danger';
@@ -122,6 +125,11 @@ class ReferrerController extends AbstractController
         if (preg_match('{forums\.somethingawful\.com}', $referrer)) {
             $referrer = preg_replace('{&perpage=\d+}', '', $referrer);
             $referrer = preg_replace('{&userid=\d+}', '', $referrer);
+        }
+
+        // Remove the derefer parameter off the end of 4chan URLs
+        if (preg_match('{/derefer\?url=.+}', $referrer)) {
+            $referrer = preg_replace('{/derefer\?url=.+}', '', $referrer);
         }
 
         return $referrer;

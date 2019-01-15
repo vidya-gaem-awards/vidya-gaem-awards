@@ -1,38 +1,41 @@
 {% extends 'base/standard.html.twig' %}
 
+{% block css %}
+  {{ parent() }}
+
+  <style type="text/css">
+    .referrer {
+      overflow: hidden;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
-  <h1 class="page-header">
-    Top referrers {{ days ? 'in the past ' ~ days ~ ' days' : 'of all time' }}
+  <h1 class="display-4">
+    Referrers
   </h1>
 
-  <ul class="breadcrumb">
-    <li class="active">
-      Change time period:
-    </li>
-    <li>
-      <a href="{{ path('referrers') }}?days=1">1 day</a>
-    </li>
-    <li>
-      <a href="{{ path('referrers') }}?days=7">7 days</a>
-    </li>
-    <li>
-      <a href="{{ path('referrers') }}?days=14">14 days</a>
-    </li>
-    <li>
-      <a href="{{ path('referrers') }}?days=30">30 days</a>
-    </li>
-    <li>
-      <a href="{{ path('referrers') }}?days=0">All time</a>
-    </li>
-  </ul>
+  <nav>
+    <ol class="breadcrumb">
+      {% for days in [1, 3, 7, 14, 30, 'all'] %}
+        <li class="breadcrumb-item {{ loop.parent.days == days ? 'active' : '' }}">
+          <a href="{{ path('referrers', {'days': days}) }}">
+            {{ days == 'all' ? 'All time' : (days ~ ' day' ~ (days == 1 ? '' : 's')) }}
+          </a>
+        </li>
+      {% endfor %}
+    </ol>
+  </nav>
 
-  <table class="table table-bordered" style="background-color: white;">
+  <table class="table table-bordered table-striped" style="background-color: white;">
+    <thead>
     <tr>
-      <th class="col-md-1">Total hits</th>
-      <th style="width: 120px;">Latest hit</th>
-      <th style="width: 110px;">Link</th>
+      <th style="width: 120px;">Total hits</th>
+      <th style="width: 140px;">Latest hit</th>
+      <th style="width: 140px;">Link</th>
       <th>Referrer</th>
     </tr>
+    </thead>
     {% for referrer in referrers %}
       <tr class="{{ referrer.class }}">
         <td><strong>{{ referrer.total }}</strong></td>
@@ -46,12 +49,12 @@
             <a href="{{ referrer.referer | escape('html_attr') }}">Follow link</a>
           {% endif %}
         </td>
-        <td>
+        <td class="referrer">
           {% if referrer.type == 'android' %}
             <strong>Android app:</strong>
           {% endif %}
-          {% if referrer.referer | length > 100 %}
-            {{ referrer.referer | slice(0,100) ~ '…' }}
+          {% if referrer.referer | length > 75 %}
+            {{ referrer.referer | slice(0,74) ~ '…' }}
           {% else %}
             {{ referrer.referer }}
           {% endif %}
