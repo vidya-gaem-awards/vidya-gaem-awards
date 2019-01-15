@@ -70,6 +70,30 @@
       <div class="alert alert-info">
         <i class="fas fa-info-circle mr-1"></i> Results for this award are not yet available.
       </div>
+    {% elseif sweepPoints %}
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-light">
+          <tr>
+            <th>Rank</th>
+            <th>Nominee</th>
+            <th>Sweep Points</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% set result = award.getOfficialResults %}
+          {% for nominee in result.results[:5] %}
+            <tr>
+              <th style="width: 100px;">{{ loop.index }}</th>
+              <td class="position position-{{ loop.index }}">{{ nominees[award.id][nominee].name }}</td>
+              <td style="width: 200px;">{{ result.steps['sweepPoints'][nominee] | default(0) | round(0, 'floor') }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
     {% else %}
 
       <div class="table-responsive mb-2">

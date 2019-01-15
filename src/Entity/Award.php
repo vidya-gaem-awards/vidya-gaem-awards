@@ -511,12 +511,7 @@ class Award implements \JsonSerializable
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('filter', ResultCache::OFFICIAL_FILTER));
 
-        $cache = $this->getResultCache()->matching($criteria);
-        if (count($cache) === 0) {
-            return null;
-        } else {
-            return $cache[0];
-        }
+        return $this->getResultCache()->matching($criteria)->first() ?: null;
     }
 
     /**

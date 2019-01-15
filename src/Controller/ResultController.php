@@ -58,7 +58,7 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function detailedAction(?string $all, EntityManagerInterface $em)
+    public function detailedAction(?string $all, EntityManagerInterface $em, Request $request)
     {
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
@@ -107,13 +107,15 @@ class ResultController extends AbstractController
                 }
             }
 
-            // Display the filter with the most votes first (this will invariably put No Filtering and 4chan on top)
-            uasort($results[$award->getId()], function (ResultCache $a, ResultCache $b) {
-                return $b->getVotes() <=> $a->getVotes();
-            });
+            if (isset($results[$award->getId()])) {
+                // Display the filter with the most votes first (this will invariably put No Filtering and 4chan on top)
+                uasort($results[$award->getId()], function (ResultCache $a, ResultCache $b) {
+                    return $b->getVotes() <=> $a->getVotes();
+                });
+            }
 
             // If the result cache is empty, results haven't been generated yet.
-            if ($award->getResultCache()->isEmpty()) {
+            if ($award->getResultCache()->isEmpty() || !isset($results[$award->getId()])) {
                 $results[$award->getId()] = null;
             }
         }
@@ -124,7 +126,8 @@ class ResultController extends AbstractController
             'nominees' => $nominees,
             'all' => (bool)$all,
             'results' => $results,
-            'filters' => $filters
+            'filters' => $filters,
+            'sweepPoints' => $request->query->getBoolean('sweepPoints')
         ]);
     }
 
