@@ -132,6 +132,9 @@ class ReferrerController extends AbstractController
         // Remove the http and www prefixes, as well as the trailing slash
         $referrer = rtrim(preg_replace('{https?://(www\.)?}', '', $referrer), '/');
 
+        // Replace 4channel.org with 4chan.org
+        $referrer = str_replace('4channel.org', '4chan.org', $referrer);
+
         // Remove the slugs from 4chan threads
         if (preg_match('{boards\.4chan\.org/.+/thread/[0-9]+/.+$}', $referrer)) {
             $referrer = preg_replace('{/([0-9]+)/.+?$}', '/$1', $referrer);
