@@ -162,6 +162,7 @@ class ResultsCommand extends Command
             'sys.4channel.org' => 2 ** 2,
             'forums.somethingawful.com' => 2 ** 3,
             'neogaf.com' => 2 ** 4,
+            'forum.facepunch.com' => 2 ** 5,
             'facepunch.com' => 2 ** 5,
             '8ch.net' => 2 ** 6,
             'twitch.tv' => 2 ** 7,
