@@ -37,7 +37,13 @@ class ResultController extends AbstractController
             $rankings = array_values($award->getOfficialResults() ? $award->getOfficialResults()->getResults() : []);
 
             foreach ($rankings as $key => &$value) {
-                $value = '<span class="rank">' . $ranks[$key] . '.</span> ' . $award->getNominee($value)->getName();
+                $nominee = $award->getNominee($value);
+                $value = '<span class="rank">' . $ranks[$key] . '.</span> ';
+                if ($nominee) {
+                    $value .= $nominee->getName();
+                } else {
+                    $value .= '<span style="color: white; background: red;">' . $value . '</span>';
+                }
             }
             $theOthers = implode(', ', array_slice($rankings, 5));
             $rankings = array_slice($rankings, 0, 5);
