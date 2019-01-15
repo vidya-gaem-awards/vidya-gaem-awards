@@ -97,7 +97,7 @@
                 {% set predictionCount = nominees[award.id][nominee].fantasyPredictions | length %}
                 {{ predictionCount }} {{ predictionCount != 1 ? 'predictions' : 'prediction' }}
                 {% if award.fantasyPredictions | length > 0 %}
-                  ({{ predictionCount / award.fantasyPredictions | length * 100 | round }}%)
+                  ({{ predictionCount / award.fantasyPredictions | length * 100 | round(0) }}%)
                 {% endif %}
               </td>
             </tr>
