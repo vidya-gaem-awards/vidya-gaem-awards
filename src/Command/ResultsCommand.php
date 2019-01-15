@@ -88,19 +88,21 @@ class ResultsCommand extends Command
         $this->output = $output;
         $this->timer = new Timer();
 
-        if (!$input->hasOption('predictions-only')) {
+        if (!$input->getOption('predictions-only')) {
             $this->updateVoteReferrers();
             $this->updateResultCache();
         }
         $this->updatePredictionScores();
 
-        if (!$input->hasOption('predictions-only')) {
+        if (!$input->getOption('predictions-only')) {
             $this->disableCronJobIfNeeded();
         }
     }
     
     private function updateVoteReferrers()
     {
+        $this->writeln('Updating vote referrers');
+
         // Step 1. Get a list of voters
         $result = $this->em->createQueryBuilder()
             ->select('DISTINCT (v.cookieID) as id')
@@ -244,6 +246,8 @@ class ResultsCommand extends Command
     
     private function updateResultCache()
     {
+        $this->writeln('Updating result cache');
+
         // Remove all existing data
         $this->em->createQueryBuilder()->delete(ResultCache::class)->getQuery()->execute();
 
@@ -307,6 +311,8 @@ class ResultsCommand extends Command
 
     private function updatePredictionScores()
     {
+        $this->writeln('Updating prediction scores');
+
         /** @var FantasyUser[] $predictionUser */
         $predictionUsers = $this->em->getRepository(FantasyUser::class)->findAll();
 
@@ -347,6 +353,8 @@ class ResultsCommand extends Command
 
     private function disableCronJobIfNeeded()
     {
+        $this->writeln('Check if cron job needs to be disabled');
+
         $votingEnd = $this->configService->getConfig()->getVotingEnd();
         if (!$votingEnd) {
             return;
