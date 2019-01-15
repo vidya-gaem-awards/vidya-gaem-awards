@@ -38,12 +38,13 @@ class ResultController extends AbstractController
 
             foreach ($rankings as $key => &$value) {
                 $nominee = $award->getNominee($value);
-                $value = '<span class="rank">' . $ranks[$key] . '.</span> ';
+                $output = '<span class="rank">' . $ranks[$key] . '.</span> ';
                 if ($nominee) {
-                    $value .= $nominee->getName();
+                    $output .= $nominee->getName();
                 } else {
-                    $value .= '<span style="color: white; background: red;">' . $value . '</span>';
+                    $output .= '<span style="color: white; background: red;">' . $value . '</span>';
                 }
+                $value = $output;
             }
             $theOthers = implode(', ', array_slice($rankings, 5));
             $rankings = array_slice($rankings, 0, 5);
