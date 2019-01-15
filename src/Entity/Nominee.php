@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class Nominee implements \JsonSerializable
 {
     const DEFAULT_IMAGE_DIRECTORY = '/img/nominees/';
@@ -25,6 +27,15 @@ class Nominee implements \JsonSerializable
 
     /** @var Award */
     private $award;
+
+    /** @var ArrayCollection|FantasyPrediction[] */
+    private $fantasyPredictions;
+
+    public function __construct()
+    {
+        $this->fantasyPredictions = new ArrayCollection();
+    }
+
 
     /**
      * @return integer
@@ -142,6 +153,14 @@ class Nominee implements \JsonSerializable
     public function getAward()
     {
         return $this->award;
+    }
+
+    /**
+     * @return FantasyPrediction[]|ArrayCollection
+     */
+    public function getFantasyPredictions()
+    {
+        return $this->fantasyPredictions;
     }
 
     public function jsonSerialize()

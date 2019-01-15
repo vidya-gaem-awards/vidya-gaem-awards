@@ -13,8 +13,10 @@ App\Entity\FantasyPrediction:
     manyToOne:
         award:
             targetEntity: Award
+            inversedBy: fantasyPredictions
         nominee:
             targetEntity: Nominee
+            inversedBy: fantasyPredictions
         fantasyUser:
             targetEntity: FantasyUser
             inversedBy: predictions

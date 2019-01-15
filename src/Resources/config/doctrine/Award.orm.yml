@@ -75,3 +75,7 @@ App\Entity\Award:
       targetEntity: ResultCache
       mappedBy: award
       cascade: ['remove']
+    fantasyPredictions:
+      targetEntity: FantasyPrediction
+      mappedBy: award
+      cascade: ['remove']

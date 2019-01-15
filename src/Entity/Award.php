@@ -86,6 +86,9 @@ class Award implements \JsonSerializable
     /** @var AwardSuggestion */
     private $suggestions;
 
+    /** @var ArrayCollection|FantasyPrediction[] */
+    private $fantasyPredictions;
+
     /**
      * Constructor
      */
@@ -97,6 +100,7 @@ class Award implements \JsonSerializable
         $this->votes = new ArrayCollection();
         $this->resultCache = new ArrayCollection();
         $this->suggestions = new ArrayCollection();
+        $this->fantasyPredictions = new ArrayCollection();
     }
 
     /**
@@ -674,6 +678,14 @@ class Award implements \JsonSerializable
         }
 
         return $suggestions;
+    }
+
+    /**
+     * @return FantasyPrediction[]|ArrayCollection
+     */
+    public function getFantasyPredictions()
+    {
+        return $this->fantasyPredictions;
     }
 }
 
