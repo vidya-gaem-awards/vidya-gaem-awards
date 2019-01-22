@@ -1,4 +1,4 @@
-{% extends 'base/standard.html.twig' %}
+{% extends 'base/standardThemed.html.twig' %}
 
 {% block title %}Videos{% endblock %}
 
@@ -34,6 +34,11 @@
       padding: 0;
       margin-bottom: 10px;
     }
+
+    .card-header {
+      border-top-width: 1px;
+      border-top-style: solid;
+    }
   </style>
 {% endblock %}
 
@@ -42,8 +47,7 @@
   <header class="jumbotron masthead">
     <div class="filmstrip"></div>
     <div class="container" style="padding: 15px 0; background-image: url('{{ asset('img/videos-background.png') }}');">
-      <h1>Where your hilarious project blossoms</h1>
-      <p>You could win $120 USD from your skit!</p>
+      {{ include('dynamic/videos_top_section.html.twig') }}
     </div>
     <div class="filmstrip"></div>
   </header>
@@ -52,81 +56,11 @@
 {% block content %}
   <div class="row">
     <div class="col-md-7">
-      <h2>Last year's competition was a success, so we're bringing it back for 2018.</h2>
-      <p>
-        We had an enormous number of submissions last year with <a href="https://www.youtube.com/watch?v=PRq_DUMVkbQ" target="_blank">No Man's Stranding</a>
-        taking the cake as best skit. This year, we're bringing the competition back, and increasing the prize to $120 USD.
-      </p>
-      <p>
-        You don't expect to much and you shouldn't either, but with 20 more dollars, who knows what we can expect?
-      </p>
-      <p>
-        This year we are also accepting bumpers, but note that <strong>bumpers are not eligible for the cash prize</strong>.
-      </p>
-      <p>
-        If you have something that you think is funny and deserves a spot on the /v/GAs, then go ahead and submit it!
-        It doesn't have to be serious, just quality vidya content.
-      </p>
-      <p>
-        If you're already rich and don't want the cash prize, you can choose to have it donated to a charity of your choice.
-      </p>
-
-      <h2 style="margin-top: 30px;">Guidelines</h2>
-      <p>
-        They're too long to list here, but you can find all the requirements <a
-            href="https://docs.google.com/document/d/15vKzWQ-xit0KG3577k8Ma2QYuaS1p8FafiYI4-fW5gc/edit?usp=sharing">here</a>.
-        <br><b>you're gonna need to read them</b>
-      </p>
-
-      <h2 style="margin-top: 30px;">Submissions</h2>
-      <p>
-        <a class="btn btn-primary" href="https://goo.gl/forms/P1WVU8qXgWyjsntA2">Submit your skit or bumper here</a>
-      </p>
-      <p>
-        <small>Submissions will close on Jan 28. Voting on skits will happen after the show and the winners will be announced
-          two weeks after on our Discord server.</small>
-      </p>
-
+      {{ include('dynamic/videos_left_section.html.twig') }}
     </div>
     <div class="col-md-5">
-      <div class="well well-small">
-        <h3 style="margin-top: 0;">Requirements:</h3>
-        <p>
-          These are the basic requirements: check the <a
-              href="https://docs.google.com/document/d/15vKzWQ-xit0KG3577k8Ma2QYuaS1p8FafiYI4-fW5gc/edit?usp=sharing">requirements
-            document</a> for the full details.
-        </p>
-        <ul>
-          <li>Your video must be related to video games in some way.</li>
-          <li>Skits must be no longer than 3 minutes.</li>
-          <li>Bumpers must be no longer than 15 seconds.</li>
-          <li>Original content only.</li>
-        </ul>
-
-        <h3>Recommendations:</h3>
-        <ul>
-          <li>1080p at 30-60fps unless it ruins the concept of the skit.</li>
-          <li>Again, read the <a
-                href="https://docs.google.com/document/d/15vKzWQ-xit0KG3577k8Ma2QYuaS1p8FafiYI4-fW5gc/edit?usp=sharing">doc</a>.
-          </li>
-        </ul>
-
-        <h3>Cash Prize:</h3>
-        <ul>
-          <li>Bumpers are not eligible for the cash prize.</li>
-          <li>The prize will be delivered to your paypal.me address. Don't have one? Make one, it comes with every
-            PayPal account.
-          </li>
-          <li>If you don't wish to collect it, you can give the prize to a charity of your choice.<br>
-            <small>
-              <em>
-                If you don't have a charity preference, the prize will go to the
-                <a href="https://www.awla.org.au/">Australian Animal Welfare League</a>
-                by default.
-              </em>
-            </small>
-          </li>
-        </ul>
+      <div class="card">
+        {{ include('dynamic/videos_right_section.html.twig') }}
       </div>
     </div>
   </div>

@@ -86,7 +86,7 @@
           {% set result = award.getOfficialResults %}
           {% for nominee in result.results %}
             <tr>
-              <th style="width: 100px;">{{ loop.index }}</th>
+              <th style="width: 100px;">{{ loop.index }}</th>ho
               <td class="position position-{{ loop.index }}">{{ nominees[award.id][nominee].name }}</td>
               <td style="width: 200px;">
                 {% if result.steps['sweepPoints'][nominee] | default(0) > 0 %}

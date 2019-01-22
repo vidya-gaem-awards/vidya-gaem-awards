@@ -49,7 +49,7 @@ html {
 body {
   background: none;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: "Corbel", Arial, sans-serif;
 }
 
 .zig {
@@ -92,14 +92,18 @@ h2 {
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
-  border: none;
-  background-color: rgb(251, 68, 7);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-.navbar a {
+.navbar .nav-item .nav-link {
   color: white !important;
   background: none !important;
   text-shadow: black 1px 1px;
+  font-family: "Corbel", Arial, sans-serif;
+}
+
+.navbar .nav-item .nav-link:hover {
+  color: #fec644 !important;
 }
 
 .navbar a:hover {
@@ -112,16 +116,124 @@ h2 {
   -moz-box-shadow: inset 0 3px 15px rgba(255, 255, 255, 0.125);
 }
 
-.navbar-fixed-top {
-  border-bottom: 1px solid yellow;
-  box-shadow: 0 0 5px yellow;
+.navbar .dropdown-menu {
+  border: 1px solid #fec644;
+  background: rgba(0, 0, 0, 0.6);
 }
 
-.navbar-fixed-bottom {
-  border-top: 1px solid yellow;
-  box-shadow: 0 0 5px yellow;
+.navbar .dropdown-item {
+  font-family: "Corbel", Arial, sans-serif;
+  color: white;
+  text-shadow: none;
+}
+
+.navbar .dropdown-item:hover {
+  color: #fec644;
+  text-shadow: none;
+  background: none;
+}
+
+.navbar.fixed-top {
+  border-bottom: 1px solid #fec644;
+}
+
+.navbar.fixed-bottom {
+  border-top: 1px solid #fec644;
 }
 
 .navbar-brand {
   font-weight: normal;
+  color: white !important;
+  font-family: "Trajan Pro 3", serif;
+}
+
+a {
+  color: #fec544;
+  font-family: "Trajan Pro 3", serif;
+  text-shadow: #00000080 2px 2px 2px;
+}
+
+a:hover {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fec644;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: #fec644;
+}
+
+.card-header {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: #fec644;
+}
+
+/** Bootstrap button **/
+.btn {
+  font-family: "Corbel", Arial, sans-serif;
+  text-shadow: none;
+}
+
+.btn-themed {
+  color: #212529;
+  background-color: #fec544;
+  border-color: #feb91e
+}
+
+.btn-themed:hover {
+  color: #212529;
+  background-color: #feb511;
+  border-color: #fecd5d
+}
+
+.btn-themed:focus,.btn-themed.focus {
+  box-shadow: 0 0 0 .2rem rgba(254,185,30,0.5)
+}
+
+.btn-themed.disabled,.btn-themed:disabled {
+  color: #212529;
+  background-color: #fec544;
+  border-color: #feb91e
+}
+
+.btn-themed:not(:disabled):not(.disabled):active,.btn-themed:not(:disabled):not(.disabled).active,.show>.btn-themed.dropdown-toggle {
+  color: #212529;
+  background-color: #fed577;
+  border-color: #db9801
+}
+
+.btn-themed:not(:disabled):not(.disabled):active:focus,.btn-themed:not(:disabled):not(.disabled).active:focus,.show>.btn-themed.dropdown-toggle:focus {
+  box-shadow: 0 0 0 .2rem rgba(254,185,30,0.5)
+}
+
+.btn-outline-themed {
+  color: #fec544;
+  background-color: transparent;
+  background-image: none;
+  border-color: #fec544
+}
+
+.btn-outline-themed:hover {
+  color: #febf30;
+  background-color: #fecd5d;
+  border-color: #fec544
+}
+
+.btn-outline-themed:focus,.btn-outline-themed.focus {
+  box-shadow: 0 0 0 .2rem rgba(254,197,68,0.5)
+}
+
+.btn-outline-themed.disabled,.btn-outline-themed:disabled {
+  color: #fec544;
+  background-color: transparent
+}
+
+.btn-outline-themed:not(:disabled):not(.disabled):active,.btn-outline-themed:not(:disabled):not(.disabled).active,.show>.btn-outline-themed.dropdown-toggle {
+  color: #212529;
+  background-color: #fecd5d;
+  border-color: #fec544
+}
+
+.btn-outline-themed:not(:disabled):not(.disabled):active:focus,.btn-outline-themed:not(:disabled):not(.disabled).active:focus,.show>.btn-outline-themed.dropdown-toggle:focus {
+  box-shadow: 0 0 0 .2rem rgba(254,197,68,0.5)
 }
