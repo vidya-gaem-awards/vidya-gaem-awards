@@ -2,10 +2,6 @@
 
 {% block title 'Soundtrack' %}
 
-{% block beforeContainer %}
-  <h1>The Official Soundtrack of the 2018 /v/GAs</h1>
-{% endblock %}
-
 {% block content %}
   <style type="text/css">
     h1 {
@@ -46,8 +42,12 @@
     }
 
     #track-list {
-      max-width: 800px;
+      max-width: 900px;
       margin: 25px auto 0;
+
+      font-family: "Trajan Pro 3", serif;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid #fec544;
     }
 
     #track-list td {
@@ -56,289 +56,56 @@
     }
 
     #track-list td:nth-child(1) {
-      color: white;
+      color: #fec544;
+      /*color: white;*/
     }
 
     #track-list td:nth-child(2) {
-      color: yellow;
+      /*color: yellow;*/
     }
 
     #track-list td:nth-child(3) {
-      color: white;
+      color: #fec544;
       font-style: italic;
     }
 
     #track-list .line-after td {
-      border-bottom: 1px solid #f1e9d0;
+      border-bottom: 1px solid #fec544;
       padding-bottom: 15px;
     }
 
     #track-list .line-before td {
-      border-top: 1px solid #f1e9d0;
+      border-top: 1px solid #fec544;
       padding-top: 15px;
     }
   </style>
 
+  <div class="pageHeader">
+    <div class="pageHeaderLogo">
+      <img src="/2018images/vga2018_logo.png" class="logo" alt="oh god it's happening again">
+    </div>
+    <div class="pageHeaderTitle">
+      <h1>The 2018 Vidya Gaem Awards</h1>
+    </div>
+  </div>
+
   <div class="row" style="margin-top: 20px;">
-    <div class="col-xs-12">
-      <div style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px; max-width: 300px;">
-        <img src="{{ asset('2017images/album.png') }}" alt="Album art" class="img-responsive album-art">
-      </div>
-      <p class="text-center" style="margin-top: 10px; color: white; font-size: 14px;">
-        <a href="https://vidyagaemawards.com/music/2017-vga-preshow-mixes.zip">Download preshow music</a>
-      </p>
+    <div class="col-12">
+      {#<div style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px; max-width: 300px;">#}
+        {#<img src="{{ asset('2017images/album.png') }}" alt="Album art" class="img-responsive album-art">#}
+      {#</div>#}
+      {#<p class="text-center" style="margin-top: 10px; color: white; font-size: 14px;">#}
+        {#<a href="https://vidyagaemawards.com/music/2017-vga-preshow-mixes.zip">Download preshow music</a>#}
+      {#</p>#}
 
       <table class="table" id="track-list">
-        <tr class="line-before">
-          <td></td>
-          <td>FutanariVorestep - /v/GAs 2017 Preshow Chill Mix</td>
-          <td>Preshow</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Jab50Yen - Jab's VGAs 2017 Mix</td>
-          <td>Preshow</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>MatrixMarioX - vgas2017preshowmix</td>
-          <td>Preshow</td>
-        </tr>
-        <tr class="line-before">
-          <td>01</td>
-          <td>The Legend of Zelda: Ocarina of Time - Shop</td>
-          <td>Intro</td>
-        </tr>
-        <tr>
-          <td>02</td>
-          <td>Tower Sound and Communications - Kmart Week of 06.21.1992</td>
-          <td>Tablet Mode Award</td>
-        </tr>
-        <tr>
-          <td>03</td>
-          <td>Ace Marino - Communication</td>
-          <td>Guilty Pleasure Award</td>
-        </tr>
-        <tr>
-          <td>04</td>
-          <td>mii channel but all the pauses are uncomfortably long</td>
-          <td>Seal of Quality Award</td>
-        </tr>
-        <tr>
-          <td>05</td>
-          <td>Akira Ishikawa Count Buffalo Jazz And Rock Band - Sunrise</td>
-          <td>Hyperbole Award</td>
-        </tr>
-        <tr>
-          <td>06</td>
-          <td>Casiopea - Take Me</td>
-          <td>Plot and Backstory Award</td>
-        </tr>
-        <tr>
-          <td>07</td>
-          <td>♥ GOJII ♥ - FIND U</td>
-          <td>A E S T H E T I C S Award</td>
-        </tr>
-        <tr>
-          <td>08</td>
-          <td>Kagi - Gift</td>
-          <td>A E S T H E T I C S Award</td>
-        </tr>
-        <tr>
-          <td>09</td>
-          <td>Snail's House - ラ・ム・ネ (ra-mu-ne)</td>
-          <td>A E S T H E T I C S Award</td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>Tecchi x Amacchi x Kagi - Chuuni</td>
-          <td>A E S T H E T I C S Award</td>
-        </tr>
-        <tr>
-          <td>11</td>
-          <td>Nokae - Oni</td>
-          <td>A E S T H E T I C S Award</td>
-        </tr>
-        <tr>
-          <td>12</td>
-          <td>Cosmicosmo - Milk & Cookie</td>
-          <td>A E S T H E T I C S Award</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>Mariko Tone - Hot Stuff</td>
-          <td>Kamige Award</td>
-        </tr>
-        <tr>
-          <td>14</td>
-          <td>Keith Mansfield - Teenage Villain</td>
-          <td>Worst Publisher Award</td>
-        </tr>
-        <tr>
-          <td>15</td>
-          <td>Toshiki Kadomatsu - 52nd Street "Akiko"</td>
-          <td>Niche Award</td>
-        </tr>
-        <tr>
-          <td>16</td>
-          <td>FR3AK - Android Babe (/v/GA Remix)</td>
-          <td>PIXEL5 Award</td>
-        </tr>
-        <tr>
-          <td>17</td>
-          <td>Sim City 4 - SC4m15</td>
-          <td>HALL-A Award</td>
-        </tr>
-        <tr>
-          <td>18</td>
-          <td>Horace Silver Quintet - Big Business</td>
-          <td>DeviantArt Award</td>
-        </tr>
-        <tr>
-          <td>19</td>
-          <td>Digitalism - Pogo</td>
-          <td>Intermission</td>
-        </tr>
-        <tr>
-          <td>20</td>
-          <td>PNAU - embrace</td>
-          <td>Intermission</td>
-        </tr>
-        <tr>
-          <td>21</td>
-          <td>glue70 - Embrace the Ray</td>
-          <td>Intermission</td>
-        </tr>
-        <tr>
-          <td>22</td>
-          <td>Takeshi Inomata & Sound Limited - It Better End Soon</td>
-          <td>Hate Machine Award</td>
-        </tr>
-        <tr>
-          <td>23</td>
-          <td>/v/GA Team - Parappa the Award Rap</td>
-          <td>PaRappa The Award</td>
-        </tr>
-        <tr>
-          <td>24</td>
-          <td>Super Mario Odyssey - Tostarena Ruins</td>
-          <td>PaRappa The Award</td>
-        </tr>
-        <tr>
-          <td>25</td>
-          <td>Cuphead - Threatenin Zeppelin</td>
-          <td>PaRappa The Award</td>
-        </tr>
-        <tr>
-          <td>26</td>
-          <td>Nier Automata - Song of the Ancients - Atonement (Instrumental)</td>
-          <td>PaRappa The Award</td>
-        </tr>
-        <tr>
-          <td>27</td>
-          <td>Persona 5 - Rivers in the Desert (Instrumental)</td>
-          <td>PaRappa The Award</td>
-        </tr>
-        <tr>
-          <td>28</td>
-          <td>Sonic Mania - Stardust Speedway Zone Act 2</td>
-          <td>PaRappa The Award</td>
-        </tr>
-        <tr>
-          <td>29</td>
-          <td>Nier Automata - Song of the Ancients - Atonement</td>
-          <td>PaRappa The Award</td>
-        </tr>
-        <tr>
-          <td>30</td>
-          <td>TimeSplitters - Mall</td>
-          <td>Good Deed Award</td>
-        </tr>
-        <tr>
-          <td>31</td>
-          <td>Dust Devil - D-Code</td>
-          <td>Golden Broom Award</td>
-        </tr>
-        <tr>
-          <td>32</td>
-          <td>Christian Mondstein/Jo Part - Ginger Snap</td>
-          <td>🤔 Award</td>
-        </tr>
-        <tr>
-          <td>32</td>
-          <td>Christian Mondstein/Jo Part - Creep Joint</td>
-          <td>🤔 Award</td>
-        </tr>
-        <tr>
-          <td>33</td>
-          <td>Sim City 4 - SC4m11</td>
-          <td>/vr/ Award</td>
-        </tr>
-        <tr>
-          <td>34</td>
-          <td>FrankJavCee - So Damn Beautiful (instrumental)</td>
-          <td>Cities Skylines Bumper</td>
-        </tr>
-        <tr>
-          <td>35</td>
-          <td>Series of Tubes</td>
-          <td>Unregistered Hypercam Award</td>
-        </tr>
-        <tr>
-          <td>36</td>
-          <td>This is Sparta Remix</td>
-          <td>Unregistered Hypercam Award</td>
-        </tr>
-        <tr>
-          <td>37</td>
-          <td>Tay Zonday - Chocolate Rain</td>
-          <td>Unregistered Hypercam Award</td>
-        </tr>
-        <tr>
-          <td>38</td>
-          <td>Hotline Miami - Daisuke</td>
-          <td>/v/irgin Award</td>
-        </tr>
-        <tr>
-          <td>39</td>
-          <td>galah1 - Old bunnings warehouse proof thing</td>
-          <td>Press X to Win The Award</td>
-        </tr>
-        <tr>
-          <td>40</td>
-          <td>Robotman - Jupiter</td>
-          <td>"Hello, Fellow Posters" Award</td>
-        </tr>
-        <tr>
-          <td>41</td>
-          <td>The Sims - Buy Mode 1</td>
-          <td>Most Hated Award</td>
-        </tr>
-        <tr>
-          <td>42</td>
-          <td>Dead Rising - Mall Music 3</td>
-          <td>Least Worst Award</td>
-        </tr>
-        <tr>
-          <td>43</td>
-          <td>Nier Automata - The End of YoRHa (Weight of the World Medley)</td>
-          <td>Credits</td>
-        </tr>
-        <tr>
-          <td>44</td>
-          <td>SOFI TUKKER - Johny (Moon Boots Remix)</td>
-          <td>Post-show Intermission</td>
-        </tr>
-        <tr>
-          <td>45</td>
-          <td>Doomguy13 - Kendrick Lamar x Death Grips - Don't Need Your Swimming Pools (Pop)</td>
-          <td>Post-show Intermission</td>
-        </tr>
-        <tr>
-          <td>46</td>
-          <td>Flow Theory - Flow Theory Radio: 002 w/ g l u e 7 0</td>
-          <td>Post-show Intermission</td>
-        </tr>
+        {% for track in tracks %}
+          <tr class="{{ loop.index == 1 ? 'line-before' }}">
+            <td>{{ loop.index }}.</td>
+            <td>{{ track[0] }}</td>
+            <td>{{ track[1] }}</td>
+          </tr>
+        {% endfor %}
       </table>
     </div>
   </div>

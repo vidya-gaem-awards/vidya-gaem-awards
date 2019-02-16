@@ -324,7 +324,7 @@ videos:
 
 soundtrack:
     path:       /soundtrack
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    controller: App\Controller\StaticController::soundtrackAction
     defaults:
         template: 'soundtrack.html.twig'
 
