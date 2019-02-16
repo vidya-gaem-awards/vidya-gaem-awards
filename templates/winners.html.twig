@@ -29,11 +29,11 @@
       color: #1565C0;
     }
 
-    .uploadable .empty-image:hover .glyphicon {
+    .uploadable .empty-image:hover .upload-icon {
       animation: move 0.4s forwards;
     }
 
-    .empty-image .glyphicon-cog {
+    .empty-image .fa-cog {
       animation: spin 2s infinite linear;
     }
 
@@ -55,7 +55,7 @@
       }
     }
 
-    .empty-image .glyphicon {
+    .empty-image .upload-icon {
       font-size: 80px;
       margin-top: 35px;
       margin-bottom: 10px;
@@ -247,7 +247,7 @@
           $('#fileInput').change(function () {
               var target = fileUploadTarget;
               var image = fileUploadTarget.find('img');
-              var icon = fileUploadTarget.find('.glyphicon');
+              var icon = fileUploadTarget.find('.upload-icon');
               var emptyImage = fileUploadTarget.find('.empty-image');
 
               if (image) {
@@ -256,9 +256,9 @@
                   emptyImage.find('.upload-help').text('Uploading...');
               }
 
-              icon.removeClass('glyphicon-upload');
-              icon.removeClass('glyphicon-alert');
-              icon.addClass('glyphicon-cog');
+              icon.removeClass('fa-file-upload');
+              icon.removeClass('fa-exclamation-triangle');
+              icon.addClass('fa-cog');
 
               var id = target.attr('data-id');
               $('#uploadAwardID').val(id);
@@ -290,8 +290,8 @@
                       } else {
                           alert('File upload error: ' + response.error);
                           emptyImage.find('.upload-help').text('Upload failed, click to try again');
-                          icon.removeClass('glyphicon-cog');
-                          icon.addClass('glyphicon-alert');
+                          icon.removeClass('fa-cog');
+                          icon.addClass('fa-exclamation-triangle');
                           target.addClass('uploadable');
                       }
                   }
@@ -341,7 +341,7 @@
                 {% endif %}
                 {% if is_granted('ROLE_AWARDS_EDIT') %}
                   <div class="empty-image {{ award.winnerImage ? 'inactive' : '' }}" >
-                    <div class="glyphicon glyphicon-upload"></div>
+                    <i class="far fa-file-upload upload-icon"></i>
                     <div style="font-weight: bold; font-size: 18px;" class="upload-help">
                       Click here to upload an image
                     </div>
