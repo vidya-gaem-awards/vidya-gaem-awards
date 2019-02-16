@@ -62,95 +62,26 @@
       position: relative;
     }
 
-    /* Page Header */
-    .pageHeader {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .pageHeaderTitle {
-      margin-left: 50px;
-    }
-
-    .pageHeader h1 {
-      font-size: 30px;
-      line-height: unset;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .pageHeader h2 {
-      font-size: 1.3em;
-      padding: 0px 50px;
-    }
-
-    .pageHeader h2 a {
-      color: #fec544;
-      font-family: "Trajan Pro 3", serif;
-      text-transform: uppercase;
-      text-shadow: #00000080 3px 3px 3px;
-      font-size: 0.9em;
-      line-height: 0.95em;
-    }
-
-    .pageHeader h2 a:hover {
-      background: rgba(0, 0, 0, 0.25);
-    }
-
-    .pageHeader h1::after {
-      display: block;
-      content: url(/2018images/5stars.png);
-    }
-
     p {
       font-size: 22px;
       line-height: 1.5em;
       color: white;
     }
 
-    p a {
-      background-color: rgb(251,68,7);
-      border-radius: 15px;
-      color: white;
-      padding: 5px 15px;
-      box-shadow: 2px 2px black;
-      text-shadow: 1px 1px black;
-    }
-
-    p a:hover {
-      text-decoration: underline;
-      color: white;
-    }
-
     .award {
       margin: 0 auto 35px auto;
       padding: 20px;
-      background: black;
-      border: 2px solid white;
-      /*text-shadow: 1px 1px black;*/
-      /*box-shadow: 0 0 10px #af3a81;*/
+
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 1px solid #fec544;
     }
 
     .winner {
-      border: 2px solid white;
+      border: 2px solid #fec544;
     }
 
     .winner img {
       max-width: 100%;
-    }
-
-    .awardName a {
-      color: yellow;
-      text-shadow: 2px 2px black;
-      font-style: italic;
-    }
-
-    .awardSubtitle {
-      color: white;
-      font-size: 18px;
-      margin-top: 5px;
-      /*line-height: 20px;*/
     }
 
     .award ul {
@@ -158,72 +89,71 @@
       margin: 0;
       font-size: 24px;
       padding-left: 0;
+      font-family: "Trajan Pro 3", serif;
     }
 
     .award ul li {
       line-height: 1.5em;
-      /*font-family: "modern typewriter", Calibri, sans-serif;*/
-      color: yellow;
     }
 
-    .award ul li:first-child {
-      font-size: 24px;
-      display: block;
-      text-align: center;
-      background-color: rgb(251, 68, 7);
+    .winner-name {
+      font-size: 30px;
       color: white;
-      border-radius: 20px;
-      padding: 5px;
-      /*color: yellow;*/
+      font-family: "Trajan Pro 3", serif;
+      text-shadow: #00000080 2px 2px 2px;
+
       line-height: 1em;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      margin-top: 5px;
     }
 
     .rank {
       font-size: 70%;
+      color: #fec544;
     }
 
-    .award ul li:last-child {
+    .award ul li {
       color: white;
       font-size: 18px;
       /*font-family: "modern typewriter", Tahoma, sans-serif;*/
     }
 
-    .page-header {
-      text-align: center;
-      border: none;
-      margin-bottom: 0;
-      display: flex;
-    }
-
-    .page-header.the-bottom {
-      margin-bottom: 20px;
-    }
-
     .awardHeaderContainer {
-      margin: 0 50px;
-      padding-top: 24px;
-      height: 106px;
-      background: url('{{ asset('2016images/title_bg.png') }}') center center no-repeat;
+      height: 121px;
+      margin: 0 0 20px 0;
+      padding: 30px 30px;
+      background-image: url(/2018images/btnNav_middle.png);
+      background-repeat: no-repeat;
+      background-position: top center;
       text-align: center;
     }
 
     .awardName {
-      /*font-family: "AnnapolisHalftoneItalic", 'Tahoma Bold', Tahoma, sans-serif;*/
-      /*font-weight: normal;*/
-      /*font-style: normal;*/
-      text-transform: uppercase;
-      font-size: 2.6em;
-      line-height: 40px;
-      /*color: #00ebdb;*/
+      font-family: "Trajan Pro 3", serif;
+      font-weight: normal;
+      /* text-transform: uppercase; */
+      font-size: 30px;
+      line-height: 38px;
+      color: #fec544;
+      text-shadow: #00000075 5px 5px 5px;
     }
 
-    a, a:visited {
-
+    .awardSubtitle {
+      font-family: "Corbel", Arial, sans-serif;
+      font-size: 22px;
+      color: #e7e7e7;
+      text-shadow: #00000075 5px 5px 5px;
     }
 
-    a:hover, a:active {
+    .winner-text {
+      color: #fec544;
+      text-shadow: #00000080 2px 2px 2px;
+      font-family: "Trajan Pro 3", serif;
+    }
 
+    .bottom-text {
+      margin-top: 50px;
+      margin-bottom: 20px;
     }
   </style>
 {% endblock %}
@@ -320,7 +250,7 @@
 
   {% for award in awards %}
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
 
         <div class="awardHeaderContainer">
           <div class="awardName">
@@ -353,8 +283,13 @@
               {% endif %}
             </div>
             <div class="col-md-8">
+              <div class="winner-text">Winner</div>
+              <div class="winner-name">
+                {{ results[award.id][0] | raw }}
+              </div>
+              <div class="winner-text">Eliminated</div>
               <ul>
-                {% for result in results[award.id] %}
+                {% for result in results[award.id][1:] %}
                   <li>{{ result | raw }}</li>
                 {% endfor %}
               </ul>
@@ -365,23 +300,17 @@
     </div>
   {% endfor %}
 
-  <div class="zig"></div>
-
-  <div class="page-header the-bottom">
-    <h1>Detailed Results</h1>
+  <div class="text-center bottom-text">
+    <h1>Would you like to know more?</h1>
   </div>
 
   <div class="row">
-    <div class="col-xs-12">
-      <p>
-        The results shown above are the same as those shown during the show and are based only on the votes from /v/.
-        For more details, including vote counts and votes that we filtered out, see the
-        <a href="{{ path('results') }}">detailed&nbsp;results</a> and
-        <a href="{{ path('pairwiseResults') }}">pairwise&nbsp;comparison</a> pages.
+    <div class="col-12">
+      <p class="text-center">
+        What's shown above are the official results as seen during the show. If you'd like to see more details,
+        including how sites other than /v/ voted, visit the <a href="{{ path('results') }}">detailed&nbsp;results</a> page.
       </p>
     </div>
   </div>
-
-  <div class="zig"></div>
 
 {% endblock %}

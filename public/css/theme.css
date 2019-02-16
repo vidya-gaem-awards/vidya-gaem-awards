@@ -237,3 +237,46 @@ a:hover {
 .btn-outline-themed:not(:disabled):not(.disabled):active:focus,.btn-outline-themed:not(:disabled):not(.disabled).active:focus,.show>.btn-outline-themed.dropdown-toggle:focus {
   box-shadow: 0 0 0 .2rem rgba(254,197,68,0.5)
 }
+
+/** Page header **/
+.pageHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.pageHeaderTitle {
+  margin-left: 50px;
+}
+
+.pageHeader h1 {
+  font-size: 30px;
+  line-height: unset;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pageHeader h2 {
+  font-size: 1.3em;
+  padding: 0 50px;
+}
+
+.pageHeader h2 a {
+  color: #fec544;
+  font-family: "Trajan Pro 3", serif;
+  text-transform: uppercase;
+  text-shadow: #00000080 3px 3px 3px;
+  font-size: 0.9em;
+  line-height: 0.95em;
+}
+
+.pageHeader h2 a:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.pageHeader h1::after {
+  display: block;
+  content: url(/2018images/5stars.png);
+}
