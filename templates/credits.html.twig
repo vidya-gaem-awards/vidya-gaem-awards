@@ -5,29 +5,30 @@
 {% block content %}
   <style type="text/css">
     p {
-      font-family: Tahoma, sans-serif;
+      font-family: "Corbel", Arial, sans-serif;
       font-size: 18px;
       line-height: 1.3em;
     }
 
     .awardHeaderContainer {
-      margin: 50px 0 10px 0;
-      padding: 10px;
-      background: url('{{ asset('2017images/title_bg.png') }}') center center no-repeat;
+      height: auto;
+      margin: 0 0 20px 0;
+      padding: 25px 0 20px;
+      background-image: url(/2018images/btnNav_middle.png);
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: contain;
       text-align: center;
     }
 
-    .awardHeaderContainer:first-child {
-      margin-top: 0;
-    }
-
     .awardName {
+      font-family: "Trajan Pro 3", serif;
       font-weight: normal;
-      text-transform: uppercase;
-      font-size: 1.6em;
-      color: yellow;
-      text-shadow: 2px 2px black;
-      font-style: italic;
+      /* text-transform: uppercase; */
+      font-size: 25px;
+      line-height: 25px;
+      color: #fec544;
+      text-shadow: #00000075 5px 5px 5px;
     }
 
     .credits {
@@ -36,12 +37,21 @@
       line-height: 30px;
       color: white;
       text-shadow: 1px 1px black;
+      font-family: "Corbel", Arial, sans-serif;
     }
 
-    .credits strong {
-      color: yellow;
-      font-size: 22px;
+    .credits-section {
+      margin-bottom: 20px;
+    }
+
+    .name {
+      color: #fec544;
+      font-size: 20px;
+      font-family: "Trajan Pro 3", serif;
       text-shadow: 1px 1px black;
+      margin-left: 3px;
+      margin-right: 3px;
+      white-space: nowrap;
     }
 
     .FLAOT {
@@ -50,11 +60,14 @@
     }
 
     .specialThanks {
-      background-size: auto;
-      /*height: 100px;*/
-      /*padding-top: 38px;*/
-      font-size: x-large;
+      margin-top: 20px;
+      height: 100px;
       margin-bottom: 20px;
+    }
+
+    .specialThanks .awardName {
+      font-size: 40px;
+      line-height: 60px;
     }
 
     .green {
@@ -74,104 +87,125 @@
     }
   </style>
 
-  <div class="zig"></div>
-
-  <div class="row">
-    <div class="col-md-4" style="text-align: center;">
-      <img src="{{ asset('2017images/vga_logo2.png') }}" alt="Logo of the 2018 Vidya Gaem Awards">
+  <div class="pageHeader">
+    <div class="pageHeaderLogo">
+      <img src="/2018images/vga2018_logo.png" class="logo" alt="oh god it's happening again">
     </div>
-    <div class="col-md-8" style="text-align: center; padding-top: 30px;">
-      <h1>Cast and Crew of the 2018 Vidya&nbsp;Gaem&nbsp;Awards</h1>
+    <div class="pageHeaderTitle">
+      <h1>The 2018 Vidya Gaem Awards</h1>
     </div>
   </div>
-
-  <div class="zig"></div>
 
   <div class="credits">
     <div class="row">
       <div class="col-md-6">
         <div class="awardHeaderContainer">
-          <div class="awardName">Production Team:</div>
+          <div class="awardName">Production Team</div>
         </div>
-        <p>Directed by <strong>PhoneEatingBear</strong></p>
-        <p>Produced by <strong>PhoneEatingBear</strong> &amp; <strong>Anonymous</strong></p>
-        <p>Assistant Producer <strong>CounterTunes</strong></p>
-        <p>Template by <strong>Ghost</strong> & <strong>Segab</strong></p>
-        <p>Edited by <strong>PhoneEatingBear</strong></p>
-        <p>Voiced by <strong>Jab50Yen</strong>, <strong>Duke</strong>, <strong>CounterTunes</strong>,
-          <strong>John C</strong>, <strong>DonnyQ</strong> & <strong>Microsoft Sam</strong></p>
-        <p>Music by <strong>MatrixMarioX</strong>, <strong>FutanariVorestep.exe</strong>, <strong>Jab50Yen</strong>
-         & <strong>FR3AK</strong></p>
+        <div class="credits-section">
+          <p>Directed by <span class="name">Counter</span></p>
+          <p>Produced by <span class="name">Lamer Gamer</span></p>
+          <p>Voiced by <span class="name">Counter</span>, <span class="name">Duke</span>, <span class="name">John C.</span> & <span class="name">Shuttah</span></p>
+          <p>Website by <span class="name">Segab</span> & <span class="name">Clamburger</span></p>
+          <p>Developer contact handled by <span class="name">Anonymous</span> & <span class="name">Lamer Gamer</span></p>
+        </div>
 
         <div class="awardHeaderContainer">
-          <div class="awardName">Writing Team:</div>
+          <div class="awardName">Video Team</div>
         </div>
 
-        <p>
-          <strong>Lamer Gamer</strong>, <strong>Duke</strong>, <strong>Beatstar</strong>,
-          <strong>PhoneEatingBear</strong>, <strong>GreenTeaCoffeeByMe</strong>,
-          <strong>Val</strong>, <strong>Argin</strong>, <strong>Importuno</strong>,
-          <strong>Ghmorello</strong>, <strong>Avex</strong>, <strong>Val</strong>, <strong>Dr. J</strong>,
-          <strong>Ahch</strong> & <strong>Kurushi</strong>
-        </p>
+        <div class="credits-section">
+          <p>Graphics by <span class="name">Segab</span>, <span class="name">Duke</span> & <span class="name">Anonymous</span></p>
+          <p>
+            Video production and editing by
+            <span class="name">toad the loser</span>,
+            <span class="name">dbraymz</span>,
+            <span class="name">Counter</span>,
+            <span class="name">shuttah</span>,
+            <span class="name">Segab</span> &
+            <span class="name">Anonymous</span>
+          </p>
+          <p>
+            Credits by <span class="name">Ahch</span> & <span class="name">shuttah</span>
+          </p>
+        </div>
 
         <div class="awardHeaderContainer">
-          <div class="awardName">Video Team:</div>
+          <div class="awardName">Writing Team</div>
         </div>
 
-        <p>
-          <strong>CounterTunes</strong>, <strong>Anonymous</strong>, <strong>Lamer Gamer</strong>,
-          <strong>PhoneEatingBear</strong>, <strong>DBraymz</strong> & <strong>Segab</strong>
-        </p>
+        <div class="credits-section">
+          <p>
+            Writing and research by
+            <span class="name">Lamer Gamer</span>,
+            <span class="name">Importuno</span>,
+            <span class="name">Ghmorello</span>,
+            <span class="name">GreenTeaCoffeeMadeByMe</span>,
+            <span class="name">Kazuchika Okada</span>,
+            <span class="name">Dr.J</span>,
+            <span class="name">Avex</span>,
+            <span class="name">Shuttah</span> &
+            <span class="name">Kurushi</span>
+          </p>
+
+          <p>
+            Translations by <span class="name">Ahch</span> & <span class="name">jorji</span>
+          </p>
+        </div>
 
         <div class="awardHeaderContainer">
-          <div class="awardName">Research Team:</div>
+          <div class="awardName">Audio Team</div>
         </div>
 
-        <p>
-          <strong>Segab</strong>, <strong>Lamer Gamer</strong>, <strong>CounterTunes</strong>,
-          <strong>Anonymous</strong>, <strong>Quinmael</strong>, <strong>Stevie T Transmission</strong>,
-          <strong>Bird</strong>, <strong>GreenTeaCoffeeByMe</strong>, <strong>Importuno</strong> &
-          <strong>Theu</strong>
-        </p>
+        <div class="credits-section">
+          <p>
+            <span class="name">nostalgia junkie</span>,
+            <span class="name">MMaker</span>,
+            <span class="name">beat_shobon</span>,
+            <span class="name">Jab50yen</span>,
+            <span class="name">Succmarijuano</span>,
+            <span class="name">Fv.exe</span> &
+            <span class="name">Segab</span>
+          </p>
+        </div>
       </div>
       <div class="col-md-6">
         <div class="awardHeaderContainer">
-          <div class="awardName">Skits and Bumpers:</div>
+          <div class="awardName">Skits and Bumpers</div>
         </div>
         <p>
-          &ldquo;2017 Overture&rdquo; &ndash; <strong>BroBuzz</strong><br>
-          &ldquo;Hotline Miami 3 - 90s Hole&rdquo; &ndash; <strong>Anonymous</strong><br>
-          &ldquo;In The Hall of Combo Fiend&rdquo; &ndash; <strong>Anonymous</strong><br>
-          &ldquo;Kratos Swimming&rdquo; &ndash; <strong>SpaceCopS</strong><br>
-          &ldquo;ABCs of Vidya&rdquo; &ndash; <strong>Voluntary Ignorance</strong><br>
-          &ldquo;King of Moon Flowers&rdquo; &ndash; <strong>most</strong><br>
-          &ldquo;Anon's Wacky Christmas&rdquo; &ndash; <strong>Anonymous</strong><br>
-          &ldquo;The Joi of Gaming&rdquo; &ndash; <strong>Neatoburritoproductions</strong><br>
-          &ldquo;Bonzi Buddy&rdquo; &ndash; <strong>Shuttah</strong><br>
-          &ldquo;David Become Cage&rdquo; &ndash; <strong>PowerPak</strong><br>
-          &ldquo;A BOX&rdquo; &ndash; <strong>CounterTunes</strong><br>
-          &ldquo;Vidya Reference!!11&rdquo; &ndash; <strong>Oast</strong><br>
-          &ldquo;funnykat 2017 - Beast&rdquo; &ndash; <strong>merinuza</strong><br>
-          &ldquo;Pubmart Shopping Network&rdquo; &ndash; <strong>Shuttah</strong><br>
-          &ldquo;2B Ass Bumper&rdquo; &ndash; <strong>most</strong><br>
-          &ldquo;>shadman Bumper&rdquo; &ndash; <strong>most</strong><br>
-          &ldquo;Ironic Shitposting Bumper&rdquo; &ndash; <strong>Duke</strong><br>
-          &ldquo;Sonic Bumper&rdquo; &ndash; <strong>most</strong><br>
-          &ldquo;Yakuza Bumper&rdquo; &ndash; <strong>most</strong><br>
-          &ldquo;Cities Skylines Bumper&rdquo; &ndash; <strong>CounterTunes</strong><br>
-          &ldquo;paint.exe Bumper&rdquo; &ndash; <strong>Shuttah</strong><br>
-          &ldquo;SoyBoy64&rdquo; &ndash; - <strong>Nillor</strong>
+          &ldquo;"Japanese" "Humor"&rdquo; &ndash; <span class="name">Ricardo Milos</span><br>
+          &ldquo;Boomer Rant&rdquo; &ndash; <span class="name">anonymous</span><br>
+          &ldquo;the really short moon skit&rdquo; &ndash; <span class="name">most</span><br>
+          &ldquo;Fallout: The Visual Novel&rdquo; &ndash; <span class="name">Hoffman</span><br>
+          &ldquo;Dankest Dungeon&rdquo; &ndash; <span class="name">George</span><br>
+          &ldquo;Ave MaREEEEa&rdquo; &ndash; <span class="name">shuttah</span><br>
+          &ldquo;Persona 3.5 Recarbonated Teaser&rdquo; &ndash; <span class="name">PeanutButterFun/A Chicken Nugget</span><br>
+          &ldquo;Cover Me Arthur&rdquo; &ndash; <span class="name">Neatoburrito</span><br>
+          &ldquo;a message for /v/&rdquo; &ndash; <span class="name">L.R.D.</span><br>
+          &ldquo;To Vidya of 2017+1-1&rdquo; &ndash; <span class="name">Blue Room Anon</span><br>
+          &ldquo;life-changing-magic.mp4&rdquo; &ndash; <span class="name">anonymous</span><br>
+          &ldquo;Cidya Piracy&rdquo; &ndash; <span class="name">FierceDeityLink</span><br>
+          &ldquo;Fallout 76 VR&rdquo; &ndash; <span class="name">FierceDeityLink</span><br>
+          &ldquo;The Life Changing Magic of Tidying Up Your Video Games&rdquo; &ndash; <span class="name">Anonymous</span><br>
+          &ldquo;Mobile Esports&rdquo; &ndash; <span class="name">Alexsey</span><br>
+          &ldquo;Fuck you you stupid fucking dog&rdquo; &ndash; <span class="name">Anonymous</span><br>
+          &ldquo;*Krakku*&rdquo; &ndash; <span class="name">Duke</span><br>
+          &ldquo;Trumpet Man&rdquo; &ndash; <span class="name">Lamer Gamer</span>
         </p>
 
         <div class="awardHeaderContainer">
-          <div class="awardName">Pleb Patrol:</div>
+          <div class="awardName">/agdg/ Trailers</div>
         </div>
-        <p>Preshow by <strong>Anonymous</strong></p>
-        <p>Intermission by <strong>CounterTunes</strong></p>
-        <p>Credits by <strong>Ahch</strong></p>
-        <p>Ahch's Wife: <strong>YoRHa No.2 Type B</strong></p>
-        <p>Website by <strong>Clamburger</strong>, <strong>Segab</strong> & <strong>(You)</strong></p>
+
+        <p>
+          <span class="name">Underspace</span> by Pastaspace Interactive<br>
+          <span class="name">Bokube</span> by BokuDev<br>
+          <span class="name">Sebat Fight Arena</span> by polinc games<br>
+          <span class="name">Quadrantica</span> by Cerebral Division<br>
+          <span class="name">The Deep</span> by neetdev<br>
+          <span class="name">Sipho</span> by All Parts Connected
+        </p>
       </div>
     </div>
 
@@ -180,17 +214,17 @@
     <div class="row">
       <div class="col-md-12">
         <div class="awardHeaderContainer specialThanks">
-          <div class="awardName">Special Thanks:</div>
+          <div class="awardName">Special Thanks</div>
         </div>
-        <p class="FLAOT"><strong>Anonymous</strong></p>
-        <p style="margin-top: 20px;">And most importantly, <strong style="font-size: x-large;">you!</strong></p>
+        <p class="FLAOT"><span class="name">Anonymous</span></p>
+        <p style="margin-top: 20px;">And most importantly, <span class="name" style="font-size: x-large;">you!</span></p>
       </div>
     </div>
 
     <div class="zig"></div>
 
     <div class="row" style="margin-top: 200px;">
-      <div class="col-xs-12">
+      <div class="col-12">
         <p class="implying">&gt;they contribute to a shitty online video game award show</p>
         <p class="implying">&gt;they take their jobs very seriously</p>
         <p class="implying">&gt;they do it for free</p>
