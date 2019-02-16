@@ -35,7 +35,7 @@
           <a href="{{ path('voting') }}"><h2>Back to voting</h2></a>
         {% endif %}
         {% if app.user.fantasyUser or not predictionService.arePredictionsLocked %}
-          <a href="{{ path('predictions') }}" class="{{ page == 'picks' and viewingOwn ? 'active' : '' }}">
+          <a href="{{ path('predictions') }}" class="{{ page == 'picks' and viewingOwn | default(false) ? 'active' : '' }}">
             <h2>{{ app.user.fantasyUser ? 'Your picks' : 'Sign up' }}</h2>
           </a>
         {% endif %}

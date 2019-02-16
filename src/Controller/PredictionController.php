@@ -57,6 +57,9 @@ class PredictionController extends AbstractController
             $viewingOwn = false;
         } else {
             if (!$user->getFantasyUser()) {
+                if ($configService->getConfig()->isPagePublic('results')) {
+                    return $this->redirectToRoute('predictionLeaderboard');
+                }
                 return $this->render('predictionSignUp.twig', [
                     'page' => 'picks',
                     'nonce' => $nonce
@@ -102,8 +105,12 @@ class PredictionController extends AbstractController
         ]);
     }
 
-    public function join(EntityManagerInterface $em, Request $request, SessionInterface $session, AuditService $auditService)
+    public function join(EntityManagerInterface $em, Request $request, SessionInterface $session, AuditService $auditService, ConfigService $configService)
     {
+        if ($configService->getConfig()->isPagePublic('results')) {
+            return $this->redirectToRoute('predictionLeaderboard');
+        }
+
         /** @var User $user */
         $user = $this->getUser();
         if (!$user->isLoggedIn() || !$request->get('nonce') || $request->get('nonce') !== $session->get('nonce')) {
@@ -224,8 +231,13 @@ class PredictionController extends AbstractController
         return $this->redirectToRoute('predictions');
     }
 
-    private function processAvatar(UploadedFile $file, Request $request)
+    private function processAvatar(UploadedFile $file, Request $request, PredictionService $predictionService)
     {
+        if ($predictionService->arePredictionsLocked()) {
+            $this->addFlash('formError', 'The 2018 Fantasy League has closed. You can no longer make changes to your details.');
+            return $this->redirectToRoute('predictions');
+        }
+
         if ($file->getSize() > FantasyUser::MAX_AVATAR_SIZE) {
             $this->addFlash('formError', 'Uploaded avatar is too large (Limit: 1 MB).');
             return false;

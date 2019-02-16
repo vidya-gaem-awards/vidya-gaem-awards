@@ -194,7 +194,7 @@ tasksPost:
 #
 
 predictions:
-    path:       /predictions/{id?}
+    path:       /predictions/picks/{id?}
     controller: App\Controller\PredictionController:index
     requirements:
         id: '[0-9]+'
@@ -208,7 +208,7 @@ predictionJoin:
     controller: App\Controller\PredictionController:join
 
 predictionUpdatePick:
-    path:       /predictions/{id}/update
+    path:       /predictions/picks{id}/update
     methods:    [POST]
     controller: App\Controller\PredictionController:updatePick
 
@@ -219,6 +219,12 @@ predictionUpdateDetails:
 predictionLeaderboard:
     path:       /predictions/leaderboard
     controller: App\Controller\PredictionController:leaderboard
+
+predictionRedirect:
+    path:       /predictions
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: predictionLeaderboard
 
 #
 # VOTING
