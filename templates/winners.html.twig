@@ -61,89 +61,48 @@
       margin-bottom: 10px;
       position: relative;
     }
-  </style>
 
-  <script type="text/javascript">
-    $(document).ready(function () {
-      var fileUploadTarget;
+    /* Page Header */
+    .pageHeader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-      $('.uploadable').click(function (event) {
-        fileUploadTarget = $(event.currentTarget);
+    .pageHeaderTitle {
+      margin-left: 50px;
+    }
 
-        // The uploadable class is removed while the upload is in progress
-        if (!fileUploadTarget.hasClass('uploadable')) {
-            return;
-        }
+    .pageHeader h1 {
+      font-size: 30px;
+      line-height: unset;
+      text-align: center;
+      margin-top: 20px;
+    }
 
-        $('#fileInput').click();
-      });
+    .pageHeader h2 {
+      font-size: 1.3em;
+      padding: 0px 50px;
+    }
 
-      $('#fileInput').change(function () {
-        var target = fileUploadTarget;
-        var image = fileUploadTarget.find('img');
-        var icon = fileUploadTarget.find('.glyphicon');
-        var emptyImage = fileUploadTarget.find('.empty-image');
+    .pageHeader h2 a {
+      color: #fec544;
+      font-family: "Trajan Pro 3", serif;
+      text-transform: uppercase;
+      text-shadow: #00000080 3px 3px 3px;
+      font-size: 0.9em;
+      line-height: 0.95em;
+    }
 
-        if (image) {
-            image.remove();
-            emptyImage.removeClass('inactive');
-            emptyImage.find('.upload-help').text('Uploading...');
-        }
+    .pageHeader h2 a:hover {
+      background: rgba(0, 0, 0, 0.25);
+    }
 
-        icon.removeClass('glyphicon-upload');
-        icon.removeClass('glyphicon-alert');
-        icon.addClass('glyphicon-cog');
+    .pageHeader h1::after {
+      display: block;
+      content: url(/2018images/5stars.png);
+    }
 
-        var id = target.attr('data-id');
-        $('#uploadAwardID').val(id);
-        target.removeClass('uploadable');
-
-        var form = $('#fileForm')[0];
-        var data = new FormData(form);
-
-        $.ajax({
-          type: 'post',
-          url: '{{ path('winnerImageUpload') }}',
-          data: data,
-          cache: false,
-          contentType: false,
-          processData: false,
-          dataType: 'json',
-          success: function (response) {
-            if (response.success) {
-                image = $('<img class="img-responsive center-block">');
-                image.appendTo(target);
-                image.hide();
-                image.attr('src', response.filePath + '?t=' + new Date().getTime());
-
-                image.bind('load', function () {
-                    emptyImage.addClass('inactive');
-                    image.show();
-                    target.addClass('uploadable');
-                });
-            } else {
-                alert('File upload error: ' + response.error);
-                emptyImage.find('.upload-help').text('Upload failed, click to try again');
-                icon.removeClass('glyphicon-cog');
-                icon.addClass('glyphicon-alert');
-                target.addClass('uploadable');
-            }
-          }
-        });
-
-        $('#fileInput').val('');
-      });
-    });
-  </script>
-{% endblock %}
-
-{% block content %}
-  <form enctype="multipart/form-data" id="fileForm" style="display: none;">
-    <input type="hidden" name="id" id="uploadAwardID">
-    <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif">
-  </form>
-
-  <style type="text/css">
     p {
       font-size: 22px;
       line-height: 1.5em;
@@ -175,6 +134,10 @@
 
     .winner {
       border: 2px solid white;
+    }
+
+    .winner img {
+      max-width: 100%;
     }
 
     .awardName a {
@@ -230,6 +193,7 @@
       text-align: center;
       border: none;
       margin-bottom: 0;
+      display: flex;
     }
 
     .page-header.the-bottom {
@@ -262,19 +226,97 @@
 
     }
   </style>
+{% endblock %}
 
-  <div class="zig"></div>
+{% block js %}
+  <script type="text/javascript">
+      $(document).ready(function () {
+          var fileUploadTarget;
 
-  <div class="row">
-    <div class="col-md-5" style="text-align: center;">
-      <img src="{{ asset('2017images/vga_logo2.png') }}" alt="Logo of the 2018 Vidya Gaem Awards">
+          $('.uploadable').click(function (event) {
+              fileUploadTarget = $(event.currentTarget);
+
+              // The uploadable class is removed while the upload is in progress
+              if (!fileUploadTarget.hasClass('uploadable')) {
+                  return;
+              }
+
+              $('#fileInput').click();
+          });
+
+          $('#fileInput').change(function () {
+              var target = fileUploadTarget;
+              var image = fileUploadTarget.find('img');
+              var icon = fileUploadTarget.find('.glyphicon');
+              var emptyImage = fileUploadTarget.find('.empty-image');
+
+              if (image) {
+                  image.remove();
+                  emptyImage.removeClass('inactive');
+                  emptyImage.find('.upload-help').text('Uploading...');
+              }
+
+              icon.removeClass('glyphicon-upload');
+              icon.removeClass('glyphicon-alert');
+              icon.addClass('glyphicon-cog');
+
+              var id = target.attr('data-id');
+              $('#uploadAwardID').val(id);
+              target.removeClass('uploadable');
+
+              var form = $('#fileForm')[0];
+              var data = new FormData(form);
+
+              $.ajax({
+                  type: 'post',
+                  url: '{{ path('winnerImageUpload') }}',
+                  data: data,
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  dataType: 'json',
+                  success: function (response) {
+                      if (response.success) {
+                          image = $('<img class="img-responsive center-block">');
+                          image.appendTo(target);
+                          image.hide();
+                          image.attr('src', response.filePath + '?t=' + new Date().getTime());
+
+                          image.bind('load', function () {
+                              emptyImage.addClass('inactive');
+                              image.show();
+                              target.addClass('uploadable');
+                          });
+                      } else {
+                          alert('File upload error: ' + response.error);
+                          emptyImage.find('.upload-help').text('Upload failed, click to try again');
+                          icon.removeClass('glyphicon-cog');
+                          icon.addClass('glyphicon-alert');
+                          target.addClass('uploadable');
+                      }
+                  }
+              });
+
+              $('#fileInput').val('');
+          });
+      });
+  </script>
+{% endblock %}
+
+{% block content %}
+  <form enctype="multipart/form-data" id="fileForm" style="display: none;">
+    <input type="hidden" name="id" id="uploadAwardID">
+    <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif">
+  </form>
+
+  <div class="pageHeader">
+    <div class="pageHeaderLogo">
+      <img src="/2018images/vga2018_logo.png" class="logo" alt="oh god it's happening again">
     </div>
-    <div class="col-md-7" style="text-align: center; padding-top: 10px;">
-      <h1>Winners of the 2018 Vidya&nbsp;Gaem&nbsp;Awards</h1>
+    <div class="pageHeaderTitle">
+      <h1>The 2018 Vidya Gaem Awards</h1>
     </div>
   </div>
-
-  <div class="zig"></div>
 
   {% for award in awards %}
     <div class="row">
