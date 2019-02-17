@@ -157,6 +157,7 @@ class ResultsCommand extends Command
         // Step 4. Begin the processing
         $sites = [
             'reddit.com' => 2 ** 0,
+            'old.reddit.com' => 2 ** 0,
             't.co' => 2 ** 1,
             'boards.4chan.org' => 2 ** 2,
             'boards.4channel.org' => 2 ** 2,
