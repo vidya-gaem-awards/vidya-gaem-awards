@@ -23,6 +23,16 @@ class StaticController extends AbstractController
     public function soundtrackAction()
     {
         $tracks = [
+            ['nelward - Artificial Intelligence Kong [from STAFFcirc Vol. II]', '/v/irgin Award'],
+            ['Dream Catcher - Kevin MacLeod', 'IP Twist Award'],
+            ['Laser Groove - Kevin MacLeod', '"But They\'ll Patch It!" Award'],
+            ['Soul Searching - Noa', 'Guilty Pleasure Award'],
+            ['Tomorrow - Bensound', 'NieR Award'],
+            ['Journey Home - Day 7', 'NieR Award'],
+            ['Super Power Cool Dude - Kevin MacLeod', 'The Sipp Boi Award'],
+            ['Bay Breeze - FortyThr33', 'Paul Allen Award'],
+            ['Paisley - TEAM MANDALA', 'CS Grad Award'],
+            ['Todd and the sweet little lies - Crowbcat', 'CS Grad Award'],
             ['if only - rook1e', '2B Award'],
             ['Nostalgia - Tobu', 'Peebee Award'],
             ['Pyres - Broken Elegance', 'Who Cares Award'],
