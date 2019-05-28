@@ -135,7 +135,7 @@ if (false) {
 		$sites = array("filtered" => "`Website` = 'NULL' OR `Website` = 'boards.4chan.org'",
 						"4chan" => "`Website` = 'boards.4chan.org'",
 						"reddit" => "`Website` = 'www.reddit.com'",
-						"all" => "",
+						"all" => "1 = 1",
 						"null" => "`Website` = 'NULL'",
 						"other" => "WHERE `Website` != 'NULL' AND `Website` != 'boards.4chan.org'
 									AND `Website` != 'www.reddit.com'");
