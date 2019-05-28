@@ -137,9 +137,9 @@ if (false) {
 						"reddit" => "`Website` = 'www.reddit.com'",
 						"all" => "1 = 1",
 						"null" => "`Website` = 'NULL'",
-						"other" => "WHERE `Website` != 'NULL' AND `Website` != 'boards.4chan.org'
+						"other" => "`Website` != 'NULL' AND `Website` != 'boards.4chan.org'
 									AND `Website` != 'www.reddit.com'");
-						
+
 		if (!isset($_GET["site"]) || !isset($sites[$_GET["site"]])) {
 			$site = "filtered";
 		} else {
