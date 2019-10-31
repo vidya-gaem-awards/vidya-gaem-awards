@@ -139,14 +139,14 @@ class PredictionController extends AbstractController
         }
 
         if ($predictionService->arePredictionsLocked()) {
-            return $this->json(['error' => 'The 2018 Fantasy League has closed. You can no longer make changes to your picks.'], 400);
+            return $this->json(['error' => 'The Vidya Gaem2019 Fantasy League has closed. You can no longer make changes to your picks.'], 400);
         }
 
         /** @var User $user */
         $user = $this->getUser();
 
         if (!$user->getFantasyUser()) {
-            return $this->json(['error' => 'You haven\'t yet signed up for the 2018 Fantasy League.', 400]);
+            return $this->json(['error' => 'You haven\'t yet signed up for the Vidya Gaem2019 Fantasy League.', 400]);
         }
 
         $prediction = $user->getFantasyUser()->getPredictionForAward($award);
@@ -184,7 +184,7 @@ class PredictionController extends AbstractController
     public function updateDetails(Request $request, EntityManagerInterface $em, PredictionService $predictionService, AuditService $auditService)
     {
         if ($predictionService->arePredictionsLocked()) {
-            $this->addFlash('formError', 'The 2018 Fantasy League has closed. You can no longer make changes to your details.');
+            $this->addFlash('formError', 'The Vidya Gaem2019 Fantasy League has closed. You can no longer make changes to your details.');
             return $this->redirectToRoute('predictions');
         }
 
@@ -199,7 +199,7 @@ class PredictionController extends AbstractController
         $fantasyUser = $user->getFantasyUser();
 
         if (!$fantasyUser) {
-            $this->addFlash('formError', 'You haven\'t yet signed up for the 2018 Fantasy League.');
+            $this->addFlash('formError', 'You haven\'t yet signed up for the Vidya Gaem2019 Fantasy League.');
             return $this->redirectToRoute('predictions');
         }
 
@@ -234,7 +234,7 @@ class PredictionController extends AbstractController
     private function processAvatar(UploadedFile $file, Request $request, PredictionService $predictionService)
     {
         if ($predictionService->arePredictionsLocked()) {
-            $this->addFlash('formError', 'The 2018 Fantasy League has closed. You can no longer make changes to your details.');
+            $this->addFlash('formError', 'The Vidya Gaem2019 Fantasy League has closed. You can no longer make changes to your details.');
             return $this->redirectToRoute('predictions');
         }
 
