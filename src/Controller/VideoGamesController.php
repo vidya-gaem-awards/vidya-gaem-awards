@@ -24,7 +24,7 @@ class VideoGamesController extends AbstractController
         $games = $query->getQuery()->getResult();
 
         return $this->render('videoGames.html.twig', [
-            'title' => 'Vidya in Vidya Gaem2019',
+            'title' => 'Vidya in 2019',
             'games' => $games
         ]);
     }
@@ -99,7 +99,7 @@ class VideoGamesController extends AbstractController
         }
 
         try {
-            $games = $wikpedia->getGames(Vidya Gaem2019);
+            $games = $wikpedia->getGames(2019);
         } catch (\Exception $e) {
             return $this->json(['error' => $e->getMessage()]);
         }
@@ -110,7 +110,7 @@ class VideoGamesController extends AbstractController
         );
         $em->flush();
 
-        $session->getFlashBag()->add('success', 'The list of Vidya Gaem2019 video game releases has been successfully imported from Wikipedia.');
+        $session->getFlashBag()->add('success', 'The list of 2019 video game releases has been successfully imported from Wikipedia.');
 
         return $this->json(['success' => true]);
     }
