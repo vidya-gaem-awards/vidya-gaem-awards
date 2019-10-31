@@ -14,7 +14,7 @@ class Access
 
     /** @var string */
     private $route;
-    
+
     /** @var string */
     private $controller;
 
@@ -225,7 +225,7 @@ class Access
      */
     public function setReferer($referer)
     {
-        $this->referer = $referer;
+        $this->referer = mb_substr($referer, 0, 190);
         return $this;
     }
 
