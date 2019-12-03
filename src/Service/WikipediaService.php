@@ -42,6 +42,7 @@ class WikipediaService
         'game boy advance' => ['GBA', null],
         'gc' => ['GCN', null],
         'gcn' => ['GCN', null],
+        'google stadia' => ['Stadia', null],
         'htc vive' => ['Vive', ['pc', 'vr']],
         'ios' => ['Mobile', 'mobile'],
         'ios (apple)' => ['Mobile', 'mobile'],
@@ -291,13 +292,16 @@ class WikipediaService
      */
     private function parseMultipleTableLayout(Crawler $crawler, int $year): array
     {
-        // 2015 added a sources column
         if ($year <= 2014) {
+            // 2015 added a sources column
             $modifier = -1;
         } elseif ($year <= 2016) {
             $modifier = 0;
-        } else {
+        } elseif ($year <= 2018) {
             $modifier = 1;
+        } else {
+            // 2019 added a publisher column
+            $modifier = 2;
         }
 
         $tables = $crawler->filter('.wikitable')->reduce(function (Crawler $node, $i) use ($year) {
