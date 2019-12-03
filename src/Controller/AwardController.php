@@ -39,7 +39,7 @@ class AwardController extends AbstractController
             ->setParameter('user', $user->getFuzzyID())
             ->getQuery()
             ->getResult();
-        
+
         $nominations = array_fill_keys(array_keys($awards), []);
 
         /** @var UserNomination $un */
@@ -143,7 +143,7 @@ class AwardController extends AbstractController
     public function postAction(Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user, AuditService $auditService)
     {
         /** @var User $user */
-        
+
         $post = $request->request;
         $repo = $em->getRepository(Award::class);
 
@@ -182,8 +182,7 @@ class AwardController extends AbstractController
             $em->flush();
 
             $auditService->add(
-                new Action('new-award-suggested', $suggestion->getId()),
-                new TableHistory(AwardSuggestion::class, $suggestion->getId(), $post->all())
+                new Action('new-award-suggested', $suggestion->getId())
             );
 
             $em->flush();
