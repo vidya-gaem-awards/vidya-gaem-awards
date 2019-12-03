@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "beberlei/DoctrineExtensions": "^1.1",
+        "beberlei/doctrineextensions": "^1.1",
         "ehesp/steam-login": "^1.0.2",
         "fightbulc/moment": "^1.17.1",
         "knojector/steam-authentication-bundle": "dev-master",
@@ -74,8 +74,8 @@
     },
     "extra": {
         "symfony": {
-            "id": "",
-            "allow-contrib": "true"
+            "allow-contrib": "true",
+            "require": "4.4.*"
         }
     }
 }
