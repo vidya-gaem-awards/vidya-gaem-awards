@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\AwardSuggestion;
+use App\Entity\TableHistory;
 use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
@@ -178,9 +179,11 @@ class AwardController extends AbstractController
                 ->setUser($user);
 
             $em->persist($suggestion);
+            $em->flush();
 
             $auditService->add(
-                new Action('new-award-suggested', $awardSuggestion)
+                new Action('new-award-suggested', $suggestion->getId()),
+                new TableHistory(AwardSuggestion::class, $suggestion->getId(), $post->all())
             );
 
             $em->flush();
