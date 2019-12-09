@@ -2,6 +2,12 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="game_releases")
+ * @ORM\Entity
+ */
 class GameRelease
 {
     public const PLATFORMS = [
@@ -22,61 +28,139 @@ class GameRelease
         'mobile' => 'Mobile'
     ];
 
-    /** @var integer */
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100)
+     */
     private $name;
 
-    /** @var boolean */
-    private $notable = false;
-    
-    /** @var boolean */
-    private $manuallyAdded = false;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="notable", type="boolean", nullable=false)
+     */
+    private $notable;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="manually_added", type="boolean", nullable=false)
+     */
+    private $manuallyAdded;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="pc", type="boolean", nullable=false)
+     */
     private $pc = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="ps3", type="boolean", nullable=false)
+     */
     private $ps3 = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="ps4", type="boolean", nullable=false)
+     */
     private $ps4 = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="vita", type="boolean", nullable=false)
+     */
     private $vita = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="psn", type="boolean", nullable=false)
+     */
     private $psn = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="x360", type="boolean", nullable=false)
+     */
     private $x360 = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="xb1", type="boolean", nullable=false)
+     */
     private $xb1 = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="xbla", type="boolean", nullable=false)
+     */
     private $xbla = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="wii", type="boolean", nullable=false)
+     */
     private $wii = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="wiiu", type="boolean", nullable=false)
+     */
     private $wiiu = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="wiiware", type="boolean", nullable=false)
+     */
     private $wiiware = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="switch", type="boolean", nullable=false)
+     */
     private $switch = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="n3ds", type="boolean", nullable=false)
+     */
     private $n3ds = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="vr", type="boolean", nullable=false)
+     */
     private $vr = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="mobile", type="boolean", nullable=false)
+     */
     private $mobile = false;
 
     /**

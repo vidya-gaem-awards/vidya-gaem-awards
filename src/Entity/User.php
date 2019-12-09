@@ -2,82 +2,138 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections;
+use Doctrine\Common\Collections\Collection;
 use Knojector\SteamAuthenticationBundle\User\AbstractSteamUser;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="steam_id", columns={"steam_id"})})
+ * @ORM\Entity
+ */
 class User extends AbstractSteamUser implements UserInterface
 {
     const EVERYONE = '*';
     const LOGGED_IN = 'logged-in';
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="steam_id", type="string", length=17)
      */
     protected $steamId;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="special", type="boolean", nullable=false)
      */
     private $special = false;
 
     /**
-     * @var \DateTime
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="firstLogin", type="datetime", nullable=true)
      */
     private $firstLogin;
 
     /**
-     * @var \DateTime
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="lastLogin", type="datetime", nullable=true)
      */
     private $lastLogin;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="primaryRole", type="string", length=255, nullable=true)
      */
     private $primaryRole;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="website", type="string", length=40, nullable=true)
      */
     private $website;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="avatar", type="text", nullable=true)
      */
     protected $avatar;
 
     /**
-     * @var Collections\Collection
+     * @var FantasyUser
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\FantasyUser", mappedBy="user")
+     */
+    private $fantasyUser;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="user")
      */
     private $votes;
 
     /**
-     * @var Collections\Collection
-     */
-    private $permissions;
-
-    /**
-     * @var Collections\Collection
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Login", mappedBy="user")
      */
     private $logins;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Permission", inversedBy="users")
+     * @ORM\JoinTable(name="user_permissions",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="userID", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="permissionID", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $permissions;
 
     /**
      * @var string
@@ -90,7 +146,7 @@ class User extends AbstractSteamUser implements UserInterface
     private $randomID;
 
     /**
-     * @var Collections\Collection|Permission[]
+     * @var Collection|Permission[]
      */
     private $permissionCache;
 
@@ -99,10 +155,22 @@ class User extends AbstractSteamUser implements UserInterface
      */
     private $votingCode;
 
-    /**
-     * @var ?FantasyUser
+    /*
+     * The properties below are from the AbstractSteamUser class.
+     * We don't use any of them, but we have to declare them here because otherwise Doctrine
+     * will read the annotations from the base class and try to create database columns for them.
      */
-    private $fantasyUser;
+    protected $communityVisibilityState;
+    protected $profileState;
+    protected $profileName;
+    protected $lastLogOff;
+    protected $commentPermission;
+    protected $profileUrl;
+    protected $personaState;
+    protected $primaryClanId;
+    protected $joinDate;
+    protected $countryCode;
+    protected $roles;
 
     public function __construct()
     {
@@ -180,7 +248,7 @@ class User extends AbstractSteamUser implements UserInterface
     /**
      * Set firstLogin
      *
-     * @param \DateTime $firstLogin
+     * @param DateTime $firstLogin
      *
      * @return User
      */
@@ -194,7 +262,7 @@ class User extends AbstractSteamUser implements UserInterface
     /**
      * Get firstLogin
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFirstLogin()
     {
@@ -204,7 +272,7 @@ class User extends AbstractSteamUser implements UserInterface
     /**
      * Set lastLogin
      *
-     * @param \DateTime $lastLogin
+     * @param DateTime $lastLogin
      *
      * @return User
      */
@@ -218,7 +286,7 @@ class User extends AbstractSteamUser implements UserInterface
     /**
      * Get lastLogin
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getLastLogin()
     {
@@ -372,7 +440,7 @@ class User extends AbstractSteamUser implements UserInterface
     /**
      * Get votes
      *
-     * @return Collections\Collection
+     * @return Collection
      */
     public function getVotes()
     {
@@ -406,7 +474,7 @@ class User extends AbstractSteamUser implements UserInterface
     /**
      * Get permissions
      *
-     * @return Collections\Collection|Permission[]
+     * @return Collection|Permission[]
      */
     public function getPermissions()
     {
@@ -509,7 +577,7 @@ class User extends AbstractSteamUser implements UserInterface
     /**
      * Get logins
      *
-     * @return Collections\Collection
+     * @return Collection
      */
     public function getLogins()
     {

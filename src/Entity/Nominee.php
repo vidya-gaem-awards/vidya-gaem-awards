@@ -3,39 +3,83 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Nominee implements \JsonSerializable
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
+
+/**
+ * @ORM\Table(name="nominees", options={"collate"="utf8mb4_unicode_ci","charset"="utf8mb4"})
+ * @ORM\Entity
+ */
+class Nominee implements JsonSerializable
 {
     const DEFAULT_IMAGE_DIRECTORY = '/img/nominees/';
 
-    /** @var integer */
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="short_name", type="string", length=45, nullable=false)
+     */
     private $shortName;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
     private $name;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subtitle", type="string", length=255, nullable=false)
+     */
     private $subtitle;
 
-    /** @var string */
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
     private $image;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="flavor_text", type="text", nullable=false)
+     */
     private $flavorText;
 
-    /** @var Award */
-    private $award;
-
-    /** @var ArrayCollection|FantasyPrediction[] */
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="nominee")
+     */
     private $fantasyPredictions;
+
+    /**
+     * @var Award
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="nominees")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
+     * })
+     */
+    private $award;
 
     public function __construct()
     {
         $this->fantasyPredictions = new ArrayCollection();
     }
-
 
     /**
      * @return integer

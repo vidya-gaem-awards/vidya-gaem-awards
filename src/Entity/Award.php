@@ -3,91 +3,147 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 
+use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use JsonSerializable;
+
 /**
- * Award
+ * @ORM\Table(name="awards")
+ * @ORM\Entity
  */
-class Award implements \JsonSerializable
+class Award implements JsonSerializable
 {
     /**
      * @var string
+     *
+     * @ORM\Column(name="id", type="string", length=30)
+     * @ORM\Id
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="subtitle", type="string", length=200, nullable=false)
      */
     private $subtitle;
 
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="order", type="integer", nullable=false)
      */
     private $order;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="comments", type="text", nullable=true)
      */
     private $comments;
 
     /**
-     * @var boolean
+     * @var string|null
+     *
+     * @ORM\Column(name="winner_image", type="string", length=255, nullable=true)
+     */
+    private $winnerImage;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean", nullable=false)
      */
     private $enabled;
 
     /**
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="nominations_enabled", type="boolean", nullable=false)
      */
     private $nominationsEnabled;
 
     /**
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="secret", type="boolean", nullable=false, options={"comment"="Secret awards only show up during voting"})
      */
     private $secret;
 
     /**
-     * @var arrayCollection
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\AwardFeedback", mappedBy="award", cascade={"remove"})
      */
     private $feedback;
 
     /**
-     * @var arrayCollection
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\AwardSuggestion", mappedBy="award", cascade={"remove"})
+     * @ORM\OrderBy({
+     *     "suggestion"="ASC"
+     * })
+     */
+    private $suggestions;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Nominee", mappedBy="award", cascade={"remove"})
+     * @ORM\OrderBy({
+     *     "name"="ASC"
+     * })
      */
     private $nominees;
 
     /**
-     * @var arrayCollection
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\UserNomination", mappedBy="award", cascade={"remove"})
      */
     private $userNominations;
 
     /**
-     * @var arrayCollection
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="award", cascade={"remove"})
      */
     private $votes;
 
     /**
-     * @var arrayCollection
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ResultCache", mappedBy="award", cascade={"remove"})
      */
     private $resultCache;
 
     /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="award", cascade={"remove"})
+     */
+    private $fantasyPredictions;
+
+    /**
      * @var Autocompleter
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Autocompleter", inversedBy="awards")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="autocompleteID", referencedColumnName="id", nullable=true)
+     * })
      */
     private $autocompleter;
-
-    /** @var string */
-    private $winnerImage;
-    
-    /** @var AwardSuggestion */
-    private $suggestions;
-
-    /** @var ArrayCollection|FantasyPrediction[] */
-    private $fantasyPredictions;
 
     /**
      * Constructor
@@ -106,12 +162,12 @@ class Award implements \JsonSerializable
     /**
      * @param string $id
      * @return Award
-     * @throws \Exception
+     * @throws Exception
      */
     public function setId($id)
     {
         if (!preg_match('/^[A-Za-z0-9-]+$/', $id)) {
-            throw new \Exception('Invalid ID provided: award IDs can only consist of numbers, letters, and dashes.');
+            throw new Exception('Invalid ID provided: award IDs can only consist of numbers, letters, and dashes.');
         }
 
         $this->id = $id;

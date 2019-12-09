@@ -1,35 +1,56 @@
 <?php
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="templates")
+ * @ORM\Entity
+ */
 class Template
 {
     /**
      * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="filename", type="string", length=100, nullable=false)
      */
     private $filename;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
 
-    /*
-     * @var string
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="details", type="text", nullable=true)
      */
     private $details;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="source", type="text", nullable=false)
      */
     private $source;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="last_updated", type="datetime", nullable=false)
      */
     private $lastUpdated;
 
@@ -114,18 +135,18 @@ class Template
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getLastUpdated(): \DateTime
+    public function getLastUpdated(): DateTime
     {
         return $this->lastUpdated;
     }
 
     /**
-     * @param \DateTime $lastUpdated
+     * @param DateTime $lastUpdated
      * @return Template
      */
-    public function setLastUpdated(\DateTime $lastUpdated): Template
+    public function setLastUpdated(DateTime $lastUpdated): Template
     {
         $this->lastUpdated = $lastUpdated;
         return $this;
