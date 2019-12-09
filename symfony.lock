@@ -112,7 +112,7 @@
         "version": "1.30.0"
     },
     "guzzlehttp/guzzle": {
-        "version": "6.4.1"
+        "version": "6.5.0"
     },
     "guzzlehttp/promises": {
         "version": "v1.3.1"

@@ -123,7 +123,7 @@
 
                       {% for nominee in award.nominees | shuffle %}
 
-                        {% spaceless %}
+                        {% apply spaceless %}
                           <div class="voteBox">
                             <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
                                  data-nominee="{{ nominee.shortName }}">
@@ -140,7 +140,7 @@
                               </div>
                             </div>
                           </div>
-                        {% endspaceless %}
+                        {% endapply %}
 
                       {% endfor %}
 
@@ -172,7 +172,7 @@
 
 
                 <div id="dragLimit">
-                      {% spaceless %}
+                      {% apply spaceless %}
                         {% if votingOpen %}
                           <div class="mobileInstructions">
                             Tap on any nominee to make them your <span class="nextPreference">1st</span> preference.
@@ -227,7 +227,7 @@
 						  </div>
 
                           <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
-                      {% endspaceless %}
+                      {% endapply %}
                 </div>
 
                 <div class="voteGroup placeholder" style="display: none;" id="dropPlaceholder">
