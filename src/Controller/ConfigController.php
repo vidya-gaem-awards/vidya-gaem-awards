@@ -21,8 +21,8 @@ class ConfigController extends AbstractController
         $config = $configService->getConfig();
 
         $navbarConfig = [];
-        foreach ($config->getNavbarItems() as $routeName => $label) {
-            $navbarConfig[] = "$routeName: $label";
+        foreach ($config->getNavbarItems() as $routeName => $details) {
+            $navbarConfig[] = "$routeName: {$details['label']}";
         }
 
         // Ultra alerts are very important and appear with a blinding red background to encourage you to fix the issue ASAP
@@ -52,7 +52,7 @@ class ConfigController extends AbstractController
     public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService, RouterInterface $router, CronJobService $cron)
     {
         $config = $configService->getConfig();
-        
+
         if ($config->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.'
                 . ' To disable read-only mode, you will need to edit the database directly.');
@@ -130,11 +130,18 @@ class ConfigController extends AbstractController
             $elements = explode(":", trim($line));
             return array_map('trim', $elements);
         }, $navbarItems);
-        $navbarItems = array_column($navbarItems, 1, 0);
+
+        $navbarItemsOrdered = [];
+        foreach ($navbarItems as $index => $details) {
+            $navbarItemsOrdered[$details[0]] = [
+                'label' => $details[1],
+                'order' => $index
+            ];
+        }
 
         $navbarError = false;
         $validRoutes = $this->getValidNavbarRoutes($router->getRouteCollection());
-        foreach ($navbarItems as $routeName => $label) {
+        foreach ($navbarItemsOrdered as $routeName => $details) {
             if (substr($routeName, 0, 8) === 'dropdown') {
                 continue;
             }
@@ -142,14 +149,14 @@ class ConfigController extends AbstractController
                 $this->addFlash('error', 'Invalid route specified in the navigation menu config (' . $routeName . ').');
                 $navbarError = $error = true;
             }
-            if (empty($label)) {
+            if (empty($details['label'])) {
                 $this->addFlash('error', 'No label provided for route ' . $routeName . ' in the navigation menu config.');
                 $navbarError = $error = true;
             }
         }
 
         if (!$navbarError) {
-            $config->setNavbarItems($navbarItems);
+            $config->setNavbarItems($navbarItemsOrdered);
         }
 
         $config->setAwardSuggestions($post->getBoolean('awardSuggestions'));
