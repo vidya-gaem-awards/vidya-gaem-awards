@@ -2,33 +2,102 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use RandomLib\Factory;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="fantasy_users")
+ * @ORM\Entity
+ */
 class FantasyUser
 {
     const NAME_LIMIT = 50;
     const VICTORY_MESSAGE_LIMIT = 140;
     const MAX_AVATAR_SIZE = 1024 * 1024 * 2; // 2 megabytes
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
-    private $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100)
+     */
     private $name = 'Anonymous';
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="avatar", type="string", nullable=true)
+     */
     private $avatar;
-    private $victoryMessage;
-    private $score;
-    private $rank;
-    private $lastUpdated;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="image_token", type="string", nullable=true)
+     */
     private $imageToken;
 
-    /** @var ArrayCollection<FantasyPrediction> */
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="victory_message", type="text", nullable=true)
+     */
+    private $victoryMessage;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="score", type="integer", nullable=true)
+     */
+    private $score;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="rank", type="integer", nullable=true)
+     */
+    private $rank;
+
+    /**
+     * @var DateTimeImmutable
+     *
+     * @ORM\Column(name="last_updated", type="datetime_immutable")
+     */
+    private $lastUpdated;
+
+    /**
+     * @var User
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="fantasyUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true)
+     * })
+     */
+    private $user;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="fantasyUser")
+     */
     private $predictions;
 
     public function __construct()
     {
         $this->predictions = new ArrayCollection();
-        $this->lastUpdated = new \DateTimeImmutable();
+        $this->lastUpdated = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -133,12 +202,12 @@ class FantasyUser
         return $this;
     }
 
-    public function getLastUpdated(): ?\DateTimeImmutable
+    public function getLastUpdated(): ?DateTimeImmutable
     {
         return $this->lastUpdated;
     }
 
-    public function setLastUpdated(\DateTimeImmutable $lastUpdated): self
+    public function setLastUpdated(DateTimeImmutable $lastUpdated): self
     {
         $this->lastUpdated = $lastUpdated;
 

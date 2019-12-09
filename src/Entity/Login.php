@@ -1,26 +1,44 @@
 <?php
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="logins")
+ * @ORM\Entity
+ */
 class Login
 {
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
     private $timestamp;
 
     /**
      * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="logins")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="userID", referencedColumnName="id", nullable=false)
+     * })
      */
     private $user;
 
     public function __construct()
     {
-        $this->timestamp = new \DateTime();
+        $this->timestamp = new DateTime();
     }
 
     /**
@@ -36,7 +54,7 @@ class Login
     /**
      * Set timestamp
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      *
      * @return Login
      */
@@ -50,7 +68,7 @@ class Login
     /**
      * Get timestamp
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimestamp()
     {

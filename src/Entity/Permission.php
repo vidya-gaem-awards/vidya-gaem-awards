@@ -5,8 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * Permission
+ * @ORM\Table(name="permissions", options={"collate"="utf8mb4_unicode_ci","charset"="utf8mb4"})
+ * @ORM\Entity
  */
 class Permission
 {
@@ -56,32 +59,48 @@ class Permission
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="id", type="string", length=40)
+     * @ORM\Id
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
 
     /**
-     * @var ArrayCollection|Permission[]
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Permission", inversedBy="parents")
+     * @ORM\JoinTable(name="permission_children",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="parentID", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="childID", referencedColumnName="id")
+     *   }
+     * )
      */
     private $children;
 
     /**
-     * @var ArrayCollection|Permission[]
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Permission", mappedBy="children")
      */
     private $parents;
 
     /**
-     * @var ArrayCollection|User[]
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="permissions")
      */
     private $users;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->children = new ArrayCollection();

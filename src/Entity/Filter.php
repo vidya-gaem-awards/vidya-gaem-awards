@@ -5,23 +5,33 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * Filter
+ * @ORM\Table(name="filters")
+ * @ORM\Entity
  */
 class Filter
 {
     /**
      * @var string
+     *
+     * @ORM\Column(name="id", type="string", length=40)
+     * @ORM\Id
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="regex", type="string", length=255, nullable=false)
      */
     private $regex;
 
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="value", type="integer", nullable=false)
      */
     private $value;
 

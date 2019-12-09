@@ -2,51 +2,78 @@
 
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * Vote
+ * @ORM\Table(name="votes")
+ * @ORM\Entity
  */
 class Vote
 {
     /**
      * @var string
+     *
+     * @ORM\Column(name="cookie_id", type="string", length=191)
+     * @ORM\Id
      */
     private $cookieID;
 
     /**
      * @var array
+     *
+     * @ORM\Column(name="preferences", type="json_array", nullable=false)
      */
     private $preferences;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
     private $timestamp;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=45, nullable=false)
      */
     private $ip;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="voting_code", type="string", length=20, nullable=true)
      */
     private $votingCode;
 
     /**
-     * @var integer
+     * @var int|null
+     *
+     * @ORM\Column(name="number", type="integer", nullable=true)
      */
     private $number;
 
     /**
      * @var Award
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="votes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
+     * })
      */
     private $award;
 
     /**
      * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="votes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="userID", referencedColumnName="id")
+     * })
      */
     private $user;
-
 
     /**
      * Set cookieID
@@ -99,7 +126,7 @@ class Vote
     /**
      * Set timestamp
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      *
      * @return Vote
      */
@@ -113,7 +140,7 @@ class Vote
     /**
      * Get timestamp
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimestamp()
     {
@@ -235,7 +262,7 @@ class Vote
     /**
      * Get user
      *
-     * @return \App\Entity\User
+     * @return User
      */
     public function getUser()
     {

@@ -1,9 +1,17 @@
 <?php
 namespace App\Entity;
 
-
+use DateTime;
+use DateTimeZone;
+use Exception;
 use Moment\Moment;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="config", options={"collate"="utf8mb4_unicode_ci","charset"="utf8mb4"})
+ * @ORM\Entity
+ */
 class Config
 {
     const ALLOWED_DEFAULT_PAGES = [
@@ -18,38 +26,79 @@ class Config
 
     const DEFAULT_TIMEZONE = 'America/New_York';
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="id", type="string", length=30)
+     * @ORM\Id
+     */
     private $id = 1;
 
-    /** @var \DateTime */
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="voting_start", type="datetime", nullable=true)
+     */
     private $votingStart;
 
-    /** @var \DateTime */
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="voting_end", type="datetime", nullable=true)
+     */
     private $votingEnd;
 
-    /** @var \DateTime */
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="stream_time", type="datetime", nullable=true)
+     */
     private $streamTime;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="default_page", type="string", length=30, nullable=false)
+     */
     private $defaultPage = 'home';
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="award_suggestions", type="boolean", nullable=false)
+     */
     private $awardSuggestions = true;
 
-    /** @var string[] */
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="public_pages", type="json", nullable=false)
+     */
     private $publicPages = [];
 
-    /** @var boolean */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="read_only", type="boolean", nullable=false)
+     */
     private $readOnly = false;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="timezone", type="string", length=50, nullable=false)
+     */
     private $timezone = self::DEFAULT_TIMEZONE;
 
-    /** @var array */
-    private $navbarItems = ['home' => 'Home', 'config' => 'Config'];
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="navbar_items", type="json", nullable=false)
+     */
+    private $navbarItems = ['config' => ['label' => 'Config', 'order' => 1]];
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getVotingStart()
     {
@@ -57,7 +106,7 @@ class Config
     }
 
     /**
-     * @param \DateTime $votingStart
+     * @param DateTime $votingStart
      * @return Config
      */
     public function setVotingStart($votingStart)
@@ -67,7 +116,7 @@ class Config
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getVotingEnd()
     {
@@ -75,7 +124,7 @@ class Config
     }
 
     /**
-     * @param \DateTime $votingEnd
+     * @param DateTime $votingEnd
      * @return Config
      */
     public function setVotingEnd($votingEnd)
@@ -89,7 +138,7 @@ class Config
      */
     public function isVotingNotYetOpen()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
 
         if (!$this->getVotingStart() || $now < $this->getVotingStart()) {
             return true;
@@ -103,7 +152,7 @@ class Config
      */
     public function isVotingOpen()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
 
         if (!$this->getVotingStart() || $now < $this->getVotingStart()) {
             return false;
@@ -121,7 +170,7 @@ class Config
      */
     public function hasVotingClosed()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
 
         if ($this->getVotingEnd() && $now > $this->getVotingEnd()) {
             return true;
@@ -130,7 +179,7 @@ class Config
         return false;
     }
 
-    public static function getRelativeTimeString(\DateTime $date)
+    public static function getRelativeTimeString(DateTime $date)
     {
         $moment = new Moment($date->format('c'));
         $diff = $moment->fromNow()->setDirection('+');
@@ -147,7 +196,7 @@ class Config
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStreamTime()
     {
@@ -155,7 +204,7 @@ class Config
     }
 
     /**
-     * @param \DateTime $streamTime
+     * @param DateTime $streamTime
      * @return Config
      */
     public function setStreamTime($streamTime)
@@ -245,7 +294,7 @@ class Config
     }
 
     /**
-     * @return \string[]
+     * @return string[]
      */
     public function getPublicPages(): array
     {
@@ -253,7 +302,7 @@ class Config
     }
 
     /**
-     * @param \string[] $publicPages
+     * @param string[] $publicPages
      * @return Config
      */
     public function setPublicPages(array $publicPages): Config
@@ -273,12 +322,12 @@ class Config
     /**
      * @param string $timezone Must be a valid timezone identifier
      * @return Config
-     * @throws \Exception
+     * @throws Exception
      */
     public function setTimezone(string $timezone): Config
     {
         // This will throw an Exception if the timezone is invalid
-        new \DateTimeZone($timezone);
+        new DateTimeZone($timezone);
 
         $this->timezone = $timezone;
         return $this;

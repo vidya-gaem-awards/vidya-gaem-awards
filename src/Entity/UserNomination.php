@@ -1,32 +1,54 @@
 <?php
 namespace App\Entity;
 
+use DateTime;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="user_nominations")
+ * @ORM\Entity
+ */
 class UserNomination
 {
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="user", type="string", length=45, nullable=false)
      */
     private $user;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="nomination", type="string", length=255, nullable=false)
      */
     private $nomination;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
     private $timestamp;
 
     /**
      * @var Award
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="userNominations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
+     * })
      */
     private $award;
 
@@ -40,7 +62,7 @@ class UserNomination
         $this->award = $award;
         $this->user = $user->getFuzzyID();
         $this->nomination = $nomination;
-        $this->timestamp = new \DateTime();
+        $this->timestamp = new DateTime();
     }
 
     /**
@@ -104,7 +126,7 @@ class UserNomination
     /**
      * Set timestamp
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      *
      * @return UserNomination
      */
@@ -118,7 +140,7 @@ class UserNomination
     /**
      * Get timestamp
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimestamp()
     {

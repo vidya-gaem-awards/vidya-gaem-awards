@@ -2,31 +2,47 @@
 
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * UserInventoryItem
+ * @ORM\Table(name="user_inventory_items")
+ * @ORM\Entity
  */
 class UserInventoryItem
 {
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="inventory", type="string", length=45)
      */
     private $inventory;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
     private $timestamp;
 
     /**
      * @var InventoryItem
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\InventoryItem", inversedBy="userItems")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="itemID", referencedColumnName="id")
+     * })
      */
     private $item;
-
 
     /**
      * Get id
@@ -65,7 +81,7 @@ class UserInventoryItem
     /**
      * Set timestamp
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      *
      * @return UserInventoryItem
      */
@@ -79,7 +95,7 @@ class UserInventoryItem
     /**
      * Get timestamp
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimestamp()
     {
