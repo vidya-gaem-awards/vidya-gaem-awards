@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
+use Twig\Error\SyntaxError;
+use Twig\Source;
 
 class EditorController extends AbstractController
 {
@@ -59,8 +61,8 @@ class EditorController extends AbstractController
         // Do a Twig syntax check of the source code before saving. This won't prevent all errors, but if provides
         // a basic safety net.
         try {
-            $twig->tokenize(new \Twig_Source($content, $templateName));
-        } catch (\Twig_Error_Syntax $e) {
+            $twig->tokenize(new Source($content, $templateName));
+        } catch (SyntaxError $e) {
             $this->addFlash('error', 'Syntax error: ' . $e->getMessage());
 
             $request->query->set('template', $templateName);

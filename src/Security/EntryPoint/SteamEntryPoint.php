@@ -7,13 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
+use Twig\Environment;
 
 class SteamEntryPoint implements AuthenticationEntryPointInterface
 {
     private $router;
     private $twig;
 
-    public function __construct(RouterInterface $router, \Twig_Environment $twig)
+    public function __construct(RouterInterface $router, Environment $twig)
     {
         $this->router = $router;
         $this->twig = $twig;

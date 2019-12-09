@@ -6,9 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Twig\Error\LoaderError;
 use Twig\Loader\LoaderInterface;
 use Twig\Source;
-use Twig_Error_Loader;
-use Twig_LoaderInterface;
-use Twig_Source;
 
 class DatabaseLoader implements LoaderInterface
 {
