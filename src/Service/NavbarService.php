@@ -35,10 +35,6 @@ class NavbarService
         $navbar = [];
 
         $items = $this->configService->getConfig()->getNavbarItems();
-        uasort($items, function ($a, $b) {
-            return $a['order'] <=> $b['order'];
-        });
-
         foreach ($items as $routeName => $details) {
             if (substr($routeName, 0, 8) === 'dropdown') {
                 $navbar[$routeName] = new NavbarItem($details);

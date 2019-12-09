@@ -153,6 +153,14 @@ class ConfigController extends AbstractController
                 $this->addFlash('error', 'No label provided for route ' . $routeName . ' in the navigation menu config.');
                 $navbarError = $error = true;
             }
+
+            $labelData = explode('/', $details['label'], 2);
+            if (count($labelData) === 2) {
+                if (!isset($validRoutes[$labelData[0]])) {
+                    $this->addFlash('error', 'Invalid navbar configuration: dropdown not found (' . $details['label'] . ').');
+                    $navbarError = $error = true;
+                }
+            }
         }
 
         if (!$navbarError) {
