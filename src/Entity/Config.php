@@ -297,6 +297,9 @@ class Config
      */
     public function getNavbarItems(): array
     {
+        uasort($this->navbarItems, function ($a, $b) {
+            return $a['order'] <=> $b['order'];
+        });
         return $this->navbarItems;
     }
 
