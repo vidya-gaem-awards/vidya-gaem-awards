@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9aed9545706d3d0fcb57dbfffeafc10",
+    "content-hash": "ee4d614e21fe455a38e73313ccfeb0a0",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
-            "version": "v1.2.4",
+            "version": "v1.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/DoctrineExtensions.git",
-                "reference": "5d5a7259b7d44f6d9d5ced4c09f9db6b7f460139"
+                "reference": "af72c4a136b744f1268ca8bb4da47a2f8af78f86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/5d5a7259b7d44f6d9d5ced4c09f9db6b7f460139",
-                "reference": "5d5a7259b7d44f6d9d5ced4c09f9db6b7f460139",
+                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/af72c4a136b744f1268ca8bb4da47a2f8af78f86",
+                "reference": "af72c4a136b744f1268ca8bb4da47a2f8af78f86",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 "doctrine",
                 "orm"
             ],
-            "time": "2019-11-22T14:30:56+00:00"
+            "time": "2019-12-05T09:49:04+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1291,16 +1291,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.4.1",
+            "version": "6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "0895c932405407fd3a7368b6910c09a24d26db11"
+                "reference": "dbc2bc3a293ed6b1ae08a3651e2bfd213d19b6a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0895c932405407fd3a7368b6910c09a24d26db11",
-                "reference": "0895c932405407fd3a7368b6910c09a24d26db11",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/dbc2bc3a293ed6b1ae08a3651e2bfd213d19b6a5",
+                "reference": "dbc2bc3a293ed6b1ae08a3651e2bfd213d19b6a5",
                 "shasum": ""
             },
             "require": {
@@ -1315,12 +1315,13 @@
                 "psr/log": "^1.1"
             },
             "suggest": {
+                "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.3-dev"
+                    "dev-master": "6.5-dev"
                 }
             },
             "autoload": {
@@ -1353,7 +1354,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2019-10-23T15:58:00+00:00"
+            "time": "2019-12-07T18:20:45+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1575,16 +1576,16 @@
         },
         {
             "name": "knojector/steam-authentication-bundle",
-            "version": "dev-master",
+            "version": "1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knojector/SteamAuthenticationBundle.git",
-                "reference": "8fdcd87c9ecb925d3e51bb72ae35a48eba2938fc"
+                "reference": "2a08f341a7af4dbff226daee79649f7bd98a7aa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knojector/SteamAuthenticationBundle/zipball/8fdcd87c9ecb925d3e51bb72ae35a48eba2938fc",
-                "reference": "8fdcd87c9ecb925d3e51bb72ae35a48eba2938fc",
+                "url": "https://api.github.com/repos/knojector/SteamAuthenticationBundle/zipball/2a08f341a7af4dbff226daee79649f7bd98a7aa5",
+                "reference": "2a08f341a7af4dbff226daee79649f7bd98a7aa5",
                 "shasum": ""
             },
             "require": {
@@ -1613,7 +1614,7 @@
                 }
             ],
             "description": "Symfony Bundle to integrate Steam authentication",
-            "time": "2019-10-01T15:43:42+00:00"
+            "time": "2019-07-19T18:07:08+00:00"
         },
         {
             "name": "koraktor/steam-condenser",
@@ -6656,9 +6657,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "knojector/steam-authentication-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

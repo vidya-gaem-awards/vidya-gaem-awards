@@ -6,5 +6,5 @@ twig:
         navbar: '@App\Service\NavbarService'
         configService: '@App\Service\ConfigService'
         predictionService: '@App\Service\PredictionService'
-
+    exception_controller: null
 
