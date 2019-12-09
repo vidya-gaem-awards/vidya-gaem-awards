@@ -33,13 +33,19 @@ class NavbarService
     {
         /** @var NavbarItem[] $navbar */
         $navbar = [];
-        foreach ($this->configService->getConfig()->getNavbarItems() as $routeName => $title) {
+
+        $items = $this->configService->getConfig()->getNavbarItems();
+        uasort($items, function ($a, $b) {
+            return $a['order'] <=> $b['order'];
+        });
+
+        foreach ($items as $routeName => $details) {
             if (substr($routeName, 0, 8) === 'dropdown') {
-                $navbar[$routeName] = new NavbarItem($title);
+                $navbar[$routeName] = new NavbarItem($details);
                 continue;
             }
 
-            $title = explode('/', $title, 2);
+            $title = explode('/', $details['label'], 2);
             if (count($title) === 2) {
                 $dropdown = $title[0];
                 $title = $title[1];
@@ -50,7 +56,7 @@ class NavbarService
 
             if ($route = $this->router->getRouteCollection()->get($routeName)) {
                 if ($this->canAccessRoute($routeName)) {
-                    $item = new NavbarItem($title, $routeName);
+                    $item = new NavbarItem(['label' => $title, 'order' => $details['order']], $routeName);
                     if ($dropdown) {
                         $navbar[$dropdown]->addChild($item);
                     } else {

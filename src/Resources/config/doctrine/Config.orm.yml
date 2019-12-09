@@ -27,7 +27,7 @@ App\Entity\Config:
       type: boolean
       nullable: false
     publicPages:
-      type: json_array
+      type: json
       nullable: false
     readOnly:
       type: boolean
@@ -37,5 +37,5 @@ App\Entity\Config:
       length: 50
       nullable: false
     navbarItems:
-      type: json_array
+      type: json
       nullable: false
