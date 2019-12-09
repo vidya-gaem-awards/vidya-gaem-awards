@@ -6,7 +6,6 @@ use DateTime;
 use Doctrine\Common\Collections;
 use Doctrine\Common\Collections\Collection;
 use Knojector\SteamAuthenticationBundle\User\AbstractSteamUser;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -667,7 +666,7 @@ class User extends AbstractSteamUser implements UserInterface
      * and populated in any number of different ways when the user object
      * is created.
      *
-     * @return Role[] The user roles
+     * @return string[] The user roles
      */
     public function getRoles(): array
     {
@@ -678,7 +677,7 @@ class User extends AbstractSteamUser implements UserInterface
         }
 
         foreach ($this->permissionCache as $permission) {
-            $roles[] = new Role('ROLE_' . strtoupper($permission->getId()));
+            $roles[] = 'ROLE_' . strtoupper($permission->getId());
         }
 
         return $roles;
