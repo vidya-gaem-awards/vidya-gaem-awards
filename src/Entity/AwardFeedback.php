@@ -4,15 +4,38 @@ namespace App\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="award_feedback")
+ * @ORM\Entity
+ */
 class AwardFeedback
 {
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user", type="string", length=45)
+     * @ORM\Id
+     */
     private $user;
 
-    /** @var integer */
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="opinion", type="smallint", nullable=false)
+     */
     private $opinion;
 
-    /** @var Award */
+    /**
+     * @var Award
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="feedback")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
+     * })
+     */
     private $award;
 
     /**

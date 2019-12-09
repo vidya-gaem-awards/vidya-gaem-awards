@@ -1,47 +1,107 @@
 <?php
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="access")
+ * @ORM\Entity
+ */
 class Access
 {
-    /** @var integer */
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cookie_id", type="string", length=255, nullable=false)
+     */
     private $cookieID;
 
-    /** @var \DateTime */
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
+     */
     private $timestamp;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="route", type="string", length=30, nullable=false)
+     */
     private $route;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="controller", type="string", nullable=false)
+     */
     private $controller;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="request_string", type="string", length=255, nullable=false)
+     */
     private $requestString;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="request_method", type="string", length=4, nullable=false)
+     */
     private $requestMethod;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=45, nullable=false)
+     */
     private $ip;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_agent", type="string", length=255, nullable=false)
+     */
     private $userAgent;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filename", type="string", length=255, nullable=false)
+     */
     private $filename;
 
-    /** @var string */
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="referer", type="string", length=255, nullable=true)
+     */
     private $referer;
 
-    /** @var User */
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="userID", referencedColumnName="id", nullable=true)
+     * })
+     */
     private $user;
 
     public function __construct()
     {
-        $this->setTimestamp(new \DateTime());
+        $this->setTimestamp(new DateTime());
     }
 
     /**
@@ -72,7 +132,7 @@ class Access
     }
 
     /**
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      * @return Access
      */
     public function setTimestamp($timestamp)
@@ -83,7 +143,7 @@ class Access
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimestamp()
     {

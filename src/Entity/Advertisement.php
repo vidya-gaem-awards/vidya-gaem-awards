@@ -1,42 +1,65 @@
 <?php
 namespace App\Entity;
 
+use JsonSerializable;
 use RandomLib\Factory;
 
-class Advertisement implements \JsonSerializable
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="advertisements")
+ * @ORM\Entity
+ */
+class Advertisement implements JsonSerializable
 {
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", nullable=false)
      */
     private $name;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="link", type="string", nullable=false)
      */
     private $link;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="image", type="string", nullable=true)
      */
     private $image;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="token", type="string", nullable=false)
      */
     private $token;
 
     /**
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="special", type="boolean", nullable=false)
      */
     private $special;
 
     /**
-     * @return integer
+     * @var int
+     *
+     * @ORM\Column(name="clicks", type="integer", nullable=false)
      */
     private $clicks = 0;
 

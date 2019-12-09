@@ -2,55 +2,85 @@
 
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * Action
+ * @ORM\Table(name="actions")
+ * @ORM\Entity
  */
 class Action
 {
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=45, nullable=false)
      */
     private $ip;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
     private $timestamp;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="page", type="string", length=100, nullable=false)
      */
     private $page;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="action", type="string", length=40, nullable=false)
      */
     private $action;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="data1", type="string", length=50, nullable=true)
      */
     private $data1;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="data2", type="string", length=50, nullable=true)
      */
     private $data2;
 
     /**
-     * @var User
-     */
-    private $user;
-
-    /**
      * @var TableHistory
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\TableHistory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="history_id", referencedColumnName="id", unique=true, nullable=true)
+     * })
      */
     private $tableHistory;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="userID", referencedColumnName="id", nullable=true)
+     * })
+     */
+    private $user;
 
     public function __construct($action, $data1 = null, $data2 = null)
     {
@@ -58,7 +88,7 @@ class Action
         $this->setPage($backtrace[1]['class'] . '::' . $backtrace[1]['function']);
 
         $this->setAction($action);
-        $this->setTimestamp(new \DateTime());
+        $this->setTimestamp(new DateTime());
         $this->setData1($data1);
         $this->setData2($data2);
     }
@@ -102,7 +132,7 @@ class Action
     /**
      * Set timestamp
      *
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      *
      * @return Action
      */
@@ -116,7 +146,7 @@ class Action
     /**
      * Get timestamp
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimestamp()
     {

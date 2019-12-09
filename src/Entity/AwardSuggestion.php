@@ -2,31 +2,46 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * AwardSuggestion
+ * @ORM\Table(name="award_suggestions")
+ * @ORM\Entity
  */
 class AwardSuggestion
 {
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="user", type="string", length=45, nullable=false)
      */
     private $user;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="suggestion", type="string", nullable=false)
      */
     private $suggestion;
 
     /**
      * @var Award
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="suggestions")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id", nullable=true)
+     * })
      */
     private $award;
-
 
     /**
      * Get id

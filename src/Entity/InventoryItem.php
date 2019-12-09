@@ -2,60 +2,92 @@
 
 namespace App\Entity;
 
-class InventoryItem implements \JsonSerializable
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
+
+/**
+ * @ORM\Table(name="inventory_items")
+ * @ORM\Entity
+ */
+class InventoryItem implements JsonSerializable
 {
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="short_name", type="string", length=50, nullable=false)
      */
     private $shortName;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="rarity", type="integer", nullable=false)
      */
     private $rarity;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="image", type="string", nullable=true)
      */
     private $image;
 
     /**
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="css", type="boolean", nullable=false)
      */
     private $css = false;
 
     /**
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="buddie", type="boolean", nullable=false)
      */
     private $buddie = false;
 
     /**
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="music", type="boolean", nullable=false)
      */
     private $music = false;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="music_file", type="string", nullable=true)
      */
     private $musicFile;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="css_contents", type="text", nullable=true)
      */
     private $cssContents;
 
     /**
-     * @var UserInventoryItem[]
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInventoryItem", mappedBy="item")
      */
     private $userItems;
 

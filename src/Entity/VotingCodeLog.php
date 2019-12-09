@@ -1,34 +1,74 @@
 <?php
 namespace App\Entity;
 
+use DateTime;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="voting_code_logs")
+ * @ORM\Entity
+ */
 class VotingCodeLog
 {
-    /** @var integer */
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
 
-    /** @var User */
-    private $user;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cookie_id", type="string", length=255, nullable=false)
+     */
+    private $cookieID;
 
-    /** @var \DateTime */
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
+     */
     private $timestamp;
 
-    /** @var string */
-    private $code;
-
-    /** @var string */
-    private $referer;
-
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=45, nullable=false)
+     */
     private $ip;
 
-    /** @var string */
-    private $cookieID;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=20, nullable=false)
+     */
+    private $code;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="referer", type="string", length=255, nullable=true)
+     */
+    private $referer;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="votes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="userID", referencedColumnName="id")
+     * })
+     */
+    private $user;
 
     public function construct()
     {
-        $this->timestamp = new \DateTime();
+        $this->timestamp = new DateTime();
     }
 
     /**
@@ -54,7 +94,7 @@ class VotingCodeLog
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimestamp()
     {
@@ -62,7 +102,7 @@ class VotingCodeLog
     }
 
     /**
-     * @param \DateTime $timestamp
+     * @param DateTime $timestamp
      * @return VotingCodeLog
      */
     public function setTimestamp($timestamp)
