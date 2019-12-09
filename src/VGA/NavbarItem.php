@@ -6,21 +6,30 @@ class NavbarItem
     /** @var string */
     public $title;
 
+    /** @var integer */
+    public $order;
+
     /** @var string */
     public $route;
 
     /** @var NavbarItem[] */
     public $children = [];
 
-    public function __construct(string $title, ?string $route = null)
+    public function __construct(array $details, ?string $route = null)
     {
-        $this->title = $title;
+        $this->title = $details['label'];
+        $this->order = $details['order'];
         $this->route = $route;
     }
 
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
     }
 
     public function getRoute(): string
