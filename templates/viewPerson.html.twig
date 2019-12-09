@@ -4,7 +4,7 @@
   <div class="col-md-6">
     <h2>User information</h2>
 
-    {% spaceless %}
+    {% apply spaceless %}
     <ul class="list-unstyled">
       {% if user.primaryRole %}
         <li>
@@ -33,7 +33,7 @@
         {% endif %}
       </li>
     </ul>
-    {% endspaceless %}
+    {% endapply %}
 
     {% if is_granted('ROLE_PROFILE_EDIT_DETAILS') and not configService.isReadOnly %}
       <a class="btn btn-primary" href="{{ path('editPerson', {'steamID': user.steamID}) }}">Edit user information</a>
@@ -68,7 +68,7 @@
           <h2>Add a permission</h2>
           <form method="POST" action="{{ path('editPerson', {'steamID': user.steamID}) }}">
             <select class="form-control input-small" name="GroupName">
-              {% for permission in permissions if permission not in user.permissions %}
+              {% for permission in permissions | filter(permission => permission not in user.permissions) %}
                 <option value="{{ permission.id }}">
                   {{ permission.id }} &ndash; {{ permission.description }}
                   {% if permission.id[0:5] != 'LEVEL' %}

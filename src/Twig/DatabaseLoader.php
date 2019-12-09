@@ -3,11 +3,14 @@ namespace App\Twig;
 
 use App\Entity\Template;
 use Doctrine\ORM\EntityManagerInterface;
+use Twig\Error\LoaderError;
+use Twig\Loader\LoaderInterface;
+use Twig\Source;
 use Twig_Error_Loader;
 use Twig_LoaderInterface;
 use Twig_Source;
 
-class DatabaseLoader implements Twig_LoaderInterface
+class DatabaseLoader implements LoaderInterface
 {
     protected $repo;
 
@@ -19,10 +22,10 @@ class DatabaseLoader implements Twig_LoaderInterface
     public function getSourceContext($name)
     {
         if (false === $template = $this->getTemplate($name)) {
-            throw new Twig_Error_Loader(sprintf('Template "%s" does not exist.', $name));
+            throw new LoaderError(sprintf('Template "%s" does not exist.', $name));
         }
 
-        return new Twig_Source($template->getSource(), $name);
+        return new Source($template->getSource(), $name);
     }
 
     public function exists($name)

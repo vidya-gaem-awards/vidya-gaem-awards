@@ -2,13 +2,15 @@
 namespace App\Twig;
 
 use Moment\Moment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class MomentExtension extends \Twig_Extension
+class MomentExtension extends AbstractExtension
 {
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('moment', [$this, 'momentFilter'])
+            new TwigFilter('moment', [$this, 'momentFilter'])
         ];
     }
 
