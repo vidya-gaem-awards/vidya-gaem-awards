@@ -49,14 +49,14 @@ class GameRelease
      *
      * @ORM\Column(name="notable", type="boolean", nullable=false)
      */
-    private $notable;
+    private $notable = false;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="manually_added", type="boolean", nullable=false)
      */
-    private $manuallyAdded;
+    private $manuallyAdded = false;
 
     /**
      * @var bool
