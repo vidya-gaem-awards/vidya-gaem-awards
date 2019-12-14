@@ -222,8 +222,14 @@ class WikipediaService
 
         $tables = $crawler->filter('.wikitable.sortable');
 
-        // 2008 is an extra long article with additional tables
-        $expectedTableCount = ($year === 2008 ? 3 : 1);
+        // Some articles have more tables containing information we don't care about
+        if ($year === 2008) {
+            $expectedTableCount = 3;
+        } elseif ($year === 1999) {
+            $expectedTableCount = 2;
+        } else {
+            $expectedTableCount = 1;
+        }
 
         if ($tables->count() > $expectedTableCount) {
             throw new \RuntimeException('Unexpected table count: ' . $tables->count());
