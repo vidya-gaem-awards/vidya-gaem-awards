@@ -51,14 +51,14 @@ class Action
     /**
      * @var string|null
      *
-     * @ORM\Column(name="data1", type="string", length=50, nullable=true)
+     * @ORM\Column(name="data1", type="string", length=255, nullable=true)
      */
     private $data1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="data2", type="string", length=50, nullable=true)
+     * @ORM\Column(name="data2", type="string", length=255, nullable=true)
      */
     private $data2;
 
