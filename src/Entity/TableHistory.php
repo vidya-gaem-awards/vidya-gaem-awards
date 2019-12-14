@@ -23,7 +23,7 @@ class TableHistory
     /**
      * @var string
      *
-     * @ORM\Column(name="table", type="string", length=100, nullable=false)
+     * @ORM\Column(name="`table`", type="string", length=100, nullable=false)
      */
     private $table;
 
@@ -37,7 +37,7 @@ class TableHistory
     /**
      * @var array
      *
-     * @ORM\Column(name="values", type="json_array", nullable=false)
+     * @ORM\Column(name="`values`", type="json_array", nullable=false)
      */
     private $values;
 
