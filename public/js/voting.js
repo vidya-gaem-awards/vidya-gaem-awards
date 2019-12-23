@@ -204,6 +204,8 @@ $(document).ready(function () {
             element.appendTo('.inventory-container');
         }
     }
+
+    addRewardToInventory('nothing');
     updateInventory();
 
     if (localStorage.getItem('activeCSS')) {
