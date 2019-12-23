@@ -67,7 +67,7 @@ class ItemManagerController extends AbstractController
             return $this->json(['error' => 'You need to enter an ID.']);
         }
 
-        if (!preg_match('/^[a-z-]+$/', $post->get('short-name'))) {
+        if (!preg_match('/^[0-9a-z-]+$/', $post->get('short-name'))) {
             return $this->json(['error' => 'ID must consist of lowercase letters and dashes only.']);
         }
 
