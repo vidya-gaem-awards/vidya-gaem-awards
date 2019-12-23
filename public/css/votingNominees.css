@@ -1,7 +1,7 @@
 /** Inner elements */
 .nominee {
   position: relative;
-  border: 1px solid #fec544;
+  border: 1px solid #f29823;
   /*width: 350px;*/
   /*height: 140px;*/
   transition: 0.3s linear all;
@@ -51,35 +51,41 @@
     bottom: 0px;
     left: 0px;
     width: 100%;
-    height: 39px;
-    background: #00000085;
+    height: 30px;
+    background: none;
     z-index: 300;
 }
 
 .nomineeName {
 	color: #fec544;
-    font-family: "Trajan Pro 3", serif;
-    text-transform: uppercase;
-    font-size: 11px;
-    line-height: 15px;
-    display: inline-block;
-    padding: 2px 7px;
-    position: absolute;
-    top: 3px;
-    left: 0px;
-	text-shadow: #000000 2px 2px 2px;
+  font-family: "OratorStd", "Courier New", serif;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 100%;
+  display: inline-block;
+  padding: 4px 5px 11px 25px;
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  text-shadow: #f29823 0px 0px 3px;
+  text-align: right;
+  background: url("/2019images/nom_namebg.png") repeat-x bottom left, black;
+  border: 1px solid #f29823;
 }
 .nomineeSubtitle {
-    font-family: Arial,sans-serif;
-    display: inline-block;
-    color: white;
-    font-size: 10px;
+    color: #f29823;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
     line-height: 10px;
+    display: inline-block;
     padding: 1px 7px;
     position: absolute;
-    top: 19px;
-    left: 0px;
-    z-index: 300;
+    bottom: -1px;
+	right: -1px;
+	z-index: 300;
+	text-align: right;
+	background:	#000;
+	border: 1px solid #f29823;
 }
 
 .nomineeSubtitle a {
@@ -100,6 +106,7 @@
 
 .fakeElement {
   height: 0;
+  background: url("/2019images/nom_corner.png") no-repeat bottom left;
   padding-top: calc(1 / 2.5 * 100%);
 }
 

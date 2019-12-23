@@ -80,7 +80,7 @@
     <div class="pageHeaderTitle">
 		<h1>The 2019 Vidya Gaem Awards</h1>
 		<h2>{{ voteText }}</h2>
-      <h2>Think you can predict the winners? Join the <a href="{{ path('predictions') }}">2019 Fantasy League!</a></h2>
+      <h2>Think you can predict the winners? Join the <a href="{{ path('predictions') }}">2019 Fantasy League</a>!</h2>
 	</div>
   </div>
 
@@ -95,7 +95,7 @@
         <div class="awardHeader">
             <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
             <div class="awardHeaderContainer">
-                <div class="awardName">{{ award.name }}</div>
+                <h1 class="awardName">{{ award.name }}</h1>
                 <h2 class="awardSubtitle">{{ award.subtitle }}</h2>
             </div>
             <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
@@ -223,7 +223,7 @@
 
 
 						  <div class="yourVotes">
-							<img src="{{ asset('2018images/yourVotes.png') }}" alt="Those votes? They're yours."/>
+							<img src="{{ asset('2019images/yourVotes.png') }}" alt="Those votes? They're yours."/>
 						  </div>
 
                           <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
@@ -322,7 +322,7 @@
 
     {% if app.user.loggedIn %}
       <h3 class="goBackLink">
-        <a href="{{ path('home') }}">Back to the main part of the site</a>
+        <a href="{{ path('home') }}">< Back to the main part of the site</a>
       </h3>
     {% endif %}
   </div>
@@ -330,9 +330,9 @@
   {% if award %}
     <img id="reward-buddie">
 
-    <div class="zig" style="margin-bottom: -6px;"></div>
+    <div class="zig"></div>
 
-    <div class="deus-ex-hr">
+    <div id="containerInventory">
       <div id="inventory">
 
         <form class="form-inline" id="cheat-code" style="margin-bottom: 10px; display: none;">

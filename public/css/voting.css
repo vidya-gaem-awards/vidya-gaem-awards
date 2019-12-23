@@ -288,8 +288,8 @@
 .item-name {
   margin-top: 10px;
   text-align: center;
-  color: black;
-  text-shadow: white 2px 2px;
+  color: #f29823;
+  text-shadow: #f29823 0px 0px 3px;
   font-size: 18px;
   width: 100%;
 }
@@ -304,15 +304,11 @@
   margin: 5px auto 0 auto;
 }
 
-.deus-ex-hr {
-  background: linear-gradient(to right, rgb(249, 253, 68) 0%, rgb(255, 255, 253) 50%, rgb(249, 253, 68) 100%);
+.containerInventory, .deus-ex-hr {
+  background: linear-gradient(to right, rgb(26, 26, 28) 0%, rgb(0, 0, 0) 30%, rgb(0, 0, 0) 70%, rgb(26, 26, 28) 100%);
   padding-top: 15px;
 }
 
-#inventory h1 {
-  color: rgb(255, 0, 11);
-  text-shadow: white 2px 2px;
-}
 
 body {
   padding-bottom: 0;
@@ -357,6 +353,7 @@ body {
 }
 
 /* Page Header */
+/*
 .pageHeader {
   height: 170px;
   margin: 0 auto;
@@ -375,7 +372,6 @@ body {
 }
 
 .pageHeader h1 {
-  font-size: 30px;
   line-height: 25px;
   margin-top: 30px;
   margin-bottom: 0px;
@@ -385,24 +381,7 @@ body {
   font-size: 1.3em;
   padding: 0px 50px;
 }
-
-.pageHeader h2 a {
-  color: #fec544;
-  font-family: "Trajan Pro 3", serif;
-  text-transform: uppercase;
-  text-shadow: #00000080 3px 3px 3px;
-  font-size: 0.9em;
-  line-height: 0.95em;
-}
-
-.pageHeader h2 a:hover {
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.pageHeader h1::after {
-    display: block;
-    content: url(/2018images/5stars.png);
-}
+*/
 
 
 /* Award Header (including left/right navigation buttons) */
@@ -414,34 +393,36 @@ body {
 }
 
 .awardHeaderContainer {
-  height: 121px;
+  height: 108px;
   margin: 0 77px 20px 77px;
-  padding: 30px 30px;
-  background-image: url(/2018images/btnNav_middle.png);
+  padding: 15px 45px;
+  background-image: url(/2019images/btnNav_middle.png);
   background-repeat: no-repeat;
   background-position: top center;
 }
 
 .awardName {
-  font-family: "Trajan Pro 3", serif;
+  font-family: "Coolvetica", Helvetica, sans-serif;
   font-weight: normal;
-  /*text-transform: uppercase;*/
-  font-size: 30px;
-  line-height: 38px;
-  color: #fec544;
-  text-shadow: #00000075 5px 5px 5px;
+  text-transform: uppercase;
+  color: #f29823;
+  text-shadow: #f29823 0px 0px 3px;
+  font-size: 3em;
+  line-height: 100%;
+  margin-top: 10px;
 }
-
+/*
 .awardSubtitle {
-  font-family: "Corbel", Arial, sans-serif;
-  font-size: 22px;
-  color: #e7e7e7;
-  text-shadow: #00000075 5px 5px 5px;
-}
+  font-family: "OratorStd", "Courier New", serif;
+  font-weight: normal;
+  font-size: 1.1em;
+  color: #f29823;
+  text-shadow: #f29823 0px 0px 3px;
+}*/
 
 .navigation {
-  width: 77px;
-  height: 121px;
+  width: 125px;
+  height: 108px;
   position: absolute;
   top: 0px;
   cursor: pointer;
@@ -450,7 +431,7 @@ body {
 
 .navigation.left {
   left: 0;
-  background: url("/2018images/btnNav_left.png") 0 0;
+  background: url("/2019images/btnNav_left.png") 0 0;
 }
 .left:hover {
   background-position: 0 bottom;
@@ -458,7 +439,7 @@ body {
 
 .navigation.right {
   right: 0;
-  background: url("/2018images/btnNav_right.png") 0 0;
+  background: url("/2019images/btnNav_right.png") 0 0;
 }
 .right:hover {
   background-position: 0 bottom;
@@ -709,13 +690,13 @@ body {
 }
 
 #voteDropAreaBottom {
-  border: 3px dashed #b71111;
-  background: url(/2018images/bg_led.png);
+  border: 1px dashed #f81317;
+  background: black;
   position: relative;
 }
 
 #voteDropAreaBottom.locked {
-  border: 2px solid white;
+  border: 1px solid #f81317;
 }
 
 #dragLimit.dragActive #voteDropAreaBottom {
@@ -724,11 +705,11 @@ body {
 
 #voteDropAreaTop:empty:after {
   content: "You've preferenced all the nominees! Nice work!";
-  font-family: Arial, sans-serif;
-  color: white;
+  font-family: "OratorStd", "Courier New", serif;
+  color: #f81317;
   font-style: italic;
   font-size: 30px;
-  text-shadow: black 2px 2px;
+  text-shadow: #f29823 0px 0px 3px;
   z-index: -1;
   text-align: center;
   line-height: 30px;
@@ -736,11 +717,11 @@ body {
 
 #voteDropAreaBottom:empty:after {
   content: "You haven't yet voted for this award";
-  font-family: Arial, sans-serif;
-  color: white;
+  font-family: "OratorStd", "Courier New", serif;
+  color: #f81317;
   font-style: italic;
   font-size: 30px;
-  text-shadow: black 2px 2px;
+  text-shadow: #f29823 0px 0px 3px;
   z-index: -1;
   text-align: center;
   line-height: 30px;
@@ -799,7 +780,8 @@ body {
 }
 
 /* Awards List */
-#containerAwards, #inventory {
+#containerAwards, #containerInventory, .deus-ex-hr {
+  clear: both;
   margin: 0 auto;
   overflow: auto;
   max-width: 1200px;
@@ -814,6 +796,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 15px;
 }
 
 .award {
@@ -836,13 +819,6 @@ body {
 }
 
 .award h3 {
-    color: #fec544;
-    text-decoration: none;
-    font-family: "Trajan Pro 3", serif;
-    text-shadow: #00000080 3px 3px 3px;
-    font-size: 0.9em;
-    line-height: 0.95em;
-    padding: 0;
     margin: 0 5px 0 17px;
     display: inline;
 }
@@ -881,7 +857,7 @@ body {
 }
 
 .goBackLink a {
-  background-color: rgb(251, 68, 7);
+  background-color: #f29823;
   border-radius: 15px;
   color: white;
   padding: 5px 15px;
