@@ -1,24 +1,4 @@
-/*@font-face {*/
-  /*font-family: 'AnnapolisHalftoneItalic';*/
-  /*src: local('☺'), url('/fonts/AnnapolisHalftoneItalic.woff') format('woff');*/
-  /*font-weight: normal;*/
-  /*font-style: normal;*/
-/*}*/
-
-/*@font-face {*/
-  /*font-family: 'Annapolis';*/
-  /*src: local('☺'), url('/fonts/Annapolis.woff') format('woff');*/
-  /*font-weight: normal;*/
-  /*font-style: normal;*/
-/*}*/
-
-/*@font-face {*/
-  /*font-family: 'FixedSystem';*/
-  /*src: local('☺'), url('/fonts/FixedSystem.woff') format('woff');*/
-  /*font-weight: normal;*/
-  /*font-style: normal;*/
-/*}*/
-
+/*
 @font-face {
     font-family: 'Trajan Pro 3';
     src: url('/fonts/TrajanPro3-Regular.woff2') format('woff2'),
@@ -33,34 +13,42 @@
         url('/fonts/Corbel.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+}*/
+
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('/fonts/CoolveticaCondensedRg-Regular.woff2') format('woff2'),
+        url('/fonts/CoolveticaCondensedRg-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-
-
+@font-face {
+    font-family: 'OratorStd';
+    src: url('/fonts/OratorStd.woff2') format('woff2'),
+        url('/fonts/OratorStd.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 html {
   background: 
-  url(/2018images/bg_dots.gif) fixed, 
-  url(/2018images/bg_stars.png) no-repeat fixed bottom center, 
-  url(/2018images/bg_crowd.jpg) no-repeat top center, 
-  linear-gradient(to bottom, rgb(17, 22, 42) 8%, rgb(50, 42, 63) 37%);
+  url(/2019images/bg_static.gif) repeat-x fixed top center, 
+  url(/2019images/bg_stars.gif) fixed, 
+  linear-gradient(to bottom, rgb(6, 6, 6) 60%, rgb(26, 26, 32) 100%) fixed;
 }
 
 body {
   background: none;
   color: white;
-  font-family: "Corbel", Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 .zig {
   clear: both;
-  height: 15px;
+  height: 11px;
   margin: 20px 0;
-    background: linear-gradient(to right, 
-	rgba(254,197,68,0.1) 0%,
-	rgba(254,197,68,1) 15%,
-	rgba(254,197,68,0.3) 60%,
-	rgba(254,197,68,0.1) 100% );
+  background: url(/2019images/zig.png) repeat-x;
 }
 
 /* Typography (headings) */
@@ -69,21 +57,31 @@ h1, h2 {
 }
 
 h1 {
-  font-family: "Trajan Pro 3", serif;
+  font-family: "Coolvetica", Helvetica, sans-serif;
   font-weight: normal;
   text-transform: uppercase;
-  color: #fec544;
-  text-shadow: #00000075 5px 5px 5px;
+  color: #f29823;
+  text-shadow: #f29823 0px 0px 3px;
   font-size: 3em;
   line-height: 100%;
 }
 
 h2 {
-  font-family: "Corbel", Arial, sans-serif;
+  font-family: "OratorStd", "Courier New", serif;
   font-weight: normal;
-  font-size: 1.5em;
-  color: #e7e7e7;
-  text-shadow: #00000075 5px 5px 5px;
+  font-size: 1.1em;
+  color: #f29823;
+  text-shadow: #f29823 0px 0px 3px;
+}
+
+h3 {
+    color: #fec544;
+    text-decoration: none;
+	font-family: "OratorStd", "Courier New", serif;
+    text-shadow: #00000080 3px 3px 3px;
+    font-size: 1em;
+    line-height: 0.95em;
+    padding: 0;
 }
 
 /* Navbar */
@@ -148,13 +146,13 @@ h2 {
 
 a {
   color: #fec544;
-  font-family: "Trajan Pro 3", serif;
-  text-shadow: #00000080 2px 2px 2px;
+  text-shadow: #fec544 0px 0px 3px;
 }
 
 a:hover {
-  background: rgba(0, 0, 0, 0.8);
-  color: #fec644;
+  color: #fde942;
+  text-shadow: #fde942 0px 0px 3px;
+  text-decoration: underline;
 }
 
 .card {
@@ -246,36 +244,26 @@ a:hover {
   margin-bottom: 20px;
 }
 
-.pageHeaderTitle {
-  margin-left: 50px;
+.pageHeaderLogo{
+  float: left;
+  width: 25%;
+  text-align: right;
+}
+.pageHeaderTitle{
+  float: right;
+  width: 75%;
 }
 
+/*
+.pageHeaderTitle {
+  margin-left: 50px;
+}*/
+
 .pageHeader h1 {
-  font-size: 30px;
-  line-height: unset;
   text-align: center;
-  margin-top: 20px;
 }
 
 .pageHeader h2 {
-  font-size: 1.3em;
+  text-align: center;
   padding: 0 50px;
-}
-
-.pageHeader h2 a {
-  color: #fec544;
-  font-family: "Trajan Pro 3", serif;
-  text-transform: uppercase;
-  text-shadow: #00000080 3px 3px 3px;
-  font-size: 0.9em;
-  line-height: 0.95em;
-}
-
-.pageHeader h2 a:hover {
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.pageHeader h1::after {
-  display: block;
-  content: url(/2018images/5stars.png);
 }
