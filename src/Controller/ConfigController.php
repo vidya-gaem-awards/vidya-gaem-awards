@@ -156,7 +156,7 @@ class ConfigController extends AbstractController
 
             $labelData = explode('/', $details['label'], 2);
             if (count($labelData) === 2) {
-                if (!isset($validRoutes[$labelData[0]])) {
+                if (!isset($navbarItemsOrdered[$labelData[0]])) {
                     $this->addFlash('error', 'Invalid navbar configuration: dropdown not found (' . $details['label'] . ').');
                     $navbarError = $error = true;
                 }
