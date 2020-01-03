@@ -190,8 +190,8 @@
 }
 
 #rewards .modal-content {
-  background: linear-gradient(to bottom, rgb(0, 51, 255) 0%, rgb(94,126,255) 70%);
-  border: 2px solid white;
+  background: linear-gradient(to bottom, rgb(6, 6, 6) 60%, rgb(26, 26, 32) 100%) fixed;
+  border: 1px solid #f81317;
   overflow: hidden;
   transition: 500ms ease-in-out;
 }
@@ -243,10 +243,10 @@
 }
 
 .btn-lootbox, .btn-lootbox:focus {
-  background-color: rgb(251,68,7);
-  border-color: rgb(232, 65, 7);
-  color: white;
-  text-shadow: black 2px 2px;
+  background-color: #000;
+  border-color: #f81317;
+  color: #f81317;
+  text-shadow: #f81317 0px 0px 3px;
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -256,9 +256,7 @@
 }
 
 .btn-lootbox:hover {
-  background-color: rgb(215, 61, 6);
-  border-color: rgb(167, 47, 5);
-  color: yellow;
+  color: #f29823;
 }
 
 .modal {
@@ -361,16 +359,6 @@ body {
   max-width: 1000px;
 }
 
-.pageHeaderLogo{
-  float: left;
-  width: 25%;
-  text-align: right;
-}
-.pageHeaderTitle{
-  float: right;
-  width: 75%;
-}
-
 .pageHeader h1 {
   line-height: 25px;
   margin-top: 30px;
@@ -409,7 +397,7 @@ body {
   text-shadow: #f29823 0px 0px 3px;
   font-size: 3em;
   line-height: 100%;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 /*
 .awardSubtitle {
@@ -437,20 +425,51 @@ body {
   background-position: 0 bottom;
 }
 
-.navigation.right {
+.navigation.right, .navigation.next {
   right: 0;
   background: url("/2019images/btnNav_right.png") 0 0;
 }
-.right:hover {
+.right:hover, .next:hover {
   background-position: 0 bottom;
 }
 
-.navigation.next {
-  right: 0;
-  background: url("/2018images/btnNav_next.png") 0 0;
+
+/* Anims */
+@keyframes flicker {
+  0%  { opacity: 0; }
+  5% { opacity: 0; }
+  6% { opacity: 0.6; }
+  10% { opacity: 0.6; }
+  11% { opacity: 0.2; }
+  15% { opacity: 0.2; }
+  16% { opacity: 0.8; }
+  20% { opacity: 0.8; }
+  21% { opacity: 0.4; }
+  26% { opacity: 0.4; }
+  70% { opacity: 1; }
 }
-.next:hover {
-  background-position: 0 bottom;
+.awardName{
+  animation-duration: 4s;
+  animation-name: flicker;
+  animation-iteration-count: 1;
+}
+@keyframes flicker2 {
+  0%  { opacity: 0; }
+  35% { opacity: 0; }
+  36% { opacity: 0.6; }
+  40% { opacity: 0.6; }
+  41% { opacity: 0.2; }
+  45% { opacity: 0.2; }
+  46% { opacity: 0.8; }
+  50% { opacity: 0.8; }
+  51% { opacity: 0.4; }
+  56% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+.awardSubtitle{
+  animation-duration: 4s;
+  animation-name: flicker2;
+  animation-iteration-count: 1;
 }
 
 
@@ -685,8 +704,8 @@ body {
 }
 
 /*#dragLimit.dragActive #voteDropAreaTop,*/ #voteDropAreaTop:empty {
-  border: 2px dashed white;
-  background: rgba(255, 255, 255, 0.2);
+  border: 1px dashed #f29823;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 #voteDropAreaBottom {
@@ -754,9 +773,9 @@ body {
 }
 
 #btnResetVotes {
-  width: 171px;
-  height: 121px;
-  background: url("/2018images/btnReset.png") 0 0;
+  width: 185px;
+  height: 108px;
+  background: url("/2019images/btnReset.png") 0 0;
   margin-right: 50px;
 }
 
@@ -765,9 +784,9 @@ body {
 }
 
 #btnLockVotes {
-  width: 171px;
-  height: 121px;
-  background: url("/2018images/btnSubmit.png") 0 0;
+  width: 185px;
+  height: 108px;
+  background: url("/2019images/btnSubmit.png") 0 0;
 }
 
 #btnLockVotes:hover {
@@ -811,7 +830,17 @@ body {
 }
 
 .award:hover {
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(242, 152, 35, 0.2);
+}
+
+.active {
+  background: rgb(0, 0, 0);
+  border: 1px solid #f81317;
+  margin: -1px 0px -1px 13px;
+}
+
+.active:hover {
+  background: rgba(242, 152, 35, 0.2);
 }
 
 .award h1 {
@@ -837,14 +866,6 @@ body {
   display: inline;
 }
 
-.active {
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.active:hover {
-  background: rgba(0, 0, 0, 0.3);
-}
-
 .complete:before {
   content: "";
   display: block;
@@ -853,15 +874,29 @@ body {
   left: 5;
   width: 26px;
   height: 100%;
-  background: url("/2017images/check.png") 0 center no-repeat;
+  background: url("/2019images/check.png") 0 center no-repeat;
 }
 
+.complete h3 {
+  color: #f81317;
+}
+
+.goBackLink {
+	margin-top: 30px;
+}
 .goBackLink a {
-  background-color: #f29823;
-  border-radius: 15px;
-  color: white;
-  padding: 5px 15px;
+  background-color:#000;
+  border-radius: 2px;
+  color: #f81317;
+  text-shadow: #f81317 0px 0px 3px;
+  padding: 5px 15px 1px;
   font-size: 18px;
+  border: 1px solid #f81317;
+}
+.goBackLink a:hover {
+  color: #f29823;
+  border: 1px solid #f29823;
+  text-shadow: #f29823 0px 0px 3px;
 }
 
 /* Easter egg */
@@ -1043,11 +1078,11 @@ a:hover {
 }
 
 #btnStart {
-  width: 311px;
-  height: 121px;
+  width: 245px;
+  height: 108px;
   margin: 0 auto;
   display: block;
-  background: url("/2018images/btnStart.png") top center no-repeat;
+  background: url("/2019images/btnStart.png") top center no-repeat;
 }
 
 #btnStart:hover {
@@ -1083,8 +1118,7 @@ a:hover {
   }
 
   .awardName {
-    font-size: 21px;
-    line-height: 22px;
+    font-size: 2em;
   }
 
   .awardSubtitle {
@@ -1155,20 +1189,6 @@ a:hover {
     content: ' - tap to remove or drag to reorder';
   }
 
-  .pageHeaderLogo {
-    float: none;
-  }
-
-  .pageHeaderLogo img {
-    height: 100px;
-    margin-bottom: 5px;
-  }
-  
-  .pageHeaderTitle {
-    float: none;
-    text-align: center;
-    width: 100%;
-  }
 
   .pageHeaderTitle h1 {
     display: none;
