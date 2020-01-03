@@ -447,7 +447,7 @@ $(document).ready(function () {
         $('.lootbox').removeClass('animate-back');
         $('.lootbox-title').text('');
 
-        var lootboxes = ['pubg', 'ow', 'tf2', 'csgo'];
+        var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa', 'r6s'];
 
         $('.lootbox-image').each(function () {
             $(this).attr('src', '/img/lootbox-' + lootboxes[getRandomInt(0, lootboxes.length)] + '.png');
