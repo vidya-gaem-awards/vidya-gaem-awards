@@ -98,16 +98,38 @@
   text-decoration: underline;
 }
 
-/** Other */
-.flexContainer .voteBox {
-  transition: 0.3s linear all;
-  width: 100%;
-}
-
 .fakeElement {
   height: 0;
   background: url("/2019images/nom_corner.png") no-repeat bottom left;
   padding-top: calc(1 / 2.5 * 100%);
+}
+
+
+/* Changes when in YOUR VOTES box */
+#voteDropAreaBottom .nominee{
+  border: 1px solid #f81317;
+}
+
+#voteDropAreaBottom .fakeElement{
+  background: url("/2019images/nom_corner_locked.png") no-repeat bottom left;
+}
+
+#voteDropAreaBottom .nomineeName, #voteDropAreaBottom .nomineeSubtitle{
+  color: #f81317;
+  border: 1px solid #f81317;
+  text-shadow: #f81317 0px 0px 3px;
+}
+#voteDropAreaBottom .nomineeName{
+  background: url("/2019images/nom_namebg_locked.png") repeat-x bottom left, black;
+}
+
+
+
+
+/** Other */
+.flexContainer .voteBox {
+  transition: 0.3s linear all;
+  width: 100%;
 }
 
 .voteGroup {

@@ -5,7 +5,7 @@
         url('/fonts/TrajanPro3-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
+}*/
 
 @font-face {
     font-family: 'Corbel';
@@ -13,7 +13,7 @@
         url('/fonts/Corbel.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}*/
+}
 
 @font-face {
     font-family: 'Coolvetica';
@@ -50,6 +50,7 @@ body {
   margin: 20px 0;
   background: url(/2019images/zig.png) repeat-x;
 }
+
 
 /* Typography (headings) */
 h1, h2 {
@@ -96,11 +97,15 @@ h3 {
   color: white !important;
   background: none !important;
   text-shadow: black 1px 1px;
-  font-family: "Corbel", Arial, sans-serif;
+  font-family: "OratorStd", Arial, sans-serif;
 }
 
 .navbar .nav-item .nav-link:hover {
   color: #fec644 !important;
+}
+
+.nav-item{
+	padding: 0px 15px;
 }
 
 .navbar a:hover {
@@ -119,7 +124,7 @@ h3 {
 }
 
 .navbar .dropdown-item {
-  font-family: "Corbel", Arial, sans-serif;
+  font-family: "OratorStd", Arial, sans-serif;
   color: white;
   text-shadow: none;
 }
@@ -141,7 +146,7 @@ h3 {
 .navbar-brand {
   font-weight: normal;
   color: white !important;
-  font-family: "Trajan Pro 3", serif;
+  font-family: "Coolvetica", Helvetica, serif;
 }
 
 a {
@@ -240,24 +245,27 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
 }
 
 .pageHeaderLogo{
   float: left;
-  width: 25%;
   text-align: right;
-}
-.pageHeaderTitle{
-  float: right;
-  width: 75%;
+  margin-left: 15px;
+  margin-right: 15px;
+  background: url(/2019images/vga2019_logo.png) no-repeat center;
+  background-size: auto;
+  width: 30%;
+  height: 100px;
+  background-size: 80%;
 }
 
-/*
-.pageHeaderTitle {
-  margin-left: 50px;
-}*/
+.pageHeaderTitle{
+  float: right;
+  text-align: center;
+  width: 70%;
+}
 
 .pageHeader h1 {
   text-align: center;
@@ -266,4 +274,13 @@ a:hover {
 .pageHeader h2 {
   text-align: center;
   padding: 0 50px;
+}
+
+/* Changes for mobile */
+@media (max-width: 768px) {
+	
+  .pageHeaderLogo img {
+	width: 100%;
+  }
+	
 }
