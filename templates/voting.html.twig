@@ -246,7 +246,9 @@
                     </div>
                 {% endif %}
 
-              <h2 class="fantasy-promo">How well can you predict /v/? Join the <a href="{{ path('predictions') }}" target="_blank">2019 Fantasy League</a> and get your message in the show to laugh at /v/'s shit taste</h2>
+              {% if showFantasyPromo %}
+                <h2 class="fantasy-promo">How well can you predict /v/? Join the <a href="{{ path('predictions') }}" target="_blank">2019 Fantasy League</a> and get your message in the show to laugh at /v/'s shit taste</h2>
+              {% endif %}
 
             {% else %}
                 <div id="startMessage">
