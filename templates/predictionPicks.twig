@@ -7,13 +7,13 @@
   <style>
     .victory {
       background-color: rgba(0, 0, 0, 0.4);
-      border: 1px solid #fec544;
+      border: 1px solid #f29823;
       position: relative;
 
       color: white;
       text-decoration: none;
-      font-family: "Trajan Pro 3", serif;
-      text-shadow: #00000080 3px 3px 3px;
+      /*font-family: "Trajan Pro 3", serif;*/
+      font-family: "Coolvetica", Helvetica, sans-serif;
       font-size: 0.9em;
       line-height: 0.95em;
 
@@ -25,14 +25,14 @@
 
     .user-container {
       background-color: rgba(0, 0, 0, 0.4);
-      border: 1px solid #fec544;
+      border: 1px solid #f29823;
       padding: 10px;
-      font-family: "Trajan Pro 3", serif;
+      font-family: "Coolvetica", Helvetica, sans-serif
     }
 
     .file-container {
       background-color: rgba(0, 0, 0, 0.4);
-      border: 1px solid #fec544;
+      border: 1px solid #f29823;
       padding: 10px;
       font-family: "Corbel", Arial, sans-serif;
     }
@@ -40,8 +40,8 @@
     .quotation {
       font-size: 100px;
       margin: 8px;
-      line-height: 1;
-      height: 45px;
+      /*line-height: 1;*/
+      /*height: 45px;*/
     }
 
     .quotation:last-child {
@@ -52,9 +52,13 @@
       height: auto;
     }
 
+    .quotation.first {
+      line-height: 0.8;
+    }
+
     .quotation-mark {
-      height: 45px;
-      line-height: 130px;
+      /*height: 45px;*/
+      /*line-height: 130px;*/
     }
 
     .victory-message {
@@ -64,12 +68,14 @@
 
     .award-title {
       font-size: 20px;
-      font-family: "Trajan Pro 3", serif;
-      color: #fec544;
+      color: #f29823;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #f29823 0 0 3px;
     }
 
     .award-subtitle {
-      font-family: "Corbel", Arial, sans-serif;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #f29823 0 0 3px;
     }
 
     .award-row {
@@ -85,7 +91,7 @@
       color: white;
       padding-right: .75rem;
       height: 80px;
-      border: 1px solid #fec544;
+      border: 1px solid #f29823;
       font-family: "Corbel", Arial, sans-serif;
       background-color: rgba(0, 0, 0, 0.4);
     }
@@ -119,30 +125,34 @@
       align-items: center;
       width: 45px;
       font-size: 25px;
-      color: #fec544;
+      color: #f29823;
     }
 
     .pick-select {
       height: 60px;
       width: 100%;
       padding: 10px;
-      font-size: 20px;
+      font-size: 30px;
       flex-grow: 1;
 
       background-color: rgba(0, 0, 0, 0.4);
-      border: 1px solid #fec544;
+      border: 1px solid #f81317;
       color: white;
-      font-family: "Trajan Pro 3", serif;
+      font-family: "Coolvetica", Helvetica, sans-serif;
     }
 
     #victory-message-read {
       padding: 6px;
+      font-size: 19px;
+      line-height: normal;
     }
 
     #victory-message-edit {
       width: 100%;
-      height: 5.3em;
-      padding: 5px;
+      height: 78px;
+      padding: 2px 5px;
+      font-size: 20px;
+      line-height: 1.05;
     }
 
     #victory-message-counter {
@@ -156,7 +166,7 @@
 
     .fantasy-name {
       /*font-weight: bold;*/
-      font-size: 30px;
+      font-size: 40px;
     }
 
     #name-edit {
@@ -177,10 +187,10 @@
     }
 
     .yellow {
-      color: #fec544;
+      color: #f29823;
       text-decoration: none;
-      font-family: "Trajan Pro 3", serif;
-      text-shadow: #00000080 3px 3px 3px;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #f29823 0 0 3px;
     }
 
     .winner-text {
@@ -191,13 +201,27 @@
     .no-pick {
       opacity: 0.4;
     }
+
+    .mecha-button {
+      background: rgb(0, 0, 0);
+      border: 1px solid #f81317;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #f29823 0 0 3px;
+      color: #f29823;
+      padding: 4px 6px;
+      cursor: pointer;
+    }
+
+    .mecha-button:hover {
+      background: rgba(242, 152, 35, 0.2);
+    }
   </style>
 {% endblock %}
 
 {% block subBody %}
 
   {% if viewingOwn %}
-    <div class="awardHeaderContainer">
+    <div class="awardHeaderContainer oneLine">
       <div class="awardName text-center">Your Details</div>
     </div>
 
@@ -231,11 +255,11 @@
 
         <div class="row mb-4">
           <div class="col-md-6">
-            <p class="yellow">
+            <p class="yellow mb-1">
               How you'll appear on the leaderboard:
             </p>
 
-            <div class="d-flex align-items-center my-3 user-container">
+            <div class="d-flex align-items-center my-1 mb-3 user-container">
               {% if fantasyUser.avatar %}
                 <img class="mr-3" src="{{ fantasyUser.avatar }}" style='height: 75px;'>
               {% else %}
@@ -262,18 +286,18 @@
 
             {% if not locked %}
               <p>
-                <button class="btn btn-themed" id="edit-details" type="button">Edit your name, avatar, or victory message</button>
-                <button class="btn btn-themed" id="save-details" type="submit" style="display: none;"><i class="fas fa-fw fa-save"></i> Save your name, avatar, and victory message</button>
+                <button class="mecha-button" id="edit-details" type="button">Edit your name, avatar, or victory message</button>
+                <button class="mecha-button" id="save-details" type="submit" style="display: none;"><i class="fas fa-fw fa-save"></i> Save your name, avatar, and victory message</button>
               </p>
             {% endif %}
           </div>
           <div class="col-md-6">
-            <p class="yellow">
+            <p class="yellow mb-1">
               Your victory message:
             </p>
 
             <div class="victory">
-              <div class="quotation">
+              <div class="quotation first">
                 <div class="quotation-mark">&ldquo;</div>
               </div>
               <div class="victory-message">
@@ -292,7 +316,7 @@
   {% endif %}
 
   {% if viewingOwn %}
-  <div class="awardHeaderContainer">
+  <div class="awardHeaderContainer oneLine">
     <div class="awardName text-center">
       Your Picks
     </div>
@@ -302,9 +326,9 @@
       {% if fantasyUser.avatar %}
         <img class="mr-4" src="{{ fantasyUser.avatar | e('html_attr')}}" style='height: 75px;'>
       {% endif %}
-      <div class="text-center" style="margin-top: 8px;">
-        <div class="awardName">{{ fantasyUser.name }}</div>
-        <h2 class="awardSubtitle">Score: {{ fantasyUser.score }} / {{ awards | length }}</h2>
+      <div class="text-center">
+        <div class="awardName" style="margin-top: 0;">{{ fantasyUser.name }}</div>
+        <h2 class="awardSubtitle" style="margin-top: 5px;">Score: {{ fantasyUser.score }} / {{ awards | length }}</h2>
       </div>
     </div>
   {% endif %}
