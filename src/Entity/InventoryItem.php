@@ -92,6 +92,11 @@ class InventoryItem implements JsonSerializable
     private $userItems;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $year = '2019';
+
+    /**
      * Get id
      *
      * @return integer
@@ -283,6 +288,7 @@ class InventoryItem implements JsonSerializable
             'music' => $this->hasMusic(),
             'musicFile' => $this->getMusicFile(),
             'cssContents' => $this->getCssContents(),
+            'year' => $this->getYear(),
         ];
     }
 
@@ -312,5 +318,15 @@ class InventoryItem implements JsonSerializable
         return $this;
     }
 
+    public function getYear(): ?string
+    {
+        return $this->year;
+    }
 
+    public function setYear(string $year): self
+    {
+        $this->year = $year;
+
+        return $this;
+    }
 }

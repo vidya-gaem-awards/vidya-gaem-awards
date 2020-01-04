@@ -198,7 +198,8 @@ $(document).ready(function () {
             element.addClass('kebab');
             element.find('img').attr('src', reward.image).attr('id', 'reward-image-' + reward.shortName);
             element.find('.item-name').text(reward.name);
-            element.find('.item-quantity').text('Quantity: ' + quantity);
+            element.find('.item-quantity').text('x ' + quantity);
+            element.find('.item-year').text(reward.year + ' item');
             if (reward.css || reward.buddie || reward.music || reward.shortName === 'nothing' || reward.shortName === 'clamburger') {
                 element.find('.item-button').show().attr('data-id', reward.shortName);
             } else {
