@@ -189,6 +189,10 @@ $(document).ready(function () {
 
         for (var i = 0; i < inventory.unlockKeys.length; i++) {
             var reward = rewards[inventory.unlockKeys[i]];
+            if (reward === undefined) {
+                console.error('Reward is undefined!', i, inventory.unlockKeys[i]);
+                continue;
+            }
             var quantity = inventory.unlocks[reward.shortName];
             var element = $('#item-template').clone();
             element.addClass('kebab');
