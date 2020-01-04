@@ -299,6 +299,11 @@
   width: 100%;
 }
 
+.item-year {
+  width: 100%;
+
+}
+
 .item-button {
   margin: 5px auto 0 auto;
 }

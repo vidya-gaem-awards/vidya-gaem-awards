@@ -70,6 +70,10 @@
       text-align: center;
       width: 100%;
     }
+
+    .item-year {
+      flex-grow: 1;
+    }
   </style>
 {% endblock %}
 
@@ -241,6 +245,7 @@
           <div class="inventory-item" data-toggle="modal" data-target="#dialog-edit" data-id="{{ item.id }}">
             <img src="{{ item.image }}">
               <div class="item-type">
+                  <div class="badge badge-light">{{ item.year }}</div>
                   {% if item.css %}
                       <div class="badge badge-primary">CSS</div>
                   {% endif %}
