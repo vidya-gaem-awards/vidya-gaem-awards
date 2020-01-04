@@ -6,6 +6,7 @@ use App\Entity\InventoryItem;
 use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\PredictionService;
 use DateInterval;
 use DatePeriod;
 use DateTimeImmutable;
@@ -35,7 +36,8 @@ class VotingController extends AbstractController
         Request $request,
         AuthorizationCheckerInterface $authChecker,
         UserInterface $user,
-        SessionInterface $session
+        SessionInterface $session,
+        PredictionService $predictionService
     ) {
         /** @var User $user */
 
@@ -226,6 +228,7 @@ class VotingController extends AbstractController
             'items' => $items,
             'itemChoiceArray' => $itemChoiceArray,
             'rewardCSS' => $customCss,
+            'showFantasyPromo' => !$predictionService->arePredictionsLocked()
         ]);
     }
 
