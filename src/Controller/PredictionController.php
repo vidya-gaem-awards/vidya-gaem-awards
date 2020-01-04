@@ -212,7 +212,7 @@ class PredictionController extends AbstractController
         /** @var UploadedFile $file */
         $file = $request->files->get('avatar');
         if ($file) {
-            $fileResult = $this->processAvatar($file, $request);
+            $fileResult = $this->processAvatar($file, $request, $predictionService);
         } else {
             $fileResult = true;
         }
