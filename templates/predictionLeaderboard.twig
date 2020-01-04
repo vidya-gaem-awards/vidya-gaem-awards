@@ -12,8 +12,7 @@
 
       color: white;
       text-decoration: none;
-      font-family: "Trajan Pro 3", serif;
-      text-shadow: #00000080 3px 3px 3px;
+      font-family: "OratorStd", "Courier New", serif;
       /*font-size: 0.9em;*/
       /*line-height: 0.95em;*/
 
@@ -29,13 +28,13 @@
 
     .user-container {
       background-color: rgba(0, 0, 0, 0.4);
-      border: 1px solid #fec544;
+      border: 1px solid #f81317;
       padding: 10px;
-      font-family: "Trajan Pro 3", serif;
+      font-family: "Coolvetica", Helvetica, sans-serif;
     }
 
     .champion.user-container {
-      background: rgba(254, 197, 68, 0.2);
+      background: black;
       border-width: 3px;
     }
 
@@ -174,12 +173,14 @@
 
     .champion .fantasy-name {
       /*font-weight: bold;*/
-      font-size: 30px;
+      font-size: 35px;
+      line-height: normal;
+      margin-top: -7px;
     }
 
     .almost .fantasy-name {
-      font-size: 20px;
-      margin-top: 5px;
+      font-size: 28px;
+      /*margin-top: 5px;*/
     }
 
     #name-edit {
@@ -198,24 +199,24 @@
       background: rgba(0,0,0,0.4);
       font-size: 12px;
       text-align: center;
-      font-family: "Trajan Pro 3", serif;
-      color: #fec544;
+      /*font-family: "Trajan Pro 3", serif;*/
+      color: #f29823;
       padding: 5px;
     }
 
     .almost .empty-image {
-      font-size: 10px;
+      font-size: 20px;
     }
 
     .plebs .empty-image {
-      font-size: 8px;
+      font-size: 13px;
     }
 
     .yellow {
-      color: #fec544;
+      color: #f29823;
       text-decoration: none;
-      font-family: "Trajan Pro 3", serif;
-      text-shadow: #00000080 3px 3px 3px;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #f29823 0 0 3px;
     }
 
     .winner-text {
@@ -249,19 +250,24 @@
     }
 
     .plebs {
-      font-family: "Trajan Pro 3", serif;
+      font-family: "Coolvetica", Helvetica, sans-serif;
       background: rgba(0,0,0,0.4);
-      border: 1px solid #fec544;
+      border: 1px solid #f29823;
     }
 
     .plebs.table {
       background: rgba(0,0,0,0.4);
-      border-bottom: 1px solid #fec544;
+      border-bottom: 1px solid #f29823;
     }
 
     .plebs td {
       vertical-align: middle;
-      border-color: #fec544;
+      border-color: #f29823;
+    }
+
+    .plebs .fantasy-name {
+      font-size: 25px;
+      margin-top: -8px;
     }
 
     .champion a, .almost a, .plebs a {
@@ -278,12 +284,12 @@
 
   <div class="container">
     <div class="awardHeaderContainer">
-      <div class="awardName text-center">
+      <div class="awardName text-center" style="margin-top: -10px;">
         The Grand Champion{{ champions | length != 1 ? 's' : '' }}
-        {% if champions %}
-          <h2 class="awardSubtitle">Correctly predicted {{ champions[0].score }} / {{ awardCount }} awards</h2>
-        {% endif %}
       </div>
+      {% if champions %}
+        <h2 class="awardSubtitle text-center">Correctly predicted {{ champions[0].score }} / {{ awardCount }} awards</h2>
+      {% endif %}
     </div>
 
     <div class="row justify-content-center">
@@ -311,7 +317,7 @@
       {% endfor %}
     </div>
 
-    <div class="awardHeaderContainer" style="margin-top: 50px;">
+    <div class="awardHeaderContainer oneLine" style="margin-top: 50px;">
       <div class="awardName text-center">Almost Good Enough</div>
     </div>
 
@@ -336,7 +342,7 @@
       {% endfor %}
     </div>
 
-    <div class="awardHeaderContainer" style="margin-top: 50px;">
+    <div class="awardHeaderContainer oneLine" style="margin-top: 50px;">
       <div class="awardName text-center">Participation Awards</div>
     </div>
 
