@@ -94,7 +94,12 @@
         <div class="awardHeader">
             <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
             <div class="awardHeaderContainer">
-                <h1 class="awardName">{{ award.name }}</h1>
+                <h1 class="awardName">
+                  {{ award.name }}
+                  {% if award.id == 'daylight-hurts' %}
+                    <img src="{{ asset('2019images/verified.png') }}" class="verified">
+                  {% endif %}
+                </h1>
                 <h2 class="awardSubtitle">{{ award.subtitle }}</h2>
             </div>
             <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
