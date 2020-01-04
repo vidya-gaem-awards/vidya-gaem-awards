@@ -8,7 +8,11 @@
   {{ parent() }}
   <style>
     p {
-      font-family: "Corbel", Arial, sans-serif;
+      /*font-family: "Corbel", Arial, sans-serif;*/
+    }
+
+    .awardHeaderContainer.halfSize {
+      padding-top: 1px;
     }
   </style>
 {% endblock %}
@@ -17,7 +21,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <div class="awardHeaderContainer">
+        <div class="awardHeaderContainer halfSize">
           <div class="awardName text-center">How it works</div>
         </div>
         <p>
@@ -31,7 +35,7 @@
       </div>
 
       <div class="col-md-6">
-        <div class="awardHeaderContainer">
+        <div class="awardHeaderContainer halfSize">
           <div class="awardName text-center">Prizes</div>
         </div>
         <p>
@@ -46,7 +50,7 @@
     </div>
     <div class="row mt-4">
       <div class="col-md-6">
-        <div class="awardHeaderContainer">
+        <div class="awardHeaderContainer halfSize">
           <div class="awardName text-center">Closing time</div>
         </div>
         <p>
@@ -55,7 +59,7 @@
         </p>
       </div>
       <div class="col-md-6">
-        <div class="awardHeaderContainer">
+        <div class="awardHeaderContainer halfSize">
           <div class="awardName text-center">Boring shit</div>
         </div>
         <ul>

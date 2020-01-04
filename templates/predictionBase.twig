@@ -16,7 +16,7 @@
     }
 
     .pageHeader h2 {
-      padding: 0 40px;
+      padding: 2px 40px;
     }
   </style>
 {% endblock %}
@@ -27,7 +27,7 @@
     </a>
     <div class="pageHeaderTitle">
       <h1>The 2019 <span style="text-transform: none;">/v/GA</span> Fantasy League</h1>
-      <div class="d-flex justify-content-around">
+      <div class="d-flex justify-content-around" style="margin-top: 10px;">
         {% if configService.config.isPagePublic('results') %}
           <a href="{{ path('winners') }}"><h2>Award Results</h2></a>
         {% else %}

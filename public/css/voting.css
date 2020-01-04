@@ -199,6 +199,7 @@
 #rewards .modal-footer {
   border-top: none;
   padding-top: 0;
+  display: block;
 }
 
 .lootbox.animate {
@@ -387,6 +388,10 @@ body {
   background-image: url(/2019images/btnNav_middle.png);
   background-repeat: no-repeat;
   background-position: top center;
+}
+
+.awardHeaderContainer.oneLine .awardName {
+  margin-top: -5px;
 }
 
 .awardName {
@@ -1087,6 +1092,24 @@ a:hover {
 
 #btnStart:hover {
   background-position: bottom center;
+}
+
+.fantasy-promo {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.fantasy-promo a {
+  background-color: #000;
+  border-radius: 2px;
+  text-shadow: #f81317 0 0 3px;
+  padding: 5px 15px 1px;
+  font-size: 18px;
+  border: 1px solid #f81317;
+}
+
+.fantasy-promo a:hover {
+  background: rgba(242, 152, 35, 0.2);
 }
 
 @media (max-width: 1400px) {
