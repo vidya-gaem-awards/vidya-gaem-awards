@@ -318,6 +318,13 @@ body {
   padding-bottom: 0;
 }
 
+.verified {
+  width: 30px;
+  height: 30px;
+  margin-top: -7px;
+  margin-left: 5px;
+}
+
 
 /*@media (max-width: 1840px) {*/
     /*.rightMeme {*/
