@@ -36,7 +36,7 @@ class ResultsCommand extends Command
         // 4chan: 4
         '13-something-awful' => 'BIT_AND(v.number, 8) > 0',
         '14-neogaf' => 'BIT_AND(v.number, 16) > 0',
-        '15-facepunch' => 'BIT_AND(v.number, 32) > 0',
+        '15-knockout' => 'BIT_AND(v.number, 32) > 0',
         '16-8chan' => 'BIT_AND(v.number, 64) > 0',
         '17-twitch' => 'BIT_AND(v.number, 128) > 0',
         '18-facebook' => 'BIT_AND(v.number, 256) > 0',
@@ -165,8 +165,7 @@ class ResultsCommand extends Command
             'sys.4channel.org' => 2 ** 2,
             'forums.somethingawful.com' => 2 ** 3,
             'neogaf.com' => 2 ** 4,
-            'forum.facepunch.com' => 2 ** 5,
-            'facepunch.com' => 2 ** 5,
+            'knockout.chat' => 2 ** 5,
             '8ch.net' => 2 ** 6,
             'twitch.tv' => 2 ** 7,
             'facebook.com' => 2 ** 8,

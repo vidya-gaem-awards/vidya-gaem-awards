@@ -37,7 +37,7 @@ class ForecastCommand extends Command
         // 4chan: 4
         '13-something-awful' => 'BIT_AND(v.number, 8) > 0',
         '14-neogaf' => 'BIT_AND(v.number, 16) > 0',
-        '15-facepunch' => 'BIT_AND(v.number, 32) > 0',
+        '15-knockout' => 'BIT_AND(v.number, 32) > 0',
         '16-8chan' => 'BIT_AND(v.number, 64) > 0',
         '17-twitch' => 'BIT_AND(v.number, 128) > 0',
         '18-facebook' => 'BIT_AND(v.number, 256) > 0',
