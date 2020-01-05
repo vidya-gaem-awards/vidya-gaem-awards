@@ -89,7 +89,7 @@ class ResultController extends AbstractController
 //            '07-4chan-or-null' => '4chan + NULL',
 //            '09-null-and-voting-code' => 'NULL with code',
 //            '10-null-without-voting-code' => 'NULL without code',
-            '15-facepunch' => 'Facepunch',
+            '15-knockout' => 'Knockout',
             '18-facebook' => 'Facebook',
             '12-twitter' => 'Twitter',
             '17-twitch' => 'Twitch',
