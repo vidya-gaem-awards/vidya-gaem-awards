@@ -153,9 +153,9 @@ class ReferrerController extends AbstractController
             $referrer = preg_replace('{/[0-9]+$}', '', $referrer);
         }
 
-        // Remove links to individual posts from the end of Facepunch URLs
-        if (preg_match('{showthread\.php\?t=\d+&p=.+}', $referrer)) {
-            $referrer = preg_replace('{&p=.+}', '', $referrer);
+        // Remove links to individual posts from the end of Knockout URLs
+        if (preg_match('{knockout\.chat\/thread\/}', $referrer)) {
+            $referrer = preg_replace('{#post-.+}', '', $referrer);
         }
 
         return $referrer;
