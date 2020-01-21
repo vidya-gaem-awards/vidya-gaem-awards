@@ -13,6 +13,13 @@ class Schulze extends AbstractResultCalculator
         $candidates = $this->candidates;
         $votes = $this->votes;
 
+        if (count($candidates) === 1) {
+            $this->warnings = [];
+            $this->steps = ['pairwise' => [], 'strengths' => [], 'sweepPoints' => 0];
+
+            return [$candidates[0]];
+        }
+
         $warnings = [];
 
         // create a matrix of pairwise preferences
