@@ -727,8 +727,9 @@ body {
 
 #voteDropAreaBottom {
   border: 1px dashed #f81317;
-  background: black;
+  background: rgba(0, 0, 0, 0.85);
   position: relative;
+  z-index: 0;
 }
 
 #voteDropAreaBottom.locked {
