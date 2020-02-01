@@ -82,6 +82,9 @@ services:
         tags:
         - { name: security.voter }
 
+    App\Service\FileService:
+        arguments: ['%kernel.project_dir%']
+
 #    get_set_method_normalizer:
 #        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
 #        public: false

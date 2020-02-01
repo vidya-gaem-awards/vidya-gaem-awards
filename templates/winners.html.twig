@@ -266,7 +266,7 @@
                    title="{{ is_granted('ROLE_AWARDS_EDIT') ? 'Click here to upload an image for this award winner' : '' }}"
                    data-id="{{ award.id }}">
                 {% if award.winnerImage %}
-                  <img class="img-responsive center-block" src="{{ award.winnerImage | e('html_attr') }}">
+                  <img class="img-responsive center-block" src="{{ award.winnerImage.url | e('html_attr') }}">
                 {% endif %}
                 {% if is_granted('ROLE_AWARDS_EDIT') %}
                   <div class="empty-image {{ award.winnerImage ? 'inactive' : '' }}" >

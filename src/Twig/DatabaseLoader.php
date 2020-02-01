@@ -58,7 +58,7 @@ class DatabaseLoader implements LoaderInterface
      */
     protected function getTemplate($name)
     {
-        if (!$this->enabled) {
+        if (!$this->enabled || substr($name, 0, 8) !== 'dynamic/') {
             return null;
         }
 
