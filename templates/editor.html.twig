@@ -46,89 +46,95 @@
 
   <hr>
 
-  <div class="row">
-    <div class="col-sm-9">
-      {% if template %}
-        <form action="{{ path('editorPost') }}" method="post">
-          <p class="lead float-right">{{ template.filename }}</p>
-          <p class="lead"><strong>{{ template.name }}</strong></p>
-          {% if template.details %}
-            {{ template.details | raw }}
-          {% endif %}
-          <input type="hidden" name="template" value="{{ template.filename | e('html_attr') }}">
-          <textarea name="codeMirror" id="codeMirror">{{ (source ?: template.source) | e('html_attr') }}</textarea>
-          <button type="submit" class="btn btn-primary mt-2">Save changes</button>
-        </form>
-      {% else %}
-        <p class="lead">
-          The page editor is a powerful tool that allows you customise certain sections of the site.
-        </p>
+  {% if available %}
+    <div class="row">
+      <div class="col-sm-9">
+        {% if template %}
+          <form action="{{ path('editorPost') }}" method="post">
+            <p class="lead float-right">{{ template.filename }}</p>
+            <p class="lead"><strong>{{ template.name }}</strong></p>
+            {% if template.details %}
+              {{ template.details | raw }}
+            {% endif %}
+            <input type="hidden" name="template" value="{{ template.filename | e('html_attr') }}">
+            <textarea name="codeMirror" id="codeMirror">{{ (source ?: template.source) | e('html_attr') }}</textarea>
+            <button type="submit" class="btn btn-primary mt-2">Save changes</button>
+          </form>
+        {% else %}
+          <p class="lead">
+            The page editor is a powerful tool that allows you customise certain sections of the site.
+          </p>
 
-        <h4>Capabilities</h4>
+          <h4>Capabilities</h4>
 
-        <p class="text-justify">
-          The templates that you can edit are made up of HTML. You can use whatever HTML you like (as long as you follow
-          the three rules below). This website uses <a href="https://getbootstrap.com/docs/4.1/" target="_blank">Bootstrap 4</a>,
-          so feel free to make use of the classes that Bootstrap provides.
-        </p>
+          <p class="text-justify">
+            The templates that you can edit are made up of HTML. You can use whatever HTML you like (as long as you follow
+            the three rules below). This website uses <a href="https://getbootstrap.com/docs/4.1/" target="_blank">Bootstrap 4</a>,
+            so feel free to make use of the classes that Bootstrap provides.
+          </p>
 
-        <p>
-          These templates are passed through the <a href="https://twig.symfony.com/" target="_blank">Twig templating engine</a>
-          before rendering. If there's a reason to make use of Twig functionality in a template, the template description will let you know
-          the details.
-        </p>
+          <p>
+            These templates are passed through the <a href="https://twig.symfony.com/" target="_blank">Twig templating engine</a>
+            before rendering. If there's a reason to make use of Twig functionality in a template, the template description will let you know
+            the details.
+          </p>
 
-        <h4 class="mt-4">Be careful</h4>
+          <h4 class="mt-4">Be careful</h4>
 
-        <p class="text-justify">
-          This is a new tool with minimal safety features. It will not syntax check your HTML or Twig syntax for you.
-          Getting it wrong will cause the page to look messed up, or the page may not even load at all.
-        </p>
+          <p class="text-justify">
+            This is a new tool with minimal safety features. It will not syntax check your HTML or Twig syntax for you.
+            Getting it wrong will cause the page to look messed up, or the page may not even load at all.
+          </p>
 
-        <p class="text-justify">
-          There's no real "undo" feature, but in case you break something, all template edits are stored in the <a href="{{ path('auditLog') }}">audit log</a>,
-          so you can always go back and find the last good revision. If you can't find the last good revision because
-          the audit log is a giant goddamn mess, you can delete the entire contents of the template as a last resort.
-          This will cause it to use the built-in source for that template.
-        </p>
+          <p class="text-justify">
+            There's no real "undo" feature, but in case you break something, all template edits are stored in the <a href="{{ path('auditLog') }}">audit log</a>,
+            so you can always go back and find the last good revision. If you can't find the last good revision because
+            the audit log is a giant goddamn mess, you can delete the entire contents of the template as a last resort.
+            This will cause it to use the built-in source for that template.
+          </p>
 
-        <h4 class="mt-4">Don't be stupid</h4>
+          <h4 class="mt-4">Don't be stupid</h4>
 
-        <p class="text-justify">
-          If you prove to be incapable of using the editor sensibly (such as by embedding <a href="" onclick="event.preventDefault(); alert('Why would you click that?');">goatse</a> on every page),
-          it will just be removed from you. It's been provided to make both your life and my life easier, so don't be a dickhead, alright?
-        </p>
+          <p class="text-justify">
+            If you prove to be incapable of using the editor sensibly (such as by embedding <a href="" onclick="event.preventDefault(); alert('Why would you click that?');">goatse</a> on every page),
+            it will just be removed from you. It's been provided to make both your life and my life easier, so don't be a dickhead, alright?
+          </p>
 
-        <h4 class="mt-4">Don't be too clever</h4>
+          <h4 class="mt-4">Don't be too clever</h4>
 
-        <p class="text-justify">
-          Yes, it is possible to do things like embed CSS and JavaScript, and to "escape" the element that the template is in
-          with a complicated combination of closing and opening tags. The template system is not designed for that, so if you
-          find yourself having to be excessively clever, check with the developer, and they'll either provide you with a better option
-          or will let you know what level of clevernes is acceptable.
-        </p>
+          <p class="text-justify">
+            Yes, it is possible to do things like embed CSS and JavaScript, and to "escape" the element that the template is in
+            with a complicated combination of closing and opening tags. The template system is not designed for that, so if you
+            find yourself having to be excessively clever, check with the developer, and they'll either provide you with a better option
+            or will let you know what level of clevernes is acceptable.
+          </p>
 
-        <p class="text-justify">
+          <p class="text-justify">
 
-        </p>
-      {% endif %}
-    </div>
-    <div class="col-sm-3">
-      <div class="card">
-        <h6 class="card-header">Templates</h6>
-          <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action {{ not template ? 'active' : '' }}" href="{{ path('editor') }}">
-              <i class="fas fa-book-open mr-1"></i> Instructions
-            </a>
-            {% for _template in templates %}
-              <a href="{{ path('editor', {'template': _template.filename}) }}" class="list-group-item list-group-item-action {{ _template is same as(template) ? 'active' : '' }}">
-                <span>{{ _template.name }}</span>
-                <small>{{ _template.filename }}</small>
+          </p>
+        {% endif %}
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <h6 class="card-header">Templates</h6>
+            <div class="list-group list-group-flush">
+              <a class="list-group-item list-group-item-action {{ not template ? 'active' : '' }}" href="{{ path('editor') }}">
+                <i class="fas fa-book-open mr-1"></i> Instructions
               </a>
-            {% endfor %}
-          </div>
+              {% for _template in templates %}
+                <a href="{{ path('editor', {'template': _template.filename}) }}" class="list-group-item list-group-item-action {{ _template is same as(template) ? 'active' : '' }}">
+                  <span>{{ _template.name }}</span>
+                  <small>{{ _template.filename }}</small>
+                </a>
+              {% endfor %}
+            </div>
 
+        </div>
       </div>
     </div>
-  </div>
+  {% else %}
+    <div class="alert alert-warning">
+      The page editor is not available, as dynamic templates have been disabled in the site backend.
+    </div>
+  {% endif %}
 {% endblock %}
