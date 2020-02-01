@@ -34,7 +34,8 @@ class EditorController extends AbstractController
         return $this->render('editor.html.twig', [
             'templates' => $templates,
             'template' => $template,
-            'source' => $request->request->get('codeMirror')
+            'source' => $request->request->get('codeMirror'),
+            'available' => $this->getParameter('dynamic_templates')
         ]);
     }
 
@@ -47,6 +48,11 @@ class EditorController extends AbstractController
         if ($config->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
             return $this->redirectToRoute('editor', $returnRouteParams);
+        }
+
+        if (!$this->getParameter('dynamic_templates')) {
+            $this->addFlash('error', 'Dynamic templates are not enabled in the site backend.');
+            return $this->redirectToRoute('editor');
         }
 
         $template = $em->getRepository(Template::class)->findOneBy(['filename' => $templateName]);

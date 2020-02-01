@@ -11,31 +11,31 @@ class PredictionService
     /** @var EntityManagerInterface */
     private $em;
 
-    /** @var Config */
-    private $config;
+    /** @var ConfigService */
+    private $configService;
 
     public function __construct(EntityManagerInterface $em, ConfigService $configService)
     {
         $this->em = $em;
-        $this->config = $configService->getConfig();
+        $this->configService = $configService;
     }
 
     public function arePredictionsLocked()
     {
-        if ($this->config->isReadOnly()) {
+        if ($this->configService->getConfig()->isReadOnly()) {
             return true;
         }
 
-        if (!$this->config->getStreamTime()) {
+        if (!$this->configService->getConfig()->getStreamTime()) {
             return false;
         }
 
-        return new DateTime('+14 days') > $this->config->getStreamTime();
+        return new DateTime('+14 days') > $this->configService->getConfig()->getStreamTime();
     }
 
     public function areResultsAvailable()
     {
-        return $this->config->isPagePublic('results');
+        return $this->configService->getConfig()->isPagePublic('results');
     }
 
     public function isAwardResultAvailable(Award $award)

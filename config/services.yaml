@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    cron_job_management: '%env(bool:CRON_JOB_MANAGEMENT)%'
+    dynamic_templates: '%env(bool:DYNAMIC_TEMPLATES)%'
 
 services:
     # default configuration for services in *this* file
@@ -33,12 +35,15 @@ services:
         public: true
         tags: ['console.command']
 
+    App\Command\InitialiseDatabaseCommand:
+        arguments: ['%kernel.project_dir%']
+
     App\Service\:
         resource: '../src/Service'
         public: true
 
     App\Service\CronJobService:
-        arguments: ['%kernel.project_dir%', '%env(bool:ENABLE_CRONJOB_MANAGEMENT)%']
+        arguments: ['%kernel.project_dir%', '%env(bool:CRON_JOB_MANAGEMENT)%']
 
     App\EventListener\UserListener:
         tags:
@@ -71,6 +76,7 @@ services:
     App\Twig\DatabaseLoader:
         tags:
         - { name: twig.loader }
+        arguments: ['%env(bool:DYNAMIC_TEMPLATES)%']
 
     App\Security\ConditionallyPublicVoter:
         tags:
