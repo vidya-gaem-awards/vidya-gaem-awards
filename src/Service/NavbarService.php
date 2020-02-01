@@ -84,8 +84,10 @@ class NavbarService
             return false;
         }
 
-        if ($this->authChecker->isGranted($roles, $routeName)) {
-            return true;
+        foreach ($roles as $role) {
+            if ($this->authChecker->isGranted($role, $routeName)) {
+                return true;
+            }
         }
 
         return false;
