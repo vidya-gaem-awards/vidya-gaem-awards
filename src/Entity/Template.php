@@ -50,9 +50,14 @@ class Template
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="last_updated", type="datetime", nullable=true)
+     * @ORM\Column(name="last_updated", type="datetime", nullable=false)
      */
     private $lastUpdated;
+
+    public function __construct()
+    {
+        $this->lastUpdated = new DateTime();
+    }
 
     /**
      * @return int
@@ -135,9 +140,9 @@ class Template
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTime
      */
-    public function getLastUpdated(): ?DateTime
+    public function getLastUpdated(): DateTime
     {
         return $this->lastUpdated;
     }
