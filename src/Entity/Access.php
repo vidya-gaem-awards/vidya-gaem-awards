@@ -194,7 +194,7 @@ class Access
      */
     public function setRequestString($requestString)
     {
-        $this->requestString = $requestString;
+        $this->requestString = substr($requestString, 0, 255);
         return $this;
     }
 
