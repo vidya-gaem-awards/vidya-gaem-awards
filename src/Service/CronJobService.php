@@ -17,9 +17,9 @@ class CronJobService
     /** @var CrontabJob */
     private $job;
 
-    public function __construct(string $projectDir)
+    public function __construct(string $projectDir, bool $enabled)
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        if (!$enabled) {
             return;
         }
 
