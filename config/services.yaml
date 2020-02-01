@@ -38,7 +38,7 @@ services:
         public: true
 
     App\Service\CronJobService:
-        arguments: ['%kernel.project_dir%']
+        arguments: ['%kernel.project_dir%', '%env(bool:ENABLE_CRONJOB_MANAGEMENT)%']
 
     App\EventListener\UserListener:
         tags:
