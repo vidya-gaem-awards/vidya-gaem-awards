@@ -219,7 +219,8 @@ class ConfigController extends AbstractController
     public function cronAction(CronJobService $cron)
     {
         return $this->render('cron.html.twig', [
-            'enabled' => $cron->isCronJobEnabled()
+            'enabled' => $cron->isCronJobEnabled(),
+            'available' => $cron->isCronJobAvailable(),
         ]);
     }
 
@@ -231,6 +232,11 @@ class ConfigController extends AbstractController
 
         if ($config->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
+            return $this->redirectToRoute('cron');
+        }
+
+        if (!$cron->isCronJobAvailable()) {
+            $this->addFlash('error', 'Cron job management is disabled in the site backend. The state of the result generator cannot be changed.');
             return $this->redirectToRoute('cron');
         }
 

@@ -13,6 +13,11 @@ class AuthController extends AbstractController
 {
     public function loginAction(RouterInterface $router, Request $request, SessionInterface $session)
     {
+        $key = $_ENV['STEAM_API_KEY'] ?? false;
+        if (!$key) {
+            return $this->render('siteConfigIssue.html.twig');
+        }
+
         $session->set('_security.main.target_path', $request->query->get('redirect'));
 
         $returnLink = $router->generate(

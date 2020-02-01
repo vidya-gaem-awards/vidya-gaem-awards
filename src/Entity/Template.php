@@ -45,12 +45,12 @@ class Template
      *
      * @ORM\Column(name="source", type="text", nullable=false)
      */
-    private $source;
+    private $source = '';
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="last_updated", type="datetime", nullable=false)
+     * @ORM\Column(name="last_updated", type="datetime", nullable=true)
      */
     private $lastUpdated;
 
@@ -135,9 +135,9 @@ class Template
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getLastUpdated(): DateTime
+    public function getLastUpdated(): ?DateTime
     {
         return $this->lastUpdated;
     }
