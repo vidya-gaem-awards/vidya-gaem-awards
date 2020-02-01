@@ -20,10 +20,23 @@ under the [MIT License](https://opensource.org/licenses/MIT).
  3. Run `composer install`.
  4. Run `bin/console app:init-db` to set up the database.
 
-### Local development
+## Local development
 
 While developing, you can use PHP's built in web server to serve the website by running the following:
 
 `php -S localhost:8080 -t public`
 
 This will allow you to access the website at http://localhost:8080.
+
+### Generating results
+
+Running this command will generate the results for all awards:
+
+`bin/console app:results`
+
+Keep in mind that only votes with a voting code are included in the final results. Go to `/vote/code` to get a valid
+voting link.
+
+In production, it's a good idea to add this command to a cron job or a scheduled task (depending on your operating
+system). If you're running the site on a machine with `crontab` available, you can set `CRON_JOB_MANAGEMENT=true` in
+`.env` which will allow you to control whether it's running or not from the frontend (`/config/cron`).
