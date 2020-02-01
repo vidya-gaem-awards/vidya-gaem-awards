@@ -53,13 +53,6 @@ class Award implements JsonSerializable
     private $comments;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="winner_image", type="string", length=255, nullable=true)
-     */
-    private $winnerImage;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean", nullable=false)
@@ -144,6 +137,16 @@ class Award implements JsonSerializable
      * })
      */
     private $autocompleter;
+
+    /**
+     * @ORM\Column(name="winner_image", type="string", nullable=true)
+     */
+    private $winnerImageLegacy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\File")
+     */
+    private $winnerImage;
 
     /**
      * Constructor
@@ -649,24 +652,6 @@ class Award implements JsonSerializable
     }
 
     /**
-     * @return string
-     */
-    public function getWinnerImage()
-    {
-        return $this->winnerImage;
-    }
-
-    /**
-     * @param string $winnerImage
-     * @return Award
-     */
-    public function setWinnerImage($winnerImage)
-    {
-        $this->winnerImage = $winnerImage ?: null;
-        return $this;
-    }
-
-    /**
      * Add suggestion
      *
      * @param AwardSuggestion $suggestion
@@ -742,6 +727,18 @@ class Award implements JsonSerializable
     public function getFantasyPredictions()
     {
         return $this->fantasyPredictions;
+    }
+
+    public function getWinnerImage(): ?File
+    {
+        return $this->winnerImage;
+    }
+
+    public function setWinnerImage(?File $winnerImage): self
+    {
+        $this->winnerImage = $winnerImage;
+
+        return $this;
     }
 }
 
