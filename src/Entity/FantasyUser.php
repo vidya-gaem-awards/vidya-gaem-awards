@@ -36,13 +36,6 @@ class FantasyUser
     private $name = 'Anonymous';
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="avatar", type="string", nullable=true)
-     */
-    private $avatarLegacy;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $avatar;

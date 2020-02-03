@@ -139,11 +139,6 @@ class Award implements JsonSerializable
     private $autocompleter;
 
     /**
-     * @ORM\Column(name="winner_image", type="string", nullable=true)
-     */
-    private $winnerImageLegacy;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $winnerImage;
