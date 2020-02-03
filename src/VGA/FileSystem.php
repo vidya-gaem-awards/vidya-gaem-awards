@@ -15,44 +15,6 @@ class FileSystem
         'video/ogg' => '.ogg',
         'application/ogg' => '.ogg',
     ];
-
-    /**
-     * This function does not adhere to security best practices (maybe?)
-     *
-     * @param UploadedFile $file
-     * @param string $directory
-     * @param string $filename
-     * @return string
-     * @throws \Exception
-     * @internal param $file_data
-     */
-    public static function handleUploadedFile(UploadedFile $file, string $directory, string $filename)
-    {
-        if ($file === null) {
-            throw new \Exception('No file was uploaded');
-        } elseif (!$file->isValid()) {
-            throw new \Exception($file->getErrorMessage());
-        } elseif (!in_array($file->getClientMimeType(), array_keys(self::EXTENSION_MAPPING), true)) {
-            throw new \Exception('Invalid MIME type (' . $file->getClientMimeType() . ')');
-        } elseif ($file->getSize() > self::FILESIZE_LIMIT) {
-            throw new \Exception('Filesize of ' . self::humanFilesize($file->getSize()) . ' exceeds limit of ' . self::humanFilesize(self::FILESIZE_LIMIT));
-        }
-
-        if (!file_exists(__DIR__ . '/../../public/uploads/' . $directory)) {
-            mkdir(__DIR__ . '/../../public/uploads/' . $directory, 0777, true);
-        }
-
-        $filename_to_use = $filename . self::EXTENSION_MAPPING[$file->getClientMimeType()];
-
-        $file->move(__DIR__ . '/../../public/uploads/' . $directory . '/', $filename_to_use);
-        return '/uploads/' . $directory . '/' . $filename_to_use;
-    }
-
-    public static function deleteFile(string $directory, string $filename)
-    {
-        unlink(__DIR__ . '/../../public/uploads/' . $directory . '/' . $filename);
-    }
-
     /**
      * Converts a number of bytes into a human-readable filesize.
      * This implementation is efficient, but will sometimes return a value that's less than one due

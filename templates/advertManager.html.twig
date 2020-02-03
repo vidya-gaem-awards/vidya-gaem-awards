@@ -2,7 +2,9 @@
 
 {% block title %}Advert Manager{% endblock %}
 
-{% block content %}
+{% block css %}
+  {{ parent() }}
+
   <style type="text/css">
     img.delete-this {
       margin: -11px 7px -8px -14px;
@@ -50,118 +52,122 @@
       height: 600px;
     }
   </style>
+{% endblock %}
 
+{% block js %}
   <script type="text/javascript">
-      $(document).ready(function () {
-          var editDialog = $("#dialog-edit");
-          var currentlySubmitting = false;
+    $(document).ready(function () {
+      var editDialog = $("#dialog-edit");
+      var currentlySubmitting = false;
 
-          editDialog.on('show.bs.modal', function (event) {
-              var button = $(event.relatedTarget);
-              var id = button.attr('data-id');
+      editDialog.on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.attr('data-id');
 
-              if (id === undefined) {
-                  // New advert
-                  editDialog.removeAttr('data-id');
-                  $("#dialog-edit-header").text("Add a new advert");
+        if (id === undefined) {
+          // New advert
+          editDialog.removeAttr('data-id');
+          $("#dialog-edit-header").text("Add a new advert");
 
-                  // Clear any existing information in the dialog
-                  $("#info-id").val("");
-                  $("#info-action").val("new");
-                  editDialog.find("input[type=text]").val("");
-                  $("#info-special").prop("checked", false);
-                  $("#dialog-edit-delete").hide();
+          // Clear any existing information in the dialog
+          $("#info-id").val("");
+          $("#info-action").val("new");
+          editDialog.find("input[type=text]").val("");
+          $("#info-special").prop("checked", false);
+          $("#dialog-edit-delete").hide();
 
-              } else {
-                  // Editing an existing advert
-                  editDialog.attr('data-id', id);
-                  var advert = adverts[id];
+        } else {
+          // Editing an existing advert
+          editDialog.attr('data-id', id);
+          var advert = adverts[id];
 
-                  $("#dialog-edit-header").text(advert.name);
-                  $("#deleteAward").show();
-                  $("#info-id").val(id);
-                  $("#info-action").val("edit");
-                  $("#info-name").val(advert.name);
-                  $("#info-link").val(advert.link);
-                  $("#dialog-edit-delete").prop("checked", advert.special);
-              }
-          });
-
-          $("#dialog-edit-form").submit(function (event) {
-              event.preventDefault();
-
-              if (currentlySubmitting) {
-                  return;
-              }
-              currentlySubmitting = true;
-
-              // Show the "please wait" message and disable the submit button
-              $("#dialog-edit-status").show();
-              $('#dialog-edit').find("button").attr("disabled", "disabled");
-              $("#dialog-edit-error").parent().slideUp();
-
-              // Grab the award ID from the dialog
-              var id = editDialog.attr("data-id");
-
-              // Send through the AJAX request
-              var formData = new FormData(this);
-              $.ajax({
-                  url: "{{ path('advertPost') }}",
-                  type: 'POST',
-                  data: formData,
-                  contentType: false,
-                  processData: false
-              }).done(function (response) {
-                  if (response.success) {
-                      window.location.reload();
-                  } else {
-                      $("#dialog-edit-status").hide();
-                      $("#dialog-edit").find("button").removeAttr("disabled");
-                      $("#dialog-edit-error")
-                          .html("<strong>Error:</strong> " + response.error)
-                          .parent().fadeIn("fast");
-
-                      currentlySubmitting = false;
-                  }
-              }, "json");
-          });
-
-          $("#dialog-edit-delete").click(function () {
-              if (currentlySubmitting) {
-                  return;
-              } else if (!confirm("Are you sure you want to just fuck this advert up?")) {
-                  return;
-              }
-
-              currentlySubmitting = true;
-              // Show the "please wait" message and disable the submit button
-              $("#dialog-edit-status").show();
-              $("#dialog-edit").find("button").attr("disabled", "disabled");
-              $("#dialog-edit-error").parent().slideUp();
-
-              var data = [
-                  {name: "action", value: "delete"},
-                  {name: "id", value: editDialog.attr("data-id")}
-              ];
-
-              $.post("{{ path('advertPost') }}", data, function (response) {
-                  if (response.success) {
-                      window.location.reload();
-                  } else {
-                      $("#dialog-edit-status").hide();
-                      $("#dialog-edit").find("button").removeAttr("disabled");
-                      $("#dialog-edit-error")
-                          .html("<strong>Error:</strong> " + response.error)
-                          .parent().fadeIn("fast");
-
-                      currentlySubmitting = false;
-                  }
-              }, "json");
-
-          });
+          $("#dialog-edit-header").text(advert.name);
+          $("#deleteAward").show();
+          $("#info-id").val(id);
+          $("#info-action").val("edit");
+          $("#info-name").val(advert.name);
+          $("#info-link").val(advert.link);
+          $("#dialog-edit-delete").prop("checked", advert.special);
+        }
       });
-  </script>
 
+      $("#dialog-edit-form").submit(function (event) {
+        event.preventDefault();
+
+        if (currentlySubmitting) {
+          return;
+        }
+        currentlySubmitting = true;
+
+        // Show the "please wait" message and disable the submit button
+        $("#dialog-edit-status").show();
+        $('#dialog-edit').find("button").attr("disabled", "disabled");
+        $("#dialog-edit-error").parent().slideUp();
+
+        // Grab the award ID from the dialog
+        var id = editDialog.attr("data-id");
+
+        // Send through the AJAX request
+        var formData = new FormData(this);
+        $.ajax({
+          url: "{{ path('advertPost') }}",
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false
+        }).done(function (response) {
+          if (response.success) {
+            window.location.reload();
+          } else {
+            $("#dialog-edit-status").hide();
+            $("#dialog-edit").find("button").removeAttr("disabled");
+            $("#dialog-edit-error")
+              .html("<strong>Error:</strong> " + response.error)
+              .parent().fadeIn("fast");
+
+            currentlySubmitting = false;
+          }
+        }, "json");
+      });
+
+      $("#dialog-edit-delete").click(function () {
+        if (currentlySubmitting) {
+          return;
+        } else if (!confirm("Are you sure you want to just fuck this advert up?")) {
+          return;
+        }
+
+        currentlySubmitting = true;
+        // Show the "please wait" message and disable the submit button
+        $("#dialog-edit-status").show();
+        $("#dialog-edit").find("button").attr("disabled", "disabled");
+        $("#dialog-edit-error").parent().slideUp();
+
+        var data = [
+          {name: "action", value: "delete"},
+          {name: "id", value: editDialog.attr("data-id")}
+        ];
+
+        $.post("{{ path('advertPost') }}", data, function (response) {
+          if (response.success) {
+            window.location.reload();
+          } else {
+            $("#dialog-edit-status").hide();
+            $("#dialog-edit").find("button").removeAttr("disabled");
+            $("#dialog-edit-error")
+              .html("<strong>Error:</strong> " + response.error)
+              .parent().fadeIn("fast");
+
+            currentlySubmitting = false;
+          }
+        }, "json");
+
+      });
+    });
+  </script>
+{% endblock %}
+
+{% block content %}
   <div class="row">
     <div class="col-xs-12">
       <h1 class="page-header">
@@ -179,7 +185,7 @@
           <div class="advert" data-toggle="modal" data-target="#dialog-edit" data-id="{{ advert.id }}">
             <div class="advert-name">{{ advert.name }}</div>
             <div class="advert-link"><a href="{{ advert.link | escape('html_attr') }}">Follow link</a></div>
-            <img src="{{ advert.image }}">
+            <img src="{{ advert.image.url }}">
             <div class="advert-special">{{ advert.clicks }} clicks</div>
           </div>
         {% endfor %}

@@ -297,7 +297,7 @@
         <div class="col-lg-10 col-xl-6 mb-3">
           <div class="d-flex align-items-center user-container champion">
             {% if fantasyUser.avatar %}
-              <img class="mr-3 avatar" src="{{ fantasyUser.avatar | e('html_attr') }}">
+              <img class="mr-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
             {% else %}
               <div class="mr-3 avatar empty-image">No picture available</div>
             {% endif %}
@@ -326,7 +326,7 @@
         <div class="col-md-10 col-lg-6 col-xl-4 mb-3">
           <div class="d-flex align-items-center user-container almost">
             {% if fantasyUser.avatar %}
-              <img class="mr-3 avatar" src="{{ fantasyUser.avatar | e('html_attr') }}">
+              <img class="mr-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
             {% else %}
               <div class="mr-3 avatar empty-image">No picture available</div>
             {% endif %}
@@ -352,7 +352,7 @@
           <div class="d-flex align-items-center pleb p-1">
             <div class="mr-3 yellow">{{ fantasyUser.rank }}.</div>
             {% if fantasyUser.avatar %}
-              <img class="mr-3 avatar" src="{{ fantasyUser.avatar | e('html_attr') }}">
+              <img class="mr-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
             {% else %}
               <div class="mr-3 avatar empty-image d-inline-block">No picture available</div>
             {% endif %}

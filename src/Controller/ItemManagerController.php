@@ -7,12 +7,12 @@ use App\Entity\InventoryItem;
 use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\News;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use App\VGA\FileSystem;
 
 class ItemManagerController extends AbstractController
 {
@@ -31,7 +31,7 @@ class ItemManagerController extends AbstractController
         ]);
     }
 
-    public function postAction(ConfigService $configService, Request $request, EntityManagerInterface $em, AuditService $auditService)
+    public function postAction(ConfigService $configService, Request $request, EntityManagerInterface $em, AuditService $auditService, FileService $fileService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -96,16 +96,10 @@ class ItemManagerController extends AbstractController
         $em->flush();
 
         if ($request->files->get('image')) {
-            if ($item->getImage()) {
-                FileSystem::deleteFile(
-                    'rewards',
-                    $item->getID() . substr($item->getImage(), -4)
-                );
-            }
-
             try {
-                $imagePath = FileSystem::handleUploadedFile(
+                $file = $fileService->handleUploadedFile(
                     $request->files->get('image'),
+                    'InventoryItem.image',
                     'rewards',
                     $item->getID()
                 );
@@ -113,22 +107,20 @@ class ItemManagerController extends AbstractController
                 return $this->json(['error' => $e->getMessage()]);
             }
 
-            $item->setImage($imagePath);
+            if ($item->getImage()) {
+                $fileService->deleteFile($item->getImage());
+            }
+
+            $item->setImage($file);
             $em->persist($item);
             $em->flush();
         }
 
         if ($request->files->get('musicFile')) {
-            if ($item->getMusicFile()) {
-                FileSystem::deleteFile(
-                    'music',
-                    $item->getID() . substr($item->getMusicFile(), -4)
-                );
-            }
-
             try {
-                $musicPath = FileSystem::handleUploadedFile(
+                $file = $fileService->handleUploadedFile(
                     $request->files->get('musicFile'),
+                    'InventoryItem.musicFile',
                     'music',
                     $item->getID()
                 );
@@ -136,7 +128,11 @@ class ItemManagerController extends AbstractController
                 return $this->json(['error' => $e->getMessage()]);
             }
 
-            $item->setMusicFile($musicPath);
+            if ($item->getMusicFile()) {
+                $fileService->deleteFile($item->getMusicFile());
+            }
+
+            $item->setMusicFile($file);
             $em->persist($item);
             $em->flush();
         }
