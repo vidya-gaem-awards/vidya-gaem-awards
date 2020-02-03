@@ -9,7 +9,7 @@ use RandomLib\Factory;
  * @ORM\Table(name="files")
  * @ORM\Entity
  */
-class File
+class File implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -73,13 +73,6 @@ class File
         return $this;
     }
 
-    public function setRandomFilename(): void
-    {
-        $factory = new Factory;
-        $generator = $factory->getLowStrengthGenerator();
-        $this->filename = hash('sha1', $generator->generate(64));
-    }
-
     public function getExtension(): ?string
     {
         return $this->extension;
@@ -121,5 +114,14 @@ class File
     public function getRelativePath(): string
     {
         return $this->getSubdirectory() . '/' . $this->getFullFilename();
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'fullFilename' => $this->getFullFilename(),
+            'relativePath' => $this->getRelativePath(),
+            'url' => $this->getURL()
+        ];
     }
 }

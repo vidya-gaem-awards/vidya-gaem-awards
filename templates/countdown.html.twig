@@ -157,7 +157,7 @@
     <div class="meme leftMeme">
       {% if ad1 %}
         <a href="{{ path('advertRedirect', {'advertToken': ad1.token}) }}" target="_blank">
-          <img src="{{ ad1.image | escape('html_attr') }}">
+          <img src="{{ ad1.image.url | escape('html_attr') }}">
         </a>
       {% endif %}
     </div>
@@ -204,7 +204,7 @@
     <div class="meme rightMeme">
       {% if ad2 %}
         <a href="{{ path('advertRedirect', {'advertToken': ad2.token}) }}" target="_blank">
-          <img src="{{ ad2.image | escape('html_attr') }}">
+          <img src="{{ ad2.image.url | escape('html_attr') }}">
         </a>
       {% endif %}
     </div>

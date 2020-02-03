@@ -196,7 +196,7 @@ $(document).ready(function () {
             var quantity = inventory.unlocks[reward.shortName];
             var element = $('#item-template').clone();
             element.addClass('kebab');
-            element.find('img').attr('src', reward.image).attr('id', 'reward-image-' + reward.shortName);
+            element.find('img').attr('src', reward.image.url).attr('id', 'reward-image-' + reward.shortName);
             element.find('.item-name').text(reward.name);
             element.find('.item-quantity').text('x ' + quantity);
             element.find('.item-year').text(reward.year + ' item');
@@ -324,7 +324,7 @@ $(document).ready(function () {
 
     function playMusic(id, showButton) {
         var reward = rewards[id];
-        if (!reward.music) {
+        if (!reward.musicFile) {
             return;
         }
 
@@ -344,13 +344,13 @@ $(document).ready(function () {
             $('#resetRewardsButton').show().text(text);
         }
 
-        music = new Audio(reward.musicFile);
+        music = new Audio(reward.musicFile.url);
         music.volume = 0.25;
         music.play();
     }
 
     function activateBuddie(id) {
-        $('#reward-buddie').attr('src', rewards[id].image);
+        $('#reward-buddie').attr('src', rewards[id].image.url);
         $('#reward-buddie').show();
     }
 
@@ -400,7 +400,7 @@ $(document).ready(function () {
         } else {
             var reward = rewards[choice];
             addRewardToInventory(choice);
-            image.attr('src', reward.image);
+            image.attr('src', reward.image.url);
             title.text(reward.name);
         }
         updateInventory();

@@ -7,6 +7,7 @@ use App\Entity\Nominee;
 use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Application;
@@ -15,7 +16,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use App\VGA\FileSystem;
 
 class TasksController extends AbstractController
 {
@@ -108,7 +108,7 @@ class TasksController extends AbstractController
         ]);
     }
 
-    public function postAction(ConfigService $configService, AuthorizationCheckerInterface $authChecker, Request $request, EntityManagerInterface $em, AuditService $auditService)
+    public function postAction(ConfigService $configService, AuthorizationCheckerInterface $authChecker, Request $request, EntityManagerInterface $em, AuditService $auditService, FileService $fileService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -149,16 +149,21 @@ class TasksController extends AbstractController
 
         if (($fullAccess || !$nominee->getImage()) && $request->files->get('image')) {
             try {
-                $imagePath = FileSystem::handleUploadedFile(
+                $file = $fileService->handleUploadedFile(
                     $request->files->get('image'),
+                    'Nominee.image',
                     'nominees',
                     $nominee->getAward()->getId() . '--' . $nominee->getShortName()
                 );
-                $nominee->setImage($imagePath);
-                $post->set('image', $imagePath);
             } catch (\Exception $e) {
                 return $this->json(['error' => $e->getMessage()]);
             }
+
+            if ($nominee->getImage()) {
+                $fileService->deleteFile($nominee->getImage());
+            }
+
+            $nominee->setImage($file);
         }
 
         $em->persist($nominee);
