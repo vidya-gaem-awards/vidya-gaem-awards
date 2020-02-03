@@ -3,6 +3,7 @@ namespace App\Service;
 
 use App\Entity\File;
 use Doctrine\ORM\EntityManagerInterface;
+use RandomLib\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileService
@@ -36,12 +37,12 @@ class FileService
      * @param UploadedFile $file
      * @param string $entityType
      * @param string $directory
-     * @param string $filename
+     * @param string|null $filename
      * @return string
      * @throws \Exception
      * @internal param $file_data
      */
-    public function handleUploadedFile(UploadedFile $file, string $entityType, string $directory, string $filename): File
+    public function handleUploadedFile(UploadedFile $file, string $entityType, string $directory, ?string $filename): File
     {
         if ($file === null) {
             throw new \Exception('No file was uploaded');
@@ -57,11 +58,16 @@ class FileService
             mkdir($this->uploadDirectory . $directory, 0777, true);
         }
 
-        $filename = $filename . '-' . time();
+        if ($filename === null) {
+            $factory = new Factory;
+            $generator = $factory->getLowStrengthGenerator();
+            $token = hash('sha1', $generator->generate(64));
+            $filename = substr($token, 0, 8);
+        }
 
         $fileEntity = new File();
         $fileEntity->setSubdirectory($directory);
-        $fileEntity->setFilename($filename);
+        $fileEntity->setFilename($filename . '-' . time());
         $fileEntity->setExtension(self::EXTENSION_MAPPING[$file->getClientMimeType()]);
         $fileEntity->setEntity($entityType);
 

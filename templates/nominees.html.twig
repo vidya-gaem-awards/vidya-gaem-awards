@@ -326,7 +326,7 @@
                       </div>
                       <div id="nominee-container" class="inaccurate">
                         {% for nominee in award.nominees %}
-                          <div class="nominee" style="background-size: cover; background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}')"
+                          <div class="nominee" style="background-size: cover; background-image: url('{{ nominee.image ? nominee.image.url : asset('img/no-image-available.png') }}')"
                                data-nominee="{{ nominee.shortName }}">
                             {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
                               <div class="hoverOverlay">
@@ -645,7 +645,7 @@
               $("#dialog-edit-name").text(nominees[nomineeID].name);
               $("#dialog-edit-subtitle").html(nominees[nomineeID].subtitle);
               if (nominees[nomineeID].image) {
-                  $("#dialog-edit-image").css("background-image", "url(" + nominees[nomineeID].image + ")");
+                  $("#dialog-edit-image").css("background-image", "url(" + nominees[nomineeID].image.url + ")");
               } else {
                   $("#dialog-edit-image").css("background-image", "url('{{ asset('img/no-image-available.png') }}'");
               }
@@ -653,7 +653,7 @@
               $("#info-id").val(nomineeID);
               $("#info-name").val(nominees[nomineeID].name);
               $("#info-subtitle").val(nominees[nomineeID].subtitle);
-              $("#info-image-container .custom-file-label").text(nominees[nomineeID].image ? nominees[nomineeID].image.split('/').pop() : "Choose file");
+              $("#info-image-container .custom-file-label").text("Choose file");
               $("#info-flavor").val(nominees[nomineeID].flavorText);
 
               $("#info-id").attr("disabled", "disabled");

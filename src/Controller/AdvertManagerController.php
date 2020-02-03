@@ -7,12 +7,12 @@ use App\Entity\TableHistory;
 use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\VGA\FileSystem;
 
 class AdvertManagerController extends AbstractController
 {
@@ -32,7 +32,7 @@ class AdvertManagerController extends AbstractController
         ]);
     }
 
-    public function postAction(ConfigService $configService, Request $request, EntityManagerInterface $em, AuditService $auditService)
+    public function postAction(ConfigService $configService, Request $request, EntityManagerInterface $em, AuditService $auditService, FileService $fileService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -81,24 +81,22 @@ class AdvertManagerController extends AbstractController
         $em->flush();
 
         if ($request->files->get('image')) {
-            if ($advert->getImage()) {
-                FileSystem::deleteFile(
-                    'memes',
-                    $advert->getToken() . substr($advert->getImage(), -4)
-                );
-            }
-
             try {
-                $imagePath = FileSystem::handleUploadedFile(
+                $file = $fileService->handleUploadedFile(
                     $request->files->get('image'),
+                    'Advertisement.image',
                     'memes',
-                    $advert->getToken()
+                    null
                 );
             } catch (\Exception $e) {
                 return $this->json(['error' => $e->getMessage()]);
             }
 
-            $advert->setImage($imagePath);
+            if ($advert->getImage()) {
+                $fileService->deleteFile($advert->getImage());
+            }
+
+            $advert->setImage($file);
             $em->persist($advert);
             $em->flush();
         }

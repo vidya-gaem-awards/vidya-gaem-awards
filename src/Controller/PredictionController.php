@@ -9,9 +9,10 @@ use App\Entity\TableHistory;
 use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\FileService;
 use App\Service\PredictionService;
-use App\VGA\FileSystem;
 use Doctrine\ORM\EntityManagerInterface;
+use RandomLib\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -181,7 +182,7 @@ class PredictionController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function updateDetails(Request $request, EntityManagerInterface $em, PredictionService $predictionService, AuditService $auditService)
+    public function updateDetails(Request $request, EntityManagerInterface $em, PredictionService $predictionService, AuditService $auditService, FileService $fileService)
     {
         if ($predictionService->arePredictionsLocked()) {
             $this->addFlash('formError', 'The 2019 Fantasy League has closed. You can no longer make changes to your details.');
@@ -212,7 +213,7 @@ class PredictionController extends AbstractController
         /** @var UploadedFile $file */
         $file = $request->files->get('avatar');
         if ($file) {
-            $fileResult = $this->processAvatar($file, $request, $predictionService);
+            $fileResult = $this->processAvatar($file, $request, $predictionService, $fileService);
         } else {
             $fileResult = true;
         }
@@ -231,7 +232,7 @@ class PredictionController extends AbstractController
         return $this->redirectToRoute('predictions');
     }
 
-    private function processAvatar(UploadedFile $file, Request $request, PredictionService $predictionService)
+    private function processAvatar(UploadedFile $file, Request $request, PredictionService $predictionService, FileService $fileService)
     {
         if ($predictionService->arePredictionsLocked()) {
             $this->addFlash('formError', 'The 2019 Fantasy League has closed. You can no longer make changes to your details.');
@@ -245,22 +246,16 @@ class PredictionController extends AbstractController
 
         /** @var FantasyUser $fantasyUser */
         $fantasyUser = $this->getUser()->getFantasyUser();
-        if ($fantasyUser->getAvatar()) {
-            FileSystem::deleteFile(
-                'predictionAvatars',
-                $fantasyUser->getImageToken() . substr($fantasyUser->getAvatar(), -4)
-            );
-        }
 
         try {
-            $token = $fantasyUser->regenerateImageToken();
-            $imagePath = FileSystem::handleUploadedFile(
+            $file = $fileService->handleUploadedFile(
                 $request->files->get('avatar'),
+                'FantasyUser.avatar',
                 'predictionAvatars',
-                $token
+                null
             );
 
-            $filepath = __DIR__ . '/../../public' . $imagePath;
+            $filepath = __DIR__ . '/../../public/uploads/' . $file->getRelativePath();
             $imageType = exif_imagetype($filepath);
 
             if (!in_array($imageType, [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF])) {
@@ -268,7 +263,7 @@ class PredictionController extends AbstractController
                 return false;
             }
 
-            $image = imagecreatefromstring(file_get_contents(__DIR__ . '/../../public' . $imagePath));
+            $image = imagecreatefromstring(file_get_contents($filepath));
             $w = imagesx($image);
             $h = imagesy($image);
             if ($w !== $h) {
@@ -293,7 +288,12 @@ class PredictionController extends AbstractController
             return false;
         }
 
-        $fantasyUser->setAvatar($imagePath);
+        if ($fantasyUser->getAvatar()) {
+            $fileService->deleteFile($fantasyUser->getAvatar());
+        }
+
+        $fantasyUser->setAvatar($file);
+
         return true;
     }
 

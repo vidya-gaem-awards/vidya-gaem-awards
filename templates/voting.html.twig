@@ -113,7 +113,7 @@
         <div class="meme leftMeme">
           {% if ad1 %}
             <a href="{{ path('advertRedirect', {'advertToken': ad1.token}) }}" target="_blank">
-              <img src="{{ ad1.image | escape('html_attr') }}">
+              <img src="{{ ad1.image.url | escape('html_attr') }}">
             </a>
           {% endif %}
         </div>
@@ -136,7 +136,7 @@
                               {% if nominee.flavorText %}
                                 <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
                               {% endif %}
-                              <img class="nomineeImage" src="{{ nominee.image }}">
+                              <img class="nomineeImage" src="{{ nominee.image ? nominee.image.url }}">
                               <div class="nomineeInfo">
                                 <div class="number"></div>
                                 <div class="nomineeName">{{ nominee.name }}</div>
@@ -190,7 +190,7 @@
                                       {#<label for="voteBox{{ loop.index }}">#}
                                       <div class="voteBox">
                                           <div class="number" style="display: none;">{{ loop.index }}</div>
-                                          <div class="nominee" style="background-image: url('{{ nominee.image ?: asset('img/no-image-available.png') }}'); background-size: cover">
+                                          <div class="nominee" style="background-image: url('{{ nominee.image ? nominee.image.url : asset('img/no-image-available.png') }}'); background-size: cover">
                                               <div class="fakeElement"></div>
                                               <div class="handle fakeHandle"></div>
                                               {% if votingOpen %}
@@ -305,7 +305,7 @@
         <div class="meme rightMeme">
           {% if ad2 %}
             <a href="{{ path('advertRedirect', {'advertToken': ad2.token}) }}" target="_blank">
-              <img src="{{ ad2.image | escape('html_attr') }}">
+              <img src="{{ ad2.image.url | escape('html_attr') }}">
             </a>
           {% endif %}
         </div>
