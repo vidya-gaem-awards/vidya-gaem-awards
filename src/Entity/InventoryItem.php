@@ -43,13 +43,6 @@ class InventoryItem implements JsonSerializable
     private $rarity;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="image", type="string", nullable=true)
-     */
-    private $imageLegacy;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $image;
@@ -79,13 +72,6 @@ class InventoryItem implements JsonSerializable
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $musicFile;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="music_file", type="string", nullable=true)
-     */
-    private $musicFileLegacy;
 
     /**
      * @var string|null

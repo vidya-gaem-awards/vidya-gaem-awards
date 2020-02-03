@@ -46,13 +46,6 @@ class Nominee implements JsonSerializable
     private $subtitle;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true)
-     */
-    private $imageLegacy;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $image;

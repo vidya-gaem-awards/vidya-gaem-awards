@@ -38,12 +38,6 @@ class File implements \JsonSerializable
      */
     private $entity;
 
-    /**
-     * A temporary ID which will be removed once all images have been migrated to the new system.
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $tempId;
-
     public function getId(): ?int
     {
         return $this->id;
