@@ -46,9 +46,7 @@ class Nominee implements JsonSerializable
     private $subtitle;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $image;
 
@@ -146,19 +144,19 @@ class Nominee implements JsonSerializable
     }
 
     /**
-     * @param string $image
+     * @param File|null $image
      * @return Nominee
      */
-    public function setImage($image)
+    public function setImage(?File $image)
     {
-        $this->image = trim($image);
+        $this->image = $image;
         return $this;
     }
 
     /**
-     * @return string
+     * @return File|null
      */
-    public function getImage()
+    public function getImage(): ?File
     {
         return $this->image;
     }

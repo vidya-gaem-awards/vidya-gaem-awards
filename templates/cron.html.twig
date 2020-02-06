@@ -17,14 +17,21 @@
     <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
-          The result generation process is currently <strong class="text-{{ enabled ? 'success' : 'dark' }}">{{ enabled ? 'active' : 'disabled' }}</strong>.
+          {% if available %}
+            The result generation process is currently <strong class="text-{{ enabled ? 'success' : 'dark' }}">{{ enabled ? 'active' : 'disabled' }}</strong>.
+          {% else %}
+            The result generation process cannot be enabled, as cron job management is currently disabled in the site backend.
+            It can be enabled on supported operating systems by changing the value of <code>CRON_JOB_MANAGEMENT</code>.
+          {% endif %}
         </div>
-        <div class="card-footer">
-          <form action="{{ path('cronPost') }}" method="post">
-            <input type="hidden" name="enable" value="{{ enabled ? '0' : '1' }}">
-            <button class="btn btn-default">{{ enabled ? 'Deactivate' : 'Activate' }} result generator</button>
-          </form>
-        </div>
+        {% if available %}
+          <div class="card-footer">
+            <form action="{{ path('cronPost') }}" method="post">
+              <input type="hidden" name="enable" value="{{ enabled ? '0' : '1' }}">
+              <button class="btn btn-default">{{ enabled ? 'Deactivate' : 'Activate' }} result generator</button>
+            </form>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>

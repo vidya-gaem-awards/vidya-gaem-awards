@@ -43,9 +43,7 @@ class InventoryItem implements JsonSerializable
     private $rarity;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="image", type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $image;
 
@@ -71,9 +69,7 @@ class InventoryItem implements JsonSerializable
     private $music = false;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="music_file", type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $musicFile;
 
@@ -154,26 +150,14 @@ class InventoryItem implements JsonSerializable
         return $this->rarity;
     }
 
-    /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return InventoryItem
-     */
-    public function setImage($image)
+    public function setImage(?File $image): InventoryItem
     {
         $this->image = $image;
 
         return $this;
     }
 
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
+    public function getImage(): ?File
     {
         return $this->image;
     }
@@ -250,19 +234,12 @@ class InventoryItem implements JsonSerializable
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMusicFile()
+    public function getMusicFile(): ?File
     {
         return $this->musicFile;
     }
 
-    /**
-     * @param string $musicFile
-     * @return InventoryItem
-     */
-    public function setMusicFile(string $musicFile): InventoryItem
+    public function setMusicFile(?File $musicFile): InventoryItem
     {
         $this->musicFile = $musicFile;
         return $this;

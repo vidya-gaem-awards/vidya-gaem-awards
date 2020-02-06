@@ -222,7 +222,7 @@
                 $("#dialog-edit-name").text(nominee.name);
                 $("#dialog-edit-subtitle").html(nominee.subtitle);
                 if (nominee.image) {
-                    $("#dialog-edit-image").css("background-image", "url(" + nominee.image + ")");
+                    $("#dialog-edit-image").css("background-image", "url(" + nominee.image.url + ")");
                 } else {
                     $("#dialog-edit-image").css("background-image", "url('{{ asset('img/no-image-available.png') }}'");
                 }
@@ -231,7 +231,7 @@
                 $("#info-name").val(nominee.name);
                 $("#info-subtitle").val(nominee.subtitle);
                 $("#info-image").val("");
-                $("#info-image-container .custom-file-label").text(nominee.image ? nominee.image.split('/').pop() : "Choose file");
+                $("#info-image-container .custom-file-label").text("Choose file");
                 $("#info-flavor").val(nominee.flavorText);
 
                 if (fullAccess) {

@@ -11,8 +11,16 @@ class DatabaseLoader implements LoaderInterface
 {
     protected $repo;
 
-    public function __construct(EntityManagerInterface $em)
+    /** @var bool */
+    protected $enabled;
+
+    public function __construct(bool $enabled, EntityManagerInterface $em)
     {
+        $this->enabled = $enabled;
+        if (!$enabled) {
+            return;
+        }
+
         $this->repo = $em->getRepository(Template::class);
     }
 
@@ -50,6 +58,10 @@ class DatabaseLoader implements LoaderInterface
      */
     protected function getTemplate($name)
     {
+        if (!$this->enabled || substr($name, 0, 8) !== 'dynamic/') {
+            return null;
+        }
+
         $template = $this->repo->findOneBy(['filename' => str_replace('dynamic/', '', $name)]);
 
         // Return null if the template is blank in the database: this will cause it to fall back to the filesystem

@@ -768,5 +768,12 @@ class User extends AbstractSteamUser implements UserInterface
     {
         $this->profileState = $state;
     }
+
+    public function setLastLogOff(?int $lastLogOff)
+    {
+        if ($lastLogOff) {
+            parent::setLastLogOff($lastLogOff);
+        }
+    }
 }
 

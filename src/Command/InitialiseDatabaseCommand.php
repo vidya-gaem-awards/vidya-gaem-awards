@@ -4,6 +4,7 @@ namespace App\Command;
 use App\Entity\Autocompleter;
 use App\Entity\Config;
 use App\Entity\Permission;
+use App\Entity\Template;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -16,8 +17,12 @@ class InitialiseDatabaseCommand extends Command
 {
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /** @var string */
+    private $projectDir;
+
+    public function __construct(string $projectDir, EntityManagerInterface $em)
     {
+        $this->projectDir = $projectDir;
         $this->em = $em;
 
         parent::__construct();
@@ -81,6 +86,16 @@ class InitialiseDatabaseCommand extends Command
 
         $this->em->flush();
 
+        // Add available templates
+        $template = (new Template())
+            ->setFilename('home_static_panel.html.twig')
+            ->setName('Home - static panel')
+            ->setSource(file_get_contents($this->projectDir . '/templates/dynamic/home_static_panel.html.twig'));
+
+        $this->em->persist($template);
+        $this->em->flush();
+
+        // Add the first user account
         $helper = $this->getHelper('question');
         $question = new Question('Enter a Steam ID or custom profile URL to give that user level 5 access: ');
         $question->setValidator(function ($answer) {
@@ -113,5 +128,7 @@ class InitialiseDatabaseCommand extends Command
         }
 
         $output->writeln('Setup complete.');
+
+        return 0;
     }
 }

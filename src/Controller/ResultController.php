@@ -5,11 +5,10 @@ use App\Entity\Action;
 use App\Entity\ResultCache;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-
-use App\VGA\FileSystem;
 use App\Entity\Award;
 use App\Entity\TableHistory;
 
@@ -159,7 +158,7 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function winnerImageUploadAction(EntityManagerInterface $em, Request $request, AuditService $auditService, ConfigService $configService)
+    public function winnerImageUploadAction(EntityManagerInterface $em, Request $request, AuditService $auditService, ConfigService $configService, FileService $fileService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -175,20 +174,29 @@ class ResultController extends AbstractController
         }
 
         try {
-            $imagePath = FileSystem::handleUploadedFile($request->files->get('file'), 'winners', $award->getId());
+            $file = $fileService->handleUploadedFile(
+                $request->files->get('file'),
+                'Award.winnerImage',
+                'winners',
+                $award->getId()
+            );
         } catch (\Exception $e) {
             return $this->json(['error' => $e->getMessage()]);
         }
 
-        $award->setWinnerImage($imagePath);
+        if ($award->getWinnerImage()) {
+            $fileService->deleteFile($award->getWinnerImage());
+        }
+
+        $award->setWinnerImage($file);
         $em->persist($award);
 
         $auditService->add(
             new Action('winner-image-updated', $award->getId()),
-            new TableHistory(Award::class, $award->getId(), ['image' => $imagePath])
+            new TableHistory(Award::class, $award->getId(), ['image' => $file->getId()])
         );
         $em->flush();
 
-        return $this->json(['success' => true, 'filePath' => $imagePath]);
+        return $this->json(['success' => true, 'filePath' => $file->getURL()]);
     }
 }

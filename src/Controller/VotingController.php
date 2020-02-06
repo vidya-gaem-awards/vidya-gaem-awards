@@ -383,12 +383,13 @@ class VotingController extends AbstractController
             ->getResult();
 
         $votingStart = $configService->getConfig()->getVotingStart();
-        $votingStart = $votingStart->modify('-1 hour');
-        $votingStart->setTime($votingStart->format('H'), 0, 0);
 
         $allValidCodes = [];
 
         if ($votingStart) {
+            $votingStart = $votingStart->modify('-1 hour');
+            $votingStart->setTime($votingStart->format('H'), 0, 0);
+
             $votingEnd = $configService->getConfig()->getVotingEnd() ?: new DateTimeImmutable(date('Y-m-d H:00'));
             $votingEnd = $votingEnd->modify('+1 hour');
             $votingEnd->setTime($votingEnd->format('H'), 0, 0);

@@ -36,9 +36,7 @@ class FantasyUser
     private $name = 'Anonymous';
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="avatar", type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $avatar;
 
@@ -117,12 +115,12 @@ class FantasyUser
         return $this;
     }
 
-    public function getAvatar(): ?string
+    public function getAvatar(): ?File
     {
         return $this->avatar;
     }
 
-    public function setAvatar(?string $avatar): self
+    public function setAvatar(?File $avatar): self
     {
         $this->avatar = $avatar;
 

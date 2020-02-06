@@ -1,0 +1,9 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+  <div class="alert alert-warning">
+    The <code>STEAM_API_KEY</code> environment variable is not set. This is required for the login to work.
+  </div>
+{% endblock %}

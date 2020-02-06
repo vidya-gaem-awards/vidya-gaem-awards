@@ -17,9 +17,13 @@ class CronJobService
     /** @var CrontabJob */
     private $job;
 
-    public function __construct(string $projectDir)
+    /** @var boolean */
+    private $available;
+
+    public function __construct(string $projectDir, bool $enabled)
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        $this->available = $enabled;
+        if (!$enabled) {
             return;
         }
 
@@ -33,6 +37,11 @@ class CronJobService
                 break;
             }
         }
+    }
+
+    public function isCronJobAvailable()
+    {
+        return $this->available;
     }
 
     public function isCronJobEnabled()

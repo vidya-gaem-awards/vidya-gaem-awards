@@ -17,7 +17,7 @@ class Schulze extends AbstractResultCalculator
             $this->warnings = [];
             $this->steps = ['pairwise' => [], 'strengths' => [], 'sweepPoints' => 0];
 
-            return [$candidates[0]];
+            return [1 => array_keys($candidates)[0]];
         }
 
         $warnings = [];

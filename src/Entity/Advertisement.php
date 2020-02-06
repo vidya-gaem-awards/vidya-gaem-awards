@@ -36,9 +36,7 @@ class Advertisement implements JsonSerializable
     private $link;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="image", type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
     private $image;
 
@@ -123,26 +121,14 @@ class Advertisement implements JsonSerializable
         return $this->link;
     }
 
-    /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return Advertisement
-     */
-    public function setImage($image)
+    public function setImage(?File $image): Advertisement
     {
         $this->image = $image;
 
         return $this;
     }
 
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
+    public function getImage(): ?File
     {
         return $this->image;
     }

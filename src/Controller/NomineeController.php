@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,6 @@ use App\Entity\Award;
 use App\Entity\Nominee;
 use App\Entity\TableHistory;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use App\VGA\FileSystem;
 
 class NomineeController extends AbstractController
 {
@@ -74,7 +74,7 @@ class NomineeController extends AbstractController
         ], $awardVariables));
     }
 
-    public function postAction(string $awardID, ConfigService $configService, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, AuditService $auditService)
+    public function postAction(string $awardID, ConfigService $configService, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, AuditService $auditService, FileService $fileService)
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -132,8 +132,9 @@ class NomineeController extends AbstractController
 
         if ($request->files->get('image')) {
             try {
-                $imagePath = FileSystem::handleUploadedFile(
+                $file = $fileService->handleUploadedFile(
                     $request->files->get('image'),
+                    'Nominee.image',
                     'nominees',
                     $award->getId() . '--' . $nominee->getShortName()
                 );
@@ -141,7 +142,11 @@ class NomineeController extends AbstractController
                 return $this->json(['error' => $e->getMessage()]);
             }
 
-            $nominee->setImage($imagePath);
+            if ($nominee->getImage()) {
+                $fileService->deleteFile($nominee->getImage());
+            }
+
+            $nominee->setImage($file);
         }
 
         $nominee

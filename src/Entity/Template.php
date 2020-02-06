@@ -45,7 +45,7 @@ class Template
      *
      * @ORM\Column(name="source", type="text", nullable=false)
      */
-    private $source;
+    private $source = '';
 
     /**
      * @var DateTime
@@ -53,6 +53,11 @@ class Template
      * @ORM\Column(name="last_updated", type="datetime", nullable=false)
      */
     private $lastUpdated;
+
+    public function __construct()
+    {
+        $this->lastUpdated = new DateTime();
+    }
 
     /**
      * @return int

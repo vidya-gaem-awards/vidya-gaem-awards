@@ -261,7 +261,7 @@
 
             <div class="d-flex align-items-center my-1 mb-3 user-container">
               {% if fantasyUser.avatar %}
-                <img class="mr-3" src="{{ fantasyUser.avatar }}" style='height: 75px;'>
+                <img class="mr-3" src="{{ fantasyUser.avatar.url }}" style='height: 75px;'>
               {% else %}
                 <div class="mr-3 empty-image"><i class="fas fa-question"></i></div>
               {% endif %}
@@ -324,7 +324,7 @@
   {% else %}
     <div class="awardHeaderContainer d-flex justify-content-center">
       {% if fantasyUser.avatar %}
-        <img class="mr-4" src="{{ fantasyUser.avatar | e('html_attr')}}" style='height: 75px;'>
+        <img class="mr-4" src="{{ fantasyUser.avatar.url | e('html_attr')}}" style='height: 75px;'>
       {% endif %}
       <div class="text-center">
         <div class="awardName" style="margin-top: 0;">{{ fantasyUser.name }}</div>
@@ -359,7 +359,7 @@
               <div class="award-winner">
                 <div class="image">
                   {% if pick.nominee.image %}
-                    <img src="{{ pick.nominee.image | e('html_attr') }}" alt="{{ pick.nominee.name | e('html_attr') }}">
+                    <img src="{{ pick.nominee.image.url | e('html_attr') }}" alt="{{ pick.nominee.name | e('html_attr') }}">
                   {% endif %}
                 </div>
                 <div class="nominee-name">{{ pick.nominee.name }}</div>
@@ -405,7 +405,7 @@
               <div class="award-winner">
                 <div class="image">
                   {% if winner.image %}
-                    <img src="{{ winner.image | e('html_attr') }}" alt="{{ winner.name | e('html_attr') }}">
+                    <img src="{{ winner.image.url | e('html_attr') }}" alt="{{ winner.name | e('html_attr') }}">
                   {% endif %}
                 </div>
                 <div class="nominee-name">{{ winner.name }}</div>
