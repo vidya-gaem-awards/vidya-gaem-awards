@@ -7,8 +7,13 @@ use App\Entity\Template;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Environment;
 use Twig\Error\SyntaxError;
 use Twig\Source;
@@ -39,7 +44,7 @@ class EditorController extends AbstractController
         ]);
     }
 
-    public function postAction(EntityManagerInterface $em, ConfigService $config, Request $request, AuditService $auditService, Environment $twig)
+    public function postAction(EntityManagerInterface $em, ConfigService $config, Request $request, AuditService $auditService, Environment $twig, KernelInterface $kernel)
     {
         $post = $request->request;
         $templateName = $post->get('template');
@@ -86,6 +91,9 @@ class EditorController extends AbstractController
                 new TableHistory(Template::class, $template->getId(), ['source' => $content])
             );
         }
+
+        $filesystem = new Filesystem();
+        $filesystem->remove($kernel->getCacheDir() . '/twig');
 
         $this->addFlash('success', 'Your changes have been saved.');
         return $this->redirectToRoute('editor', $returnRouteParams);
