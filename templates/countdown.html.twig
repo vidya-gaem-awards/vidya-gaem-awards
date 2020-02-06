@@ -199,18 +199,14 @@
       </div>
       <div class="col-lg-6 col-12">
         <div class="logo">
-          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/FeVMyaUCjtc" frameborder="0"
-                  allowfullscreen></iframe>
+          {{ include('dynamic/countdown_logo_area.html.twig') }}
         </div>
         <div class="title">
-          <h1>You Can (Not) Contain The Hype</h1>
+          <h1>{{ include('dynamic/countdown_header.html.twig') }}</h1>
           <h2 id="countdown">
             <span id="countdown">&nbsp;</span>
           </h2>
-          <h2 class="preshow-message">
-            Join us two hours before the main show for the preshow,<br>
-            featuring brand new mixes from the /v/GA music team
-          </h2>
+          {{ include('dynamic/countdown_secondary_message.html.twig') }}
           <div class="d-lg-none">
             <a href="https://vidyagaemawards.com/previous-years" class="mobile-link" target="_blank">View stream date in your timezone</a>
           </div>
