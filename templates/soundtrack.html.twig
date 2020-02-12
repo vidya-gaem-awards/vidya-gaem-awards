@@ -45,9 +45,9 @@
       max-width: 900px;
       margin: 25px auto 0;
 
-      font-family: "Trajan Pro 3", serif;
+      font-family: Arial, sans-serif;
       background: rgba(0,0,0,0.4);
-      border: 1px solid #fec544;
+      border: 1px solid #f29823;
     }
 
     #track-list td {
@@ -56,7 +56,8 @@
     }
 
     #track-list td:nth-child(1) {
-      color: #fec544;
+      color: #f29823;
+      font-family: "OratorStd", "Courier New", serif;
       /*color: white;*/
     }
 
@@ -66,7 +67,11 @@
 
     #track-list td:nth-child(3) {
       color: #fec544;
-      font-style: italic;
+      text-decoration: none;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #00000080 3px 3px 3px;
+
+      /*color: #fec544;*/
     }
 
     #track-list .line-after td {
@@ -92,7 +97,7 @@
       <table class="table" id="track-list">
         {% for track in tracks %}
           <tr class="{{ loop.index == 1 ? 'line-before' }}">
-            <td>{{ loop.index }}.</td>
+            <td>#{{ loop.index }}</td>
             <td>{{ track[0] }}</td>
             <td>{{ track[1] }}</td>
           </tr>

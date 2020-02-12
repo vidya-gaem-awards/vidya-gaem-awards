@@ -32,9 +32,9 @@
 }
 
 html {
-  background: 
-  url(/2019images/bg_static.gif) repeat-x fixed top center, 
-  url(/2019images/bg_stars.gif) fixed, 
+  background:
+  url(/2019images/bg_static.gif) repeat-x fixed top center,
+  url(/2019images/bg_stars.gif) fixed,
   linear-gradient(to bottom, rgb(6, 6, 6) 60%, rgb(26, 26, 32) 100%) fixed;
 }
 
@@ -95,13 +95,15 @@ h3 {
 
 .navbar .nav-item .nav-link {
   color: white !important;
-  background: none !important;
+  background: none;
   text-shadow: black 1px 1px;
   font-family: "OratorStd", Arial, sans-serif;
 }
 
 .navbar .nav-item .nav-link:hover {
-  color: #fec644 !important;
+  color: #fde942 !important;
+  text-shadow: #fde942 0px 0px 3px;
+  background: rgba(242, 152, 35, 0.2) !important;
 }
 
 .nav-item{
@@ -119,7 +121,7 @@ h3 {
 }
 
 .navbar .dropdown-menu {
-  border: 1px solid #fec644;
+  border: 1px solid #f81317;
   background: rgba(0, 0, 0, 0.6);
 }
 
@@ -130,17 +132,17 @@ h3 {
 }
 
 .navbar .dropdown-item:hover {
-  color: #fec644;
-  text-shadow: none;
-  background: none;
+  color: #fde942;
+  text-shadow: #fde942 0px 0px 3px;
+  background: rgba(242, 152, 35, 0.2);
 }
 
 .navbar.fixed-top {
-  border-bottom: 1px solid #fec644;
+  border-bottom: 1px solid #f81317;
 }
 
 .navbar.fixed-bottom {
-  border-top: 1px solid #fec644;
+  border-top: 1px solid #f81317;
 }
 
 .navbar-brand {
@@ -158,6 +160,20 @@ a:hover {
   color: #fde942;
   text-shadow: #fde942 0px 0px 3px;
   text-decoration: underline;
+}
+
+.mecha-button {
+  background: rgb(0, 0, 0);
+  border: 1px solid #f81317;
+  font-family: "OratorStd", "Courier New", serif;
+  text-shadow: #f29823 0 0 3px;
+  color: #f29823;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+.mecha-button:hover {
+  background: rgba(242, 152, 35, 0.2);
 }
 
 .card {
@@ -278,9 +294,9 @@ a:hover {
 
 /* Changes for mobile */
 @media (max-width: 768px) {
-	
+
   .pageHeaderLogo img {
 	width: 100%;
   }
-	
+
 }
