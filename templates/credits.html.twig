@@ -13,22 +13,41 @@
     .awardHeaderContainer {
       height: auto;
       margin: 0 0 20px 0;
-      padding: 25px 0 20px;
-      background-image: url(/2018images/btnNav_middle.png);
+      padding: 10px 0 20px;
+      background-image: url(/2019images/btnNav_middle.png);
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: top center;
-      background-size: contain;
       text-align: center;
     }
 
+    @keyframes flicker {
+      0%  { opacity: 0; }
+      5% { opacity: 0; }
+      6% { opacity: 0.6; }
+      10% { opacity: 0.6; }
+      11% { opacity: 0.2; }
+      15% { opacity: 0.2; }
+      16% { opacity: 0.8; }
+      20% { opacity: 0.8; }
+      21% { opacity: 0.4; }
+      26% { opacity: 0.4; }
+      70% { opacity: 1; }
+    }
+
     .awardName {
-      font-family: "Trajan Pro 3", serif;
+      font-family: "Coolvetica", Helvetica, sans-serif;
       font-weight: normal;
-      /* text-transform: uppercase; */
-      font-size: 25px;
-      line-height: 25px;
-      color: #fec544;
-      text-shadow: #00000075 5px 5px 5px;
+      text-transform: uppercase;
+      color: #f29823;
+      text-shadow: #f29823 0px 0px 3px;
+      font-size: 30px;
+      line-height: 100%;
+      margin-top: 5px;
+
+      animation-duration: 4s;
+      animation-name: flicker;
+      animation-iteration-count: 1;
     }
 
     .credits {
@@ -50,17 +69,35 @@
 
     .name {
       color: #fec544;
-      font-size: 20px;
-      font-family: "Trajan Pro 3", serif;
-      text-shadow: 1px 1px black;
+      text-decoration: none;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #00000080 3px 3px 3px;
+      font-size: 1em;
+      line-height: 0.95em;
+      padding: 0;
+
+      /*color: #fec544;*/
+      /*font-size: 20px;*/
+      /*font-family: "Trajan Pro 3", serif;*/
+      /*text-shadow: 1px 1px black;*/
       margin-left: 3px;
       margin-right: 3px;
       white-space: nowrap;
     }
 
     .name a {
-      border-bottom: 1px solid #fec544;
+      background: rgb(0, 0, 0);
+      border: 1px solid #f81317;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #f29823 0 0 3px;
+      color: #f29823;
+      padding: 4px 6px;
+      cursor: pointer;
       text-decoration: none !important;
+    }
+
+    .name a:hover {
+      background: rgba(242, 152, 35, 0.2);
     }
 
     .FLAOT {
@@ -86,7 +123,6 @@
 
   <div class="pageHeader">
     <div class="pageHeaderLogo">
-      <img src="/2018images/vga2018_logo.png" class="logo" alt="oh god it's happening again">
     </div>
     <div class="pageHeaderTitle">
       <h1>The 2019 Vidya Gaem Awards</h1>

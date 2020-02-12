@@ -25,7 +25,7 @@ class ResultController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $results = [];
+        $results = $winners = [];
 
         $ranks = [
             '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th',
@@ -35,21 +35,23 @@ class ResultController extends AbstractController
         foreach ($awards as $award) {
             $rankings = array_values($award->getOfficialResults() ? $award->getOfficialResults()->getResults() : []);
 
+            $winners[$award->getId()] = $award->getNominee($rankings[0]);
+
             foreach ($rankings as $key => &$value) {
                 $nominee = $award->getNominee($value);
                 if ($key === 0) {
                     $output = '';
                 } else {
-                    $output = '<span class="rank">' . $ranks[$key] . '.</span> ';
+                    $output = '<span class="rank">#' . ($key + 1) . '</span>&nbsp;';
                 }
                 if ($nominee) {
-                    $output .= $nominee->getName();
+                    $output .= str_replace(' ', '&nbsp;', $nominee->getName());
                 } else {
                     $output .= '<span style="color: white; background: red;">' . $value . '</span>';
                 }
                 $value = $output;
             }
-            $theOthers = implode(', ', array_slice($rankings, 1));
+            $theOthers = implode(' ', array_slice($rankings, 1));
             $rankings = array_slice($rankings, 0, 1);
             $rankings[] = $theOthers;
 
@@ -58,7 +60,8 @@ class ResultController extends AbstractController
 
         return $this->render('winners.html.twig', [
             'awards' => $awards,
-            'results' => $results
+            'results' => $results,
+            'winners' => $winners,
         ]);
     }
 

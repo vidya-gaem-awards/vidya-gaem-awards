@@ -9,8 +9,7 @@
     }
 
     .uploadable:hover {
-      border-color: #f5e8c4;
-      box-shadow:  0 0 15px rgb(247, 208, 89);
+      border-color: red;
     }
 
     .empty-image {
@@ -73,11 +72,11 @@
       padding: 20px;
 
       background-color: rgba(0, 0, 0, 0.4);
-      border: 1px solid #fec544;
+      border: 1px solid #f29823;
     }
 
     .winner {
-      border: 2px solid #fec544;
+      border: 1px solid #f29823;
     }
 
     .winner img {
@@ -87,9 +86,12 @@
     .award ul {
       list-style-type: none;
       margin: 0;
-      font-size: 24px;
+      font-size: 20px;
       padding-left: 0;
-      font-family: "Trajan Pro 3", serif;
+
+      font-family: "OratorStd", "Courier New", serif;
+      font-weight: normal;
+      text-shadow: #f29823 0px 0px 3px;
     }
 
     .award ul li {
@@ -98,18 +100,35 @@
 
     .winner-name {
       font-size: 30px;
-      color: white;
-      font-family: "Trajan Pro 3", serif;
-      text-shadow: #00000080 2px 2px 2px;
+      /*color: white;*/
+      /*font-family: "Trajan Pro 3", serif;*/
+      /*text-shadow: #00000080 2px 2px 2px;*/
 
       line-height: 1em;
       margin-bottom: 15px;
       margin-top: 5px;
+
+      color: #fec544;
+      font-family: "OratorStd", "Courier New", serif;
+      text-transform: uppercase;
+      /*font-size: 14px;*/
+      /*line-height: 100%;*/
+      display: inline-block;
+      padding: 4px 25px 11px 5px;
+      /*position: absolute;*/
+      /*bottom: -1px;*/
+      /*right: -1px;*/
+      text-shadow: #f29823 0px 0px 3px;
+      text-align: right;
+      background: url(/2019images/nom_namebg.png) repeat-x bottom left, black;
+      border: 1px solid #f29823;
     }
 
     .rank {
-      font-size: 70%;
+      font-size: 120%;
       color: #fec544;
+      font-family: "OratorStd", "Courier New", serif;
+
     }
 
     .award ul li {
@@ -119,36 +138,66 @@
     }
 
     .awardHeaderContainer {
-      height: 121px;
-      margin: 0 0 20px 0;
-      padding: 30px 30px;
-      background-image: url(/2018images/btnNav_middle.png);
+      height: 108px;
+      margin: 0 77px 20px 77px;
+      padding: 15px 45px;
+      background-image: url(/2019images/btnNav_middle.png);
       background-repeat: no-repeat;
       background-position: top center;
       text-align: center;
     }
 
     .awardName {
-      font-family: "Trajan Pro 3", serif;
+      font-family: "Coolvetica", Helvetica, sans-serif;
       font-weight: normal;
-      /* text-transform: uppercase; */
-      font-size: 30px;
-      line-height: 38px;
-      color: #fec544;
-      text-shadow: #00000075 5px 5px 5px;
+      text-transform: uppercase;
+      color: #f29823;
+      text-shadow: #f29823 0px 0px 3px;
+      font-size: 3em;
+      line-height: 100%;
+      margin-top: 5px;
+    }
+
+    .awardName a:hover {
+      background: rgba(242, 152, 35, 0.2);
+      text-decoration: none;
+      text-shadow: none;
     }
 
     .awardSubtitle {
-      font-family: "Corbel", Arial, sans-serif;
-      font-size: 22px;
-      color: #e7e7e7;
-      text-shadow: #00000075 5px 5px 5px;
+      font-family: "OratorStd", "Courier New", serif;
+      font-weight: normal;
+      font-size: 1.1em;
+      color: #f29823;
+      text-shadow: #f29823 0px 0px 3px;
+    }
+
+    .winner-container {
+      position: relative;
     }
 
     .winner-text {
-      color: #fec544;
-      text-shadow: #00000080 2px 2px 2px;
-      font-family: "Trajan Pro 3", serif;
+      color: #f29823;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      line-height: 10px;
+      padding: 1px 7px;
+      z-index: 300;
+      background: #000;
+      border: 1px solid #f29823;
+    }
+
+    .winner-subtitle {
+      color: #f29823;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      line-height: 10px;
+      padding: 1px 7px;
+      z-index: 300;
+      background: #000;
+      border: 1px solid #f29823;
+      position: absolute;
+      bottom: 15px;
     }
 
     .bottom-text {
@@ -192,7 +241,7 @@
       height: 90vh;
       padding-top: 120px;
     }
-    
+
     .title-card-container .title-card {
       max-height: 90vh;
       width: 100vw;
@@ -230,6 +279,10 @@
       filter: drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.7))
         drop-shadow(0px -2px 2px rgba(221, 33, 23, 0.3)) drop-shadow(0px 1px 1px #1ca88edb)
         blur(0.6px);
+    }
+
+    .flare {
+      pointer-events: none;
     }
 
   .flare1 {
@@ -326,6 +379,10 @@
 
               $('#fileInput').val('');
           });
+
+          $('.flare').on('animationend', function () {
+            $(this).remove();
+          });
       });
   </script>
 {% endblock %}
@@ -350,9 +407,9 @@
       src="/2019images/awoo.svg"
       alt=""
     />
-    <img class="flare1" src="/2019images/flare.svg" alt="" />
-    <img class="flare2" src="/2019images/flare.svg" alt="" />
-    <img class="flare3" src="/2019images/flare.svg" alt="" />
+    <img class="flare flare1" src="/2019images/flare.svg" alt="" />
+    <img class="flare flare2" src="/2019images/flare.svg" alt="" />
+    <img class="flare flare3" src="/2019images/flare.svg" alt="" />
   </div>
 
   {% for award in awards %}
@@ -390,11 +447,12 @@
               {% endif %}
             </div>
             <div class="col-md-8">
-              <div class="winner-text">Winner</div>
-              <div class="winner-name">
-                {{ results[award.id][0] | raw }}
+              <div class="winner-container">
+                <div class="winner-name">
+                  <span style="opacity: 0.5;">#1</span> {{ results[award.id][0] | raw }}
+                </div>
+                <div class="winner-subtitle">{{ winners[award.id].subtitle | raw }}</div>
               </div>
-              <div class="winner-text">Eliminated</div>
               <ul>
                 {% for result in results[award.id][1:] %}
                   <li>{{ result | raw }}</li>
@@ -415,7 +473,7 @@
     <div class="col-12">
       <p class="text-center">
         What's shown above are the official results as seen during the show. If you'd like to see more details,
-        including how sites other than /v/ voted, visit the <a href="{{ path('results') }}">detailed&nbsp;results</a> page.
+        including how sites other than /v/ voted, visit the <a class="mecha-button" href="{{ path('results') }}">detailed&nbsp;results</a> page.
       </p>
     </div>
   </div>
