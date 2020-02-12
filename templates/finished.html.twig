@@ -20,8 +20,13 @@
       text-align: center;
     }
 
+    h1 {
+      font-size: 60px;
+    }
+
     h2 {
       margin-top: 10px;
+      font-size: 30px;
     }
 
     /*.title h1 {*/
@@ -86,40 +91,47 @@
     }
 
     .link a {
-      background-color: rgba(0, 0, 0, 0.4);
-      border-radius: 15px;
-      color: white;
-      padding: 5px 15px;
-      font-size: 18px;
+      font-size: 20px;
       display: inline-block;
-      width: 270px;
-      box-shadow: 2px 2px black;
-      text-shadow: none;
-      border: 1px solid #fec544;
+      width: 300px;
+
+      background-color: #000;
+      border-radius: 2px;
+      color: white;
+      text-shadow: #f81317 0px 0px 3px;
+      padding: 5px 15px 1px;
+      border: 1px solid #f81317;
+      font-family: "OratorStd", "Courier New", serif;
+      line-height: 0.95em;
+      text-decoration: none;
     }
 
     .link.special a {
-      background-color: #fec544;
+      background-color: #f29823;
+      text-shadow: #f29823 0px 0px 3px;
       color: black;
     }
 
     .link a:hover {
-      background-color: rgba(0, 0, 0, 0.6);
+      color: #f29823;
+      border: 1px solid #f29823;
+      text-shadow: #f29823 0px 0px 3px;
+      text-decoration: none;
     }
 
     .link.special a:hover {
-      background-color: #cb9c37;
+      background: #000;
     }
 
     .link .soon {
       font-size: small;
     }
 
-    .link a:hover {
-      box-shadow: 1px 1px black;
-      text-decoration: none;
-      transform: translate(1px, 1px);
-    }
+    /*.link a:hover {*/
+    /*  box-shadow: 1px 1px black;*/
+    /*  text-decoration: none;*/
+    /*  transform: translate(1px, 1px);*/
+    /*}*/
 
     .link .soon {
       color: white;
@@ -128,9 +140,16 @@
 {% endblock %}
 {##}
 {% block body %}
+
+  <div style="text-align: center;">
+    <img src="{{ asset('2019images/vga2019_logo.png') }}" alt="Logo of the 2019 Vidya Gaem Awards" style="display: inline;">
+  </div>
+
+  <div class="zig"></div>
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-8 offset-md-2 col-12">
+
         <div class="logo">
           <iframe width="100%" height="460" src="https://www.youtube.com/embed/RF2nKx4Aa2I" frameborder="0"
                   allowfullscreen=""></iframe>
@@ -174,4 +193,6 @@
       </div>
     </div>
   </div>
+
+  <div class="zig"></div>
 {% endblock %}
