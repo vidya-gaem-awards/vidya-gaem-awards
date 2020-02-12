@@ -55,10 +55,10 @@ class ResultsCommand extends Command
 
     /** @var CronJobService */
     private $cron;
-    
+
     /** @var Timer */
     private $timer;
-    
+
     /** @var OutputInterface */
     private $output;
 
@@ -98,7 +98,7 @@ class ResultsCommand extends Command
             $this->disableCronJobIfNeeded();
         }
     }
-    
+
     private function updateVoteReferrers()
     {
         $this->writeln('Updating vote referrers');
@@ -136,8 +136,9 @@ class ResultsCommand extends Command
         $result = $this->em->createQueryBuilder()
             ->select('a')
             ->from(Access::class, 'a')
-            ->where("a.referer NOT LIKE 'https://____.vidyagaemawards.com%'")
-            ->orWhere('a.referer IS NULL')
+            ->where("a.referer NOT LIKE 'https://____.vidyagaemawards.com%' OR a.referer IS NULL")
+            ->andWhere('a.cookieID IN (:voters)')
+            ->setParameter('voters', array_keys($voters))
             ->orderBy('a.timestamp', 'ASC')
             ->getQuery()
             ->getResult();
@@ -243,7 +244,7 @@ class ResultsCommand extends Command
 
         $this->writeln("Step 5 (update database) complete");
     }
-    
+
     private function updateResultCache()
     {
         $this->writeln('Updating result cache');
