@@ -14,10 +14,11 @@ class Schulze extends AbstractResultCalculator
         $votes = $this->votes;
 
         if (count($candidates) === 1) {
+            $candidate = array_keys($candidates)[0];
             $this->warnings = [];
-            $this->steps = ['pairwise' => [], 'strengths' => [], 'sweepPoints' => 0];
+            $this->steps = ['pairwise' => [], 'strengths' => [], 'sweepPoints' => [$candidate => 0]];
 
-            return [1 => array_keys($candidates)[0]];
+            return [1 => $candidate];
         }
 
         $warnings = [];
