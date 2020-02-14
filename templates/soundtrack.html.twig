@@ -10,19 +10,6 @@
       margin-top: 10px;
     }
 
-    #mainContainer a {
-      background-color: rgb(251,68,7);
-      border-radius: 15px;
-      color: white;
-      padding: 5px 15px;
-      box-shadow: 2px 2px black;
-      text-shadow: 1px 1px black;
-    }
-
-    #mainContainer a:hover {
-      text-decoration: underline;
-    }
-
     .album-art {
       width: 300px;
       max-width: 300px;
@@ -83,18 +70,49 @@
       border-top: 1px solid #fec544;
       padding-top: 15px;
     }
+
+    .artist {
+      transition: all 0.2s ease-in-out;
+      color: #a8a8a8;
+      font-family: "OratorStd", "Courier New", serif;
+      margin-left: 10px;
+    }
+
+    .preshow-download a {
+      background: rgb(0, 0, 0);
+      border: 2px solid #f81317;
+      font-family: "OratorStd", "Courier New", serif;
+      text-shadow: #f29823 0 0 3px;
+      color: #f29823;
+      padding: 8px 12px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 26px;
+    }
+
+    .preshow-download a:hover {
+      background: rgba(242, 152, 35, 0.2);
+    }
   </style>
 
   <div class="row" style="margin-top: 20px;">
     <div class="col-12">
       <div style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px; max-width: 300px;">
-        <img src="{{ asset('2018images/soundtrack_cover.jpg') }}" alt="Album art" class="img-responsive album-art">
+        <img src="{{ asset('2019images/soundtrack_cover.jpg') }}" alt="Album art" class="img-responsive album-art">
       </div>
-      {#<p class="text-center" style="margin-top: 10px; color: white; font-size: 14px;">#}
-        {#<a href="https://vidyagaemawards.com/music/2017-vga-preshow-mixes.zip">Download preshow music</a>#}
-      {#</p>#}
+
+      <p class="text-center preshow-download" style="">
+        <a href="https://vidyagaemawards.com/music/2019-vga-preshow-mixes.zip">Download preshow music</a>
+      </p>
 
       <table class="table" id="track-list">
+        {% for track in preshow %}
+          <tr class="{{ loop.index == 1 ? 'line-before' }}">
+            <td></td>
+            <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
+            <td>{{ track[2] }}</td>
+          </tr>
+        {% endfor %}
         {% for track in tracks %}
           <tr class="{{ loop.index == 1 ? 'line-before' }}">
             <td>#{{ loop.index }}</td>
