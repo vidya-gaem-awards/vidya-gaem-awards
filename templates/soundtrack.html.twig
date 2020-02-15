@@ -102,7 +102,7 @@
       </div>
 
       <p class="text-center preshow-download" style="">
-        <a href="https://vidyagaemawards.com/music/2019-vga-preshow-mixes.zip">Download preshow music</a>
+        <a href="https://vidyagaemawards.com/music/2019-vga-preshow-mixes.zip">Download preshow music (331 MB)</a>
       </p>
 
       <table class="table" id="track-list">
@@ -116,8 +116,8 @@
         {% for track in tracks %}
           <tr class="{{ loop.index == 1 ? 'line-before' }}">
             <td>#{{ loop.index }}</td>
-            <td>{{ track[0] }}</td>
-            <td>{{ track[1] }}</td>
+            <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
+            <td>{{ track[2] }}</td>
           </tr>
         {% endfor %}
       </table>
