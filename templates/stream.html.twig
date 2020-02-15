@@ -40,6 +40,12 @@
       font-size: 20px;
       margin-top: 15px;
     }
+
+    s {
+      color: #734715;
+      text-shadow: none;
+      text-decoration-color: #f29823;
+    }
   </style>
 {% endblock %}
 
@@ -54,7 +60,8 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="my-3">Streaming Live on Three Platforms</h1>
+        <h1 class="my-3">Streaming Live on <s>Three</s> Two Platforms</h1>
+        <h2 style="margin-top: -10px; margin-bottom: 15px;">(Apologies to the single person who uses Mixer, we had account issues)</h2>
 
         <p class="links">
           <a href="https://twitch.tv/vidyagaemawards" target="_blank">
@@ -63,10 +70,10 @@
           <a href="https://www.youtube.com/vidyagaemawards" target="_blank">
             <i class="fab fa-youtube fa-fw"></i> <span>YouTube</span>
           </a>
-          <a href="https://mixer.com/vidyagaemawards" target="_blank">
-            <i class="fab fa-microsoft fa-fw"></i> <span>Mixer</span>
-          </a><br>
-          <a href="https://discord.gg/hSn98S" target="_blank" class="discord">Chat on <i class="fab fa-discord fa-fw"></i> <span>Discord</span></a>
+{#          <a href="https://mixer.com/vidyagaemawards" target="_blank">#}
+{#            <i class="fab fa-microsoft fa-fw"></i> <span>Mixer</span>#}
+{#          </a><br>#}
+          <a href="https://discord.gg/hSn98S" target="_blank">Chat on <i class="fab fa-discord fa-fw"></i> <span>Discord</span></a>
         </p>
 
         <div id="twitch-embed"></div>
