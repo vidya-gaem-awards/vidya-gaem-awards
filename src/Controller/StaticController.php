@@ -83,7 +83,7 @@ class StaticController extends AbstractController
             ['Men of Destiny', 'Gundam 0083: Stardust Memory', '/vr/ Award'],
             ['Assault Waves', 'Gundam 0083: Stardust Memory', '/vr/ Award'],
             ['Unreeeal Superhero 3', 'Rez and Kenet', 'Swine Flu Award'],
-            ['Paralyzer', 'Finger Elevent', 'Swine Flu Award'],
+            ['Keyboard Cat', '', 'Swine Flu Award'],
             ['This is My Life', 'DJ Splash', 'Swine Flu Award'],
             ['The Art of Precision', 'Ed Field', '0 out of 10\'s Award'],
             ['Nyanyanyanyanyanyanya!', 'daniwell', '0 out of 10\'s Award'],
