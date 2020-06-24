@@ -90,7 +90,7 @@ class InventoryItem implements JsonSerializable
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $year = '2019';
+    private $year = '2020';
 
     /**
      * Get id
