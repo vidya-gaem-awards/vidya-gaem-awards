@@ -79,5 +79,4 @@ swiftmailer:
 steam_auth:
     steam_key: A5AD250B28674FA844A319523CF95B79
     user_class: AppBundle\Entity\User
-    login_redirect_route: false
 
