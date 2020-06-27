@@ -24,7 +24,7 @@ class DatabaseLoader implements LoaderInterface
         $this->repo = $em->getRepository(Template::class);
     }
 
-    public function getSourceContext($name)
+    public function getSourceContext(string $name): Source
     {
         if (false === $template = $this->getTemplate($name)) {
             throw new LoaderError(sprintf('Template "%s" does not exist.', $name));
@@ -33,17 +33,17 @@ class DatabaseLoader implements LoaderInterface
         return new Source($template->getSource(), $name);
     }
 
-    public function exists($name)
+    public function exists(string $name)
     {
         return (bool)$this->getTemplate($name);
     }
 
-    public function getCacheKey($name)
+    public function getCacheKey(string $name): string
     {
         return $name;
     }
 
-    public function isFresh($name, $time)
+    public function isFresh(string $name, int $time): bool
     {
         if (false === $template = $this->getTemplate($name)) {
             return false;

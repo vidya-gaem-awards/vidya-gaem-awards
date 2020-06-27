@@ -73,6 +73,10 @@ services:
         tags:
         - { name: twig.extension }
 
+    App\Twig\ArrayExtension:
+        tags:
+            - { name: twig.extension }
+
     App\Twig\DatabaseLoader:
         tags:
         - { name: twig.loader }
