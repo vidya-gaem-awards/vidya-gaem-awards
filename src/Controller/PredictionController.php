@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Advertisement;
 use App\Entity\FantasyPrediction;
 use App\Entity\FantasyUser;
-use App\Entity\InventoryItem;
+use App\Entity\LootboxItem;
 use App\Entity\TableHistory;
 use App\Entity\User;
 use App\Service\AuditService;

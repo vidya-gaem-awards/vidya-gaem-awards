@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
 /**
- * @ORM\Table(name="inventory_items")
- * @ORM\Entity
+ * @ORM\Table(name="lootbox_items")
+ * @ORM\Entity(repositoryClass="App\Repository\LootboxItemRepository")
  */
-class InventoryItem implements JsonSerializable
+class LootboxItem implements JsonSerializable, DropChance
 {
     /**
      * @var int
@@ -34,13 +34,6 @@ class InventoryItem implements JsonSerializable
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
     private $name;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="rarity", type="integer", nullable=false)
-     */
-    private $rarity;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
@@ -93,6 +86,39 @@ class InventoryItem implements JsonSerializable
     private $year = '2020';
 
     /**
+     * @ORM\ManyToOne(targetEntity=LootboxTier::class, inversedBy="items")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tier;
+
+    /**
+     * @ORM\Column(name="drop_chance", type="decimal", precision=10, scale=5, nullable=true)
+     */
+    private $dropChance;
+
+    /**
+     * @ORM\Column(name="absolute_drop_chance", type="decimal", precision=10, scale=5, nullable=true)
+     */
+    private $absoluteDropChance;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=5, nullable=true)
+     */
+    private $cachedDropValueStart;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=5, nullable=true)
+     */
+    private $cachedDropValueEnd;
+
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -107,7 +133,7 @@ class InventoryItem implements JsonSerializable
      *
      * @param string $name
      *
-     * @return InventoryItem
+     * @return LootboxItem
      */
     public function setName($name)
     {
@@ -126,31 +152,7 @@ class InventoryItem implements JsonSerializable
         return $this->name;
     }
 
-    /**
-     * Set rarity
-     *
-     * @param string $rarity
-     *
-     * @return InventoryItem
-     */
-    public function setRarity($rarity)
-    {
-        $this->rarity = $rarity;
-
-        return $this;
-    }
-
-    /**
-     * Get rarity
-     *
-     * @return string
-     */
-    public function getRarity()
-    {
-        return $this->rarity;
-    }
-
-    public function setImage(?File $image): InventoryItem
+    public function setImage(?File $image): LootboxItem
     {
         $this->image = $image;
 
@@ -172,9 +174,10 @@ class InventoryItem implements JsonSerializable
 
     /**
      * @param string $shortName
-     * @return InventoryItem
+     *
+     * @return LootboxItem
      */
-    public function setShortName(string $shortName): InventoryItem
+    public function setShortName(string $shortName ): LootboxItem
     {
         $this->shortName = $shortName;
         return $this;
@@ -190,9 +193,10 @@ class InventoryItem implements JsonSerializable
 
     /**
      * @param bool $css
-     * @return InventoryItem
+     *
+     * @return LootboxItem
      */
-    public function setCss(bool $css): InventoryItem
+    public function setCss( bool $css): LootboxItem
     {
         $this->css = $css;
         return $this;
@@ -208,9 +212,10 @@ class InventoryItem implements JsonSerializable
 
     /**
      * @param bool $buddie
-     * @return InventoryItem
+     *
+     * @return LootboxItem
      */
-    public function setBuddie(bool $buddie): InventoryItem
+    public function setBuddie( bool $buddie): LootboxItem
     {
         $this->buddie = $buddie;
         return $this;
@@ -226,9 +231,10 @@ class InventoryItem implements JsonSerializable
 
     /**
      * @param bool $music
-     * @return InventoryItem
+     *
+     * @return LootboxItem
      */
-    public function setMusic(bool $music): InventoryItem
+    public function setMusic(bool $music): LootboxItem
     {
         $this->music = $music;
         return $this;
@@ -239,7 +245,7 @@ class InventoryItem implements JsonSerializable
         return $this->musicFile;
     }
 
-    public function setMusicFile(?File $musicFile): InventoryItem
+    public function setMusicFile( ?File $musicFile): LootboxItem
     {
         $this->musicFile = $musicFile;
         return $this;
@@ -258,7 +264,6 @@ class InventoryItem implements JsonSerializable
             'id' => $this->getId(),
             'shortName' => $this->getShortName(),
             'name' => $this->getName(),
-            'rarity' => $this->getRarity(),
             'image' => $this->getImage(),
             'css' => $this->hasCss(),
             'buddie' => $this->isBuddie(),
@@ -266,6 +271,9 @@ class InventoryItem implements JsonSerializable
             'musicFile' => $this->getMusicFile(),
             'cssContents' => $this->getCssContents(),
             'year' => $this->getYear(),
+            'tier' => $this->getTier()->getId(),
+            'dropChance' => $this->getDropChance(),
+            'absoluteDropChance' => $this->getAbsoluteDropChance()
         ];
     }
 
@@ -287,9 +295,10 @@ class InventoryItem implements JsonSerializable
 
     /**
      * @param string|null $cssContents
-     * @return InventoryItem
+     *
+     * @return LootboxItem
      */
-    public function setCssContents(?string $cssContents): InventoryItem
+    public function setCssContents(?string $cssContents): LootboxItem
     {
         $this->cssContents = $cssContents;
         return $this;
@@ -303,6 +312,66 @@ class InventoryItem implements JsonSerializable
     public function setYear(string $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    public function getTier(): ?LootboxTier
+    {
+        return $this->tier;
+    }
+
+    public function setTier(?LootboxTier $tier): self
+    {
+        $this->tier = $tier;
+
+        return $this;
+    }
+
+    public function getDropChance(): ?string
+    {
+        return $this->dropChance;
+    }
+
+    public function setDropChance(?string $dropChance): self
+    {
+        $this->dropChance = $dropChance;
+
+        return $this;
+    }
+
+    public function getAbsoluteDropChance(): ?string
+    {
+        return $this->absoluteDropChance;
+    }
+
+    public function setAbsoluteDropChance(?string $absoluteDropChance): self
+    {
+        $this->absoluteDropChance = $absoluteDropChance;
+
+        return $this;
+    }
+
+    public function getCachedDropValueStart(): ?string
+    {
+        return $this->cachedDropValueStart;
+    }
+
+    public function setCachedDropValueStart(?string $cachedDropValueStart): self
+    {
+        $this->cachedDropValueStart = $cachedDropValueStart;
+
+        return $this;
+    }
+
+    public function getCachedDropValueEnd(): ?string
+    {
+        return $this->cachedDropValueEnd;
+    }
+
+    public function setCachedDropValueEnd(?string $cachedDropValueEnd): self
+    {
+        $this->cachedDropValueEnd = $cachedDropValueEnd;
 
         return $this;
     }

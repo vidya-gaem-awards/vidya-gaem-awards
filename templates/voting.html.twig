@@ -51,8 +51,8 @@
   {% endif %}
 
   <script type="text/javascript">
+      var lootboxSettings = {{ lootboxSettings | json_encode | raw }};
       var rewards = {{ items | json_encode | raw }};
-      var itemChoiceArray = {{ itemChoiceArray | json_encode | raw }};
   </script>
 
   {% if votingOpen %}

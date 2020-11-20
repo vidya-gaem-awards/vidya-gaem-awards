@@ -375,22 +375,71 @@ editor:
 
 editorPost:
     path:       /config/editor
-    methods:    [POSt]
+    methods:    [POST]
     controller: App\Controller\EditorController::postAction
+
+#
+# LOOTBOXES (ADMIN SECTION)
+#
+
+lootboxRedirect:
+    path:       /lootboxes
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: lootboxItems
+
+lootboxItems:
+    path:       /lootboxes/items
+    methods:    [GET]
+    controller: App\Controller\LootboxController::items
+
+lootboxItemPost:
+    path:       /lootboxes/items
+    methods:    [POST]
+    controller: App\Controller\LootboxController::itemPost
+
+lootboxItemCalculation:
+    path:       /lootboxes/items/calculation
+    methods:    [POST]
+    controller: App\Controller\LootboxController::itemCalculation
+
+lootboxTiers:
+    path:       /lootboxes/tiers
+    methods:    [GET]
+    controller: App\Controller\LootboxController::tiers
+
+lootboxTierPost:
+    path:       /lootboxes/tiers
+    methods:    [POST]
+    controller: App\Controller\LootboxController::tierPost
+
+lootboxTierCalculation:
+    path:       /lootboxes/tiers/calculation
+    methods:    [POST]
+    controller: App\Controller\LootboxController::tierCalculation
+
+lootboxSettings:
+    path:       /lootboxes/settings
+    methods:    [GET]
+    controller: App\Controller\LootboxController::settings
+
+lootboxSettingsSave:
+    path:       /lootboxes/settings
+    methods:    [POST]
+    controller: App\Controller\LootboxController::settingsSave
+
+#
+# INVENTORY (VOTING PAGE)
+#
+
+inventoryPurchaseLootbox:
+    path:       /inventory/purchase-lootbox
+    methods:    [POST]
+    controller: App\Controller\InventoryController::purchaseLootbox
 
 #
 # SPECIAL
 #
-
-itemManager:
-    path:       /lootboxes
-    methods:    [GET]
-    controller: App\Controller\ItemManagerController::indexAction
-
-itemPost:
-    path:       /lootboxes
-    methods:    [POST]
-    controller: App\Controller\ItemManagerController::postAction
 
 advertManager:
     path:       /adverts

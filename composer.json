@@ -39,6 +39,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "phpunit/phpunit": "^9.4",
         "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "^5.0",
         "symfony/maker-bundle": "^1.11",

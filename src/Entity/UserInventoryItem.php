@@ -35,9 +35,9 @@ class UserInventoryItem
     private $timestamp;
 
     /**
-     * @var InventoryItem
+     * @var LootboxItem
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\InventoryItem", inversedBy="userItems")
+     * @ORM\ManyToOne(targetEntity="LootboxItem", inversedBy="userItems")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="itemID", referencedColumnName="id")
      * })
@@ -105,11 +105,11 @@ class UserInventoryItem
     /**
      * Set item
      *
-     * @param InventoryItem $item
+     * @param LootboxItem $item
      *
      * @return UserInventoryItem
      */
-    public function setItem(InventoryItem $item = null)
+    public function setItem(LootboxItem $item = null)
     {
         $this->item = $item;
 
@@ -119,7 +119,7 @@ class UserInventoryItem
     /**
      * Get item
      *
-     * @return InventoryItem
+     * @return LootboxItem
      */
     public function getItem()
     {

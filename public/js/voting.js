@@ -158,7 +158,7 @@ $(document).ready(function () {
     }
 
     inventory = JSON.parse(localStorage.getItem('inventory'));
-    var lootboxCost = 1500;
+    var lootboxCost = window.lootboxSettings.cost;
 
     $('#lootboxCostText').text(lootboxCost);
 
@@ -179,7 +179,7 @@ $(document).ready(function () {
         localStorage.setItem('inventory', JSON.stringify(inventory));
         $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' shekels');
 
-        if (inventory['shekels'] > lootboxCost) {
+        if (inventory['shekels'] >= lootboxCost) {
             $('#buy-lootbox').removeAttr('disabled');
         } else {
             $('#buy-lootbox').attr('disabled', 'disabled');
@@ -231,6 +231,11 @@ $(document).ready(function () {
 
     $('#inventory').on('click', '.item-button', function () {
         var id = $(this).attr('data-id');
+
+        if (id === undefined) {
+            return;
+        }
+
         var reward = rewards[id];
 
         if (id === 'nothing') {
@@ -390,19 +395,20 @@ $(document).ready(function () {
         var title = lootbox.find('.lootbox-title');
         var image = lootbox.find('img');
 
-        var choice = itemChoiceArray[getRandomInt(0, itemChoiceArray.length)];
+        var reward = pendingItems.pop();
 
-        if (choice === 'shekels') {
-            var shekelCount = getRandomInt(2, 1000);
+        if (reward.type === 'item') {
+            var item = rewards[reward.shortName];
+            addRewardToInventory(item.shortName);
+            image.attr('src', item.image.url);
+            title.text(item.name);
+        } else if (reward.type === 'shekels') {
+            var shekelCount = reward.amount;
             inventory['shekels'] += shekelCount;
             image.attr('src', '/img/dosh.png');
             title.text(shekelCount + " shekels");
-        } else {
-            var reward = rewards[choice];
-            addRewardToInventory(choice);
-            image.attr('src', reward.image.url);
-            title.text(reward.name);
         }
+
         updateInventory();
     };
 
@@ -419,6 +425,7 @@ $(document).ready(function () {
     $('#unboxButton').click(function () {
         lootboxSound.volume = 0.25;
         lootboxSound.play();
+
         $('.lootbox').addClass('animate');
 
         $(this).hide();
@@ -426,6 +433,7 @@ $(document).ready(function () {
         setTimeout(function () {
             $('.lootbox').find('img').removeAttr('src');
         }, 1100);
+
 
         for (var i = 0; i < 3; i++) {
             setTimeout(showNewLoot, 2000 + i * 300, i);
@@ -440,7 +448,9 @@ $(document).ready(function () {
         localStorage.setItem('ignoreRewards', true);
         $('#rewards').modal('hide');
         $('#restoreDrops').show();
-    });
+    })
+
+    var pendingItems = [];
 
     function openLootboxRewards(force) {
         if (!force && !showRewardsOnSubmit) {
@@ -452,7 +462,7 @@ $(document).ready(function () {
         $('.lootbox').removeClass('animate-back');
         $('.lootbox-title').text('');
 
-        var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa', 'r6s'];
+        var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa'];
 
         $('.lootbox-image').each(function () {
             $(this).attr('src', '/img/lootbox-' + lootboxes[getRandomInt(0, lootboxes.length)] + '.png');
@@ -469,6 +479,14 @@ $(document).ready(function () {
         audio.play();
 
         showRewardsOnSubmit = false;
+
+        $('#unboxButton').attr('disabled', 'disabled');
+
+        $.post('/inventory/purchase-lootbox').then(data => {
+            pendingItems = data.rewards;
+        }).always(() => {
+            $('#unboxButton').removeAttr('disabled');
+        });
     }
 
     var previousLockExists = lastVotes.length > 1;

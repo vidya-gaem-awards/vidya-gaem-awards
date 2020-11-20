@@ -22,7 +22,7 @@
     .inventory-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      margin-bottom: 1rem;
     }
 
     .inventory-item {
@@ -74,16 +74,65 @@
     .item-year {
       flex-grow: 1;
     }
+
+    #info-drop-chance-override {
+      margin-left: -1rem;
+      margin-right: -1rem;
+    }
   </style>
 {% endblock %}
 
 {% block js %}
   {{ parent() }}
 
+  <script src='{{ asset('js/utils.js') }}'></script>
+
   <script type="text/javascript">
       $(document).ready(function () {
           var editDialog = $("#dialog-edit");
           var currentlySubmitting = false;
+
+          function getAbsoluteDropChance () {
+              if (!$('#info-tier').val()) {
+                  return;
+              }
+
+              if ($('#info-override-drop-chance').prop('checked')) {
+                  if (!$('#info-drop-chance-relative')[0].checkValidity() || !$('#info-drop-chance-absolute')[0].checkValidity()) {
+                      return;
+                  }
+              }
+
+              $('#dialog-edit .absolute-drop-chance').html('<i class="fas fa-spinner fa-spin fa-fw"></i>');
+
+              $.ajax({
+                  url: "{{ path('lootboxItemCalculation') }}",
+                  type: 'POST',
+                  data: {
+                      id: $('#info-id').val(),
+                      tier: $('#info-tier').val(),
+                      dropChanceOverride: $('#info-override-drop-chance').prop('checked'),
+                      dropChance: $('#info-drop-chance-relative').val(),
+                      absoluteDropChance: $('#info-drop-chance-absolute').val()
+                  }
+              }).fail(() => {
+                  $('#dialog-edit .absolute-drop-chance').text('Error');
+              }).done(data => {
+                  if (!data.success) {
+                      $('#dialog-edit .absolute-drop-chance').text('Error');
+                  } else {
+                      const denominator = Math.round(1 / data.absoluteDropChance);
+                      $('#dialog-edit .absolute-drop-chance').text((data.absoluteDropChance * 100).toFixed(5) + '% (~1 in ' + denominator + ')');
+                  }
+              });
+          }
+
+          const getAbsoluteDropChanceDebounced = debounce(getAbsoluteDropChance, 250);
+
+          $('#info-drop-chance-relative').change(getAbsoluteDropChanceDebounced);
+          $('#info-drop-chance-absolute').change(getAbsoluteDropChanceDebounced);
+          $('#info-override-drop-chance').change(getAbsoluteDropChanceDebounced);
+          $('#info-tier').change(getAbsoluteDropChanceDebounced);
 
           editDialog.on('show.bs.modal', function (event) {
               var button = $(event.relatedTarget);
@@ -99,12 +148,16 @@
                   $("#code-id").text("reward-");
                   $("#info-action").val("new");
                   editDialog.find("input[type=text]").val("");
+                  editDialog.find("input[type=number]").val("");
                   editDialog.find("input[type=file]").val("");
                   editDialog.find("input[type=checkbox]").prop("checked", false);
                   $("#dialog-edit-delete").hide();
 
+                  $("#info-override-drop-chance").prop("checked", false);
+
                   $("#info-musicFile-container").hide();
                   $("#info-cssContents-container").hide();
+                  $("#info-drop-chance-override").hide();
 
               } else {
                   // Editing an existing advert
@@ -118,14 +171,21 @@
                   $("#info-action").val("edit");
                   $("#info-short-name").val(item.shortName);
                   $("#info-name").val(item.name);
-                  $("#info-rarity").val(item.rarity);
+                  $("#info-override-drop-chance").prop("checked", item.dropChance !== null || item.absoluteDropChance !== null);
+                  $("#info-drop-chance-relative").val(item.dropChance);
+                  $("#info-drop-chance-absolute").val(item.absoluteDropChance ? item.absoluteDropChance * 100 : '');
                   $("#info-css").prop("checked", item.css);
                   $("#info-buddie").prop("checked", item.buddie);
                   $("#info-music").prop("checked", item.music);
                   $("#info-cssContents").val(item.cssContents);
 
+                  editDialog.find("input[type=file]").val("");
+
                   $("#info-musicFile-container").toggle(item.music);
                   $("#info-cssContents-container").toggle(item.css);
+                  $("#info-drop-chance-override").toggle(item.dropChance !== null || item.absoluteDropChance !== null);
+
+                  getAbsoluteDropChance();
               }
           });
 
@@ -139,6 +199,10 @@
 
           $("#info-music").change(function (event) {
               $("#info-musicFile-container").toggle($("#info-music").prop('checked'));
+          });
+
+          $("#info-override-drop-chance").change(function(event) {
+              $("#info-drop-chance-override").toggle($("#info-override-drop-chance").prop('checked'));
           });
 
           $("#dialog-edit-form").submit(function (event) {
@@ -160,7 +224,7 @@
               // Send through the AJAX request
               var formData = new FormData(this);
               $.ajax({
-                  url: "{{ path('itemPost') }}",
+                  url: "{{ path('lootboxItemPost') }}",
                   type: 'POST',
                   data: formData,
                   contentType: false,
@@ -198,7 +262,7 @@
                   {name: "id", value: editDialog.attr("data-id")}
               ];
 
-              $.post("{{ path('itemPost') }}", data, function (response) {
+              $.post("{{ path('lootboxItemPost') }}", data, function (response) {
                   if (response.success) {
                       window.location.reload();
                   } else {
@@ -228,44 +292,63 @@
 
 {% block containerClass %}container-fluid{% endblock %}
 
+{% block beforeContainer %}
+  {% include 'parts/itemAdminBar.twig' %}
+{% endblock %}
+
 {% block content %}
-  <div class="row">
-    <div class="col-xs-12">
+  <h1 class="page-header board-header">Lootbox Items</h1>
 
-      <h1 class="page-header board-header">Lootbox Reward Manager</h1>
-
-      <div class="text-center">
-        <button class="btn btn-sm btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
-          <i class="fal fa-fw fa-plus glyphicon-plus"></i> Add a new reward
-        </button>
-      </div>
-
-      <div class="inventory-container">
-        {% for item in items %}
-          <div class="inventory-item" data-toggle="modal" data-target="#dialog-edit" data-id="{{ item.id }}">
-            <img src="{{ item.image.url }}">
-              <div class="item-type">
-                  <div class="badge badge-light">{{ item.year }}</div>
-                  {% if item.css %}
-                      <div class="badge badge-primary">CSS</div>
-                  {% endif %}
-                  {% if item.buddie %}
-                      <div class="badge badge-success">Buddie</div>
-                  {% endif %}
-                  {% if item.music %}
-                      <div class="badge badge-danger">Music</div>
-                  {% endif %}
-                  {% if not item.css and not item.buddie and not item.music %}
-                    <div class="badge badge-secondary">None</div>
-                  {% endif %}
-              </div>
-            <div class="item-name">{{ item.name }}</div>
-            <div class="item-rarity">Chance: {{ item.rarity }}</div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
+  <div class="text-center">
+    <button class="btn btn-sm btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
+      <i class="fal fa-fw fa-plus glyphicon-plus"></i> Add a new reward
+    </button>
   </div>
+
+  {% for tier in tiers %}
+  <h2 style="border-bottom: 3px solid {{ tier.color }}; padding-bottom: 8px;">
+    {{ tier.name }}
+    <small class="text-muted">
+      ({{ 0 + tier.dropChance }})
+    </small>
+  </h2>
+
+  <div class="inventory-container">
+    {% for item in tier.items %}
+      <div class="inventory-item" data-toggle="modal" data-target="#dialog-edit" data-id="{{ item.id }}">
+        <img src="{{ item.image.url }}">
+        <div class="item-type">
+          <div class="badge badge-light">{{ item.year }}</div>
+          {% if item.css %}
+            <div class="badge badge-primary">CSS</div>
+          {% endif %}
+          {% if item.buddie %}
+            <div class="badge badge-success">Buddie</div>
+          {% endif %}
+          {% if item.music %}
+            <div class="badge badge-danger">Music</div>
+          {% endif %}
+          {% if not item.css and not item.buddie and not item.music %}
+            <div class="badge badge-secondary">None</div>
+          {% endif %}
+        </div>
+        <div class="item-name">{{ item.name }}</div>
+        <div class="item-rarity">
+          {% if item.dropChance != null %}
+            Override: {{ 0 + item.dropChance }}
+          {% elseif item.absoluteDropChance != null %}
+            Override: {{ 0 + item.absoluteDropChance * 100 }}%
+          {% else %}
+            Standard chance
+          {% endif %}
+        </div>
+      </div>
+    {% else %}
+      There are no items in this tier.
+    {% endfor %}
+  </div>
+  {% endfor %}
+
 
   <div id="dialog-edit" class="modal" role="dialog">
     <div class="modal-dialog" role="document">
@@ -302,12 +385,56 @@
             </div>
 
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="info-rarity">Chance</label>
+              <label class="col-sm-3 col-form-label" for="info-tier">Tier</label>
               <div class="col-sm-9">
-                <input class="form-control" type="number" id="info-rarity" name="rarity" min="0" max="100" placeholder="10" required
-                 style="width: 100px;">
-                <small class="form-text">Chance is linear and is between 0 and 100. An item of chance 0 will never be shown.</small>
+                <select class="form-control" id="info-tier" name="tier" required>
+                  {% for tier in tiers %}
+                    <option value="{{ tier.id }}">{{ tier.name }} ({{ 0 + tier.dropChance }})</option>
+                  {% endfor %}
+                </select>
+                <small class="form-text"><strong>Absolute drop chance for item:</strong> <span class="absolute-drop-chance">0.00%</span></small>
               </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="offset-sm-3 col-sm-9">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="info-override-drop-chance" name="drop-chance-override">
+                  <label class="form-check-label" for="info-override-drop-chance">Override drop chance</label>
+                </div>
+              </div>
+            </div>
+
+            <div id="info-drop-chance-override" style="display: none;" class="bg-light">
+              <hr>
+
+              <div style="margin-left: 1rem; margin-right: 1rem;">
+                <div class="form-group row text-danger">
+                  <div class="col-sm-3 col-form-label">
+                    Drop Chance
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label for="info-drop-chance-relative"><small class="form-text">Relative</small></label>
+                        <input class="form-control" type="number" id="info-drop-chance-relative" name="drop-chance-relative" min="0" max="99999.99999" step="any">
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="info-drop-chance-absolute"><small class="form-text">Absolute</small></label>
+                        <div class="input-group">
+                          <input class="form-control" type="number" id="info-drop-chance-absolute" name="drop-chance-absolute" min="0" max="100" step="any">
+                          <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <small>Drop chance overrides should be used sparingly.</small>
+                  </div>
+                </div>
+              </div>
+
+              <hr>
             </div>
 
             <div class="form-group row">
@@ -385,6 +512,7 @@
   </div>
 
   <script type="text/javascript">
-      var items = {{ items | json_encode | raw }};
+      const items = {{ items | json_encode | raw }};
+      const tiers = {{ tiers | json_encode | raw }};
   </script>
 {% endblock %}

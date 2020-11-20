@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Advertisement;
-use App\Entity\InventoryItem;
+use App\Entity\LootboxItem;
 use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
@@ -181,18 +181,18 @@ class VotingController extends AbstractController
         // Lootbox items
         $items = $em->createQueryBuilder()
             ->select('i')
-            ->from(InventoryItem::class, 'i')
+            ->from(LootboxItem::class, 'i')
             ->indexBy('i', 'i.shortName')
             ->getQuery()
             ->getResult();
 
-        $itemChoiceArray = [];
-        /** @var InventoryItem $item */
-        foreach ($items as $item) {
-            $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, $item->getRarity(), $item->getShortName()));
-        }
+//        $itemChoiceArray = [];
+//        /** @var LootboxItem $item */
+//        foreach ($items as $item) {
+//            $itemChoiceArray = array_merge($itemChoiceArray, array_fill(0, $item->getRarity(), $item->getShortName()));
+//        }
 
-        $itemsWithCss = array_filter($items, function (InventoryItem $item) {
+        $itemsWithCss = array_filter($items, function (LootboxItem $item) {
             return $item->hasCss() && $item->getCssContents();
         });
 
@@ -203,11 +203,15 @@ class VotingController extends AbstractController
             $customCss .= "/* End CSS for {$item->getShortName()} */\n\n";
         }
 
-        $shekelChance = 66; // percent
-        $shekelChance = round(1 / ((100 - $shekelChance) / 100) - 1);
+//        $shekelChance = 66; // percent
+//        $shekelChance = round(1 / ((100 - $shekelChance) / 100) - 1);
+//
+//        $itemChoiceArray = array_merge($itemChoiceArray,
+//            array_fill(0, count($itemChoiceArray) * $shekelChance, 'shekels'));
 
-        $itemChoiceArray = array_merge($itemChoiceArray,
-            array_fill(0, count($itemChoiceArray) * $shekelChance, 'shekels'));
+        $lootboxSettings = [
+            'cost' => $configService->get('lootbox-cost')
+        ];
 
         return $this->render('voting.html.twig', [
             'title' => 'Voting',
@@ -226,7 +230,8 @@ class VotingController extends AbstractController
             'ad1' => $ad1,
             'ad2' => $ad2,
             'items' => $items,
-            'itemChoiceArray' => $itemChoiceArray,
+//            'itemChoiceArray' => $itemChoiceArray,
+            'lootboxSettings' => $lootboxSettings,
             'rewardCSS' => $customCss,
             'showFantasyPromo' => !$predictionService->arePredictionsLocked()
         ]);

@@ -2,6 +2,7 @@
 namespace App\Service;
 
 use App\Entity\Config;
+use App\Entity\ConfigKeyValue;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ConfigService
@@ -44,5 +45,22 @@ class ConfigService
     public function isReadOnly()
     {
         return $this->getConfig()->isReadOnly();
+    }
+
+    public function get(string $key, $default = null)
+    {
+        $keyValue = $this->em->getRepository(ConfigKeyValue::class)->find($key);
+        return $keyValue ? $keyValue->getValue() : $default;
+    }
+
+    public function set(string $key, $value)
+    {
+        $keyValue = $this->em->getRepository(ConfigKeyValue::class)->find($key);
+        if (!$keyValue) {
+            $keyValue = new ConfigKeyValue($key);
+        }
+        $keyValue->setValue($value);
+
+        $this->em->persist($keyValue);
     }
 }
