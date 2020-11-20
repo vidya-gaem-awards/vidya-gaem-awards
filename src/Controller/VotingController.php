@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Advertisement;
 use App\Entity\LootboxItem;
+use App\Entity\LootboxTier;
 use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
@@ -213,6 +214,12 @@ class VotingController extends AbstractController
             'cost' => $configService->get('lootbox-cost')
         ];
 
+        $lootboxTiers = $em->createQueryBuilder()
+            ->select('t')
+            ->from(LootboxTier::class, 't', 't.id')
+            ->getQuery()
+            ->getResult();
+
         return $this->render('voting.html.twig', [
             'title' => 'Voting',
             'awards' => $awards,
@@ -232,6 +239,7 @@ class VotingController extends AbstractController
             'items' => $items,
 //            'itemChoiceArray' => $itemChoiceArray,
             'lootboxSettings' => $lootboxSettings,
+            'lootboxTiers' => $lootboxTiers,
             'rewardCSS' => $customCss,
             'showFantasyPromo' => !$predictionService->arePredictionsLocked()
         ]);

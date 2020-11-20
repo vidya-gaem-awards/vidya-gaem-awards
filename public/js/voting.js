@@ -205,6 +205,8 @@ $(document).ready(function () {
             } else {
                 element.find('.item-button').hide();
             }
+            var tier = lootboxTiers[reward.tier];
+            element.find('.item-tier').text(tier.name).css('backgroundColor', tier.color);
             element.show();
             element.appendTo('.inventory-container');
         }
@@ -394,14 +396,19 @@ $(document).ready(function () {
         lootbox.removeClass('animate').addClass('animate-back');
         var title = lootbox.find('.lootbox-title');
         var image = lootbox.find('img');
+        var $tier = lootbox.find('.lootbox-tier')
 
         var reward = pendingItems.pop();
 
         if (reward.type === 'item') {
             var item = rewards[reward.shortName];
+            var tier = lootboxTiers[item.tier];
             addRewardToInventory(item.shortName);
             image.attr('src', item.image.url);
             title.text(item.name);
+            $tier.show();
+            $tier.text(tier.name);
+            $tier.css('backgroundColor', tier.color);
         } else if (reward.type === 'shekels') {
             var shekelCount = reward.amount;
             inventory['shekels'] += shekelCount;
@@ -461,6 +468,7 @@ $(document).ready(function () {
         $('#closeRewards').hide();
         $('.lootbox').removeClass('animate-back');
         $('.lootbox-title').text('');
+        $('.lootbox-tier').hide();
 
         var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa'];
 

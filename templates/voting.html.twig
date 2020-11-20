@@ -52,6 +52,7 @@
 
   <script type="text/javascript">
       var lootboxSettings = {{ lootboxSettings | json_encode | raw }};
+      var lootboxTiers = {{ lootboxTiers | json_encode | raw }};
       var rewards = {{ items | json_encode | raw }};
   </script>
 
@@ -366,6 +367,7 @@
           </div>
           <div class="inventory-item" id="item-template" style="display: none;">
             <img>
+            <div class="item-tier"></div>
             <div class="item-name"></div>
             <div class="w-100 text-center">
               <span class="item-year"></span>
@@ -429,18 +431,21 @@
             <div class="lootboxbox">
               <div class="lootbox">
                 <img src="" class="lootbox-image">
+                <div class="lootbox-tier"></div>
                 <div class="lootbox-title">
                   &nbsp;
                 </div>
               </div>
               <div class="lootbox">
                 <img src="" class="lootbox-image">
+                <div class="lootbox-tier"></div>
                 <div class="lootbox-title">
                   &nbsp;
                 </div>
               </div>
               <div class="lootbox">
                 <img src="" class="lootbox-image">
+                <div class="lootbox-tier"></div>
                 <div class="lootbox-title">
                   &nbsp;
                 </div>

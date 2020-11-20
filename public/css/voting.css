@@ -189,6 +189,10 @@
   font-size: 18px;
 }
 
+.lootbox-tier {
+  width: 100%;
+}
+
 #rewards .modal-content {
   background: linear-gradient(to bottom, rgb(6, 6, 6) 60%, rgb(26, 26, 32) 100%) fixed;
   border: 1px solid #f81317;
@@ -297,6 +301,11 @@
   color: #333;
   font-style: italic;
   width: 100%;
+}
+
+.item-tier {
+  width: 100%;
+  text-shadow: 1px 1px 2px black, -1px -1px 2px rgba(0,0,0,0.5);
 }
 
 .item-year {
