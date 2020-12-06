@@ -103,6 +103,7 @@ class WikipediaService
         'psp' => ['PSP', null],
         'psvita' => ['Vita', 'vita'],
         'r-zone' => ['R-Zone', null],
+        'retail and steam' => ['PC', 'pc'],
         'sat' => ['Saturn', null],
         'saturn' => ['Saturn', null],
         'smart speaker' => ['Mobile', 'mobile'],
@@ -230,7 +231,7 @@ class WikipediaService
         // Some articles have more tables containing information we don't care about
         if ($year === 2008) {
             $expectedTableCount = 3;
-        } elseif ($year === 1999) {
+        } elseif ($year === 1999 || $year === 2000) {
             $expectedTableCount = 2;
         } else {
             $expectedTableCount = 1;
