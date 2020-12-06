@@ -15,10 +15,12 @@ class GameRelease
         'vr' => 'VR',
         'ps3' => 'PS3',
         'ps4' => 'PS4',
+        'ps5' => 'PS5',
         'vita' => 'Vita',
         'psn' => 'PSN',
         'x360' => '360',
         'xb1' => 'XB1',
+        'xsx' => 'XSX',
         'xbla' => 'XBLA',
         'wii' => 'Wii',
         'wiiu' => 'Wii U',
@@ -82,6 +84,13 @@ class GameRelease
     /**
      * @var bool
      *
+     * @ORM\Column(name="ps5", type="boolean", nullable=false)
+     */
+    private $ps5 = false;
+
+    /**
+     * @var bool
+     *
      * @ORM\Column(name="vita", type="boolean", nullable=false)
      */
     private $vita = false;
@@ -113,6 +122,13 @@ class GameRelease
      * @ORM\Column(name="xbla", type="boolean", nullable=false)
      */
     private $xbla = false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="xsx", type="boolean", nullable=false)
+     */
+    private $xsx = false;
 
     /**
      * @var bool
@@ -294,6 +310,25 @@ class GameRelease
     }
 
     /**
+     * @param boolean $ps5
+     * @return GameRelease
+     */
+    public function setPs5($ps5)
+    {
+        $this->ps5 = $ps5;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getPs5()
+    {
+        return $this->ps5;
+    }
+
+    /**
      * @param boolean $vita
      * @return GameRelease
      */
@@ -367,6 +402,25 @@ class GameRelease
     public function getXb1()
     {
         return $this->xb1;
+    }
+
+    /**
+     * @param boolean $xsx
+     * @return GameRelease
+     */
+    public function setXsx($xsx)
+    {
+        $this->xsx = $xsx;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getXsx()
+    {
+        return $this->xsx;
     }
 
     /**

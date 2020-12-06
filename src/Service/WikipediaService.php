@@ -28,6 +28,7 @@ class WikipediaService
         'android (operating system)' => ['Mobile', 'mobile'],
         'apple watch' => ['Mobile', 'mobile'],
         'arcade' => ['Arcade', null],
+        'browser game' => ['PC', 'pc'],
         'dc' => ['DC', null],
         'dos' => ['DOS', 'pc'],
         'dreamcast' => ['DC', null],
@@ -93,6 +94,7 @@ class WikipediaService
         'playstation 2' => ['PS2', null],
         'playstation 3' => ['PS3', 'ps3'],
         'playstation 4' => ['PS4', 'ps4'],
+        'playstation 5' => ['PS5', 'ps5'],
         'playstation network' => ['PSN', 'psn'],
         'playstation portable' => ['PSP', null],
         'playstation vr' => ['PSVR', ['ps4', 'vr']],
@@ -103,9 +105,11 @@ class WikipediaService
         'r-zone' => ['R-Zone', null],
         'sat' => ['Saturn', null],
         'saturn' => ['Saturn', null],
+        'smart speaker' => ['Mobile', 'mobile'],
         'smd' => ['SMD', null],
         'snes' => ['SNES', null],
         'super nintendo entertainment system' => ['SNES', null],
+        'valve index' => ['Index', ['pc', 'vr']],
         'virtual console' => ['VC', null],
         'wii' => ['Wii', 'wii'],
         'wiiu' => ['Wii U', 'wiiu'],
@@ -125,6 +129,7 @@ class WikipediaService
         'xbox 360' => ['360', 'x360'],
         'xbox live arcade' => ['360', 'xbla'],
         'xbox one' => ['XB1', 'xb1'],
+        'xbox series x and series s' => ['XSX', 'xsx'],
     ];
 
     public function __construct(EntityManagerInterface $em)
