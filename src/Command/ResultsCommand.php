@@ -79,7 +79,7 @@ class ResultsCommand extends Command
             ->addOption('predictions-only', null, InputOption::VALUE_NONE);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->configService->isReadOnly()) {
             throw new \RuntimeException('Database is in read-only mode. Read-only mode must be disabled to run this script.');
@@ -97,6 +97,8 @@ class ResultsCommand extends Command
         if (!$input->getOption('predictions-only')) {
             $this->disableCronJobIfNeeded();
         }
+
+        return 0;
     }
 
     private function updateVoteReferrers()

@@ -35,7 +35,7 @@ class InitialiseDatabaseCommand extends Command
             ->setDescription('Initialises the database with the required data.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $command = $this->getApplication()->find('doctrine:schema:update');
         $arguments = ['--force' => true];

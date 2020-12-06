@@ -37,7 +37,7 @@ class ImageCheckCommand extends Command
             ->setDescription('Checks the filesize and dimensions of all nominee images.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $bold = new OutputFormatterStyle(null, null, ['bold']);
         $cyan = new OutputFormatterStyle('cyan');
@@ -110,5 +110,7 @@ class ImageCheckCommand extends Command
 
             $output->writeln('');
         }
+
+        return 0;
     }
 }

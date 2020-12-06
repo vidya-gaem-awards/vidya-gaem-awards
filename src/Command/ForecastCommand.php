@@ -78,7 +78,7 @@ class ForecastCommand extends Command
             ->setName(self::COMMAND_NAME);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
         $this->timer = new Timer();
@@ -162,6 +162,8 @@ class ForecastCommand extends Command
         }
 
         $this->writeln('Iterations required: ' . $totalIterations);
+
+        return 0;
     }
 
     /**

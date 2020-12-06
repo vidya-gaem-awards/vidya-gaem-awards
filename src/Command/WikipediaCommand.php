@@ -40,7 +40,7 @@ class WikipediaCommand extends Command
             ->addOption('legacy', null, InputOption::VALUE_NONE, 'Put the list of games into a different autocompleter');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->configService->isReadOnly()) {
             throw new \RuntimeException('Database is in read-only mode. Read-only mode must be disabled to run this script.');
@@ -76,5 +76,7 @@ class WikipediaCommand extends Command
         }
 
         $output->writeln('Import complete. ' . count($games) . ' games added.');
+
+        return 0;
     }
 }

@@ -175,7 +175,7 @@ class WikipediaService
             throw new \Exception('Future years are not supported.');
         }
 
-        $url = "https://en.wikipedia.org/w/api.php?action=parse&page={$year}_in_video_gaming&prop=text&format=json";
+        $url = "https://en.wikipedia.org/w/api.php?action=parse&page={$year}_in_video_games&prop=text&format=json";
         $result = json_decode(file_get_contents($url), true);
 
         if (isset($result['error'])) {

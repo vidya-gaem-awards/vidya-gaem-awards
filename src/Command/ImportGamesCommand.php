@@ -35,7 +35,7 @@ class ImportGamesCommand extends Command
             ->addOption('no-clear', null, InputOption::VALUE_NONE, 'Don\'t clear the list of games before importing');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $filename = $input->getArgument('file');
 
@@ -97,5 +97,7 @@ class ImportGamesCommand extends Command
         $this->em->flush();
 
         $output->writeln('Import complete. ' . count($games) . ' games added.');
+
+        return 0;
     }
 }
