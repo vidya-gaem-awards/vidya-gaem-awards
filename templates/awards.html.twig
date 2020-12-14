@@ -261,7 +261,7 @@
         <a href="{{ path('videoGames') }}" target="_blank">
           <div id="video-game-collage">
             <div class="top">Forgotten what vidya you played earlier this year?</div>
-              {% if is_granted('LEVEL_5') %}
+              {% if is_granted('ROLE_LEVEL_5') %}
                 <img class="img-responsive" src="{{ asset('img/blinding-collage.png') }}">
               {% else %}
                 <img class="img-responsive" src="{{ asset('img/collage.jpg') }}">
