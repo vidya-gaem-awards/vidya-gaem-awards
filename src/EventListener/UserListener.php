@@ -124,7 +124,7 @@ class UserListener
                 ->setRequestMethod($request->server->get('REQUEST_METHOD'))
                 ->setRequestString($request->server->get('REQUEST_URI'))
                 ->setIp($user->getIP())
-                ->setUserAgent($request->server->get('HTTP_USER_AGENT', ''))
+                ->setUserAgent(substr($request->server->get('HTTP_USER_AGENT', ''), 0, 255))
                 ->setFilename($request->server->get('SCRIPT_FILENAME'))
                 ->setReferer($request->server->get('HTTP_REFERER'));
 
