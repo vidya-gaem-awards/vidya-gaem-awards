@@ -304,6 +304,10 @@
               <a href="{{ path('nomineeUserNominationExport') }}" target="_blank"><i class="fal fa-download fa-fw"></i> Export user nominations (.csv)</a>
           </div>
 
+          <div class="text-center">
+              <a href="{{ path('nomineeExport') }}" target="_blank"><i class="fal fa-download fa-fw"></i> Export award nominees (.csv)</a>
+          </div>
+
           {% else %}
             <div class="award-title-container text-center mb-3">
               <div id="award-name" class="award-title">&gt;{{ award.name }}</div>

@@ -169,6 +169,50 @@ class NomineeController extends AbstractController
         return $this->json(['success' => true]);
     }
 
+    public function exportNomineesAction(EntityManagerInterface $em)
+    {
+        /** @var Award[] $awards */
+        $awards = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a')
+            ->where('a.enabled = true')
+            ->orderBy('a.order', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $csv = Writer::createFromString();
+        $csv->insertOne([
+            'Award Name',
+            'Award Subtitle',
+            'Nominee Name',
+            'Nominee Subtitle',
+            'Flavor Text'
+
+        ]);
+
+        foreach ($awards as $award) {
+            $nominees = $award->getNominees();
+            foreach ($nominees as $nominee) {
+                $csv->insertOne([
+                    $award->getName(),
+                    $award->getSubtitle(),
+                    $nominee->getName(),
+                    $nominee->getSubtitle(),
+                    $nominee->getFlavorText()
+                ]);
+            }
+        }
+
+        $response = new Response($csv->getContent());
+        $disposition = HeaderUtils::makeDisposition(
+            HeaderUtils::DISPOSITION_ATTACHMENT,
+            'vga-2020-award-nominees.csv'
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+        return $response;
+    }
+
     public function exportUserNominationsAction(EntityManagerInterface $em)
     {
         /** @var Award[] $awards */

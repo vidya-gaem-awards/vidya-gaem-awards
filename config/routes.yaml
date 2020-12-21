@@ -146,6 +146,11 @@ awardManagerPostAjax:
     methods:    [POST]
     controller: App\Controller\AwardAdminController::managerPostAjaxAction
 
+nomineeExport:
+    path: /nominees/export
+    methods:    [GET]
+    controller: App\Controller\NomineeController::exportNomineesAction
+
 nomineeUserNominationExport:
     path:       /nominees/export/user-nominations
     methods:    [GET]
