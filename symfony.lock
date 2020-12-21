@@ -132,6 +132,9 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.4"
     },
+    "league/csv": {
+        "version": "9.6.2"
+    },
     "monolog/monolog": {
         "version": "1.25.2"
     },

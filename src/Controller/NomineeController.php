@@ -5,12 +5,15 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Csv\Writer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Action;
 use App\Entity\Award;
 use App\Entity\Nominee;
 use App\Entity\TableHistory;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class NomineeController extends AbstractController
@@ -164,5 +167,46 @@ class NomineeController extends AbstractController
         $em->flush();
 
         return $this->json(['success' => true]);
+    }
+
+    public function exportUserNominationsAction(EntityManagerInterface $em)
+    {
+        /** @var Award[] $awards */
+        $awards = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a')
+            ->where('a.enabled = true')
+            ->orderBy('a.order', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $csv = Writer::createFromString();
+        $csv->insertOne([
+            'Award Name',
+            'Award Subtitle',
+            'Nomination',
+            'Count'
+        ]);
+
+        foreach ($awards as $award) {
+            $nominations = $award->getUserNominations();
+            foreach ($nominations as $nomination) {
+                $csv->insertOne([
+                    $award->getName(),
+                    $award->getSubtitle(),
+                    $nomination['title'],
+                    $nomination['count'],
+                ]);
+            }
+        }
+
+        $response = new Response($csv->getContent());
+        $disposition = HeaderUtils::makeDisposition(
+            HeaderUtils::DISPOSITION_ATTACHMENT,
+            'vga-2020-user-nominations.csv'
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+        return $response;
     }
 }
