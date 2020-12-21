@@ -107,6 +107,10 @@
       white-space: normal;
     }
 
+    #user-nomination-list ul {
+      margin-bottom: 0;
+    }
+
     .affix {
       width: 100%;
     }
@@ -409,7 +413,18 @@
       if (userNominations[award].length === 0) {
         $('#user-nomination-list').html("You haven't nominated anything for this award.");
       } else {
-        $('#user-nomination-list').html(userNominations[award].join(', '));
+        $('#user-nomination-list').html('');
+
+        let $list = $('<ul></ul>');
+        for (const nomination of userNominations[award]) {
+            let $listItem = $(`<li><span class="nomination">${nomination.nomination}</span></li>`);
+            $listItem.attr('data-id', nomination.id);
+            if (awards[award]['nominationsEnabled']) {
+                $listItem.append(' <a href="#" class="remove-nomination text-danger" title="Remove this nomination"><i class="fal fa-times fa-fw"></i></a>');
+            }
+            $list.append($listItem);
+        }
+        $('#user-nomination-list').append($list);
       }
 
       var suggestionCount = userSuggestions[award].length;
@@ -559,6 +574,52 @@
       }, "json");
     });
 
+    $('#user-nomination-list').on('click', '.remove-nomination', function (event) {
+        const $nomination = $(event.target).parents('li');
+        const nomination = $nomination.find('.nomination').text();
+
+        event.preventDefault();
+
+        if (currentlySubmitting) {
+            return;
+        }
+
+        if (!confirm(`Remove your nomination "${nomination}"?`)) {
+            return;
+        }
+
+        currentlySubmitting = true;
+        var formAward = award;
+
+        $("#nomination-status").show();
+        $("#nomination-status").html("Removing nomination...");
+
+        $.post("{{ path('awardFrontendPost') }}", {id: award, removeNomination: $nomination.attr('data-id')}, null, 'json')
+            .done(function (data) {
+                if (data.success) {
+                    userNominations[formAward] = userNominations[formAward].filter(n => String(n.id) !== $nomination.attr('data-id'));
+
+                    if (formAward === award) {
+                        updateNominations();
+                        $("#nomination-status").html("<span style='color: green;'>Success!</span>");
+                        $("#nomination-status").fadeOut(3000);
+                    }
+                    var icon = $('[data-id="' + formAward + '"] .opinion-icon');
+                    icon.text("[" + userNominations[formAward].length + "]");
+                } else {
+                    if (formAward === award) {
+                        $("#nomination-status").html("<span style='color: red;'>" + data.error + "</span>");
+                    }
+                }
+                currentlySubmitting = false;
+            })
+            .fail(function (xhr, textStatus, error) {
+                currentlySubmitting = false;
+                $("#nomination-status").html("<span style='color: red;'>HTTP error: " + xhr.status + " " + xhr.statusText + ". Try again.</span>");
+                console.log(xhr);
+            });
+    });
+
     $('#suggest-name').click(function (event) {
         var suggestion = prompt('Recommend a new name for the ' + awards[award]['name'] + ':');
         if (!suggestion) {
@@ -673,7 +734,7 @@
 
     if (window.location.hash) {
       var selected = window.location.hash.slice(1);
-      $('[data-id="' + selected + '"]').click();
+      $('[data-id="' + selected + '"]').first().click();
     }
   </script>
 {% endblock %}

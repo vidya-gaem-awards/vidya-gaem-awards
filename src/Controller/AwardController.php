@@ -44,7 +44,10 @@ class AwardController extends AbstractController
 
         /** @var UserNomination $un */
         foreach ($userNominations as $un) {
-            $nominations[$un->getAward()->getId()][] = $un->getNomination();
+            $nominations[$un->getAward()->getId()][] = [
+                'id' => $un->getId(),
+                'nomination' => $un->getNomination()
+            ];
         }
 
         $feedback = $em->createQueryBuilder()
@@ -302,6 +305,39 @@ class AwardController extends AbstractController
 
             $auditService->add(
                 new Action('nomination-made', $award->getId(), $nomination)
+            );
+
+            $em->flush();
+            return $this->json(['success' => true]);
+        }
+
+        $removeNomination = $post->get('removeNomination');
+        if ($removeNomination !== null) {
+            if ($configService->isReadOnly() || !$award->areNominationsEnabled()) {
+                return $this->json(['error' => 'Nominations can no longer be changed for this award.']);
+            }
+
+            /** @var UserNomination|null $result */
+            $result = $em->createQueryBuilder()
+                ->select('un')
+                ->from(UserNomination::class, 'un')
+                ->where('un.user = :fuzzyUser')
+                ->andWhere('IDENTITY(un.award) = :award')
+                ->andWhere('un.id = :id')
+                ->setParameter('fuzzyUser', $user->getFuzzyID())
+                ->setParameter('award', $award->getId())
+                ->setParameter('id', $removeNomination)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if (!$result) {
+                return $this->json(['error' => 'Unable to find nomination. Perhaps it was already removed?']);
+            }
+
+            $em->remove($result);
+
+            $auditService->add(
+                new Action('nomination-removed', $award->getId(), $result->getNomination())
             );
 
             $em->flush();
