@@ -308,7 +308,7 @@ class AwardController extends AbstractController
             );
 
             $em->flush();
-            return $this->json(['success' => true]);
+            return $this->json(['success' => true, 'id' => $userNomination->getId()]);
         }
 
         $removeNomination = $post->get('removeNomination');

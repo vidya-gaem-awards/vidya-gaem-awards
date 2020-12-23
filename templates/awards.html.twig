@@ -675,7 +675,7 @@
         .done(function (data) {
           if (data.success) {
             var safeValue = $('<div></div>').text($.trim(value)).html();
-            userNominations[formAward].push(safeValue);
+            userNominations[formAward].push({id: data.id, nomination: safeValue});
             $('#tags').val("");
             $('#tags').autocomplete("close");
             if (formAward === award) {
