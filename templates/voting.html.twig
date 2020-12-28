@@ -69,11 +69,13 @@
 
   <div class="background-elements">
     <img class="conspiracy" src="{{ asset('2020images/conspiracy.png') }}">
-    <div class="photograph">
-      <div class="photo-image" style="background-image: url('{{ asset('2020images/maybemore.jpg') }}')"></div>
-      <div class="photo-text">Don't believe his lies</div>
-      <div class="photo-bg"></div>
-    </div>
+    {% if ad1 %}
+      <div class="photograph">
+        <div class="photo-image" style="background-image: url('{{ ad1.image.url | escape('html_attr') }}')"></div>
+        <div class="photo-text">{{ ad1.name }}</div>
+        <div class="photo-bg"></div>
+      </div>
+    {% endif %}
   </div>
 
   <div class="center-container">

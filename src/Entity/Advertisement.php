@@ -31,7 +31,7 @@ class Advertisement implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="link", type="string", nullable=false)
+     * @ORM\Column(name="link", type="string", nullable=true)
      */
     private $link;
 

@@ -64,54 +64,14 @@ header {
   left: -250px;
 }
 
+@import 'photographs';
+
 .photograph {
-  width: 16vw;
-  height: 19.4vw;
   position: absolute;
-  overflow: hidden;
-  display: inline-block;
-  transform: rotateZ(-15deg);
   z-index: -1;
+  transform: rotateZ(-15deg);
   right: 40px;
-
-  .photo-image {
-    position: absolute;
-    z-index: 9;
-    width: 92%;
-    height: 75%;
-    top: 6%;
-    left: 3.7%;
-    right: 3.7%;
-    background-size: cover;
-    background-position: center;
-  }
-
-  .photo-bg {
-    background: url(/2020images/photobg.png);
-    background-size: contain;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-  }
-
-  .photo-text {
-    font-family: "Cracked Johnnie", sans-serif;
-    font-size: 20px;
-    color: black;
-    position: absolute;
-    left: 4.6%;
-    right: 4.6%;
-    height: 14.2%;
-    bottom: 2.6%;
-    z-index: 11;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
 }
-
 
 /* Award Header (including left/right navigation buttons) */
 .award-header {

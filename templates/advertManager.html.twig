@@ -1,9 +1,11 @@
 {% extends 'base/standard.html.twig' %}
 
-{% block title %}Advert Manager{% endblock %}
+{% block title %}Voting Page Photographs{% endblock %}
 
 {% block css %}
   {{ parent() }}
+
+  {{ encore_entry_link_tags('photographs') }}
 
   <style type="text/css">
     img.delete-this {
@@ -13,48 +15,39 @@
       border-bottom-left-radius: 4px;
     }
 
-    .advert-container {
-      overflow-x: scroll;
-      white-space: nowrap;
-      padding: 12px 1px 1px 1px;
-      margin-top: -12px;
+    .decoration-container {
+      margin-top: 15px;
       margin-bottom: 10px;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      row-gap: 10px;
+      column-gap: 10px;
     }
 
-    .advert {
-      background: white;
-      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-      transition: all 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
-      padding: 10px 0 10px 0;
-      width: 160px;
-      margin-bottom: 5px;
-      margin-right: 5px;
+    .photograph {
       cursor: pointer;
-      text-align: center;
-      display: inline-block;
+      transition: ease-in-out .2s;
+      width: 200px;
+      height: 243px;
     }
 
-    .advert:hover {
-      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    .photograph:hover {
       transform: translateY(-10px);
     }
 
-    .advert-name {
-      display: block;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 5px;
-    }
-
-    .advert img {
-      margin: 10px 0 10px 0;
-      width: 160px;
-      height: 600px;
+    .photograph .photo-text {
+      font-size: 11.5px;
     }
   </style>
 {% endblock %}
 
 {% block js %}
+
+  {{ parent() }}
+
+  {{ encore_entry_script_tags('photographs') }}
+
   <script type="text/javascript">
     $(document).ready(function () {
       var editDialog = $("#dialog-edit");
@@ -67,11 +60,13 @@
         if (id === undefined) {
           // New advert
           editDialog.removeAttr('data-id');
-          $("#dialog-edit-header").text("Add a new advert");
+          $("#dialog-edit-header").text("Add a new photograph");
 
           // Clear any existing information in the dialog
           $("#info-id").val("");
           $("#info-action").val("new");
+          $("#info-image").val("");
+          $("#info-image-container .custom-file-label").text("Choose file");
           editDialog.find("input[type=text]").val("");
           $("#info-special").prop("checked", false);
           $("#dialog-edit-delete").hide();
@@ -79,12 +74,14 @@
         } else {
           // Editing an existing advert
           editDialog.attr('data-id', id);
-          var advert = adverts[id];
+          var advert = decorations[id];
 
           $("#dialog-edit-header").text(advert.name);
           $("#deleteAward").show();
           $("#info-id").val(id);
           $("#info-action").val("edit");
+          $("#info-image").val("");
+          $("#info-image-container .custom-file-label").text("Choose file");
           $("#info-name").val(advert.name);
           $("#info-link").val(advert.link);
           $("#dialog-edit-delete").prop("checked", advert.special);
@@ -164,38 +161,36 @@
 
       });
     });
+
+    $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });
   </script>
 {% endblock %}
 
 {% block content %}
   <div class="row">
-    <div class="col-xs-12">
-      <h1 class="page-header">
-        Advert Manager
-        <button class="btn btn-primary pull-right" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
-          <span class="glyphicon glyphicon-plus"></span> Add a new advert
-        </button>
-      </h1>
-      {#<div class="alert alert-warning">#}
-        {#<strong>Warning:</strong> this page may not function correctly with adblocking extensions enabled. Your mileage may vary.#}
-      {#</div>#}
+    <div class="col">
 
-      <div class="advert-container">
+      <h1 class="page-header board-header">Voting Page Photographs</h1>
+
+      <p class="board-subheader"><strong>Note:</strong> this page is based </p>
+
+      <div class="text-center">
+        <button class="btn btn-sm btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
+          <i class="fal fa-fw fa-plus"></i> Add a new photo
+        </button>
+      </div>
+
+      <div class="decoration-container">
         {% for advert in adverts %}
-          <div class="advert" data-toggle="modal" data-target="#dialog-edit" data-id="{{ advert.id }}">
-            <div class="advert-name">{{ advert.name }}</div>
-            <div class="advert-link"><a href="{{ advert.link | escape('html_attr') }}">Follow link</a></div>
-            <img src="{{ advert.image.url }}">
-            <div class="advert-special">{{ advert.clicks }} clicks</div>
+          <div class="photograph" data-toggle="modal" data-target="#dialog-edit" data-id="{{ advert.id }}">
+            <div class="photo-image" style="background-image: url('{{ advert.image.url | escape('html_attr') }}')"></div>
+            <div class="photo-text">{{ advert.name }}</div>
+            <div class="photo-bg"></div>
           </div>
         {% endfor %}
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="alert alert-warning clearfix">
-        <strong>Warning:</strong> if you don't see anything here, you may need to disable your adblocker for this site.
       </div>
     </div>
   </div>
@@ -205,8 +200,8 @@
       <div class="modal-content">
         <form class="form-horizontal" id="dialog-edit-form" enctype="multipart/form-data">
           <div class="modal-header">
+            <h4 class="modal-title" id="dialog-edit-header">Add a new photograph</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-            <h4 class="modal-title" id="dialog-edit-header">Add a new advert</h4>
           </div>
 
           <div class="modal-body">
@@ -215,59 +210,49 @@
               <a class="close" href="#">&times;</a>
             </div>
 
-            <script>
-                $('.alert-danger .close').on('click', function () {
-                    $(this).parent().fadeOut("fast");
-                });
-            </script>
-
             <input type="hidden" id="info-action" name="action">
             <input type="hidden" id="info-id" name="id">
 
-            <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-name">Name</label>
-              <div class="col-xs-8">
-                <input class="form-control" type="text" id="info-name" placeholder="Gay Purple Man" required
-                       name="name">
-                <span class="help-block">This is only used internally.</span>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="info-image">Image</label>
+              <div class="col-sm-9">
+                <div class="custom-file" id="info-image-container">
+                  <input type="file" id="info-image" name="image" class="custom-file-input">
+                  <label class="custom-file-label" for="info-image">Choose file</label>
+                </div>
+                <small class="form-text">Recommended image dimensions: <strong>500 x 500</strong></small>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-xs-3 control-label" for="info-link">Link</label>
-              <div class="col-xs-8">
-                <input class="form-control" type="text" id="info-link" placeholder="https://4chan.org"
-                       name="link" required>
+
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="info-name">Caption</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="info-name" placeholder="The Power of Shitposting" required
+                       name="name" maxlength="50">
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label" for="info-image">Image</label>
-              <div class="col-sm-8">
-                <input class="form-control" type="file" id="info-image" name="image" autocomplete="off">
-                <span class="help-block">Required image dimensions: <strong>160 x 600</strong></span>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-xs-offset-3 col-xs-8">
-                <label class="checkbox">
-                  <input type="checkbox" id="info-special" name="special"> Special advertisement
-                </label>
-                <span class="help-block">
-                  Special adverts don't show up in the standard rotation.<br>
-                  If you want to disable an ad, you can just check this box.
-                </span>
+
+            <div class="form-group row">
+              <div class="offset-sm-3 col-sm-9">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="info-css" name="css">
+                  <label class="form-check-label" for="info-css">Special</label>
+                  <small class="form-text">Special photos won't show up in the normal rotation.</small>
+                </div>
               </div>
             </div>
           </div>
+
           <div class="modal-footer">
-            <button class="btn btn-danger" id="dialog-edit-delete" style="float: left;" type="button">
-              <img src="{{ asset('img/delete-this.png') }}" class="delete-this">
+            <button class="btn btn-danger mr-auto" id="dialog-edit-delete" type="button">
+              <img src="{{ asset('img/delete-this.png') }}" class="delete-this" alt="A picture of Counter pointing a gun at you, the viewer">
               Delete this
             </button>
             <span id="dialog-edit-status" style="display: none;">
-              <img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> saving...&nbsp;
-            </span>
-            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit">Submit</button>
+                <i class="far fa-circle-notch fa-spin mr-1"></i> saving...&nbsp;
+              </span>
+            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" id="dialog-edit-submit" type="submit">Submit</button>
           </div>
         </form>
       </div>
@@ -275,6 +260,6 @@
   </div>
 
   <script type="text/javascript">
-      var adverts = {{ adverts | json_encode | raw }};
+      const decorations = {{ adverts | json_encode | raw }};
   </script>
 {% endblock %}

@@ -68,13 +68,8 @@ class AdvertManagerController extends AbstractController
             return $this->json(['error' => 'You need to enter a name.']);
         }
 
-        if (!filter_var($post->get('link', ''), FILTER_VALIDATE_URL)) {
-            return $this->json(['error' => 'You need to enter a valid link.']);
-        }
-
         $advert
             ->setName($post->get('name'))
-            ->setLink($post->get('link'))
             ->setSpecial((bool)$post->get('special', false));
 
         $em->persist($advert);
