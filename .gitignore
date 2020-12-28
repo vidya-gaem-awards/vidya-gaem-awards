@@ -5,6 +5,8 @@
 /.web-server-pid
 /build/
 
+/assets/**/*.js
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

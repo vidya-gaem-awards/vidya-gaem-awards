@@ -170,30 +170,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col">
-
-      <h1 class="page-header board-header">Voting Page Photographs</h1>
-
-      <p class="board-subheader"><strong>Note:</strong> this page is based </p>
-
-      <div class="text-center">
-        <button class="btn btn-sm btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
-          <i class="fal fa-fw fa-plus"></i> Add a new photo
-        </button>
-      </div>
-
-      <div class="decoration-container">
-        {% for advert in adverts %}
-          <div class="photograph" data-toggle="modal" data-target="#dialog-edit" data-id="{{ advert.id }}">
-            <div class="photo-image" style="background-image: url('{{ advert.image.url | escape('html_attr') }}')"></div>
-            <div class="photo-text">{{ advert.name }}</div>
-            <div class="photo-bg"></div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
+  <div class="row" id="react-photographs"></div>
 
   <div id="dialog-edit" class="modal" role="dialog">
     <div class="modal-dialog" role="document">
@@ -221,6 +198,7 @@
                   <label class="custom-file-label" for="info-image">Choose file</label>
                 </div>
                 <small class="form-text">Recommended image dimensions: <strong>500 x 500</strong></small>
+                <small class="form-text">Supported file types: <strong>.png, .jpg, .gif</strong></small>
               </div>
             </div>
 

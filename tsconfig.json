@@ -1,10 +1,12 @@
 {
-  "include": ["assets/**/*.ts"],
+  "include": ["assets/**/*.ts", "assets/**/*.tsx"],
   "compilerOptions": {
     "lib": [
       "dom",
       "es5",
       "scripthost"
-    ]
+    ],
+    "esModuleInterop": true,
+    "jsx": "react"
   }
 }

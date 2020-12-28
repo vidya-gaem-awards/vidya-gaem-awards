@@ -5,6 +5,8 @@
         "@types/bootstrap": "^4.5.1",
         "@types/jquery": "^3.5.4",
         "@types/jqueryui": "^1.12.13",
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
         "core-js": "^3.0.0",
         "node-sass": "^4.14.1",
         "regenerator-runtime": "^0.13.2",
