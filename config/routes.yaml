@@ -452,12 +452,12 @@ inventoryPurchaseLootbox:
 #
 
 advertManager:
-    path:       /poloroids
+    path:       /voting-decorations
     controller: App\Controller\AdvertManagerController::indexAction
     methods:    [GET]
 
 advertPost:
-    path:       /poloroids
+    path:       /voting-decorations
     methods:    [POST]
     controller: App\Controller\AdvertManagerController::postAction
 
