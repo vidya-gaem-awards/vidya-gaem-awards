@@ -1,0 +1,10 @@
+{
+  "include": ["assets/**/*.ts"],
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost"
+    ]
+  }
+}

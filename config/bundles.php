@@ -14,4 +14,5 @@ return [
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     App\AppBundle::class => ['all' => true],
     Knojector\SteamAuthenticationBundle\KnojectorSteamAuthenticationBundle::class => ['all' => true],
+    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 ];

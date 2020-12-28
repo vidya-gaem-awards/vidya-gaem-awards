@@ -4,7 +4,9 @@
 
 {% block css %}
   {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('css/voting.css') }}?v=25">
+
+  {{ encore_entry_link_tags('voting') }}
+
   <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
 
   <style type="text/css">
@@ -13,38 +15,22 @@
 {% endblock %}
 
 {% block js %}
-  {{ parent() }}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
-  <script src='{{ asset('js/dumbshit.js') }}'></script>
-  <script src='{{ asset('js/voting.js') }}?v=25'></script>
+{#  {{ parent() }}#}
 
-  <script>
-      var val;
-      $('#debugWidth').change(function () {
-          val = $(this).val();
-//                $('.nominee').css('width', val);
-      });
-      $('#debugHeight').change(function () {
-          val = $(this).val();
-          $('.nominee').css('height', val);
-      });
-      $('#debugTitle').change(function () {
-          val = $(this).val();
-          $('.nomineeName').css('fontSize', val);
-      });
-      $('#debugSubtitle').change(function () {
-          val = $(this).val();
-          $('.nomineeSubtitle').css('fontSize', val);
-      });
-  </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/twemoji/11.1.0/2/twemoji.min.js'></script>
+
+  {{ encore_entry_script_tags('voting') }}
+
+{#  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>#}
 {% endblock %}
+
+{% block body_attr %}id="voting-page"{% endblock %}
 
 {% block head %}
   {% if award %}
     <script type="text/javascript">
       var votingEnabled = {{ votingOpen ? 'true' : 'false' }};
       var lastVotes = {{ votes | json_encode | raw }};
-      var currentAward = "{{ award.id }}";
       var postURL = "{{ path('votingSubmission', {'awardID': award.id}) }}";
       var votingStyle = "{{ votingStyle }}";
     </script>
@@ -54,6 +40,11 @@
       var lootboxSettings = {{ lootboxSettings | json_encode | raw }};
       var lootboxTiers = {{ lootboxTiers | json_encode | raw }};
       var rewards = {{ items | json_encode | raw }};
+      {% if award %}
+      var currentAward = "{{ award.id }}";
+      {% else %}
+      var currentAward;
+      {% endif %}
   </script>
 
   {% if votingOpen %}
@@ -76,392 +67,381 @@
 {% block body %}
   <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
 
-  <div class="pageHeader">
-    <a class="pageHeaderLogo" href="{{ path('voting') }}"></a>
-    <div class="pageHeaderTitle">
-		<h1>The 2020 Vidya Gaem Awards</h1>
-		<h2>{{ voteText }}</h2>
-	</div>
+  <div class="background-elements">
+    <img class="conspiracy" src="{{ asset('2020images/conspiracy.png') }}">
+    <div class="photograph">
+      <div class="photo-image" style="background-image: url('{{ asset('2020images/maybemore.jpg') }}')"></div>
+      <div class="photo-text">Don't believe his lies</div>
+      <div class="photo-bg"></div>
+    </div>
   </div>
 
-  {#<div class="pageHeader" style="text-align: center; height: 110px;">#}
-  {#<label>Width <input type="number" value="350" id="debugWidth"></label>#}
-  {#<label>Height <input type="number" value="140" id="debugHeight"></label>#}
-  {#<label>Title <input type="number" value="14" id="debugTitle"></label>#}
-  {#<label>Subtitle <input type="number" value="12" id="debugSubtitle"></label>#}
-  {#</div>#}
+  <div class="center-container">
+    <header>
+      <a class="logo" href="{{ path('voting') }}">
+        <img src="{{ asset('2020images/logo.png') }}">
+      </a>
+      <div class="title-text">
+        <div class="line-1">The 2020 Vidya Gaem Awards</div>
+        <div class="line-2">{{ voteText }}</div>
+      </div>
+    </header>
+
+    {#<div class="pageHeader" style="text-align: center; height: 110px;">#}
+    {#<label>Width <input type="number" value="350" id="debugWidth"></label>#}
+    {#<label>Height <input type="number" value="140" id="debugHeight"></label>#}
+    {#<label>Title <input type="number" value="14" id="debugTitle"></label>#}
+    {#<label>Subtitle <input type="number" value="12" id="debugSubtitle"></label>#}
+    {#</div>#}
 
     {% if award %}
-        <div class="awardHeader">
-            <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
-            <div class="awardHeaderContainer">
-                <h1 class="awardName">
-                  {{ award.name }}
-                  {% if award.id == 'daylight-hurts' %}
-                    <img src="{{ asset('2019images/verified.png') }}" class="verified">
-                  {% endif %}
-                </h1>
-                <h2 class="awardSubtitle">{{ award.subtitle }}</h2>
-            </div>
-            <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
+      <div class="award-header">
+        <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
+        <div class="award-name-container">
+          <div class="award-name">{{ award.name }}</div>
+          <div class="award-subtitle">{{ award.subtitle }}</div>
         </div>
-        {% if votingOpen %}
-            {#<img src="{{ asset('2016images/dontForget.png') }}" id="dontforget" alt="Don't forget to hit submit"/>#}
-        {% endif %}
+        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
+      </div>
     {% endif %}
 
-    <div class="memeContainer {{ votingStyle }}Style">
-        <div class="meme leftMeme">
-          {% if ad1 %}
-            <a href="{{ path('advertRedirect', {'advertToken': ad1.token}) }}" target="_blank">
-              <img src="{{ ad1.image.url | escape('html_attr') }}">
-            </a>
-          {% endif %}
-        </div>
-        <div id="wrapper">
-            {% if award %}
-                {% if votingStyle == 'legacy' %}
-                  <div id="limitsDrag">
-                    <div id="nomineeColumn" class="column">
+    <div id="wrapper">
+      {% if award %}
+        {% if votingStyle == 'legacy' %}
+          <div id="limitsDrag">
+            <div id="nomineeColumn" class="column">
 
-                      <img src="/2016images/pickYourNominees.png" width="204" height="70" alt="Pick your nominees">
+              <img src="/2016images/pickYourNominees.png" width="204" height="70" alt="Pick your nominees">
 
-                      {% for nominee in award.nominees | shuffle %}
+              {% for nominee in award.nominees | shuffle %}
 
-                        {% apply spaceless %}
-                          <div class="voteBox">
-                            <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
-                                 data-nominee="{{ nominee.shortName }}">
-                              <img class="fakeBorder" src="/2016images/votebox_foreground.png">
-                              <img class="fakeBorder locked" src="/2016images/votebox_foreground_locked.png">
-                              {% if nominee.flavorText %}
-                                <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
-                              {% endif %}
-                              <img class="nomineeImage" src="{{ nominee.image ? nominee.image.url }}">
-                              <div class="nomineeInfo">
-                                <div class="number"></div>
-                                <div class="nomineeName">{{ nominee.name }}</div>
-                                <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
-                              </div>
-                            </div>
-                          </div>
-                        {% endapply %}
-
-                      {% endfor %}
-
-                    </div>
-
-                    <div id="spacerColumn" class="column">
-                      &nbsp;
-                    </div>
-
-                    {% if votingOpen or votingClosed %}
-                      <div id="voteColumn" class="column">
-                        <img src="/2016images/dragAndDrop.png" width="307px" height="70px" alt="Drag and drop to vote"/>
-                        {% for nominee in award.nominees %}
-                          <div id="voteBox{{ loop.index }}" class="voteBox">
-                          </div>
-                        {% endfor %}
+                {% apply spaceless %}
+                  <div class="voteBox">
+                    <div id="nominee-{{ nominee.shortName }}" class="aNominee" data-order="{{ loop.index }}"
+                         data-nominee="{{ nominee.shortName }}">
+                      <img class="fakeBorder" src="/2016images/votebox_foreground.png">
+                      <img class="fakeBorder locked" src="/2016images/votebox_foreground_locked.png">
+                      {% if nominee.flavorText %}
+                        <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
+                      {% endif %}
+                      <img class="nomineeImage" src="{{ nominee.image ? nominee.image.url }}">
+                      <div class="nomineeInfo">
+                        <div class="number"></div>
+                        <div class="nomineeName">{{ nominee.name }}</div>
+                        <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
                       </div>
-                    {% endif %}
-
+                    </div>
                   </div>
-                {% else %}
-                  {#<div class="numberPopup {{ voteButtonSizeMap[award.nominees | length] }}" style="display: none;" id="numberPopup">#}
-                  {#<div class="numberButtons">#}
-                  {#{% for i in 1..award.nominees | length %}#}
-                  {#<button id="numberButton{{ i }}" class="numberButton" data-value="{{ i }}">#{{ i }}</button>#}
-                  {#{% endfor %}#}
-                  {#</div>#}
-                  {#</div>#}
+                {% endapply %}
+
+              {% endfor %}
+
+            </div>
+
+            <div id="spacerColumn" class="column">
+              &nbsp;
+            </div>
+
+            {% if votingOpen or votingClosed %}
+              <div id="voteColumn" class="column">
+                <img src="/2016images/dragAndDrop.png" width="307px" height="70px" alt="Drag and drop to vote"/>
+                {% for nominee in award.nominees %}
+                  <div id="voteBox{{ loop.index }}" class="voteBox">
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+          </div>
+        {% else %}
+          {#<div class="numberPopup {{ voteButtonSizeMap[award.nominees | length] }}" style="display: none;" id="numberPopup">#}
+          {#<div class="numberButtons">#}
+          {#{% for i in 1..award.nominees | length %}#}
+          {#<button id="numberButton{{ i }}" class="numberButton" data-value="{{ i }}">#{{ i }}</button>#}
+          {#{% endfor %}#}
+          {#</div>#}
+          {#</div>#}
 
 
-                <div id="dragLimit">
-                      {% apply spaceless %}
+          <div id="dragLimit">
+            {% apply spaceless %}
+              {% if votingOpen %}
+                <div class="mobileInstructions">
+                  Tap on any nominee to make them your <span class="nextPreference">1st</span> preference.
+                </div>
+              {% endif %}
+              <div class="flexContainer voteDropArea" id="voteDropAreaTop">
+                {% for nominee in award.nominees | shuffle %}
+                  <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}" data-order="{{ loop.index }}">
+                    {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}
+                    {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
+                    {#<label for="voteBox{{ loop.index }}">#}
+                    <div class="voteBox">
+                      <div class="number" style="display: none;">{{ loop.index }}</div>
+                      <div class="nominee" style="background-image: url('{{ nominee.image ? nominee.image.url : asset('img/no-image-available.png') }}'); background-size: cover">
+                        <div class="fakeElement"></div>
+                        <div class="handle fakeHandle"></div>
                         {% if votingOpen %}
-                          <div class="mobileInstructions">
-                            Tap on any nominee to make them your <span class="nextPreference">1st</span> preference.
-                          </div>
-                        {% endif %}
-                          <div class="flexContainer voteDropArea" id="voteDropAreaTop">
-                              {% for nominee in award.nominees | shuffle %}
-                                  <div class="voteGroup" id="nominee-{{ nominee.shortName }}" data-nominee="{{ nominee.shortName }}" data-order="{{ loop.index }}">
-                                      {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}
-                                      {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
-                                      {#<label for="voteBox{{ loop.index }}">#}
-                                      <div class="voteBox">
-                                          <div class="number" style="display: none;">{{ loop.index }}</div>
-                                          <div class="nominee" style="background-image: url('{{ nominee.image ? nominee.image.url : asset('img/no-image-available.png') }}'); background-size: cover">
-                                              <div class="fakeElement"></div>
-                                              <div class="handle fakeHandle"></div>
-                                              {% if votingOpen %}
-                                                <div class="hoverOverlay overlayWhenTop {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
+                          <div class="hoverOverlay overlayWhenTop {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
                                                   <span>
                                                     Click to make <strong style="color: rgb(251,68,7);">{{ nominee.name }}</strong>
                                                     your&nbsp;<span class="nextPreference">1st</span>&nbsp;preference
                                                   </span>
-                                                </div>
-                                                <div class="hoverOverlay overlayWhenBottom {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
+                          </div>
+                          <div class="hoverOverlay overlayWhenBottom {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
                                                     <span>
                                                       Click to remove <strong style="color: rgb(251,68,7);">{{ nominee.name }}</strong>
                                                       from your votes
                                                     </span>
-                                                </div>
-                                              {% endif %}
-                                              {% if nominee.flavorText %}
-                                                  <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
-                                              {% endif %}
-											  <div class="nomineeInfo">
-												<div class="nomineeName">{{ nominee.name }}</div>
-												<div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>
-                                              </div>
-											  <div class="handle realHandle">
-                                                  <span class="glyphicon glyphicon-menu-hamburger"></span>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      {#</label>#}
-                                  </div>
-
-                              {% endfor %}
                           </div>
-
-
-						  <div class="yourVotes">
-							<img src="{{ asset('2019images/yourVotes.png') }}" alt="Those votes? They're yours."/>
-						  </div>
-
-                          <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
-                      {% endapply %}
-                </div>
-
-                <div class="voteGroup placeholder" style="display: none;" id="dropPlaceholder">
-                    <div class="voteBox">
-                      <div class="nominee">
-                        <div class="fakeElement"></div>
+                        {% endif %}
+                        {% if nominee.flavorText %}
+                          <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
+                        {% endif %}
+                        <div class="nomineeInfo">
+                          <div class="nomineeName">{{ nominee.name }}</div>
+                          <div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>
+                        </div>
+                        <div class="handle realHandle">
+                          <span class="glyphicon glyphicon-menu-hamburger"></span>
+                        </div>
                       </div>
                     </div>
-                </div>
-                {% endif %}
+                    {#</label>#}
+                  </div>
 
-                {% if votingOpen %}
-                    <div class="buttons">
-                        <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
-                        <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
-                        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award"></a>
-                    </div>
-                {% endif %}
+                {% endfor %}
+              </div>
 
-              {% if showFantasyPromo %}
-                <h2 class="fantasy-promo">How well can you predict /v/? Join the <a href="{{ path('predictions') }}" target="_blank">2020 Fantasy League</a> and get your message in the show to laugh at /v/'s shit taste</h2>
-              {% endif %}
 
-            {% else %}
-                <div id="startMessage">
+              <div class="your-votes">
+                Votes
+              </div>
 
-                    {% if votingNotYetOpen or votingOpen %}
-                      <h2>How to vote:</h2>
-                      <p style="margin-top: 5px; margin-bottom: 15px;">
-                        <img src="{{ asset('2017images/virgin.png') }}" style="width: 40px; margin-right: 5px;">
-                        <strong>The Virgin Vote:</strong> click on the nominee you want to win, then hit submit.
-                      </p>
-                      <p>
-                        <img src="{{ asset('2017images/chad.png') }}" style="width: 40px; margin-right: 5px;">
-                        <strong>The Chad Choice:</strong> click on multiple nominees in the order you want them to win.
-                      </p>
-                      <p>
-                        Click on the nominee you want to win most first, followed by the nominee you want to win second, etc.
-                        <b>You can preference as many or as few nominees as you want.</b>
-                      </p>
-                    {% endif %}
+              <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
+            {% endapply %}
+          </div>
 
-                    {% if votingNotYetOpen %}
-                        <!-- Before votes open -->
-                        <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can
-                            use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
-                    {% endif %}
+          <div class="voteGroup placeholder" style="display: none;" id="dropPlaceholder">
+            <div class="voteBox">
+              <div class="nominee">
+                <div class="fakeElement"></div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
 
-                    {% if votingOpen %}
-                        <!-- While votes are open -->
-                        <p>
-                          Use the award list at the bottom to navigate, the arrows at the top of the page, or the arrow that appears after you
-                          click submit.
-                        </p>
+        {% if votingOpen %}
+          <div class="buttons">
+            <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
+            <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
+            <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award"></a>
+          </div>
+        {% endif %}
 
-                        <a href="{{ path('voting', {'awardID': (awards|first).id}) }}" id="btnStart"></a>
-                    {% endif %}
+        {% if showFantasyPromo %}
+          <h2 class="fantasy-promo">How well can you predict /v/? Join the <a href="{{ path('predictions') }}" target="_blank">2020 Fantasy League</a> and get your message in the show to laugh at /v/'s shit taste</h2>
+        {% endif %}
 
-                    {% if votingClosed %}
-                        <!-- After votes close -->
-                        <h2>Thanks to everybody who voted.</h2>
-                        <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>
-                    {% endif %}
+      {% else %}
+        <div id="startMessage">
 
-                    <h2>Stream information:</h2>
-                    <p style="margin-top: 5px;">We're aiming to stream in February.</p>
-
-                </div>
-            {% endif %}
-        </div>
-        <div class="meme rightMeme">
-          {% if ad2 %}
-            <a href="{{ path('advertRedirect', {'advertToken': ad2.token}) }}" target="_blank">
-              <img src="{{ ad2.image.url | escape('html_attr') }}">
-            </a>
+          {% if votingNotYetOpen or votingOpen %}
+            <h2>How to vote:</h2>
+            <p style="margin-top: 5px; margin-bottom: 15px;">
+              <img src="{{ asset('img/virgin.png') }}" style="width: 40px; margin-right: 5px;">
+              <strong>The Virgin Vote:</strong> click on the nominee you want to win, then hit submit.
+            </p>
+            <p>
+              <img src="{{ asset('img/chad.png') }}" style="width: 40px; margin-right: 5px;">
+              <strong>The Chad Choice:</strong> click on multiple nominees in the order you want them to win.
+            </p>
+            <p>
+              Click on the nominee you want to win most first, followed by the nominee you want to win second, etc.
+              <b>You can preference as many or as few nominees as you want.</b>
+            </p>
           {% endif %}
+
+          {% if votingNotYetOpen %}
+            <!-- Before votes open -->
+            <p>Voting isn't open yet, but you can still browse the awards and have a look at the nominees. You can
+              use the list of awards at the bottom and the meme arrows at the top to navigate.</p>
+          {% endif %}
+
+          {% if votingOpen %}
+            <!-- While votes are open -->
+            <p>
+              Use the award list at the bottom to navigate, the arrows at the top of the page, or the arrow that appears after you
+              click submit.
+            </p>
+
+            <a href="{{ path('voting', {'awardID': (awards|first).id}) }}" id="btnStart"></a>
+          {% endif %}
+
+          {% if votingClosed %}
+            <!-- After votes close -->
+            <h2>Thanks to everybody who voted.</h2>
+            <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>
+          {% endif %}
+
+          <h2>Stream information:</h2>
+          <p style="margin-top: 5px;">We're aiming to stream in February.</p>
+
         </div>
+      {% endif %}
     </div>
-
-  <div class="zig"></div>
-
-  <div id="containerAwards">
-    <h1 id="topAwards">
-      The Awards
-    </h1>
-
-    <div class="awardList">
-      {% for _award in awards %}
-        <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
-           class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
-          <h3>{{ _award.name }}</h3>
-          <p>{{ _award.subtitle }}</p>
-        </a>
-      {% endfor %}
-    </div>
-
-    {% if app.user.loggedIn %}
-      <h3 class="goBackLink">
-        <a href="{{ path('home') }}">< Back to the main part of the site</a>
-      </h3>
-    {% endif %}
-  </div>
-
-  {% if award %}
-    <img id="reward-buddie">
 
     <div class="zig"></div>
 
-    <div id="containerInventory">
-      <div id="inventory">
+    <div id="containerAwards" class="awards-list">
+      <h2 id="topAwards">
+        The Awards
+      </h2>
 
-        <form class="form-inline" id="cheat-code" style="margin-bottom: 10px; display: none;">
-          <div class="form-group" style="width: 400px;">
-            <label for="cheat-code-input" class="item-quantity">Enter cheat code:</label>
-            <input type="text" class="form-control" id="cheat-code-input">
-            <button type="submit" class="btn btn-default btn-lootbox">Activate</button>
-          </div>
-        </form>
+      <div class="awards">
+        {% for _award in awards %}
+          <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
+             class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
+            <span class="award-name">{{ _award.name }}</span>
+            <span class="award-subtitle">{{ _award.subtitle }}</span>
+          </a>
+        {% endfor %}
+      </div>
 
-        <button class="btn btn-lootbox" style="float: right; display: none;" id="resetRewardsButton">Mute music ($10.00)</button>
-        <button class="btn btn-lootbox" style="float: right; display: none;" id="restoreDrops">Restore drops ($4.49)</button>
+      {% if app.user.loggedIn %}
+        <h3 class="goBackLink">
+          <a href="{{ path('home') }}">< Back to the main part of the site</a>
+        </h3>
+      {% endif %}
+    </div>
 
-        <h1>
-          Your Inventory
-        </h1>
+    {% if award %}
+      <img id="reward-buddie">
 
-        <div class="inventory-container">
-          <div class="inventory-item" id="shekelCount">
-            <img src="{{ asset('img/dosh.png') }}">
-            <div class="item-name">-1 shekels</div>
-            <button type="button" class="btn btn-lootbox btn-sm item-button" id="buy-lootbox">Buy lootbox<br><span id="lootboxCostText"></span> shekels</button>
-          </div>
-          <div class="inventory-item" id="item-template" style="display: none;">
-            <img>
-            <div class="item-tier"></div>
-            <div class="item-name"></div>
-            <div class="w-100 text-center">
-              <span class="item-year"></span>
-              <span class="item-quantity"></span>
+      <div class="zig"></div>
+
+      <div id="containerInventory">
+        <div id="inventory">
+
+          <form class="form-inline" id="cheat-code" style="margin-bottom: 10px; display: none;">
+            <div class="form-group" style="width: 400px;">
+              <label for="cheat-code-input" class="item-quantity">Enter cheat code:</label>
+              <input type="text" class="form-control" id="cheat-code-input">
+              <button type="submit" class="btn btn-default btn-lootbox">Activate</button>
             </div>
-            <button type="button" class="btn btn-lootbox btn-sm item-button">Equip</button>
+          </form>
+
+          <button class="btn btn-lootbox" style="float: right; display: none;" id="resetRewardsButton">Mute music ($10.00)</button>
+          <button class="btn btn-lootbox" style="float: right; display: none;" id="restoreDrops">Restore drops ($4.49)</button>
+
+          <h1>
+            Your Inventory
+          </h1>
+
+          <div class="inventory-container">
+            <div class="inventory-item" id="shekelCount">
+              <img src="{{ asset('img/dosh.png') }}">
+              <div class="item-name">-1 shekels</div>
+              <button type="button" class="btn btn-lootbox btn-sm item-button" id="buy-lootbox">Buy lootbox<br><span id="lootboxCostText"></span> shekels</button>
+            </div>
+            <div class="inventory-item" id="item-template" style="display: none;">
+              <img>
+              <div class="item-tier"></div>
+              <div class="item-name"></div>
+              <div class="w-100 text-center">
+                <span class="item-year"></span>
+                <span class="item-quantity"></span>
+              </div>
+              <button type="button" class="btn btn-lootbox btn-sm item-button">Equip</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div id="todd" class="modal fade" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close">&times;</button>
-          </div>
+      <div id="todd" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close">&times;</button>
+            </div>
 
-          <div class="modal-body">
-            <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
-              <img src="/img/todd1.jpg">
-            </a>
-
-            <div class="buy_my_game">
+            <div class="modal-body">
               <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
-                Buy The Elder Scrolls V: Skyrim Special Edition <span class="tail">on Steam</span>
+                <img src="/img/todd1.jpg">
               </a>
-              <div class="desc">Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail.</div>
-            </div>
 
-            <div class="game_purchase_action">
-              <form name="add_to_cart_110687" action="https://store.steampowered.com/cart/" method="POST" target="_blank" style="position: relative;">
-                <input type="hidden" name="snr" value="1_5_1100_">
-                <input type="hidden" name="sessionid" value="37f5dea779e28dbaef40f8c5">
-                <input type="hidden" name="action" value="add_to_cart">
-                <input type="hidden" name="subid" value="110687">
-                <div class="game_purchase_action_bg">
-                  <div class="game_purchase_price price">
-                    $<span class="theprice">39.95</span> USD
+              <div class="buy_my_game">
+                <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
+                  Buy The Elder Scrolls V: Skyrim Special Edition <span class="tail">on Steam</span>
+                </a>
+                <div class="desc">Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail.</div>
+              </div>
+
+              <div class="game_purchase_action">
+                <form name="add_to_cart_110687" action="https://store.steampowered.com/cart/" method="POST" target="_blank" style="position: relative;">
+                  <input type="hidden" name="snr" value="1_5_1100_">
+                  <input type="hidden" name="sessionid" value="37f5dea779e28dbaef40f8c5">
+                  <input type="hidden" name="action" value="add_to_cart">
+                  <input type="hidden" name="subid" value="110687">
+                  <div class="game_purchase_action_bg">
+                    <div class="game_purchase_price price">
+                      $<span class="theprice">39.95</span> USD
+                    </div>
+                    <div class="btn_addtocart">
+                      <div class="btn_addtocart_left"></div>
+                      <button class="btn_addtocart_content" type="submit">
+                        Buy on Steam
+                      </button>
+                      <div class="btn_addtocart_right"></div>
+                    </div>
                   </div>
-                  <div class="btn_addtocart">
-                    <div class="btn_addtocart_left"></div>
-                    <button class="btn_addtocart_content" type="submit">
-                      Buy on Steam
-                    </button>
-                    <div class="btn_addtocart_right"></div>
-                  </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body" style="text-align: center;">
-            <img src="{{ asset('img/your-rewards.png') }}" id="youre" style="max-width: 100%;">
-            <div class="lootboxbox">
-              <div class="lootbox">
-                <img src="" class="lootbox-image">
-                <div class="lootbox-tier"></div>
-                <div class="lootbox-title">
-                  &nbsp;
+      <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body" style="text-align: center;">
+              <img src="{{ asset('img/your-rewards.png') }}" id="youre" style="max-width: 100%;">
+              <div class="lootboxbox">
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+                  <div class="lootbox-tier"></div>
+                  <div class="lootbox-title">
+                    &nbsp;
+                  </div>
+                </div>
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+                  <div class="lootbox-tier"></div>
+                  <div class="lootbox-title">
+                    &nbsp;
+                  </div>
+                </div>
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+                  <div class="lootbox-tier"></div>
+                  <div class="lootbox-title">
+                    &nbsp;
+                  </div>
                 </div>
               </div>
-              <div class="lootbox">
-                <img src="" class="lootbox-image">
-                <div class="lootbox-tier"></div>
-                <div class="lootbox-title">
-                  &nbsp;
-                </div>
-              </div>
-              <div class="lootbox">
-                <img src="" class="lootbox-image">
-                <div class="lootbox-tier"></div>
-                <div class="lootbox-title">
-                  &nbsp;
-                </div>
-              </div>
+
             </div>
-
-          </div>
-          <div class="modal-footer" style="text-align: center;">
-            <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot! ($2.49)</button>
-            <div id="closeRewards" style="display: none;">
-              <button type="button" class="btn btn-lootbox btn-lg" data-dismiss="modal">Claim rewards ($0.99)</button><br>
-              <button type="button" class="btn btn-lootbox btn-xs" id="neverShowAgain" style="margin-top: 5px;">Don't show this again ($19.99)</button>
+            <div class="modal-footer" style="text-align: center;">
+              <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot! ($2.49)</button>
+              <div id="closeRewards" style="display: none;">
+                <button type="button" class="btn btn-lootbox btn-lg" data-dismiss="modal">Claim rewards ($0.99)</button><br>
+                <button type="button" class="btn btn-lootbox btn-xs" id="neverShowAgain" style="margin-top: 5px;">Don't show this again ($19.99)</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  {% endif %}
+    {% endif %}
+  </div>
 {% endblock %}

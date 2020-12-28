@@ -1,0 +1,1353 @@
+// START NEW SCSS
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.center-container {
+  background-image: url(/2020images/paper.png);
+  background-repeat: repeat-y;
+  background-position-x: center;
+  background-position-y: top;
+  background-size: contain;
+  width: 1300px;
+  margin: 0 auto;
+  padding: 15px 90px;
+  z-index: 20;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .logo {
+    width: 182px;
+    height: 136px;
+    display: block;
+    margin-right: 80px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  .title-text {
+    font-family: "X-Files", sans-serif;
+    color: black;
+    font-size: 30px;
+    transform: rotateZ(-1.8deg);
+    text-align: right;
+
+    .line-1 {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.background-elements {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: -1;
+}
+
+.conspiracy {
+  position: absolute;
+  width: 46vw;
+  left: -250px;
+}
+
+.photograph {
+  width: 16vw;
+  height: 19.4vw;
+  position: absolute;
+  overflow: hidden;
+  display: inline-block;
+  transform: rotateZ(-15deg);
+  z-index: -1;
+  right: 40px;
+
+  .photo-image {
+    position: absolute;
+    z-index: 9;
+    width: 92%;
+    height: 75%;
+    top: 6%;
+    left: 3.7%;
+    right: 3.7%;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .photo-bg {
+    background: url(/2020images/photobg.png);
+    background-size: contain;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+
+  .photo-text {
+    font-family: "Cracked Johnnie", sans-serif;
+    font-size: 20px;
+    color: black;
+    position: absolute;
+    left: 4.6%;
+    right: 4.6%;
+    height: 14.2%;
+    bottom: 2.6%;
+    z-index: 11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+
+/* Award Header (including left/right navigation buttons) */
+.award-header {
+  text-align: center;
+  position: relative;
+  max-width: 965px;
+  margin: 0 auto;
+
+  .award-name-container {
+    height: 108px;
+    margin: 0 77px 20px 77px;
+    padding: 15px 45px;
+    background-image: url(/2020images/tape.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: black;
+  }
+
+  .award-name-container.oneLine .awardName {
+    margin-top: -5px;
+  }
+
+  .award-name {
+    font-family: "Dot Matrix", monospace;
+    text-transform: uppercase;
+    font-size: 3em;
+    line-height: 100%;
+    margin-top: 5px;
+  }
+
+  .award-subtitle {
+    font-family: "Dot Matrix", monospace;
+    font-size: 1.1em;
+  }
+
+  .navigation {
+    width: 125px;
+    height: 108px;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    display: block;
+  }
+
+  .navigation.left {
+    left: 0;
+    background: url("/2019images/btnNav_left.png") 0 0;
+  }
+
+  .left:hover {
+    background-position: 0 bottom;
+  }
+
+  .navigation.right, .navigation.next {
+    right: 0;
+    background: url("/2019images/btnNav_right.png") 0 0;
+  }
+
+  .right:hover, .next:hover {
+    background-position: 0 bottom;
+  }
+}
+
+.awards-list {
+  h2 {
+    font-family: "Dot Matrix", monospace;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .awards {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .award {
+    color: black;
+    text-shadow: none;
+    font-family: "Dot Matrix", monospace;
+
+    &.active {
+      color: red;
+    }
+
+    &.complete {
+      text-decoration: line-through double black;
+    }
+  }
+
+  .award-name {
+    font-weight: bold;
+  }
+
+  .award-subtitle {
+    text-decoration: none;
+    font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+    display: inline;
+  }
+}
+
+.your-votes {
+  text-align: center;
+  font-family: "X-Files", sans-serif;
+  font-size: 30px;
+  text-decoration: underline;
+}
+// END NEW SCSS
+
+
+/* Assorted page elements */
+.meme {
+  width: 160px;
+  height: 600px;
+  margin-top: 5px;
+  /*position: absolute;*/
+  /*top: 250px;*/
+}
+
+.leftMeme {
+  margin-left: 10px;
+}
+
+.rightMeme {
+  margin-right: 10px;
+}
+
+#todd img {
+  max-width: 100%;
+}
+
+/*#todd .modal-dialog {*/
+/*width: 602px;*/
+/*}*/
+
+#todd .modal-header {
+  background: transparent;
+  padding: 3px;
+  border: none;
+}
+
+#todd .close {
+  color: white;
+  text-shadow: none;
+  opacity: 1;
+}
+
+#todd .modal-body {
+  padding: 0;
+  background: #262626;
+  border: 1px solid #4d4b49;
+}
+
+#todd .modal-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.game_purchase_action_bg {
+  height: 42px;
+  background-color: #3c3d3e;
+  padding: 3px 3px 3px 0;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+
+.game_purchase_action .game_purchase_price {
+  background-color: #000000;
+  font-size: 13px;
+  padding-top: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 35px;
+}
+
+.game_purchase_action .game_purchase_price, .game_purchase_action .game_purchase_discount, .game_purchase_action .btn_addtocart, .game_purchase_action .btn_packageinfo, .game_purchase_action .game_purchase_action_bg
+.game_purchase_action .game_purchase_action_qty {
+  float: left;
+  margin-left: 3px;
+}
+
+.price, .match_price {
+  font-family: tahoma, helvetica, arial, trebuchet ms, sans-serif;
+  font-size: 11px;
+  color: #b0aeac;
+}
+
+.btn_addtocart {
+  position: relative;
+  height: 34px;
+}
+
+.btn_addtocart .btn_addtocart_left, .btn_addtocart .btn_addtocart_right {
+  position: absolute;
+  width: 2px;
+  height: 34px;
+  top: 0px;
+  background-image: url('https://steamstore-a.akamaihd.net/public/images/v5/btn_addtocart_corners.gif');
+}
+
+.btn_addtocart .btn_addtocart_left {
+  background-position: left;
+  left: 0px;
+}
+
+.game_purchase_action {
+  position: absolute;
+  bottom: -20px;
+  right: 10px;
+}
+
+.btn_addtocart .btn_addtocart_content {
+  display: inline-block;
+  height: 34px;
+  font-size: 11px;
+  color: #ffffff;
+  text-align: center;
+  padding: 0px 11px;
+  line-height: 34px;
+  background-image: url('https://steamstore-a.akamaihd.net/public/images/v5/btn_addtocart_repeat.gif');
+  background-repeat: repeat-x;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+}
+
+.btn_addtocart .btn_addtocart_right {
+  background-position: right;
+  right: 0px;
+}
+
+.buy_my_game {
+  padding: 10px 0 30px 15px;
+  border-top: 1px solid #4d4b49;
+}
+
+.buy_my_game a .tail {
+  color: #9e9e9e;
+  font-weight: 300;
+}
+
+.buy_my_game a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.buy_my_game .desc {
+  margin: 5px 10px 0 0;
+  font-size: 13px;
+  color: #c9c9c9;
+  line-height: 16px;
+  max-height: 96px;
+  overflow: hidden;
+}
+
+@keyframes shake{2%{transform:translate(-.5px, .5px) rotate(-.5deg)}4%{transform:translate(2.5px, .5px) rotate(-.5deg)}6%{transform:translate(-.5px, 1.5px) rotate(1.5deg)}8%{transform:translate(.5px, .5px) rotate(-.5deg)}10%{transform:translate(-.5px, -1.5px) rotate(-.5deg)}12%{transform:translate(.5px, -.5px) rotate(1.5deg)}14%{transform:translate(1.5px, 2.5px) rotate(-.5deg)}16%{transform:translate(-.5px, -.5px) rotate(.5deg)}18%{transform:translate(2.5px, .5px) rotate(.5deg)}20%{transform:translate(.5px, -1.5px) rotate(-.5deg)}22%{transform:translate(2.5px, 2.5px) rotate(-.5deg)}24%{transform:translate(2.5px, 1.5px) rotate(1.5deg)}26%{transform:translate(.5px, 1.5px) rotate(-.5deg)}28%{transform:translate(1.5px, .5px) rotate(.5deg)}30%{transform:translate(-1.5px, 2.5px) rotate(1.5deg)}32%{transform:translate(.5px, .5px) rotate(.5deg)}34%{transform:translate(.5px, 1.5px) rotate(1.5deg)}36%{transform:translate(2.5px, -.5px) rotate(1.5deg)}38%{transform:translate(.5px, 1.5px) rotate(1.5deg)}40%{transform:translate(2.5px, 1.5px) rotate(1.5deg)}42%{transform:translate(2.5px, -1.5px) rotate(.5deg)}44%{transform:translate(.5px, -.5px) rotate(.5deg)}46%{transform:translate(1.5px, -1.5px) rotate(.5deg)}48%{transform:translate(-1.5px, -.5px) rotate(.5deg)}50%{transform:translate(2.5px, -1.5px) rotate(1.5deg)}52%{transform:translate(.5px, 1.5px) rotate(.5deg)}54%{transform:translate(2.5px, -.5px) rotate(.5deg)}56%{transform:translate(2.5px, 2.5px) rotate(.5deg)}58%{transform:translate(2.5px, 1.5px) rotate(-.5deg)}60%{transform:translate(1.5px, 1.5px) rotate(-.5deg)}62%{transform:translate(-.5px, .5px) rotate(-.5deg)}64%{transform:translate(2.5px, 1.5px) rotate(-.5deg)}66%{transform:translate(-1.5px, .5px) rotate(1.5deg)}68%{transform:translate(1.5px, -1.5px) rotate(.5deg)}70%{transform:translate(.5px, .5px) rotate(-.5deg)}72%{transform:translate(-.5px, 1.5px) rotate(1.5deg)}74%{transform:translate(-1.5px, 1.5px) rotate(1.5deg)}76%{transform:translate(2.5px, -.5px) rotate(.5deg)}78%{transform:translate(2.5px, 2.5px) rotate(.5deg)}80%{transform:translate(-1.5px, 2.5px) rotate(.5deg)}82%{transform:translate(-1.5px, -.5px) rotate(.5deg)}84%{transform:translate(.5px, 1.5px) rotate(-.5deg)}86%{transform:translate(-.5px, 2.5px) rotate(.5deg)}88%{transform:translate(2.5px, 2.5px) rotate(1.5deg)}90%{transform:translate(-.5px, -1.5px) rotate(-.5deg)}92%{transform:translate(1.5px, .5px) rotate(.5deg)}94%{transform:translate(-.5px, -.5px) rotate(.5deg)}96%{transform:translate(1.5px, .5px) rotate(1.5deg)}98%{transform:translate(.5px, -.5px) rotate(1.5deg)}0%,100%{transform:translate(0, 0) rotate(0)}}
+
+.shake {
+  animation-name: shake;
+  animation-duration: 100ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.bigShake {
+
+}
+
+.lootboxbox {
+  display: flex;
+  justify-content: center;
+}
+
+.lootbox img {
+  width: 100%;
+}
+
+.lootbox {
+  width: 30%;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  font-weight: bold;
+}
+
+.lootbox-title {
+  margin-top: 10px;
+  text-align: center;
+  flex-grow: 1;
+  color: white;
+  text-shadow: black 2px 2px;
+  font-size: 18px;
+}
+
+.lootbox-tier {
+  width: 100%;
+}
+
+#rewards .modal-content {
+  background: linear-gradient(to bottom, rgb(6, 6, 6) 60%, rgb(26, 26, 32) 100%) fixed;
+  border: 1px solid #f81317;
+  overflow: hidden;
+  transition: 500ms ease-in-out;
+}
+
+#rewards .modal-footer {
+  border-top: none;
+  padding-top: 0;
+  display: block;
+}
+
+.lootbox.animate {
+  animation-duration: 1s;
+  animation-name: lootboxOut;
+  animation-fill-mode: forwards;
+}
+
+.lootbox.animate-back {
+  animation-duration: 1s;
+  animation-name: lootboxIn;
+  animation-fill-mode: forwards;
+}
+
+@keyframes lootboxIn {
+  from {
+    transform: translateY(-300px);
+  }
+
+  75% {
+    transform: translateY(20px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes lootboxOut {
+  from {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(20px);
+  }
+
+  to {
+    transform: translateY(-300px);
+  }
+}
+
+.btn-lootbox, .btn-lootbox:focus {
+  background-color: #000;
+  border-color: #f81317;
+  color: #f81317;
+  text-shadow: #f81317 0px 0px 3px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.btn-lootbox:active {
+  transform: translateY(3px);
+}
+
+.btn-lootbox:hover {
+  color: #f29823;
+}
+
+.modal {
+  color: #333;
+}
+
+.inventory-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.inventory-item img {
+  width: 100%;
+}
+
+.inventory-item {
+  width: 150px;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  font-weight: bold;
+}
+
+.item-name {
+  margin-top: 10px;
+  text-align: center;
+  color: #f29823;
+  text-shadow: #f29823 0px 0px 3px;
+  font-size: 18px;
+  width: 100%;
+}
+
+.item-quantity {
+  color: #333;
+  font-style: italic;
+  width: 100%;
+}
+
+.item-tier {
+  width: 100%;
+  text-shadow: 1px 1px 2px black, -1px -1px 2px rgba(0,0,0,0.5);
+}
+
+.item-year {
+  width: 100%;
+
+}
+
+.item-button {
+  margin: 5px auto 0 auto;
+}
+
+.containerInventory, .deus-ex-hr {
+  background: linear-gradient(to right, rgb(26, 26, 28) 0%, rgb(0, 0, 0) 30%, rgb(0, 0, 0) 70%, rgb(26, 26, 28) 100%);
+  padding-top: 15px;
+}
+
+
+body {
+  padding-bottom: 0;
+}
+
+.verified {
+  width: 30px;
+  height: 30px;
+  margin-top: -7px;
+  margin-left: 5px;
+}
+
+
+/*@media (max-width: 1840px) {*/
+/*.rightMeme {*/
+/*display: none;*/
+/*}*/
+/*#wrapper {*/
+/*margin-right: 10px !important;*/
+/*}*/
+/*}*/
+/**/
+/*@media (max-width: 1680px) {*/
+/*.leftMeme {*/
+/*display: none;*/
+/*}*/
+/*#wrapper {*/
+/*margin-right: auto !important;*/
+/*}*/
+/*}*/
+
+#dontforget {
+  position: absolute;
+  top: 218px;
+  right: -40px;
+}
+
+.mobileInstructions {
+  background: rgb(251,68,7);
+  color: white;
+  font-family: Arial,sans-serif;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 12px;
+  display: none;
+}
+
+/* Page Header */
+/*
+.pageHeader {
+  height: 170px;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 1000px;
+}
+
+.pageHeader h1 {
+  line-height: 25px;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+.pageHeader h2 {
+  font-size: 1.3em;
+  padding: 0px 50px;
+}
+*/
+
+
+
+/* Anims */
+@keyframes flicker {
+  0%  { opacity: 0; }
+  5% { opacity: 0; }
+  6% { opacity: 0.6; }
+  10% { opacity: 0.6; }
+  11% { opacity: 0.2; }
+  15% { opacity: 0.2; }
+  16% { opacity: 0.8; }
+  20% { opacity: 0.8; }
+  21% { opacity: 0.4; }
+  26% { opacity: 0.4; }
+  70% { opacity: 1; }
+}
+.awardName{
+  animation-duration: 4s;
+  animation-name: flicker;
+  animation-iteration-count: 1;
+}
+@keyframes flicker2 {
+  0%  { opacity: 0; }
+  35% { opacity: 0; }
+  36% { opacity: 0.6; }
+  40% { opacity: 0.6; }
+  41% { opacity: 0.2; }
+  45% { opacity: 0.2; }
+  46% { opacity: 0.8; }
+  50% { opacity: 0.8; }
+  51% { opacity: 0.4; }
+  56% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+.awardSubtitle{
+  animation-duration: 4s;
+  animation-name: flicker2;
+  animation-iteration-count: 1;
+}
+
+
+/* Nominee Box - inner elements */
+/* See votingNominees.css */
+
+.hoverOverlay {
+  width: 100%;
+  height: 40px;
+  z-index: 301;
+  position: absolute;
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+  /*transition: 200ms linear all;*/
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  bottom: 0;
+  font-size: 0.9em;
+  line-height: 16px;
+  padding: 3px;
+}
+
+.hoverOverlay.adjustForLink {
+  bottom: 39px;
+  z-index: 49;
+}
+
+#voteDropAreaTop .voteBox:hover .hoverOverlay.overlayWhenTop {
+  display: flex;
+}
+
+#voteDropAreaBottom .voteBox:hover .hoverOverlay.overlayWhenBottom {
+  display: flex;
+}
+
+/* Shown on mobile, hidden on desktop */
+.realHandle {
+  display: none;
+}
+
+/* Shown on desktop, hidden on mobile */
+.fakeHandle {
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  position: absolute;
+  top: 0;
+}
+
+/* Nominee Box - outer elements that encompass the nominee box */
+/* See votingNominee.css */
+#voteDropAreaBottom .voteGroup {
+  margin-top: 20px;
+}
+
+/* Nominee Box - extra elements that are tied to the nominee box, but are near it instead of inside it */
+.preferenceButton {
+  width: 116px;
+  height: 116px;
+  background: #262f5c;
+  color: yellow;
+  border: 4px white inset;
+  text-align: center;
+  font-size: 60px;
+  margin-right: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.preferenceInput {
+  width: 116px;
+  height: 116px;
+  background: #262f5c;
+  color: yellow;
+  border: 4px white inset;
+  text-align: center;
+  font-size: 60px;
+  line-height: 116px;
+  padding-left: 16px;
+  margin-right: 15px;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.preferenceInput:invalid, .preferenceInput.invalid {
+  border-color: red;
+  color: red;
+  background-color: #5c2626;
+}
+
+.preferenceInput.static {
+  background: url('https://vignette.wikia.nocookie.net/memory-gamma/images/1/17/Static.gif') center #37255c;
+}
+
+.voteGroup .number {
+  background: rgb(251,68,7);
+  color: white;
+  font-family: Arial,sans-serif;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 12px;
+  position: absolute;
+  top: -20px;
+}
+
+.sortable-ghost .number, .sortable-chosen .number, .sortable-drag .number, .locked .number {
+  background: black;
+}
+
+.locked .voteGroup .number:after {
+  content: ' - SAVED';
+}
+
+.placeholder .nominee {
+  border: 1px dashed rgba(255, 255, 255, 0.8);
+}
+
+/* Preference number popup */
+.numberPopup {
+  border: 4px inset white;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.5) 4px 4px;
+  position: absolute;
+  z-index: 300;
+  max-width: 100%;
+}
+
+.numberPopup.height2 {
+  height: 220px;
+}
+
+.numberPopup.height3 {
+  height: 320px;
+}
+
+.numberPopup.width2 {
+  width: 240px;
+}
+
+.numberPopup.width3 {
+  width: 340px;
+}
+
+.numberPopup.width4 {
+  width: 440px;
+}
+
+.numberPopup.width5 {
+  width: 540px;
+}
+
+.numberButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.numberButton {
+  width: 100px;
+  height: 100px;
+  background: rgb(251, 68, 7);
+  color: white;
+  border-radius: 100%;
+  border: none;
+  box-shadow: black 2px 2px;
+  text-align: center;
+  font-size: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.numberButton:hover, .numberButton:focus {
+  background: rgb(221, 70, 7);
+}
+
+.numberButton:disabled {
+  background: grey;
+  color: silver;
+  box-shadow: none;
+  position: relative;
+  top: 1px;
+  left: 1px;
+}
+
+.numberButton:active {
+  position: relative;
+  top: 4px;
+  box-shadow: black 2px -2px;
+}
+
+/* Top and bottom voting panes */
+#wrapper {
+  /*width: 100%;*/
+  max-width: 1480px;
+  position: relative;
+  flex-grow: 1;
+  /*margin: 0 auto 5px;*/
+}
+
+.memeContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.voteDropArea {
+  margin-bottom: 20px;
+  padding: 5px;
+  min-height: 185px;
+  border: 2px dashed #c2c5b5;
+  transition: 0.2s all;
+}
+
+/*#dragLimit.dragActive #voteDropAreaTop,*/ #voteDropAreaTop:empty {
+                                              border: 1px dashed #f29823;
+                                              background: rgba(0, 0, 0, 0.2);
+                                            }
+
+#voteDropAreaBottom {
+  border: 2px dashed #c2c5b5;
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  z-index: 0;
+}
+
+#voteDropAreaBottom.locked {
+  border: 1px solid #f81317;
+}
+
+#dragLimit.dragActive #voteDropAreaBottom {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+#voteDropAreaTop:empty:after {
+  content: "You've preferenced all the nominees! Nice work!";
+  font-family: "OratorStd", "Courier New", serif;
+  color: #f81317;
+  font-style: italic;
+  font-size: 30px;
+  text-shadow: #f29823 0px 0px 3px;
+  z-index: -1;
+  text-align: center;
+  line-height: 30px;
+}
+
+#voteDropAreaBottom:empty:after {
+  content: "You haven't yet voted for this award";
+  font-family: "OratorStd", "Courier New", serif;
+  color: #f81317;
+  font-style: italic;
+  font-size: 30px;
+  text-shadow: #f29823 0px 0px 3px;
+  z-index: -1;
+  text-align: center;
+  line-height: 30px;
+}
+
+.voteDropArea.flash .nominee {
+  opacity: 0;
+}
+
+.voteDropArea.flash .voteBox {
+  background: white;
+}
+
+/* Reset and submit buttons */
+.buttons {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.buttons .navigation {
+  top: 8px;
+  display: none;
+}
+
+.btnSubmit {
+  cursor: pointer;
+  height: 49px;
+  position: relative;
+}
+
+#btnResetVotes {
+  width: 185px;
+  height: 108px;
+  background: url("/2019images/btnReset.png") 0 0;
+  margin-right: 50px;
+}
+
+#btnResetVotes:hover {
+  background-position: 0 bottom;
+}
+
+#btnLockVotes {
+  width: 185px;
+  height: 108px;
+  background: url("/2019images/btnSubmit.png") 0 0;
+}
+
+#btnLockVotes:hover {
+  background-position: 0 center;
+}
+
+.iVoted {
+  background-position: 0 bottom !important;
+  cursor: default;
+}
+
+/* Awards List */
+#containerInventory, .deus-ex-hr {
+  clear: both;
+  margin: 0 auto;
+  overflow: auto;
+  max-width: 1200px;
+}
+
+#secondaryAwards {
+  font-size: 30px;
+  padding-top: 20px;
+}
+
+.goBackLink {
+  margin-top: 30px;
+}
+.goBackLink a {
+  background-color:#000;
+  border-radius: 2px;
+  color: #f81317;
+  text-shadow: #f81317 0px 0px 3px;
+  padding: 5px 15px 1px;
+  font-size: 18px;
+  border: 1px solid #f81317;
+}
+.goBackLink a:hover {
+  color: #f29823;
+  border: 1px solid #f29823;
+  text-shadow: #f29823 0px 0px 3px;
+}
+
+/* Easter egg */
+.shit {
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  top: -200px;
+  display: none;
+  color: white;
+  font-size: 4em;
+  width: 100%;
+  text-align: center;
+  line-height: 85px;
+  animation: dumb 9s infinite linear;
+}
+
+@keyframes dumb {
+  0% {
+    top: 1500px;
+  }
+  100% {
+    top: -200px;
+  }
+}
+
+/* Legacy voting page */
+#limitsDrag {
+  padding-left: 14px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.legacyStyle #wrapper {
+  max-width: 1100px;
+}
+
+.column {
+  position: relative;
+}
+
+#nomineeColumn {
+  width: 473px;
+}
+
+#spacerColumn {
+  width: 14px;
+}
+
+#voteColumn {
+  width: 473px;
+}
+
+#voteColumn > img {
+  margin-left: 160px;
+}
+
+.aNominee {
+  position: relative;
+  background: white;
+}
+
+.nomineeImage {
+  width: 473px;
+  height: 126px;
+}
+
+/*.info{*/
+/*width: 25px;*/
+/*height: 25px;*/
+/*position: absolute;*/
+/*top: 4px;*/
+/*left: 4px;*/
+/*z-index: 55;*/
+/*background: url("/2016images/info.png") center top no-repeat;*/
+/*cursor: help;*/
+/*}*/
+/*.info:hover{*/
+/*background-position: center bottom;*/
+/*}*/
+/*.innerInfo {*/
+/*display: none;*/
+/*background-color: rgba(0,0,0,0.6);*/
+/*position: relative;*/
+/*top: 0px;*/
+/*left: 30px;*/
+/*padding: 3px;*/
+/*width: 433px;*/
+/*height: auto;*/
+/*font-family: Calibri,sans-serif;*/
+/*font-size: 0.81em;*/
+/*line-height: 13px;*/
+/*color: white;*/
+/*}*/
+/*.info:hover .innerInfo {*/
+/*display: block;*/
+/*}*/
+
+a:hover {
+  text-decoration: none;
+}
+
+.aNominee .fakeBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 41;
+}
+
+.aNominee img.locked {
+  display: none;
+}
+
+.aNominee.locked img.locked {
+  display: block;
+}
+
+#nomineeColumn .number {
+  display: none;
+}
+
+
+.column .voteBox {
+  clear:both;
+  float:left;
+  position: relative;
+  width: 100%;
+  height: 126px;
+  background: rgba(246, 231, 190, 0.5) url("/2016images/votebox_background.png");
+  margin-bottom: 4px;
+}
+
+/*.voteBox.locked {
+  background: none;
+}*/
+
+.column .voteBox.dragging {
+  /*background-image: url("/votebox_background_drag.png");*/
+}
+
+.column .number {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: rgb(251, 68, 7);
+  color: white;
+  font-size: 1.8em;
+  line-height: 1em;
+  border-radius: 20px;
+  display: block;
+  padding: 7px;
+}
+
+/* Instruction page (appears when no awards are selected) */
+#startMessage {
+  max-width: 880px;
+  margin: 0 auto;
+  margin-bottom: 25px;
+}
+
+#startMessage h2 {
+  margin-top: 20px;
+}
+
+#startMessage h2:first-child {
+  margin-top: 0;
+}
+
+#startMessage p {
+  padding-top: 0;
+  line-height: 1.3;
+  color: white;
+}
+
+#startMessage a {
+  color: #f85898;
+}
+
+#btnStart {
+  width: 245px;
+  height: 108px;
+  margin: 0 auto;
+  display: block;
+  background: url("/2019images/btnStart.png") top center no-repeat;
+}
+
+#btnStart:hover {
+  background-position: bottom center;
+}
+
+.fantasy-promo {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.fantasy-promo a {
+  background-color: #000;
+  border-radius: 2px;
+  text-shadow: #f81317 0 0 3px;
+  padding: 5px 15px 1px;
+  font-size: 18px;
+  border: 1px solid #f81317;
+}
+
+.fantasy-promo a:hover {
+  background: rgba(242, 152, 35, 0.2);
+}
+
+@media (max-width: 1400px) {
+  .rightMeme {
+    display: none;
+  }
+}
+
+@media (max-width: 1250px) {
+  .leftMeme {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .voteGroup {
+    width: calc(100% / 3 - 10px);
+  }
+}
+
+/* Changes for mobile */
+@media (max-width: 768px) {
+  .fakeElement {
+    display: none;
+  }
+  .nominee {
+    width: 100%;
+    height: 75px;
+  }
+
+  .awardName {
+    font-size: 2em;
+  }
+
+  .awardSubtitle {
+    font-size: 15px;
+  }
+
+  .voteDropArea {
+    min-height: 100px;
+  }
+
+  .preferenceButton {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-width: 3px;
+    padding-left: 0;
+    font-size: 40px;
+  }
+
+  .voteBox {
+    width: calc(100% - 5px);
+  }
+
+  .voteGroup {
+    width: 100%;
+    flex-basis: 100%;
+    margin-bottom: 5px;
+  }
+
+  .voteGroup label {
+    width: 100%;
+  }
+
+  .fakeHandle {
+    display: none;
+  }
+
+  #voteDropAreaBottom .realHandle {
+    display: block;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background: rgb(251, 68, 7);
+    padding: 25px 5px 5px 5px;
+    text-align: center;
+    width: 25px;
+  }
+
+  .flavorText {
+    display: none !important;
+  }
+
+  .hoverOverlay {
+    display: none !important;
+  }
+
+  .mobileInstructions {
+    display: block;
+  }
+
+  .voteGroup .number:after {
+    content: ' - tap to remove or drag to reorder';
+  }
+
+  .locked .voteGroup .number:after {
+    content: ' - tap to remove or drag to reorder';
+  }
+
+
+  .pageHeaderTitle h1 {
+    display: none;
+  }
+
+  .pageHeaderTitle h2 {
+    font-size: 18px;
+  }
+
+  .buttons a.navigation.right {
+    position: static;
+  }
+
+  #btnResetVotes {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 1090px) {
+  #dontforget {
+    display: none;
+  }
+}
+
+/** SPECIAL REWARD CSS **/
+#reward-buddie {
+  position: fixed;
+  right: 5px;
+  bottom: 5px;
+}
+
