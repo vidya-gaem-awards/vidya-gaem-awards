@@ -47,6 +47,7 @@ class ImageCheckCommand extends Command
         $output->getFormatter()->setStyle('red', $red);
         $output->getFormatter()->setStyle('warning', new OutputFormatterStyle('black', 'yellow'));
 
+        /** @var Award[] $awards */
         $awards = $this->em->getRepository(Award::class)
             ->findBy(['enabled' => 1], ['order' => 'ASC']);
 
@@ -71,14 +72,20 @@ class ImageCheckCommand extends Command
                     continue;
                 }
 
-                if ($nominee->getImage()[0] === '/') {
-                    $file = $this->kernel->getProjectDir() . '/public' . $nominee->getImage();
-                    if (!file_exists($file)) {
-                        $output->writeln('<error>broken image</error>');
-                        continue;
-                    }
-                } else {
-                    $file = $nominee->getImage();
+//                if ($nominee->getImage()[0] === '/') {
+//                    $file = $this->kernel->getProjectDir() . '/public' . $nominee->getImage();
+//                    if (!file_exists($file)) {
+//                        $output->writeln('<error>broken image</error>');
+//                        continue;
+//                    }
+//                } else {
+//                    $file = $nominee->getImage();
+//                }
+
+                $file = $this->kernel->getProjectDir() . '/public' . $nominee->getImage()->getURL();
+                if (!file_exists($file)) {
+                    $output->writeln('<error>broken image</error>');
+                    continue;
                 }
 
                 $image = file_get_contents($file);
