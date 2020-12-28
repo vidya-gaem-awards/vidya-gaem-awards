@@ -64,13 +64,14 @@ class AdvertManagerController extends AbstractController
             return $this->json(['success' => true]);
         }
 
-        if (strlen(trim($post->get('name', ''))) === 0) {
+        $name = $post->get('dialogName', '');
+        if (strlen(trim($name)) === 0) {
             return $this->json(['error' => 'You need to enter a name.']);
         }
 
         $advert
-            ->setName($post->get('name'))
-            ->setSpecial((bool)$post->get('special', false));
+            ->setName($name)
+            ->setSpecial((bool)$post->get('dialogSpecial', false));
 
         $em->persist($advert);
         $em->flush();

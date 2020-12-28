@@ -8,11 +8,22 @@
   {{ encore_entry_link_tags('photographs') }}
 
   <style type="text/css">
+    #dialog-edit {
+      max-width: 730px;
+    }
+
+    #dialog-edit-delete {
+      position: relative;
+      padding-left: 46px;
+    }
+
     img.delete-this {
-      margin: -11px 7px -8px -14px;
-      width: 34px;
+      height: calc(100% + 2px);
+      top: -1px;
+      left: -1px;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
+      position: absolute;
     }
 
     .decoration-container {
@@ -25,219 +36,34 @@
       column-gap: 10px;
     }
 
-    .photograph {
+    .decoration-container > .photograph {
       cursor: pointer;
       transition: ease-in-out .2s;
       width: 200px;
       height: 243px;
     }
 
-    .photograph:hover {
+    .decoration-container > .photograph:hover {
       transform: translateY(-10px);
     }
 
-    .photograph .photo-text {
+    .decoration-container > .photograph .photo-text {
       font-size: 11.5px;
     }
   </style>
 {% endblock %}
 
 {% block js %}
-
-  {{ parent() }}
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twemoji/11.1.0/2/twemoji.min.js'></script>
 
   {{ encore_entry_script_tags('photographs') }}
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      var editDialog = $("#dialog-edit");
-      var currentlySubmitting = false;
-
-      editDialog.on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var id = button.attr('data-id');
-
-        if (id === undefined) {
-          // New advert
-          editDialog.removeAttr('data-id');
-          $("#dialog-edit-header").text("Add a new photograph");
-
-          // Clear any existing information in the dialog
-          $("#info-id").val("");
-          $("#info-action").val("new");
-          $("#info-image").val("");
-          $("#info-image-container .custom-file-label").text("Choose file");
-          editDialog.find("input[type=text]").val("");
-          $("#info-special").prop("checked", false);
-          $("#dialog-edit-delete").hide();
-
-        } else {
-          // Editing an existing advert
-          editDialog.attr('data-id', id);
-          var advert = decorations[id];
-
-          $("#dialog-edit-header").text(advert.name);
-          $("#deleteAward").show();
-          $("#info-id").val(id);
-          $("#info-action").val("edit");
-          $("#info-image").val("");
-          $("#info-image-container .custom-file-label").text("Choose file");
-          $("#info-name").val(advert.name);
-          $("#info-link").val(advert.link);
-          $("#dialog-edit-delete").prop("checked", advert.special);
-        }
-      });
-
-      $("#dialog-edit-form").submit(function (event) {
-        event.preventDefault();
-
-        if (currentlySubmitting) {
-          return;
-        }
-        currentlySubmitting = true;
-
-        // Show the "please wait" message and disable the submit button
-        $("#dialog-edit-status").show();
-        $('#dialog-edit').find("button").attr("disabled", "disabled");
-        $("#dialog-edit-error").parent().slideUp();
-
-        // Grab the award ID from the dialog
-        var id = editDialog.attr("data-id");
-
-        // Send through the AJAX request
-        var formData = new FormData(this);
-        $.ajax({
-          url: "{{ path('advertPost') }}",
-          type: 'POST',
-          data: formData,
-          contentType: false,
-          processData: false
-        }).done(function (response) {
-          if (response.success) {
-            window.location.reload();
-          } else {
-            $("#dialog-edit-status").hide();
-            $("#dialog-edit").find("button").removeAttr("disabled");
-            $("#dialog-edit-error")
-              .html("<strong>Error:</strong> " + response.error)
-              .parent().fadeIn("fast");
-
-            currentlySubmitting = false;
-          }
-        }, "json");
-      });
-
-      $("#dialog-edit-delete").click(function () {
-        if (currentlySubmitting) {
-          return;
-        } else if (!confirm("Are you sure you want to just fuck this advert up?")) {
-          return;
-        }
-
-        currentlySubmitting = true;
-        // Show the "please wait" message and disable the submit button
-        $("#dialog-edit-status").show();
-        $("#dialog-edit").find("button").attr("disabled", "disabled");
-        $("#dialog-edit-error").parent().slideUp();
-
-        var data = [
-          {name: "action", value: "delete"},
-          {name: "id", value: editDialog.attr("data-id")}
-        ];
-
-        $.post("{{ path('advertPost') }}", data, function (response) {
-          if (response.success) {
-            window.location.reload();
-          } else {
-            $("#dialog-edit-status").hide();
-            $("#dialog-edit").find("button").removeAttr("disabled");
-            $("#dialog-edit-error")
-              .html("<strong>Error:</strong> " + response.error)
-              .parent().fadeIn("fast");
-
-            currentlySubmitting = false;
-          }
-        }, "json");
-
-      });
-    });
-
-    $('.custom-file-input').on('change', function() {
-        let fileName = $(this).val().split('\\').pop();
-        $(this).next('.custom-file-label').addClass("selected").html(fileName);
-    });
-  </script>
 {% endblock %}
 
 {% block content %}
   <div class="row" id="react-photographs"></div>
 
-  <div id="dialog-edit" class="modal" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <form class="form-horizontal" id="dialog-edit-form" enctype="multipart/form-data">
-          <div class="modal-header">
-            <h4 class="modal-title" id="dialog-edit-header">Add a new photograph</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-          </div>
-
-          <div class="modal-body">
-            <div class="alert alert-danger" style="display: none;">
-              <span id="dialog-edit-error"></span>
-              <a class="close" href="#">&times;</a>
-            </div>
-
-            <input type="hidden" id="info-action" name="action">
-            <input type="hidden" id="info-id" name="id">
-
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="info-image">Image</label>
-              <div class="col-sm-9">
-                <div class="custom-file" id="info-image-container">
-                  <input type="file" id="info-image" name="image" class="custom-file-input">
-                  <label class="custom-file-label" for="info-image">Choose file</label>
-                </div>
-                <small class="form-text">Recommended image dimensions: <strong>500 x 500</strong></small>
-                <small class="form-text">Supported file types: <strong>.png, .jpg, .gif</strong></small>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="info-name">Caption</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="text" id="info-name" placeholder="The Power of Shitposting" required
-                       name="name" maxlength="50">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="offset-sm-3 col-sm-9">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="info-css" name="css">
-                  <label class="form-check-label" for="info-css">Special</label>
-                  <small class="form-text">Special photos won't show up in the normal rotation.</small>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button class="btn btn-danger mr-auto" id="dialog-edit-delete" type="button">
-              <img src="{{ asset('img/delete-this.png') }}" class="delete-this" alt="A picture of Counter pointing a gun at you, the viewer">
-              Delete this
-            </button>
-            <span id="dialog-edit-status" style="display: none;">
-                <i class="far fa-circle-notch fa-spin mr-1"></i> saving...&nbsp;
-              </span>
-            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" id="dialog-edit-submit" type="submit">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <script type="text/javascript">
+      const ajaxUrl = {{ path('advertPost') | json_encode | raw }};
       const decorations = {{ adverts | json_encode | raw }};
   </script>
 {% endblock %}
