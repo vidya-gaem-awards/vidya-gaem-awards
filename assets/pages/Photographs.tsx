@@ -87,7 +87,7 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
       dialogAction: 'edit',
       dialogFileFilename: 'Change file',
       dialogFileObject: null,
-      dialogFileUrl: decoration.image.url,
+      dialogFileUrl: decoration.image?.url,
       dialogId: decoration.id,
       dialogName: decoration.name,
       dialogSpecial: decoration.special,
@@ -179,7 +179,7 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
 
         <div className="decoration-container">
           {this.state.decorations.map((decoration) => (
-            <Photograph name={decoration.name} image={decoration.image.url} key={decoration.id} onClick={() => this.openEditDialog(decoration)} />
+            <Photograph name={decoration.name} image={decoration.image?.url} key={decoration.id} onClick={() => this.openEditDialog(decoration)} />
           ))}
         </div>
 

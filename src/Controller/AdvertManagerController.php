@@ -73,9 +73,6 @@ class AdvertManagerController extends AbstractController
             ->setName($name)
             ->setSpecial((bool)$post->get('dialogSpecial', false));
 
-        $em->persist($advert);
-        $em->flush();
-
         if ($request->files->get('image')) {
             try {
                 $file = $fileService->handleUploadedFile(
@@ -93,9 +90,10 @@ class AdvertManagerController extends AbstractController
             }
 
             $advert->setImage($file);
-            $em->persist($advert);
-            $em->flush();
         }
+
+        $em->persist($advert);
+        $em->flush();
 
         $auditService->add(
             new Action('advert-' . $action, $advert->getId()),
