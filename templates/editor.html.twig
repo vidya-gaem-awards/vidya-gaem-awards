@@ -3,6 +3,7 @@
 {% block title %}Page Editor{% endblock %}
 
 {% block js %}
+  {{ parent() }}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/addon/mode/overlay.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.0/addon/edit/closebrackets.min.js"></script>

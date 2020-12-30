@@ -430,6 +430,8 @@
 {% endblock %}
 
 {% block js %}
+  {{ parent() }}
+
 <script>
   $(document).ready(function () {
       $('.pick-select').change(function (event) {

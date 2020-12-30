@@ -3,6 +3,8 @@
 {% block title 'Add team member' %}
 
 {% block js %}
+  {{ parent() }}
+
   <script type="text/javascript">
       var currentlySubmitting = false;
       var addButton = $("#btn-add");

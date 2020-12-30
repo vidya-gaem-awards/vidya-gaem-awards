@@ -1,6 +1,8 @@
 {% extends 'base/standard.html.twig' %}
 
 {% block js %}
+  {{ parent() }}
+
   <script src="https://moment.github.io/luxon/global/luxon.min.js"></script>
   <script type="text/javascript">
       $(document).ready(function() {
