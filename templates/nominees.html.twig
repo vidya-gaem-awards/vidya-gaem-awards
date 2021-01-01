@@ -134,8 +134,8 @@
     }
 
     #nominee-container.accurate .nominee, .modal-dialog .nominee {
-      width: 351px;
-      height: 143px;
+      width: 274px;
+      height: 140px;
     }
 
     #nominee-container.inaccurate .flavorText {
@@ -344,8 +344,10 @@
                             {% if nominee.flavorText %}
                               <div class="flavorText">{{ nominee.flavorText }}</div>
                             {% endif %}
-                            <div class="nomineeName">{{ nominee.name }}</div>
-                            <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                            <div class="nomineeInfo">
+                              <div class="nomineeName">{{ nominee.name }}</div>
+                              <div class="nomineeSubtitle">{{ nominee.subtitle | raw }}</div>
+                            </div>
                           </div>
                         {% endfor %}
                       </div>
@@ -459,8 +461,10 @@
 
               <div class="nominee" id="dialog-edit-image" style="background-size: cover">
                 <div class="flavorText" id="dialog-edit-flavor"></div>
-                <div class="nomineeName" id="dialog-edit-name"></div>
-                <div class="nomineeSubtitle" id="dialog-edit-subtitle"></div>
+                <div class="nomineeInfo">
+                  <div class="nomineeName" id="dialog-edit-name"></div>
+                  <div class="nomineeSubtitle" id="dialog-edit-subtitle"></div>
+                </div>
               </div>
 
               <input type="hidden" name="action" id="form-action">
