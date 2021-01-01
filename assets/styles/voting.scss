@@ -24,11 +24,11 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 
   .logo {
     width: 182px;
-    height: 136px;
+    height: 100px;
     display: block;
     margin-right: 80px;
 
@@ -109,30 +109,27 @@ header {
   }
 
   .navigation {
-    width: 125px;
-    height: 108px;
+    width: 140px;
+    height: 65px;
     position: absolute;
-    top: 0;
+    top: 20px;
     cursor: pointer;
     display: block;
-  }
+    background-size: contain;
 
-  .navigation.left {
-    left: 0;
-    background: url("/2019images/btnNav_left.png") 0 0;
-  }
+    &:hover {
+      transform: translateY(3px);
+    }
 
-  .left:hover {
-    background-position: 0 bottom;
-  }
+    &.left {
+      left: 0;
+      background-image: url("/2020images/backarrow.png");
+    }
 
-  .navigation.right, .navigation.next {
-    right: 0;
-    background: url("/2019images/btnNav_right.png") 0 0;
-  }
-
-  .right:hover, .next:hover {
-    background-position: 0 bottom;
+    &.right {
+      right: 0;
+      background-image: url("/2020images/nextarrow.png");
+    }
   }
 }
 
@@ -817,13 +814,13 @@ body {
 }
 
 /* Top and bottom voting panes */
-#wrapper {
-  /*width: 100%;*/
-  max-width: 1480px;
-  position: relative;
-  flex-grow: 1;
-  /*margin: 0 auto 5px;*/
-}
+//#wrapper {
+//  width: 100%;
+//  //max-width: 1480px;
+//  position: relative;
+//  flex-grow: 1;
+//  /*margin: 0 auto 5px;*/
+//}
 
 .memeContainer {
   display: flex;
@@ -843,10 +840,12 @@ body {
   min-height: 185px;
   border: 2px dashed #c2c5b5;
   transition: 0.2s all;
+  margin-left: -15px;
+  margin-right: -15px;
 }
 
 /*#dragLimit.dragActive #voteDropAreaTop,*/ #voteDropAreaTop:empty {
-                                              border: 1px dashed #f29823;
+                                              //border: 1px dashed #f29823;
                                               background: rgba(0, 0, 0, 0.2);
                                             }
 
@@ -866,28 +865,28 @@ body {
 }
 
 #voteDropAreaTop:empty:after {
-  content: "You've preferenced all the nominees! Nice work!";
-  font-family: "OratorStd", "Courier New", serif;
-  color: #f81317;
+  //content: "You've preferenced all the nominees! Nice work!";
+  //font-family: "OratorStd", "Courier New", serif;
+  //color: #f81317;
   font-style: italic;
   font-size: 30px;
-  text-shadow: #f29823 0px 0px 3px;
+  //text-shadow: #f29823 0px 0px 3px;
   z-index: -1;
   text-align: center;
   line-height: 30px;
 }
 
-#voteDropAreaBottom:empty:after {
-  content: "You haven't yet voted for this award";
-  font-family: "OratorStd", "Courier New", serif;
-  color: #f81317;
-  font-style: italic;
-  font-size: 30px;
-  text-shadow: #f29823 0px 0px 3px;
-  z-index: -1;
-  text-align: center;
-  line-height: 30px;
-}
+//#voteDropAreaBottom:empty:after {
+//  content: "You haven't yet voted for this award";
+//  font-family: "OratorStd", "Courier New", serif;
+//  color: #f81317;
+//  font-style: italic;
+//  font-size: 30px;
+//  text-shadow: #f29823 0px 0px 3px;
+//  z-index: -1;
+//  text-align: center;
+//  line-height: 30px;
+//}
 
 .voteDropArea.flash .nominee {
   opacity: 0;
@@ -916,28 +915,30 @@ body {
 }
 
 #btnResetVotes {
-  width: 185px;
-  height: 108px;
-  background: url("/2019images/btnReset.png") 0 0;
-  margin-right: 50px;
+  width: 180px;
+  height: 135px;
+  background-image: url("/2020images/resetvotes.png");
+  background-size: 180px;
 }
 
 #btnResetVotes:hover {
-  background-position: 0 bottom;
+  background-image: url("/2020images/resetvotes-hover.png");
 }
 
 #btnLockVotes {
-  width: 185px;
-  height: 108px;
-  background: url("/2019images/btnSubmit.png") 0 0;
+  width: 180px;
+  height: 135px;
+  background-image: url("/2020images/submitvotes.png");
+  background-size: 180px;
+  margin-left: 20px;
 }
 
 #btnLockVotes:hover {
-  background-position: 0 center;
+  background-image: url("/2020images/submitvotes-hover.png");
 }
 
 .iVoted {
-  background-position: 0 bottom !important;
+  background-image: url("/2020images/submitvotes-done.png") !important;
   cursor: default;
 }
 
@@ -956,21 +957,25 @@ body {
 
 .goBackLink {
   margin-top: 30px;
+
+  a:hover {
+    text-decoration: underline;
+  }
 }
-.goBackLink a {
-  background-color:#000;
-  border-radius: 2px;
-  color: #f81317;
-  text-shadow: #f81317 0px 0px 3px;
-  padding: 5px 15px 1px;
-  font-size: 18px;
-  border: 1px solid #f81317;
-}
-.goBackLink a:hover {
-  color: #f29823;
-  border: 1px solid #f29823;
-  text-shadow: #f29823 0px 0px 3px;
-}
+//.goBackLink a {
+//  background-color:#000;
+//  border-radius: 2px;
+//  color: #f81317;
+//  text-shadow: #f81317 0px 0px 3px;
+//  padding: 5px 15px 1px;
+//  font-size: 18px;
+//  border: 1px solid #f81317;
+//}
+//.goBackLink a:hover {
+//  color: #f29823;
+//  border: 1px solid #f29823;
+//  text-shadow: #f29823 0px 0px 3px;
+//}
 
 /* Easter egg */
 .shit {

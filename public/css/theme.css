@@ -176,13 +176,14 @@ h3 {
 }
 
 a {
-  color: #fec544;
-  text-shadow: #fec544 0px 0px 3px;
+  color: #125ba7;
+  font-family: "X-Files", sans-serif;
+  /*text-shadow: #fec544 0px 0px 3px;*/
 }
 
 a:hover {
-  color: #fde942;
-  text-shadow: #fde942 0px 0px 3px;
+  /*color: #fde942;*/
+  /*text-shadow: #fde942 0px 0px 3px;*/
   text-decoration: underline;
 }
 
