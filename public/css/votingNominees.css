@@ -47,25 +47,31 @@
 }
 
 .nomineeInfo {
-	position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 300;
-    background: #E9E9E4;
-  border-top: 1px dotted #c2c5b5;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 300;
+  background: rgba(50, 50, 50, 0.4);
+  padding-top: 3px;
+  /*border-top: 1px dotted #c2c5b5;*/
 }
 
 .nomineeName {
-  font-family: 'Dot Matrix', sans-serif;
+  font-family: 'X-Files', sans-serif;
   text-align: center;
-    font-weight: bold;
+  font-weight: normal;
+  text-shadow: 1px 1px black;
+  color: white;
+  font-size: 13px;
 }
 .nomineeSubtitle {
-    font-family: 'Dot Matrix', sans-serif;
-    text-align: center;
-    margin-top: -5px;
+  font-family: 'Dot Matrix', sans-serif;
+  text-align: center;
+  margin-top: -5px;
   font-size: 10px;
+  text-shadow: 1px 1px black;
+  color: white;
 }
 
 .nomineeSubtitle a {
