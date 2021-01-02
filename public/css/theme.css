@@ -74,8 +74,15 @@ body {
 .zig {
   clear: both;
   height: 11px;
-  margin: 20px 0;
-  /*background: url(/2019images/zig.png) repeat-x;*/
+  margin: 30px -30px;
+  background: url(/2020images/zig.png) repeat-x;
+}
+
+@media screen and (max-width: 1300px) {
+  .zig {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
 }
 
 
@@ -94,9 +101,9 @@ h1 {
 }
 
 h2 {
-  font-family: "OratorStd", "Courier New", serif;
-  font-weight: normal;
-  font-size: 1.1em;
+  font-family: "Dot Matrix", monospace;
+  font-weight: bold;
+  font-size: 21px;
   color: black;
 }
 

@@ -3,7 +3,7 @@
   position: relative;
   /*border: 1px solid #f29823;*/
   /*width: 350px;*/
-  height: 150px;
+  /*height: 150px;*/
   transition: 0.3s linear all;
   background-position: center;
 }
@@ -85,26 +85,28 @@
 }
 
 .fakeElement {
-  height: 115px;
+  /* This line is magic CSS which keeps the voting box at a fixed aspect ratio, even when the width changes. */
+  /* This works because the percentage for the padding-top is a percentage of width. */
+  padding-top: calc(150 / 274 * 100%);
 }
 
 
 /* Changes when in YOUR VOTES box */
 #voteDropAreaBottom .nominee{
-  border: 1px solid #f81317;
+  /*border: 1px solid #f81317;*/
 }
 
 #voteDropAreaBottom .fakeElement{
-  background: url("/2019images/nom_corner_locked.png") no-repeat bottom left;
+  /*background: url("/2019images/nom_corner_locked.png") no-repeat bottom left;*/
 }
 
 #voteDropAreaBottom .nomineeName, #voteDropAreaBottom .nomineeSubtitle{
-  color: #f81317;
-  border: 1px solid #f81317;
-  text-shadow: #f81317 0px 0px 3px;
+  /*color: #f81317;*/
+  /*border: 1px solid #f81317;*/
+  /*text-shadow: #f81317 0px 0px 3px;*/
 }
 #voteDropAreaBottom .nomineeName{
-  background: url("/2019images/nom_namebg_locked.png") repeat-x bottom left, black;
+  /*background: url("/2019images/nom_namebg_locked.png") repeat-x bottom left, black;*/
 }
 
 
@@ -127,6 +129,12 @@
   width: calc(25% - 10px);
   position: relative;
   user-select: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .voteGroup {
+    width: calc(33% - 10px);
+  }
 }
 
 .voteGroup label {

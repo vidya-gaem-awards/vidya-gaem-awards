@@ -13,11 +13,20 @@ body {
   background-repeat: repeat-y;
   background-position-x: center;
   background-position-y: top;
-  background-size: contain;
+  background-size: 100%;
   width: 1300px;
   margin: 0 auto;
   padding: 15px 90px;
   z-index: 20;
+
+  @media screen and (max-width: 1300px) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 1000px) {
+    padding-left: calc(6% + 10px);
+    padding-right: calc(6% + 10px);
+  }
 }
 
 header {
@@ -26,11 +35,18 @@ header {
   align-items: center;
   margin-bottom: 10px;
 
+  @media screen and (max-width: 1000px) {
+    justify-content: space-between;
+  }
+
   .logo {
-    width: 182px;
     height: 100px;
     display: block;
     margin-right: 80px;
+
+    @media screen and (max-width: 1000px) {
+      margin-right: 20px;
+    }
 
     img {
       max-width: 100%;
@@ -48,6 +64,10 @@ header {
     .line-1 {
       text-transform: uppercase;
     }
+
+    @media screen and (max-width: 800px) {
+      font-size: 24px;
+    }
   }
 }
 
@@ -56,6 +76,10 @@ header {
   width: 100vw;
   position: fixed;
   z-index: -1;
+
+  @media screen and (max-width: 1300px) {
+    display: none;
+  }
 }
 
 .conspiracy {
@@ -75,20 +99,33 @@ header {
 
 /* Award Header (including left/right navigation buttons) */
 .award-header {
+  display: flex;
+  justify-content: space-between;
   text-align: center;
   position: relative;
-  max-width: 965px;
-  margin: 0 auto;
+  max-width: 1100px;
+  align-items: center;
+  margin: 0 auto 20px;
+  background-image: url(/2020images/tape.png);
+  background-size: 790px;
+  background-position: center top;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 1000px) {
+    flex-wrap: wrap;
+  }
 
   .award-name-container {
-    height: 108px;
-    margin: 0 77px 20px 77px;
     padding: 15px 45px;
-    background-image: url(/2020images/tape.png);
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+
     color: black;
+    flex-grow: 1;
+    order: 2;
+
+    @media screen and (max-width: 1000px) {
+      width: 100%;
+      order: 0;
+    }
   }
 
   .award-name-container.oneLine .awardName {
@@ -111,24 +148,23 @@ header {
   .navigation {
     width: 140px;
     height: 65px;
-    position: absolute;
-    top: 20px;
     cursor: pointer;
     display: block;
     background-size: contain;
+    flex-shrink: 0;
 
     &:hover {
       transform: translateY(3px);
     }
 
     &.left {
-      left: 0;
       background-image: url("/2020images/backarrow.png");
+      order: 1;
     }
 
     &.right {
-      right: 0;
       background-image: url("/2020images/nextarrow.png");
+      order: 3;
     }
   }
 }
@@ -145,6 +181,11 @@ header {
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+
+    @media screen and (max-width: 700px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .award {
@@ -454,16 +495,22 @@ header {
 }
 
 .inventory-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  row-gap: 10px;
+  column-gap: 10px;
 }
 
 .inventory-item img {
   width: 100%;
 }
 
+$card-width: 150px;
+
 .inventory-item {
-  width: 150px;
+  width: $card-width;
+  height: ($card-width * 7 / 5);
+  border-radius: 4%;
   margin: 10px;
   padding: 10px;
   display: flex;
@@ -471,6 +518,7 @@ header {
   flex-wrap: wrap;
   text-align: center;
   font-weight: bold;
+  border: 2px solid black;
 }
 
 .item-name {
@@ -670,7 +718,7 @@ body {
 /* Nominee Box - outer elements that encompass the nominee box */
 /* See votingNominee.css */
 #voteDropAreaBottom .voteGroup {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 /* Nominee Box - extra elements that are tied to the nominee box, but are near it instead of inside it */
@@ -712,21 +760,27 @@ body {
 }
 
 .voteGroup .number {
-  background: rgb(251,68,7);
-  color: white;
-  font-family: Arial,sans-serif;
-  width: 100%;
+  background: #DED1BA;
+  color: black;
+  font-family: 'Dot Matrix', Arial, sans-serif;
+  width: 210px;
   height: 20px;
-  text-align: center;
+  padding-left: 20px;
   line-height: 20px;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 12px;
   position: absolute;
   top: -20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+
+  @media screen and (max-width: 768px) {
+    width: 95%;
+  }
 }
 
 .sortable-ghost .number, .sortable-chosen .number, .sortable-drag .number, .locked .number {
-  background: black;
+  //background: black;
 }
 
 .locked .voteGroup .number:after {
@@ -857,7 +911,8 @@ body {
 }
 
 #voteDropAreaBottom.locked {
-  border: 1px solid #f81317;
+  border-style: solid;
+  border-color: #4a4848;
 }
 
 #dragLimit.dragActive #voteDropAreaBottom {
@@ -957,9 +1012,14 @@ body {
 
 .goBackLink {
   margin-top: 30px;
+  font-size: 20px;
 
-  a:hover {
-    text-decoration: underline;
+  a {
+    font-family: 'Dot Matrix', sans-serif;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 //.goBackLink a {
@@ -1148,7 +1208,6 @@ a:hover {
 #startMessage p {
   padding-top: 0;
   line-height: 1.3;
-  color: white;
 }
 
 #startMessage a {
@@ -1156,15 +1215,16 @@ a:hover {
 }
 
 #btnStart {
-  width: 245px;
-  height: 108px;
-  margin: 0 auto;
+  width: 180px;
+  height: 135px;
+  background-image: url("/2020images/startvoting.png");
+  background-size: 180px;
   display: block;
-  background: url("/2019images/btnStart.png") top center no-repeat;
+  margin: 0 auto;
 }
 
 #btnStart:hover {
-  background-position: bottom center;
+  background-image: url("/2020images/startvoting-hover.png");
 }
 
 .fantasy-promo {
@@ -1259,8 +1319,8 @@ a:hover {
     position: absolute;
     right: 0;
     height: 100%;
-    background: rgb(251, 68, 7);
-    padding: 25px 5px 5px 5px;
+    background: #DED1BA;
+    padding: 5px;
     text-align: center;
     width: 25px;
   }
