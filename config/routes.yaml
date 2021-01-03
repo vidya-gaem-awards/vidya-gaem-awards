@@ -203,38 +203,38 @@ tasksPost:
 # PREDICTIONS
 #
 
-predictions:
-    path:       /predictions/picks/{id?}
-    controller: App\Controller\PredictionController:index
-    requirements:
-        id: '[0-9]+'
-
-predictionRules:
-    path:       /predictions/rules
-    controller: App\Controller\PredictionController:rules
-
-predictionJoin:
-    path:       /predictions/join
-    controller: App\Controller\PredictionController:join
-
-predictionUpdatePick:
-    path:       /predictions/picks{id}/update
-    methods:    [POST]
-    controller: App\Controller\PredictionController:updatePick
-
-predictionUpdateDetails:
-    path:       /predictions/details
-    controller: App\Controller\PredictionController:updateDetails
-
-predictionLeaderboard:
-    path:       /predictions/leaderboard
-    controller: App\Controller\PredictionController:leaderboard
-
-predictionRedirect:
-    path:       /predictions
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-    defaults:
-        route: predictionLeaderboard
+#predictions:
+#    path:       /predictions/picks/{id?}
+#    controller: App\Controller\PredictionController:index
+#    requirements:
+#        id: '[0-9]+'
+#
+#predictionRules:
+#    path:       /predictions/rules
+#    controller: App\Controller\PredictionController:rules
+#
+#predictionJoin:
+#    path:       /predictions/join
+#    controller: App\Controller\PredictionController:join
+#
+#predictionUpdatePick:
+#    path:       /predictions/picks{id}/update
+#    methods:    [POST]
+#    controller: App\Controller\PredictionController:updatePick
+#
+#predictionUpdateDetails:
+#    path:       /predictions/details
+#    controller: App\Controller\PredictionController:updateDetails
+#
+#predictionLeaderboard:
+#    path:       /predictions/leaderboard
+#    controller: App\Controller\PredictionController:leaderboard
+#
+#predictionRedirect:
+#    path:       /predictions
+#    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+#    defaults:
+#        route: predictionLeaderboard
 
 #
 # VOTING
