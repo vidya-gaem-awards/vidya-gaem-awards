@@ -328,28 +328,38 @@
             </div>
           </form>
 
-          <button class="btn btn-lootbox" style="float: right; display: none;" id="resetRewardsButton">Mute music ($10.00)</button>
-          <button class="btn btn-lootbox" style="float: right; display: none;" id="restoreDrops">Restore drops ($4.49)</button>
+          <div class="inventory-header">
+            <h2>
+              Your Inventory
+            </h2>
 
-          <h1>
-            Your Inventory
-          </h1>
+{#            <button class="btn btn-lootbox" style="display: none;" id="resetRewardsButton"><i class="far fa-music-slash fa-fw"></i> <span>Mute music</span></button>#}
+            <button class="btn btn-lootbox" style="display: none;" id="restoreDrops">Restore drops</button>
+          </div>
 
           <div class="inventory-container">
             <div class="inventory-item" id="shekelCount">
+              <div class="item-tier"></div>
               <img src="{{ asset('img/dosh.png') }}">
               <div class="item-name">-1 shekels</div>
-              <button type="button" class="btn btn-lootbox btn-sm item-button" id="buy-lootbox">Buy lootbox<br><span id="lootboxCostText"></span> shekels</button>
+
+              <div class="item-button-container">
+                <div class="btn-sm item-button" id="buy-lootbox">Buy lootbox<br><span id="lootboxCostText"></span> shekels</div>
+              </div>
             </div>
             <div class="inventory-item" id="item-template" style="display: none;">
-              <img>
               <div class="item-tier"></div>
+              <img>
               <div class="item-name"></div>
               <div class="w-100 text-center">
-                <span class="item-year"></span>
-                <span class="item-quantity"></span>
+{#                <span class="item-year"></span>#}
+{#                <span class="item-quantity"></span>#}
               </div>
-              <button type="button" class="btn btn-lootbox btn-sm item-button">Equip</button>
+              <div class="item-button-container">
+                <div class="btn-sm item-button item-buddie" data-type="buddie">Equip</div>
+                <div class="btn-sm item-button item-music" data-type="music"><i class="far fa-music"></i></div>
+                <div class="btn-sm item-button item-css" data-type="css"><i class="far fa-palette"></i></div>
+              </div>
             </div>
           </div>
         </div>

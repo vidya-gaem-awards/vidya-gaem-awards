@@ -52,7 +52,7 @@ class LootboxItem implements JsonSerializable, DropChance
      *
      * @ORM\Column(name="buddie", type="boolean", nullable=false)
      */
-    private $buddie = false;
+    private $buddie = true;
 
     /**
      * @var bool

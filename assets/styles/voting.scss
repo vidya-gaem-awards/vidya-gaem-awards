@@ -39,6 +39,10 @@ header {
     justify-content: space-between;
   }
 
+  @media screen and (max-width: 500px) {
+    justify-content: center;
+  }
+
   .logo {
     height: 100px;
     display: block;
@@ -46,6 +50,10 @@ header {
 
     @media screen and (max-width: 1000px) {
       margin-right: 20px;
+    }
+
+    @media screen and (max-width: 500px) {
+      display: none;
     }
 
     img {
@@ -67,6 +75,13 @@ header {
 
     @media screen and (max-width: 800px) {
       font-size: 24px;
+    }
+
+
+    @media screen and (max-width: 500px) {
+      font-size: 20px;
+      transform: none;
+      text-align: center;
     }
   }
 }
@@ -138,6 +153,10 @@ header {
     font-size: 3em;
     line-height: 100%;
     margin-top: 5px;
+
+    @media screen and (max-width: 800px) {
+      font-size: 2em;
+    }
   }
 
   .award-subtitle {
@@ -473,23 +492,6 @@ header {
   }
 }
 
-.btn-lootbox, .btn-lootbox:focus {
-  background-color: #000;
-  border-color: #f81317;
-  color: #f81317;
-  text-shadow: #f81317 0px 0px 3px;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.btn-lootbox:active {
-  transform: translateY(3px);
-}
-
-.btn-lootbox:hover {
-  color: #f29823;
-}
-
 .modal {
   color: #333;
 }
@@ -502,30 +504,37 @@ header {
 }
 
 .inventory-item img {
-  width: 100%;
+  max-width: 100%;
+  height: 80px;
 }
 
 $card-width: 150px;
 
 .inventory-item {
   width: $card-width;
-  height: ($card-width * 7 / 5);
+  min-height: ($card-width * 7 / 5);
   border-radius: 4%;
-  margin: 10px;
-  padding: 10px;
+  //margin: 10px;
+  //padding-top: 10px;
+  //padding: 10px 10px 0 10px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  //flex-wrap: wrap;
   text-align: center;
-  font-weight: bold;
-  border: 2px solid black;
+  flex-direction: column;
+  //font-weight: bold;
+  //border: 2px dotted black;
+  justify-content: start;
+  background-image: url(/2020images/cardbg.png);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .item-name {
   margin-top: 10px;
+  padding-left: 3px;
+  padding-right: 3px;
   text-align: center;
-  color: #f29823;
-  text-shadow: #f29823 0px 0px 3px;
+  font-family: "Dot Matrix", monospace;
   font-size: 18px;
   width: 100%;
 }
@@ -539,6 +548,12 @@ $card-width: 150px;
 .item-tier {
   width: 100%;
   text-shadow: 1px 1px 2px black, -1px -1px 2px rgba(0,0,0,0.5);
+  height: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: black;
+  margin-bottom: 5px;
+  opacity: 0.8;
 }
 
 .item-year {
@@ -546,8 +561,38 @@ $card-width: 150px;
 
 }
 
+.item-button-container {
+  margin-top: auto;
+  display: flex;
+  width: 100%;
+}
+
 .item-button {
-  margin: 5px auto 0 auto;
+  width: 100%;
+  border-top: 1px dashed #c2c5b5;
+  border-radius: 0;
+  background: rgba(255,255,255,0.6);
+  font-family: 'Dot Matrix', monospace;
+  flex: 1;
+  cursor: pointer;
+  border-right: 1px dashed #c2c5b5;
+
+  &:first-child {
+    border-bottom-left-radius: 5px;
+  }
+
+  &:last-child {
+    border-bottom-right-radius: 5px;
+    border-right: none;
+  }
+
+  &:hover {
+    background: white;
+  }
+
+  &.active {
+    background: #FCFFAF;
+  }
 }
 
 .containerInventory, .deus-ex-hr {
@@ -999,10 +1044,15 @@ body {
 
 /* Awards List */
 #containerInventory, .deus-ex-hr {
-  clear: both;
-  margin: 0 auto;
-  overflow: auto;
-  max-width: 1200px;
+  h2 {
+    font-family: "Dot Matrix", monospace;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  //clear: both;
+  //margin: 0 auto;
+  //overflow: auto;
+  //max-width: 1200px;
 }
 
 #secondaryAwards {
@@ -1369,10 +1419,35 @@ a:hover {
   }
 }
 
+.btn-lootbox {
+  background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.4),
+                  rgba(255, 255, 255, 0.4)
+  ), url(/2020images/cardbg.png);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  font-family: 'Dot Matrix', monospace;
+
+  &:hover {
+    background-image: linear-gradient(
+                    rgba(255, 255, 255, 1),
+                    rgba(255, 255, 255, 1)
+    ), url(/2020images/cardbg.png);
+  }
+}
+
+.inventory-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  h2 {
+    margin-right: auto;
+  }
+}
+
 /** SPECIAL REWARD CSS **/
 #reward-buddie {
   position: fixed;
   right: 5px;
   bottom: 5px;
 }
-

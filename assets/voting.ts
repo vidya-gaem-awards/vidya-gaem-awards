@@ -132,11 +132,16 @@ function reset() {
     localStorage.removeItem('dragCounter');
 }
 
-function resetRewards() {
+function resetCSS() {
     if (localStorage.getItem('activeCSS')) {
         $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
         localStorage.removeItem('activeCSS');
     }
+
+    $('.item-css').removeClass('active');
+}
+
+function resetMusic() {
     if (music) {
         music.pause();
         music.currentTime = 0;
@@ -144,10 +149,23 @@ function resetRewards() {
     if (localStorage.getItem('activeMusic')) {
         localStorage.removeItem('activeMusic');
     }
+
+    $('.item-music').removeClass('active');
+}
+
+function resetBuddie() {
     $('#reward-buddie').hide();
     if (localStorage.getItem('activeBuddie')) {
         localStorage.removeItem('activeBuddie');
     }
+
+    $('.item-buddie').removeClass('active');
+}
+
+function resetRewards() {
+    resetCSS();
+    resetMusic();
+    resetBuddie();
 }
 
 function getTextNodesIn(el) {
@@ -252,13 +270,18 @@ $(document).ready(function () {
             element.find('.item-name').text(reward.name);
             element.find('.item-quantity').text('x ' + quantity);
             element.find('.item-year').text(reward.year + ' item');
-            if (reward.css || reward.buddie || reward.music || reward.shortName === 'nothing' || reward.shortName === 'clamburger') {
-                element.find('.item-button').show().attr('data-id', reward.shortName);
-            } else {
-                element.find('.item-button').hide();
+            element.find('.item-button').show().attr('data-id', reward.shortName);
+
+            if (reward.shortName === 'nothing') {
+                element.find('.item-buddie').text('Unequip All');
             }
+
+            element.find('.item-music').toggle(reward.music);
+            element.find('.item-css').toggle(reward.css);
+
             var tier = lootboxTiers[reward.tier];
-            element.find('.item-tier').text(tier.name).css('backgroundColor', tier.color);
+            element.css('borderColor', tier.color);
+            element.find('.item-tier').css('backgroundColor', tier.color);
             element.show();
             element.appendTo('.inventory-container');
         }
@@ -269,22 +292,28 @@ $(document).ready(function () {
 
     if (localStorage.getItem('activeCSS')) {
         $('html').addClass('reward-' + localStorage.getItem('activeCSS'));
+        $('.item-css[data-id=' + localStorage.getItem('activeCSS') + ']').addClass('active');
     }
 
     if (localStorage.getItem('activeMusic') && !localStorage.getItem('muteMusic')) {
         playMusic(localStorage.getItem('activeMusic'), true);
+        $('.item-music[data-id=' + localStorage.getItem('activeMusic') + ']').addClass('active');
     }
 
     if (localStorage.getItem('activeBuddie')) {
         activateBuddie(localStorage.getItem('activeBuddie'));
+        $('.item-buddie[data-id=' + localStorage.getItem('activeBuddie') + ']').addClass('active');
     }
 
-    if (localStorage.getItem('casual')) {
-        $('#inventory').find('h1').text('Filthy casual detected');
-    }
+    // if (localStorage.getItem('casual')) {
+    //     $('#inventory').find('h1').text('Filthy casual detected');
+    // }
 
     $('#inventory').on('click', '.item-button', function () {
         var id = $(this).attr('data-id');
+
+        const button = $(this).attr('data-type');
+        const alreadyActive = $(this).hasClass('active');
 
         if (id === undefined) {
             return;
@@ -300,32 +329,53 @@ $(document).ready(function () {
             shuffleTextNodes($('div'));
         }
 
-        if (id === 'half-life-three') {
-            $(this).text('NEVER EVER').attr('disabled', 'disabled');
-            $('#reward-image-half-life-three').attr('src', '/img/reward-half-life-three.png');
-            $(this).parent().find('.item-quantity').text('Chance: 0');
-        }
+        // if (id === 'half-life-three') {
+        //     $(this).text('NEVER EVER').attr('disabled', 'disabled');
+        //     $('#reward-image-half-life-three').attr('src', '/img/reward-half-life-three.png');
+        //     $(this).parent().find('.item-quantity').text('Chance: 0');
+        // }
 
-        if (reward.css) {
-            if (localStorage.getItem('activeCSS')) {
-                $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
-            }
-            localStorage.setItem('activeCSS', id);
-            $('html').addClass('reward-' + id);
-        }
-
-        if (reward.buddie) {
-            activateBuddie(id);
-            localStorage.setItem('activeBuddie', id);
-        }
-
-        if (reward.music) {
-            playMusic(id, true);
-            if (id === 'whirr') {
-                localStorage.removeItem('activeMusic');
+        if (reward.css && button === 'css') {
+            if (alreadyActive) {
+                resetCSS();
             } else {
-                localStorage.setItem('activeMusic', id);
-                localStorage.removeItem('muteMusic');
+                if (localStorage.getItem('activeCSS')) {
+                    $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
+                }
+                localStorage.setItem('activeCSS', id);
+                $('html').addClass('reward-' + id);
+
+                $('.item-css').removeClass('active');
+                $('.item-css[data-id=' + id + ']').addClass('active');
+            }
+        }
+
+        if (id !== 'nothing' && button === 'buddie') {
+            if (alreadyActive) {
+                resetBuddie();
+            } else {
+                activateBuddie(id);
+                localStorage.setItem('activeBuddie', id);
+
+                $('.item-buddie').removeClass('active');
+                $('.item-buddie[data-id=' + id + ']').addClass('active');
+            }
+        }
+
+        if (reward.music && button === 'music') {
+            if (alreadyActive) {
+                resetMusic();
+            } else {
+                playMusic(id, true);
+                if (id === 'whirr') {
+                    localStorage.removeItem('activeMusic');
+                } else {
+                    localStorage.setItem('activeMusic', id);
+                    localStorage.removeItem('muteMusic');
+                }
+
+                $('.item-music').removeClass('active');
+                $('.item-music[data-id=' + id + ']').addClass('active');
             }
         }
     });
@@ -395,12 +445,12 @@ $(document).ready(function () {
         if (showButton) {
             var text;
             if (id === 'straya') {
-                text = 'Ban Australians ($99.99 AUD)';
+                text = 'Ban Australians';
             } else {
-                text = 'Mute music ($10.00)'
+                text = 'Mute music'
             }
 
-            $('#resetRewardsButton').show().text(text);
+            $('#resetRewardsButton').show().find('span').text(text);
         }
 
         music = new Audio(reward.musicFile.url);
