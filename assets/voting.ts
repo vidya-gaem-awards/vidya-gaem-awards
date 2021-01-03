@@ -18,6 +18,7 @@ let dragCounter: any;
 let toddDialog: any;
 let showRewardsOnSubmit: boolean = false;
 let music: HTMLAudioElement;
+let canPlayAudio: boolean;
 
 var val;
 $('#debugWidth').change(function () {
@@ -203,6 +204,8 @@ jQuery(function () {
     if (!currentAward) {
         return;
     }
+
+    canPlayAudio = new Audio().canPlayType('audio/ogg') !== '';
 
     toddDialog = $('#todd');
     toddDialog.modal({
@@ -391,8 +394,12 @@ jQuery(function () {
         if (reward.music && button === 'music') {
             if (alreadyActive) {
                 resetMusic();
+            } else if (canPlayAudio) {
+                $('#no-music').modal('show');
             } else {
-                playMusic(id, true);
+                playMusic(id, true).catch(e => {
+                    console.log(e.name);
+                });
                 if (id === 'whirr') {
                     localStorage.removeItem('activeMusic');
                 } else {
@@ -522,6 +529,7 @@ jQuery(function () {
     var showNewLoot = function showNewLoot(i) {
         var lootbox = $($('.lootbox').get(i));
         lootbox.removeClass('animate').addClass('animate-back');
+        lootbox.find('.lootbox-image').remove();
 
         const $item = lootbox.find('.inventory-item');
         $item.show();

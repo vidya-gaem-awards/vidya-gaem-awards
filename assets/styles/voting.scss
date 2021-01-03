@@ -443,22 +443,48 @@ header {
   width: 100%;
 }
 
-#rewards .modal-dialog {
-  max-width: 600px;
-}
-
-#rewards .modal-content {
+.modal-content {
   background: url(/2020images/paper.png);
   background-size: cover;
   overflow: hidden;
   transition: 500ms ease-in-out;
-  min-height: 500px;
 }
 
-#rewards .modal-footer {
-  border-top: none;
-  padding-top: 0;
-  display: block;
+#reward {
+  .modal-content {
+    min-height: 500px;
+  }
+
+  .modal-dialog {
+    max-width: 600px;
+  }
+
+  .modal-footer {
+    border-top: none;
+    padding-top: 0;
+    display: block;
+  }
+}
+
+#no-music {
+  font-family: "Dot Matrix", monospace;
+
+  .modal-header {
+    font-family: "Dot Matrix", monospace;
+    font-weight: bold;
+    font-size: 24px;
+    justify-content: center;
+    transform: rotate(-2deg);
+  }
+
+  .modal-body {
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .modal-footer {
+    justify-content: center;
+  }
 }
 
 .lootbox.animate {
