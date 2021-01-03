@@ -1463,4 +1463,8 @@ a:hover {
   position: fixed;
   right: 5px;
   bottom: 5px;
+  z-index: 1000;
+  pointer-events: none;
+  transition: .5s ease-in;
+  max-height: 200px;
 }
