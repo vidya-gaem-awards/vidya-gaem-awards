@@ -221,6 +221,7 @@ $(document).ready(function () {
     // Lootbox
     if (!localStorage.getItem('inventory')) {
         localStorage.setItem('inventory', JSON.stringify({
+            'version': 3,
             'shekels': 0,
             'unlocks': [],
             'unlockKeys': []
@@ -235,16 +236,16 @@ $(document).ready(function () {
     var inventory;
 
     function updateInventory() {
-        if (inventory.version === undefined) {
-            inventory.version = 2;
-            var temp = inventory.unlocks;
-            inventory.unlocks = {};
-            inventory.unlockKeys = [];
-            for (var i = 0; i < temp.length; i++) {
-                inventory.unlocks[temp[i].id] = 1;
-                inventory.unlockKeys.push(temp[i].id);
-            }
-        }
+        // if (inventory.version === undefined) {
+        //     inventory.version = 2;
+        //     var temp = inventory.unlocks;
+        //     inventory.unlocks = {};
+        //     inventory.unlockKeys = [];
+        //     for (var i = 0; i < temp.length; i++) {
+        //         inventory.unlocks[temp[i].id] = 1;
+        //         inventory.unlockKeys.push(temp[i].id);
+        //     }
+        // }
 
         localStorage.setItem('inventory', JSON.stringify(inventory));
         $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' shekels');
@@ -287,7 +288,9 @@ $(document).ready(function () {
         }
     }
 
-    addRewardToInventory('nothing');
+    if (rewards['nothing']) {
+        addRewardToInventory('nothing');
+    }
     updateInventory();
 
     if (localStorage.getItem('activeCSS')) {
