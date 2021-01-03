@@ -232,7 +232,6 @@ $(document).ready(function () {
     var lootboxCost = lootboxSettings.cost;
 
     $('#lootboxCostText').text(lootboxCost);
-    $('#shekelCount').show();
 
     var inventory;
 
@@ -278,8 +277,13 @@ $(document).ready(function () {
                 element.find('.item-buddie').text('Unequip All');
             }
 
-            element.find('.item-music').toggle(reward.music);
-            element.find('.item-css').toggle(reward.css);
+            if (!reward.music) {
+                element.find('.item-music').remove();
+            }
+
+            if (!reward.css) {
+                element.find('.item-css').remove();
+            }
 
             var tier = lootboxTiers[reward.tier];
             element.css('borderColor', tier.color);
@@ -293,6 +297,8 @@ $(document).ready(function () {
         addRewardToInventory('nothing');
     }
     updateInventory();
+
+    $('#shekelCount').show();
 
     if (localStorage.getItem('activeCSS')) {
         $('html').addClass('reward-' + localStorage.getItem('activeCSS'));
