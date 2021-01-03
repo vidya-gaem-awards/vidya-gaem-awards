@@ -314,7 +314,9 @@ jQuery(function () {
     if (localStorage.getItem('activeMusic') && !localStorage.getItem('muteMusic')) {
         playMusic(localStorage.getItem('activeMusic'), true).catch(() => {
             let clickHandler = () => {
-                playMusic(localStorage.getItem('activeMusic'), true);
+                if (localStorage.getItem('activeMusic')) {
+                    playMusic(localStorage.getItem('activeMusic'), true);
+                }
                 $(document).off('click', clickHandler);
             }
 
