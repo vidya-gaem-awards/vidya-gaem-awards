@@ -232,6 +232,7 @@ $(document).ready(function () {
     var lootboxCost = lootboxSettings.cost;
 
     $('#lootboxCostText').text(lootboxCost);
+    $('#shekelCount').show();
 
     var inventory;
 
