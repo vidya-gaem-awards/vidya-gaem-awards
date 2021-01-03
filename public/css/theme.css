@@ -33,28 +33,21 @@
 
 @font-face {
   font-family: 'X-Files';
-  src: url('/fonts/x-files.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Cracked Johnnie';
-  src: url('/fonts/CrackedJohnnie.ttf') format('truetype');
+  src: url('/fonts/X-Files.woff2') format('woff2'), url('/fonts/X-Files.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Dot Matrix';
-  src: url('/fonts/DotMatrix.ttf') format('truetype');
+  src: url('/fonts/DotMatrix.woff2') format('woff2'), url('/fonts/DotMatrix.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Dot Matrix';
-  src: url('/fonts/DotMatrixBold.ttf') format('truetype');
+  src: url('/fonts/DotMatrixBold.woff2') format('woff2'), url('/fonts/DotMatrixBold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }

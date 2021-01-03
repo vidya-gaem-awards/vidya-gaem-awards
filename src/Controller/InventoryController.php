@@ -16,7 +16,7 @@ class InventoryController extends AbstractController
 
         $rewards = [];
         for ($i = 0; $i < 3; $i++) {
-            if ($i === 0) {
+            if (random_int(1, 3) === 3) {
                 $rewards[] = ['type' => 'shekels', 'amount' => random_int(2, 1000)];
             } else {
                 $item = $lootboxService->getRandomItem();
