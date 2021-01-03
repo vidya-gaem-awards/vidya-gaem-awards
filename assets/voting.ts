@@ -394,7 +394,7 @@ jQuery(function () {
         if (reward.music && button === 'music') {
             if (alreadyActive) {
                 resetMusic();
-            } else if (canPlayAudio) {
+            } else if (!canPlayAudio) {
                 $('#no-music').modal('show');
             } else {
                 playMusic(id, true).catch(e => {
