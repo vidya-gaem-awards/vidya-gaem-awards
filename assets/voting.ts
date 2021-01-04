@@ -814,6 +814,8 @@ jQuery(function () {
 
         bottomArea.addClass("locked");
         submitButton.addClass('iVoted').attr('title', 'Saved!');
+        $('#submitReminder').text('Your votes have been submitted.');
+
         previousLockExists = true;
         votesChanged = false;
         $(".navigation").show();
@@ -823,6 +825,7 @@ jQuery(function () {
     function unlockVotes() {
         $(".voteBox").removeClass("locked");
         $(".aNominee").removeClass("locked");
+        $('#submitReminder').text('Don\'t forget to click on "Submit Votes" below to save your votes!');
 
         bottomArea.removeClass("locked");
         submitButton.removeClass('iVoted').attr('title', 'Submit Votes');
