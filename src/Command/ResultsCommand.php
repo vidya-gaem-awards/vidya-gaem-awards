@@ -235,7 +235,7 @@ class ResultsCommand extends Command
             $query = clone $baseQuery;
             $query
                 ->set('v.number', $info['number'])
-                ->setParameter('id', $id)
+                ->setParameter('id', (string) $id)
                 ->getQuery()
                 ->execute();
 
