@@ -623,7 +623,7 @@ jQuery(function () {
         });
 
         if (getRandomInt(1,7) === 6) {
-            $('#youre').attr('src', '/img/youre-rewards.png');
+            $('#youre').attr('src', '/2020images/youre-rewards.png');
         }
 
         $('#rewards').modal('show');
