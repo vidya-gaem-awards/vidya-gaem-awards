@@ -2,14 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Entity\UserInventoryItem;
 use App\Service\ConfigService;
 use App\Service\LootboxService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class InventoryController extends AbstractController
 {
-    public function purchaseLootbox(ConfigService $configService, LootboxService $lootboxService)
+    public function purchaseLootbox(ConfigService $configService, LootboxService $lootboxService, UserInterface $user, EntityManagerInterface $em)
     {
+        /** @var User $user */
+
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The lootbox shop has closed for the year. No refunds!'], 400);
         }
@@ -21,8 +27,15 @@ class InventoryController extends AbstractController
             } else {
                 $item = $lootboxService->getRandomItem();
                 $rewards[] = ['type' => 'item', 'id' => $item->getId(), 'shortName' => $item->getShortName()];
+
+                $userItem = new UserInventoryItem();
+                $userItem->setUser($user->getFuzzyID());
+                $userItem->setItem($item);
+                $em->persist($userItem);
             }
         }
+
+        $em->flush();
 
         return $this->json(['rewards' => $rewards]);
     }

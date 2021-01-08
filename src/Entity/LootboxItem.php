@@ -111,6 +111,11 @@ class LootboxItem implements JsonSerializable, DropChance
      */
     private $cachedDropValueEnd;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $extra;
+
     public function setId($id)
     {
         $this->id = $id;
@@ -273,7 +278,8 @@ class LootboxItem implements JsonSerializable, DropChance
             'year' => $this->getYear(),
             'tier' => $this->getTier()->getId(),
             'dropChance' => $this->getDropChance(),
-            'absoluteDropChance' => $this->getAbsoluteDropChance()
+            'absoluteDropChance' => $this->getAbsoluteDropChance(),
+            'extra' => $this->getExtra(),
         ];
     }
 
@@ -372,6 +378,18 @@ class LootboxItem implements JsonSerializable, DropChance
     public function setCachedDropValueEnd(?string $cachedDropValueEnd): self
     {
         $this->cachedDropValueEnd = $cachedDropValueEnd;
+
+        return $this;
+    }
+
+    public function getExtra(): ?string
+    {
+        return $this->extra;
+    }
+
+    public function setExtra(?string $extra): self
+    {
+        $this->extra = $extra;
 
         return $this;
     }

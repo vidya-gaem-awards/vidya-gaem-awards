@@ -10,15 +10,20 @@ declare var lastVotes: any;
 declare var currentAward: string;
 declare var postURL: string;
 declare var votingStyle: any;
-declare var lootboxSettings: any;
-declare var lootboxTiers: any;
-declare var rewards: any;
+declare const lootboxSettings: any;
+declare const lootboxTiers: any;
+declare const rewards: any;
+declare const knownItems: any;
 
 let dragCounter: any;
 let toddDialog: any;
 let showRewardsOnSubmit: boolean = false;
 let music: HTMLAudioElement;
 let canPlayAudio: boolean;
+
+for (const item of knownItems) {
+    rewards[item.shortName] = item;
+}
 
 var val;
 $('#debugWidth').change(function () {
@@ -238,6 +243,19 @@ jQuery(function () {
 
     var inventory;
 
+    const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const symbols = "!@#$%^&*()|_-+=\\";
+
+    setInterval(() => {
+        const elements = $('.inventory-item.encrypted .item-button');
+        for (const element of elements) {
+            const $el = $(elements);
+            const alphabet = $el.is(':hover') ? symbols : alpha;
+            const randomText = [...Array(12)].reduce(a=>a+alphabet[~~(Math.random()*alphabet.length)],'');
+            $el.text(randomText);
+        }
+    }, 100);
+
     function updateInventory() {
         // if (inventory.version === undefined) {
         //     inventory.version = 2;
@@ -295,6 +313,10 @@ jQuery(function () {
                 element.find('.item-tier').css('backgroundColor', 'black');
             } else {
                 element.find('.item-tier').css('backgroundColor', tier.color);
+            }
+
+            if (reward.extra) {
+                element.addClass('encrypted');
             }
 
             element.show();
@@ -356,6 +378,18 @@ jQuery(function () {
 
         if (id === 'clamburger') {
             shuffleTextNodes($('div'));
+        }
+
+        if (reward.extra) {
+            const a = document.createElement("a");
+            document.body.appendChild(a);
+            a.href = reward.extra;
+            a.setAttribute('target', '_blank');
+            a.setAttribute("download", "");
+            a.click();
+            document.body.removeChild(a);
+
+            return;
         }
 
         // if (id === 'half-life-three') {
@@ -540,8 +574,15 @@ jQuery(function () {
 
         var reward = pendingItems.pop();
 
+        $item.removeClass('encrypted');
+
         if (reward.type === 'item') {
             var item = rewards[reward.shortName];
+
+            if (item.extra) {
+                $item.addClass('encrypted');
+            }
+
             var tier = lootboxTiers[item.tier];
             addRewardToInventory(item.shortName);
             image.attr('src', item.image.url);

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,116 +13,72 @@ use Doctrine\ORM\Mapping as ORM;
 class UserInventoryItem
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="inventory", type="string", length=45)
+     * @ORM\Column(name="user", type="string", length=45, nullable=false)
      */
-    private $inventory;
+    private string $user;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
+     * @ORM\Column(name="timestamp", type="datetime_immutable", nullable=false)
      */
-    private $timestamp;
+    private DateTimeImmutable $dateReceived;
 
     /**
-     * @var LootboxItem
-     *
      * @ORM\ManyToOne(targetEntity="LootboxItem", inversedBy="userItems")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="itemID", referencedColumnName="id")
      * })
      */
-    private $item;
+    private LootboxItem $item;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function __construct()
+    {
+        $this->dateReceived = new DateTimeImmutable();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set inventory
-     *
-     * @param string $inventory
-     *
-     * @return UserInventoryItem
-     */
-    public function setInventory($inventory)
+    public function setUser(string $user): self
     {
-        $this->inventory = $inventory;
+        $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Get inventory
-     *
-     * @return string
-     */
-    public function getInventory()
+    public function getUser(): string
     {
-        return $this->inventory;
+        return $this->user;
     }
 
-    /**
-     * Set timestamp
-     *
-     * @param DateTime $timestamp
-     *
-     * @return UserInventoryItem
-     */
-    public function setTimestamp($timestamp)
+    public function setDateReceived(DateTimeImmutable $dateReceived): self
     {
-        $this->timestamp = $timestamp;
+        $this->dateReceived = $dateReceived;
 
         return $this;
     }
 
-    /**
-     * Get timestamp
-     *
-     * @return DateTime
-     */
-    public function getTimestamp()
+    public function getDateReceived(): DateTimeImmutable
     {
-        return $this->timestamp;
+        return $this->dateReceived;
     }
 
-    /**
-     * Set item
-     *
-     * @param LootboxItem $item
-     *
-     * @return UserInventoryItem
-     */
-    public function setItem(LootboxItem $item = null)
+    public function setItem(LootboxItem $item): self
     {
         $this->item = $item;
 
         return $this;
     }
 
-    /**
-     * Get item
-     *
-     * @return LootboxItem
-     */
-    public function getItem()
+    public function getItem(): LootboxItem
     {
         return $this->item;
     }

@@ -5,6 +5,7 @@ use App\Entity\Advertisement;
 use App\Entity\LootboxItem;
 use App\Entity\LootboxTier;
 use App\Entity\User;
+use App\Entity\UserInventoryItem;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\PredictionService;
@@ -183,6 +184,7 @@ class VotingController extends AbstractController
         $items = $em->createQueryBuilder()
             ->select('i')
             ->from(LootboxItem::class, 'i')
+            ->where('i.extra IS NULL')
             ->indexBy('i', 'i.shortName')
             ->getQuery()
             ->getResult();
@@ -220,6 +222,17 @@ class VotingController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        // Secret items that the user has legitimately obtained
+        $knownItems = $em->createQueryBuilder()
+            ->select('i')
+            ->from(LootboxItem::class, 'i')
+            ->join(UserInventoryItem::class, 'uii', 'WITH', 'uii.item = i')
+            ->where('uii.user = :user')
+            ->setParameter('user', $user->getFuzzyID())
+            ->andWhere('i.extra IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+
         return $this->render('voting.html.twig', [
             'title' => 'Voting',
             'awards' => $awards,
@@ -240,6 +253,7 @@ class VotingController extends AbstractController
 //            'itemChoiceArray' => $itemChoiceArray,
             'lootboxSettings' => $lootboxSettings,
             'lootboxTiers' => $lootboxTiers,
+            'knownItems' => $knownItems,
             'rewardCSS' => $customCss,
             'showFantasyPromo' => !$predictionService->arePredictionsLocked()
         ]);

@@ -408,6 +408,8 @@ header {
 .lootboxbox {
   display: flex;
   justify-content: center;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .lootbox-image {
@@ -417,7 +419,7 @@ header {
 .lootbox {
   width: 30%;
   margin: 10px;
-  padding: 10px;
+  //padding: 10px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -563,6 +565,36 @@ $card-width: 150px;
   justify-content: start;
   background-image: url(/2020images/cardbg.png);
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+  &.encrypted {
+    background-image: url(/2020images/cardbg-black.png);
+    color: white;
+    box-shadow: 0 0 6px 1px green, 0 0 10px 3px black;
+    padding-top: 10px;
+
+    img {
+      display: none;
+    }
+
+    .item-name {
+      margin-top: 58px;
+    }
+
+    .item-button {
+      color: lime;
+      background: rgba(0, 0, 0, 0.6);
+      border-top-color: transparent;
+
+      &:hover {
+        color: white;
+        background: blue;
+      }
+    }
+
+    .item-tier {
+      display: none !important;
+    }
+  }
 }
 
 .item-name {
