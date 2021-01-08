@@ -559,6 +559,7 @@ jQuery(function () {
     });
 
     var lootboxSound = new Audio("/ogg/open-box.ogg");
+    var spookyLootboxSound = new Audio("/2020images/spooky.ogg");
 
     var showNewLoot = function showNewLoot(i) {
         var lootbox = $($('.lootbox').get(i));
@@ -577,7 +578,7 @@ jQuery(function () {
         $item.removeClass('encrypted');
 
         if (reward.type === 'item') {
-            var item = rewards[reward.shortName];
+            var item = rewards[reward.item.shortName];
 
             if (item.extra) {
                 $item.addClass('encrypted');
@@ -616,8 +617,17 @@ jQuery(function () {
     }
 
     $('#unboxButton').click(function () {
-        lootboxSound.volume = 0.25;
-        lootboxSound.play();
+        const spookyItems = pendingItems.filter(reward => reward.item && reward.item.extra);
+
+        if (spookyItems.length > 0) {
+            setTimeout(() => {
+                spookyLootboxSound.volume = 0.5;
+                spookyLootboxSound.play();
+            }, 1000);
+        } else {
+            lootboxSound.volume = 0.25;
+            lootboxSound.play();
+        }
 
         $('.lootbox').addClass('animate');
 
@@ -679,6 +689,16 @@ jQuery(function () {
 
         $.post('/inventory/purchase-lootbox').then(data => {
             pendingItems = data.rewards;
+            for (const reward of pendingItems) {
+                if (reward.type !== 'item') {
+                    continue;
+                }
+                if (!rewards[reward.item.shortName]) {
+                    rewards[reward.item.shortName] = reward.item;
+                }
+            }
+
+            console.log(rewards);
         }).always(() => {
             $('#unboxButton').removeAttr('disabled');
         });

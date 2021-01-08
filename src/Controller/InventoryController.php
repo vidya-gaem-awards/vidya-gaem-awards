@@ -26,7 +26,7 @@ class InventoryController extends AbstractController
                 $rewards[] = ['type' => 'shekels', 'amount' => random_int(2, 1000)];
             } else {
                 $item = $lootboxService->getRandomItem();
-                $rewards[] = ['type' => 'item', 'id' => $item->getId(), 'shortName' => $item->getShortName()];
+                $rewards[] = ['type' => 'item', 'item' => $item];
 
                 $userItem = new UserInventoryItem();
                 $userItem->setUser($user->getFuzzyID());
