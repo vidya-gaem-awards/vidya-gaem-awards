@@ -125,12 +125,18 @@
         }
     }
 
+    .backup-files {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
     .backup-file {
         width: 200px;
         display: block;
         text-align: center;
         color: black;
-        background-image: url('{{ asset('2020images/cardbg.png') }}')
+        background-image: url('{{ asset('2020images/cardbg.png') }}');
+        margin-right: 5px;
     }
 
     .backup-file .image {
@@ -194,23 +200,25 @@ ETA: <span id="countdown"></span>
 
     <h2 style="margin-top: 40px;">Backup Volume Contents</h2>
 
-    <a class="card backup-file" href="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}" target="_blank">
-      <div class="card-body">
-        <div class="image">
-          <img src="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}">
+    <div class="backup-files">
+      <a class="card backup-file" href="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}" target="_blank">
+        <div class="card-body">
+          <div class="image">
+            <img src="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}">
+          </div>
+          <p class="card-text">12.jpg (392 KB)</p>
         </div>
-        <p class="card-text">12.jpg (392 KB)</p>
-      </div>
-    </a>
+      </a>
 
-    <a class="card backup-file" href="{{ asset("uploads/VGUltra/¼Ò{j'gìóVLwéÑ!p³³¸ø{.png") }}" target="_blank">
-      <div class="card-body">
-        <div class="image">
-          <img src="{{ asset("uploads/VGUltra/¼Ò{j'gìóVLwéÑ!p³³¸ø{.png") }}">
+      <a class="card backup-file" href="{{ asset("uploads/VGUltra/¼Ò{j'gìóVLwéÑ!p³³¸ø{.png") }}" target="_blank">
+        <div class="card-body">
+          <div class="image">
+            <img src="{{ asset("uploads/VGUltra/¼Ò{j'gìóVLwéÑ!p³³¸ø{.png") }}">
+          </div>
+          <p class="card-text">33.jpg (672 KB)</p>
         </div>
-        <p class="card-text">33.jpg (672 KB)</p>
-      </div>
-    </a>
+      </a>
+    </div>
 
     <h2 style="margin-top: 40px;">System Encryption Code Input</h2>
 
