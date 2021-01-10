@@ -14,6 +14,7 @@
         padding: 0 100px;
         background-image: url('{{ asset('2020images/arg-bg.jpg') }}');
         background-size: cover;
+        background-attachment: fixed;
         min-height: 100vh;
     }
 
@@ -30,7 +31,6 @@
         background-image: radial-gradient(
                 rgba(0, 150, 0, 0.75), black 120%
         );
-        min-height: 50vh;
         color: white;
         font: 1.3rem Inconsolata, monospace;
         text-shadow: 0 0 5px #C8C8C8;
@@ -186,7 +186,7 @@
 
     <h2 style="margin-top: 40px;">System Log</h2>
 
-    <div class="terminal" style="white-space: pre">Mounting system drive...            <span style="color: red;">[ FAIL ]</span>
+    <pre class="terminal" style="white-space: pre">Mounting system drive...            <span style="color: red;">[ FAIL ]</span>
 Decryption password is incorrect.
 Loading recovery environment...     <span style="color: lime;">[  OK  ]</span>
 
@@ -210,7 +210,7 @@ Detected 6 files in need of repair.
 File 1/6 [12.jpg] repaired.
 Repairing file 2/6 [33.jpg]...
 ETA: <span id="countdown"></span>
-    </div>
+    </pre>
 
     <h2 style="margin-top: 40px;">Backup Volume Contents</h2>
 
