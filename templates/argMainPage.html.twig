@@ -187,7 +187,8 @@ Corruption detected in /mnt/vga2020backup.
 > <span style="color: yellow;">fsck -y /dev/fd0</span>
 Detected 6 files in need of repair.
 File 1/6 [12.jpg] repaired.
-Repairing file 2/6 [33.jpg]...
+File 2/6 [33.jpg] repaired.
+Repairing file 3/6 [90.jpg]...
 ETA: <span id="countdown"></span>
     </pre>
 
@@ -199,6 +200,15 @@ ETA: <span id="countdown"></span>
           <img src="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}">
         </div>
         <p class="card-text">12.jpg (392 KB)</p>
+      </div>
+    </a>
+
+    <a class="card backup-file" href="{{ asset("uploads/VGUltra/¼Ò{j'gìóVLwéÑ!p³³¸ø{.png") }}" target="_blank">
+      <div class="card-body">
+        <div class="image">
+          <img src="{{ asset("uploads/VGUltra/¼Ò{j'gìóVLwéÑ!p³³¸ø{.png") }}">
+        </div>
+        <p class="card-text">33.jpg (672 KB)</p>
       </div>
     </a>
 
@@ -217,7 +227,7 @@ ETA: <span id="countdown"></span>
 
     <p>
       <strong>Encryption codes found:</strong> 0<br>
-      <strong>Layers remaining:</strong> ?
+      <strong>Layers remaining:</strong> Unknown
     </p>
   </div>
 {% endblock %}
@@ -234,7 +244,7 @@ ETA: <span id="countdown"></span>
         var clientNow = Date.now();
         var serverNow = clientNow - clientLoad + serverLoad - 1;
 
-        var kickoff = Date.parse("{{ '2021-01-11 00:00:00' | date('c') }}");
+        var kickoff = Date.parse("{{ '2021-01-11 18:04:55' | date('c') }}");
         var diff = kickoff - serverNow;
         diff = Math.max(diff, 0);
 
