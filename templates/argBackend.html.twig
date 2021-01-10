@@ -1,0 +1,84 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block title %}ARG Control Center{% endblock %}
+
+{% block css %}
+  {{ parent() }}
+
+  <style type="text/css">
+      .code {
+          display: flex;
+          align-items: center;
+          border: 1px solid #BBB;
+          border-bottom: none;
+          padding-left: 10px;
+          flex-grow: 1;
+          background: #E9E9E9;
+          align-self: stretch;
+      }
+
+      .codes .code-container:first-child .code {
+          border-top-left-radius: .25rem;
+          border-top-right-radius: .25rem;
+      }
+
+      .codes .code-container:last-child .code {
+          border-bottom-left-radius: .25rem;
+          border-bottom-right-radius: .25rem;
+          border-bottom: 1px solid #BBB;
+      }
+
+      .code-container {
+          display: flex;
+          align-items: center;
+          height: 30px;
+      }
+
+      .code-count {
+          width: 2em;
+          margin-right: 1rem;
+          text-align: center;
+          font-weight: bold;
+      }
+
+      .code-code {
+          flex-grow: 1;
+      }
+  </style>
+{% endblock %}
+
+{% block content %}
+<h1 class="page-header board-header">ARG Control Center</h1>
+
+  <div class="row">
+    <div class="col-6">
+      <h2>Code Summary</h2>
+
+      <div class="codes">
+        {% for code, count in codes %}
+          <div class="code-container">
+              <div class="code">
+                <div class="code-code">{{ code }}</div>
+                <div class="code-count">{{ count }}</div>
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-6">
+      <h2>Latest 50 Codes</h2>
+
+      <div class="codes">
+        {% for code in latestCodes %}
+          <div class="code-container">
+            <div class="code">
+              <div class="code-code">{{ code.code }}</div>
+              <div>{{ code.timestamp.format('c') }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

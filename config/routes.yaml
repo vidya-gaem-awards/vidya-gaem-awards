@@ -466,3 +466,24 @@ advertRedirect:
     controller: App\Controller\AdvertManagerController::redirectAction
     requirements:
         advertToken: '^[0-9a-f]+$'
+
+#
+# ARG
+#
+
+argLandingPage:
+    path:       /admin
+    controller: App\Controller\ArgController::landingPage
+
+argMain:
+    path:       /admin/emergency-recovery
+    controller: App\Controller\ArgController::main
+
+argCodeInput:
+    path:       /admin/code
+    methods:    [POST]
+    controller: App\Controller\ArgController::codeInput
+
+argBackend:
+    path:       /arg
+    controller: App\Controller\ArgController::backend

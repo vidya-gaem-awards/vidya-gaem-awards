@@ -1,0 +1,26 @@
+{% extends 'base/master.html.twig' %}
+
+{% block fullTitle %}-- SYSTEM COMPROMISED --{% endblock %}
+
+{% block css %}
+  <style type="text/css">
+    body {
+        background-image: url("{{ asset('2020images/arg-landing-page.jpg') }}");
+        height: 100vh;
+        background-size: cover;
+        display: flex;
+    }
+
+    a {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <a href="{{ path('argMain') }}"></a>
+{% endblock %}

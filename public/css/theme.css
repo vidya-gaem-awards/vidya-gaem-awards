@@ -201,15 +201,15 @@ a:hover {
   background: rgba(242, 152, 35, 0.2);
 }
 
-.card {
-  background: rgba(0, 0, 0, 0.4);
-  border-color: #fec644;
-}
+/*.card {*/
+/*  background: rgba(0, 0, 0, 0.4);*/
+/*  border-color: #fec644;*/
+/*}*/
 
-.card-header {
-  background: rgba(0, 0, 0, 0.4);
-  border-color: #fec644;
-}
+/*.card-header {*/
+/*  background: rgba(0, 0, 0, 0.4);*/
+/*  border-color: #fec644;*/
+/*}*/
 
 /** Bootstrap button **/
 .btn {

@@ -17,6 +17,7 @@ class Permission
         'add_user' => 'Add a new level 1 user',
         'add_video_game' => 'Add a game to the autocomplete list',
         'adverts_manage' => 'View and manage the fake voting page ads',
+        'arg_manage' => 'View and manage things relating to the ARG',
         'audit_log_view' => 'View the website\'s audit log',
         'autocompleter_edit' => 'Edit nomination autocompleters',
         'awards_delete' => 'Delete awards',
@@ -53,7 +54,7 @@ class Permission
         'LEVEL_1' => ['add_video_game', 'awards_feedback', 'nominations_view', 'tasks_view', 'view_unfinished_pages', 'voting_view'],
         'LEVEL_2' => ['LEVEL_1', 'awards_secret', 'news_view_user', 'profile_view', 'tasks_nominees', 'voting_code'],
         'LEVEL_3' => ['LEVEL_2', 'autocompleter_edit', 'awards_edit', 'nominations_edit', 'profile_edit_notes'],
-        'LEVEL_4' => ['LEVEL_3', 'add_user', 'audit_log_view', 'news_manage', 'profile_edit_details', 'referrers_view', 'voting_results', 'adverts_manage', 'items_manage'],
+        'LEVEL_4' => ['LEVEL_3', 'add_user', 'arg_manage', 'audit_log_view', 'news_manage', 'profile_edit_details', 'referrers_view', 'voting_results', 'adverts_manage', 'items_manage'],
         'LEVEL_5' => ['LEVEL_4', 'awards_delete', 'edit_config', 'template_edit', 'profile_edit_groups']
     ];
 

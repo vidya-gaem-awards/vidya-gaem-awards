@@ -1,0 +1,291 @@
+{% extends "base/special.html.twig" %}
+
+
+{% block css %}
+  {{ parent() }}
+
+  {{ encore_entry_link_tags('voting') }}
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+
+<style type="text/css">
+    body {
+        padding: 0 100px;
+        background-image: url('{{ asset('2020images/arg-bg.jpg') }}');
+        background-size: cover;
+        min-height: 100vh;
+    }
+
+    .center-container {
+        max-width: 1000px;
+        width: 100%;
+        text-align: justify;
+        min-height: 100vh;
+        padding-bottom: 50px;
+    }
+
+    .terminal {
+        background-color: black;
+        background-image: radial-gradient(
+                rgba(0, 150, 0, 0.75), black 120%
+        );
+        min-height: 50vh;
+        color: white;
+        font: 1.3rem Inconsolata, monospace;
+        text-shadow: 0 0 5px #C8C8C8;
+        position: relative;
+        margin-top: 20px;
+        border: 4px solid black;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: inset 0 0 10px white;
+        font-size: 16px;
+    }
+
+    .terminal::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+        );
+        pointer-events: none;
+        padding: 5px;
+    }
+
+    .terminal::selection {
+        background: red;
+        text-shadow: none;
+    }
+
+    h1 {
+        font-family: Dot Matrix,monospace;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-family: Dot Matrix,monospace;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-family: Dot Matrix,monospace;
+        font-size: 18px;
+    }
+
+    @media screen and (max-width: 800px) {
+        body {
+            padding: 0 50px;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        h2 {
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 16px;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        body {
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 16px;
+        }
+    }
+
+    .backup-file {
+        width: 200px;
+        display: block;
+        text-align: center;
+        color: black;
+        background-image: url('{{ asset('2020images/cardbg.png') }}')
+    }
+
+    .backup-file .image {
+        height: 150px;
+        width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px;
+    }
+
+    .backup-file img {
+        max-width: 100%;
+    }
+
+    #code-input-response {
+        height: 50px;
+    }
+</style>
+{% endblock %}
+
+{% block fullTitle %}-- SYSTEM COMPROMISED --{% endblock %}
+
+{% block body %}
+  <div class="center-container">
+    <h1>SYSTEM COMPROMISE DETECTED</h1>
+    <h2>Emergency recovery procedures initiated</h2>
+
+    <p style="margin-top: 30px;">
+      If you’re seeing this, then all hope is not lost. The /v/GAs have been compromised and our information on the site, awards, nominees, gameplay, music, and trailers have been sabotaged.
+    </p>
+    <p>
+      Our team has gone to name the individual responsible for the event has been dubbed “Maudz Jahnnie,” the disaster is pretty much over but we still need to pick up the pieces.
+    </p>
+    <p>
+      The /v/GAs needs your help: In order to secure our assets and information that Maudz could not get their hands on, we’ve locked the door on ourselves and encrypted pretty much everything.
+    </p>
+    <p>
+      Normally, we’d know how to decrypt our own passwords but Maudz played fowl and bricked our tools. So we’re asking for outside help, that’s you.
+    </p>
+    <p>
+      Our field agents, Vee, Gee, and Ayy left some important intel lying around the website. We were only smart enough to take a crack at one to get us started but here’s where you come in.
+    </p>
+
+    <p>
+      Vee, Gee, and Ayy hid passwords to the encryptions using videos and images from the spy games we had them marathon over the year. I’ve heard from our intel team that the nominee voting page has something to do with the images tied to the videos, but I haven't discovered how yet….
+    </p>
+
+    <p>
+      Use the information available and the intel you can pull from the voting pages to find out what those passwords are.
+    </p>
+
+
+    <h2 style="margin-top: 40px;">System Log</h2>
+
+    <div class="terminal" style="white-space: pre">Mounting system drive...            <span style="color: red;">[ FAIL ]</span>
+Decryption password is incorrect.
+Loading recovery environment...     <span style="color: lime;">[  OK  ]</span>
+
+> <span style="color: yellow;">mount -t msdos /dev/fd0 /mnt/vga2020backup</span>
+Mount successful.
+
+> <span style="color: yellow;">ls -al /mnt/vga2020backup</span>
+drwxr-xr-x+ root root 4.0K Jan  8 17:01 .
+drwxr-xr-x+ root root 4.0K Jan  8 17:01 ..
+?????????   ?    ?    ?    ?            12.jpg
+?????????   ?    ?    ?    ?            12.mp4
+?????????   ?    ?    ?    ?            33.jpg
+?????????   ?    ?    ?    ?            33.mp4
+?????????   ?    ?    ?    ?            90.jpg
+?????????   ?    ?    ?    ?            90.mp4
+
+Corruption detected in /mnt/vga2020backup.
+
+> <span style="color: yellow;">fsck -y /dev/fd0</span>
+Detected 6 files in need of repair.
+File 1/6 [12.jpg] repaired.
+Repairing file 2/6 [33.jpg]...
+ETA: <span id="countdown"></span>
+    </div>
+
+    <h2 style="margin-top: 40px;">Backup Volume Contents</h2>
+
+    <a class="card backup-file" href="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}" target="_blank">
+      <div class="card-body">
+        <div class="image">
+          <img src="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}">
+        </div>
+        <p class="card-text">12.jpg (392 KB)</p>
+      </div>
+    </a>
+
+    <h2 style="margin-top: 40px;">System Encryption Code Input</h2>
+
+    <form class="form-inline" id="code-input-form" style="justify-content: center;">
+      <input class="form-control form-control-lg" type="text" autofocus style="font-family: 'Dot Matrix', monospace;" maxlength="20">
+      <button type="submit" class="btn btn-lg ml-3 btn-lootbox" style="color: black;">Submit</button>
+    </form>
+    <p class="text-center mt-3 mx-auto" id="code-input-response" style="max-width: 500px"></p>
+  </div>
+{% endblock %}
+
+{% block js %}
+  {{ parent() }}
+
+<script type="text/javascript">
+    var serverLoad = Date.parse("{{ 'now' | date('c') }}");
+    var clientLoad = Date.now();
+
+    // This could probably be replaced by moment.js
+    function updateWCTime() {
+        var clientNow = Date.now();
+        var serverNow = clientNow - clientLoad + serverLoad - 1;
+
+        var kickoff = Date.parse("{{ '2021-01-11 00:00:00' | date('c') }}");
+        var diff = kickoff - serverNow;
+        diff = Math.max(diff, 0);
+
+        var hours = Math.floor(diff / (1000 * 60 * 60));
+        var mins = Math.floor(diff / (1000 * 60));
+        var secs = Math.floor(diff / 1000);
+
+        var hh = String(hours).padStart(2, '0');
+        var mm = String(mins - hours * 60).padStart(2, '0');
+        var ss = String(secs - mins * 60).padStart(2, '0');
+
+        document.getElementById("countdown").innerHTML = `${hh}:${mm}:${ss}`;
+    }
+    window.onload = updateWCTime;
+    setInterval(updateWCTime, 500);
+
+    let currentlySubmitting = false;
+
+    $('#code-input-form').submit(function (event) {
+        event.preventDefault();
+
+        if (currentlySubmitting) {
+            return;
+        }
+
+        currentlySubmitting = true;
+        $('#code-input-response').text('Processing...');
+
+        const code = $('#code-input-form').find('input[type=text]').val();
+
+        $.post("{{ path('argCodeInput') }}", {code: code}, null, 'json')
+            .done(function (data) {
+                $('#code-input-response').text(data.response);
+            })
+            .fail(function (xhr, textStatus, error) {
+                $('#code-input-response').text('An error occurred. Contact a developer. (This error message is not part of the ARG)');
+            })
+            .always(function () {
+                currentlySubmitting = false;
+            });
+    });
+</script>
+{% endblock %}
