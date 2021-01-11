@@ -487,3 +487,13 @@ argCodeInput:
 argBackend:
     path:       /arg
     controller: App\Controller\ArgController::backend
+
+argBackendSaveTimes:
+    path:       /arg/save/times
+    methods:    [POST]
+    controller: App\Controller\ArgController::backendSaveTimes
+
+argBackendSaveConfig:
+    path:       /arg/save/config
+    methods:    [POST]
+    controller: App\Controller\ArgController::backendSaveConfig

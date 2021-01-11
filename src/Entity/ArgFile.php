@@ -6,7 +6,8 @@ use App\Repository\ArgFileRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ArgFileRepository::class)
+ * @ORM\Entity(repositoryClass=ArgFileRepository::class)`
+ * @ORM\Table(name="arg_files")
  */
 class ArgFile
 {
@@ -30,10 +31,15 @@ class ArgFile
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $thumbnail;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $size;
 
     /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime_immutable")
      */
     private $dateVisible;
 
@@ -86,6 +92,18 @@ class ArgFile
     public function setDateVisible(?\DateTimeImmutable $dateVisible): self
     {
         $this->dateVisible = $dateVisible;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(string $thumbnail): self
+    {
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }

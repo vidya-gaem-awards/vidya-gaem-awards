@@ -50,8 +50,85 @@
 {% block content %}
 <h1 class="page-header board-header">ARG Control Center</h1>
 
+  <div class="row mb-4">
+    <div class="col-sm-6">
+      <h2 class="mb-3">File Unlock Times</h2>
+
+      <form method="post" action="{{ path('argBackendSaveTimes') }}">
+        {% for file in files %}
+          <div class="form-group row">
+            <label for="file-{{ file.id }}" class="col-sm-2 col-form-label">{{ file.name }}</label>
+            <div class="col-sm-8">
+              <input id="file-{{ file.id }}" name="files[{{ file.id }}]" type="text" class="form-control" value="{{ file.dateVisible ? file.dateVisible.format('Y-m-d H:i') }}" placeholder="yyyy-mm-dd hh:mm" required>
+            </div>
+          </div>
+        {% endfor %}
+        <div class="form-group row">
+          <div class="col-sm-8 offset-sm-2">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-6">
+
+      <h2 class="mb-3">Other Settings</h2>
+
+      <form method="post" action="{{ path('argBackendSaveConfig') }}">
+        <div class="form-group row">
+          <label for="revealed-codes" class="col-sm-4 col-form-label">Revealed codes</label>
+          <div class="col-sm-8">
+            <textarea class="form-control" name="acceptedCodes" id="revealed-codes" rows="6">{% for code in config.acceptedCodes %}{{ code }}
+{% endfor %}</textarea>
+            <small class="form-text">Each line should contain one code. Revealed codes will be shown on the ARG page along with how many people entered it.</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="code-count" class="col-sm-4 col-form-label">Total code count</label>
+          <div class="col-sm-8">
+            <input type="number" id="code-count" name="codeCount" min="0" class="form-control" value="{{ config.codeCount ?: '' }}">
+            <small class="form-text">How many codes are there going to be in total? This will be shown on the ARG page. Leave blank for unknown.</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="stage" class="col-sm-4 col-form-label">Code input feedback</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="stage" name="stage">
+              <option value="0" {{ config.stage == 0 ? 'selected' }}>Stage 0 - no validation</option>
+              <option value="1" {{ config.stage == 1 ? 'selected' }}>Stage 1 - entered or not</option>
+              <option value="2" {{ config.stage == 2 ? 'selected' }}>Stage 2 - code count</option>
+              <option value="3" {{ config.stage == 3 ? 'selected' }}>Stage 3 - code count needed</option>
+            </select>
+            <small class="form-text">At each stage, a little bit more information will be revealed to users when they enter in an input code..</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="next-threshold" class="col-sm-4 col-form-label">Threshold needed for next code</label>
+          <div class="col-sm-8">
+            <input type="number" id="next-threshold" name="nextThreshold" min="0" class="form-control" value="{{ config.nextThreshold ?: '' }}">
+            <small class="form-text">How many different users need to enter a code before you will reveal it? (Stage 3 only)</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-8 offset-sm-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="finished" name="finished" {{ config.finished ? 'checked' }}>
+              <label class="form-check-label" for="finished">ARG finished</label>
+            </div>
+            <small class="form-text">Is the website portion of the ARG completed? Check this box to prevent additional submissions.</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-8 offset-sm-4">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="row">
-    <div class="col-6">
+    <div class="col-sm-6">
       <h2>Code Summary</h2>
 
       <div class="codes">
@@ -66,7 +143,7 @@
       </div>
     </div>
 
-    <div class="col-6">
+    <div class="col-sm-6">
       <h2>Latest 50 Codes</h2>
 
       <div class="codes">

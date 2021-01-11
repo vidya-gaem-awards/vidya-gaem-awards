@@ -46,6 +46,8 @@ class AuditLogController extends AbstractController
 //            'fantasy-signed-up' => 'Signed up for the Fantasy League',
 //            'fantasy-picked' => 'Made a pick in the Fantasy League',
 //            'fantasy-updated-details' => 'Updated their details in the Fantasy League',
+            'arg-times-updated' => 'Updated file unlock times for the ARG',
+            'arg-config-updated' => 'Updated the ARG settings',
         ];
 
         $result = $em->createQueryBuilder()

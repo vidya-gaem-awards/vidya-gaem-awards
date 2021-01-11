@@ -137,6 +137,7 @@
         color: black;
         background-image: url('{{ asset('2020images/cardbg.png') }}');
         margin-right: 5px;
+        margin-bottom: 5px;
     }
 
     .backup-file .image {
@@ -153,7 +154,7 @@
     }
 
     #code-input-response {
-        height: 50px;
+        min-height: 50px;
     }
 </style>
 {% endblock %}
@@ -192,32 +193,35 @@ Corruption detected in /mnt/vga2020backup.
 
 > <span style="color: yellow;">fsck -y /dev/fd0</span>
 Detected 6 files in need of repair.
-File 1/6 [12.jpg] repaired.
-File 2/6 [33.jpg] repaired.
-Repairing file 3/6 [90.jpg]...
+{% for file in files %}
+Repairing file {{ loop.index }}/{{ files | length }} [{{ file.name }}]... {% if file.dateVisible <= now %}
+repaired.
+{% elseif (files | last).dateVisible %}
 ETA: <span id="countdown"></span>
+{% else %}
+ETA: unknown
+{% endif %}
+{% endfor %}
+{% if allFilesVisible %}<span style="color: lime;">Repair complete. Filesystem /dev/fd0 is now clean.</span>
+
+>{% endif %}
     </pre>
 
     <h2 style="margin-top: 40px;">Backup Volume Contents</h2>
 
     <div class="backup-files">
-      <a class="card backup-file" href="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}" target="_blank">
-        <div class="card-body">
-          <div class="image">
-            <img src="{{ asset('/uploads/VGUltra/rhypngbarenfrznaryvsrug.png') }}">
-          </div>
-          <p class="card-text">12.jpg (392 KB)</p>
-        </div>
-      </a>
-
-      <a class="card backup-file" href="{{ asset("uploads/VGUltra/¼Ò{j'gìóVLwéÑ!p³³¸ø{.png") }}" target="_blank">
-        <div class="card-body">
-          <div class="image">
-            <img src="{{ asset("uploads/VGUltra/¼Ò{j'gìóVLwéÑ!p³³¸ø{.png") }}">
-          </div>
-          <p class="card-text">33.jpg (672 KB)</p>
-        </div>
-      </a>
+      {% for file in files %}
+        {% if file.dateVisible <= now %}
+          <a class="card backup-file" href="{{ file.link }}" target="_blank">
+            <div class="card-body">
+              <div class="image">
+                <img src="{{ file.thumbnail }}">
+              </div>
+              <p class="card-text">{{ file.name }} ({{ file.size }})</p>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
     </div>
 
     <h2 style="margin-top: 40px;">System Encryption Code Input</h2>
@@ -226,17 +230,89 @@ ETA: <span id="countdown"></span>
       <input class="form-control form-control-lg" type="text" style="font-family: 'Dot Matrix', monospace;" maxlength="20">
       <button type="submit" class="btn btn-lg ml-3 btn-lootbox" style="color: black;">Submit</button>
     </form>
-    <p class="text-center mt-3 mx-auto" id="code-input-response" style="max-width: 500px"></p>
+    <p class="text-center mt-3 mx-auto" id="code-input-response" style="max-width: 700px; color: maroon;"></p>
 
-    <p>
-      Cryptanalysis has determined that the system drive has been protected with multiple layers of encryption, all of which must be removed to decrypt the drive.
-      As layers are removed, more information will become available.
-    </p>
+<pre class="terminal">
+Encryption codes found:          {{ config.acceptedCodes | length }}
+{% for code in config.acceptedCodes %}
+    Code #{{ loop.index }}:  <strong style="color: yellow">{{ code }}</strong>
+{% endfor %}
 
-    <p>
-      <strong>Encryption codes found:</strong> 0<br>
-      <strong>Layers remaining:</strong> Unknown
-    </p>
+Layers of encryption remaining:  {{ config.codeCount ? config.codeCount - config.acceptedCodes | length : 'Unknown' }}
+{% if config.finished %}
+
+
+> <span style="color: yellow;">reboot -t now</span>
+Rebooting system...
+
+Importing encryption passwords...   <span style="color: lime;">[  OK  ]</span>
+Mounting system drive...            <span style="color: lime;">[  OK  ]</span>
+Connecting to database vga2020...   <span style="color: lime;">[  OK  ]</span>
+Initialising...
+<div style="font-size: 12px;">
+{% verbatim %}
+                                                 lI
+                                                 ;:
+                                               .'ll'.
+                                            .^^`.""'`^".
+                                           ^:^'.,!l`.'^,^
+                                          `" ':;;,:^,;' "`
+                                          ; ^,~l.  " :^` ;
+                                          I'!]&lt;I   " ^l,'I
+                                          :.'Ii!  '^'I...:
+                                           :.:<_:<<"^"^.:.
+                                            >~,;":i' ',i
+                                           '!Il>;!;:I!!i'
+                                           i!>;<?:II,:!!<
+                                          ;l>?>_?,;,l;I:_l
+                                         "i;+~^;>+l,`I".,~"
+                                        '>:,ll'"'>?,` ,"`.<'
+                                        !;"""";"!;:~;' ."`><
+                                       ;l",,`'"Ii  il:;:;~1;;
+                                      ^>^""`.':<.  .<:";;ll I"
+                                     .i,^;'.'"<,::;:,>",,;,.^i'
+                                     !,..".`;~, `,:` ,>^,^,'"!i
+                                    ;I"^`^'^ii   `^   li;'^, "<;
+                                   ^l`^^'^'^>          <; `,  :-^
+                                  .!.''.`^'i'          '! `!'^'l+.
+                                  !"'^'''`!:     !i     :I ^^^` !>
+:"```^'..`:"                   'l+i"`' '":~;;;;;;--;;;;;;~:^'   "i+l'                   ^:`..'^```":
+.,^   .`'.^l!`                  `>I",,,,'        ll        ',,:^,,!^                  'll^.'`.   ^,.
+  ','      ."iI.               .:   ",.                       ",   :.               .Ii".      ','
+    ^,.     ^`I<,              ;  .,'        ">[(\|{+,^[11.    .,.  ;              ,>;`"     .,^
+     .,"  ;".  ^i<^           ,' ',       .i|Jm0YvcYLJfJo/`      ,` ',           `>!^  .`^  ",.
+       ',`      ^,~i.        `" ',       :)LWZ/i^'',_xq$W/,       ,` "`        .!~,"     .`:'
+         ^,.  "`. 'I+;      .: ':       I/b$01`      ,|w@fI        ,' :.      :+I' .``  .,^
+           "".'     ,>+"    ; .:       `\q$W/;        :/#n>         :' ;    ^~>,     ..""
+            .,`   `". ,+>' ,'.:        _u$@p(.         ?uj-          :.', 'i~, .^`.  `,.
+              `,''"    'l+>" :         {L$$O1      ....`;;"..         : ^i+l'    "'',`
+                ""   .`".^i i          10$$0{     <|xrnrjrjr\l         i !^."'    ""
+                 .,^ ""  : ;+<`        ]X$@m)     !)\fc%$dr\);       '>+; :  `, ^,.
+                   `:'  "`I;.;_!.      ;tM@*\^       "|M$U}         l_;.;l`"  ',`
+                     ^"^",`   '!_:      _u8$c?       ItB$J}       ,+l'   `,"^"^
+                      '!;`    '"^<~`     +xa8c?^   .;|OQBJ}     `~<^".    `;l'
+                      ,:",`  "'  .,+i.    :}zpZzf|\rYLn)ZQ}   .!+,.  `;. `,"::
+                     ^l`  ^,'     ."I_;     ">{jucvx|~^ijj{  :+l".    .',^  `l^
+                    .>^     ""  ';`  ^>~^       .''.    ``'^~>^  ``.  ""     ^>'
+                    >,       .,`.'    ';~>'              .!+;'     '`,'       ,>
+                   !l          `,.  '"^ .l_I            ;+l. ^^.  .,`          I!
+                  :<             "" `^    ^>+"        "+>^    ^" ""             >;
+                 '+               .,`    ^^ "+<'    '>+" ^`.   `,.               ~`
+                 ,                  `,' `'    ;_l  I_I    .;.':`                  ,
+                                      ^,.    `^'!++i'^`     ,"
+                                       .,^       ``       ^,.
+                                         ',`  "":"^:""  `:'
+                                           ^,.;^    ^;.,^
+                                             :I`'  '';:
+                                              ."""""".
+                                                ^::^
+{% endverbatim %}
+</div>
+
+All systems online.
+Welcome home.
+{% endif %}
+</pre>
   </div>
 {% endblock %}
 
@@ -244,6 +320,7 @@ ETA: <span id="countdown"></span>
   {{ parent() }}
 
 <script type="text/javascript">
+  {% if not allFilesVisible and (files | last).dateVisible %}
     var serverLoad = Date.parse("{{ 'now' | date('c') }}");
     var clientLoad = Date.now();
 
@@ -252,7 +329,7 @@ ETA: <span id="countdown"></span>
         var clientNow = Date.now();
         var serverNow = clientNow - clientLoad + serverLoad - 1;
 
-        var kickoff = Date.parse("{{ '2021-01-11 18:04:55' | date('c') }}");
+        var kickoff = Date.parse("{{ (files | last).dateVisible | date('c') }}");
         var diff = kickoff - serverNow;
         diff = Math.max(diff, 0);
 
@@ -268,6 +345,7 @@ ETA: <span id="countdown"></span>
     }
     window.onload = updateWCTime;
     setInterval(updateWCTime, 500);
+  {% endif %}
 
     let currentlySubmitting = false;
 
