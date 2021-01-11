@@ -224,6 +224,7 @@ ETA: unknown
       {% endfor %}
     </div>
 
+    {% if not config.finished %}
     <h2 style="margin-top: 40px;">System Encryption Code Input</h2>
 
     <form class="form-inline" id="code-input-form" style="justify-content: center;">
@@ -231,6 +232,7 @@ ETA: unknown
       <button type="submit" class="btn btn-lg ml-3 btn-lootbox" style="color: black;">Submit</button>
     </form>
     <p class="text-center mt-3 mx-auto" id="code-input-response" style="max-width: 700px; color: maroon;"></p>
+    {% endif %}
 
 <pre class="terminal">
 Encryption codes found:          {{ config.acceptedCodes | length }}
