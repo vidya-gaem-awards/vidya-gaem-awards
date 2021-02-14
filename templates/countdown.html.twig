@@ -2,7 +2,11 @@
 
 {% block fullTitle %}2020 Vidya Gaem Awards{% endblock %}
 
-{% block head %}
+{% block css %}
+  {{ encore_entry_link_tags('voting') }}
+
+  {{ parent() }}
+
   <style type="text/css">
     html {
       height: 100%;
@@ -103,13 +107,11 @@
       font-weight: normal;
     }
 
-    .logo {
-      background-color: black;
-      /*border: 2px solid #af3a81;*/
-      margin-bottom: 30px;
-      height: 462px;
-      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.32), 0 0 0 1px rgba(0,0,0,0.16);
-    }
+    /*.logo {*/
+    /*  height: 210px;*/
+    /*  margin: 0 auto 10px auto;*/
+    /*  display: block;*/
+    /*}*/
 
     .title {
       text-align: center;
@@ -139,11 +141,6 @@
       display: inline-block;
     }
 
-    .timezone-container {
-      display: flex;
-      justify-content: center;
-      flex-grow: 1;
-    }
 
     .title h2.preshow-message {
       margin-top: 15px;
@@ -168,76 +165,131 @@
         display: none;
       }
     }
+
+    .terminal {
+        background-color: black;
+        background-image: radial-gradient( rgba(0, 150, 0, 0.75), black 120% );
+        color: white;
+        font: 1.3rem Inconsolata, monospace;
+        text-shadow: 0 0 5px #c8c8c8;
+        position: relative;
+        margin-top: 20px;
+        border: 4px solid black;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: inset 0 0 10px white;
+        font-size: 16px;
+    }
+
+    .aspect-ratio {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%;
+    }
+
+    .aspect-ratio iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+
+    .embed-container {
+        border: 2px dashed #c2c5b5;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 5px;
+    }
+
+    .timezone-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        row-gap: 10px;
+        column-gap: 10px;
+        margin-top: 20px;
+    }
+
+    .timezone {
+        background-image: url(/2020images/tape.png);
+        background-size: contain;
+        font-family: "Dot Matrix", monospace;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .timezone-name {
+        font-weight: bold;
+        margin-top: 4px;
+    }
+
+    .timezone-time {
+
+    }
   </style>
 {% endblock %}
 
 {% block body %}
-  <div style="text-align: center;">
-    <img src="{{ asset('2019images/vga2019_logo.png') }}" alt="Logo of the 2020 Vidya Gaem Awards" style="display: inline;">
+
+  <div class="background-elements">
+    <img class="conspiracy" src="{{ asset('2020images/conspiracy.png') }}">
+    {% if ad1 %}
+      <div class="photograph">
+        <div class="photo-image" style="background-image: url('{{ ad1.image.url | escape('html_attr') }}')"></div>
+        <div class="photo-text">{{ ad1.name }}</div>
+        <div class="photo-bg"></div>
+      </div>
+    {% endif %}
   </div>
 
-  <div class="zig d-none d-lg-block" style="margin-top: 20px;"></div>
+  <div class="center-container">
 
-  <div class="memeContainer">
-    <div class="meme leftMeme">
-      {% if ad1 %}
-        <a href="{{ path('advertRedirect', {'advertToken': ad1.token}) }}" target="_blank">
-          <img src="{{ ad1.image.url | escape('html_attr') }}">
-        </a>
-      {% endif %}
+    <header>
+      <a class="logo" href="{{ path('argLandingPage') }}">
+        <img src="{{ asset('2020images/logo.png') }}">
+      </a>
+      <div class="title-text">
+        <div class="line-1">The 2020 Vidya Gaem Awards</div>
+      </div>
+    </header>
+
+    <div class="zig"></div>
+
+    <div class="embed-container">
+      <div class="aspect-ratio">
+        {{ include('dynamic/countdown_logo_area.html.twig') }}
+      </div>
+    </div>
+
+    <div class="zig"></div>
+
+
+    <div class="title">
+      <h1>{{ include('dynamic/countdown_header.html.twig') }}</h1>
+      <h2 id="countdown">
+        <span id="countdown">&nbsp;</span>
+      </h2>
+      {{ include('dynamic/countdown_secondary_message.html.twig') }}
+      <div style="margin-top: 10px;">
+        <a href="https://vidyagaemawards.com/previous-years" class="btn" target="_blank">View previous /v/GA shows</a>
+        <a href="{{ otherTimezonesLink }}" class="btn" target="_blank">View stream date in your timezone</a>
+      </div>
     </div>
 
     <div class="timezone-container">
-      <div class="timezones d-none d-lg-block">
-        <dl>
-          {% for friendlyTimezone, timezone in timezones[:(timezones|length)/2] %}
-            <dt title="UTC {{ streamDate | date('P', timezone) }}">{{ friendlyTimezone }}</dt>
-            <dd>{{ streamDate | date('D M jS, H:i', timezone) }}</dd>
-          {% endfor %}
-          <dt><a href="{{ otherTimezonesLink }}" target="_blank">Other Timezones</a></dt>
-        </dl>
-      </div>
-      <div class="col-lg-6 col-12">
-        <div class="logo">
-          {{ include('dynamic/countdown_logo_area.html.twig') }}
-        </div>
-        <div class="title">
-          <h1>{{ include('dynamic/countdown_header.html.twig') }}</h1>
-          <h2 id="countdown">
-            <span id="countdown">&nbsp;</span>
-          </h2>
-          {{ include('dynamic/countdown_secondary_message.html.twig') }}
-          <div class="d-lg-none">
-            <a href="https://vidyagaemawards.com/previous-years" class="mobile-link" target="_blank">View stream date in your timezone</a>
+      {% for friendlyTimezone, timezone in timezones %}
+        <div class="timezone">
+          <div class="timezone-name">
+            <strong>{{ friendlyTimezone }} <span style="opacity: 0.8; font-weight: normal;">[{{ streamDate | date('P', timezone) }}]</span></strong>
           </div>
-          <div>
-            <a href="https://vidyagaemawards.com/previous-years" class="mobile-link" target="_blank">View previous /v/GA shows</a>
+          <div class="timezone-time">
+            {{ streamDate | date('D M jS, H:i', timezone) }}
           </div>
         </div>
-      </div>
-      <div class="timezones d-none d-lg-block">
-        <dl>
-          {% for friendlyTimezone, timezone in timezones[(timezones|length)/2:] %}
-            <dt title="UTC {{ streamDate | date('P', timezone) }}">{{ friendlyTimezone }}</dt>
-            <dd>{{ streamDate | date('D M jS, H:i', timezone) }}</dd>
-          {% endfor %}
-          <dt><a href="{{ otherTimezonesLink }}" target="_blank">Other Timezones</a></dt>
-        </dl>
-      </div>
+      {% endfor %}
     </div>
 
-    <div class="meme rightMeme">
-      {% if ad2 %}
-        <a href="{{ path('advertRedirect', {'advertToken': ad2.token}) }}" target="_blank">
-          <img src="{{ ad2.image.url | escape('html_attr') }}">
-        </a>
-      {% endif %}
-    </div>
-  </div>
-
-  <div class="zig d-none d-lg-block"></div>
-
-  <script type="text/javascript">
+    <script type="text/javascript">
       var serverLoad = Date.parse("{{ 'now' | date('c') }}");
       var clientLoad = Date.now();
 

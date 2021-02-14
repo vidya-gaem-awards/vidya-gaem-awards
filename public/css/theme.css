@@ -86,7 +86,8 @@ h1, h2 {
 
 h1 {
   /*font-family: "Coolvetica", Helvetica, sans-serif;*/
-  font-weight: normal;
+  font-family: "Dot Matrix", monospace;
+  font-weight: bold;
   /*text-transform: uppercase;*/
   color: black;
   font-size: 30px;
@@ -213,8 +214,14 @@ a:hover {
 
 /** Bootstrap button **/
 .btn {
-  font-family: "Corbel", Arial, sans-serif;
-  text-shadow: none;
+  background: rgba(255, 255, 255, 0.6);
+  font-family: 'Dot Matrix', monospace;
+  border: 1px dashed #c2c5b5;
+  color: #0056be;
+}
+
+.btn:hover {
+  text-decoration: underline;
 }
 
 .btn-themed {

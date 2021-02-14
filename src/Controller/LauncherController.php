@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Entity\Advertisement;
 use App\Service\ConfigService;
+use DateTimeImmutable;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -10,15 +12,17 @@ class LauncherController extends AbstractController
 {
     public function countdownAction(ConfigService $configService, EntityManagerInterface $em)
     {
-        $streamDate = $configService->getConfig()->getStreamTime();
+        $timezone = new DateTimeZone($configService->getConfig()->getTimezone());
+
+        $streamDate = new DateTimeImmutable($configService->getConfig()->getStreamTime()->format('Y-m-d H:i:s'), $timezone);
 
         $timezones = [
             'Honolulu' => 'Pacific/Honolulu',
             'Anchorage' => 'America/Anchorage',
-            'Los Angeles (PST)' => 'America/Los_Angeles',
+            'Seattle (PST)' => 'America/Los_Angeles',
             'Denver (MST)' => 'America/Denver',
             'Chicago (CST)' => 'America/Chicago',
-            '4chan Time (EST)' => 'America/New_York',
+            'New York (EST)' => 'America/New_York',
             'Rio de Janeiro' => 'America/Sao_Paulo',
             'London (GMT)' => 'Europe/London',
             'Paris (CET)' => 'Europe/Paris',
@@ -57,8 +61,12 @@ class LauncherController extends AbstractController
 
     public function streamAction(ConfigService $configService)
     {
-        $streamDate = $configService->getConfig()->getStreamTime();
-        $showCountdown = ($streamDate > new \DateTime());
+        $timezone = new DateTimeZone($configService->getConfig()->getTimezone());
+
+        $streamDate = DateTimeImmutable::createFromMutable($configService->getConfig()->getStreamTime());
+        $streamDate = $streamDate->setTimezone($timezone);
+
+        $showCountdown = ($streamDate > new \DateTime('now', $timezone));
 
         return $this->render('stream.html.twig', [
             'streamDate' => $streamDate,
