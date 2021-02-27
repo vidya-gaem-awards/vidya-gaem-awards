@@ -2,19 +2,23 @@
 
 {% block fullTitle %}2020 Vidya Gaem Awards{% endblock %}
 
-{% block head %}
+{% block css %}
+  {{ parent() }}
+
+  {{ encore_entry_link_tags('voting') }}
+
   <style type="text/css">
     html, body {
       min-height: 100%;
     }
 
-    .logo {
-      background-color: black;
-      /*border: 2px solid #af3a81;*/
-      margin-bottom: 30px;
-      height: 462px;
-      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.32), 0 0 0 1px rgba(0,0,0,0.16);
-    }
+    /*.logo {*/
+    /*  background-color: black;*/
+    /*  !*border: 2px solid #af3a81;*!*/
+    /*  margin-bottom: 30px;*/
+    /*  height: 462px;*/
+    /*  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.32), 0 0 0 1px rgba(0,0,0,0.16);*/
+    /*}*/
 
     .title {
       text-align: center;
@@ -91,37 +95,41 @@
     }
 
     .link a {
-      font-size: 20px;
-      display: inline-block;
-      width: 300px;
-
-      background-color: #000;
-      border-radius: 2px;
-      color: white;
-      text-shadow: #f81317 0px 0px 3px;
-      padding: 5px 15px 1px;
-      border: 1px solid #f81317;
-      font-family: "OratorStd", "Courier New", serif;
-      line-height: 0.95em;
-      text-decoration: none;
+        font-size: 20px;
     }
 
-    .link.special a {
-      background-color: #f29823;
-      text-shadow: #f29823 0px 0px 3px;
-      color: black;
-    }
+    /*.link a {*/
+    /*  font-size: 20px;*/
+    /*  display: inline-block;*/
+    /*  width: 300px;*/
 
-    .link a:hover {
-      color: #f29823;
-      border: 1px solid #f29823;
-      text-shadow: #f29823 0px 0px 3px;
-      text-decoration: none;
-    }
+    /*  background-color: #000;*/
+    /*  border-radius: 2px;*/
+    /*  color: white;*/
+    /*  text-shadow: #f81317 0px 0px 3px;*/
+    /*  padding: 5px 15px 1px;*/
+    /*  border: 1px solid #f81317;*/
+    /*  font-family: "OratorStd", "Courier New", serif;*/
+    /*  line-height: 0.95em;*/
+    /*  text-decoration: none;*/
+    /*}*/
 
-    .link.special a:hover {
-      background: #000;
-    }
+    /*.link.special a {*/
+    /*  background-color: #f29823;*/
+    /*  text-shadow: #f29823 0px 0px 3px;*/
+    /*  color: black;*/
+    /*}*/
+
+    /*.link a:hover {*/
+    /*  color: #f29823;*/
+    /*  border: 1px solid #f29823;*/
+    /*  text-shadow: #f29823 0px 0px 3px;*/
+    /*  text-decoration: none;*/
+    /*}*/
+
+    /*.link.special a:hover {*/
+    /*  background: #000;*/
+    /*}*/
 
     .link .soon {
       font-size: small;
@@ -136,62 +144,82 @@
     .link .soon {
       color: white;
     }
+
+    .embed-container {
+      border: 2px dashed #c2c5b5;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 5px;
+    }
+
+    .center-container {
+        min-height: 100vh;
+    }
   </style>
 {% endblock %}
-{##}
+
 {% block body %}
 
-  <div style="text-align: center;">
-    <img src="{{ asset('2019images/vga2019_logo.png') }}" alt="Logo of the 2020 Vidya Gaem Awards" style="display: inline;">
+  <div class="background-elements">
+    <img class="conspiracy" src="{{ asset('2020images/conspiracy.png') }}">
+    {% if ad1 %}
+      <div class="photograph">
+        <div class="photo-image" style="background-image: url('{{ ad1.image.url | escape('html_attr') }}')"></div>
+        <div class="photo-text">{{ ad1.name }}</div>
+        <div class="photo-bg"></div>
+      </div>
+    {% endif %}
   </div>
 
-  <div class="zig"></div>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-8 offset-md-2 col-12">
+<div class="center-container">
 
-        <div class="logo" style="display: flex; justify-content: center; align-items: center; flex-direction: column">
-          <iframe width="100%" height="460" src="https://www.youtube.com/embed/XIGcVZg4orA#t=228" frameborder="0"
-                  allowfullscreen=""></iframe>
-        </div>
-        <div class="title">
-          <h1>The 2020 Vidya Gaem Awards</h1>
-          <h2 id="countdown">
-            Thanks for watching!
-          </h2>
-        </div>
-        <div class="links main">
-          <div class="link special soon">
-            <a href="https://www.twitch.tv/videos/552565781">Watch on Twitch</a>
-          </div>
-          <div class="link special">
-            <a href="https://youtu.be/XIGcVZg4orA?t=228">Watch on YouTube</a>
-          </div>
-          {#<div class="link special">#}
-            {#<a href="#">Direct download</a>#}
-          {#</div>#}
-          <div class="link">
-            <a href="{{ path('winners') }}">Results</a>
-          </div>
-          <div class="link">
-            <a href="{{ path('credits') }}">Credits and /agdg/</a>
-          </div>
-          <div class="link">
-            <a href="{{ path('soundtrack') }}">Soundtrack</a>
-          </div>
-          <div class="link">
-            <a href="{{ path('predictionLeaderboard') }}">Fantasy league results</a>
-          </div>
-        </div>
+  <header>
+    <a class="logo" href="{{ path('argLandingPage') }}">
+      <img src="{{ asset('2020images/logo.png') }}">
+    </a>
+    <div class="title-text">
+      <div class="line-1">The 2020 Vidya Gaem Awards</div>
+    </div>
+  </header>
 
-        <div class="links bottom">
-          <div class="link">
-            <a href="https://vidyagaemawards.com/previous-years">View previous /v/GAs</a>
-          </div>
-        </div>
+  <div class="embed-container" style="margin-top: 20px;">
+    <iframe width="100%" height="460" src="https://www.youtube.com/embed/XIGcVZg4orA#t=228" frameborder="0"
+            allowfullscreen=""></iframe>
+  </div>
+
+    <div class="title" style="margin-top: 20px;">
+      <h1>The 2020 Vidya Gaem Awards</h1>
+      <h2 id="countdown">
+        Thanks for watching!
+      </h2>
+    </div>
+    <div class="links main">
+      <div class="link special">
+        <a class="btn" href="https://www.twitch.tv/videos/552565781">Watch on Twitch</a>
+      </div>
+      <div class="link special">
+        <a class="btn" href="https://youtu.be/XIGcVZg4orA?t=228">Watch on YouTube</a>
+      </div>
+      {#<div class="link special">#}
+      {#<a href="#">Direct download</a>#}
+      {#</div>#}
+      <div class="link">
+        <a class="btn" href="{{ path('winners') }}">Results</a>
+      </div>
+      <div class="link">
+        <a class="btn" href="{{ path('credits') }}">Credits and /agdg/</a>
+      </div>
+      <div class="link">
+        <a class="btn" href="{{ path('soundtrack') }}">Soundtrack</a>
+      </div>
+      {#          <div class="link">#}
+      {#            <a href="{{ path('predictionLeaderboard') }}">Fantasy league results</a>#}
+      {#          </div>#}
+    </div>
+
+    <div class="links bottom">
+      <div class="link">
+        <a href="https://vidyagaemawards.com/previous-years">View previous /v/GAs</a>
       </div>
     </div>
   </div>
-
-  <div class="zig"></div>
 {% endblock %}

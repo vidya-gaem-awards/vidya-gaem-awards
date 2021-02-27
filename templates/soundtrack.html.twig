@@ -2,125 +2,125 @@
 
 {% block title 'Soundtrack' %}
 
-{% block content %}
+{% block css %}
+  {{ parent() }}
+
   <style type="text/css">
-    h1 {
-      /*text-shadow: rgba(0, 235, 219, 0.5) 1px 1px 5px;*/
-      text-align: center;
-      margin-top: 10px;
-    }
+      h1 {
+          /*text-shadow: rgba(0, 235, 219, 0.5) 1px 1px 5px;*/
+          text-align: center;
+          margin-top: 10px;
+      }
 
-    .album-art {
-      width: 300px;
-      max-width: 300px;
-      margin: 0 auto 10px auto;
-      transition: all 0.3s ease-in-out;
-      box-shadow: 3px 3px 1px black;
-    }
+      .album-art {
+          width: 300px;
+          max-width: 300px;
+          margin: 0 auto 10px auto;
+          transition: all 0.3s ease-in-out;
+          box-shadow: 3px 3px 1px black;
+      }
 
-    .download-now {
-      margin: 20px;
-    }
+      .download-now {
+          margin: 20px;
+      }
 
-    .download-now a {
-      font-size: 38px;
-      font-weight: normal;
-      line-height: 0.95em;
-    }
+      .download-now a {
+          font-size: 38px;
+          font-weight: normal;
+          line-height: 0.95em;
+      }
 
-    #track-list {
-      max-width: 900px;
-      margin: 25px auto 0;
+      #track-list {
+          max-width: 900px;
+          margin: 25px auto 0;
 
-      font-family: Arial, sans-serif;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid #f29823;
-    }
+          font-family: Arial, sans-serif;
+          background: rgba(0,0,0,0.4);
+          border: 1px solid #f29823;
+      }
 
-    #track-list td {
-      border: none;
-      text-shadow: 1px 1px black;
-    }
+      #track-list td {
+          border: none;
+          text-shadow: 1px 1px black;
+      }
 
-    #track-list td:nth-child(1) {
-      color: #f29823;
-      font-family: "OratorStd", "Courier New", serif;
-      /*color: white;*/
-    }
+      #track-list td:nth-child(1) {
+          color: #f29823;
+          font-family: "OratorStd", "Courier New", serif;
+          /*color: white;*/
+      }
 
-    #track-list td:nth-child(2) {
-      /*color: yellow;*/
-    }
+      #track-list td:nth-child(2) {
+          /*color: yellow;*/
+      }
 
-    #track-list td:nth-child(3) {
-      color: #fec544;
-      text-decoration: none;
-      font-family: "OratorStd", "Courier New", serif;
-      text-shadow: #00000080 3px 3px 3px;
+      #track-list td:nth-child(3) {
+          color: #fec544;
+          text-decoration: none;
+          font-family: "OratorStd", "Courier New", serif;
+          text-shadow: #00000080 3px 3px 3px;
 
-      /*color: #fec544;*/
-    }
+          /*color: #fec544;*/
+      }
 
-    #track-list .line-after td {
-      border-bottom: 1px solid #fec544;
-      padding-bottom: 15px;
-    }
+      #track-list .line-after td {
+          border-bottom: 1px solid #fec544;
+          padding-bottom: 15px;
+      }
 
-    #track-list .line-before td {
-      border-top: 1px solid #fec544;
-      padding-top: 15px;
-    }
+      #track-list .line-before td {
+          border-top: 1px solid #fec544;
+          padding-top: 15px;
+      }
 
-    .artist {
-      transition: all 0.2s ease-in-out;
-      color: #a8a8a8;
-      font-family: "OratorStd", "Courier New", serif;
-      margin-left: 10px;
-    }
+      .artist {
+          transition: all 0.2s ease-in-out;
+          color: #a8a8a8;
+          font-family: "OratorStd", "Courier New", serif;
+          margin-left: 10px;
+      }
 
-    .preshow-download a {
-      background: rgb(0, 0, 0);
-      border: 2px solid #f81317;
-      font-family: "OratorStd", "Courier New", serif;
-      text-shadow: #f29823 0 0 3px;
-      color: #f29823;
-      padding: 8px 12px;
-      cursor: pointer;
-      margin-top: 10px;
-      font-size: 26px;
-    }
-
-    .preshow-download a:hover {
-      background: rgba(242, 152, 35, 0.2);
-    }
+      .preshow-download a {
+          /*background: rgb(0, 0, 0);*/
+          /*border: 2px solid #f81317;*/
+          /*font-family: "OratorStd", "Courier New", serif;*/
+          /*text-shadow: #f29823 0 0 3px;*/
+          /*color: #f29823;*/
+          padding: 8px 20px;
+          /*cursor: pointer;*/
+          margin-top: 10px;
+          font-size: 26px;
+          font-weight: bold;
+      }
   </style>
+{% endblock %}
 
-  <div class="row" style="margin-top: 20px;">
-    <div class="col-12">
-      <div style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px; max-width: 300px;">
-        <img src="{{ asset('2019images/soundtrack_cover.jpg') }}" alt="Album art" class="img-responsive album-art">
-      </div>
+{% block content %}
 
-      <p class="text-center preshow-download" style="">
-        <a href="https://vidyagaemawards.com/music/2020-vga-preshow-mixes.zip">Download preshow music (331 MB)</a>
-      </p>
-
-      <table class="table" id="track-list">
-        {% for track in preshow %}
-          <tr class="{{ loop.index == 1 ? 'line-before' }}">
-            <td></td>
-            <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
-            <td>{{ track[2] }}</td>
-          </tr>
-        {% endfor %}
-        {% for track in tracks %}
-          <tr class="{{ loop.index == 1 ? 'line-before' }}">
-            <td>#{{ loop.index }}</td>
-            <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
-            <td>{{ track[2] }}</td>
-          </tr>
-        {% endfor %}
-      </table>
+  <div class="center-container">
+    <div style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px; max-width: 300px;">
+      <img src="{{ asset('2019images/soundtrack_cover.jpg') }}" alt="Album art" class="img-responsive album-art">
     </div>
+
+    <p class="text-center preshow-download" style="">
+      <a href="https://vidyagaemawards.com/music/2020-vga-preshow-mixes.zip" class="btn">Download preshow music (331 MB)</a>
+    </p>
+
+    <table class="table" id="track-list">
+      {% for track in preshow %}
+        <tr class="{{ loop.index == 1 ? 'line-before' }}">
+          <td></td>
+          <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
+          <td>{{ track[2] }}</td>
+        </tr>
+      {% endfor %}
+      {% for track in tracks %}
+        <tr class="{{ loop.index == 1 ? 'line-before' }}">
+          <td>#{{ loop.index }}</td>
+          <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
+          <td>{{ track[2] }}</td>
+        </tr>
+      {% endfor %}
+    </table>
   </div>
 {% endblock %}

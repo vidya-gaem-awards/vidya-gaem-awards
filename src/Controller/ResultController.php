@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Action;
+use App\Entity\Advertisement;
 use App\Entity\ResultCache;
 use App\Service\AuditService;
 use App\Service\ConfigService;
@@ -58,7 +59,20 @@ class ResultController extends AbstractController
             $results[$award->getId()] = $rankings;
         }
 
+
+        // Fake ads
+        $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
+
+        if (empty($adverts)) {
+            $ad1 = $ad2 = false;
+        } else {
+            $ad1 = $adverts[array_rand($adverts)];
+            $ad2 = $adverts[array_rand($adverts)];
+        }
+
         return $this->render('winners.html.twig', [
+            'ad1' => $ad1,
+            'ad2' => $ad2,
             'awards' => $awards,
             'results' => $results,
             'winners' => $winners,

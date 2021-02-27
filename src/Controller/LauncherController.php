@@ -59,7 +59,7 @@ class LauncherController extends AbstractController
         ]);
     }
 
-    public function streamAction(ConfigService $configService)
+    public function streamAction(ConfigService $configService, EntityManagerInterface $em)
     {
         $timezone = new DateTimeZone($configService->getConfig()->getTimezone());
 
@@ -68,14 +68,39 @@ class LauncherController extends AbstractController
 
         $showCountdown = ($streamDate > new \DateTime('now', $timezone));
 
+        // Fake ads
+        $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
+
+        if (empty($adverts)) {
+            $ad1 = $ad2 = false;
+        } else {
+            $ad1 = $adverts[array_rand($adverts)];
+            $ad2 = $adverts[array_rand($adverts)];
+        }
+
         return $this->render('stream.html.twig', [
             'streamDate' => $streamDate,
-            'countdown' => $showCountdown
+            'countdown' => $showCountdown,
+            'ad1' => $ad1,
+            'ad2' => $ad2
         ]);
     }
 
-    public function finishedAction()
+    public function finishedAction(EntityManagerInterface $em)
     {
-        return $this->render('finished.html.twig');
+        // Fake ads
+        $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
+
+        if (empty($adverts)) {
+            $ad1 = $ad2 = false;
+        } else {
+            $ad1 = $adverts[array_rand($adverts)];
+            $ad2 = $adverts[array_rand($adverts)];
+        }
+
+        return $this->render('finished.html.twig', [
+            'ad1' => $ad1,
+            'ad2' => $ad2
+        ]);
     }
 }

@@ -312,9 +312,7 @@ stream:
 
 finished:
     path:       /finished
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-    defaults:
-        template: 'finished.html.twig'
+    controller: App\Controller\LauncherController::finishedAction
 
 #
 # STATIC PAGES

@@ -2,7 +2,9 @@
 
 {% block title %}Winners{% endblock %}
 
-{% block head %}
+{% block css %}
+  {{ parent() }}
+
   <style type="text/css">
     .uploadable {
       cursor: pointer;
@@ -64,19 +66,38 @@
     p {
       font-size: 22px;
       line-height: 1.5em;
-      color: white;
+      font-family: "Dot Matrix", monospace;
+
+      /*color: white;*/
     }
 
     .award {
-      margin: 0 auto 35px auto;
-      padding: 20px;
+      margin-bottom: 35px;
 
-      background-color: rgba(0, 0, 0, 0.4);
-      border: 1px solid #f29823;
+      min-height: 300px;
+
+      /*margin: 0 auto 35px auto;*/
+      /*padding: 20px;*/
+
+      /*background-color: rgba(0, 0, 0, 0.4);*/
+      /*border: 1px solid #f29823;*/
+    }
+
+    .second-placers {
+        background-image: url(/2020images/cardbg.png);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .award .zig {
+        margin: 10px 0;
     }
 
     .winner {
-      border: 1px solid #f29823;
+      border: 2px dashed #c2c5b5;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 5px;
     }
 
     .winner img {
@@ -89,9 +110,9 @@
       font-size: 20px;
       padding-left: 0;
 
-      font-family: "OratorStd", "Courier New", serif;
-      font-weight: normal;
-      text-shadow: #f29823 0px 0px 3px;
+      /*font-family: "OratorStd", "Courier New", serif;*/
+      /*font-weight: normal;*/
+      /*text-shadow: #f29823 0px 0px 3px;*/
     }
 
     .award ul li {
@@ -105,7 +126,7 @@
       /*text-shadow: #00000080 2px 2px 2px;*/
 
       line-height: 1em;
-      margin-bottom: 15px;
+      /*margin-bottom: 15px;*/
       margin-top: 5px;
 
       color: #fec544;
@@ -126,50 +147,15 @@
 
     .rank {
       font-size: 120%;
-      color: #fec544;
-      font-family: "OratorStd", "Courier New", serif;
-
+      font-weight: bold;
+      color: black;
     }
 
     .award ul li {
-      color: white;
+      font-family: "Dot Matrix", sans-serif;
+      /*color: white;*/
       font-size: 18px;
       /*font-family: "modern typewriter", Tahoma, sans-serif;*/
-    }
-
-    .awardHeaderContainer {
-      height: 108px;
-      margin: 0 77px 20px 77px;
-      padding: 15px 45px;
-      background-image: url(/2019images/btnNav_middle.png);
-      background-repeat: no-repeat;
-      background-position: top center;
-      text-align: center;
-    }
-
-    .awardName {
-      font-family: "Coolvetica", Helvetica, sans-serif;
-      font-weight: normal;
-      text-transform: uppercase;
-      color: #f29823;
-      text-shadow: #f29823 0px 0px 3px;
-      font-size: 3em;
-      line-height: 100%;
-      margin-top: 5px;
-    }
-
-    .awardName a:hover {
-      background: rgba(242, 152, 35, 0.2);
-      text-decoration: none;
-      text-shadow: none;
-    }
-
-    .awardSubtitle {
-      font-family: "OratorStd", "Courier New", serif;
-      font-weight: normal;
-      font-size: 1.1em;
-      color: #f29823;
-      text-shadow: #f29823 0px 0px 3px;
     }
 
     .winner-container {
@@ -305,6 +291,45 @@
     animation-iteration-count: 2;
     animation-delay: 100ms;
   }
+
+  .award .photograph {
+      z-index: 10;
+      left: 20px;
+      right: unset;
+
+      width: 240px;
+      height: 288px;
+
+      position: static;
+      transform: rotateZ(-10deg) translate(35px, -20px);
+  }
+
+  .award .photograph .photo-text {
+      font-size: 14px;
+  }
+
+  .award .photo-container {
+      width: 300px;
+  }
+
+  .second-placers-container {
+      width: calc(100% - 300px);
+  }
+
+  @media (max-width: 800px) {
+      .award .photo-container {
+          width: 100%;
+          text-align: center;
+      }
+
+      .award .photograph {
+          transform: rotateZ(-5deg) translate(0, -10px);
+      }
+
+      .second-placers-container {
+          width: 100%;
+      }
+  }
   </style>
 {% endblock %}
 
@@ -387,80 +412,99 @@
   </script>
 {% endblock %}
 
+{% block beforeContainer %}
+  <div class="background-elements">
+    <img class="conspiracy" src="{{ asset('2020images/conspiracy.png') }}">
+    {% if ad1 %}
+      <div class="photograph">
+        <div class="photo-image" style="background-image: url('{{ ad1.image.url | escape('html_attr') }}')"></div>
+        <div class="photo-text">{{ ad1.name }}</div>
+        <div class="photo-bg"></div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block containerClass %}{% endblock %}
+
 {% block content %}
   <form enctype="multipart/form-data" id="fileForm" style="display: none;">
     <input type="hidden" name="id" id="uploadAwardID">
     <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif">
   </form>
 
-  <div class="pageHeader">
-    <div class="pageHeaderLogo">
+<div class="center-container">
+  <header>
+    <a class="logo" href="{{ path('argLandingPage') }}">
+      <img src="{{ asset('2020images/logo.png') }}">
+    </a>
+    <div class="title-text">
+      <div class="line-1">The 2020 Vidya Gaem Awards</div>
     </div>
-    <div class="pageHeaderTitle">
-      <h1>The 2020 Vidya Gaem Awards</h1>
-    </div>
-  </div>
+  </header>
 
-  <div class="title-card-container">
-    <img
-      class="title-card"
-      src="/2019images/awoo.svg"
-      alt=""
-    />
-    <img class="flare flare1" src="/2019images/flare.svg" alt="" />
-    <img class="flare flare2" src="/2019images/flare.svg" alt="" />
-    <img class="flare flare3" src="/2019images/flare.svg" alt="" />
-  </div>
+  <div class="zig"></div>
 
   {% for award in awards %}
     <div class="row">
       <div class="col-12">
 
-        <div class="awardHeaderContainer">
-          <div class="awardName">
-            <a id="{{ award.id }}" href="#{{ award.id }}" class="anchor">{{ award.name }}</a>
+        <div class="award-header">
+          <div class="award-name-container">
+            <div class="award-name">{{ award.name }}</div>
+            <div class="award-subtitle">{{ award.subtitle }}</div>
           </div>
-          <h2 class="awardSubtitle">{{ award.subtitle }}</h2>
         </div>
 
         <div class="award">
           <div class="row">
-            <div class="col-md-4">
-              {% if award.winnerImage or is_granted('ROLE_AWARDS_EDIT') %}
-              <div class="winner {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}"
-                   title="{{ is_granted('ROLE_AWARDS_EDIT') ? 'Click here to upload an image for this award winner' : '' }}"
-                   data-id="{{ award.id }}">
-                {% if award.winnerImage %}
-                  <img class="img-responsive center-block" src="{{ award.winnerImage.url | e('html_attr') }}">
-                {% endif %}
-                {% if is_granted('ROLE_AWARDS_EDIT') %}
-                  <div class="empty-image {{ award.winnerImage ? 'inactive' : '' }}" >
-                    <i class="far fa-file-upload upload-icon"></i>
-                    <div style="font-weight: bold; font-size: 18px;" class="upload-help">
-                      Click here to upload an image
-                    </div>
-                    <div>Minimum dimensions: 345 x 245</div>
-                    <div>Image will scale as needed</div>
-                  </div>
-                {% endif %}
+            <div class="photo-container">
+
+              <div class="photograph">
+                <div class="photo-image" style="background-image: url('{{ award.winnerImage.url | escape('html_attr') }}')"></div>
+                <div class="photo-text">{{ results[award.id][0] | raw }}</div>
+                <div class="photo-bg"></div>
               </div>
-              {% endif %}
+
+{#              {% if award.winnerImage or is_granted('ROLE_AWARDS_EDIT') %}#}
+{#                <div class="winner {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}"#}
+{#                     title="{{ is_granted('ROLE_AWARDS_EDIT') ? 'Click here to upload an image for this award winner' : '' }}"#}
+{#                     data-id="{{ award.id }}">#}
+{#                  {% if award.winnerImage %}#}
+{#                    <img class="img-responsive center-block" src="{{ award.winnerImage.url | e('html_attr') }}">#}
+{#                  {% endif %}#}
+{#                  {% if is_granted('ROLE_AWARDS_EDIT') %}#}
+{#                    <div class="empty-image {{ award.winnerImage ? 'inactive' : '' }}" >#}
+{#                      <i class="far fa-file-upload upload-icon"></i>#}
+{#                      <div style="font-weight: bold; font-size: 18px;" class="upload-help">#}
+{#                        Click here to upload an image#}
+{#                      </div>#}
+{#                      <div>Minimum dimensions: 345 x 245</div>#}
+{#                      <div>Image will scale as needed</div>#}
+{#                    </div>#}
+{#                  {% endif %}#}
+{#                </div>#}
+{#              {% endif %}#}
             </div>
-            <div class="col-md-8">
-              <div class="winner-container">
-                <div class="winner-name">
-                  <span style="opacity: 0.5;">#1</span> {{ results[award.id][0] | raw }}
-                </div>
-                <div class="winner-subtitle">{{ winners[award.id].subtitle | raw }}</div>
+            <div class="second-placers-container">
+              <div class="second-placers">
+                {#              <div class="winner-container">#}
+                {#                <div class="winner-name">#}
+                {#                  <span style="opacity: 0.5;">#1</span> {{ results[award.id][0] | raw }}#}
+                {#                </div>#}
+                {#                <div class="winner-subtitle">{{ winners[award.id].subtitle | raw }}</div>#}
+                {#              </div>#}
+                <ul>
+                  {% for result in results[award.id][1:] %}
+                    <li>{{ result | raw }}</li>
+                  {% endfor %}
+                </ul>
               </div>
-              <ul>
-                {% for result in results[award.id][1:] %}
-                  <li>{{ result | raw }}</li>
-                {% endfor %}
-              </ul>
             </div>
           </div>
         </div>
+
+        <div class="zig"></div>
       </div>
     </div>
   {% endfor %}
@@ -473,9 +517,9 @@
     <div class="col-12">
       <p class="text-center">
         What's shown above are the official results as seen during the show. If you'd like to see more details,
-        including how sites other than /v/ voted, visit the <a class="mecha-button" href="{{ path('results') }}">detailed&nbsp;results</a> page.
+        including how sites other than /v/ voted, visit the <a class="btn" href="{{ path('results') }}">Detailed&nbsp;Results</a> page.
       </p>
     </div>
   </div>
-
+</div>
 {% endblock %}

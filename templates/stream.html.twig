@@ -2,96 +2,130 @@
 
 {% block fullTitle %}2020 Vidya Gaem Awards{% endblock %}
 
-{% block head %}
+{% block css %}
+  {{ encore_entry_link_tags('voting') }}
+
+  {{ parent() }}
+
   <style type="text/css">
     html, body {
       height: 100%;
     }
 
     .links a {
-      background-color: #000;
-      border-radius: 2px;
-      color: #f81317;
-      text-shadow: #f81317 0px 0px 3px;
-      padding: 5px 15px 1px;
-      border: 1px solid #f81317;
-      font-family: "OratorStd", "Courier New", serif;
-      line-height: 0.95em;
-      text-decoration: none;
+        font-size: 24px;
+        border-radius: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    /*  background-color: #000;*/
+    /*  border-radius: 2px;*/
+    /*  color: #f81317;*/
+    /*  text-shadow: #f81317 0px 0px 3px;*/
+    /*  padding: 5px 15px 1px;*/
+    /*  border: 1px solid #f81317;*/
+    /*  font-family: "OratorStd", "Courier New", serif;*/
+    /*  line-height: 0.95em;*/
+    /*  text-decoration: none;*/
 
-      margin-right: 2rem;
-      font-size: 30px;
-      display: inline-block;
+    /*  margin-right: 2rem;*/
+    /*  font-size: 30px;*/
+    /*  display: inline-block;*/
+    /*}*/
+
+    /*.links a:hover {*/
+    /*  color: #f29823;*/
+    /*  border: 1px solid #f29823;*/
+    /*  text-shadow: #f29823 0px 0px 3px;*/
+    /*  text-decoration: none;*/
+    /*}*/
+
+    /*.links a span {*/
+    /*  !*border-bottom: 2px solid #fec544;*!*/
+    /*}*/
+
+    /*.links a.discord {*/
+    /*  color: white;*/
+    /*  font-size: 20px;*/
+    /*  margin-top: 15px;*/
+    /*}*/
+
+    /*s {*/
+    /*  color: #734715;*/
+    /*  text-shadow: none;*/
+    /*  text-decoration-color: #f29823;*/
+    /*}*/
+
+    .center-container {
+        min-height: 100vh;
     }
 
-    .links a:hover {
-      color: #f29823;
-      border: 1px solid #f29823;
-      text-shadow: #f29823 0px 0px 3px;
-      text-decoration: none;
-    }
-
-    .links a span {
-      /*border-bottom: 2px solid #fec544;*/
-    }
-
-    .links a.discord {
-      color: white;
-      font-size: 20px;
-      margin-top: 15px;
-    }
-
-    s {
-      color: #734715;
-      text-shadow: none;
-      text-decoration-color: #f29823;
+    .embed-container {
+        border: 2px dashed #c2c5b5;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 5px;
     }
   </style>
 {% endblock %}
 
 {% block body %}
 
-  <div style="text-align: center;">
-    <img src="{{ asset('2019images/vga2019_logo.png') }}" alt="Logo of the 2020 Vidya Gaem Awards" style="display: inline;">
-  </div>
-
-  <div class="zig hidden-xs hidden-sm" style="margin-top: 20px;"></div>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h1 class="my-3">Streaming Live on <s>Three</s> Two Platforms</h1>
-        <h2 style="margin-top: -10px; margin-bottom: 15px;">(Apologies to the single person who uses Mixer, we had account issues)</h2>
-
-        <p class="links">
-          <a href="https://twitch.tv/vidyagaemawards" target="_blank">
-            <i class="fab fa-twitch fa-fw"></i> <span>Twitch</span>
-          </a>
-          <a href="https://www.youtube.com/vidyagaemawards" target="_blank">
-            <i class="fab fa-youtube fa-fw"></i> <span>YouTube</span>
-          </a>
-{#          <a href="https://mixer.com/vidyagaemawards" target="_blank">#}
-{#            <i class="fab fa-microsoft fa-fw"></i> <span>Mixer</span>#}
-{#          </a><br>#}
-          <a href="https://discord.gg/hSn98S" target="_blank">Chat on <i class="fab fa-discord fa-fw"></i> <span>Discord</span></a>
-        </p>
-
-        <div id="twitch-embed"></div>
-
-        <!-- Load the Twitch embed script -->
-        <script src="https://embed.twitch.tv/embed/v1.js"></script>
-
-        <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
-        <script type="text/javascript">
-            new Twitch.Embed("twitch-embed", {
-                width: '100%',
-                height: 480,
-                channel: "vidyagaemawards",
-                theme: 'dark'
-            });
-        </script>
+  <div class="background-elements">
+    <img class="conspiracy" src="{{ asset('2020images/conspiracy.png') }}">
+    {% if ad1 %}
+      <div class="photograph">
+        <div class="photo-image" style="background-image: url('{{ ad1.image.url | escape('html_attr') }}')"></div>
+        <div class="photo-text">{{ ad1.name }}</div>
+        <div class="photo-bg"></div>
       </div>
-    </div>
+    {% endif %}
   </div>
 
+<div class="center-container">
+
+  <header>
+    <a class="logo" href="{{ path('argLandingPage') }}">
+      <img src="{{ asset('2020images/logo.png') }}">
+    </a>
+    <div class="title-text">
+      <div class="line-1">The 2020 Vidya Gaem Awards</div>
+    </div>
+  </header>
+
+  <div class="zig"></div>
+
+  <div class="col-12 text-center">
+    <h1 class="my-3">Streaming Live on Three Platforms</h1>
+
+    <p class="links">
+      <a href="https://twitch.tv/vidyagaemawards" class="btn" target="_blank">
+        <span>Twitch</span>
+      </a>
+      <a href="https://www.youtube.com/vidyagaemawards" class="btn" target="_blank">
+        <span>YouTube</span>
+      </a>
+      <a href="https://dlive.com/vidyagaemawards" class="btn" target="_blank">
+        <span>DLive</span>
+      </a>
+      <a href="https://discord.gg/4e8JQB4" class="btn" target="_blank">Chat on <span>Discord</span></a>
+    </p>
+
+    <div class="embed-container">
+      <div id="twitch-embed"></div>
+    </div>
+
+    <!-- Load the Twitch embed script -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
+    <script type="text/javascript">
+        new Twitch.Embed("twitch-embed", {
+            width: '100%',
+            height: 480,
+            channel: "vidyagaemawards",
+            theme: 'dark'
+        });
+    </script>
+  </div>
+</div>
 {% endblock %}

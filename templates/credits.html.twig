@@ -2,293 +2,331 @@
 
 {% block title 'Credits' %}
 
-{% block content %}
+{% block css %}
+  {{ parent() }}
+
   <style type="text/css">
-    p {
-      font-family: "Corbel", Arial, sans-serif;
-      font-size: 18px;
-      line-height: 1.3em;
-    }
+      p {
+      /*    font-family: "Corbel", Arial, sans-serif;*/
+          font-size: 16px;
+          line-height: 1.3em;
+      }
 
-    .awardHeaderContainer {
-      height: auto;
-      margin: 0 0 20px 0;
-      padding: 10px 0 20px;
-      background-image: url(/2020images/btnNav_middle.png);
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: top center;
-      text-align: center;
-    }
+      /*.awardHeaderContainer {*/
+      /*    height: auto;*/
+      /*    margin: 0 0 20px 0;*/
+      /*    padding: 10px 0 20px;*/
+      /*    background-image: url(/2020images/btnNav_middle.png);*/
+      /*    background-size: contain;*/
+      /*    background-repeat: no-repeat;*/
+      /*    background-position: top center;*/
+      /*    text-align: center;*/
+      /*}*/
 
-    @keyframes flicker {
-      0%  { opacity: 0; }
-      5% { opacity: 0; }
-      6% { opacity: 0.6; }
-      10% { opacity: 0.6; }
-      11% { opacity: 0.2; }
-      15% { opacity: 0.2; }
-      16% { opacity: 0.8; }
-      20% { opacity: 0.8; }
-      21% { opacity: 0.4; }
-      26% { opacity: 0.4; }
-      70% { opacity: 1; }
-    }
+      /*@keyframes flicker {*/
+      /*    0%  { opacity: 0; }*/
+      /*    5% { opacity: 0; }*/
+      /*    6% { opacity: 0.6; }*/
+      /*    10% { opacity: 0.6; }*/
+      /*    11% { opacity: 0.2; }*/
+      /*    15% { opacity: 0.2; }*/
+      /*    16% { opacity: 0.8; }*/
+      /*    20% { opacity: 0.8; }*/
+      /*    21% { opacity: 0.4; }*/
+      /*    26% { opacity: 0.4; }*/
+      /*    70% { opacity: 1; }*/
+      /*}*/
 
-    .awardName {
-      font-family: "Coolvetica", Helvetica, sans-serif;
-      font-weight: normal;
-      text-transform: uppercase;
-      color: #f29823;
-      text-shadow: #f29823 0px 0px 3px;
-      font-size: 30px;
-      line-height: 100%;
-      margin-top: 5px;
+      .awardName {
+      /*    font-family: "Coolvetica", Helvetica, sans-serif;*/
+      /*    font-weight: normal;*/
+      /*    text-transform: uppercase;*/
+      /*    color: #f29823;*/
+      /*    text-shadow: #f29823 0px 0px 3px;*/
+      /*    font-size: 30px;*/
+      /*    line-height: 100%;*/
+      /*    margin-top: 5px;*/
 
-      animation-duration: 4s;
-      animation-name: flicker;
-      animation-iteration-count: 1;
-    }
+      /*    animation-duration: 4s;*/
+      /*    animation-name: flicker;*/
+      /*    animation-iteration-count: 1;*/
+      }
 
-    .credits {
-      text-align: center;
-      font-size: 20px;
-      line-height: 30px;
-      color: white;
-      text-shadow: 1px 1px black;
-      font-family: "Corbel", Arial, sans-serif;
-    }
+      .credits {
+          text-align: center;
+          font-size: 20px;
+          line-height: 30px;
+          /*color: white;*/
+          /*text-shadow: 1px 1px black;*/
+          /*font-family: "Corbel", Arial, sans-serif;*/
+      }
 
-    .credits-section {
-      margin-bottom: 20px;
-    }
+      .credits-section {
+          margin-bottom: 20px;
+      }
 
-    .credits-section.condensed p {
-      line-height: 1.4;
-    }
+      .credits-section.condensed p {
+          line-height: 1.4;
+      }
 
-    .name {
-      color: #fec544;
-      text-decoration: none;
-      font-family: "OratorStd", "Courier New", serif;
-      text-shadow: #00000080 3px 3px 3px;
-      font-size: 1em;
-      line-height: 0.95em;
-      padding: 0;
+      .name {
+          color: black;
+          font-family: "Dot Matrix", sans-serif;
+          font-weight: bold;
+          /*text-decoration: none;*/
+          /*font-family: "OratorStd", "Courier New", serif;*/
+          /*text-shadow: #00000080 3px 3px 3px;*/
+          font-size: 20px;
+          line-height: 1.2em;
+          padding: 0;
 
-      /*color: #fec544;*/
-      /*font-size: 20px;*/
-      /*font-family: "Trajan Pro 3", serif;*/
-      /*text-shadow: 1px 1px black;*/
-      margin-left: 3px;
-      margin-right: 3px;
-      white-space: nowrap;
-    }
+          /*color: #fec544;*/
+          /*font-size: 20px;*/
+          /*font-family: "Trajan Pro 3", serif;*/
+          /*text-shadow: 1px 1px black;*/
+          margin-left: 3px;
+          /*margin-right: 3px;*/
+          white-space: nowrap;
+      }
 
-    .name a {
-      background: rgb(0, 0, 0);
-      border: 1px solid #f81317;
-      font-family: "OratorStd", "Courier New", serif;
-      text-shadow: #f29823 0 0 3px;
-      color: #f29823;
-      padding: 4px 6px;
-      cursor: pointer;
-      text-decoration: none !important;
-    }
+      .name a {
+          font-family: "Dot Matrix", sans-serif;
+      }
 
-    .name a:hover {
-      background: rgba(242, 152, 35, 0.2);
-    }
+      .FLAOT {
+          display: inline-block;
+          margin: 0 30px;
+      }
 
-    .FLAOT {
-      display: inline-block;
-      margin: 0 30px;
-    }
+      .specialThanks {
+          margin-top: 20px;
+          height: 100px;
+          margin-bottom: 20px;
+      }
 
-    .specialThanks {
-      margin-top: 20px;
-      height: 100px;
-      margin-bottom: 20px;
-    }
+      .specialThanks .awardName {
+          font-size: 40px;
+          line-height: 60px;
+      }
 
-    .specialThanks .awardName {
-      font-size: 40px;
-      line-height: 60px;
-    }
+      .implying {
+          color: #298330;
+          font-family: X-Files, sans-serif;
+      }
 
-    .implying {
-      color: #41da4e;
-    }
+      .credits-header {
+          background-image: url(/2020images/tape.png);
+      }
+
+      .award-header {
+          background-size: contain;
+      }
+
+      .award-header .award-name-container {
+          padding: 10px;
+      }
+
+      .award-header .award-name {
+          font-size: 1.75em;
+      }
   </style>
+{% endblock %}
 
-  <div class="pageHeader">
-    <div class="pageHeaderLogo">
-    </div>
-    <div class="pageHeaderTitle">
-      <h1>The 2020 Vidya Gaem Awards</h1>
+{% block content %}
+  <div class="center-container">
+    <header>
+      <a class="logo" href="{{ path('argLandingPage') }}">
+        <img src="{{ asset('2020images/logo.png') }}">
+      </a>
+      <div class="title-text">
+        <div class="line-1">The 2020 Vidya Gaem Awards</div>
+      </div>
+    </header>
+
+    <div class="credits">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="award-header">
+            <div class="award-name-container">
+              <div class="award-name">Production Team</div>
+            </div>
+          </div>
+          <div class="credits-section">
+{#            <p>Directed by <span class="name">Counter</span></p>#}
+{#            <p>Produced by <span class="name">Lamer Gamer</span> & <span class="name">Importuno</span></p>#}
+{#            <p>Project managed by <span class="name">db</span></p>#}
+            <p>Website by <span class="name">Clamburger</span> & <span class="name">Lamer Gamer</span></p>
+            <p>Developer outreach handled by <span class="name">Anonymous</span>, <span class="name">beatstar</span>, <span class="name">John C.</span> & <span class="name">MalZenith</span></p>
+            <p>
+              ARG created by <span class="name">Anonymous</span>, <span class="name">Cee</span>, <span class="name">Clamburger</span>, <span class="name">Donny Q</span>,
+              <span class="name">Lamer Gamer</span>, <span class="name">Pomathan</span> & <span class="name">Theu</span>
+            </p>
+          </div>
+
+          <div class="award-header">
+            <div class="award-name-container">
+              <div class="award-name">Video Team</div>
+            </div>
+          </div>
+
+          <div class="credits-section">
+            <p>Art and Graphics by <span class="name">beatstar</span>, <span class="name">Cee</span> & <span class="name">MalZenith</span></p>
+            <p>
+              Video production and editing by
+              <span class="name">Anonymous</span>,
+              <span class="name">beatstar</span>,
+              <span class="name">Counter</span>,
+              <span class="name">db</span>,
+              <span class="name">Segab</span>,
+              <span class="name">shuttah</span> &
+              <span class="name">toad</span>
+            </p>
+          </div>
+
+          <div class="award-header">
+            <div class="award-name-container">
+              <div class="award-name">Writing Team</div>
+            </div>
+          </div>
+          <div class="credits-section">
+            <p>
+              Writing by
+              <span class="name">Anonymous</span>,
+              <span class="name">beatstar</span>,
+              <span class="name">Cee</span>,
+              <span class="name">db</span>,
+              <span class="name">Donny Q</span>,
+              <span class="name">Dr. J</span>,
+              <span class="name">ErogeAutist</span>,
+              <span class="name">Gravetracer</span>,
+              <span class="name">Happymartin</span>,
+              <span class="name">Hg80</span>,
+              <span class="name">Importuno</span>,
+              <span class="name">Kurushi</span>,
+              <span class="name">Lamer Gamer</span>,
+              <span class="name">MalZenith</span> &
+              <span class="name">SonicIsDragonball</span>
+            </p>
+          </div>
+
+          <div class="award-header">
+            <div class="award-name-container">
+              <div class="award-name">Audio Team</div>
+            </div>
+          </div>
+
+          <div class="credits-section">
+            <p>
+              Voiced by
+              <span class="name">Anonymous</span>,
+              <span class="name">Counter</span>,
+              <span class="name">Donny Q</span>,
+              <span class="name">Duke</span>,
+              <span class="name">Jimmy Threecocks</span>,
+              <span class="name">John C.</span>,
+              <span class="name">Karl Jobst</span>,
+              <span class="name">Lungfish</span>,
+              <span class="name">Phaseroll</span>,
+              <span class="name">Pomathan</span> &
+              <span class="name">StephanosRex</span>
+            </p>
+
+            <p>
+              Preshow music by
+              <span class="name">beat_shobon</span>,
+              <span class="name">fv.exe</span>,
+              <span class="name">jab50yen</span>,
+              <span class="name">nostalgia junkie</span>,
+              <span class="name">Phaseroll</span> &
+              <span class="name">W.T. Snacks</span>
+            </p>
+
+            <p>
+              <span class="name"><a href="{{ path('soundtrack') }}" target="_blank">View full soundtrack</a></span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="award-header">
+            <div class="award-name-container">
+              <div class="award-name">Skits and Bumpers</div>
+            </div>
+          </div>
+          <div class="credits-section condensed">
+            <p>
+              Another Shenmue Video &ndash; <span class="name">NeatoBurrito</span><br>
+              Cyberjunk 2077 &ndash; <span class="name">rare</span><br>
+              joker song &ndash; <span class="name">Anonymous</span><br>
+              Smash's first black fighter &ndash; <span class="name">WelfareWalrus</span><br>
+              Super Stadia Bros &ndash; <span class="name">most</span><br>
+              The "Stunning and Brave" Award &ndash; <span class="name">Hoffmann</span><br>
+              We Love YiiK &ndash; <span class="name">littlefunnyman</span>
+            </p>
+          </div>
+          <div class="credits-section condensed">
+            <p>
+              0x40 vgas &ndash; <span class="name">Hoffmann</span><br>
+              Altar of Kings &ndash; <span class="name">PeanutBufferFun</span><br>
+              Apologize &ndash; <span class="name">Shuttah</span><br>
+              Astronaut &ndash; <span class="name">Anonymous</span><br>
+              Contrails &ndash; <span class="name">Anonymous</span><br>
+              Fuck Remasters &ndash; <span class="name">Dr. J</span><br>
+              LETS ALL LOVE /v/ga &ndash; <span class="name">RedMarz</span><br>
+              Pogchamp1 &ndash; <span class="name">Shuttah</span><br>
+              Pogchamp2 &ndash; <span class="name">Shuttah</span><br>
+              seizure inducing mograph &ndash; <span class="name">Bonzi/Someguy</span><br>
+              Tinfoil &ndash; <span class="name">Anonymous</span><br>
+              VGA is Illuminati &ndash; <span class="name">xXPU$$YSLAY0R69Xx</span><br>
+              Wash away the anger &ndash; <span class="name">WelfareWalrus</span><br>
+              You Can't Skip The Cutscene &ndash; <span class="name">Anonymous</span><br>
+            </p>
+          </div>
+
+          <div class="award-header">
+            <div class="award-name-container">
+              <div class="award-name">/agdg/ Trailers</div>
+            </div>
+          </div>
+
+          <div class="credits-section condensed">
+            <p>
+              <span class="name">Brutal Rain: Angels Of Retaliation</span> by Nuclear&nbsp;Barrage&nbsp;Productions<br>
+              <span class="name"><a href="https://ithiro.itch.io/dungeons-of-rhamdon-ii" target="_blank">Dungeons of Rhamdon II</a></span> by Ithiro&nbsp;Sumi<br>
+              <span class="name"><a href="https://store.steampowered.com/app/1133050/Good_Night_Knight/" target="_blank">Good Night, Knight</a></span> by KnightDev<br>
+              <span class="name"><a href="https://zeredek.itch.io/marmoreal">Marmoreal</a></span> by Marmo<br>
+              <span class="name"><a href="https://teamessell.itch.io/soporo-wonderland-in-ruin" target="_blank">Soporo: Wonderland In Ruin</a></span> by Team&nbsp;Essell<br>
+              <span class="name"><a href="https://store.steampowered.com/app/811970/Super_Dream_Dasher/" target="_blank">Super Dream Dasher</a></span> by Puddleside<br>
+              <span class="name"><a href="https://entrancejew.itch.io/tiny-talos" target="_blank">Tiny Talos</a></span> by ejew.in
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zig" style="margin-top: 20px;"></div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="award-header">
+            <div class="award-name-container special-thanks">
+              <div class="award-name">Special Thanks</div>
+            </div>
+          </div>
+{#          <p><span class="name">Mowtendoo</span> for music contribution</p>#}
+          <p class="FLAOT"><span class="name">Anonymous</span></p>
+          <p style="margin-top: 20px;">And most importantly, <span class="name" style="font-size: x-large;">you!</span></p>
+        </div>
+      </div>
+
+      <div class="zig"></div>
+
+      <div class="row" style="margin-top: 200px;">
+        <div class="col-12">
+          <p class="implying">&gt;they contribute to a shitty online video game award show</p>
+          <p class="implying">&gt;they take their jobs very seriously</p>
+          <p class="implying">&gt;they do it for free</p>
+          <img src="{{ asset('img/for-free.jpg') }}" style="width: 200px;">
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="credits">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="awardHeaderContainer">
-          <div class="awardName">Production Team</div>
-        </div>
-        <div class="credits-section">
-          <p>Directed by <span class="name">Counter</span></p>
-          <p>Produced by <span class="name">Lamer Gamer</span> & <span class="name">Importuno</span></p>
-          <p>Project managed by <span class="name">db</span></p>
-          <p>Website by <span class="name">Segab</span>, <span class="name">Clamburger</span> & <span class="name">Inacio</span></p>
-          <p>Developer outreach handled by <span class="name">beatstar</span> & <span class="name">Anonymous</span></p>
-        </div>
-
-        <div class="awardHeaderContainer">
-          <div class="awardName">Video Team</div>
-        </div>
-
-        <div class="credits-section">
-          <p>Graphics by <span class="name">Anonymous</span>, <span class="name">Duke</span> & <span class="name">MalZenith</span></p>
-          <p>
-            Video production and editing by
-            <span class="name">Ahch</span>,
-            <span class="name">Anonymous</span>,
-            <span class="name">beatstar</span>,
-            <span class="name">Counter</span>,
-            <span class="name">db</span>,
-            <span class="name">jab50yen</span>,
-            <span class="name">Kurushi</span>,
-            <span class="name">PhoneEatingBear</span>,
-            <span class="name">Segab</span>,
-            <span class="name">shuttah</span> &
-            <span class="name">Toad</span>
-          </p>
-          <p>
-            Trailer by <span class="name">beatstar</span> & <span class="name">db</span>
-          </p>
-        </div>
-
-        <div class="awardHeaderContainer">
-          <div class="awardName">Audio Team</div>
-        </div>
-
-        <div class="credits-section">
-          <p>
-            Voiced by
-            <span class="name">beatstar</span>,
-            <span class="name">Counter</span>,
-            <span class="name">Donny Q</span>,
-            <span class="name">Duke</span>,
-            <span class="name">John C</span>,
-            <span class="name">Phaseroll</span>,
-            <span class="name">Pomathan</span> &
-            <span class="name">Stephen Hawking</span>
-          </p>
-
-          <p>
-            Preshow music by
-            <span class="name">FEISaR</span>,
-            <span class="name">radiomuff</span>,
-            <span class="name">jab50yen</span>,
-            <span class="name">fv.exe</span>,
-            <span class="name">radiomuff</span>,
-            <span class="name">nostalgia_junkie</span>,
-            <span class="name">Marpix</span>,
-            <span class="name">beat_shobon</span>,
-            <span class="name">Donny Q</span>,
-            <span class="name">db</span> &
-            <span class="name">Anonymous</span>
-          </p>
-
-          <p>
-            <span class="name"><a href="{{ path('soundtrack') }}" target="_blank">View full soundtrack</a></span>
-          </p>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="awardHeaderContainer">
-          <div class="awardName">Writing Team</div>
-        </div>
-
-        <div class="credits-section">
-          <p>
-            Writing and research by
-            <span class="name">Anonymous</span>,
-            <span class="name">beatstar</span>,
-            <span class="name">BroBuzz</span>,
-            <span class="name">Cee</span>,
-            <span class="name">db</span>,
-            <span class="name">Dr. J</span>,
-            <span class="name">ErogeAutist</span>,
-            <span class="name">ghmorello</span>,
-            <span class="name">Hg80</span>,
-            <span class="name">Importuno</span>,
-            <span class="name">Lamer Gamer</span>,
-            <span class="name">MalZenith</span>,
-            <span class="name">shuttah</span>,
-            <span class="name">Theu</span>
-          </p>
-        </div>
-
-        <div class="awardHeaderContainer">
-          <div class="awardName">Skits and Bumpers</div>
-        </div>
-        <div class="credits-section condensed">
-          <p>
-            An Interview with Game Freak &ndash; <span class="name">JakeVidya</span><br>
-            Anime Games &ndash; <span class="name">mistafoxx</span><br>
-            Boomer 2019 &ndash; <span class="name">Pierce asdf</span><br>
-            cockandballkampf &ndash; <span class="name">Edwin Chavez</span><br>
-            Full Moon Over the Internet &ndash; <span class="name">Duke</span><br>
-            got2bradical &ndash; <span class="name">Ahch</span> + <span class="name">BetterThanTofu</span><br>
-            The Next Level &ndash; <span class="name">Nick/Cody</span><br>
-            Vin &ndash; <span class="name">neatoBurrito Productions</span><br>
-            bumper in vr &ndash; <span class="name">oniiguy</span><br>
-            Curb your sea exploration &ndash; <span class="name">mistafoxx</span><br>
-            We like Fortnite &ndash; <span class="name">mistafoxx</span><br>
-            vga bumper &ndash; <span class="name">Anonymous</span><br>
-            20200130vga_bumper &ndash; <span class="name">Anonymous</span><br>
-          </p>
-        </div>
-
-        <div class="awardHeaderContainer">
-          <div class="awardName">/agdg/ Trailers</div>
-        </div>
-
-        <div class="credits-section condensed">
-          <p>
-            <span class="name"><a href="https://scarletstring.itch.io/monospaced-lovers" target="_blank">Monospaced Lovers</a></span> by Scarlet String Studios<br>
-            <span class="name"><a href="https://store.steampowered.com/app/1068800/Alphaman/" target="_blank">Alphaman</a></span> by Heartfelt Games<br>
-            <span class="name"><a href="https://store.steampowered.com/app/1006220/Type_Knight/">Type Knight</a></span> by chaikadev<br>
-            <span class="name"><a href="https://store.steampowered.com/app/831110/Unconventional_Warfare/" target="_blank">Unconventional Warfare</a></span> by Nightlife Strangers
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="zig" style="margin-top: 20px;"></div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="awardHeaderContainer specialThanks">
-          <div class="awardName">Special Thanks</div>
-        </div>
-        <p><span class="name">Mowtendoo</span> for music contribution</p>
-        <p class="FLAOT"><span class="name">Anonymous</span></p>
-        <p style="margin-top: 20px;">And most importantly, <span class="name" style="font-size: x-large;">you!</span></p>
-      </div>
-    </div>
-
-    <div class="zig"></div>
-
-    <div class="row" style="margin-top: 200px;">
-      <div class="col-12">
-        <p class="implying">&gt;they contribute to a shitty online video game award show</p>
-        <p class="implying">&gt;they take their jobs very seriously</p>
-        <p class="implying">&gt;they do it for free</p>
-        <img src="{{ asset('img/for-free.jpg') }}" style="width: 200px;">
-      </div>
-    </div>
-  </div>
-
 {% endblock %}

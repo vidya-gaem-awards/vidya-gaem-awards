@@ -10,7 +10,24 @@
     - Winners
 #}
 
+{% block containerClass %}{% endblock %}
+
 {% block css %}
   <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+
+  {{ encore_entry_link_tags('voting') }}
+
+  <style type="text/css">
+    .center-container {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    @media (min-width: 1300px) {
+        .container {
+            max-width: 1300px;
+        }
+    }
+  </style>
 {% endblock %}
 
