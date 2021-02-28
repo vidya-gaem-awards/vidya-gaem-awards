@@ -32,19 +32,19 @@ class StaticController extends AbstractController
         ];
 
         $tracks = [
-            ['', '', '"Hello, Fellow Posters" Award'],
+            ['HIKA TO KAGE', 'The Five Star Stories Movie OST', '"Hello, Fellow Posters" Award'],
             ['Metropolis, Planet Kerwan', 'David Bergeaud', 'IP Twist Award'],
             ['FBI - Headquarters - Interrogation', 'XIII OST', 'Haptic Feedback Award'],
             ['Dancer', 'Tom & Jerry', 'Blue Checkmark Award'],
             ['Don\'t Look', 'Silent Partner', 'New Challenger Award'],
-            ['', '', 'Hyperbole Award'],
+            ['SimCity 4 OST', '', 'Hyperbole Award'],
             ['Luminosa', '', 'Smug Pessimist Award'],
-            ['', '', 'Guilty Pleasure Award'],
+            ['Main Theme', 'The Room', 'Guilty Pleasure Award'],
             ['Bubble Star', 'Thelonious Monkees', 'Balkanization Award'],
             ['The Mole', 'Michael McCann', 'Hate Machine Award'],
             ['Mute City', 'F-Zero', '/vr/ Award'],
             ['Ezio\'s Family', 'Jesper Kyd', 'Redemption Arc Award'],
-            ['', '', 'Fahrenheit 2020 Award'],
+            ['Maiden Voyage', 'Global Communication', 'Fahrenheit 2020 Award'],
             ['Apocalypse', 'Jesper Kyd', 'Pottery Award'],
             ['L no Shidou', 'Tanichui Hideki', 'PIXELS ARE 8RT Award'],
             ['Fuan', 'Taniuchi Hideki', 'Ocarina of All Time Award'],
@@ -52,7 +52,7 @@ class StaticController extends AbstractController
             ['Ignition', '', 'Awardgate'],
             ['Angel', 'Massive Attack', 'Seal of Quality Award'],
             ['Frolic', 'Luciano Michelini', 'Seal of Quality Award'],
-            ['', '', '!votemap Award'],
+            ['Hazardous Environments', 'Half-Life OST', '!votemap Award'],
             ['windy bay', 'yuji ohno', 'Plot and Backstory Award'],
             ['Rock Me Amadeus (Canadian/American \'86 Mix)', 'Falco', 'Plot and Backstory Award'],
             ['Damn, I Wish I Was Your Lover', 'Sophie B. Hawkins', 'The Van Darkholme Award'],
@@ -79,7 +79,7 @@ class StaticController extends AbstractController
             ['Intro Sequence', 'Alexander Brandon', '/v2k/ Award'],
             ['Red and Gold (instrumental)', 'MF DOOM', 'Humble Award Bundle'],
             ['Goodbye Horses (instrumental)', 'Q Lazzarus', 'Most Hated Award'],
-            ['', '', 'Least Hated Award'],
+            ['Menu Music', 'Grand Theft Auto V', 'Least Hated Award'],
         ];
 
         return $this->render('soundtrack.html.twig', [
