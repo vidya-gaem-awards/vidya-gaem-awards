@@ -124,23 +124,23 @@
 
     <div class="zig"></div>
 
-    <p class="text-center soon">Full tracklist coming soon</p>
+{#    <p class="text-center soon">Full tracklist coming soon</p>#}
 
-{#    <table class="table" id="track-list">#}
-{#      {% for track in preshow %}#}
-{#        <tr class="{{ loop.index == 1 ? 'line-before' }}">#}
-{#          <td></td>#}
-{#          <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>#}
-{#          <td>{{ track[2] }}</td>#}
-{#        </tr>#}
-{#      {% endfor %}#}
-{#      {% for track in tracks %}#}
-{#        <tr class="{{ loop.index == 1 ? 'line-before' }}">#}
-{#          <td>#{{ loop.index }}</td>#}
-{#          <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>#}
-{#          <td>{{ track[2] }}</td>#}
-{#        </tr>#}
-{#      {% endfor %}#}
-{#    </table>#}
+    <table class="table" id="track-list">
+      {% for track in preshow %}
+        <tr class="{{ loop.index == 1 ? 'line-before' }}">
+          <td></td>
+          <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
+          <td>{{ track[2] }}</td>
+        </tr>
+      {% endfor %}
+      {% for track in tracks %}
+        <tr class="{{ loop.index == 1 ? 'line-before' }}">
+          <td>#{{ loop.index }}</td>
+          <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
+          <td>{{ track[2] }}</td>
+        </tr>
+      {% endfor %}
+    </table>
   </div>
 {% endblock %}
