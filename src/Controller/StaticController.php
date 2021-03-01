@@ -46,7 +46,7 @@ class StaticController extends AbstractController
             ['Ezio\'s Family', 'Jesper Kyd', 'Redemption Arc Award'],
             ['Maiden Voyage', 'Global Communication', 'Fahrenheit 2020 Award'],
             ['Apocalypse', 'Jesper Kyd', 'Pottery Award'],
-            ['L no Shidou', 'Tanichui Hideki', 'PIXELS ARE 8RT Award'],
+            ['L no Shisou', 'Tanichui Hideki', 'PIXELS ARE 8RT Award'],
             ['Fuan', 'Taniuchi Hideki', 'Ocarina of All Time Award'],
             ['BGM001 (Title Theme)', 'Custom Maid 3D 2', 'Kaimge Award'],
             ['Ignition', '', 'Awardgate'],
