@@ -45,6 +45,7 @@ class ResultsCommand extends Command
         '03-null' => 'BIT_AND(v.number, 2048) > 0',
         '20-yandex' => 'BIT_AND(v.number, 4096) > 0',
         '21-kiwifarms' => 'BIT_AND(v.number, 8192) > 0',
+        '22-4chan-ads' => 'BIT_AND(v.number, 16384) > 0',
     ];
 
     /** @var EntityManagerInterface */
@@ -188,6 +189,13 @@ class ResultsCommand extends Command
             if (count($info['codes']) > 0) {
                 $number += 2 ** 10;
                 $info['notes'][] = "Has voting code";
+            }
+
+            foreach (['BGmo', 'BGds', 'BGm2'] as $ad_voting_code) {
+                if (in_array($ad_voting_code, $info['codes'])) {
+                    $number += 2 ** 14;
+                    break;
+                }
             }
 
             $referers = array_unique($info['referrers']);

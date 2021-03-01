@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Award;
 use App\Entity\TableHistory;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ResultController extends AbstractController
 {
@@ -79,7 +80,7 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function detailedAction(?string $all, EntityManagerInterface $em, Request $request)
+    public function detailedAction(?string $all, EntityManagerInterface $em, Request $request, AuthorizationCheckerInterface $authChecker)
     {
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
@@ -115,6 +116,10 @@ class ResultController extends AbstractController
             '13-something-awful' => 'Something Awful',
             '20-yandex' => 'Yandex',
         ];
+
+        if ($authChecker->isGranted('ROLE_VOTING_CODE')) {
+            $filters['22-4chan-ads'] = '4chan Ads';
+        }
 
         $nominees = [];
 
