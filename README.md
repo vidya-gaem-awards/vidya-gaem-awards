@@ -7,18 +7,22 @@ under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Requirements
 
- * PHP 7.3
+ * PHP 7.4
  * A MySQL or MariaDB database. (An SQLite database is sufficient for local development.) 
  * [Composer](https://getcomposer.org/)
+ * NodeJS
+ * Yarn package manager
 
 ## Getting started
 
  1. Clone the repo to a server of your choice.
- 2. Copy `.env.dist` to `.env` and adjust as needed.
+ 2. Copy `.env` to `.env.local` and adjust as needed.
     * You will need a Steam Web API key for the login to work. You can get one from [here](https://steamcommunity.com/dev/apikey).
+    * Update the value of `APP_SECRET` to a randomly generated string.
     * Leave the value of `DYNAMIC_TEMPLATES` as `false` until the database has been initalized.
  3. Run `composer install`.
- 4. Run `bin/console app:init-db` to set up the database.
+ 4. Run `php bin/console app:init-db` to set up the database.
+ 5. Run `yarn build` (for production) or `yarn watch` (for development).
 
 ## Local development
 
@@ -32,7 +36,7 @@ This will allow you to access the website at http://localhost:8080.
 
 Running this command will generate the results for all awards:
 
-`bin/console app:results`
+`php bin/console app:results`
 
 Keep in mind that only votes with a voting code are included in the final results. Go to `/vote/code` to get a valid
 voting link.
