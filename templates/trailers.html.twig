@@ -1,0 +1,280 @@
+{% extends 'base/standardThemed.html.twig' %}
+
+{% block title 'Trailers' %}
+
+{% block css %}
+  {{ parent() }}
+
+  <style type="text/css">
+      h1 {
+          /*text-shadow: rgba(0, 235, 219, 0.5) 1px 1px 5px;*/
+          text-align: center;
+          margin-top: 10px;
+      }
+
+      .album-art {
+          width: 300px;
+          max-width: 300px;
+          margin: 0 auto 10px auto;
+          transition: all 0.3s ease-in-out;
+          box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+      }
+
+      .download-now {
+          margin: 20px;
+      }
+
+      .download-now a {
+          font-size: 38px;
+          font-weight: normal;
+          line-height: 0.95em;
+      }
+
+      #track-list {
+          max-width: 900px;
+          margin: 25px auto 0;
+
+          font-family: "Dot Matrix", sans-serif;
+          font-size: 18px;
+
+          background: none;
+
+          /*background-image: url(/2020images/cardbg.png);*/
+          /*box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);*/
+          /*border-radius: 5px;*/
+          /*padding: 10px;*/
+      }
+
+      #track-list td {
+          border: none;
+          padding: .25rem .75rem;
+          /*text-shadow: 1px 1px black;*/
+      }
+
+      #track-list td:nth-child(1) {
+          font-family: "Dot Matrix", sans-serif;
+          font-weight: bold;
+          color: black;
+          /*font-family: "OratorStd", "Courier New", serif;*/
+          /*color: white;*/
+      }
+
+      #track-list td:nth-child(2) {
+          /*color: yellow;*/
+      }
+
+      #track-list td:nth-child(3) {
+          /*color: #fec544;*/
+          font-family: "Dot Matrix", sans-serif;
+          text-decoration: none;
+          /*font-family: "OratorStd", "Courier New", serif;*/
+          /*text-shadow: #00000080 3px 3px 3px;*/
+
+          /*color: #fec544;*/
+      }
+
+      #track-list .line-after td {
+          /*border-bottom: 1px solid #fec544;*/
+          padding-bottom: 15px;
+      }
+
+      #track-list .line-before td {
+          /*border-top: 1px solid #fec544;*/
+          padding-top: 15px;
+      }
+
+      .artist {
+          transition: all 0.2s ease-in-out;
+          color: #a8a8a8;
+          /*font-family: "OratorStd", "Courier New", serif;*/
+          margin-left: 10px;
+      }
+
+      .preshow-download a {
+          /*background: rgb(0, 0, 0);*/
+          /*border: 2px solid #f81317;*/
+          /*font-family: "OratorStd", "Courier New", serif;*/
+          /*text-shadow: #f29823 0 0 3px;*/
+          /*color: #f29823;*/
+          padding: 8px 20px;
+          /*cursor: pointer;*/
+          margin-top: 10px;
+          font-size: 26px;
+          font-weight: bold;
+      }
+
+      .soon {
+          font-family: "Dot Matrix", sans-serif;
+          font-weight: bold;
+          font-size: 30px;
+      }
+
+      .embed-container {
+          border: 2px dashed #c2c5b5;
+          background: rgba(255, 255, 255, 0.5);
+          padding: 5px;
+          display: block;
+      }
+
+      .embed-container:hover {
+          border-color: black;
+      }
+
+      .game-container img {
+          max-width: 100%;
+      }
+
+      .game-container {
+          font-family: "Dot Matrix", sans-serif;
+          font-size: 20px;
+      }
+
+      .game-name {
+          margin-top: 10px;
+          font-weight: bold;
+          display: block;
+          font-family: "Dot Matrix", sans-serif;
+      }
+
+      .game-name:hover {
+          text-decoration: underline;
+      }
+
+      .game-status {
+          color: #333;
+      }
+
+      .status-text {
+          font-weight: bold;
+          color: #333;
+      }
+
+      .game-description {
+          font-family: "X-Files", sans-serif;
+          font-size: 14px;
+          margin-top: 10px;
+          color: #333;
+          margin-bottom: 20px;
+      }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <div class="center-container">
+
+    <header>
+      <a class="logo" href="{{ path('argLandingPage') }}">
+        <img src="{{ asset('2020images/logo.png') }}">
+      </a>
+      <div class="title-text">
+        <div class="line-1">The 2021 Vidya Gaem Awards</div>
+        <div class="line-2" style="font-size: 18px; text-align: left;">Supporting our amateur game developers</div>
+      </div>
+    </header>
+
+    <div class="zig"></div>
+
+    <div class="row">
+      <div class="col-4">
+        <div class="game-container">
+          <a class="embed-container" href="https://ithiro.itch.io/dungeons-of-rhamdon-ii" target="_blank">
+            <img src="{{ asset('2020images/arg-bg.jpg') }}">
+          </a>
+
+          <a href="https://ithiro.itch.io/dungeons-of-rhamdon-ii" class="game-name" target="_blank">Dungeons of Rhamdon II</a>
+          <div class="game-status">Status: <span class="status-text">Free Beta</span></div>
+          <div class="game-status">Genre: <span class="status-text">Low resolution RPG</span></div>
+          <div class="game-description">
+            A hardcore first-person pseudo-3D roguelite action RPG dungeon crawler stylized after old PC games.
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="game-container">
+          <a class="embed-container" href="https://store.steampowered.com/app/1133050/Good_Night_Knight/" target="_blank">
+            <img src="{{ asset('2020images/arg-bg.jpg') }}">
+          </a>
+
+          <a href="https://store.steampowered.com/app/1133050/Good_Night_Knight/" class="game-name" target="_blank">Good Night, Knight</a>
+          <div class="game-status">Status: <span class="status-text">Early Access on Steam</span></div>
+          <div class="game-status">Genre: <span class="status-text">Undertale-like</span></div>
+          <div class="game-description">
+            A dynamic hack-and-slash adventure that mixes procedural generation with hand-made scenarios and a darkly humorous story.
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="game-container">
+          <a class="embed-container" href="https://zeredek.itch.io/marmoreal" target="_blank">
+            <img src="{{ asset('2020images/arg-bg.jpg') }}">
+          </a>
+
+          <a href="https://zeredek.itch.io/marmoreal" class="game-name" target="_blank">Marmoreal</a>
+          <div class="game-status">Status: <span class="status-text">Beta, free download</span></div>
+          <div class="game-status">Genre: <span class="status-text">Anime girls</span></div>
+          <div class="game-description">
+            A bullet hell action RPG with swords, magic and fully automatic crossbows.
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="game-container">
+          <a class="embed-container" href="https://teamessell.itch.io/soporo-wonderland-in-ruin" target="_blank">
+            <img src="{{ asset('2020images/arg-bg.jpg') }}">
+          </a>
+
+          <a href="https://teamessell.itch.io/soporo-wonderland-in-ruin" class="game-name" target="_blank">Soporo: Wonderland in Ruin</a>
+          <div class="game-status">Status: <span class="status-text">Alpha, free download</span></div>
+          <div class="game-status">Genre: <span class="status-text">Dangerously furry</span></div>
+          <div class="game-description">
+            A game about a cat and a fairy solving puzzles and fighting nightmares in a world that is slowly crumbling to pieces!
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="game-container">
+          <a class="embed-container" href="https://store.steampowered.com/app/811970/Super_Dream_Dasher/" target="_blank">
+            <img src="{{ asset('2020images/arg-bg.jpg') }}">
+          </a>
+
+          <a href="https://store.steampowered.com/app/811970/Super_Dream_Dasher/" class="game-name" target="_blank">Super Dream Dasher</a>
+          <div class="game-status">Status: <span class="status-text">Wishlist on Steam</span></div>
+          <div class="game-status">Genre: <span class="status-text">Cute and funny</span></div>
+          <div class="game-description">
+            Dash and roll through a charming world in this fast-paced, momentum-based, fun-filled platformer!
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="game-container">
+          <a class="embed-container" href="https://entrancejew.itch.io/tiny-talos" target="_blank">
+            <img src="{{ asset('2020images/arg-bg.jpg') }}">
+          </a>
+
+          <a href="https://entrancejew.itch.io/tiny-talos" class="game-name" target="_blank">Tiny Talos</a>
+          <div class="game-status">Status: <span class="status-text">Alpha, free download</span></div>
+          <div class="game-status">Genre: <span class="status-text">Chore simulator</span></div>
+          <div class="game-description">
+            Explore everyone's favorite High Quality house from a brand new 10cm tall perspective.
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="game-container">
+          <a class="embed-container" href="https://www.youtube.com/watch?v=86mIQFwHpy8" target="_blank">
+            <img src="{{ asset('2020images/arg-bg.jpg') }}">
+          </a>
+
+          <a href="https://www.youtube.com/watch?v=86mIQFwHpy8" class="game-name" target="_blank">Brutal Rain: Angels Of Retaliation</a>
+          <div class="game-status">Status: <span class="status-text">Barely announced</span></div>
+          <div class="game-status">Genre: <span class="status-text">Venezuelan</span></div>
+          <div class="game-description">
+            This project has born from the necessity of a mech PC game that's up to the standards of people who played Armored Core on consoles but were ultimately let down.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

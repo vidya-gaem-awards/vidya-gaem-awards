@@ -92,4 +92,9 @@ class StaticController extends AbstractController
     {
         return $this->render('credits.html.twig');
     }
+
+    public function trailersAction()
+    {
+        return $this->render('trailers.html.twig');
+    }
 }

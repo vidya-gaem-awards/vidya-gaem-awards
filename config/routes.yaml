@@ -342,6 +342,10 @@ credits:
     defaults:
         template: 'credits.html.twig'
 
+trailers:
+    path:       /trailers
+    controller: App\Controller\StaticController::trailersAction
+
 resultRedirect:
     path:       /voting/results
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
