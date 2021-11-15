@@ -22,7 +22,7 @@ class Vote
     /**
      * @var array
      *
-     * @ORM\Column(name="preferences", type="json_array", nullable=false)
+     * @ORM\Column(name="preferences", type="json", nullable=false)
      */
     private $preferences;
 

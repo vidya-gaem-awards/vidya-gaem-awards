@@ -34,7 +34,7 @@ class Autocompleter
     /**
      * @var array
      *
-     * @ORM\Column(name="strings", type="json_array", nullable=false)
+     * @ORM\Column(name="strings", type="json", nullable=false)
      */
     private $strings = [];
 

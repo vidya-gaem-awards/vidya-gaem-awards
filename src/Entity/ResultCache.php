@@ -23,21 +23,21 @@ class ResultCache
     /**
      * @var array
      *
-     * @ORM\Column(name="results", type="json_array", nullable=false)
+     * @ORM\Column(name="results", type="json", nullable=false)
      */
     private $results;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="steps", type="json_array", nullable=false)
+     * @ORM\Column(name="steps", type="json", nullable=false)
      */
     private $steps;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="warnings", type="json_array", nullable=false)
+     * @ORM\Column(name="warnings", type="json", nullable=false)
      */
     private $warnings;
 

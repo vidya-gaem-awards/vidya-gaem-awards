@@ -37,7 +37,7 @@ class TableHistory
     /**
      * @var array
      *
-     * @ORM\Column(name="`values`", type="json_array", nullable=false)
+     * @ORM\Column(name="`values`", type="json", nullable=false)
      */
     private $values;
 
