@@ -81,14 +81,14 @@
               <div class="form-group row">
                 <label class="col-lg-2 col-sm-3 col-form-label" for="info-id">ID</label>
                 <div class="col-lg-10 col-sm-9">
-                  <input class="form-control" type="text" id="info-id" required name="id" pattern="[0-9a-zA-Z-]+">
+                  <input class="form-control" type="text" id="info-id" required name="id" pattern="[0-9a-zA-Z-]+" maxlength="30">
                   <small class="form-text text-muted">ID can only include letters, numbers, and dashes</small>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-2 col-sm-3 col-form-label" for="info-name">Name</label>
                 <div class="col-lg-10 col-sm-9">
-                  <input class="form-control" type="text" id="info-name" required name="name">
+                  <input class="form-control" type="text" id="info-name" required name="name" maxlength="100">
                   <small class="form-text text-muted">The name is only visible to those with award edit access</small>
                 </div>
               </div>
