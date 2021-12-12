@@ -113,7 +113,7 @@
       color: #2A32AD;
     }
 
-    .fa-nintendo-switch {
+    .fa-puzzle-piece {
       color: #E50019;
     }
 
@@ -145,7 +145,7 @@
               {% if game.pc %}<i class="fab fa-fw fa-windows"></i>{% endif %}
               {% if game.x360 or game.xb1 or game.xsx %}<i class="fab fa-fw fa-xbox"></i>{% endif %}
               {% if game.ps3 or game.ps4 or game.ps5 or game.vita %}<i class="fab fa-fw fa-playstation"></i>{% endif %}
-              {% if game.switch %}<i class="fab fa-fw fa-nintendo-switch"></i>{% endif %}
+              {% if game.switch %}<i class="fab fa-fw fa-puzzle-piece"></i>{% endif %}
               {% if game.mobile %}<i class="fab fa-fw fa-android"></i>{% endif %}
 
               <a href="#" class="remove-game float-right" data-title="{{ game.name | e('html_attr') }}" data-id="{{ game.id }}">×</a>
