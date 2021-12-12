@@ -311,9 +311,12 @@ class WikipediaService
             $modifier = 0;
         } elseif ($year <= 2018) {
             $modifier = 1;
-        } else {
+        } elseif ($year <= 2019) {
             // 2019 added a publisher column
             $modifier = 2;
+        } else {
+            // 2021 added a developer column (it just never ends)
+            $modifier = 3;
         }
 
         $tables = $crawler->filter('.wikitable')->reduce(function (Crawler $node, $i) use ($year) {
