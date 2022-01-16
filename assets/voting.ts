@@ -4,6 +4,7 @@ require('jquery-ui/ui/widgets/draggable');
 require('jquery-ui/ui/widgets/droppable');
 require('bootstrap');
 import Sortable from "sortablejs";
+import Webamp from "webamp";
 
 declare var votingEnabled: boolean;
 declare var lastVotes: any;
@@ -156,6 +157,10 @@ function resetMusic() {
         localStorage.removeItem('activeMusic');
     }
 
+    if (webamp) {
+        webamp.close();
+    }
+
     $('.item-music').removeClass('active');
 }
 
@@ -204,6 +209,15 @@ function shuffleTextNodes(el) {
     });
 }
 
+let webamp;
+
+declare global {
+    interface Window {
+        cheat(code: string): void;
+    }
+}
+
+
 jQuery(function () {
     // If there's no award currently selected, none of this code is relevant.
     if (!currentAward) {
@@ -211,6 +225,9 @@ jQuery(function () {
     }
 
     canPlayAudio = new Audio().canPlayType('audio/ogg') !== '';
+
+    webamp = new Webamp({});
+    webamp.renderWhenReady(document.getElementById('winamp')).then(() => webamp.pause());
 
     toddDialog = $('#todd');
     toddDialog.modal({
@@ -269,7 +286,7 @@ jQuery(function () {
         // }
 
         localStorage.setItem('inventory', JSON.stringify(inventory));
-        $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' shekels');
+        $('#shekelCount').find('.item-name').text(inventory['shekels'] + '-shekels.dat');
 
         if (inventory['shekels'] >= lootboxCost) {
             $('#buy-lootbox').removeAttr('disabled');
@@ -289,7 +306,7 @@ jQuery(function () {
             var element = $('#item-template').clone();
             element.addClass('kebab');
             element.find('img').attr('src', reward.image.url).attr('id', 'reward-image-' + reward.shortName);
-            element.find('.item-name').text(reward.name);
+            element.find('.item-name').text(reward.name + '.exe');
             element.find('.item-quantity').text('x ' + quantity);
             element.find('.item-year').text(reward.year + ' item');
             element.find('.item-button').show().attr('data-id', reward.shortName);
@@ -304,6 +321,18 @@ jQuery(function () {
 
             if (!reward.css) {
                 element.find('.item-css').remove();
+            }
+
+            if (localStorage.getItem('activeCSS') === reward.shortName) {
+                element.find('.item-css').addClass('active');
+            }
+
+            if (localStorage.getItem('activeMusic') === reward.shortName) {
+                element.find('.item-music').addClass('active');
+            }
+
+            if (localStorage.getItem('activeBuddie') === reward.shortName) {
+                element.find('.item-buddie').addClass('active');
             }
 
             var tier = lootboxTiers[reward.tier];
@@ -324,9 +353,9 @@ jQuery(function () {
         }
     }
 
-    if (rewards['nothing']) {
-        addRewardToInventory('nothing');
-    }
+    // if (rewards['nothing']) {
+    //     addRewardToInventory('nothing');
+    // }
     updateInventory();
 
     $('#shekelCount').show();
@@ -447,6 +476,12 @@ jQuery(function () {
         }
     });
 
+    $('#no-music').on('show.bs.modal', function () {
+        $('body').addClass("no-music-modal");
+    }).on('hide.bs.modal', function () {
+        $('body').removeClass("no-music-modal");
+    });
+
     $('#resetRewardsButton').click(function () {
         if (music) {
             music.pause();
@@ -463,14 +498,24 @@ jQuery(function () {
     });
 
     $('.based').on('click', function (event) {
-        inventory['shekels'] += 10;
+        inventory['shekels'] += 100;
         updateInventory();
+
+        if (Math.random() > 0.95) {
+            const body = $('body');
+            body.empty();
+            body.append('<div class="bsod"></div>');
+        }
     });
 
     $('#cheat-code').submit(function (event) {
         event.preventDefault();
         var code = String($('#cheat-code-input').val());
 
+        processCheat(code);
+    });
+
+    function processCheat(code) {
         $('#cheat-code-input').val('');
         if (code === 'rosebud') {
             inventory['shekels'] += 1000;
@@ -490,7 +535,9 @@ jQuery(function () {
             playCheatMusic(true);
         }
         updateInventory();
-    });
+    }
+
+    window.cheat = processCheat;
 
     function playCheatMusic(markAsCheater) {
         var sound = new Audio("/ogg/tf2.ogg");
@@ -509,25 +556,43 @@ jQuery(function () {
             return;
         }
 
-        if (music) {
-            music.pause();
-            music.currentTime = 0;
-        }
+        // if (music) {
+        //     music.pause();
+        //     music.currentTime = 0;
+        // }
+        //
+        // if (showButton) {
+        //     var text;
+        //     if (id === 'straya') {
+        //         text = 'Ban Australians';
+        //     } else {
+        //         text = 'Mute music'
+        //     }
+        //
+        //     $('#resetRewardsButton').show().find('span').text(text);
+        // }
+        //
+        // music = new Audio(reward.musicFile.url);
+        // music.volume = 0.2;
 
-        if (showButton) {
-            var text;
-            if (id === 'straya') {
-                text = 'Ban Australians';
-            } else {
-                text = 'Mute music'
+        webamp.setTracksToPlay([
+            {
+                url: reward.musicFile.url,
+                metaData: {
+                    title: reward.shortName + ".mp3",
+                    artist: null
+                }
             }
+        ]);
+        webamp.reopen();
+        webamp.play();
 
-            $('#resetRewardsButton').show().find('span').text(text);
+        if (webamp.media._context.state === 'suspended') {
+            return Promise.reject('Media context failed to start');
         }
 
-        music = new Audio(reward.musicFile.url);
-        music.volume = 0.25;
-        return music.play();
+        // return music.play();
+        return Promise.resolve();
     }
 
     function activateBuddie(id) {
@@ -546,21 +611,25 @@ jQuery(function () {
     });
 
     if (localStorage.getItem('ignoreRewards')) {
-        $('#restoreDrops').show();
+        $('#restoreDrops').removeAttr('disabled');
     }
 
     if (!localStorage.getItem('ignoreRewards') && lastVotes.length === 0) {
         showRewardsOnSubmit = true;
     }
 
+    $('#unequipAll').on('click', function (event) {
+        resetRewards();
+    });
+
     $('#restoreDrops').click(function (event) {
         event.preventDefault();
-        $(this).remove();
+        $(this).attr('disabled', 'disabled');
         localStorage.removeItem('ignoreRewards');
         if (lastVotes.length === 0) {
             showRewardsOnSubmit = true;
         }
-        alert('Transaction successful! You will now receive crate drops when submitting votes.');
+        alert('Transaction successful! You will now receive files when submitting votes.');
     });
 
     var lootboxSound = new Audio("/ogg/open-box.ogg");
@@ -592,7 +661,7 @@ jQuery(function () {
             var tier = lootboxTiers[item.tier];
             addRewardToInventory(item.shortName);
             image.attr('src', item.image.url);
-            title.text(item.name);
+            title.text(item.name + '.exe');
             $tier.show();
             $tier.text(tier.name);
             $tier.css('color', 'black');
@@ -601,7 +670,7 @@ jQuery(function () {
             var shekelCount = reward.amount;
             inventory['shekels'] += shekelCount;
             image.attr('src', '/img/dosh.png');
-            title.text(shekelCount + " shekels");
+            title.text(shekelCount + "-shekels.dat");
             $tier.show();
             $tier.text('Special');
             $tier.css('color', 'white');
@@ -655,8 +724,12 @@ jQuery(function () {
     $('#neverShowAgain').click(function () {
         localStorage.setItem('ignoreRewards', 'true');
         $('#rewards').modal('hide');
-        $('#restoreDrops').show();
+        $('#restoreDrops').removeAttr('disabled');
     })
+
+    $('#closeRewardsModal').click(function () {
+        $('#rewards').modal('hide');
+    });
 
     var pendingItems = [];
 
