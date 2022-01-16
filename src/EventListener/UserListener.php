@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use RandomLib\Factory;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -16,23 +17,24 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserListener
 {
-    private $secret;
-    private $tokenStorage;
-    private $session;
-    private $em;
-    private $configService;
+    private string $secret;
+    private TokenStorageInterface $tokenStorage;
+    private RequestStack $requestStack;
+    private EntityManagerInterface $em;
+    private ConfigService $configService;
 
-    public function __construct(string $secret, TokenStorageInterface $tokenStorage, SessionInterface $session, EntityManagerInterface $em, ConfigService $configService)
+    public function __construct(string $secret, TokenStorageInterface $tokenStorage, RequestStack $requestStack, EntityManagerInterface $em, ConfigService $configService)
     {
         $this->secret = $secret;
         $this->tokenStorage = $tokenStorage;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->em = $em;
         $this->configService = $configService;
     }
 
     public function onKernelRequest(RequestEvent $event)
     {
+        $session = $this->requestStack->getSession();
         $request = $event->getRequest();
 
         // The token won't be set in rare cases (such as when loading the web debug toolbar).
@@ -44,12 +46,12 @@ class UserListener
         // Generate a random ID to keep in the cookie if one doesn't already exist.
         // We use this cookie as part of the voting identification process.
         $randomIDCookie = $request->cookies->get('access');
-        $randomIDSession = $this->session->get('access');
+        $randomIDSession = $session->get('access');
 
         if ($randomIDCookie && $randomIDSession) {
             $randomID = $randomIDCookie;
         } elseif ($randomIDCookie && !$randomIDSession) {
-            $this->session->set('access', $randomIDCookie);
+            $session->set('access', $randomIDCookie);
             $randomID = $randomIDCookie;
         } else {
             // Who knows where this came from... it's probably not very secure.
@@ -59,16 +61,16 @@ class UserListener
             $randomID = hash('sha256', $generator->generate(64));
             $randomID .= ':' . hash_hmac('md5', $randomID, $this->secret);
 
-            $this->session->set('access', $randomID);
+            $session->set('access', $randomID);
         }
 
         // If the user has a votingCode cookie set, use that, otherwise, use the votingCode session.
         // This helps guard against users with cookies turned off.
-        $votingCodeSession = $this->session->get('votingCode');
+        $votingCodeSession = $session->get('votingCode');
         $votingCodeCookie = $request->cookies->get('votingCode');
 
         if ($votingCodeCookie) {
-            $this->session->set('votingCode', $votingCodeCookie);
+            $session->set('votingCode', $votingCodeCookie);
             $votingCode = $votingCodeCookie;
         } else {
             $votingCode = $votingCodeSession;
@@ -84,6 +86,7 @@ class UserListener
 
     public function onKernelResponse(ResponseEvent $event)
     {
+        $session = $this->requestStack->getSession();
         $request = $event->getRequest();
 
         // The token won't be set in rare cases (such as when loading the web debug toolbar).
@@ -96,7 +99,7 @@ class UserListener
         // in the request handler above. As such, we only need to worry about copying the value from the session
         // into the cookie here.
         $randomIDCookie = $request->cookies->get('access');
-        $randomIDSession = $this->session->get('access');
+        $randomIDSession = $session->get('access');
 
         if ($randomIDSession && !$randomIDCookie) {
             setcookie('access', $randomIDSession, strtotime('+90 days'), '/', $request->getHost());

@@ -7,53 +7,53 @@
     font-style: normal;
 }*/
 
-@font-face {
-    font-family: 'Corbel';
-    src: url('/fonts/Corbel.woff2') format('woff2'),
-        url('/fonts/Corbel.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+/*@font-face {*/
+/*    font-family: 'Corbel';*/
+/*    src: url('/fonts/Corbel.woff2') format('woff2'),*/
+/*        url('/fonts/Corbel.woff') format('woff');*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*}*/
 
-@font-face {
-    font-family: 'Coolvetica';
-    src: url('/fonts/CoolveticaCondensedRg-Regular.woff2') format('woff2'),
-        url('/fonts/CoolveticaCondensedRg-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+/*@font-face {*/
+/*    font-family: 'Coolvetica';*/
+/*    src: url('/fonts/CoolveticaCondensedRg-Regular.woff2') format('woff2'),*/
+/*        url('/fonts/CoolveticaCondensedRg-Regular.woff') format('woff');*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*}*/
 
-@font-face {
-    font-family: 'OratorStd';
-    src: url('/fonts/OratorStd.woff') format('woff2'),
-        url('/fonts/OratorStd.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+/*@font-face {*/
+/*    font-family: 'OratorStd';*/
+/*    src: url('/fonts/OratorStd.woff') format('woff2'),*/
+/*        url('/fonts/OratorStd.woff') format('woff');*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*}*/
 
-@font-face {
-  font-family: 'X-Files';
-  src: url('/fonts/X-Files.woff2') format('woff2'), url('/fonts/X-Files.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+/*@font-face {*/
+/*  font-family: 'X-Files';*/
+/*  src: url('/fonts/X-Files.woff2') format('woff2'), url('/fonts/X-Files.woff') format('woff');*/
+/*  font-weight: normal;*/
+/*  font-style: normal;*/
+/*}*/
 
-@font-face {
-  font-family: 'Dot Matrix';
-  src: url('/fonts/DotMatrix.woff2') format('woff2'), url('/fonts/DotMatrix.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+/*@font-face {*/
+/*  font-family: 'Dot Matrix';*/
+/*  src: url('/fonts/DotMatrix.woff2') format('woff2'), url('/fonts/DotMatrix.woff') format('woff');*/
+/*  font-weight: normal;*/
+/*  font-style: normal;*/
+/*}*/
 
-@font-face {
-  font-family: 'Dot Matrix';
-  src: url('/fonts/DotMatrixBold.woff2') format('woff2'), url('/fonts/DotMatrixBold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-}
+/*@font-face {*/
+/*  font-family: 'Dot Matrix';*/
+/*  src: url('/fonts/DotMatrixBold.woff2') format('woff2'), url('/fonts/DotMatrixBold.woff') format('woff');*/
+/*  font-weight: bold;*/
+/*  font-style: normal;*/
+/*}*/
 
 html {
-  background: url(/2020images/corkboard.jpg) repeat fixed;
+  background: #00807F;
 }
 
 body {
@@ -66,9 +66,10 @@ body {
 
 .zig {
   clear: both;
-  height: 11px;
-  margin: 30px -30px;
-  background: url(/2020images/zig.png) repeat-x;
+  height: 2px;
+  margin: 30px 0;
+  /*background: url(/2020images/zig.png) repeat-x;*/
+  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
 }
 
 @media screen and (max-width: 1300px) {
@@ -85,8 +86,6 @@ h1, h2 {
 }
 
 h1 {
-  /*font-family: "Coolvetica", Helvetica, sans-serif;*/
-  font-family: "Dot Matrix", monospace;
   font-weight: bold;
   /*text-transform: uppercase;*/
   color: black;
@@ -95,7 +94,6 @@ h1 {
 }
 
 h2 {
-  font-family: "Dot Matrix", monospace;
   font-weight: bold;
   font-size: 21px;
   color: black;
@@ -104,7 +102,6 @@ h2 {
 h3 {
     color: black;
     text-decoration: none;
-	font-family: "OratorStd", "Courier New", serif;
     font-size: 1em;
     line-height: 0.95em;
     padding: 0;
@@ -177,7 +174,7 @@ h3 {
 
 a {
   color: #125ba7;
-  font-family: "X-Files", sans-serif;
+  /*font-family: "X-Files", sans-serif;*/
   /*text-shadow: #fec544 0px 0px 3px;*/
 }
 
@@ -190,7 +187,7 @@ a:hover {
 .mecha-button {
   background: rgb(0, 0, 0);
   border: 1px solid #f81317;
-  font-family: "OratorStd", "Courier New", serif;
+  /*font-family: "OratorStd", "Courier New", serif;*/
   text-shadow: #f29823 0 0 3px;
   color: #f29823;
   padding: 4px 6px;
@@ -214,7 +211,7 @@ a:hover {
 /** Bootstrap button **/
 .btn {
   background: rgba(255, 255, 255, 0.6);
-  font-family: 'Dot Matrix', monospace;
+  /*font-family: 'Dot Matrix', monospace;*/
   border: 1px dashed #c2c5b5;
   color: #0056be;
 }

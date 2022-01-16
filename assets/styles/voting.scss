@@ -9,23 +9,12 @@ body {
 }
 
 .center-container {
-  background-image: url(/2020images/paper.png);
-  background-repeat: repeat-y;
-  background-position-x: center;
-  background-position-y: top;
-  background-size: 100%;
-  width: 1300px;
-  margin: 0 auto;
-  padding: 15px 90px;
+  width: 1480px;
+  margin: 10px auto;
   z-index: 20;
 
-  @media screen and (max-width: 1300px) {
+  @media screen and (max-width: 1480px) {
     width: 100%;
-  }
-
-  @media screen and (max-width: 1000px) {
-    padding-left: calc(6% + 10px);
-    padding-right: calc(6% + 10px);
   }
 }
 
@@ -63,10 +52,9 @@ header {
   }
 
   .title-text {
-    font-family: "X-Files", sans-serif;
     color: black;
     font-size: 30px;
-    transform: rotateZ(-1.8deg);
+    //transform: rotateZ(-1.8deg);
     text-align: right;
 
     .line-1 {
@@ -86,54 +74,37 @@ header {
   }
 }
 
-.background-elements {
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  z-index: -1;
-
-  @media screen and (max-width: 1300px) {
-    display: none;
-  }
-}
-
 .conspiracy {
   position: absolute;
   width: 46vw;
   left: -250px;
 }
 
-@import 'photographs';
-
-.photograph {
-  position: absolute;
-  z-index: -1;
-  transform: rotateZ(-15deg);
-  right: 40px;
-}
-
 /* Award Header (including left/right navigation buttons) */
 .award-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   text-align: center;
   position: relative;
   max-width: 1100px;
   align-items: center;
   margin: 0 auto 20px;
-  background-image: url(/2020images/tape.png);
-  background-size: 790px;
-  background-position: center top;
-  background-repeat: no-repeat;
+  //background-image: url(/2020images/tape.png);
+  //background-size: 790px;
+  //background-position: center top;
+  //background-repeat: no-repeat;
 
   @media screen and (max-width: 1000px) {
     flex-wrap: wrap;
   }
 
   .award-name-container {
-    padding: 15px 45px;
+    background: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    margin: 0 12px;
+    padding: 12px 8px;
+    max-width: 700px;
 
-    color: black;
     flex-grow: 1;
     order: 2;
 
@@ -148,7 +119,6 @@ header {
   }
 
   .award-name {
-    font-family: "Dot Matrix", monospace;
     text-transform: uppercase;
     font-size: 2.5em;
     line-height: 100%;
@@ -160,29 +130,28 @@ header {
   }
 
   .award-subtitle {
-    font-family: "Dot Matrix", monospace;
     font-size: 1.1em;
   }
 
   .navigation {
-    width: 140px;
-    height: 65px;
-    cursor: pointer;
-    display: block;
-    background-size: contain;
-    flex-shrink: 0;
-
-    &:hover {
-      transform: translateY(3px);
-    }
+  //  width: 140px;
+  //  height: 65px;
+  //  cursor: pointer;
+  //  display: block;
+  //  background-size: contain;
+  //  flex-shrink: 0;
+  //
+  //  &:hover {
+  //    transform: translateY(3px);
+  //  }
 
     &.left {
-      background-image: url("/2020images/backarrow.png");
+  //    background-image: url("/2020images/backarrow.png");
       order: 1;
     }
 
     &.right {
-      background-image: url("/2020images/nextarrow.png");
+  //    background-image: url("/2020images/nextarrow.png");
       order: 3;
     }
   }
@@ -190,34 +159,37 @@ header {
 
 .awards-list {
   h2 {
-    font-family: "Dot Matrix", monospace;
     font-weight: bold;
     font-size: 24px;
     margin-bottom: 10px;
   }
 
   .awards {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 10px;
-
+    column-count: 2;
+    //position: relative;
+    //display: grid;
+    //grid-template-columns: repeat(2, 1fr);
+    //column-gap: 10px;
+    //
     @media screen and (max-width: 700px) {
-      grid-template-columns: 1fr;
+      //grid-template-columns: 1fr;
+      column-count: 1;
     }
   }
 
   .award {
     color: black;
     text-shadow: none;
-    font-family: "Dot Matrix", monospace;
-
-    &.active {
-      color: red;
-    }
 
     &.complete {
-      text-decoration: line-through double black;
+      background: #D4D0C8;
+      color: #808080;
+      //text-decoration: line-through double black;
+    }
+
+    &.active {
+      background-color: navy;
+      color: #fff;
     }
   }
 
@@ -227,7 +199,7 @@ header {
 
   .award-subtitle {
     text-decoration: none;
-    font-size: 0.8em;
+    //font-size: 0.8em;
     padding: 0;
     margin: 0;
     display: inline;
@@ -236,7 +208,6 @@ header {
 
 .your-votes {
   text-align: center;
-  font-family: "X-Files", sans-serif;
   font-size: 30px;
   text-decoration: underline;
 }
@@ -446,8 +417,8 @@ header {
 }
 
 .modal-content {
-  background: url(/2020images/paper.png);
-  background-size: cover;
+  //background: url(/2020images/paper.png);
+  //background-size: cover;
   overflow: hidden;
   transition: 500ms ease-in-out;
 }
@@ -469,10 +440,8 @@ header {
 }
 
 #no-music {
-  font-family: "Dot Matrix", monospace;
 
   .modal-header {
-    font-family: "Dot Matrix", monospace;
     font-weight: bold;
     font-size: 24px;
     justify-content: center;
@@ -535,6 +504,11 @@ header {
 }
 
 .inventory-container {
+  background: #fff;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  margin: 0;
+  padding: 12px 8px;
+
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   row-gap: 10px;
@@ -551,7 +525,7 @@ $card-width: 150px;
 .inventory-item {
   width: $card-width;
   min-height: ($card-width * 7 / 5);
-  border-radius: 4%;
+  //border-radius: 4%;
   //margin: 10px;
   //padding-top: 10px;
   //padding: 10px 10px 0 10px;
@@ -563,8 +537,12 @@ $card-width: 150px;
   //font-weight: bold;
   //border: 2px dotted black;
   justify-content: start;
-  background-image: url(/2020images/cardbg.png);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+  background: #F9FDDD;
+  border: 1px solid black;
+
+  //background-image: url(/2020images/cardbg.png);
+  //box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 
   &.encrypted {
     background-color: black;
@@ -603,7 +581,6 @@ $card-width: 150px;
   padding-left: 3px;
   padding-right: 3px;
   text-align: center;
-  font-family: "Dot Matrix", monospace;
   font-size: 18px;
   width: 100%;
 }
@@ -615,14 +592,14 @@ $card-width: 150px;
 }
 
 .item-tier {
+  display: none;
   width: 100%;
   color: black;
-  font-family: "Dot Matrix", monospace;
   //text-shadow: 1px 1px 2px black, -1px -1px 2px rgba(0,0,0,0.5);
-  font-size: 15px;
+  //font-size: 15px;
   height: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  //border-top-left-radius: 5px;
+  //border-top-right-radius: 5px;
   background-color: black;
   margin-bottom: 5px;
   opacity: 0.8;
@@ -637,35 +614,40 @@ $card-width: 150px;
   margin-top: auto;
   display: flex;
   width: 100%;
-}
+  justify-content: center;
+  margin-bottom: 5px;
 
-.item-button {
-  width: 100%;
-  border-top: 1px dashed #c2c5b5;
-  border-radius: 0;
-  background: rgba(255,255,255,0.6);
-  font-family: 'Dot Matrix', monospace;
-  flex: 1;
-  cursor: pointer;
-  border-right: 1px dashed #c2c5b5;
-
-  &:first-child {
-    border-bottom-left-radius: 5px;
-  }
-
-  &:last-child {
-    border-bottom-right-radius: 5px;
-    border-right: none;
-  }
-
-  &:hover {
-    background: white;
-  }
-
-  &.active {
-    background: #FCFFAF;
+  button {
+    min-width: 0;
   }
 }
+
+//.item-button {
+//  width: 100%;
+//  border-top: 1px dashed #c2c5b5;
+//  border-radius: 0;
+//  background: rgba(255,255,255,0.6);
+//  flex: 1;
+//  cursor: pointer;
+//  border-right: 1px dashed #c2c5b5;
+//
+//  &:first-child {
+//    border-bottom-left-radius: 5px;
+//  }
+//
+//  &:last-child {
+//    border-bottom-right-radius: 5px;
+//    border-right: none;
+//  }
+//
+//  &:hover {
+//    background: white;
+//  }
+//
+//  &.active {
+//    background: #FCFFAF;
+//  }
+//}
 
 .containerInventory, .deus-ex-hr {
   background: linear-gradient(to right, rgb(26, 26, 28) 0%, rgb(0, 0, 0) 30%, rgb(0, 0, 0) 70%, rgb(26, 26, 28) 100%);
@@ -712,7 +694,6 @@ body {
 .mobileInstructions {
   background: rgb(251,68,7);
   color: white;
-  font-family: Arial,sans-serif;
   width: 100%;
   height: 20px;
   text-align: center;
@@ -792,15 +773,16 @@ body {
   height: 40px;
   z-index: 301;
   position: absolute;
-  background-color: rgba(0,0,0,0.8);
-  color: white;
+  background-color: #F9FDDD;
+  border: 1px solid black;
+  color: black;
   /*transition: 200ms linear all;*/
   display: none;
   align-items: center;
   justify-content: center;
   text-align: center;
   bottom: 0;
-  font-size: 0.9em;
+  //font-size: 0.9em;
   line-height: 16px;
   padding: 3px;
 }
@@ -835,7 +817,7 @@ body {
 /* Nominee Box - outer elements that encompass the nominee box */
 /* See votingNominee.css */
 #voteDropAreaBottom .voteGroup {
-  margin-top: 25px;
+  //margin-top: 25px;
 }
 
 /* Nominee Box - extra elements that are tied to the nominee box, but are near it instead of inside it */
@@ -876,32 +858,35 @@ body {
   background: url('https://vignette.wikia.nocookie.net/memory-gamma/images/1/17/Static.gif') center #37255c;
 }
 
-.voteGroup .number {
-  background: #DED1BA;
-  color: black;
-  font-family: 'Dot Matrix', Arial, sans-serif;
-  width: 210px;
-  height: 20px;
-  padding-left: 20px;
-  line-height: 20px;
-  font-weight: normal;
-  font-size: 12px;
-  position: absolute;
-  top: -20px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
-  @media screen and (max-width: 768px) {
-    width: 95%;
-  }
-}
+//.voteGroup .number {
+//  background: #DED1BA;
+//  color: black;
+//  width: 210px;
+//  height: 20px;
+//  padding-left: 20px;
+//  line-height: 20px;
+//  font-weight: normal;
+//  //font-size: 12px;
+//  position: absolute;
+//  top: -20px;
+//  border-top-left-radius: 20px;
+//  border-top-right-radius: 20px;
+//
+//  @media screen and (max-width: 768px) {
+//    width: 95%;
+//  }
+//}
 
 .sortable-ghost .number, .sortable-chosen .number, .sortable-drag .number, .locked .number {
   //background: black;
 }
 
 .locked .voteGroup .number:after {
-  content: ' - SAVED';
+  //content: ' - SAVED';
+}
+
+.locked .title-bar {
+  background: linear-gradient(90deg,grey,#b5b5b5);
 }
 
 .placeholder .nominee {
@@ -1009,10 +994,10 @@ body {
   margin-bottom: 20px;
   padding: 5px;
   min-height: 185px;
-  border: 2px dashed #c2c5b5;
+  //border: 2px dashed #c2c5b5;
   transition: 0.2s all;
-  margin-left: -15px;
-  margin-right: -15px;
+  //margin-left: -15px;
+  //margin-right: -15px;
 }
 
 /*#dragLimit.dragActive #voteDropAreaTop,*/ #voteDropAreaTop:empty {
@@ -1021,15 +1006,21 @@ body {
                                             }
 
 #voteDropAreaBottom {
-  border: 2px dashed #c2c5b5;
-  background: rgba(255, 255, 255, 0.5);
+  background: #fff;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  margin: 0;
+  padding: 12px 8px;
+
+  //border: 2px dashed #c2c5b5;
+  //background: rgba(255, 255, 255, 0.5);
   position: relative;
   z-index: 0;
 }
 
 #voteDropAreaBottom.locked {
-  border-style: solid;
-  border-color: #4a4848;
+  background: silver;
+  //border-style: solid;
+  //border-color: #4a4848;
 }
 
 #dragLimit.dragActive #voteDropAreaBottom {
@@ -1088,36 +1079,43 @@ body {
 
 #btnResetVotes {
   width: 180px;
-  height: 135px;
-  background-image: url("/2020images/resetvotes.png");
-  background-size: 180px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  //background-image: url("/2020images/resetvotes.png");
+  //background-size: 180px;
 }
 
 #btnResetVotes:hover {
-  background-image: url("/2020images/resetvotes-hover.png");
+  //background-image: url("/2020images/resetvotes-hover.png");
 }
 
 #btnLockVotes {
   width: 180px;
-  height: 135px;
-  background-image: url("/2020images/submitvotes.png");
-  background-size: 180px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  background: green;
+  color: white;
+  //background-image: url("/2020images/submitvotes.png");
+  //background-size: 180px;
   margin-left: 20px;
 }
 
 #btnLockVotes:hover {
-  background-image: url("/2020images/submitvotes-hover.png");
+  //background-image: url("/2020images/submitvotes-hover.png");
 }
 
-.iVoted {
-  background-image: url("/2020images/submitvotes-done.png") !important;
+#btnLockVotes.iVoted {
+  text-shadow: 1px 1px 0 #fff;
+  color: grey;
+  background: silver;
   cursor: default;
 }
 
 /* Awards List */
 #containerInventory, .deus-ex-hr {
   h2 {
-    font-family: "Dot Matrix", monospace;
     font-weight: bold;
     font-size: 24px;
   }
@@ -1134,11 +1132,9 @@ body {
 
 .goBackLink {
   margin-top: 30px;
-  font-size: 20px;
+  //font-size: 20px;
 
   a {
-    font-family: 'Dot Matrix', sans-serif;
-
     &:hover {
       text-decoration: underline;
     }
@@ -1338,16 +1334,18 @@ a:hover {
 
 #btnStart {
   width: 180px;
-  height: 135px;
-  background-image: url("/2020images/startvoting.png");
-  background-size: 180px;
-  display: block;
-  margin: 0 auto;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  //background-image: url("/2020images/startvoting.png");
+  //background-size: 180px;
+  //display: block;
+  //margin: 0 auto;
 }
 
-#btnStart:hover {
-  background-image: url("/2020images/startvoting-hover.png");
-}
+//#btnStart:hover {
+//  background-image: url("/2020images/startvoting-hover.png");
+//}
 
 .fantasy-promo {
   text-align: center;
@@ -1491,21 +1489,20 @@ a:hover {
   }
 }
 
-.btn-lootbox {
-  background-image: linear-gradient(
-                  rgba(255, 255, 255, 0.4),
-                  rgba(255, 255, 255, 0.4)
-  ), url(/2020images/cardbg.png);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  font-family: 'Dot Matrix', monospace;
-
-  &:hover {
-    background-image: linear-gradient(
-                    rgba(255, 255, 255, 1),
-                    rgba(255, 255, 255, 1)
-    ), url(/2020images/cardbg.png);
-  }
-}
+//.btn-lootbox {
+//  background-image: linear-gradient(
+//                  rgba(255, 255, 255, 0.4),
+//                  rgba(255, 255, 255, 0.4)
+//  ), url(/2020images/cardbg.png);
+//  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+//
+//  &:hover {
+//    background-image: linear-gradient(
+//                    rgba(255, 255, 255, 1),
+//                    rgba(255, 255, 255, 1)
+//    ), url(/2020images/cardbg.png);
+//  }
+//}
 
 .inventory-header {
   display: flex;
@@ -1521,9 +1518,110 @@ a:hover {
 #reward-buddie {
   position: fixed;
   right: 5px;
-  bottom: 5px;
+  bottom: 31px;
   z-index: 1000;
   pointer-events: none;
   transition: .5s ease-in;
   max-height: 200px;
+}
+
+.its-now-safe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/2021images/logos.sys.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+}
+
+.it-was-never-safe {
+  background-image: url('/2021images/logos.panic.png');
+}
+
+
+.start-bar {
+  padding: 2px;
+  box-shadow: inset 1px 0 #fff;
+  display: flex;
+  background-color: silver;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #f4f4f4;
+  border-bottom: 1px solid #4e4e4e;
+  position: fixed;
+  z-index: 99999;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  font-family: "Pixelated MS Sans Serif", Arial;
+  font-size: 11px;
+}
+
+.start-button-wrapper {
+  margin-left: 2px;
+  margin-left: 2px;
+  margin-bottom: 2px;
+  vertical-align: middle;
+  display: inline-block;
+  padding: 0px 4px 0px !important;
+  background-color: silver;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
+  box-shadow: inset 1px 1px #dfdfdf, 1px 0 #000, 0 1px #000, 1px 1px #000;
+  min-width: 59px;
+  margin-right: 6px;
+  color: #000;
+  font-weight: bold;
+}
+
+.start-bar-window {
+  padding: 0 10px 0 6px;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  box-shadow: inset 1px 1px grey;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAG0lEQVQYV2M8cODAf3t7ewbG/////z948CADAFuqCj64BtLKAAAAAElFTkSuQmCC);
+  width: 160px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.made-by, .start-bar-window {
+  vertical-align: middle;
+  height: 24px;
+  line-height: 22px;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  //font-family: Arial;
+  //font-weight: 400;
+  color: #000;
+}
+
+.made-by {
+  margin-left: auto;
+  text-align: right;
+  padding: 0 10px;
+  border-top: 1px solid gray;
+  border-left: 1px solid gray;
+}
+
+.start-button {
+  //background-image: url(/2021images/start-button.png);
+  //background-repeat: no-repeat;
+  //width: 45px;
+  //height: 14px;
+}
+
+.white-box {
+  background: #fff;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
 }

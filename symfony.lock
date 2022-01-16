@@ -106,13 +106,13 @@
         "version": "v1.0.5"
     },
     "guzzlehttp/guzzle": {
-        "version": "6.5.0"
+        "version": "6.5.5"
     },
     "guzzlehttp/promises": {
-        "version": "v1.3.1"
+        "version": "1.5.1"
     },
     "guzzlehttp/psr7": {
-        "version": "1.6.1"
+        "version": "1.8.3"
     },
     "ircmaxell/security-lib": {
         "version": "v1.1.0"
@@ -390,9 +390,6 @@
             "./src/Kernel.php"
         ]
     },
-    "symfony/http-client-contracts": {
-        "version": "v2.2.0"
-    },
     "symfony/http-foundation": {
         "version": "v4.4.1"
     },
@@ -436,7 +433,7 @@
         "version": "v4.4.1"
     },
     "symfony/orm-pack": {
-        "version": "v1.0.7"
+        "version": "v1.0.8"
     },
     "symfony/password-hasher": {
         "version": "v5.3.8"
@@ -469,7 +466,7 @@
         "version": "v1.13.1"
     },
     "symfony/polyfill-intl-idn": {
-        "version": "v1.13.1"
+        "version": "v1.24.0"
     },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.17.1"

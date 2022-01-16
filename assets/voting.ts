@@ -462,6 +462,11 @@ jQuery(function () {
         $(this).hide();
     });
 
+    $('.based').on('click', function (event) {
+        inventory['shekels'] += 10;
+        updateInventory();
+    });
+
     $('#cheat-code').submit(function (event) {
         event.preventDefault();
         var code = String($('#cheat-code-input').val());
@@ -862,7 +867,7 @@ jQuery(function () {
             $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn);
 
             //empty the number
-            dropped.find(".number").html("");
+            dropped.find(".number .title-bar-text").html("");
         }
     });
 
@@ -930,7 +935,7 @@ jQuery(function () {
         bottomArea.find(".voteGroup").each(function (index) {
             index = index + 1;
             var text = 'Your ' + getOrdinal(index) + ' preference';
-            $(this).find(".number").show().html(text);
+            $(this).find(".number").show().find(".title-bar-text").html(text);
         });
 
         var boxesInBottom = bottomArea.find(".voteGroup").length;
@@ -938,7 +943,7 @@ jQuery(function () {
 
         voteColumnBoxes.each(function () {
             var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
-            $(this).find(".number").html("#" + onlyTheNumber);
+            $(this).find(".number .title-bar-text").html("#" + onlyTheNumber);
         });
 
         topArea.find(".number").hide();
@@ -1159,5 +1164,18 @@ jQuery(function () {
         }, 'json');
 
         openLootboxRewards(false);
+    });
+
+    $('.turn-off-computer').on('click',() => {
+        const body = $('body');
+        body.empty();
+        body.append('<div class="its-now-safe"></div>');
+
+        const random = Math.floor(Math.random() * 100);
+        if (random === 0) {
+            setTimeout(function () {
+                $('.its-now-safe').addClass('it-was-never-safe')
+            }, 3000);
+        }
     });
 });

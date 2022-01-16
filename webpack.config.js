@@ -1,4 +1,4 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -27,6 +27,9 @@ Encore
     .addEntry('photographs', './assets/photographs.tsx')
     //.addEntry('page2', './assets/page2.js')
 
+    // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+    //.enableStimulusBridge('./assets/controllers.json')
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
@@ -47,6 +50,10 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
+    .configureBabel((config) => {
+        config.plugins.push('@babel/plugin-proposal-class-properties');
+    })
+
     // enables @babel/preset-env polyfills
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
@@ -57,8 +64,10 @@ Encore
     .enableSassLoader()
 
     // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
-    .enableBabelTypeScriptPreset()
+    .enableTypeScriptLoader()
+
+    // uncomment if you use React
+    .enableReactPreset()
 
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
@@ -67,9 +76,9 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
 
-    // uncomment if you use API Platform Admin (composer req api-admin)
-    .enableReactPreset()
-    //.addEntry('admin', './assets/admin.js')
+    .configureCssLoader(loaderRule => {
+        loaderRule.url = false;
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

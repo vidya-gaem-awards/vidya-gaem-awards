@@ -27,6 +27,8 @@
 {% block body_attr %}id="voting-page"{% endblock %}
 
 {% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/98.css" />
+
   {% if award %}
     <script type="text/javascript">
       var votingEnabled = {{ votingOpen ? 'true' : 'false' }};
@@ -63,27 +65,28 @@
 {% block body %}
   <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
 
-  <div class="background-elements">
-    <img class="conspiracy" src="{{ asset('2020images/conspiracy.png') }}">
-    {% if ad1 %}
-      <div class="photograph">
-        <div class="photo-image" style="background-image: url('{{ ad1.image.url | escape('html_attr') }}')"></div>
-        <div class="photo-text">{{ ad1.name }}</div>
-        <div class="photo-bg"></div>
-      </div>
-    {% endif %}
-  </div>
+  <header>
+    <a class="logo" href="{{ path('index') }}">
+      <img src="{{ asset('2021images/logo.png') }}">
+    </a>
+    <div class="title-text">
+      <div class="line-1">The 2021 Vidya Gaem Awards</div>
+      <div class="line-2">{{ voteText }}</div>
+    </div>
+  </header>
 
-  <div class="center-container">
-    <header>
-      <a class="logo" href="{{ path('argLandingPage') }}">
-        <img src="{{ asset('2020images/logo.png') }}">
-      </a>
-      <div class="title-text">
-        <div class="line-1">The 2021 Vidya Gaem Awards</div>
-        <div class="line-2">{{ voteText }}</div>
+  <div class="center-container window">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img src="{{ asset('2021images/executable-1.png') }}" style="height: 16px;">
+        2021 Vidya Gaem Awards
       </div>
-    </header>
+      <div class="title-bar-controls">
+        <button aria-label="Close" class="turn-off-computer"></button>
+      </div>
+    </div>
+
+    <div class="window-body">
 
     {#<div class="pageHeader" style="text-align: center; height: 110px;">#}
     {#<label>Width <input type="number" value="350" id="debugWidth"></label>#}
@@ -93,13 +96,21 @@
     {#</div>#}
 
     {% if award %}
+      {% if random(10) == 10 %}
+        <button class="based">Based</button>
+      {% endif %}
+
       <div class="award-header">
-        <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
+        <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left">
+          <button><< {{ prevAward.name }}</button>
+        </a>
         <div class="award-name-container">
           <div class="award-name">{{ award.name }}</div>
           <div class="award-subtitle">{{ award.subtitle }}</div>
         </div>
-        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
+        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right">
+          <button>{{ nextAward.name }} >></button>
+        </a>
       </div>
     {% endif %}
 
@@ -174,36 +185,54 @@
                     {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}
                     {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
                     {#<label for="voteBox{{ loop.index }}">#}
-                    <div class="voteBox">
-                      <div class="number" style="display: none;">{{ loop.index }}</div>
-                      <div class="nominee" style="background-image: url('{{ nominee.image ? nominee.image.url : asset('img/no-image-available.png') }}'); background-size: cover">
-                        <div class="fakeElement"></div>
-                        <div class="handle fakeHandle"></div>
-                        {% if votingOpen %}
-                          <div class="hoverOverlay overlayWhenTop {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
-                                                  <span>
-                                                    Click to make <strong style="color: rgb(251,68,7);">{{ nominee.name }}</strong>
-                                                    your&nbsp;<span class="nextPreference">1st</span>&nbsp;preference
-                                                  </span>
-                          </div>
-                          <div class="hoverOverlay overlayWhenBottom {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
-                                                    <span>
-                                                      Click to remove <strong style="color: rgb(251,68,7);">{{ nominee.name }}</strong>
-                                                      from your votes
-                                                    </span>
-                          </div>
-                        {% endif %}
-                        {% if nominee.flavorText %}
-                          <div class="flavorText">{{ nominee.flavorText | nl2br }}</div>
-                        {% endif %}
-                        <div class="nomineeInfo">
-                          <div class="nomineeName">{{ nominee.name }}</div>
-                          <div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>
-                        </div>
-                        <div class="handle realHandle">
-                          <i class="fas fa-bars"></i>
+                    <div class="voteBox window">
+                      <div class="number title-bar" style="display: none;">
+                        <div class="title-bar-text">{{ loop.index }}</div>
+                        <div class="title-bar-controls">
+                          <button aria-label="Close"></button>
                         </div>
                       </div>
+                      <div class="window-body">
+                        <div class="nominee" style="background-image: url('{{ nominee.image ? nominee.image.url : asset('img/no-image-available.png') }}'); background-size: cover">
+                          <div class="fakeElement"></div>
+                          <div class="handle fakeHandle"></div>
+                          {% if votingOpen %}
+                            <div class="hoverOverlay overlayWhenTop {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
+                                                  <span>
+                                                    Click to make <strong>{{ nominee.name }}</strong>
+                                                    your&nbsp;<span class="nextPreference">1st</span>&nbsp;preference
+                                                  </span>
+                            </div>
+                            <div class="hoverOverlay overlayWhenBottom {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
+                                                    <span>
+                                                      Click to remove <strong>{{ nominee.name }}</strong>
+                                                      from your votes
+                                                    </span>
+                            </div>
+                          {% endif %}
+                          {% if nominee.flavorText %}
+                            <div class="flavorText">
+                              <img src="{{ asset('2021images/msg_information-2.png') }}">
+                              <div class="flavorText__text">
+                                {{ nominee.flavorText | nl2br }}
+                              </div>
+                            </div>
+                          {% endif %}
+{#                          <div class="nomineeInfo">#}
+{#                            <div class="nomineeName">{{ nominee.name }}</div>#}
+{#                            <div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>#}
+{#                          </div>#}
+                          <div class="handle realHandle">
+                            <i class="fas fa-bars"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="status-bar">
+                        <p class="status-bar-field"><strong>{{ nominee.name }}</strong><br>{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</p>
+                      </div>
+{#                      <div class="status-bar">#}
+{#                        <p class="status-bar-field">{{ nominee.subtitle }}</p>#}
+{#                      </div>#}
                     </div>
                     {#</label>#}
                   </div>
@@ -231,13 +260,21 @@
 
         {% if votingOpen %}
 
-          <h2 style="text-align: center; margin-bottom: 10px;" id="submitReminder">Don't forget to click on "Submit Votes" below to save your votes!</h2>
+          <h4 style="text-align: center; margin-top: 10px; margin-bottom: 10px;" id="submitReminder">Don't forget to click on "Submit Votes" below to save your votes!</h4>
 
           <div class="buttons">
-            <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
-            <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
-            <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award"></a>
+            <button id="btnResetVotes" class="btnSubmit">Reset Votes</button>
+            <button id="btnLockVotes" class="btnSubmit">Submit Votes</button>
+{#            <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>#}
+{#            <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>#}
           </div>
+
+          <div class="buttons" style="margin-top: 10px;">
+            <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award">
+              <button>{{ nextAward.name }} >></button>
+            </a>
+          </div>
+
         {% endif %}
 
         {# {% if showFantasyPromo %}
@@ -248,7 +285,7 @@
         <div id="startMessage">
 
           {% if votingNotYetOpen or votingOpen %}
-            <h2>How to vote:</h2>
+            <h3>How to vote:</h3>
             <p style="margin-top: 5px; margin-bottom: 15px;">
               <img src="{{ asset('img/virgin.png') }}" style="width: 40px; margin-right: 5px;">
               <strong>The Virgin Vote:</strong> click on the nominee you want to win, then hit submit.
@@ -276,7 +313,9 @@
               click submit.
             </p>
 
-            <a href="{{ path('voting', {'awardID': (awards|first).id}) }}" id="btnStart"></a>
+            <a href="{{ path('voting', {'awardID': (awards|first).id}) }}">
+              <button id="btnStart" class="btnSubmit">Start Voting</button>
+            </a>
           {% endif %}
 
           {% if votingClosed %}
@@ -285,192 +324,172 @@
             <p>No new votes can be made, but if you've already voted you can still see the votes you made.</p>
           {% endif %}
 
-          <h2>Stream information:</h2>
-          <p style="margin-top: 5px;">We're aiming to stream in February.</p>
-
         </div>
       {% endif %}
     </div>
 
-    <div class="zig"></div>
-
-    <div id="containerAwards" class="awards-list">
-      <h2 id="topAwards">
-        The Awards
-      </h2>
-
-      <div class="awards">
-        {% for _award in awards %}
-          <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
-             class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
-            <span class="award-name">{{ _award.name }}</span>
-            <span class="award-subtitle">{{ _award.subtitle }}</span>
-          </a>
-        {% endfor %}
-      </div>
+    <div id="containerAwards" class="awards-list" style="margin-top: 10px;">
+      <ul class="tree-view">
+        <li>
+          The Awards
+          <ul class="awards">
+          {% for _award in awards %}
+          <li>
+            <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
+               class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
+              <span class="award-name">{{ _award.name }}</span>
+              <span class="award-subtitle">{{ _award.subtitle }}</span>
+            </a>
+          </li>
+          {% endfor %}
+          </ul>
+        </li>
+      </ul>
 
       {% if app.user.loggedIn %}
-        <h3 class="goBackLink">
+        <div class="goBackLink">
           <a href="{{ path('home') }}">< Back to the main part of the site</a>
-        </h3>
+        </div>
       {% endif %}
     </div>
 
     {% if award %}
       <img id="reward-buddie">
 
-      <div class="zig"></div>
-
-      <div id="containerInventory">
-        <div id="inventory">
-
-          <form class="form-inline" id="cheat-code" style="margin-bottom: 10px; display: none;">
-            <div class="form-group" style="width: 400px;">
-              <label for="cheat-code-input" class="item-quantity">Enter cheat code:</label>
-              <input type="text" class="form-control" id="cheat-code-input">
-              <button type="submit" class="btn btn-default btn-lootbox">Activate</button>
+      <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="window">
+            <div class="title-bar">
+              <div class="title-bar-text" id="youre">
+                <img src="{{ asset('2021images/directory_open_cool-4.png') }}">
+                <span>FTP connection established</span>
+              </div>
             </div>
-          </form>
+            <div class="modal-content">
+              <div class="modal-body" style="text-align: center;">
+                <img src="{{ asset('2020images/your-rewards.png') }}" id="youre" style="max-width: 90%;">
+                <div class="lootboxbox">
+                  <div class="lootbox">
+                    <img src="" class="lootbox-image">
 
-          <div class="inventory-header">
-            <h2>
-              Your Inventory
-            </h2>
+                    <div class="inventory-item" style="display: none;">
+                      <div class="item-tier"></div>
+                      <img>
+                      <div class="item-name"></div>
+                    </div>
+                  </div>
+                  <div class="lootbox">
+                    <img src="" class="lootbox-image">
+                    <div class="inventory-item" style="display: none;">
+                      <div class="item-tier"></div>
+                      <img>
+                      <div class="item-name"></div>
+                    </div>
+                  </div>
+                  <div class="lootbox">
+                    <img src="" class="lootbox-image">
+                    <div class="inventory-item" style="display: none;">
+                      <div class="item-tier"></div>
+                      <img>
+                      <div class="item-name"></div>
+                    </div>
+                  </div>
+                </div>
 
-            <button class="btn btn-lootbox" style="display: none;" id="restoreDrops">Restore drops</button>
+              </div>
+              <div class="modal-footer" style="text-align: center;">
+                <button type="button" class="btn-lootbox" id="unboxButton">Start download</button>
+                <div id="closeRewards" style="display: none;">
+                  <button type="button" class="btn-lootbox" data-dismiss="modal">Save to C:\My Documents\Downloads</button><br>
+                  <button type="button" class="btn-lootbox" id="neverShowAgain" style="margin-top: 5px;">Don't show this again</button>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
 
+  <div id="no-music" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          Oops! There's been a fucky wucky!
+        </div>
+        <div class="modal-body">
+          <p>
+            Your browser doesn't support OGG audio.
+          </p>
+          <img src="{{ asset('img/itoddlers.gif') }}" style="width: 97%;">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lootbox btn-lg" data-dismiss="modal">iToddlers BTFO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+    </div>
+</div>
+
+  {% if award %}
+  <div class="center-container window" style="margin-bottom: 40px;">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img class="title-bar-icon" src="{{ asset('2021images/directory_open_cool-4.png') }}">
+        Downloads
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-bar-field" style="margin-top: 2px; display: flex; align-items: center; height: 24px;">
+        <span style="margin-right: 4px; margin-left: 4px;">Address</span>
+        <div class="white-box" style="flex-grow: 1; height: 24px; display: flex; align-items: center; padding-left: 4px; background-color: silver; -webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none; color: grey;">
+          <img src="{{ asset('2021images/directory_closed-1.png') }}" style="margin-right: 6px;">
+          C:\My Documents\Downloads
+        </div>
+      </div>
+    </div>
+
+{#    <div class="window-body">#}
+      <div id="containerInventory">
+
+        <div id="inventory">
           <div class="inventory-container">
             <div class="inventory-item" id="shekelCount" style="display: none;">
               <div class="item-tier"></div>
               <img src="{{ asset('img/dosh.png') }}">
               <div class="item-name">-1 shekels</div>
-
-              <div class="item-button-container">
-                <div class="btn-sm item-button" id="buy-lootbox">Buy lootbox<br><span id="lootboxCostText"></span> shekels</div>
-              </div>
             </div>
             <div class="inventory-item" id="item-template" style="display: none;">
               <div class="item-tier"></div>
               <img>
               <div class="item-name"></div>
               <div class="item-button-container">
-                <div class="btn-sm item-button item-buddie" data-type="buddie">Equip</div>
-                <div class="btn-sm item-button item-music" data-type="music"><i class="far fa-music"></i></div>
-                <div class="btn-sm item-button item-css" data-type="css"><i class="far fa-palette"></i></div>
+                <button class="item-button item-buddie" data-type="buddie">Equip</button>
+                <button class="item-button item-music" data-type="music"><i class="far fa-music"></i></button>
+                <button class="item-button item-css" data-type="css"><i class="far fa-palette"></i></button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="todd" class="modal fade" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close">&times;</button>
-            </div>
-
-            <div class="modal-body">
-              <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
-                <img src="/img/todd1.jpg">
-              </a>
-
-              <div class="buy_my_game">
-                <a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank">
-                  Buy The Elder Scrolls V: Skyrim Special Edition <span class="tail">on Steam</span>
-                </a>
-                <div class="desc">Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail.</div>
-              </div>
-
-              <div class="game_purchase_action">
-                <form name="add_to_cart_110687" action="https://store.steampowered.com/cart/" method="POST" target="_blank" style="position: relative;">
-                  <input type="hidden" name="snr" value="1_5_1100_">
-                  <input type="hidden" name="sessionid" value="37f5dea779e28dbaef40f8c5">
-                  <input type="hidden" name="action" value="add_to_cart">
-                  <input type="hidden" name="subid" value="110687">
-                  <div class="game_purchase_action_bg">
-                    <div class="game_purchase_price price">
-                      $<span class="theprice">39.95</span> USD
-                    </div>
-                    <div class="btn_addtocart">
-                      <div class="btn_addtocart_left"></div>
-                      <button class="btn_addtocart_content" type="submit">
-                        Buy on Steam
-                      </button>
-                      <div class="btn_addtocart_right"></div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body" style="text-align: center;">
-              <img src="{{ asset('2020images/your-rewards.png') }}" id="youre" style="max-width: 90%;">
-              <div class="lootboxbox">
-                <div class="lootbox">
-                  <img src="" class="lootbox-image">
-
-                  <div class="inventory-item" style="display: none;">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
-                  </div>
-                </div>
-                <div class="lootbox">
-                  <img src="" class="lootbox-image">
-                  <div class="inventory-item" style="display: none;">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
-                  </div>
-                </div>
-                <div class="lootbox">
-                  <img src="" class="lootbox-image">
-                  <div class="inventory-item" style="display: none;">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="modal-footer" style="text-align: center;">
-              <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot! ($2.49)</button>
-              <div id="closeRewards" style="display: none;">
-                <button type="button" class="btn btn-lootbox btn-lg" data-dismiss="modal">Claim rewards ($0.99)</button><br>
-                <button type="button" class="btn btn-lootbox btn-xs" id="neverShowAgain" style="margin-top: 5px;">Don't show this again ($19.99)</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <div id="no-music" class="modal fade" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            Oops! There's been a fucky wucky!
-          </div>
-          <div class="modal-body">
-            <p>
-              Your browser doesn't support OGG audio.
-            </p>
-            <img src="{{ asset('img/itoddlers.gif') }}" style="width: 97%;">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-lootbox btn-lg" data-dismiss="modal">iToddlers BTFO</button>
-          </div>
-        </div>
-      </div>
+    <div class="window-body">
+      <button id="buy-lootbox" style="margin-right: 2px;">Buy files (<span id="lootboxCostText"></span> shekels)</button>
+      <button id="restoreDrops">Restore drops</button>
     </div>
-    {% endif %}
+{#    </div>#}
   </div>
+
+    <div class="start-bar">
+      <button title="Start Menu" class="button start-button-wrapper js-start-button">
+        <img src="{{ asset('2021images/windows-4.png') }}"> Start
+      </button>
+      <span class="start-bar-window" style="text-wrap: none;">
+        <img src="/2021images/executable-1.png" style="height: 16px;"> 2021 Vidya Gaem Awards
+      </span>
+      <span class="made-by">4:20 PM</span>
+    </div>
+  {% endif %}
 {% endblock %}

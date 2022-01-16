@@ -10,18 +10,28 @@
 
 .flavorText {
   display: none;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: #F9FDDD;
+  border: 1px solid black;
   position: absolute;
   top: 0;
   left: 0;
   padding: 3px;
   width: calc(100% - 0px);
   height: auto;
-  font-size: 0.81em;
+  /*font-size: 0.81em;*/
   line-height: 13px;
-  color: white;
+  color: black;
   z-index: 40;
   user-select: all;
+}
+
+.flavorText img {
+  margin-right: 5px;
+  align-self: start;
+}
+
+.flavorText__text {
+  margin-top: 2px;
 }
 
 .aNominee .flavorText {
@@ -35,7 +45,7 @@
 }
 
 .nominee:hover .flavorText, .voteBox:hover .flavorText {
-  display: block;
+  display: flex;
 }
 
 .nominee img.locked {
@@ -58,18 +68,18 @@
 }
 
 .nomineeName {
-  font-family: 'X-Files', sans-serif;
+  /*font-family: 'X-Files', sans-serif;*/
   text-align: center;
   font-weight: normal;
   text-shadow: 1px 1px black;
   color: white;
-  font-size: 13px;
+  /*font-size: 13px;*/
 }
 .nomineeSubtitle {
-  font-family: 'Dot Matrix', sans-serif;
+  /*font-family: 'Dot Matrix', sans-serif;*/
   text-align: center;
   margin-top: -5px;
-  font-size: 10px;
+  /*font-size: 10px;*/
   text-shadow: 1px 1px black;
   color: white;
 }
@@ -116,7 +126,7 @@
 .flexContainer .voteBox {
   transition: 0.3s linear all;
   width: 100%;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+  /*box-shadow: 2px 2px 5px rgba(0,0,0,0.8);*/
 }
 
 .voteGroup {

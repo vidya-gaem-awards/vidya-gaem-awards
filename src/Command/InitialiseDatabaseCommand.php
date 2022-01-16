@@ -7,6 +7,7 @@ use App\Entity\Permission;
 use App\Entity\Template;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use SteamCondenser\Community\SteamId;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -103,14 +104,14 @@ class InitialiseDatabaseCommand extends Command
                 return false;
             }
 
-            $steam = \SteamId::create($answer);
+            $steam = SteamId::create($answer);
             return $steam;
         });
 
         $steam = $helper->ask($input, $output, $question);
 
         if ($steam) {
-            /** @var \SteamId $steam */
+            /** @var SteamId $steam */
             $user = new User();
             $user
                 ->setSteamId($steam->getSteamId64())

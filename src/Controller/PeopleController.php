@@ -8,6 +8,8 @@ use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
+use SteamCondenser\Community\SteamId;
+use SteamCondenser\Exceptions\SteamCondenserException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -75,7 +77,7 @@ class PeopleController extends AbstractController
             $this->addFlash('error', 'Invalid SteamID provided.');
             return $this->redirectToRoute('people');
         }
-        
+
         $post = $request->request;
 
         // Remove group
@@ -172,8 +174,8 @@ class PeopleController extends AbstractController
         }
 
         try {
-            $steam = \SteamId::create($id);
-        } catch (\SteamCondenserException $e) {
+            $steam = SteamId::create($id);
+        } catch (SteamCondenserException $e) {
             return $this->json(['error' => 'no matches']);
         }
 
@@ -184,7 +186,7 @@ class PeopleController extends AbstractController
         $binary = str_pad(decbin($steam->getSteamId64()), 64, '0', STR_PAD_LEFT);
         if ($binary[31] === '0') {
             $binary[31] = '1';
-            $steam = \SteamId::create(bindec($binary));
+            $steam = SteamId::create(bindec($binary));
         }
 
         $repo = $em->getRepository(User::class);
