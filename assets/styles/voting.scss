@@ -160,6 +160,8 @@ header {
 }
 
 .awards-list {
+  text-align: left;
+
   h2 {
     font-weight: bold;
     font-size: 24px;
@@ -1603,24 +1605,36 @@ a:hover {
 }
 
 .start-bar-window {
-  padding: 0 10px 0 6px;
-  border-top: 1px solid #000;
-  border-left: 1px solid #000;
-  box-shadow: inset 1px 1px grey;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAG0lEQVQYV2M8cODAf3t7ewbG/////z948CADAFuqCj64BtLKAAAAAElFTkSuQmCC);
+  text-align: left;
+  padding: 0 10px 0 6px !important;
+
+  &:not(.minimized) {
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    box-shadow: inset 1px 1px grey;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAG0lEQVQYV2M8cODAf3t7ewbG/////z948CADAFuqCj64BtLKAAAAAElFTkSuQmCC);
+    font-weight: bold;
+  }
+
   width: 160px;
-  font-weight: bold;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  img {
+    height: 16px;
+  }
 }
 
 .made-by, .start-bar-window {
   vertical-align: middle;
   height: 24px;
   line-height: 22px;
-  border-right: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+
+  &:not(.minimized) {
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+  }
   //font-family: Arial;
   //font-weight: 400;
   color: #000;
@@ -1744,6 +1758,7 @@ input[type=range]::-webkit-slider-thumb {
 
 #webamp {
   position: fixed !important;
+  z-index: 2000 !important;
 
   #equalizer-button {
     visibility: hidden;
@@ -1771,5 +1786,20 @@ input[type=range]::-webkit-slider-thumb {
 
   #equalizer-button, #playlist-button, #previous, #next, #eject, #stop {
     pointer-events: none;
+  }
+}
+
+.functional-window {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-window {
+  max-width: 640px;
+
+  iframe {
+    width: 100%;
+    min-height: 200px;
+    aspect-ratio: 4/3;
   }
 }

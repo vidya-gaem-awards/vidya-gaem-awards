@@ -21,6 +21,7 @@ let toddDialog: any;
 let showRewardsOnSubmit: boolean = false;
 let music: HTMLAudioElement;
 let canPlayAudio: boolean;
+let usingWinamp: boolean = true;
 
 for (const item of knownItems) {
     rewards[item.shortName] = item;
@@ -158,6 +159,7 @@ function resetMusic() {
     }
 
     if (webamp) {
+        webamp.stop();
         webamp.close();
     }
 
@@ -217,6 +219,19 @@ declare global {
     }
 }
 
+interface WindowsWindow {
+    id: string,
+    open: boolean,
+    minimized: boolean,
+    draggable: boolean,
+}
+
+const windows: Record<string, WindowsWindow> = {
+    'window-vga': {id: 'window-vga', open: true, minimized: false, draggable: false},
+    'window-downloads': {id: 'window-downloads', open: true, minimized: false, draggable: false},
+    'game-skyrim': {id: 'game-skyrim', open: false, minimized: false, draggable: true},
+    'game-rigged': {id: 'game-rigged', open: false, minimized: false, draggable: true},
+}
 
 jQuery(function () {
     // If there's no award currently selected, none of this code is relevant.
@@ -224,10 +239,86 @@ jQuery(function () {
         return;
     }
 
-    canPlayAudio = new Audio().canPlayType('audio/ogg') !== '';
+    function openWindow(id) {
+        if (windows[id].open) {
+            return;
+        }
 
-    webamp = new Webamp({});
-    webamp.renderWhenReady(document.getElementById('winamp')).then(() => webamp.pause());
+        const window = $('#' + id).show();
+        windows[id].open = true;
+        windows[id].minimized = false;
+
+        const iframe = window.find('iframe');
+        iframe.attr('src', iframe.attr('data-src'));
+
+        const startBar = $('#start-bar-template').clone();
+
+        startBar.find('img').attr('src', window.find('.title-bar-text img').attr('src'));
+        startBar.find('.start-bar-text').text(window.find('.title-bar-text').text());
+        startBar.attr('data-window', id);
+
+        startBar.show();
+        startBar.insertBefore($('#start-bar-template'));
+    }
+
+    function closeWindow(id) {
+        if (!windows[id].open) {
+            return;
+        }
+
+        const window = $('#' + id);
+        windows[id].open = false;
+        windows[id].minimized = false;
+
+        window.find('iframe').removeAttr('src');
+        window.hide();
+
+        $('.start-bar').find('[data-window="' + id + '"]').remove();
+    }
+
+    function minimizeWindow(id) {
+        if (!windows[id].open || windows[id].minimized) {
+            return;
+        }
+
+        const window = $('#' + id);
+        windows[id].minimized = true;
+
+        window.hide();
+
+        $('.start-bar').find('[data-window="' + id + '"]').addClass('minimized');
+    }
+
+    function unminimizeWindow(id) {
+        if (!windows[id].open || !windows[id].minimized) {
+            return;
+        }
+
+        const window = $('#' + id);
+        windows[id].minimized = false;
+
+        window.show();
+        window[0].scrollIntoView();
+
+        $('.start-bar').find('[data-window="' + id + '"]').removeClass('minimized');
+    }
+
+    canPlayAudio = new Audio().canPlayType('audio/ogg') !== '';
+    usingWinamp = !localStorage.getItem('disableWinamp');
+
+    function initWebamp() {
+        webamp = new Webamp({});
+        webamp.renderWhenReady(document.getElementById('winamp')).then(() => {
+            webamp.pause();
+        });
+    }
+
+    if (usingWinamp) {
+        initWebamp();
+        $('#uninstallWinamp').text('Uninstall Winamp 2.91');
+    } else {
+        $('#uninstallWinamp').text('Install Winamp 2.91');
+    }
 
     toddDialog = $('#todd');
     toddDialog.modal({
@@ -365,7 +456,7 @@ jQuery(function () {
         $('.item-css[data-id=' + localStorage.getItem('activeCSS') + ']').addClass('active');
     }
 
-    if (localStorage.getItem('activeMusic') && !localStorage.getItem('muteMusic')) {
+    function tryToPlayMusicAutomatically() {
         playMusic(localStorage.getItem('activeMusic'), true).catch(() => {
             let clickHandler = () => {
                 if (localStorage.getItem('activeMusic')) {
@@ -378,6 +469,14 @@ jQuery(function () {
         });
 
         $('.item-music[data-id=' + localStorage.getItem('activeMusic') + ']').addClass('active');
+    }
+
+    if (localStorage.getItem('activeMusic') && !localStorage.getItem('muteMusic')) {
+        tryToPlayMusicAutomatically();
+    } else {
+        if (webamp) {
+            webamp.close();
+        }
     }
 
     if (localStorage.getItem('activeBuddie')) {
@@ -498,10 +597,19 @@ jQuery(function () {
     });
 
     $('.based').on('click', function (event) {
-        inventory['shekels'] += 100;
+
+        let shekels = 100;
+        let bsodChance = 0.05;
+
+        if ($(this).hasClass('start-button-wrapper')) {
+            shekels = 10;
+            bsodChance = 0.005;
+        }
+
+        inventory['shekels'] += shekels;
         updateInventory();
 
-        if (Math.random() > 0.95) {
+        if (Math.random() <= bsodChance) {
             const body = $('body');
             body.empty();
             body.append('<div class="bsod"></div>');
@@ -556,44 +664,70 @@ jQuery(function () {
             return;
         }
 
-        // if (music) {
-        //     music.pause();
-        //     music.currentTime = 0;
-        // }
-        //
-        // if (showButton) {
-        //     var text;
-        //     if (id === 'straya') {
-        //         text = 'Ban Australians';
-        //     } else {
-        //         text = 'Mute music'
-        //     }
-        //
-        //     $('#resetRewardsButton').show().find('span').text(text);
-        // }
-        //
-        // music = new Audio(reward.musicFile.url);
-        // music.volume = 0.2;
-
-        webamp.setTracksToPlay([
-            {
-                url: reward.musicFile.url,
-                metaData: {
-                    title: reward.shortName + ".mp3",
-                    artist: null
+        if (usingWinamp) {
+            webamp.setTracksToPlay([
+                {
+                    url: reward.musicFile.url,
+                    metaData: {
+                        title: reward.shortName + ".mp3",
+                        artist: null
+                    }
                 }
-            }
-        ]);
-        webamp.reopen();
-        webamp.play();
+            ]);
+            webamp.reopen();
+            webamp.play();
 
-        if (webamp.media._context.state === 'suspended') {
-            return Promise.reject('Media context failed to start');
+            if (webamp.media._context.state === 'suspended') {
+                return Promise.reject('Media context failed to start');
+            }
+
+            return Promise.resolve();
+        } else {
+            if (music) {
+                music.pause();
+                music.currentTime = 0;
+            }
+
+            if (showButton) {
+                var text;
+                if (id === 'straya') {
+                    text = 'Ban Australians';
+                } else {
+                    text = 'Mute music'
+                }
+
+                $('#resetRewardsButton').show().find('span').text(text);
+            }
+
+            music = new Audio(reward.musicFile.url);
+            music.volume = 0.5;
+
+            return music.play();
+        }
+    }
+
+    $('#uninstallWinamp').on('click', function () {
+        resetMusic();
+
+        localStorage.setItem('disableWinamp', usingWinamp ? '1': '');
+
+        usingWinamp = !usingWinamp;
+
+        if (!usingWinamp && webamp) {
+            webamp.stop();
+            webamp.close();
         }
 
-        // return music.play();
-        return Promise.resolve();
-    }
+        if (usingWinamp) {
+            if (webamp) {
+                webamp.reopen();
+            } else {
+                initWebamp();
+            }
+        }
+
+        $(this).text(usingWinamp ? 'Uninstall Winamp 2.91' : 'Install Winamp 2.91');
+    });
 
     function activateBuddie(id) {
         $('#reward-buddie').attr('src', rewards[id].image.url);
@@ -637,8 +771,8 @@ jQuery(function () {
 
     var showNewLoot = function showNewLoot(i) {
         var lootbox = $($('.lootbox').get(i));
-        lootbox.removeClass('animate').addClass('animate-back');
-        lootbox.find('.lootbox-image').remove();
+        // lootbox.removeClass('animate').addClass('animate-back');
+        // lootbox.find('.lootbox-image').remove();
 
         const $item = lootbox.find('.inventory-item');
         $item.show();
@@ -703,22 +837,22 @@ jQuery(function () {
             lootboxSound.play();
         }
 
-        $('.lootbox').addClass('animate');
+        // $('.lootbox').addClass('animate');
 
         $(this).hide();
 
-        setTimeout(function () {
-            $('.lootbox').find('img').removeAttr('src');
-        }, 1100);
+        // setTimeout(function () {
+        //     $('.lootbox').find('img').removeAttr('src');
+        // }, 1100);
 
 
         for (var i = 0; i < 3; i++) {
-            setTimeout(showNewLoot, 2000 + i * 300, i);
+            setTimeout(showNewLoot, 1000 + i * 300, i);
         }
 
         setTimeout(function () {
             $('#closeRewards').show();
-        }, 3600);
+        }, 2000);
     });
 
     $('#neverShowAgain').click(function () {
@@ -745,11 +879,11 @@ jQuery(function () {
         $('.lootbox-title').text('');
         $('.lootbox-tier').hide();
 
-        var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa'];
+        // var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa'];
 
-        $('.lootbox-image').each(function () {
-            $(this).attr('src', '/img/lootbox-' + lootboxes[getRandomInt(0, lootboxes.length)] + '.png');
-        });
+        // $('.lootbox-image').each(function () {
+        //     $(this).attr('src', '/img/lootbox-' + lootboxes[getRandomInt(0, lootboxes.length)] + '.png');
+        // });
 
         if (getRandomInt(1,7) === 6) {
             $('#youre').attr('src', '/2020images/youre-rewards.png');
@@ -1250,5 +1384,17 @@ jQuery(function () {
                 $('.its-now-safe').addClass('it-was-never-safe')
             }, 3000);
         }
+    });
+
+    $('.functional-window .window-close').on('click', function (event) {
+        closeWindow($(this).closest('.window').attr('id'));
+    });
+
+    $('.functional-window .window-minimize').on('click', function () {
+        minimizeWindow($(this).closest('.window').attr('id'));
+    });
+
+    $('.start-bar').on('click', '.minimized', function (event) {
+       unminimizeWindow($(this).attr('data-window'));
     });
 });

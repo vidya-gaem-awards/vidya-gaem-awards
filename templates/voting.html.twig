@@ -79,13 +79,43 @@
     </div>
   </header>
 
-  <div class="center-container window">
+  {% if award %}
+    <div style="text-align: center;">
+      <div class="window functional-window game-window" style="display: none;" id="game-skyrim">
+        <div class="title-bar">
+          <div class="title-bar-text">
+            <img src="{{ asset('2021images/executable-1.png') }}"> The Elder Scrolls
+          </div>
+          <div class="title-bar-controls">
+            <button aria-label="Minimize" class="window-minimize"></button>
+            <button aria-label="Close" class="window-close"></button>
+          </div>
+        </div>
+        <iframe data-src="/2021images/games/VotingGame/index.html"></iframe>
+      </div>
+      <div class="window functional-window game-window" style="display: none;" id="game-vga">
+        <div class="title-bar">
+          <div class="title-bar-text">
+            <img src="{{ asset('2021images/executable-1.png') }}"> RIG THE VOTE!
+          </div>
+          <div class="title-bar-controls">
+            <button aria-label="Minimize" class="window-minimize"></button>
+            <button aria-label="Close" class="window-close"></button>
+          </div>
+        </div>
+        <iframe data-src="/2021images/games/4chanVoting/index.html"></iframe>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="center-container window functional-window" id="window-vga">
     <div class="title-bar">
       <div class="title-bar-text">
         <img src="{{ asset('2021images/favicon.png') }}" style="height: 16px; margin-right: 2px;">
         2021 Vidya Gaem Awards
       </div>
       <div class="title-bar-controls">
+        <button aria-label="Minimize" class="window-minimize"></button>
         <button aria-label="Close" class="turn-off-computer"></button>
       </div>
     </div>
@@ -244,6 +274,10 @@
                 {% endfor %}
               </div>
 
+              {% if votingOpen %}
+                <h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;" id="submitReminder">After voting, click on "Submit Votes" below! Otherwise they won't save!</h3>
+              {% endif %}
+
 
               <div class="your-votes">
                 Votes
@@ -263,10 +297,7 @@
         {% endif %}
 
         {% if votingOpen %}
-
-          <h4 style="text-align: center; margin-top: 10px; margin-bottom: 10px;" id="submitReminder">Don't forget to click on "Submit Votes" below to save your votes!</h4>
-
-          <div class="buttons">
+          <div class="buttons" style="margin-top: 10px;">
             <button id="btnResetVotes" class="btnSubmit">Reset Votes</button>
             <button id="btnLockVotes" class="btnSubmit">Submit Votes</button>
 {#            <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>#}
@@ -439,7 +470,7 @@
 </div>
 
   {% if award %}
-  <div class="center-container window" style="margin-bottom: 40px;">
+  <div class="center-container window" style="margin-bottom: 40px;" id="window-downloads">
     <div class="title-bar">
       <div class="title-bar-text">
         <img class="title-bar-icon" src="{{ asset('2021images/directory_open_cool-4.png') }}">
@@ -481,22 +512,28 @@
         </div>
       </div>
 
-    <div class="window-body">
-      <button id="buy-lootbox" style="margin-right: 2px;" disabled>Pay Usenet bill (<span id="lootboxCostText"></span> shekels)</button>
-      <button id="unequipAll" style="margin-right: 2px;">Unequip all items</button>
+    <div class="window-body" style="text-align: center;">
+      <button id="buy-lootbox">Pay Usenet bill (<span id="lootboxCostText"></span> shekels)</button>
+      <button id="unequipAll">Unequip all items</button>
       <button id="restoreDrops" disabled>Restore file drops</button>
+      <button id="uninstallWinamp">Uninstall Winamp 2.91</button>
     </div>
 {#    </div>#}
   </div>
 
     <div class="start-bar">
-      <button title="Start Menu" class="button start-button-wrapper js-start-button">
+      <button title="Start Menu" class="button start-button-wrapper js-start-button based">
         <img src="{{ asset('2021images/windows-4.png') }}"> Start
       </button>
-      <span class="start-bar-window" style="text-wrap: none;">
-        <img src="/2021images/favicon.png" style="height: 16px;"> 2021 Vidya Gaem Awards
-      </span>
-      <span class="made-by">4:20 PM</span>
+      <button class="start-bar-window" data-window="window-vga">
+        <img src="/2021images/favicon.png">
+        <span class="start-bar-text">2021 Vidya Gaem Awards</span>
+      </button>
+      <button class="start-bar-window" id="start-bar-template" style="display: none;">
+        <img src="/2021images/favicon.png">
+        <span class="start-bar-text"></span>
+      </button>
+      <span class="made-by">{{ date().format('h:i A') }}</span>
     </div>
   {% endif %}
 {% endblock %}
