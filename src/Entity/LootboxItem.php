@@ -284,9 +284,9 @@ class LootboxItem implements JsonSerializable, DropChance
     }
 
     /**
-     * @return UserInventoryItem[]
+     * @return Collection<UserInventoryItem>
      */
-    public function getUserItems(): array
+    public function getUserItems(): Collection
     {
         return $this->userItems;
     }

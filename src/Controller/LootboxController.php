@@ -67,6 +67,9 @@ class LootboxController extends AbstractController
         }
 
         if ($action === 'delete') {
+            if (!$item->getUserItems()->isEmpty()) {
+                return $this->json(['error' => 'This drop has already been acquired by somebody, and it cannot be deleted.']);
+            }
             $em->remove($item);
             $auditService->add(
                 new Action('item-delete', $item->getId())
