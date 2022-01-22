@@ -261,6 +261,10 @@ jQuery(function () {
         startBar.insertBefore($('#start-bar-template'));
     }
 
+    $('[data-open-window]').on('click', function () {
+        openWindow($(this).attr('data-open-window'));
+    });
+
     function closeWindow(id) {
         if (!windows[id].open) {
             return;
@@ -268,10 +272,14 @@ jQuery(function () {
 
         const window = $('#' + id);
         windows[id].open = false;
-        windows[id].minimized = false;
+        windows[id].minimized = true;
 
         window.find('iframe').removeAttr('src');
         window.hide();
+
+        if (windows['window-vga'].minimized && windows['window-downloads'].minimized) {
+            $('#desktop-icons').show();
+        }
 
         $('.start-bar').find('[data-window="' + id + '"]').remove();
     }
@@ -285,6 +293,10 @@ jQuery(function () {
         windows[id].minimized = true;
 
         window.hide();
+
+        if (windows['window-vga'].minimized && windows['window-downloads'].minimized) {
+            $('#desktop-icons').show();
+        }
 
         $('.start-bar').find('[data-window="' + id + '"]').addClass('minimized');
     }

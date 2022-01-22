@@ -79,6 +79,17 @@
     </div>
   </header>
 
+  <div class="center-container" id="desktop-icons" style="display: none;">
+    <div class="desktop-icon pixel-font" style="display: inline-flex;" data-open-window="game-rigged">
+      <img src="{{ asset('2021images/html-3.png') }}">
+      <div class="item-name" style="margin-top: 2px; color: white;">game1.swf</div>
+    </div>
+    <div class="desktop-icon pixel-font" style="display: inline-flex;" data-open-window="game-skyrim">
+      <img src="{{ asset('2021images/html-3.png') }}">
+      <div class="item-name" style="margin-top: 2px; color: white;">game2.swf</div>
+    </div>
+  </div>
+
   {% if award %}
     <div style="text-align: center;">
       <div class="window functional-window game-window" style="display: none;" id="game-skyrim">
@@ -93,7 +104,7 @@
         </div>
         <iframe data-src="/2021images/games/VotingGame/index.html"></iframe>
       </div>
-      <div class="window functional-window game-window" style="display: none;" id="game-vga">
+      <div class="window functional-window game-window" style="display: none;" id="game-rigged">
         <div class="title-bar">
           <div class="title-bar-text">
             <img src="{{ asset('2021images/executable-1.png') }}"> RIG THE VOTE!
@@ -470,11 +481,15 @@
 </div>
 
   {% if award %}
-  <div class="center-container window" style="margin-bottom: 40px;" id="window-downloads">
+  <div class="center-container window functional-window" style="margin-bottom: 40px;" id="window-downloads">
     <div class="title-bar">
       <div class="title-bar-text">
         <img class="title-bar-icon" src="{{ asset('2021images/directory_open_cool-4.png') }}">
         Downloads
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize" class="window-minimize"></button>
+        <button aria-label="Close" class="window-close"></button>
       </div>
     </div>
 
@@ -528,6 +543,10 @@
       <button class="start-bar-window" data-window="window-vga">
         <img src="/2021images/favicon.png">
         <span class="start-bar-text">2021 Vidya Gaem Awards</span>
+      </button>
+      <button class="start-bar-window" data-window="window-downloads">
+        <img src="/2021images/directory_open_cool-4.png">
+        <span class="start-bar-text">Downloads</span>
       </button>
       <button class="start-bar-window" id="start-bar-template" style="display: none;">
         <img src="/2021images/favicon.png">

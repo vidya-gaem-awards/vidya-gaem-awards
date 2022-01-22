@@ -666,7 +666,7 @@ $card-width: 100px;
 
 
 body {
-  padding-bottom: 0;
+  padding-bottom: 100px;
 }
 
 .verified {
@@ -1802,4 +1802,20 @@ input[type=range]::-webkit-slider-thumb {
     min-height: 200px;
     aspect-ratio: 4/3;
   }
+}
+
+.pixel-font {
+  font-family: "Pixelated MS Sans Serif", Arial;
+  -webkit-font-smoothing: none;
+  font-size: 11px;
+}
+
+.desktop-icon {
+  width: 80px;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  justify-content: start;
+
+  cursor: pointer;
 }
