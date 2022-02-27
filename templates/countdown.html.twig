@@ -14,6 +14,9 @@
 
     body {
       height: 100%;
+      background-image: url("/2021images/clouds.png");
+      background-position: center;
+      background-size: cover;
     }
 
     .meme {
@@ -57,27 +60,6 @@
       text-decoration: none;
     }
 
-    /*a, a:hover {*/
-      /*text-decoration: none;*/
-      /*color: #f0f1a3;*/
-      /*font-family: 'FixedSystem', Calibri, sans-serif;*/
-    /*}*/
-
-    /*a:hover {*/
-      /*color: white;*/
-    /*}*/
-
-    /*.stats {*/
-      /*text-align: center;*/
-      /*color: #89A;*/
-      /*font-size: 9pt;*/
-      /*font-family: arial, helvetica, sans-serif;*/
-    /*}*/
-
-    /*.stat {*/
-      /*color: #34345C;*/
-      /*padding: 1px;*/
-    /*}*/
 
     .timezones, dd, dt {
       color: #fec544;
@@ -86,9 +68,6 @@
       text-shadow: #00000080 3px 3px 3px;
       font-size: 1em;
       padding: 0;
-      /*font-size: 34px;*/
-      /*line-height: 0.6;*/
-      /*font-family: 'FixedSystem', Calibri, sans-serif;*/
     }
 
     .timezones dl {
@@ -107,205 +86,129 @@
       font-weight: normal;
     }
 
-    /*.logo {*/
-    /*  height: 210px;*/
-    /*  margin: 0 auto 10px auto;*/
-    /*  display: block;*/
-    /*}*/
-
     .title {
       text-align: center;
     }
 
     .title h1 {
-      /*color: #f0f1a3;*/
       font-size: 44px;
-      /*text-shadow: 0 0 10px #f0f1a3;*/
     }
 
     .title h2 {
-      /*font-family: 'Annapolis', 'Tahoma Bold', Tahoma, sans-serif;*/
-      /*color: #00ebdb;*/
-      /*font-size: 24px;*/
       margin-top: 5px;
-      /*text-shadow: 0 0 3px #00ebdb;*/
-    }
-
-    .container-fluid {
-      max-width: 1400px;
-    }
-
-    .mobile-link {
-      /*font-size: 45px;*/
-      margin-top: 24px;
-      display: inline-block;
     }
 
 
-    .title h2.preshow-message {
-      margin-top: 15px;
-    }
-
-    .timezones {
-      width: 220px;
-    }
-
-    .meme {
-      display: none;
-    }
-
-    @media (max-width: 1400px) {
-      .rightMeme {
-        display: none;
-      }
-    }
-
-    @media (max-width: 1250px) {
-      .leftMeme {
-        display: none;
-      }
-    }
-
-    .terminal {
-        background-color: black;
-        background-image: radial-gradient( rgba(0, 150, 0, 0.75), black 120% );
-        color: white;
-        font: 1.3rem Inconsolata, monospace;
-        text-shadow: 0 0 5px #c8c8c8;
-        position: relative;
-        margin-top: 20px;
-        border: 4px solid black;
-        border-radius: 20px;
-        padding: 20px;
-        box-shadow: inset 0 0 10px white;
-        font-size: 16px;
-    }
-
-    .aspect-ratio {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-bottom: 56.25%;
-    }
-
-    .aspect-ratio iframe {
-        position: absolute;
-        width: 100%;
+    .flex-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         height: 100%;
-        left: 0;
-        top: 0;
+        padding: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        flex-direction: column;
     }
 
-    .embed-container {
-        border: 2px dashed #c2c5b5;
-        background: rgba(255, 255, 255, 0.5);
-        padding: 5px;
+    .logo-link {
+        display: inline-block;
+        max-width: 60%;
+        margin-bottom: 50px;
     }
 
-    .timezone-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        row-gap: 10px;
-        column-gap: 10px;
-        margin-top: 20px;
+    .logo-link:hover {
+        filter: grayscale(100%);
     }
 
-    .timezone {
-        background-image: url(/2020images/tape.png);
-        background-size: contain;
-        font-family: "Dot Matrix", monospace;
-        font-size: 18px;
+    .logo {
+        width: 100%;
+    }
+
+    .loading-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      animation: AnimationName 2s linear infinite;
+      background: repeating-linear-gradient(90deg, rgba(71, 126, 183, 1), rgba(170, 185, 199, 1), rgba(71, 126, 183, 1) 50%);
+      background-position: right;
+      background-size: 200% 200%;
+    }
+
+    @keyframes AnimationName {
+        0% {
+            background-position: right;
+        }
+        100% {
+            background-position: left;
+        }
+    }
+
+
+    .text {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 900;
+        font-size: 48px;
+        filter: blur(1px);
         text-align: center;
     }
 
-    .timezone-name {
-        font-weight: bold;
-        margin-top: 4px;
+    img {
+        max-width: 100%;
     }
 
-    .timezone-time {
+    @media only screen and (max-width: 600px) {
+        .text {
+            font-size: 24px;
+            filter: blur(0.5px);
+        }
 
+        .logo-link {
+            margin-bottom: 20px;
+        }
     }
   </style>
 {% endblock %}
 
-{% block body %}
+{% block js %}
+  {{ parent() }}
 
-  <div class="center-container">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.1/luxon.min.js" integrity="sha512-Nw0Abk+Ywwk5FzYTxtB70/xJRiCI0S2ORbXI3VBlFpKJ44LM6cW2WxIIolyKEOxOuMI90GIfXdlZRJepu7cczA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/humanize-duration/3.27.1/humanize-duration.min.js" integrity="sha512-0Bd+9yMPZnNzFL0DAx7t9faxR9Djf2p41RVNAUZIdvG6s9q05Vvl4Dwj+rgRqh2esOq01Lv74VGmLA1mo4Ic+A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <header>
-      <a class="logo" href="{{ path('index') }}">
-        <img src="{{ asset('2020images/logo.png') }}">
-      </a>
-      <div class="title-text">
-        <div class="line-1">The 2021 Vidya Gaem Awards</div>
-      </div>
-    </header>
+  <script type="text/javascript">
+      const kickoff = luxon.DateTime.fromISO("{{ streamDate | date('c') }}");
 
-    <div class="zig"></div>
-
-    <div class="embed-container">
-      <div class="aspect-ratio">
-        {{ include('dynamic/countdown_logo_area.html.twig') }}
-      </div>
-    </div>
-
-    <div class="zig"></div>
-
-
-    <div class="title">
-      <h1>{{ include('dynamic/countdown_header.html.twig') }}</h1>
-      <h2 id="countdown">
-        <span id="countdown">&nbsp;</span>
-      </h2>
-      {{ include('dynamic/countdown_secondary_message.html.twig') }}
-      <div style="margin-top: 10px;">
-        <a href="https://vidyagaemawards.com/previous-years" class="btn" target="_blank">View previous /v/GA shows</a>
-        <a href="{{ otherTimezonesLink }}" class="btn" target="_blank">View stream date in your timezone</a>
-      </div>
-    </div>
-
-    <div class="timezone-container">
-      {% for friendlyTimezone, timezone in timezones %}
-        <div class="timezone">
-          <div class="timezone-name">
-            <strong>{{ friendlyTimezone }} <span style="opacity: 0.8; font-weight: normal;">[{{ streamDate | date('P', timezone) }}]</span></strong>
-          </div>
-          <div class="timezone-time">
-            {{ streamDate | date('D M jS, H:i', timezone) }}
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-
-    <script type="text/javascript">
-      var serverLoad = Date.parse("{{ 'now' | date('c') }}");
-      var clientLoad = Date.now();
+      document.getElementById("local-time").innerHTML = kickoff.toLocaleString(luxon.DateTime.DATETIME_FULL);
 
       // This could probably be replaced by moment.js
-      function updateWCTime() {
-          var clientNow = Date.now();
-          var serverNow = clientNow - clientLoad + serverLoad - 1;
+      function updateCountdown() {
+          const diff = kickoff.diffNow().valueOf();
 
-          var kickoff = Date.parse("{{ streamDate | date('c') }}");
-          var diff = kickoff - serverNow;
-          diff = Math.max(diff, 0);
-
-          var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          var hours = Math.floor(diff / (1000 * 60 * 60));
-          var mins = Math.floor(diff / (1000 * 60));
-          var secs = Math.floor(diff / 1000);
-
-          var dd = days;
-          var hh = hours - days * 24;
-          var mm = mins - hours * 60;
-          var ss = secs - mins * 60;
-
-          document.getElementById("countdown").innerHTML = dd + ' day' + (dd === 1 ? ', ' : 's, ') + hh + ' hour' +
-              (hh === 1 ? ', ' : 's, ') + mm + ' minute' + (mm === 1 ? ', ' : 's, ') +
-              ss + ' second' + (ss === 1 ? '' : 's');
+          document.getElementById("countdown").innerHTML = humanizeDuration(diff, { units: ["d", "h", "m"], round: true });
       }
-      window.onload = updateWCTime;
-      setInterval('updateWCTime()', 1000);
+      updateCountdown();
+      setInterval(updateCountdown, 10000);
   </script>
+{% endblock %}
+
+{% block body %}
+
+  <div class="flex-container">
+
+    <a href="https://www.youtube.com/watch?v=cg0WawO03x8" class="logo-link">
+      <img src="{{ asset('2021images/logohd.png') }}" class="logo">
+    </a>
+
+    <img src="{{ asset('2021images/textlogo.png') }}" style="margin-bottom: 20px;">
+
+    <div id="local-time" class="text"></div>
+    <div id="countdown" class="text"></div>
+    <div class="text"><a href="https://www.youtube.com/watch?v=cg0WawO03x8">View trailer</a></div>
+  </div>
+
+  <div class="loading-bar">
+
+  </div>
 {% endblock %}
