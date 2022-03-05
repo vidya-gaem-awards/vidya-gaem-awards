@@ -41,11 +41,8 @@ class ResultController extends AbstractController
 
             foreach ($rankings as $key => &$value) {
                 $nominee = $award->getNominee($value);
-                if ($key === 0) {
-                    $output = '';
-                } else {
-                    $output = '<span class="rank">#' . ($key + 1) . '</span>&nbsp;';
-                }
+                $output = '<strong>' . $ranks[$key] . '</strong> ';
+
                 if ($nominee) {
                     $output .= str_replace(' ', '&nbsp;', $nominee->getName());
                 } else {
@@ -53,9 +50,10 @@ class ResultController extends AbstractController
                 }
                 $value = $output;
             }
-            $theOthers = implode(' ', array_slice($rankings, 1));
-            $rankings = array_slice($rankings, 0, 1);
-            $rankings[] = $theOthers;
+
+//            $theOthers = implode(' ', array_slice($rankings, 1));
+//            $rankings = array_slice($rankings, 0, 1);
+//            $rankings[] = $theOthers;
 
             $results[$award->getId()] = $rankings;
         }

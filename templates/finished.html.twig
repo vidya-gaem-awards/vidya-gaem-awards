@@ -12,6 +12,13 @@
       min-height: 100%;
     }
 
+    body {
+        height: 100%;
+        background-image: url("/2021images/clouds.png");
+        background-position: center;
+        background-size: cover;
+    }
+
     /*.logo {*/
     /*  background-color: black;*/
     /*  !*border: 2px solid #af3a81;*!*/
@@ -65,7 +72,7 @@
 
     .links {
       text-align: center;
-      max-width: 900px;
+      max-width: 1200px;
       margin: 15px auto 0 auto;
     }
 
@@ -76,7 +83,8 @@
     }
 
     .links.bottom {
-      margin-top: 40px;
+      margin-top: 15px;
+      font-size: 16px;
     }
 
     .link {
@@ -153,6 +161,33 @@
     .center-container {
         min-height: 100vh;
     }
+
+    .title h1 {
+        filter: blur(1px);
+    }
+
+    #countdown {
+        filter: blur(0.75px);
+    }
+
+    header .logo {
+        margin-right: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        height: auto;
+    }
+
+    header .logo img {
+        max-height: 100px;
+    }
+
+    button {
+        font-size: 16px;
+        font-weight: bold;
+        height: 40px;
+        width: 200px;
+    }
   </style>
 {% endblock %}
 
@@ -161,16 +196,14 @@
 <div class="center-container">
 
   <header>
-    <a class="logo" href="{{ path('index') }}">
-      <img src="{{ asset('2020images/logo.png') }}">
-    </a>
-    <div class="title-text">
-      <div class="line-1">The 2021 Vidya Gaem Awards</div>
+    <div class="logo" href="{{ path('index') }}">
+      <img src="{{ asset('2021images/logohd.png') }}">
+      <img src="/2021images/textlogo.png" class="logo-text">
     </div>
   </header>
 
   <div class="embed-container" style="margin-top: 20px;">
-    <img src="{{ asset('2020images/arg-landing-page.jpg') }}" style="max-width: 100%;">
+{#    <img src="{{ asset('2020images/arg-landing-page.jpg') }}" style="max-width: 100%;">#}
 {#    <iframe width="100%" height="460" src="https://www.youtube.com/embed/XIGcVZg4orA#t=228" frameborder="0"#}
 {#            allowfullscreen=""></iframe>#}
   </div>
@@ -183,22 +216,32 @@
     </div>
     <div class="links main">
       <div class="link special">
-        <a class="btn" href="https://www.twitch.tv/videos/931453410">Watch on Twitch</a>
+        <a href="https://www.twitch.tv/videos/931453410">
+          <button>Watch on Twitch</button>
+        </a>
       </div>
       <div class="link special">
-        <a class="btn" href="https://www.youtube.com/watch?v=QbUtmpSKMGg">Watch on YouTube</a>
+        <a href="https://www.youtube.com/watch?v=QbUtmpSKMGg">
+          <button>Watch on YouTube</button>
+        </a>
       </div>
       {#<div class="link special">#}
       {#<a href="#">Direct download</a>#}
       {#</div>#}
       <div class="link">
-        <a class="btn" href="{{ path('winners') }}">Results</a>
+        <a href="{{ path('winners') }}">
+          <button>Results</button>
+        </a>
       </div>
       <div class="link">
-        <a class="btn" href="{{ path('credits') }}">Credits and /agdg/</a>
+        <a href="{{ path('credits') }}">
+          <button>Credits and /agdg/</button>
+        </a>
       </div>
       <div class="link">
-        <a class="btn" href="{{ path('soundtrack') }}">Soundtrack</a>
+        <a href="{{ path('soundtrack') }}">
+          <button>Soundtrack</button>
+        </a>
       </div>
       {#          <div class="link">#}
       {#            <a href="{{ path('predictionLeaderboard') }}">Fantasy league results</a>#}

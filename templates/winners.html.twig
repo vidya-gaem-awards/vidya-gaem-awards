@@ -64,9 +64,9 @@
     }
 
     p {
-      font-size: 22px;
-      line-height: 1.5em;
-      font-family: "Dot Matrix", monospace;
+      /*font-size: 22px;*/
+      /*line-height: 1.5em;*/
+      /*font-family: "Dot Matrix", monospace;*/
 
       /*color: white;*/
     }
@@ -90,14 +90,15 @@
         padding: 10px;
     }
 
-    .award .zig {
-        margin: 10px 0;
+    .zig {
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .winner {
-      border: 2px dashed #c2c5b5;
+      /*border: 2px dashed #c2c5b5;*/
       background: rgba(255, 255, 255, 0.5);
-      padding: 5px;
+      /*padding: 5px;*/
     }
 
     .winner img {
@@ -105,10 +106,10 @@
     }
 
     .award ul {
-      list-style-type: none;
-      margin: 0;
-      font-size: 20px;
-      padding-left: 0;
+      /*list-style-type: none;*/
+      /*margin: 0;*/
+      /*font-size: 20px;*/
+      /*padding-left: 0;*/
 
       /*font-family: "OratorStd", "Courier New", serif;*/
       /*font-weight: normal;*/
@@ -116,7 +117,7 @@
     }
 
     .award ul li {
-      line-height: 1.5em;
+      /*line-height: 1.5em;*/
     }
 
     .winner-name {
@@ -152,9 +153,9 @@
     }
 
     .award ul li {
-      font-family: "Dot Matrix", sans-serif;
+      /*font-family: "Dot Matrix", sans-serif;*/
       /*color: white;*/
-      font-size: 18px;
+      /*font-size: 18px;*/
       /*font-family: "modern typewriter", Tahoma, sans-serif;*/
     }
 
@@ -431,84 +432,79 @@
 <div class="center-container">
   <header>
     <a class="logo" href="{{ path('index') }}">
-      <img src="{{ asset('2020images/logo.png') }}">
+      <img src="{{ asset('2021images/logo.png') }}">
     </a>
     <div class="title-text">
       <div class="line-1">The 2021 Vidya Gaem Awards</div>
     </div>
   </header>
 
-  <div class="zig"></div>
-
   {% for award in awards %}
-    <div class="row">
+    <div class="row mb-4">
       <div class="col-12">
-
-        <div class="award-header">
-          <div class="award-name-container">
-            <div class="award-name">{{ award.name }}</div>
-            <div class="award-subtitle">{{ award.subtitle }}</div>
-          </div>
-        </div>
-
-        <div class="award">
-          <div class="row">
-            <div class="photo-container">
-              <div class="photograph {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}" data-id="{{ award.id }}">
-                <div class="photo-image" style="background-image: url('{{ award.winnerImage ? award.winnerImage.url : '' | escape('html_attr') }}')">
-                  {% if is_granted('ROLE_AWARDS_EDIT') %}
-                    <div class="empty-image {{ award.winnerImage ? 'inactive' : '' }}" >
-                      <i class="far fa-file-upload upload-icon"></i>
-                      <div style="font-weight: bold; font-size: 18px;" class="upload-help">
-                        Click here to upload
-                      </div>
-                      <div>Recommended dimensions: 500 x 500</div>
+        <div class="window">
+          <div class="window-body">
+            <div class="award-header mb-0">
+              <div class="flex">
+                <div class="award-name">{{ award.name }}</div>
+                <div class="award-subtitle">{{ award.subtitle }}</div>
+              </div>
+            </div>
+            <div class="zig"></div>
+            <div class="award">
+              <div class="row">
+                <div class="col-sm-3">
+                <div class="window">
+                  <div class="title-bar">
+                    <div class="title-bar-text">
+                      Winner
+                    </div>
+                  </div>
+                  <div class="window-body">
+                  {% if award.winnerImage or is_granted('ROLE_AWARDS_EDIT') %}
+                    <div class="winner {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}"
+                         title="{{ is_granted('ROLE_AWARDS_EDIT') ? 'Click here to upload an image for this award winner' : '' }}"
+                         data-id="{{ award.id }}">
+                      {% if award.winnerImage %}
+                        <img class="img-responsive center-block" src="{{ award.winnerImage.url | e('html_attr') }}">
+                      {% endif %}
+                      {% if is_granted('ROLE_AWARDS_EDIT') %}
+                        <div class="empty-image {{ award.winnerImage ? 'inactive' : '' }}" >
+                          <i class="far fa-file-upload upload-icon"></i>
+                          <div style="font-weight: bold; font-size: 18px;" class="upload-help">
+                            Click here to upload an image
+                          </div>
+                          <div>Minimum dimensions: 345 x 245</div>
+                          <div>Image will scale as needed</div>
+                        </div>
+                      {% endif %}
                     </div>
                   {% endif %}
+                  </div>
+                  <div class="status-bar">
+                    <p class="status-bar-field">
+                      <strong>{{ winners[award.id].name | raw }}</strong><br>
+                      {{ winners[award.id].subtitle }}
+                    </p>
+                  </div>
                 </div>
-                <div class="photo-text">{{ results[award.id][0] | raw }}</div>
-                <div class="photo-bg"></div>
-              </div>
-
-{#              {% if award.winnerImage or is_granted('ROLE_AWARDS_EDIT') %}#}
-{#                <div class="winner {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}"#}
-{#                     title="{{ is_granted('ROLE_AWARDS_EDIT') ? 'Click here to upload an image for this award winner' : '' }}"#}
-{#                     data-id="{{ award.id }}">#}
-{#                  {% if award.winnerImage %}#}
-{#                    <img class="img-responsive center-block" src="{{ award.winnerImage.url | e('html_attr') }}">#}
-{#                  {% endif %}#}
-{#                  {% if is_granted('ROLE_AWARDS_EDIT') %}#}
-{#                    <div class="empty-image {{ award.winnerImage ? 'inactive' : '' }}" >#}
-{#                      <i class="far fa-file-upload upload-icon"></i>#}
-{#                      <div style="font-weight: bold; font-size: 18px;" class="upload-help">#}
-{#                        Click here to upload an image#}
-{#                      </div>#}
-{#                      <div>Minimum dimensions: 345 x 245</div>#}
-{#                      <div>Image will scale as needed</div>#}
-{#                    </div>#}
-{#                  {% endif %}#}
-{#                </div>#}
-{#              {% endif %}#}
-            </div>
-            <div class="second-placers-container">
-              <div class="second-placers">
-                {#              <div class="winner-container">#}
-                {#                <div class="winner-name">#}
-                {#                  <span style="opacity: 0.5;">#1</span> {{ results[award.id][0] | raw }}#}
-                {#                </div>#}
-                {#                <div class="winner-subtitle">{{ winners[award.id].subtitle | raw }}</div>#}
-                {#              </div>#}
-                <ul>
-                  {% for result in results[award.id][1:] %}
-                    <li>{{ result | raw }}</li>
-                  {% endfor %}
-                </ul>
+                </div>
+                <div class="col-sm-9">
+                  <ul class="tree-view">
+                    <li><strong>Results</strong></li>
+                    <li>
+                      <ul>
+                        {% for result in results[award.id] %}
+                          <li>{{ result | raw }}</li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="zig"></div>
       </div>
     </div>
   {% endfor %}

@@ -53,9 +53,9 @@
       }
 
       .credits {
-          text-align: center;
-          font-size: 20px;
-          line-height: 30px;
+          /*text-align: center;*/
+          /*font-size: 20px;*/
+          /*line-height: 30px;*/
           /*color: white;*/
           /*text-shadow: 1px 1px black;*/
           /*font-family: "Corbel", Arial, sans-serif;*/
@@ -109,10 +109,6 @@
           line-height: 60px;
       }
 
-      .implying {
-          color: #298330;
-          font-family: X-Files, sans-serif;
-      }
 
       .credits-header {
           background-image: url(/2020images/tape.png);
@@ -129,202 +125,253 @@
       .award-header .award-name {
           font-size: 1.75em;
       }
+
+      .credits ul.tree-view a {
+          color: #0056b3;
+      }
+
+      .credits a:hover {
+          text-decoration: underline;
+          color: white;
+      }
+
+      header .logo {
+          margin-right: 0;
+      }
   </style>
 {% endblock %}
 
 {% block content %}
   <div class="center-container">
     <header>
-      <a class="logo" href="{{ path('index') }}">
-        <img src="{{ asset('2020images/logo.png') }}">
-      </a>
-      <div class="title-text">
-        <div class="line-1">The 2021 Vidya Gaem Awards</div>
+      <div class="logo" href="{{ path('index') }}">
+        <img src="{{ asset('2021images/logohd.png') }}">
+        <img src="/2021images/textlogo.png" class="logo-text">
       </div>
     </header>
 
     <div class="credits">
       <div class="row">
         <div class="col-md-6">
-          <div class="award-header">
-            <div class="award-name-container">
-              <div class="award-name">Production Team</div>
+          <div class="window">
+            <div class="title-bar">
+              <div class="title-bar-text">
+                The /v/GA Team
+              </div>
             </div>
-          </div>
-          <div class="credits-section">
-            <p>Project managed by <span class="name">db</span></p>
-            <p>Produced by <span class="name">Lamer Gamer</span></p>
-            <p>Directed by <span class="name">Counter</span></p>
-            <p>Website by <span class="name">Clamburger</span> & <span class="name">Lamer Gamer</span></p>
-            <p>Developer outreach handled by <span class="name">Anonymous</span>, <span class="name">beatstar</span>, <span class="name">John C.</span> & <span class="name">MalZenith</span></p>
-            <p>
-              ARG created by <span class="name">Anonymous</span>, <span class="name">Cee</span>, <span class="name">Clamburger</span>, <span class="name">Donny Q</span>,
-              <span class="name">Lamer Gamer</span>, <span class="name">Pomathan</span> & <span class="name">Theu</span>
-            </p>
-          </div>
-
-          <div class="award-header">
-            <div class="award-name-container">
-              <div class="award-name">Video Team</div>
+            <div class="window-body">
+              <ul class="tree-view">
+                <li>
+                  <strong>Writing and Research</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li>beatstar</li>
+                    <li>Happymartin</li>
+                    <li>Hoffmann</li>
+                    <li>Lamer Gamer</li>
+                    <li>cormano</li>
+                    <li>PhoneEatingBear</li>
+                    <li>Importuno</li>
+                    <li>Dr. J</li>
+                    <li>hg80</li>
+                    <li>Cee</li>
+                    <li>Vander</li>
+                    <li>db</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Website</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li>Clamburger</li>
+                    <li>Lamer Gamer</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Voice Actors</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li>beatstar</li>
+                    <li>toad</li>
+                    <li>Phaseroll</li>
+                    <li>Pomathan</li>
+                    <li>Imakuni</li>
+                    <li>CrazedJew</li>
+                    <li>shuttah</li>
+                    <li>Lamer Gamer</li>
+                    <li>the dude who shouted for the dmc nominee</li>
+                    <li>John C</li>
+                    <li>StephanosRex</li>
+                    <li>Importuno</li>
+                    <li>MoriSummer</li>
+                    <li>Donny Q</li>
+                    <li>RedMarz</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Video</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li>beatstar</li>
+                    <li>toad</li>
+                    <li>shuttah</li>
+                    <li>Donny Q</li>
+                    <li>Anon</li>
+                    <li>Lamer Gamer</li>
+                    <li>cormano</li>
+                    <li>Bonzi/Someguy</li>
+                    <li>db</li>
+                    <li>anonymous</li>
+                    <li>Vander</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Outreach</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li>beatstar</li>
+                    <li>anonymous</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Music/Audio</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li>nostalgia_junkie</li>
+                    <li>beat_shobon</li>
+                    <li>fv.exe</li>
+                    <li>W.T. Snacks</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Art/Graphics</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li>Dr. J</li>
+                    <li>hg80</li>
+                    <li>beatstar</li>
+                  </ul>
+                </li>
+              </ul>
             </div>
-          </div>
-
-          <div class="credits-section">
-            <p>Art and Graphics by <span class="name">beatstar</span>, <span class="name">Cee</span> & <span class="name">MalZenith</span></p>
-            <p>
-              Video production and editing by
-              <span class="name">Anonymous</span>,
-              <span class="name">beatstar</span>,
-              <span class="name">Counter</span>,
-              <span class="name">db</span>,
-              <span class="name">Segab</span>,
-              <span class="name">shuttah</span> &
-              <span class="name">toad</span>
-            </p>
-          </div>
-
-          <div class="award-header">
-            <div class="award-name-container">
-              <div class="award-name">Writing Team</div>
-            </div>
-          </div>
-          <div class="credits-section">
-            <p>
-              Writing by
-              <span class="name">Anonymous</span>,
-              <span class="name">beatstar</span>,
-              <span class="name">Cee</span>,
-              <span class="name">db</span>,
-              <span class="name">Donny Q</span>,
-              <span class="name">Dr. J</span>,
-              <span class="name">ErogeAutist</span>,
-              <span class="name">Gravetracer</span>,
-              <span class="name">Happymartin</span>,
-              <span class="name">Hg80</span>,
-              <span class="name">Importuno</span>,
-              <span class="name">Kurushi</span>,
-              <span class="name">Lamer Gamer</span>,
-              <span class="name">MalZenith</span> &
-              <span class="name">SonicIsDragonball</span>
-            </p>
-          </div>
-
-          <div class="award-header">
-            <div class="award-name-container">
-              <div class="award-name">Audio Team</div>
-            </div>
-          </div>
-
-          <div class="credits-section">
-            <p>
-              Voiced by
-              <span class="name">Anonymous</span>,
-              <span class="name">Counter</span>,
-              <span class="name">Donny Q</span>,
-              <span class="name">Duke</span>,
-              <span class="name">Jimmy Threecocks</span>,
-              <span class="name">John C.</span>,
-              <span class="name">Karl Jobst</span>,
-              <span class="name">Lungfish</span>,
-              <span class="name">Phaseroll</span>,
-              <span class="name">Pomathan</span> &
-              <span class="name">StephanosRex</span>
-            </p>
-
-            <p>
-              Preshow music by
-              <span class="name">beat_shobon</span>,
-              <span class="name">fv.exe</span>,
-              <span class="name">jab50yen</span>,
-              <span class="name">nostalgia junkie</span>,
-              <span class="name">Phaseroll</span> &
-              <span class="name">W.T. Snacks</span>
-            </p>
-
-            <p>
-              <span class="name"><a href="{{ path('soundtrack') }}" target="_blank">View full soundtrack</a></span>
-            </p>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="award-header">
-            <div class="award-name-container">
-              <div class="award-name">Skits and Bumpers</div>
+          <div class="window">
+            <div class="title-bar">
+              <div class="title-bar-text">
+                Contributors
+              </div>
+            </div>
+            <div class="window-body">
+              <ul class="tree-view">
+                <li>
+                  <strong>Skits</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li><strong>Dark Age of Gaming</strong> &ndash; Hoffmann</li>
+                    <li><strong>Yestergaem</strong> &ndash; Necroanon</li>
+                    <li><strong>GTA Definitely Shit Edition</strong> &ndash; Hoffmann</li>
+                    <li><strong>LTG vs. DSP</strong> &ndash; Neatoburrito</li>
+                    <li><strong>Jose Wants 7 Dollars</strong> &ndash; Neatoburrito</li>
+                    <li><strong>In Memoriam</strong> &ndash; CrazedJew</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Bumpers</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li><strong>Stranded (1, 2, and 3)</strong> &ndash; Anonymous</li>
+                    <li><strong>Amogus</strong> &ndash; Hoffmann</li>
+                    <li><strong>Balan Smash</strong> &ndash; shuttah</li>
+                    <li><strong>GTA Smash</strong> &ndash; shuttah</li>
+                    <li><strong>She's a Pretty Hot Cartoon</strong> &ndash; Donny Q</li>
+                    <li><strong>WindowsScape</strong> &ndash; ArcadenBlog</li>
+                    <li><strong>comp1vhs</strong> &ndash; ArcadenBlog</li>
+                    <li><strong>Welcome to the /v/GAs!</strong> &ndash; RedMarz</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>/adgd/ Trailers</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li><strong><a href="https://store.steampowered.com/app/1683370/Blocky_Dungeon/">Blocky Dungeon</a></strong> &ndash; SquareAnon</li>
+                    <li><strong><a href="https://store.steampowered.com/app/1861290/Devil_Spire/">Devil Spire</a></strong> &ndash; Ithiro Sumi</li>
+                    <li><strong><a href="https://gaem-by-jj.itch.io/h8machine">h8machine</a></strong> &ndash; gaem by jj</li>
+                    <li><strong><a href="https://hugthegator.xyz/">I Wani Hug the Gator</a></strong> &ndash; Cavemanon Studios</li>
+                    <li><strong><a href="https://mammothplant.itch.io/mirrored-soul">Mirrored Soul</a></strong> &ndash; mammothplant</li>
+                  </ul>
+                </li>
+              </ul>
             </div>
           </div>
-          <div class="credits-section condensed">
-            <p>
-              Another Shenmue Video &ndash; <span class="name">NeatoBurrito</span><br>
-              Cyberjunk 2077 &ndash; <span class="name">rare</span><br>
-              joker song &ndash; <span class="name">Anonymous</span><br>
-              Smash's first black fighter &ndash; <span class="name">WelfareWalrus</span><br>
-              Super Stadia Bros &ndash; <span class="name">most</span><br>
-              The "Stunning and Brave" Award &ndash; <span class="name">Hoffmann</span><br>
-              We Love YiiK &ndash; <span class="name">littlefunnyman</span>
-            </p>
-          </div>
-          <div class="credits-section condensed">
-            <p>
-              0x40 vgas &ndash; <span class="name">Hoffmann</span><br>
-              Altar of Kings &ndash; <span class="name">PeanutBufferFun</span><br>
-              Apologize &ndash; <span class="name">Shuttah</span><br>
-              Astronaut &ndash; <span class="name">Anonymous</span><br>
-              Contrails &ndash; <span class="name">Anonymous</span><br>
-              Fuck Remasters &ndash; <span class="name">Dr. J</span><br>
-              LETS ALL LOVE /v/ga &ndash; <span class="name">RedMarz</span><br>
-              Pogchamp1 &ndash; <span class="name">Shuttah</span><br>
-              Pogchamp2 &ndash; <span class="name">Shuttah</span><br>
-              seizure inducing mograph &ndash; <span class="name">Bonzi/Someguy</span><br>
-              Tinfoil &ndash; <span class="name">Anonymous</span><br>
-              VGA is Illuminati &ndash; <span class="name">xXPU$$YSLAY0R69Xx</span><br>
-              Wash away the anger &ndash; <span class="name">WelfareWalrus</span><br>
-              You Can't Skip The Cutscene &ndash; <span class="name">Anonymous</span><br>
-            </p>
-          </div>
 
-          <div class="award-header">
-            <div class="award-name-container">
-              <div class="award-name">/agdg/ Trailers</div>
+          <div class="window" style="margin-top: 20px;">
+            <div class="title-bar">
+              <div class="title-bar-text">
+                Other
+              </div>
+            </div>
+            <div class="window-body">
+              <ul class="tree-view">
+                <li>
+                  <strong>Acknowledgements</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li>Miku Live2d rig &ndash; This work depicts the character "Hatsune Miku" of Crypton Future Media Co., Ltd. based on the <a href="https://piapro.jp/license/pcl/summary">Piapro Character License</a>.</li>
+                    <li><a href="https://twitter.com/snakesandrews">Blake Andrews</a> &ndash; Games for the website: "Rig the Vote" and "Don't Pick Skyrim"</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Special Thanks</strong>
+                </li>
+                <li>
+                  <ul>
+                    <li><a href="https://archive.org">archive.org</a></li>
+                    <li>Supremax</li>
+                    <li>BadSkiddy</li>
+                    <li>Cee</li>
+                    <li>/v/</li>
+                    <li>...and most importantly &ndash; <strong>you!</strong></li>
+                  </ul>
+                </li>
+              </ul>
             </div>
           </div>
 
-          <div class="credits-section condensed">
-            <p>
-              <span class="name">Brutal Rain: Angels Of Retaliation</span> by Nuclear&nbsp;Barrage&nbsp;Productions<br>
-              <span class="name"><a href="https://ithiro.itch.io/dungeons-of-rhamdon-ii" target="_blank">Dungeons of Rhamdon II</a></span> by Ithiro&nbsp;Sumi<br>
-              <span class="name"><a href="https://store.steampowered.com/app/1133050/Good_Night_Knight/" target="_blank">Good Night, Knight</a></span> by KnightDev<br>
-              <span class="name"><a href="https://zeredek.itch.io/marmoreal">Marmoreal</a></span> by Marmo<br>
-              <span class="name"><a href="https://teamessell.itch.io/soporo-wonderland-in-ruin" target="_blank">Soporo: Wonderland In Ruin</a></span> by Team&nbsp;Essell<br>
-              <span class="name"><a href="https://store.steampowered.com/app/811970/Super_Dream_Dasher/" target="_blank">Super Dream Dasher</a></span> by Puddleside<br>
-              <span class="name"><a href="https://entrancejew.itch.io/tiny-talos" target="_blank">Tiny Talos</a></span> by ejew.in
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="zig" style="margin-top: 20px;"></div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="award-header">
-            <div class="award-name-container special-thanks">
-              <div class="award-name">Special Thanks</div>
+          <div class="window" style="margin-top: 20px;">
+            <div class="title-bar">
+              <div class="title-bar-text">
+                Legal
+              </div>
+            </div>
+            <div class="window-body">
+              <ul class="tree-view">
+                <li>
+                  <strong>This awards show contains chemicals known to the State of California to cause cancer and birth defects or other reproductive harm.</strong>
+                </li>
+                    <li class="implying">&gt;they contribute to a shitty online video game award show</li>
+                    <li class="implying">&gt;they take their jobs very seriously</li>
+                    <li class="implying">&gt;they do it for free</li>
+              </ul>
+              <div class="window" style="display: inline-block; margin-top: 8px;">
+                <div class="window-body" style="margin: 3px;">
+                  <img src="{{ asset('img/for-free.jpg') }}" style="width: 200px;">
+                </div>
+              </div>
             </div>
           </div>
-{#          <p><span class="name">Mowtendoo</span> for music contribution</p>#}
-          <p class="FLAOT"><span class="name">Anonymous</span></p>
-          <p style="margin-top: 20px;">And most importantly, <span class="name" style="font-size: x-large;">you!</span></p>
-        </div>
-      </div>
-
-      <div class="zig"></div>
-
-      <div class="row" style="margin-top: 200px;">
-        <div class="col-12">
-          <p class="implying">&gt;they contribute to a shitty online video game award show</p>
-          <p class="implying">&gt;they take their jobs very seriously</p>
-          <p class="implying">&gt;they do it for free</p>
-          <img src="{{ asset('img/for-free.jpg') }}" style="width: 200px;">
         </div>
       </div>
     </div>
