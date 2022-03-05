@@ -12,12 +12,20 @@
       height: 100%;
     }
 
-    .links a {
-        font-size: 24px;
-        border-radius: 10px;
-        padding-left: 20px;
-        padding-right: 20px;
+    body {
+        height: 100%;
+        background-image: url("/2021images/clouds.png");
+        background-position: center;
+        background-size: cover;
     }
+
+    button {
+        font-size: 16px;
+        font-weight: bold;
+        height: 40px;
+        width: 200px;
+    }
+
     /*  background-color: #000;*/
     /*  border-radius: 2px;*/
     /*  color: #f81317;*/
@@ -73,30 +81,28 @@
 <div class="center-container">
 
   <header>
-    <a class="logo" href="{{ path('index') }}">
-      <img src="{{ asset('2021images/logo.png') }}">
-    </a>
-    <div class="title-text">
-      <div class="line-1">The 2021 Vidya Gaem Awards</div>
+    <div class="logo" href="{{ path('index') }}">
+      <img src="{{ asset('2021images/logohd.png') }}">
+      <img src="/2021images/textlogo.png" class="logo-text">
     </div>
   </header>
 
-  <div class="zig"></div>
-
   <div class="col-12 text-center">
-    <h1 class="my-3">Streaming Live on Three Platforms</h1>
+    <h1 class="my-3" style="filter: blur(0.5px)">Streaming Live on Three Platforms</h1>
 
     <p class="links">
-      <a href="https://twitch.tv/vidyagaemawards" class="btn" target="_blank">
-        <span>Twitch</span>
+      <a href="https://twitch.tv/vidyagaemawards" target="_blank">
+        <button>Twitch</button>
       </a>
-      <a href="https://www.youtube.com/vidyagaemawards" class="btn" target="_blank">
-        <span>YouTube</span>
+      <a href="https://www.youtube.com/vidyagaemawards" target="_blank">
+        <button>YouTube</button>
       </a>
-      <a href="https://dlive.tv/vidyagaemawards" class="btn" target="_blank">
-        <span>DLive</span>
+      <a href="https://dlive.tv/vidyagaemawards" target="_blank">
+        <button>DLive</button>
       </a>
-      <a href="https://discord.gg/4e8JQB4" class="btn" target="_blank">Chat on <span>Discord</span></a>
+      <a href="https://discord.gg/4e8JQB4" target="_blank">
+        <button>Chat on Discord</button>
+      </a>
     </p>
 
     <div class="embed-container">
