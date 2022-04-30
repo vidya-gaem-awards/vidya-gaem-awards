@@ -13,11 +13,10 @@
       }
 
       .album-art {
-          width: 300px;
-          max-width: 300px;
-          margin: 0 auto 10px auto;
-          transition: all 0.3s ease-in-out;
-          box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+          max-width: 500px;
+          /*margin: 0;*/
+          /*transition: all 0.3s ease-in-out;*/
+          /*box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);*/
       }
 
       .download-now {
@@ -34,8 +33,8 @@
           max-width: 900px;
           margin: 25px auto 0;
 
-          font-family: "Dot Matrix", sans-serif;
-          font-size: 18px;
+          /*font-family: "Dot Matrix", sans-serif;*/
+          /*font-size: 14px;*/
 
           background: none;
 
@@ -52,7 +51,7 @@
       }
 
       #track-list td:nth-child(1) {
-          font-family: "Dot Matrix", sans-serif;
+          /*font-family: "Dot Matrix", sans-serif;*/
           font-weight: bold;
           color: black;
           /*font-family: "OratorStd", "Courier New", serif;*/
@@ -65,7 +64,7 @@
 
       #track-list td:nth-child(3) {
           /*color: #fec544;*/
-          font-family: "Dot Matrix", sans-serif;
+          /*font-family: "Dot Matrix", sans-serif;*/
           text-decoration: none;
           /*font-family: "OratorStd", "Courier New", serif;*/
           /*text-shadow: #00000080 3px 3px 3px;*/
@@ -114,33 +113,54 @@
 {% block content %}
 
   <div class="center-container">
-    <div style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px; max-width: 300px;">
-      <img src="{{ asset('2020images/soundtrack_cover.png') }}" alt="Album art" class="img-responsive album-art">
+
+    <div style="text-align: center;">
+{#      <div class="window" style="display: inline-block; margin-left: auto; margin-right: auto;">#}
+{#        <div class="title-bar">#}
+{#          <div class="title-bar-text">#}
+{#            2021-soundtrack-cover.jpg#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="window-body">#}
+{#          <div style="background: #059798; padding: 5px; text-align: center;">#}
+            <img src="{{ asset('2021images/album.jpg') }}" alt="Album art" class="img-responsive album-art">
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
     </div>
 
-    <p class="text-center preshow-download" style="">
-      <a href="https://vidyagaemawards.com/music/2020-vga-preshow-mixes.zip" class="btn">Download preshow music (105 MB)</a>
-    </p>
+    {#    <p class="text-center preshow-download" style="">#}
+{#      <a href="https://vidyagaemawards.com/music/2020-vga-preshow-mixes.zip" class="btn">Download preshow music (105 MB)</a>#}
+{#    </p>#}
 
     <div class="zig"></div>
 
 {#    <p class="text-center soon">Full tracklist coming soon</p>#}
 
-    <table class="table" id="track-list">
-      {% for track in preshow %}
-        <tr class="{{ loop.index == 1 ? 'line-before' }}">
-          <td></td>
-          <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
-          <td>{{ track[2] }}</td>
-        </tr>
-      {% endfor %}
-      {% for track in tracks %}
-        <tr class="{{ loop.index == 1 ? 'line-before' }}">
-          <td>#{{ loop.index }}</td>
-          <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
-          <td>{{ track[2] }}</td>
-        </tr>
-      {% endfor %}
-    </table>
+    <div class="window">
+      <div class="title-bar">
+        <div class="title-bar-text">
+          Track List
+        </div>
+      </div>
+      <div class="window-body">
+        <table class="table" id="track-list">
+          {% for track in preshow %}
+            <tr class="{{ loop.index == 1 ? 'line-before' }}">
+              <td></td>
+              <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
+              <td>{{ track[2] }}</td>
+            </tr>
+          {% endfor %}
+          {% for track in tracks %}
+            <tr class="{{ loop.index == 1 ? 'line-before' }}">
+              <td>#{{ loop.index }}</td>
+              <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
+              <td>{{ track[2] }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
   </div>
 {% endblock %}
