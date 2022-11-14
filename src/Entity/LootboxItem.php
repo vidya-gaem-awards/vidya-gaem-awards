@@ -83,7 +83,7 @@ class LootboxItem implements JsonSerializable, DropChance
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $year = '2021';
+    private $year = '2022';
 
     /**
      * @ORM\ManyToOne(targetEntity=LootboxTier::class, inversedBy="items")
