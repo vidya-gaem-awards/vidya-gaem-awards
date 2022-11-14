@@ -5,8 +5,18 @@
 {% block head %}
   <style type="text/css">
     body {
-      font-family: 'Roboto', sans-serif;
+      background: #CF282F;
+      font-family: 'Sedgwick Ave', sans-serif;
+      color: black;
       font-weight: 300;
+    }
+
+    a {
+      color: #F0961F;
+    }
+
+    a:hover {
+      color: #F2B561;
     }
 
     @keyframes title {
@@ -43,6 +53,7 @@
     #title {
       opacity: 0;
       animation: {{ fastAnimations ? '2s' : '2s' }} ease-out forwards title;
+      font-family: "Sedgwick Ave Display", sans-serif;
     }
 
     #awardList .award {
@@ -72,25 +83,28 @@
 {% endblock %}
 
 {% block css %}
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave&family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
   <div class="container">
     <div class="row">
-      <div class="col-xs-12">
-        <div style="font-size: 80px; line-height: 77px; font-weight: 100;" id="title">
+      <div class="col-12" style="text-align: center;">
+
+        <img src="{{ asset('2022images/logo.png') }}" style="width: 600px; margin: 0 auto; max-width: 100%;" class="mb-4">
+
+        <div style="font-size: 80px; line-height: 77px; margin-top: 40px;" id="title">
           <div style="margin-bottom: 30px;">
-            DON'T GET SPOOKED.
+            The 2022 /v/GAs
           </div>
-          <div style="margin-bottom: 30px;">
-            THE /v/GAs ARE ON THEIR WAY.
+          <div style="font-size: 50px; margin-top: 30px;" class="animate-in">
+            Coming soon to a wall near you
           </div>
         </div>
-        <div style="font-size: 30px; margin-top: 80px;" class="animate-in">
-          The 2022 /v/GAs. Arriving later this year.
-        </div>
-        <div style="font-size: 30px; margin-top: 80px;" class="animate-in">
+        <div style="font-size: 30px; margin-top: 60px;" class="animate-in">
           <a href="http://discord.gg/4e8JQB4">http://discord.gg/4e8JQB4</a>
         </div>
       </div>
