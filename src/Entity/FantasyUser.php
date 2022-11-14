@@ -64,7 +64,7 @@ class FantasyUser
     /**
      * @var int|null
      *
-     * @ORM\Column(name="rank", type="integer", nullable=true)
+     * @ORM\Column(name="`rank`", type="integer", nullable=true)
      */
     private $rank;
 
