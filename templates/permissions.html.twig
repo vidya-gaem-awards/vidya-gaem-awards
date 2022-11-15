@@ -9,7 +9,7 @@
       <li class="breadcrumb-item">
         <a href="{{ path('people') }}">Team members</a>
       </li>
-      <li class="breadcrumb-item active ml-auto">
+      <li class="breadcrumb-item active ms-auto">
         <a href="{{ path('permissions') }}">Your permissions</a>
       </li>
       {% if is_granted('ROLE_ADD_USER') and not configService.isReadOnly %}
@@ -39,7 +39,7 @@
           <dt class="col-sm-3">
             {{ permission.id }}
             {% if permission.parents | length > 0 %}
-              <small class='text-muted ml-1'>{{ permission.parents | join(', ') }}</small>
+              <small class='text-muted ms-1'>{{ permission.parents | join(', ') }}</small>
             {% endif %}
           </dt>
           <dd class="col-sm-8">

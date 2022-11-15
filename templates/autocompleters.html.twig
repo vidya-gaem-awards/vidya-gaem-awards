@@ -37,7 +37,7 @@
         {% if autocompleter.id == constant('VIDEO_GAMES', autocompleter) %}
           <a href="{{ path('videoGames') }}" target="_blank">{{ autocompleter.name }} <i class="far fa-external-link fa-xs"></i></a><br>
         {% else %}
-          <a href data-toggle="modal" data-target="#autocompleterModal" data-id="{{ autocompleter.id | e('html_attr') }}">{{ autocompleter.name }}</a>
+          <a href data-bs-toggle="modal" data-bs-target="#autocompleterModal" data-id="{{ autocompleter.id | e('html_attr') }}">{{ autocompleter.name }}</a>
         {% endif %}
       </td>
       <td>
@@ -57,7 +57,7 @@
     </tbody>
   </table>
 
-  <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#autocompleterModal">
+  <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#autocompleterModal">
       <i class="far fa-plus"></i> Add a new autocompleter
     </button>
 
@@ -68,14 +68,12 @@
           <form>
             <div class="modal-header">
               <h5 class="modal-title"></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="alert alert-danger" style="display: none;">
+              <div class="alert alert-dismissible alert-danger" style="display: none;">
                 <span class="alert-text"></span>
-                <a class="close" href="#">&times;</a>
+                <button type="button" class="btn-close"></button>
               </div>
 
               <div class="form-group row">
@@ -107,15 +105,13 @@
                   </button>
 
                   <div class="input-group" id="wikipedia-selection" style="display: none; max-width: 300px;">
-                    <select class="form-control">
+                    <select class="form-select">
                       <option value>Select a year</option>
                       {% for year in ('now'|date("Y"))..1995 %}
                         <option value="{{ year }}">{{ year }} in video gaming</option>
                       {% endfor %}
                     </select>
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="button">Import</button>
-                    </div>
+                    <button class="btn btn-outline-secondary" type="button">Import</button>
                   </div>
 
                   <small class="form-text text-dark" id="wikipedia-message"></small>
@@ -123,11 +119,11 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" id="delete-autocompleter" class="btn btn-danger mr-auto">Delete autocompleter</button>
-              <span class="saving mr-2" style="display: none;">
-              <i class="far fa-circle-notch fa-spin mr-1"></i> Saving...
+              <button type="button" id="delete-autocompleter" class="btn btn-danger me-auto">Delete autocompleter</button>
+              <span class="saving me-2" style="display: none;">
+              <i class="far fa-circle-notch fa-spin me-1"></i> Saving...
             </span>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
               <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
           </form>
@@ -146,7 +142,7 @@
           var editDialog = $("#autocompleterModal");
           var currentlySubmitting = false;
 
-          $('.alert .close').on('click', function () {
+          $('.alert .btn-close').on('click', function () {
               $(this).parent().fadeOut("fast");
           });
 

@@ -285,7 +285,7 @@
       </div>
     </nav>
 
-    <main class="col-md-9 ml-sm-auto col-lg-10 px-4" style="padding-bottom: 50px;">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-4" style="padding-bottom: 50px;">
 
       <h1 class="page-header board-header mt-2 mb-3">/nm/ - Nominee Manager</h1>
 
@@ -322,8 +322,8 @@
                     nominee{{ award.nominees | length == 1 ? '' : 's' }}
 
                     {% if is_granted('ROLE_NOMINATIONS_EDIT') and not configService.isReadOnly %}
-                      <button class="btn btn-default" type="button" id="new" style="margin: -12px 0 -10px 15px">
-                        <span class="glyphicon glyphicon-plus"></span> Add Nominee
+                      <button class="btn btn-outline-dark" type="button" id="new" style="margin: -12px 0 -10px 15px">
+                        <i class="far fa-plus fa-fw"></i> Add Nominee
                       </button>
                     {% endif %}
                   </div>
@@ -433,7 +433,7 @@
           </div>
           <div class="modal-footer">
             <span id="dialog-delete-status"><img src='{{ asset('img/loading.gif') }}' style="width: 16px;"> deleting...&nbsp;</span>
-            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
             <button class="btn btn-danger" id="dialog-delete-nominee-confirm">Confirm</button>
           </div>
         </div>
@@ -446,13 +446,13 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title" id="dialog-edit-header">Add new nominee</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-              <div class="alert alert-danger" style="display: none;">
+              <div class="alert alert-dismissible alert-danger" style="display: none;">
                 <span id="dialog-edit-error"></span>
-                <a class="close" href="#">&times;</a>
+                <button type="button" class="btn-close"></button>
               </div>
 
               <div style="text-align: center; padding-bottom: 5px;  ">
@@ -496,10 +496,7 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="info-image">Image</label>
                 <div class="col-sm-9">
-                  <div class="custom-file" id="info-image-container">
-                    <input type="file" id="info-image" name="image" class="custom-file-input">
-                    <label class="custom-file-label" for="info-image">Choose file</label>
-                  </div>
+                  <input type="file" id="info-image" name="image" class="form-control">
                   <small class="form-text">Recommended image dimensions: <strong>548 x 300</strong></small>
                 </div>
               </div>
@@ -511,14 +508,14 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-danger mr-auto" id="dialog-edit-delete" type="button">
+              <button class="btn btn-danger me-auto" id="dialog-edit-delete" type="button">
                 <img src="{{ asset('img/delete-this.png') }}" class="delete-this" alt="A picture of Counter pointing a gun at you, the viewer">
                 Delete this
               </button>
               <span id="dialog-edit-status" style="display: none;">
-                <i class="far fa-circle-notch fa-spin mr-1"></i> saving...&nbsp;
+                <i class="far fa-circle-notch fa-spin me-1"></i> saving...&nbsp;
               </span>
-              <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
               <button class="btn btn-primary" id="dialog-edit-submit" type="submit">Submit</button>
             </div>
           </div>
@@ -538,13 +535,8 @@
       var currentlySubmitting = false;
 
       $(document).ready(function () {
-        $('.alert-danger .close').on('click', function () {
+        $('.alert-danger .btn-close').on('click', function () {
           $(this).parent().fadeOut("fast");
-        });
-
-        $('.custom-file-input').on('change', function() {
-            let fileName = $(this).val().split('\\').pop();
-            $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
 
         $("#info-name").autocomplete({
@@ -631,7 +623,6 @@
               $("#info-name").val("");
               $("#info-subtitle").val("");
               $("#info-image").val("");
-              $("#info-image-container .custom-file-label").text("Choose file");
               $("#info-flavor").val("");
 
               $("#info-id").removeAttr("disabled");
@@ -666,7 +657,6 @@
               $("#info-name").val(nominees[nomineeID].name);
               $("#info-subtitle").val(nominees[nomineeID].subtitle);
               $("#info-image").val("");
-              $("#info-image-container .custom-file-label").text("Choose file");
               $("#info-flavor").val(nominees[nomineeID].flavorText);
 
               $("#info-id").attr("disabled", "disabled");

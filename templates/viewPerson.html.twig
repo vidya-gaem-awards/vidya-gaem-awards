@@ -8,24 +8,24 @@
     <ul class="list-unstyled">
       {% if user.primaryRole %}
         <li>
-            <i class="fas fa-fw fa-user mr-2"></i>{{ user.primaryRole }}
+            <i class="fas fa-fw fa-user me-2"></i>{{ user.primaryRole }}
         </li>
       {% endif %}
 
       <li>
-        <i class="fab fa-fw fa-steam-symbol mr-2"></i>
+        <i class="fab fa-fw fa-steam-symbol me-2"></i>
         <a href="https://steamcommunity.com/profiles/{{ user.steamID }}" target="_blank">Steam profile</a>
       </li>
 
       {% if user.email %}
         <li>
-          <i class="fas fa-fw fa-envelope mr-2"></i>
+          <i class="fas fa-fw fa-envelope me-2"></i>
           <a href="mailto:{{ user.email }}">{{ user.email }}</a>
         </li>
       {% endif %}
 
       <li>
-        <i class="fas fa-fw fa-clock mr-2"></i>
+        <i class="fas fa-fw fa-clock me-2"></i>
         {% if user.lastLogin %}
           <span>Logged in on {{ user.lastLogin | date('F jS, Y') }}</span>
         {% else %}
@@ -47,17 +47,13 @@
             Hover over any permission for a description of that permission.</p>
           <form method="POST" action="{{ path('editPerson', {'steamID': user.steamID}) }}" class="form-inline mb-3">
             {% for permission in user.permissions %}
-              <div class="input-group mr-2 mb-2">
-                <div class="input-group-prepend">
-                  <div class="input-group-text" data-toggle="tooltip" data-placement="bottom"
-                       title="{{ permission.description | e('html_attr') }}">{{ permission }}</div>
-                </div>
+              <div class="input-group me-2 mb-2">
+                <div class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                     title="{{ permission.description | e('html_attr') }}">{{ permission }}</div>
                 {% if not configService.isReadOnly %}
-                  <div class="input-group-append">
-                    <button class="btn btn-danger" name="RemoveGroup" value="{{ permission.id }}" title="Remove this permission">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
+                  <button class="btn btn-danger" name="RemoveGroup" value="{{ permission.id }}" title="Remove this permission">
+                    <i class="fas fa-times"></i>
+                  </button>
                 {% endif %}
               </div>
             {% endfor %}
@@ -67,7 +63,7 @@
         {% if not configService.isReadOnly %}
           <h2>Add a permission</h2>
           <form method="POST" action="{{ path('editPerson', {'steamID': user.steamID}) }}">
-            <select class="form-control input-small" name="GroupName">
+            <select class="form-select input-small" name="GroupName">
               {% for permission in permissions | filter(permission => permission not in user.permissions) %}
                 <option value="{{ permission.id }}">
                   {{ permission.id }} &ndash; {{ permission.description }}

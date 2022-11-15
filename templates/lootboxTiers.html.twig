@@ -198,7 +198,7 @@
 
       });
 
-      $('.alert-danger .close').on('click', function () {
+      $('.alert-danger .btn-close').on('click', function () {
         $(this).parent().fadeOut("fast");
       });
     });
@@ -213,14 +213,14 @@
   <h1 class="page-header board-header">Lootbox Tiers</h1>
 
   <div class="text-center">
-    <button class="btn btn-sm btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
-      <i class="fal fa-fw fa-plus glyphicon-plus"></i> Add a new tier
+    <button class="btn btn-sm btn-primary" id="new-award" type="button" data-bs-toggle="modal" data-bs-target="#dialog-edit">
+      <i class="fal fa-fw fa-plus"></i> Add a new tier
     </button>
   </div>
 
   <div class="inventory-container">
     {% for tier in tiers %}
-      <div class="lootbox-tier" data-toggle="modal" data-target="#dialog-edit" data-id="{{ tier.id }}" style="background: {{ tier.color }}">
+      <div class="lootbox-tier" data-bs-toggle="modal" data-bs-target="#dialog-edit" data-id="{{ tier.id }}" style="background: {{ tier.color }}">
         <div class="tier-name">{{ tier.name }}</div>
         <div class="tier-drop-chance">Drop Chance: {{ tier.dropChance }}</div>
       </div>
@@ -233,13 +233,13 @@
         <form class="form-horizontal" id="dialog-edit-form">
           <div class="modal-header">
             <h4 class="modal-title" id="dialog-edit-header">Add a new lootbox tier</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
-            <div class="alert alert-danger" style="display: none;">
+            <div class="alert alert-dismissible alert-danger" style="display: none;">
               <span id="dialog-edit-error"></span>
-              <a class="close" href="#">&times;</a>
+              <button type="button" class="btn-close"></button>
             </div>
 
             <input type="hidden" id="info-action" name="action">
@@ -258,8 +258,8 @@
               <div class="col-sm-9">
                 <input class="form-control" type="number" id="info-drop-chance" name="dropChance" min="0" max="99999.99999" placeholder="10.00" required step="any"
                        style="width: 150px;">
-                <small class="form-text">Drop chance is relative to other tiers</small>
-                <small class="form-text"><strong>Absolute drop chance:</strong> <span class="absolute-drop-chance"></span></small>
+                <small class="form-text d-block">Drop chance is relative to other tiers</small>
+                <small class="form-text d-block"><strong>Absolute drop chance:</strong> <span class="absolute-drop-chance"></span></small>
               </div>
             </div>
 
@@ -276,14 +276,14 @@
           </div>
 
           <div class="modal-footer">
-            <button class="btn btn-danger mr-auto" id="dialog-edit-delete" type="button">
+            <button class="btn btn-danger me-auto" id="dialog-edit-delete" type="button">
               <img src="{{ asset('img/delete-this.png') }}" class="delete-this" alt="A picture of Counter pointing a gun at you, the viewer">
               Delete this
             </button>
             <span id="dialog-edit-status" style="display: none;">
-                <i class="far fa-circle-notch fa-spin mr-1"></i> saving...&nbsp;
+                <i class="far fa-circle-notch fa-spin me-1"></i> saving...&nbsp;
               </span>
-            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
             <button class="btn btn-primary" id="dialog-edit-submit" type="submit">Submit</button>
           </div>
         </form>

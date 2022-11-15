@@ -25,7 +25,7 @@ body {
   color: #6c757d;
 }
 
-.breadcrumb-item.ml-auto::before {
+.breadcrumb-item.ms-auto::before {
   display: none;
 }
 
@@ -312,4 +312,31 @@ ul.nav li.dropdown:hover ul.dropdown-menu {
 
 .sidebar .nav-item .nav-link:hover {
   color: #D00 !important;
+}
+
+/* Styles from older versions of Bootstrap that were removed in Bootstrap 5 */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.breadcrumb {
+  padding: 0.75rem 1rem;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+}
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+@media (min-width: 576px) {
+  .form-inline .input-group {
+    width: auto;
+  }
+}
+
+small, .small {
+  font-weight: 400;
 }

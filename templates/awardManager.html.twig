@@ -174,7 +174,7 @@
           });
       });
 
-      $('.alert-danger .close').on('click', function () {
+      $('.alert-danger .btn-close').on('click', function () {
           $(this).parent().fadeOut("fast");
       });
   </script>
@@ -189,18 +189,14 @@
 
   {% for message in app.session.getFlashBag().get('formError') %}
     <div class="alert alert-danger" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       {{ message }}
     </div>
   {% endfor %}
 
   {% for message in app.session.getFlashBag().get('formSuccess') %}
     <div class="alert alert-success" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       {{ message }}
     </div>
   {% endfor %}
@@ -212,7 +208,7 @@
         <th style="width: 60px;" class="hidden-sm">Order</th>
         <th>Name</th>
         <th style="width: 60px;">Nominees</th>
-        <th style="width: 190px;">
+        <th style="width: 220px;">
           Feedback
           <span style="float: right;">
             <small>
@@ -231,7 +227,7 @@
         <tr class="{{ not award.enabled ? 'warning' : award.secret ? 'info' : '' }}">
           <td class="aligned hidden-sm">{{ award.order }}</td>
           <td class="align-middle p-2">
-            <div class="float-right award-id hidden-sm">
+            <div class="float-end award-id hidden-sm">
               <abbr title="The internal ID of the award. Visible in some places, such as URLs.">{{ award.id }}</abbr>
             </div>
             <div class="{{ award.enabled ? '' : 'text-muted' }}">
@@ -268,24 +264,24 @@
           </td>
           {% if not award.enabled %}
             <td class="aligned bg-warning">
-              <span class="badge badge-warning">Award Disabled</span>
+              <span class="badge">Award Disabled</span>
             </td>
           {% elseif award.secret %}
             <td class="aligned bg-info">
-              <span class="badge badge-info">Secret Award!</span>
+              <span class="badge">Secret Award!</span>
             </td>
           {% elseif award.areNominationsEnabled %}
             <td class="aligned bg-success">
-              <span class="badge badge-success">Nominations Open</span>
+              <span class="badge">Nominations Open</span>
             </td>
           {% else %}
-            <td class="aligned bg-default">
-              <span class="badge badge-default">Nominations Closed</span>
+            <td class="aligned">
+              <span class="badge text-black">Nominations Closed</span>
             </td>
           {% endif %}
           {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
             <td class="aligned">
-              <button class="btn btn-primary" title="Edit award" data-toggle="modal" data-target="#dialog-edit"
+              <button class="btn btn-primary" title="Edit award" data-bs-toggle="modal" data-bs-target="#dialog-edit"
                 data-id="{{ award.id }}">
                 <i class="fal fa-edit"></i> &nbsp;Edit
               </button>
@@ -314,11 +310,11 @@
         </div>
       {% endif %}
         <div class="btn-group pull-right">
-          <button class="btn btn-default" id="view-award-suggestions" data-toggle="modal" data-target="#dialog-award-suggestions" {{ awardSuggestions | length == 0 ? 'disabled' : '' }}>
+          <button class="btn btn-outline-dark" id="view-award-suggestions" data-bs-toggle="modal" data-bs-target="#dialog-award-suggestions" {{ awardSuggestions | length == 0 ? 'disabled' : '' }}>
             View award suggestions ({{ awardSuggestions | length }})
           </button>
           {% if is_granted('ROLE_AWARDS_EDIT') and not configService.isReadOnly %}
-            <button class="btn btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
+            <button class="btn btn-primary" id="new-award" type="button" data-bs-toggle="modal" data-bs-target="#dialog-edit">
               <i class="fal fa-plus"></i> Add a new award
             </button>
           {% endif %}
@@ -331,7 +327,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Award suggestions</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <div class="modal-body">
@@ -346,7 +342,7 @@
           </ul>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+          <button class="btn btn-outline-dark" type="button" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -358,13 +354,13 @@
         <form id="dialog-edit-form">
           <div class="modal-header">
             <h5 class="modal-title" id="dialog-edit-header">Add new award</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
-            <div class="alert alert-danger" style="display: none;">
+            <div class="alert alert-dismissible alert-danger" style="display: none;">
               <span id="dialog-edit-error"></span>
-              <a class="close" href="#">&times;</a>
+              <button type="button" class="btn-close"></button>
             </div>
 
             <div class="form-group row">
@@ -399,7 +395,7 @@
             <div class="form-group row">
               <label class="col-lg-2 col-sm-3 col-form-label" for="info-autocomplete">Autocompleter</label>
               <div class="col-lg-10 col-sm-9">
-                <select name="autocompleter" id="info-autocomplete" class="form-control">
+                <select class="form-select" name="autocompleter" id="info-autocomplete">
                   <option></option>
                   {% for autocompleter in autocompleters %}
                     <option value="{{ autocompleter.id }}">
@@ -449,20 +445,20 @@
                   <label class="form-check-label" for="info-secret">
                     Secret award?
                   </label>
-                  <small class="form-text text-muted">Secret awards don't show up until the voting stage</small>
+                  <small class="form-text d-block text-muted">Secret awards don't show up until the voting stage</small>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
             {% if is_granted('ROLE_AWARDS_DELETE') %}
-              <button class="btn btn-danger mr-auto" type="button" id="deleteAward">Delete award</button>
+              <button class="btn btn-danger me-auto" type="button" id="deleteAward">Delete award</button>
             {% endif %}
-            <span id="dialog-edit-status" class="saving mr-2" style="display: none;">
-              <i class="far fa-circle-notch fa-spin mr-1"></i> Saving...
+            <span id="dialog-edit-status" class="saving me-2" style="display: none;">
+              <i class="far fa-circle-notch fa-spin me-1"></i> Saving...
             </span>
 
-            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-outline-dark" type="button" data-bs-dismiss="modal">Cancel</button>
             <button class="btn btn-primary" type="submit">Submit</button>
           </div>
         </form>

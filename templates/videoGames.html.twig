@@ -148,7 +148,7 @@
               {% if game.switch %}<i class="fas fa-fw fa-puzzle-piece"></i>{% endif %}
               {% if game.mobile %}<i class="fab fa-fw fa-android"></i>{% endif %}
 
-              <a href="#" class="remove-game float-right" data-title="{{ game.name | e('html_attr') }}" data-id="{{ game.id }}">×</a>
+              <a href="#" class="remove-game float-end" data-title="{{ game.name | e('html_attr') }}" data-id="{{ game.id }}">×</a>
             </div>
           </div>
         </div>
@@ -157,11 +157,11 @@
   </div>
 
   {% if is_granted('ROLE_ADD_VIDEO_GAME') and not configService.isReadOnly %}
-    <button class="btn btn-primary my-3" type="button" data-toggle="modal" data-target="#addGameModal">
+    <button class="btn btn-primary my-3" type="button" data-bs-toggle="modal" data-bs-target="#addGameModal">
       <i class="far fa-plus fa-fw"></i> Add a video game
     </button>
 
-    <button class="btn btn-warning my-3 float-right" type="button" id="wikipedia">
+    <button class="btn btn-warning my-3 float-end" type="button" id="wikipedia">
       {% if games | length == 0 %}
         <i class="far fa-file-download fa-fw"></i> Import list of games from Wikipedia
       {% else %}
@@ -176,14 +176,12 @@
           <form>
             <div class="modal-header">
               <h5 class="modal-title">Add a video game</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="alert alert-danger" style="display: none;">
+              <div class="alert alert-dismissible alert-danger" style="display: none;">
                 <span class="alert-text"></span>
-                <a class="close" href="#">&times;</a>
+                <button type="button" class="btn-close"></button>
               </div>
 
               <div class="form-group row">
@@ -209,10 +207,10 @@
               </div>
             </div>
             <div class="modal-footer">
-              <span class="saving mr-2" style="display: none;">
-              <i class="far fa-circle-notch fa-spin mr-1"></i> Saving...
+              <span class="saving me-2" style="display: none;">
+              <i class="far fa-circle-notch fa-spin me-1"></i> Saving...
             </span>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </form>
@@ -231,7 +229,7 @@
             var dialog = $("#addGameModal");
             var currentlySubmitting = false;
 
-            $('.alert .close').on('click', function () {
+            $('.alert .btn-close').on('click', function () {
                 $(this).parent().fadeOut("fast");
             });
 

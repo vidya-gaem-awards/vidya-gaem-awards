@@ -297,9 +297,9 @@
         <div class="col-lg-10 col-xl-6 mb-3">
           <div class="d-flex align-items-center user-container champion">
             {% if fantasyUser.avatar %}
-              <img class="mr-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
+              <img class="me-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
             {% else %}
-              <div class="mr-3 avatar empty-image">No picture available</div>
+              <div class="me-3 avatar empty-image">No picture available</div>
             {% endif %}
             <div class="name-and-rank">
               <div class="victory yellow">
@@ -326,9 +326,9 @@
         <div class="col-md-10 col-lg-6 col-xl-4 mb-3">
           <div class="d-flex align-items-center user-container almost">
             {% if fantasyUser.avatar %}
-              <img class="mr-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
+              <img class="me-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
             {% else %}
-              <div class="mr-3 avatar empty-image">No picture available</div>
+              <div class="me-3 avatar empty-image">No picture available</div>
             {% endif %}
             <div class="name-and-rank">
               <div class="victory d-flex justify-content-between">
@@ -350,14 +350,14 @@
       {% for fantasyUser in plebs %}
         <div class="col-lg-6 mb-3">
           <div class="d-flex align-items-center pleb p-1">
-            <div class="mr-3 yellow">{{ fantasyUser.rank }}.</div>
+            <div class="me-3 yellow">{{ fantasyUser.rank }}.</div>
             {% if fantasyUser.avatar %}
-              <img class="mr-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
+              <img class="me-3 avatar" src="{{ fantasyUser.avatar.url | e('html_attr') }}">
             {% else %}
-              <div class="mr-3 avatar empty-image d-inline-block">No picture available</div>
+              <div class="me-3 avatar empty-image d-inline-block">No picture available</div>
             {% endif %}
             <div class="fantasy-name"><a href="{{ path('predictions', {'id': fantasyUser.id}) }}">{{ fantasyUser.name }}</a></div>
-            <div class="ml-3 yellow">{{ fantasyUser.score }} / {{ awardCount }} correct</div>
+            <div class="ms-3 yellow">{{ fantasyUser.score }} / {{ awardCount }} correct</div>
           </div>
         </div>
       {% endfor %}

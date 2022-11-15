@@ -97,7 +97,7 @@
               <span>{{ item.timestamp|date('m/d/y(D)H:i:s') }}</span>
               <span>No. {{ item.id }}</span>
               {% if item.new %}
-                <span class="new float-right">(New)</span>
+                <span class="new float-end">(New)</span>
               {% endif %}
             </div>
             <div class="postText">{{ item.text | raw }}</div>

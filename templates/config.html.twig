@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block content %}
-  <kbd class="float-right" id="time"></kbd>
+  <kbd class="float-end" id="time"></kbd>
   <h1 class="display-4">
     Site configuration
   </h1>
@@ -46,7 +46,7 @@
   {% endif %}
 
   <form class="form-horizontal" action="{{ path('configPost') }}" method="post">
-    <div class="form-row">
+    <div class="row">
       <div class="col-lg-5 col-md-12 mb-4">
         <label for="votingStart" class="h5">Voting times</label>
         <div class="input-group voting-time">
@@ -54,9 +54,7 @@
                  value="{{ config.votingStart ? config.votingStart | date('Y-m-d H:i') : '' }}"
                  placeholder="yyyy-mm-dd hh:mm">
 
-          <div class="input-group-prepend input-group-append">
-            <span class="input-group-text" id="inputGroupPrepend2">to</span>
-          </div>
+          <span class="input-group-text" id="inputGroupPrepend2">to</span>
 
           <input type="text" class="form-control" id="votingEnd" name="votingEnd"
                  value="{{ config.votingEnd ? config.votingEnd | date('Y-m-d H:i') : '' }}"
@@ -73,7 +71,7 @@
       </div>
       <div class="col-lg-4 col-md-6 mb-4">
         <label for="defaultPage" class="h5">Default page</label>
-        <select class="form-control" id="defaultPage" name="defaultPage">
+        <select class="form-select" id="defaultPage" name="defaultPage">
           {% for page, title in config.allowedDefaultPages %}
             <option {{ (config.defaultPage == page) ? 'selected' : '' }}
                 value="{{ page }}">{{ page }} &ndash; {{ title }}</option>
@@ -85,7 +83,7 @@
       </div>
     </div>
 
-    <div class="form-row">
+    <div class="row">
       <div class="col-md-5 mb-4">
         <label class="h5" for="navigationMenu">Navigation menu</label>
         <textarea class="form-control" rows="12" id="navigationMenu" name="navigationMenu">
@@ -98,7 +96,7 @@
         </small>
 
         <label for="availableRoutes" class="mt-4 h5">Available routes</label>
-        <select class="form-control" id="availableRoutes">
+        <select class="form-select" id="availableRoutes">
           {% for routeName, route in routes %}
             <option>{{ routeName }} ({{ route.path }})</option>
           {% endfor %}
@@ -112,99 +110,122 @@
         <label class="h5">Public access</label>
 
         {# Note: parameters to isPagePublic must match the route name for those pages. #}
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[videoGames]" {{ config.isPagePublic('videoGames') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-videoGames"
+                 name="publicPages[videoGames]"
+                 {{ config.isPagePublic('videoGames') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-videoGames">
             <a href="{{ path('videoGames') }}" target="_blank">Video games list</a>
           </label>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[awards]" {{ config.isPagePublic('awards') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-awards"
+                 name="publicPages[awards]" {{ config.isPagePublic('awards') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-awards">
             <a href="{{ path('awards') }}" target="_blank">Awards and Nominations</a>
           </label>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[videos]" {{ config.isPagePublic('videos') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-videos"
+                 name="publicPages[videos]" {{ config.isPagePublic('videos') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-videos">
             <a href="{{ path('videos') }}" target="_blank">Videos page</a>
           </label>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-voting"
+                 name="publicPages[voting]" {{ config.isPagePublic('voting') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-voting">
             <a href="{{ path('voting') }}" target="_blank">Voting page</a>
-            <small class="form-text text-muted">
+            <small class="form-text d-block text-muted">
               Checking this box does not open voting: use the voting time settings for that.
             </small>
           </label>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[countdown]" {{ config.isPagePublic('countdown') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-countdown"
+                 name="publicPages[countdown]" {{ config.isPagePublic('countdown') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-countdown">
             <a href="{{ path('countdown') }}" target="_blank">Stream countdown</a>
-            <small class="form-text text-muted">
+            <small class="form-text d-block text-muted">
               Set the countdown timer on the left.
             </small>
           </label>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[stream]" {{ config.isPagePublic('stream') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-stream"
+                 name="publicPages[stream]" {{ config.isPagePublic('stream') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-stream">
             <a href="{{ path('stream') }}" target="_blank">Stream page</a>
           </label>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[finished]" {{ config.isPagePublic('finished') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-finished"
+                 name="publicPages[finished]" {{ config.isPagePublic('finished') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-finished">
             <a href="{{ path('finished') }}" target="_blank">Post-stream "thank you" page</a>
           </label>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[credits]" {{ config.isPagePublic('credits') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-credits"
+                 name="publicPages[credits]" {{ config.isPagePublic('credits') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-credits">
             <a href="{{ path('credits') }}" target="_blank">Credits</a>
           </label>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="publicPages[soundtrack]" {{ config.isPagePublic('soundtrack') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-soundtrack"
+                 name="publicPages[soundtrack]" {{ config.isPagePublic('soundtrack') ? 'checked' : '' }}>
+          <label class="form-check-label" for="public-soundtrack">
             <a href="{{ path('soundtrack') }}" target="_blank">Soundtrack</a>
           </label>
         </div>
-        <div class="checkbox">
-          <label class="dangerous">
-            <input type="checkbox"
-                   name="publicPages[results]" {{ config.isPagePublic('results') ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="public-results"
+                 name="publicPages[results]" {{ config.isPagePublic('results') ? 'checked' : '' }}>
+          <label class="form-check-label dangerous" for="public-results">
             <a href="{{ path('results') }}" target="_blank">Voting results</a>
             and the <a href="{{ path('winners') }}" target="_blank">winners page</a>
-            <small class="form-text text-danger">
+            <small class="form-text d-block text-danger">
               <strong>Warning:</strong> this will reveal the results to everybody!
             </small>
           </label>
         </div>
         <label class="h5 mt-4">Other settings</label>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="awardSuggestions" {{ config.getAwardSuggestions ? 'checked' : '' }}>
+        <div class="form-check">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="other-awardSuggestions"
+                 name="awardSuggestions" {{ config.getAwardSuggestions ? 'checked' : '' }}>
+          <label class="form-check-label" for="other-awardSuggestions">
             Allow suggestions for new awards and award names
           </label>
         </div>
       </div>
     </div>
-    <div class="form-row mt-5">
+    <div class="row mt-5">
       <div class="col">
-        <button type="submit" class="btn btn-primary btn-lg btn-block p-3" {{ config.isReadOnly ? 'disabled' : '' }}>Save configuration</button>
+        <button type="submit" class="btn btn-primary btn-lg w-100 d-block p-3" {{ config.isReadOnly ? 'disabled' : '' }}>Save configuration</button>
       </div>
     </div>
   </form>

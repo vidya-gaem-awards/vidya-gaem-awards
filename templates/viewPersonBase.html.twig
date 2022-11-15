@@ -18,14 +18,14 @@
   {{ parent() }}
   <script type="text/javascript">
     $(function () {
-      $('[data-toggle="tooltip"]').tooltip();
+      $('[data-bs-toggle="tooltip"]').tooltip();
     })
   </script>
 {% endblock %}
 
 {% block content %}
   <h1 class="display-4">
-    <img class="profile-pic mr-3" src="{{ user.avatar }}">
+    <img class="profile-pic me-3" src="{{ user.avatar }}">
     <span>{{ user.name }}</span>
   </h1>
 
@@ -37,7 +37,7 @@
       <li class="breadcrumb-item active">
         <a href="{{ path('viewPerson', {steamID: user.steamId}) }}">{{ user.name }}</a>
       </li>
-      <li class="breadcrumb-item ml-auto">
+      <li class="breadcrumb-item ms-auto">
         <a href="{{ path('permissions') }}">Your permissions</a>
       </li>
       {% if is_granted('ROLE_ADD_USER') and not configService.isReadOnly %}
@@ -50,16 +50,14 @@
 
   {% for message in app.session.getFlashBag().get('formError') %}
     <div class="alert alert-danger" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       {{ message }}
     </div>
   {% endfor %}
 
   {% for message in app.session.getFlashBag().get('formSuccess') %}
     <div class="alert alert-success" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       {{ message }}
     </div>
   {% endfor %}

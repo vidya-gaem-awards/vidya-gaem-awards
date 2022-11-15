@@ -280,13 +280,8 @@
           });
       });
 
-      $('.alert-danger .close').on('click', function () {
+      $('.alert-danger .btn-close').on('click', function () {
           $(this).parent().fadeOut("fast");
-      });
-
-      $('.custom-file-input').on('change', function() {
-          let fileName = $(this).val().split('\\').pop();
-          $(this).next('.custom-file-label').addClass("selected").html(fileName);
       });
   </script>
 {% endblock %}
@@ -301,8 +296,8 @@
   <h1 class="page-header board-header">Lootbox Items</h1>
 
   <div class="text-center">
-    <button class="btn btn-sm btn-primary" id="new-award" type="button" data-toggle="modal" data-target="#dialog-edit">
-      <i class="fal fa-fw fa-plus glyphicon-plus"></i> Add a new reward
+    <button class="btn btn-sm btn-primary" id="new-award" type="button" data-bs-toggle="modal" data-bs-target="#dialog-edit">
+      <i class="fal fa-fw fa-plus"></i> Add a new reward
     </button>
   </div>
 
@@ -316,21 +311,21 @@
 
   <div class="inventory-container">
     {% for item in tier.items %}
-      <div class="inventory-item" data-toggle="modal" data-target="#dialog-edit" data-id="{{ item.id }}">
+      <div class="inventory-item" data-bs-toggle="modal" data-bs-target="#dialog-edit" data-id="{{ item.id }}">
         <img src="{{ item.image.url }}">
         <div class="item-type">
-          <div class="badge badge-light">{{ item.year }}</div>
+          <div class="badge badge-light text-black">{{ item.year }}</div>
           {% if item.css %}
-            <div class="badge badge-primary">CSS</div>
+            <div class="badge bg-primary">CSS</div>
           {% endif %}
           {# {% if item.buddie %}
-            <div class="badge badge-success">Buddie</div>
+            <div class="badge bg-success">Buddie</div>
           {% endif %} #}
           {% if item.music %}
-            <div class="badge badge-danger">Music</div>
+            <div class="badge bg-danger">Music</div>
           {% endif %}
           {% if not item.css and not item.buddie and not item.music %}
-            <div class="badge badge-secondary">None</div>
+            <div class="badge bg-secondary">None</div>
           {% endif %}
         </div>
         <div class="item-name">{{ item.name }}</div>
@@ -357,13 +352,13 @@
         <form class="form-horizontal" id="dialog-edit-form" enctype="multipart/form-data">
           <div class="modal-header">
             <h4 class="modal-title" id="dialog-edit-header">Add a new reward</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
-            <div class="alert alert-danger" style="display: none;">
+            <div class="alert alert-dismissible alert-danger" style="display: none;">
               <span id="dialog-edit-error"></span>
-              <a class="close" href="#">&times;</a>
+              <button type="button" class="btn-close"></button>
             </div>
 
             <input type="hidden" id="info-action" name="action">
@@ -388,12 +383,12 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label" for="info-tier">Tier</label>
               <div class="col-sm-9">
-                <select class="form-control" id="info-tier" name="tier" required>
+                <select class="form-select" id="info-tier" name="tier" required>
                   {% for tier in tiers %}
                     <option value="{{ tier.id }}">{{ tier.name }} ({{ 0 + tier.dropChance }})</option>
                   {% endfor %}
                 </select>
-                <small class="form-text"><strong>Absolute drop chance for item:</strong> <span class="absolute-drop-chance">0.00%</span></small>
+                <small class="form-text d-block"><strong>Absolute drop chance for item:</strong> <span class="absolute-drop-chance">0.00%</span></small>
               </div>
             </div>
 
@@ -424,9 +419,7 @@
                         <label for="info-drop-chance-absolute"><small class="form-text">Absolute</small></label>
                         <div class="input-group">
                           <input class="form-control" type="number" id="info-drop-chance-absolute" name="drop-chance-absolute" min="0" max="100" step="any">
-                          <div class="input-group-append">
-                            <span class="input-group-text">%</span>
-                          </div>
+                          <span class="input-group-text">%</span>
                         </div>
                       </div>
                     </div>
@@ -441,10 +434,7 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="info-image">Image</label>
                 <div class="col-sm-9">
-                  <div class="custom-file" id="info-image-container">
-                    <input type="file" id="info-image" name="image" class="custom-file-input">
-                    <label class="custom-file-label" for="info-image">Choose file</label>
-                  </div>
+                  <input type="file" id="info-image" name="image" class="form-control">
                   <small class="form-text">Required image dimensions: <strong>200 x 200</strong></small>
                 </div>
             </div>
@@ -487,24 +477,21 @@
             <div class="form-group row" id="info-musicFile-container">
                 <label class="col-sm-3 col-form-label" for="info-musicFile">Music file</label>
                 <div class="col-sm-9">
-                  <div class="custom-file" id="info-musicFile-container">
-                    <input type="file" id="info-musicFile" name="musicFile" class="custom-file-input">
-                    <label class="custom-file-label" for="info-musicFile">Choose file</label>
-                  </div>
+                  <input type="file" id="info-musicFile" name="musicFile" class="form-control">
                   <small class="form-text">Required file type: <strong>.ogg</strong></small>
                 </div>
             </div>
           </div>
 
           <div class="modal-footer">
-            <button class="btn btn-danger mr-auto" id="dialog-edit-delete" type="button">
+            <button class="btn btn-danger me-auto" id="dialog-edit-delete" type="button">
               <img src="{{ asset('img/delete-this.png') }}" class="delete-this" alt="A picture of Counter pointing a gun at you, the viewer">
               Delete this
             </button>
             <span id="dialog-edit-status" style="display: none;">
-                <i class="far fa-circle-notch fa-spin mr-1"></i> saving...&nbsp;
+                <i class="far fa-circle-notch fa-spin me-1"></i> saving...&nbsp;
               </span>
-            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
             <button class="btn btn-primary" id="dialog-edit-submit" type="submit">Submit</button>
           </div>
         </form>

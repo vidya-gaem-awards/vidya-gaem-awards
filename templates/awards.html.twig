@@ -132,7 +132,7 @@
       position: relative;
     }
 
-    .awardBox .glyphicon-chevron-right {
+    .awardBox .fa-chevron-right {
       position: absolute;
       right: 5px;
       top: calc(50% - 7px);
@@ -212,8 +212,8 @@
   <div class="row">
     <div class="col-lg-6 col-md-12" id="award-selector">
        <div class="dropdown" id="awardDropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="awardDropdownButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" data-flip="false">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="awardDropdownButton" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" data-bs-flip="false">
           Select an award
         </button>
         <div class="dropdown-menu" aria-labelledby="awardDropdownButton">
@@ -239,14 +239,14 @@
       <div class="awardContainer">
         {% for award in awards %}
           <div class="awardBox awardClickTarget" data-id="{{ award.id }}">
-            <i class="glyphicon glyphicon-chevron-right"></i>
+            <i class="far fa-chevron-right"></i>
             <div class="awardName">{{ award.name }}</div>
             <div class="awardSubtitle">{{ award.subtitle }}</div>
           </div>
         {% endfor %}
         {% if configService.config.awardSuggestions or userSuggestions['new-award'] | length > 0 %}
           <div class="awardBox awardClickTarget" data-id="new-award" style="flex-basis: 100%; margin-top: 15px;">
-            <i class="glyphicon glyphicon-chevron-right"></i>
+            <i class="far fa-chevron-right"></i>
             <div class="awardName">{{ configService.config.awardSuggestions ? 'Suggest a new award' : 'View your award suggestions' }}</div>
           </div>
         {% endif %}
@@ -288,7 +288,7 @@
             <button class="btn btn-outline-danger" id="thumbs-down" {{ configService.isReadOnly ? 'disabled' : '' }}>This award is shit</button>
           </div>
           <div>
-            <button class="btn btn-default" style="float: none; border-radius: 4px;" id="suggest-name" {{ configService.config.awardSuggestions ? '' : 'disabled title="Award name suggestions are now closed."' }}>Suggest a new name</button>
+            <button class="btn btn-outline-dark" style="float: none; border-radius: 4px;" id="suggest-name" {{ configService.config.awardSuggestions ? '' : 'disabled title="Award name suggestions are now closed."' }}>Suggest a new name</button>
             <div id="suggestion-count" style="font-size: small;"></div>
           </div>
         </div>
@@ -310,7 +310,7 @@
                   <input class="form-control" id="tags" name="nomination" type="text" required>
                 </div>
               </div>
-              <button class="btn btn-primary ml-2" type="submit">Submit</button>
+              <button class="btn btn-primary ms-2" type="submit">Submit</button>
             </form>
 
             <small class="text-muted text-center mt-2 d-block">
@@ -367,7 +367,7 @@
                   <input class="form-control" id="suggestion-box" name="suggestion" type="text" required>
                 </div>
                 <div class="form-group">
-                  <button class="btn btn-default" type="submit">Submit</button>
+                  <button class="btn btn-outline-dark" type="submit">Submit</button>
                 </div>
                 <span id="new-award-status"></span>
               </form>

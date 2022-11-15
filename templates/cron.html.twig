@@ -28,7 +28,7 @@
           <div class="card-footer">
             <form action="{{ path('cronPost') }}" method="post">
               <input type="hidden" name="enable" value="{{ enabled ? '0' : '1' }}">
-              <button class="btn btn-default">{{ enabled ? 'Deactivate' : 'Activate' }} result generator</button>
+              <button class="btn btn-outline-dark">{{ enabled ? 'Deactivate' : 'Activate' }} result generator</button>
             </form>
           </div>
         {% endif %}

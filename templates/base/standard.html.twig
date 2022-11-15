@@ -13,16 +13,16 @@
   <nav class="navbar fixed-top navbar-expand-md navbar-light bg-yotsuba">
     <div class="container">
       <a class="navbar-brand" href="/">2022 /v/GAs</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapsed" aria-controls="navbarCollapsed" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarCollapsed">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav me-auto">
           {% for item in navbar.getItems() %}
             {% if item.dropdown and item.children %}
               <li class="nav-item dropdown">
-                <a class="nav-link text-primary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link text-primary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {{ item.title }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -43,7 +43,7 @@
             <li class="nav-item d-none d-lg-block">
               <a class="nav-link py-0" href="https://steamcommunity.com/profiles/{{ app.user.steamID }}" target="_blank" rel="noopener">
                 {{ app.user.name }}
-                <img class="profile-pic ml-2" src="{{ app.user.avatar }}" style='height: 40px;'>
+                <img class="profile-pic ms-2" src="{{ app.user.avatar }}" style='height: 40px;'>
               </a>
             </li>
           {% else %}
@@ -62,16 +62,16 @@
 
   <div class="{% block containerClass %}container{% endblock %}" role="main" id="mainContainer">
     {% for message in app.session.getFlashBag().get('error') %}
-      <div class="alert alert-danger" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="alert alert-dismissible alert-danger" role="alert">
         {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     {% endfor %}
 
     {% for message in app.session.getFlashBag().get('success') %}
-      <div class="alert alert-success" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="alert alert-dismissible alert-success" role="alert">
         {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     {% endfor %}
 
@@ -82,12 +82,12 @@
   <nav class="navbar fixed-bottom navbar-expand-md navbar-light bg-yotsuba">
     <div class="container">
 
-      <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarBottomCollapsed" aria-controls="navbarBottomCollapsed" aria-expanded="false" aria-label="Toggle bottom menu">
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBottomCollapsed" aria-controls="navbarBottomCollapsed" aria-expanded="false" aria-label="Toggle bottom menu">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarBottomCollapsed">
-        <ul class="nav navbar-nav mr-auto">
+        <ul class="nav navbar-nav me-auto">
           <li class="nav-item">
             <a class="nav-link" href="http://discord.gg/4e8JQB4">Discord</a>
           </li>

@@ -26,31 +26,35 @@
   <h1 class="display-4">Detailed results</h1>
   <hr>
 
-  <div class="card-deck mb-4">
-    <div class="card">
-      <h5 class="card-header">The results you've been waiting for</h5>
-      <div class="card-body">
-        <p>
-          Here are the detailed results for the 2022 /v/GAs. Although we only use votes from 4chan in our official
-          results, we include the results of other websites here for your amusement.
-        </p>
-        <p class="mb-0">
-          If all you want is the official results for each award, you can get those on the
-          <a href="{{ path('winners') }}">winners&nbsp;page</a>. If you want to see the results in even <em>more</em>
-          detail, you can view the <a href="{{ path('pairwiseResults') }}">pairwise voting results</a>.
-        </p>
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card">
+        <h5 class="card-header">The results you've been waiting for</h5>
+        <div class="card-body">
+          <p>
+            Here are the detailed results for the 2022 /v/GAs. Although we only use votes from 4chan in our official
+            results, we include the results of other websites here for your amusement.
+          </p>
+          <p class="mb-0">
+            If all you want is the official results for each award, you can get those on the
+            <a href="{{ path('winners') }}">winners&nbsp;page</a>. If you want to see the results in even <em>more</em>
+            detail, you can view the <a href="{{ path('pairwiseResults') }}">pairwise voting results</a>.
+          </p>
+        </div>
       </div>
     </div>
-    <div class="card">
-      <h5 class="card-header">What are Sweep Points™?</h5>
-      <div class="card-body">
-        The Schulze method doesn't allow for exact vote counts for each nominee, so instead we calculate Sweep
-        Points™ as a way to see how much the winners won by.
-        It may give unexpected results for low vote counts.
-      </div>
-      <div class="card-footer">
-        <a href="https://youtu.be/i_UG-IKNzIQ" target="_blank">Watch the tutorial <i class="fas fa-external-link-alt fa-xs"></i></a>
-        <small class="text-muted">a sweep point is a sweep point, you can't say it's only half</small>
+    <div class="col-md-6">
+      <div class="card">
+        <h5 class="card-header">What are Sweep Points™?</h5>
+        <div class="card-body">
+          The Schulze method doesn't allow for exact vote counts for each nominee, so instead we calculate Sweep
+          Points™ as a way to see how much the winners won by.
+          It may give unexpected results for low vote counts.
+        </div>
+        <div class="card-footer">
+          <a href="https://youtu.be/i_UG-IKNzIQ" target="_blank">Watch the tutorial <i class="fas fa-external-link-alt fa-xs"></i></a>
+          <small class="text-muted">a sweep point is a sweep point, you can't say it's only half</small>
+        </div>
       </div>
     </div>
   </div>
@@ -61,14 +65,14 @@
       <small class="text-muted">
         {{ award.subtitle }}
       </small>
-      <div class="float-right">
+      <div class="float-end">
         <a href="#{{ award.id }}" title="Direct link to this result"><i class="fas fa-link fa-xs"></i></a>
       </div>
     </h2>
 
     {% if not results[award.id] %}
       <div class="alert alert-info">
-        <i class="fas fa-info-circle mr-1"></i> Results for this award are not yet available.
+        <i class="fas fa-info-circle me-1"></i> Results for this award are not yet available.
       </div>
     {% elseif sweepPoints %}
 

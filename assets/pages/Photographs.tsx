@@ -171,8 +171,8 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
         <h1 className="page-header board-header">Voting Page Photographs</h1>
 
         <div className="text-center">
-          <button className="btn btn-sm btn-primary" id="new-award" type="button" data-toggle="modal"
-                  data-target="#dialog-edit" onClick={this.openNewPhotoDialog.bind(this)}>
+          <button className="btn btn-sm btn-primary" id="new-award" type="button" data-bs-toggle="modal"
+                  data-bs-target="#dialog-edit" onClick={this.openNewPhotoDialog.bind(this)}>
             <i className="fal fa-fw fa-plus"/> Add a new photo
           </button>
         </div>
@@ -198,19 +198,16 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
                 : ''
               }
               <div className="d-flex">
-                <div className="flex-grow-1 mr-4 d-flex flex-column">
+                <div className="flex-grow-1 me-4 d-flex flex-column">
                   <input type="hidden" id="info-action" name="action" value={this.state.dialogAction} />
                   <input type="hidden" id="info-id" name="id" value={this.state.dialogId} />
 
                   <div className="form-group row">
                     <label className="col-sm-3 col-form-label" htmlFor="info-image">Image</label>
                     <div className="col-sm-9">
-                      <div className="custom-file" id="info-image-container">
-                        <input type="file" id="info-image" name="image" className="custom-file-input" onChange={this.handleFileChange}/>
-                        <label className="custom-file-label" htmlFor="info-image">{this.state.dialogFileFilename || 'Choose file'}</label>
-                      </div>
-                      <small className="form-text">Recommended image dimensions: <strong>500 x 500</strong></small>
-                      <small className="form-text">Supported file types: <strong>.png, .jpg, .gif</strong></small>
+                      <input type="file" id="info-image" name="image" className="form-control" onChange={this.handleFileChange}/>
+                      <small className="form-text d-block">Recommended image dimensions: <strong>500 x 500</strong></small>
+                      <small className="form-text d-block">Supported file types: <strong>.png, .jpg, .gif</strong></small>
                     </div>
                   </div>
 
@@ -229,12 +226,12 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
                       <div className="form-check">
                         <input className="form-check-input" type="checkbox" id="info-special" name="dialogSpecial" checked={this.state.dialogSpecial} onChange={this.handleInputChange} />
                         <label className="form-check-label" htmlFor="info-special">Special</label>
-                        <small className="form-text">Special photos won't show up in the normal rotation.</small>
+                        <small className="form-text d-block">Special photos won't show up in the normal rotation.</small>
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-auto mb-2 text-right font-weight-bold" style={{fontSize: '18px'}}>Preview</div>
+                  <div className="mt-auto mb-2 text-end fw-bold" style={{fontSize: '18px'}}>Preview</div>
                 </div>
 
                 <Photograph name={this.state.dialogName} image={this.state.dialogFileUrl} />
@@ -244,7 +241,7 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
             <Modal.Footer>
               {
                 this.state.dialogAction === 'edit' ?
-                  <button className="btn btn-danger mr-auto" id="dialog-edit-delete" type="button" onClick={this.submitDelete.bind(this)} disabled={Boolean(this.state.dialogSubmitting)}>
+                  <button className="btn btn-danger me-auto" id="dialog-edit-delete" type="button" onClick={this.submitDelete.bind(this)} disabled={Boolean(this.state.dialogSubmitting)}>
                     <img src={deleteThis} className="delete-this" alt="A picture of Counter pointing a gun at you, the viewer" /> Delete this
                   </button>
                 : ''
@@ -252,11 +249,11 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
               {
                 this.state.dialogSubmitting ?
                   <>
-                    <i className="far fa-circle-notch fa-spin mr-1" /> {this.state.dialogSubmitting}...&nbsp;
+                    <i className="far fa-circle-notch fa-spin me-1" /> {this.state.dialogSubmitting}...&nbsp;
                   </>
                 : ''
               }
-              <button className="btn btn-default" type="button" onClick={this.handleClose.bind(this)} disabled={Boolean(this.state.dialogSubmitting)}>Cancel</button>
+              <button className="btn btn-outline-dark" type="button" onClick={this.handleClose.bind(this)} disabled={Boolean(this.state.dialogSubmitting)}>Cancel</button>
               <button className="btn btn-primary" id="dialog-edit-submit" type="submit" disabled={Boolean(this.state.dialogSubmitting)}>Submit</button>
             </Modal.Footer>
           </form>

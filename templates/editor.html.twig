@@ -52,7 +52,7 @@
       <div class="col-sm-9">
         {% if template %}
           <form action="{{ path('editorPost') }}" method="post">
-            <p class="lead float-right">{{ template.filename }}</p>
+            <p class="lead float-end">{{ template.filename }}</p>
             <p class="lead"><strong>{{ template.name }}</strong></p>
             {% if template.details %}
               {{ template.details | raw }}
@@ -120,7 +120,7 @@
           <h6 class="card-header">Templates</h6>
             <div class="list-group list-group-flush">
               <a class="list-group-item list-group-item-action {{ not template ? 'active' : '' }}" href="{{ path('editor') }}">
-                <i class="fas fa-book-open mr-1"></i> Instructions
+                <i class="fas fa-book-open me-1"></i> Instructions
               </a>
               {% for _template in templates %}
                 <a href="{{ path('editor', {'template': _template.filename}) }}" class="list-group-item list-group-item-action {{ _template is same as(template) ? 'active' : '' }}">

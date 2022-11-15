@@ -7,7 +7,7 @@ under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Requirements
 
- * PHP 7.4
+ * PHP 8.1
  * A MySQL or MariaDB database. (An SQLite database is sufficient for local development.) 
  * [Composer](https://getcomposer.org/)
  * NodeJS

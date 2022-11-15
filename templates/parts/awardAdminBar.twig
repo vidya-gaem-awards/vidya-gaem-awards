@@ -1,7 +1,7 @@
 {% if is_granted('ROLE_AWARDS_EDIT') or is_granted('ROLE_NOMINATIONS_VIEW') or is_granted('ROLE_AUTOCOMPLETER_EDIT') %}
   <nav class="navbar navbar-expand-md navbar-light bg-yotsuba admin-navbar">
     <div class="container">
-      <a class="navbar-brand mr-auto" href="{{ path('awards') }}">Awards and Nominations</a>
+      <a class="navbar-brand me-auto" href="{{ path('awards') }}">Awards and Nominations</a>
       <ul class="navbar-nav">
         {% if is_granted('ROLE_AWARDS_EDIT') %}
           <li class="nav-item">
@@ -10,7 +10,7 @@
         {% endif %}
         {% if is_granted('ROLE_NOMINATIONS_VIEW') %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Manage nominees</a>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Manage nominees</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{{ path('nomineeManager') }}">Nominee manager</a>
               <a class="dropdown-item" href="{{ path('tasks') }}">Missing nominee data</a>

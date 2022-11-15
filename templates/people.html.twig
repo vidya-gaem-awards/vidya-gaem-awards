@@ -36,7 +36,7 @@
       <li class="breadcrumb-item active">
         <a href="{{ path('people') }}">Team members</a>
       </li>
-      <li class="breadcrumb-item ml-auto">
+      <li class="breadcrumb-item ms-auto">
         <a href="{{ path('permissions') }}">Your permissions</a>
       </li>
       {% if is_granted('ROLE_ADD_USER') and not configService.isReadOnly %}

@@ -238,18 +238,14 @@
 
         {% for message in app.session.getFlashBag().get('formSuccess') %}
           <div class="alert alert-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
             {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         {% endfor %}
         {% for message in app.session.getFlashBag().get('formError') %}
           <div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
             {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         {% endfor %}
 
@@ -261,9 +257,9 @@
 
             <div class="d-flex align-items-center my-1 mb-3 user-container">
               {% if fantasyUser.avatar %}
-                <img class="mr-3" src="{{ fantasyUser.avatar.url }}" style='height: 75px;'>
+                <img class="me-3" src="{{ fantasyUser.avatar.url }}" style='height: 75px;'>
               {% else %}
-                <div class="mr-3 empty-image"><i class="fas fa-question"></i></div>
+                <div class="me-3 empty-image"><i class="fas fa-question"></i></div>
               {% endif %}
               <span class="fantasy-name" id="name-read">{{ fantasyUser.name }}</span>
               <input class="fantasy-name" name="name" type="text" id="name-edit" value="{{ fantasyUser.name | e('html_attr') }}" style="display: none;" maxlength="{{ constant('NAME_LIMIT', fantasyUser) }}">
@@ -324,7 +320,7 @@
   {% else %}
     <div class="awardHeaderContainer d-flex justify-content-center">
       {% if fantasyUser.avatar %}
-        <img class="mr-4" src="{{ fantasyUser.avatar.url | e('html_attr')}}" style='height: 75px;'>
+        <img class="me-4" src="{{ fantasyUser.avatar.url | e('html_attr')}}" style='height: 75px;'>
       {% endif %}
       <div class="text-center">
         <div class="awardName" style="margin-top: 0;">{{ fantasyUser.name }}</div>
@@ -378,8 +374,8 @@
             <div class="d-flex">
               <div class="status-icon">
                 <i class="status-loading far fa-circle-notch fa-spin" style="display: none;"></i>
-                <i class="status-success far fa-check" style="display: none;"data-toggle="tooltip" title="Your pick has been saved"></i>
-                <i class="status-error far fa-exclamation-circle" style="display: none;" data-toggle="tooltip" title="Your pick could not be saved, try again"></i>
+                <i class="status-success far fa-check" style="display: none;"data-bs-toggle="tooltip" title="Your pick has been saved"></i>
+                <i class="status-error far fa-exclamation-circle" style="display: none;" data-bs-toggle="tooltip" title="Your pick could not be saved, try again"></i>
               </div>
               <select class="pick-select" data-award="{{ award.id | e('html_attr') }}">
                 <option value=""></option>
@@ -491,7 +487,7 @@
           counter.toggleClass('limited', remaining <= 10);
       }
 
-      $('[data-toggle="tooltip"]').tooltip();
+      $('[data-bs-toggle="tooltip"]').tooltip();
   });
 </script>
 {% endblock %}
