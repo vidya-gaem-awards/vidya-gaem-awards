@@ -1,6 +1,4 @@
 # https://github.com/knojector/SteamAuthenticationBundle for configuration documentation
 knojector_steam_authentication:
-    api_key: "%env(STEAM_API_KEY)%"
-    login_route: 'loginCheck'
-    login_redirect: 'loginRedirect'
-    user_class: App\Entity\User
+    login_success_redirect: 'loginRedirect'
+    login_failure_redirect: 'loginRedirect'

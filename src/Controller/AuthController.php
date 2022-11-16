@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class AuthController extends AbstractController
@@ -21,7 +22,7 @@ class AuthController extends AbstractController
         $session->set('_security.main.target_path', $request->query->get('redirect'));
 
         $returnLink = $router->generate(
-            'loginCheck',
+            'steam_authentication_callback',
             [],
             UrlGenerator::ABSOLUTE_URL
         );
@@ -30,8 +31,8 @@ class AuthController extends AbstractController
         return new RedirectResponse($steam->url($returnLink));
     }
 
-    public function loginRedirectAction(SessionInterface $session)
+    public function loginRedirectAction(SessionInterface $session, UrlGeneratorInterface $urlGenerator)
     {
-        return new RedirectResponse($session->get('_security.main.target_path'));
+        return new RedirectResponse($session->get('_security.main.target_path') ?: $urlGenerator->generate('home'));
     }
 }

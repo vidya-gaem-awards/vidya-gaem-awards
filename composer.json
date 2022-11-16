@@ -9,12 +9,6 @@
             "symfony/flex": true
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/ThauEx/SteamAuthenticationBundle"
-        }
-    ],
     "require": {
         "beberlei/doctrineextensions": "^1.1",
         "composer/package-versions-deprecated": "1.11.99.4",
@@ -23,7 +17,7 @@
         "doctrine/orm": "^2",
         "ehesp/steam-login": "^1.0.2",
         "fightbulc/moment": "^1.17.1",
-        "knojector/steam-authentication-bundle": "dev-master",
+        "knojector/steam-authentication-bundle": "^1.3.2",
         "koraktor/steam-condenser": "dev-master",
         "league/csv": "^9.6",
         "paragonie/random-lib": "^2.0.0",

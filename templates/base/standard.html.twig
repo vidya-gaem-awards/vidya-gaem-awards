@@ -39,7 +39,7 @@
           {% endfor %}
         </ul>
         <ul class="navbar-nav">
-          {% if app.user.loggedIn %}
+          {% if app.user and app.user.loggedIn %}
             <li class="nav-item d-none d-lg-block">
               <a class="nav-link py-0" href="https://steamcommunity.com/profiles/{{ app.user.steamID }}" target="_blank" rel="noopener">
                 {{ app.user.name }}
@@ -108,7 +108,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ path('privacy') }}">Privacy Policy</a>
           </li>
-          {% if app.user.loggedIn %}
+          {% if app.user and app.user.loggedIn %}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('logout') }}">Logout</a>
             </li>

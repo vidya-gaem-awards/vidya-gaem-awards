@@ -10,8 +10,8 @@ login:
     path:       /login
     controller: App\Controller\AuthController::loginAction
 
-loginCheck:
-    path:       /login/check
+#loginCheck:
+#    path:       /login/check
 
 loginRedirect:
     path:       /login/success
@@ -19,6 +19,10 @@ loginRedirect:
 
 logout:
     path:       /logout
+
+steam_authentication_callback:
+    path:       /steam/login_check
+    controller: Knojector\SteamAuthenticationBundle\Controller\SteamController::callback
 
 #
 # FRONT PAGE

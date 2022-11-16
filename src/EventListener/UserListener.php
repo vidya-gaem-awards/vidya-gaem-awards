@@ -79,9 +79,14 @@ class UserListener
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
         $user
-            ->setIP($request->server->get('HTTP_CF_CONNECTING_IP', $request->server->get('REMOTE_ADDR')))
+            ->setIP(self::getIpAddress($request))
             ->setVotingCode($votingCode)
             ->setRandomID($randomID);
+    }
+
+    private static function getIpAddress(Request $request)
+    {
+        return $request->server->get('HTTP_CF_CONNECTING_IP', $request->server->get('REMOTE_ADDR'));
     }
 
     public function onKernelResponse(ResponseEvent $event)
@@ -121,12 +126,12 @@ class UserListener
             $user = $this->tokenStorage->getToken()->getUser();
 
             $access
-                ->setCookieID($user->getRandomID())
+                ->setCookieID($user->getRandomID() ?: $randomIDSession)
                 ->setRoute($request->attributes->get('_route', ''))
                 ->setController($request->attributes->get('_controller'))
                 ->setRequestMethod($request->server->get('REQUEST_METHOD'))
                 ->setRequestString($request->server->get('REQUEST_URI'))
-                ->setIp($user->getIP())
+                ->setIp($user->getIP() ?: self::getIpAddress($request))
                 ->setUserAgent(substr($request->server->get('HTTP_USER_AGENT', ''), 0, 255))
                 ->setFilename($request->server->get('SCRIPT_FILENAME'))
                 ->setReferer($request->server->get('HTTP_REFERER'));

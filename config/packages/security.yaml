@@ -1,18 +1,31 @@
 security:
+    enable_authenticator_manager: true
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        steam_user_provider:
-            id: Knojector\SteamAuthenticationBundle\Security\User\SteamUserProvider
+        database:
+            entity:
+                class: 'App\Entity\User'
+                property: 'steamId'
+
+        anonymous:
+            id: 'App\Security\AnonymousUserProvider'
+
+        users:
+            chain:
+                providers: ['database', 'anonymous']
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            anonymous: true
-            provider: steam_user_provider
-            steam: true
+        steam:
+            pattern: ^/
+#            lazy: true
+#            anonymous: true
+            provider: users
             entry_point: App\Security\EntryPoint\SteamEntryPoint
+            access_denied_handler: App\Security\EntryPoint\AccessDeniedHandler
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -20,6 +33,9 @@ security:
             logout:
                 path:   /logout
                 target: /
+
+            custom_authenticators:
+                - App\Security\AnonymousAuthenticator
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
