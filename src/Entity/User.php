@@ -5,7 +5,6 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\Common\Collections;
 use Doctrine\Common\Collections\Collection;
-use Knojector\SteamAuthenticationBundle\User\AbstractSteamUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="steam_id", columns={"steam_id"})})
  * @ORM\Entity
  */
-class User extends AbstractSteamUser implements UserInterface
+class User implements UserInterface
 {
     const EVERYONE = '*';
     const LOGGED_IN = 'logged-in';
@@ -154,28 +153,16 @@ class User extends AbstractSteamUser implements UserInterface
      */
     private $votingCode;
 
-    /*
-     * The properties below are from the AbstractSteamUser class.
-     * We don't use any of them, but we have to declare them here because otherwise Doctrine
-     * will read the annotations from the base class and try to create database columns for them.
-     */
-    protected $communityVisibilityState;
-    protected $profileState;
-    protected $profileName;
-    protected $lastLogOff;
-    protected $commentPermission;
-    protected $profileUrl;
-    protected $personaState;
-    protected $primaryClanId;
-    protected $joinDate;
-    protected $countryCode;
-    protected $roles;
-
     public function __construct()
     {
         $this->votes = new Collections\ArrayCollection();
         $this->permissions = new Collections\ArrayCollection();
         $this->logins = new Collections\ArrayCollection();
+    }
+
+    public function getSteamId(): string
+    {
+        return $this->getSteamIdString();
     }
 
     /*
@@ -190,7 +177,7 @@ class User extends AbstractSteamUser implements UserInterface
         return $this->steamId;
     }
 
-    public function setSteamId(int $steamID)
+    public function setSteamId(string $steamID)
     {
         $this->steamId = $steamID;
         return $this;
@@ -680,6 +667,9 @@ class User extends AbstractSteamUser implements UserInterface
             $roles[] = 'ROLE_' . strtoupper($permission->getId());
         }
 
+        // Symfony requires at least one role for a user to be authenticated
+        $roles[] = 'ROLE_USER';
+
         return $roles;
     }
 
@@ -737,15 +727,6 @@ class User extends AbstractSteamUser implements UserInterface
         return $this->id;
     }
 
-    /**
-     * The authentication API uses this function to set the name
-     * @param string $name
-     */
-    public function setProfileName(string $name)
-    {
-        $this->profileName = $this->name = $name;
-    }
-
     public function getFantasyUser(): ?FantasyUser
     {
         return $this->fantasyUser;
@@ -762,18 +743,6 @@ class User extends AbstractSteamUser implements UserInterface
         }
 
         return $this;
-    }
-
-    public function setProfileState(?int $state)
-    {
-        $this->profileState = $state;
-    }
-
-    public function setLastLogOff(?int $lastLogOff)
-    {
-        if ($lastLogOff) {
-            parent::setLastLogOff($lastLogOff);
-        }
     }
 }
 

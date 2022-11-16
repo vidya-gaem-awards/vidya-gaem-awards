@@ -45,6 +45,9 @@ services:
     App\Service\CronJobService:
         arguments: ['%kernel.project_dir%', '%env(bool:CRON_JOB_MANAGEMENT)%']
 
+    App\Security\AnonymousAuthenticator:
+        arguments: [ '%env(APP_SECRET)%' ]
+
     App\EventListener\UserListener:
         tags:
         - { name: kernel.event_listener, event: kernel.request }
@@ -57,12 +60,6 @@ services:
     Symfony\Component\Security\Http\AccessMapInterface:
         alias: security.access_map
         public: true
-
-    account.security_listener:
-        class: 'App\EventListener\SecurityListener'
-        tags:
-        - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
-        arguments: ['@doctrine.orm.entity_manager']
 
     twig.extension.ansi:
         class: SensioLabs\AnsiConverter\Bridge\Twig\AnsiExtension
@@ -93,3 +90,6 @@ services:
 #        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
 #        public: false
 #        tags: [serializer.normalizer]
+
+    Symfony\Component\Security\Core\User\UserProviderInterface:
+        alias: 'security.user.provider.concrete.users'

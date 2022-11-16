@@ -110,7 +110,7 @@ class File implements \JsonSerializable
         return $this->getSubdirectory() . '/' . $this->getFullFilename();
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'fullFilename' => $this->getFullFilename(),
