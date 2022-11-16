@@ -98,7 +98,7 @@ class Action
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -110,7 +110,7 @@ class Action
      *
      * @return Action
      */
-    public function setUser($user)
+    public function setUser($user): Action
     {
         $this->ip = $user->getIP();
         if ($user->isLoggedIn()) {
@@ -124,7 +124,7 @@ class Action
      *
      * @return string
      */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
@@ -136,7 +136,7 @@ class Action
      *
      * @return Action
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): Action
     {
         $this->timestamp = $timestamp;
 
@@ -148,7 +148,7 @@ class Action
      *
      * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
@@ -160,7 +160,7 @@ class Action
      *
      * @return Action
      */
-    public function setPage($page)
+    public function setPage($page): Action
     {
         $this->page = $page;
 
@@ -172,7 +172,7 @@ class Action
      *
      * @return string
      */
-    public function getPage()
+    public function getPage(): string
     {
         return $this->page;
     }
@@ -184,7 +184,7 @@ class Action
      *
      * @return Action
      */
-    public function setAction($action)
+    public function setAction($action): Action
     {
         $this->action = $action;
 
@@ -196,7 +196,7 @@ class Action
      *
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
@@ -208,7 +208,7 @@ class Action
      *
      * @return Action
      */
-    public function setData1($data1)
+    public function setData1($data1): Action
     {
         $this->data1 = $data1;
 
@@ -220,7 +220,7 @@ class Action
      *
      * @return string
      */
-    public function getData1()
+    public function getData1(): string
     {
         return $this->data1;
     }
@@ -232,7 +232,7 @@ class Action
      *
      * @return Action
      */
-    public function setData2($data2)
+    public function setData2($data2): Action
     {
         $this->data2 = $data2;
 
@@ -244,7 +244,7 @@ class Action
      *
      * @return string
      */
-    public function getData2()
+    public function getData2(): string
     {
         return $this->data2;
     }
@@ -252,7 +252,7 @@ class Action
     /**
      * @return User|null
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -260,7 +260,7 @@ class Action
     /**
      * @return TableHistory
      */
-    public function getTableHistory(): ?TableHistory
+    public function getTableHistory(): TableHistory
     {
         return $this->tableHistory;
     }

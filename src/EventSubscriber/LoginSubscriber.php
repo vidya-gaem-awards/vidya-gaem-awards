@@ -31,7 +31,7 @@ class LoginSubscriber implements EventSubscriberInterface
         $this->dispatcher = $dispatcher;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             AuthenticateUserEvent::NAME => 'onAuthenticateUser',

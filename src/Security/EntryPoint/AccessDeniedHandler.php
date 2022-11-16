@@ -18,7 +18,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
     {
     }
 
-    public function handle(Request $request, AccessDeniedException $accessDeniedException)
+    public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
         // Don't automatically redirect for bots (such as the DiscordBot) - show a 401 page instead.
         // The user agent check is intentionally loose, since it doesn't really matter if an actual user gets

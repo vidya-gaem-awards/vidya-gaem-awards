@@ -22,7 +22,7 @@ class FileSystem
      * @param  int $bytes File size in bytes.
      * @return string     The human-readable string, to two decimal places.
      */
-    public static function humanFilesize($bytes)
+    public static function humanFilesize($bytes): string
     {
         $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         // Determine the magnitude of the size from the length of the string.

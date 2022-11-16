@@ -100,7 +100,7 @@ class Config
     /**
      * @return DateTime
      */
-    public function getVotingStart()
+    public function getVotingStart(): DateTime
     {
         return $this->votingStart;
     }
@@ -109,7 +109,7 @@ class Config
      * @param DateTime $votingStart
      * @return Config
      */
-    public function setVotingStart($votingStart)
+    public function setVotingStart($votingStart): Config
     {
         $this->votingStart = $votingStart;
         return $this;
@@ -118,7 +118,7 @@ class Config
     /**
      * @return DateTime
      */
-    public function getVotingEnd()
+    public function getVotingEnd(): DateTime
     {
         return $this->votingEnd;
     }
@@ -127,7 +127,7 @@ class Config
      * @param DateTime $votingEnd
      * @return Config
      */
-    public function setVotingEnd($votingEnd)
+    public function setVotingEnd($votingEnd): Config
     {
         $this->votingEnd = $votingEnd;
         return $this;
@@ -136,7 +136,7 @@ class Config
     /**
      * @return bool Returns true if voting hasn't yet opened.
      */
-    public function isVotingNotYetOpen()
+    public function isVotingNotYetOpen(): bool
     {
         $now = new DateTime();
 
@@ -150,7 +150,7 @@ class Config
     /**
      * @return bool Returns true if voting is currently open.
      */
-    public function isVotingOpen()
+    public function isVotingOpen(): bool
     {
         $now = new DateTime();
 
@@ -168,7 +168,7 @@ class Config
     /**
      * @return bool Returns true if voting has closed.
      */
-    public function hasVotingClosed()
+    public function hasVotingClosed(): bool
     {
         $now = new DateTime();
 
@@ -198,7 +198,7 @@ class Config
     /**
      * @return DateTime
      */
-    public function getStreamTime()
+    public function getStreamTime(): DateTime
     {
         return $this->streamTime;
     }
@@ -207,7 +207,7 @@ class Config
      * @param DateTime $streamTime
      * @return Config
      */
-    public function setStreamTime($streamTime)
+    public function setStreamTime($streamTime): Config
     {
         $this->streamTime = $streamTime;
         return $this;
@@ -216,7 +216,7 @@ class Config
     /**
      * @return string
      */
-    public function getDefaultPage()
+    public function getDefaultPage(): string
     {
         return $this->defaultPage;
     }
@@ -225,7 +225,7 @@ class Config
      * @param string $defaultPage
      * @return Config
      */
-    public function setDefaultPage($defaultPage)
+    public function setDefaultPage($defaultPage): Config
     {
         if (self::ALLOWED_DEFAULT_PAGES[$defaultPage] ?? false) {
             $this->defaultPage = $defaultPage;
@@ -236,7 +236,7 @@ class Config
     /**
      * @return string[]
      */
-    public function getAllowedDefaultPages()
+    public function getAllowedDefaultPages(): array
     {
         return self::ALLOWED_DEFAULT_PAGES;
     }

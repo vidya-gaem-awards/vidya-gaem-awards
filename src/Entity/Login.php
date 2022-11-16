@@ -46,7 +46,7 @@ class Login
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -58,7 +58,7 @@ class Login
      *
      * @return Login
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): Login
     {
         $this->timestamp = $timestamp;
 
@@ -70,7 +70,7 @@ class Login
      *
      * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
@@ -82,7 +82,7 @@ class Login
      *
      * @return Login
      */
-    public function setUser(User $user)
+    public function setUser(User $user): Login
     {
         $this->user = $user;
 
@@ -94,7 +94,7 @@ class Login
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }

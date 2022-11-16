@@ -52,7 +52,7 @@ class AwardFeedback
      * @param string $user
      * @return AwardFeedback
      */
-    public function setUser($user)
+    public function setUser($user): AwardFeedback
     {
         $this->user = $user;
 
@@ -62,7 +62,7 @@ class AwardFeedback
     /**
      * @return string
      */
-    public function getUser()
+    public function getUser(): string
     {
         return $this->user;
     }
@@ -71,7 +71,7 @@ class AwardFeedback
      * @param integer $opinion
      * @return AwardFeedback
      */
-    public function setOpinion($opinion)
+    public function setOpinion($opinion): AwardFeedback
     {
         $this->opinion = $opinion;
 
@@ -81,7 +81,7 @@ class AwardFeedback
     /**
      * @return integer
      */
-    public function getOpinion()
+    public function getOpinion(): int
     {
         return $this->opinion;
     }
@@ -90,7 +90,7 @@ class AwardFeedback
      * @param Award $award
      * @return AwardFeedback
      */
-    public function setAward(Award $award)
+    public function setAward(Award $award): AwardFeedback
     {
         $this->award = $award;
 
@@ -100,7 +100,7 @@ class AwardFeedback
     /**
      * @return Award
      */
-    public function getAward()
+    public function getAward(): Award
     {
         return $this->award;
     }

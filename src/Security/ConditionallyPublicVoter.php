@@ -35,7 +35,7 @@ class ConditionallyPublicVoter implements VoterInterface
      *
      * @return int either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
      */
-    public function vote(TokenInterface $token, $subject, array $attributes)
+    public function vote(TokenInterface $token, $subject, array $attributes): int
     {
         if (!in_array('CONDITIONALLY_PUBLIC', $attributes)) {
             $this->logger->debug('Route doesn\'t have CONDITIONALLY_PUBLIC', $attributes);

@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
 class AnonymousAuthenticator extends AbstractAuthenticator
@@ -32,7 +33,7 @@ class AnonymousAuthenticator extends AbstractAuthenticator
         return true;
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(Request $request): Passport
     {
         $session = $request->getSession();
 

@@ -128,7 +128,7 @@ class LootboxItem implements JsonSerializable, DropChance
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -140,7 +140,7 @@ class LootboxItem implements JsonSerializable, DropChance
      *
      * @return LootboxItem
      */
-    public function setName($name)
+    public function setName($name): LootboxItem
     {
         $this->name = $name;
 
@@ -152,7 +152,7 @@ class LootboxItem implements JsonSerializable, DropChance
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -263,7 +263,7 @@ class LootboxItem implements JsonSerializable, DropChance
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'id' => $this->getId(),

@@ -41,7 +41,7 @@ class AuditService
      * @param Action $action
      * @return null|object
      */
-    public function getEntity(Action $action)
+    public function getEntity(Action $action): ?object
     {
         if ($history = $action->getTableHistory()) {
             $class = $history->getTable();

@@ -42,7 +42,7 @@ class FileService
      * @throws \Exception
      * @internal param $file_data
      */
-    public function handleUploadedFile(UploadedFile $file, string $entityType, string $directory, ?string $filename): File
+    public function handleUploadedFile(UploadedFile $file, string $entityType, string $directory, ?string $filename): string
     {
         if ($file === null) {
             throw new \Exception('No file was uploaded');
@@ -92,7 +92,7 @@ class FileService
      * @param  int $bytes File size in bytes.
      * @return string     The human-readable string, to two decimal places.
      */
-    public static function humanFilesize($bytes)
+    public static function humanFilesize($bytes): string
     {
         $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         // Determine the magnitude of the size from the length of the string.

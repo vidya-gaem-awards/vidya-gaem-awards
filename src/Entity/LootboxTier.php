@@ -87,7 +87,7 @@ class LootboxTier implements JsonSerializable, DropChance
     }
 
     /**
-     * @return Collection|LootboxItem[]
+     * @return Collection<LootboxItem>
      */
     public function getItems(): Collection
     {
@@ -117,7 +117,7 @@ class LootboxTier implements JsonSerializable, DropChance
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): array {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),

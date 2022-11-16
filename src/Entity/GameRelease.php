@@ -190,7 +190,7 @@ class GameRelease
     /**
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -199,7 +199,7 @@ class GameRelease
      * @param string $name
      * @return GameRelease
      */
-    public function setName($name)
+    public function setName($name): GameRelease
     {
         $this->name = $name;
 
@@ -209,7 +209,7 @@ class GameRelease
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -218,7 +218,7 @@ class GameRelease
      * @param boolean $notable
      * @return GameRelease
      */
-    public function setNotable($notable)
+    public function setNotable($notable): GameRelease
     {
         $this->notable = $notable;
 
@@ -228,7 +228,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function isNotable()
+    public function isNotable(): bool
     {
         return $this->notable;
     }
@@ -237,7 +237,7 @@ class GameRelease
      * @param boolean $manuallyAdded
      * @return GameRelease
      */
-    public function setManuallyAdded($manuallyAdded)
+    public function setManuallyAdded($manuallyAdded): GameRelease
     {
         $this->manuallyAdded = $manuallyAdded;
 
@@ -247,7 +247,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function isManuallyAdded()
+    public function isManuallyAdded(): bool
     {
         return $this->manuallyAdded;
     }
@@ -256,7 +256,7 @@ class GameRelease
      * @param boolean $pc
      * @return GameRelease
      */
-    public function setPc($pc)
+    public function setPc($pc): GameRelease
     {
         $this->pc = $pc;
 
@@ -266,7 +266,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getPc()
+    public function getPc(): bool
     {
         return $this->pc;
     }
@@ -275,7 +275,7 @@ class GameRelease
      * @param boolean $ps3
      * @return GameRelease
      */
-    public function setPs3($ps3)
+    public function setPs3($ps3): GameRelease
     {
         $this->ps3 = $ps3;
 
@@ -285,7 +285,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getPs3()
+    public function getPs3(): bool
     {
         return $this->ps3;
     }
@@ -294,7 +294,7 @@ class GameRelease
      * @param boolean $ps4
      * @return GameRelease
      */
-    public function setPs4($ps4)
+    public function setPs4($ps4): GameRelease
     {
         $this->ps4 = $ps4;
 
@@ -304,7 +304,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getPs4()
+    public function getPs4(): bool
     {
         return $this->ps4;
     }
@@ -313,7 +313,7 @@ class GameRelease
      * @param boolean $ps5
      * @return GameRelease
      */
-    public function setPs5($ps5)
+    public function setPs5($ps5): GameRelease
     {
         $this->ps5 = $ps5;
 
@@ -323,7 +323,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getPs5()
+    public function getPs5(): bool
     {
         return $this->ps5;
     }
@@ -332,7 +332,7 @@ class GameRelease
      * @param boolean $vita
      * @return GameRelease
      */
-    public function setVita($vita)
+    public function setVita($vita): GameRelease
     {
         $this->vita = $vita;
 
@@ -342,7 +342,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getVita()
+    public function getVita(): bool
     {
         return $this->vita;
     }
@@ -351,7 +351,7 @@ class GameRelease
      * @param boolean $psn
      * @return GameRelease
      */
-    public function setPsn($psn)
+    public function setPsn($psn): GameRelease
     {
         $this->psn = $psn;
 
@@ -361,7 +361,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getPsn()
+    public function getPsn(): bool
     {
         return $this->psn;
     }
@@ -370,7 +370,7 @@ class GameRelease
      * @param boolean $x360
      * @return GameRelease
      */
-    public function setX360($x360)
+    public function setX360($x360): GameRelease
     {
         $this->x360 = $x360;
 
@@ -380,7 +380,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getX360()
+    public function getX360(): bool
     {
         return $this->x360;
     }
@@ -389,7 +389,7 @@ class GameRelease
      * @param boolean $xb1
      * @return GameRelease
      */
-    public function setXb1($xb1)
+    public function setXb1($xb1): GameRelease
     {
         $this->xb1 = $xb1;
 
@@ -399,7 +399,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getXb1()
+    public function getXb1(): bool
     {
         return $this->xb1;
     }
@@ -408,7 +408,7 @@ class GameRelease
      * @param boolean $xsx
      * @return GameRelease
      */
-    public function setXsx($xsx)
+    public function setXsx($xsx): GameRelease
     {
         $this->xsx = $xsx;
 
@@ -418,7 +418,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getXsx()
+    public function getXsx(): bool
     {
         return $this->xsx;
     }
@@ -427,7 +427,7 @@ class GameRelease
      * @param boolean $xbla
      * @return GameRelease
      */
-    public function setXbla($xbla)
+    public function setXbla($xbla): GameRelease
     {
         $this->xbla = $xbla;
 
@@ -437,7 +437,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getXbla()
+    public function getXbla(): bool
     {
         return $this->xbla;
     }
@@ -446,7 +446,7 @@ class GameRelease
      * @param boolean $wii
      * @return GameRelease
      */
-    public function setWii($wii)
+    public function setWii($wii): GameRelease
     {
         $this->wii = $wii;
 
@@ -456,7 +456,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getWii()
+    public function getWii(): bool
     {
         return $this->wii;
     }
@@ -465,7 +465,7 @@ class GameRelease
      * @param boolean $wiiu
      * @return GameRelease
      */
-    public function setWiiu($wiiu)
+    public function setWiiu($wiiu): GameRelease
     {
         $this->wiiu = $wiiu;
 
@@ -475,7 +475,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getWiiu()
+    public function getWiiu(): bool
     {
         return $this->wiiu;
     }
@@ -484,7 +484,7 @@ class GameRelease
      * @param boolean $wiiware
      * @return GameRelease
      */
-    public function setWiiware($wiiware)
+    public function setWiiware($wiiware): GameRelease
     {
         $this->wiiware = $wiiware;
 
@@ -494,7 +494,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getWiiware()
+    public function getWiiware(): bool
     {
         return $this->wiiware;
     }
@@ -503,7 +503,7 @@ class GameRelease
      * @param boolean $n3ds
      * @return GameRelease
      */
-    public function setN3ds($n3ds)
+    public function setN3ds($n3ds): GameRelease
     {
         $this->n3ds = $n3ds;
 
@@ -513,7 +513,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getN3ds()
+    public function getN3ds(): bool
     {
         return $this->n3ds;
     }
@@ -522,7 +522,7 @@ class GameRelease
      * @param boolean $vr
      * @return GameRelease
      */
-    public function setVr($vr)
+    public function setVr($vr): GameRelease
     {
         $this->vr = $vr;
 
@@ -532,7 +532,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getVr()
+    public function getVr(): bool
     {
         return $this->vr;
     }
@@ -541,7 +541,7 @@ class GameRelease
      * @param boolean $mobile
      * @return GameRelease
      */
-    public function setMobile($mobile)
+    public function setMobile($mobile): GameRelease
     {
         $this->mobile = $mobile;
 
@@ -551,7 +551,7 @@ class GameRelease
     /**
      * @return boolean
      */
-    public function getMobile()
+    public function getMobile(): bool
     {
         return $this->mobile;
     }

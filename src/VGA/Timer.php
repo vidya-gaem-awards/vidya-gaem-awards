@@ -13,7 +13,7 @@ class Timer
     /**
      * @return float
      */
-    public function time()
+    public function time(): float
     {
         $time = microtime(true);
         return round($time - $this->startTime, 2);

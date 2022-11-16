@@ -459,7 +459,7 @@ class VotingController extends AbstractController
      * @param int $max
      * @return int
      */
-    private static function randomNumber(string $seed, int $max)
+    private static function randomNumber(string $seed, int $max): int
     {
         //hash the seed to ensure enough random(ish) characters each time
         $hash = sha1($seed);

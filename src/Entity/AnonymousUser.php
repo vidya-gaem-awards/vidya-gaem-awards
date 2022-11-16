@@ -24,7 +24,7 @@ class AnonymousUser implements UserInterface
      * @param string $ipAddress
      * @return self
      */
-    public function setIP($ipAddress)
+    public function setIP($ipAddress): \App\Entity\AnonymousUser
     {
         $this->ipAddress = $ipAddress;
         return $this;
@@ -33,7 +33,7 @@ class AnonymousUser implements UserInterface
     /**
      * @return string
      */
-    public function getIP()
+    public function getIP(): string
     {
         return $this->ipAddress;
     }
@@ -42,7 +42,7 @@ class AnonymousUser implements UserInterface
      * @param string $randomID
      * @return self
      */
-    public function setRandomID($randomID)
+    public function setRandomID($randomID): \App\Entity\AnonymousUser
     {
         $this->randomID = $randomID;
         return $this;
@@ -51,7 +51,7 @@ class AnonymousUser implements UserInterface
     /**
      * @return string
      */
-    public function getRandomID()
+    public function getRandomID(): string
     {
         return $this->randomID;
     }
@@ -60,7 +60,7 @@ class AnonymousUser implements UserInterface
      * A fuzzy ID will be either a user ID (for logged in users) or an IP address (for anonymous users).
      * @return string
      */
-    public function getFuzzyID()
+    public function getFuzzyID(): string
     {
         return $this->getIP();
     }
@@ -68,7 +68,7 @@ class AnonymousUser implements UserInterface
     /**
      * @return mixed
      */
-    public function getVotingCode()
+    public function getVotingCode(): mixed
     {
         return $this->votingCode;
     }
@@ -77,15 +77,10 @@ class AnonymousUser implements UserInterface
      * @param mixed $votingCode
      * @return self
      */
-    public function setVotingCode($votingCode)
+    public function setVotingCode($votingCode): \App\Entity\AnonymousUser
     {
         $this->votingCode = $votingCode;
         return $this;
-    }
-
-    public function getUsername()
-    {
-        return 'Anonymous (' . substr($this->getRandomID(), 0, 6) . ')';
     }
 
     public function isLoggedIn()
@@ -98,17 +93,7 @@ class AnonymousUser implements UserInterface
         return ['ROLE_ANONYMOUS'];
     }
 
-    public function getPassword()
-    {
-        return null;
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getUserIdentifier()
+    public function getUserIdentifier(): string
     {
         return $this->getRandomID();
     }

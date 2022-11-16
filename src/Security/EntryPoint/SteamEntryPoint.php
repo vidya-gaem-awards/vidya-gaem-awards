@@ -20,7 +20,7 @@ class SteamEntryPoint implements AuthenticationEntryPointInterface
         $this->twig = $twig;
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): Response
     {
         // Don't automatically redirect for bots (such as the DiscordBot) - show a 401 page instead.
         // The user agent check is intentionally loose, since it doesn't really matter if an actual user gets

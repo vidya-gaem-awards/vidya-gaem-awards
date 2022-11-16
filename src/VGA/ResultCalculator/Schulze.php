@@ -5,10 +5,7 @@ use App\VGA\AbstractResultCalculator;
 
 class Schulze extends AbstractResultCalculator
 {
-    /**
-     * @return array
-     */
-    public function calculateResults()
+    public function calculateResults(): array
     {
         $candidates = $this->candidates;
         $votes = $this->votes;

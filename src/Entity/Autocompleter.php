@@ -53,7 +53,7 @@ class Autocompleter
      * @return Autocompleter
      * @throws Exception
      */
-    public function setId($id)
+    public function setId($id): Autocompleter
     {
         if (!preg_match('/^[A-Za-z0-9-]+$/', $id)) {
             throw new Exception('Invalid ID provided: autocompleter IDs can only consist of numbers, letters, and dashes.');
@@ -69,7 +69,7 @@ class Autocompleter
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -81,7 +81,7 @@ class Autocompleter
      *
      * @return Autocompleter
      */
-    public function setName($name)
+    public function setName($name): Autocompleter
     {
         $this->name = $name;
 
@@ -93,7 +93,7 @@ class Autocompleter
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -105,7 +105,7 @@ class Autocompleter
      *
      * @return Autocompleter
      */
-    public function setStrings($strings)
+    public function setStrings($strings): Autocompleter
     {
         $this->strings = $strings;
 
@@ -117,7 +117,7 @@ class Autocompleter
      *
      * @return array
      */
-    public function getStrings()
+    public function getStrings(): array
     {
         return $this->strings;
     }
@@ -126,7 +126,7 @@ class Autocompleter
      * @param string $string
      * @return $this
      */
-    public function addString(string $string)
+    public function addString(string $string): static
     {
         $this->strings[] = $string;
         return $this;
@@ -135,7 +135,7 @@ class Autocompleter
     /**
      * @return ArrayCollection|Award[]
      */
-    public function getAwards()
+    public function getAwards(): ArrayCollection|array
     {
         return $this->awards;
     }

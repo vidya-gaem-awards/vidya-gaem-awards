@@ -80,7 +80,7 @@ class Advertisement implements JsonSerializable
      *
      * @return Advertisement
      */
-    public function setName($name)
+    public function setName($name): Advertisement
     {
         $this->name = $name;
 
@@ -92,7 +92,7 @@ class Advertisement implements JsonSerializable
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -104,7 +104,7 @@ class Advertisement implements JsonSerializable
      *
      * @return Advertisement
      */
-    public function setLink($link)
+    public function setLink($link): Advertisement
     {
         $this->link = $link;
 
@@ -116,7 +116,7 @@ class Advertisement implements JsonSerializable
      *
      * @return string
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -140,7 +140,7 @@ class Advertisement implements JsonSerializable
      *
      * @return Advertisement
      */
-    public function setSpecial($special)
+    public function setSpecial($special): Advertisement
     {
         $this->special = $special;
 
@@ -152,7 +152,7 @@ class Advertisement implements JsonSerializable
      *
      * @return boolean
      */
-    public function isSpecial()
+    public function isSpecial(): bool
     {
         return $this->special;
     }
@@ -178,7 +178,7 @@ class Advertisement implements JsonSerializable
     /**
      * @return mixed
      */
-    public function getClicks()
+    public function getClicks(): mixed
     {
         return $this->clicks;
     }
@@ -196,7 +196,7 @@ class Advertisement implements JsonSerializable
     /**
      * @return $this
      */
-    public function incrementClicks(): Advertisement
+    public function incrementClicks(): static
     {
         $this->clicks++;
         return $this;
@@ -209,7 +209,7 @@ class Advertisement implements JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'id' => $this->getId(),

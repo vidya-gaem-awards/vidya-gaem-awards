@@ -76,7 +76,7 @@ class News
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -88,7 +88,7 @@ class News
      *
      * @return News
      */
-    public function setHeadline($headline)
+    public function setHeadline($headline): News
     {
         $this->headline = $headline;
 
@@ -100,7 +100,7 @@ class News
      *
      * @return string
      */
-    public function getHeadline()
+    public function getHeadline(): string
     {
         return $this->headline;
     }
@@ -112,7 +112,7 @@ class News
      *
      * @return News
      */
-    public function setText($text)
+    public function setText($text): News
     {
         $this->text = $text;
 
@@ -124,7 +124,7 @@ class News
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -136,7 +136,7 @@ class News
      *
      * @return News
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): News
     {
         $this->timestamp = $timestamp;
 
@@ -148,7 +148,7 @@ class News
      *
      * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
@@ -160,7 +160,7 @@ class News
      *
      * @return News
      */
-    public function setVisible($visible)
+    public function setVisible($visible): News
     {
         $this->visible = $visible;
 
@@ -172,7 +172,7 @@ class News
      *
      * @return boolean
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->visible;
     }
@@ -184,7 +184,7 @@ class News
      *
      * @return News
      */
-    public function setUser(UserInterface $user)
+    public function setUser(UserInterface $user): News
     {
         $this->user = $user;
 
@@ -196,7 +196,7 @@ class News
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -205,7 +205,7 @@ class News
      * Returns true if the post was created in the past two days
      * @return bool
      */
-    public function isNew()
+    public function isNew(): bool
     {
         return $this->getTimestamp() > new DateTime('-2 days');
     }
@@ -214,7 +214,7 @@ class News
      * Returns true if the post was created more than a week ago
      * @return bool
      */
-    public function isOld()
+    public function isOld(): bool
     {
         return $this->getTimestamp() < new DateTime('-7 days');
     }
@@ -222,7 +222,7 @@ class News
     /**
      * @return User
      */
-    public function getDeletedBy()
+    public function getDeletedBy(): User
     {
         return $this->deletedBy;
     }

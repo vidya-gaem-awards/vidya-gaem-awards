@@ -70,7 +70,7 @@ class UserNomination
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -82,7 +82,7 @@ class UserNomination
      *
      * @return UserNomination
      */
-    public function setUser($user)
+    public function setUser($user): UserNomination
     {
         $this->user = $user;
 
@@ -94,7 +94,7 @@ class UserNomination
      *
      * @return string
      */
-    public function getUser()
+    public function getUser(): string
     {
         return $this->user;
     }
@@ -106,7 +106,7 @@ class UserNomination
      *
      * @return UserNomination
      */
-    public function setNomination($nomination)
+    public function setNomination($nomination): UserNomination
     {
         $this->nomination = $nomination;
 
@@ -118,7 +118,7 @@ class UserNomination
      *
      * @return string
      */
-    public function getNomination()
+    public function getNomination(): string
     {
         return $this->nomination;
     }
@@ -130,7 +130,7 @@ class UserNomination
      *
      * @return UserNomination
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): UserNomination
     {
         $this->timestamp = $timestamp;
 
@@ -142,7 +142,7 @@ class UserNomination
      *
      * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
@@ -154,7 +154,7 @@ class UserNomination
      *
      * @return UserNomination
      */
-    public function setAward(Award $award = null)
+    public function setAward(Award $award = null): UserNomination
     {
         $this->award = $award;
 
@@ -166,7 +166,7 @@ class UserNomination
      *
      * @return Award
      */
-    public function getAward()
+    public function getAward(): Award
     {
         return $this->award;
     }

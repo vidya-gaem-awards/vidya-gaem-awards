@@ -115,7 +115,7 @@ class Template
      * @param string|null $details
      * @return Template
      */
-    public function setDetails(?string $details)
+    public function setDetails(?string $details): Template
     {
         $this->details = $details;
         return $this;

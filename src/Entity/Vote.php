@@ -82,7 +82,7 @@ class Vote
      *
      * @return Vote
      */
-    public function setCookieID($cookieID)
+    public function setCookieID($cookieID): Vote
     {
         $this->cookieID = $cookieID;
 
@@ -94,7 +94,7 @@ class Vote
      *
      * @return string
      */
-    public function getCookieID()
+    public function getCookieID(): string
     {
         return $this->cookieID;
     }
@@ -106,7 +106,7 @@ class Vote
      *
      * @return Vote
      */
-    public function setPreferences($preferences)
+    public function setPreferences($preferences): Vote
     {
         $this->preferences = $preferences;
 
@@ -118,7 +118,7 @@ class Vote
      *
      * @return array
      */
-    public function getPreferences()
+    public function getPreferences(): array
     {
         return $this->preferences;
     }
@@ -130,7 +130,7 @@ class Vote
      *
      * @return Vote
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): Vote
     {
         $this->timestamp = $timestamp;
 
@@ -142,7 +142,7 @@ class Vote
      *
      * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
@@ -154,7 +154,7 @@ class Vote
      *
      * @return Vote
      */
-    public function setIp($ip)
+    public function setIp($ip): Vote
     {
         $this->ip = $ip;
 
@@ -166,7 +166,7 @@ class Vote
      *
      * @return string
      */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
@@ -178,7 +178,7 @@ class Vote
      *
      * @return Vote
      */
-    public function setVotingCode($votingCode)
+    public function setVotingCode($votingCode): Vote
     {
         $this->votingCode = $votingCode;
 
@@ -190,7 +190,7 @@ class Vote
      *
      * @return string
      */
-    public function getVotingCode()
+    public function getVotingCode(): string
     {
         return $this->votingCode;
     }
@@ -202,7 +202,7 @@ class Vote
      *
      * @return Vote
      */
-    public function setNumber($number)
+    public function setNumber($number): Vote
     {
         $this->number = $number;
 
@@ -214,7 +214,7 @@ class Vote
      *
      * @return integer
      */
-    public function getNumber()
+    public function getNumber(): int
     {
         return $this->number;
     }
@@ -226,7 +226,7 @@ class Vote
      *
      * @return Vote
      */
-    public function setAward(Award $award)
+    public function setAward(Award $award): Vote
     {
         $this->award = $award;
 
@@ -238,7 +238,7 @@ class Vote
      *
      * @return Award
      */
-    public function getAward()
+    public function getAward(): Award
     {
         return $this->award;
     }
@@ -251,7 +251,7 @@ class Vote
      *
      * @return Vote
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): Vote
     {
         if ($user->isLoggedIn()) {
             $this->user = $user;
@@ -264,7 +264,7 @@ class Vote
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }

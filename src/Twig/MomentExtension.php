@@ -7,7 +7,7 @@ use Twig\TwigFilter;
 
 class MomentExtension extends AbstractExtension
 {
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('moment', [$this, 'momentFilter'])
@@ -16,6 +16,6 @@ class MomentExtension extends AbstractExtension
 
     public function momentfilter(\DateTime $dateTime): Moment
     {
-        return new Moment($dateTime->format(\DateTime::ISO8601));
+        return new Moment($dateTime->format(\DateTime::ATOM));
     }
 }

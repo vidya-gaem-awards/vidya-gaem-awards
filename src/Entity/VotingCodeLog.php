@@ -74,7 +74,7 @@ class VotingCodeLog
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -83,7 +83,7 @@ class VotingCodeLog
      * @param User|UserInterface $user
      * @return VotingCodeLog
      */
-    public function setUser($user)
+    public function setUser($user): VotingCodeLog
     {
         if ($user->isLoggedIn()) {
             $this->user = $user;
@@ -96,7 +96,7 @@ class VotingCodeLog
     /**
      * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
@@ -105,7 +105,7 @@ class VotingCodeLog
      * @param DateTime $timestamp
      * @return VotingCodeLog
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): VotingCodeLog
     {
         $this->timestamp = $timestamp;
         return $this;
@@ -114,7 +114,7 @@ class VotingCodeLog
     /**
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -123,7 +123,7 @@ class VotingCodeLog
      * @param string $code
      * @return VotingCodeLog
      */
-    public function setCode($code)
+    public function setCode($code): VotingCodeLog
     {
         $this->code = $code;
         return $this;
@@ -132,7 +132,7 @@ class VotingCodeLog
     /**
      * @return string
      */
-    public function getReferer()
+    public function getReferer(): string
     {
         return $this->referer;
     }
@@ -141,7 +141,7 @@ class VotingCodeLog
      * @param string $referer
      * @return VotingCodeLog
      */
-    public function setReferer($referer)
+    public function setReferer($referer): VotingCodeLog
     {
         $this->referer = mb_substr($referer, 0, 190);
         return $this;
@@ -150,7 +150,7 @@ class VotingCodeLog
     /**
      * @return string
      */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
@@ -159,7 +159,7 @@ class VotingCodeLog
      * @param string $ip
      * @return VotingCodeLog
      */
-    public function setIp($ip)
+    public function setIp($ip): VotingCodeLog
     {
         $this->ip = $ip;
         return $this;
@@ -168,7 +168,7 @@ class VotingCodeLog
     /**
      * @return string
      */
-    public function getCookieID()
+    public function getCookieID(): string
     {
         return $this->cookieID;
     }
@@ -177,7 +177,7 @@ class VotingCodeLog
      * @param string $cookieID
      * @return VotingCodeLog
      */
-    public function setCookieID($cookieID)
+    public function setCookieID($cookieID): VotingCodeLog
     {
         $this->cookieID = $cookieID;
         return $this;

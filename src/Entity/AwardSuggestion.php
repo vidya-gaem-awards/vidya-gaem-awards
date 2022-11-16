@@ -48,7 +48,7 @@ class AwardSuggestion
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -60,7 +60,7 @@ class AwardSuggestion
      *
      * @return AwardSuggestion
      */
-    public function setUser(User $user)
+    public function setUser(User $user): AwardSuggestion
     {
         $this->user = $user->getFuzzyID();
 
@@ -72,7 +72,7 @@ class AwardSuggestion
      *
      * @return string
      */
-    public function getUser()
+    public function getUser(): string
     {
         return $this->user;
     }
@@ -84,7 +84,7 @@ class AwardSuggestion
      *
      * @return AwardSuggestion
      */
-    public function setSuggestion($suggestion)
+    public function setSuggestion($suggestion): AwardSuggestion
     {
         $this->suggestion = $suggestion;
 
@@ -96,7 +96,7 @@ class AwardSuggestion
      *
      * @return string
      */
-    public function getSuggestion()
+    public function getSuggestion(): string
     {
         return $this->suggestion;
     }
@@ -108,7 +108,7 @@ class AwardSuggestion
      *
      * @return AwardSuggestion
      */
-    public function setAward(Award $award = null)
+    public function setAward(Award $award = null): AwardSuggestion
     {
         $this->award = $award;
 
@@ -120,7 +120,7 @@ class AwardSuggestion
      *
      * @return Award
      */
-    public function getAward()
+    public function getAward(): Award
     {
         return $this->award;
     }

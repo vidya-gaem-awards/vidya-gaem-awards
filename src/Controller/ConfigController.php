@@ -189,7 +189,7 @@ class ConfigController extends AbstractController
      * @param RouteCollection $routeCollection
      * @return Route[] An array of routes, indexed by the route name.
      */
-    private function getValidNavbarRoutes(RouteCollection $routeCollection)
+    private function getValidNavbarRoutes(RouteCollection $routeCollection): array
     {
         $routes = array_filter($routeCollection->all(), function (Route $route, $routeName) {
             // Ignore internal routes (includes the web profiler routes and login/logout)

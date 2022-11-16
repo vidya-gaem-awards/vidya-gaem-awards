@@ -25,7 +25,7 @@ class ConfigService
      * @return Config
      * @throws \Exception
      */
-    public function getConfig()
+    public function getConfig(): Config
     {
         if (!isset($this->config)) {
             $this->config = $this->em->getRepository(Config::class)->findOneBy([]);
@@ -42,7 +42,7 @@ class ConfigService
      * This is the most commonly used part of the config
      * @return bool
      */
-    public function isReadOnly()
+    public function isReadOnly(): bool
     {
         return $this->getConfig()->isReadOnly();
     }

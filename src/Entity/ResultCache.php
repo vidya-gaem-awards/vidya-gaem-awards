@@ -67,7 +67,7 @@ class ResultCache
      *
      * @return ResultCache
      */
-    public function setResults($results)
+    public function setResults($results): ResultCache
     {
         $this->results = $results;
 
@@ -79,7 +79,7 @@ class ResultCache
      *
      * @return array
      */
-    public function getResults()
+    public function getResults(): array
     {
         return $this->results;
     }
@@ -91,7 +91,7 @@ class ResultCache
      *
      * @return ResultCache
      */
-    public function setSteps($steps)
+    public function setSteps($steps): ResultCache
     {
         $this->steps = $steps;
 
@@ -103,7 +103,7 @@ class ResultCache
      *
      * @return array
      */
-    public function getSteps()
+    public function getSteps(): array
     {
         return $this->steps;
     }
@@ -115,7 +115,7 @@ class ResultCache
      *
      * @return ResultCache
      */
-    public function setWarnings($warnings)
+    public function setWarnings($warnings): ResultCache
     {
         $this->warnings = $warnings;
 
@@ -127,7 +127,7 @@ class ResultCache
      *
      * @return array
      */
-    public function getWarnings()
+    public function getWarnings(): array
     {
         return $this->warnings;
     }
@@ -139,7 +139,7 @@ class ResultCache
      *
      * @return ResultCache
      */
-    public function setVotes($votes)
+    public function setVotes($votes): ResultCache
     {
         $this->votes = $votes;
 
@@ -151,7 +151,7 @@ class ResultCache
      *
      * @return integer
      */
-    public function getVotes()
+    public function getVotes(): int
     {
         return $this->votes;
     }
@@ -163,7 +163,7 @@ class ResultCache
      *
      * @return ResultCache
      */
-    public function setAward(Award $award)
+    public function setAward(Award $award): ResultCache
     {
         $this->award = $award;
 
@@ -175,7 +175,7 @@ class ResultCache
      *
      * @return Award
      */
-    public function getAward()
+    public function getAward(): Award
     {
         return $this->award;
     }
@@ -187,7 +187,7 @@ class ResultCache
      *
      * @return ResultCache
      */
-    public function setFilter(string $filter)
+    public function setFilter(string $filter): ResultCache
     {
         $this->filter = $filter;
 
@@ -199,7 +199,7 @@ class ResultCache
      *
      * @return string
      */
-    public function getFilter()
+    public function getFilter(): string
     {
         return $this->filter;
     }

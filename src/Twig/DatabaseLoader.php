@@ -33,7 +33,7 @@ class DatabaseLoader implements LoaderInterface
         return new Source($template->getSource(), $name);
     }
 
-    public function exists(string $name)
+    public function exists(string $name): bool
     {
         return (bool)$this->getTemplate($name);
     }
@@ -56,7 +56,7 @@ class DatabaseLoader implements LoaderInterface
      * @param $name
      * @return Template|null
      */
-    protected function getTemplate($name)
+    protected function getTemplate($name): ?Template
     {
         if (!$this->enabled || substr($name, 0, 8) !== 'dynamic/') {
             return null;

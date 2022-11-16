@@ -25,7 +25,7 @@ class ResultsService
      * @param array[] $votePreferences
      * @return ResultCache
      */
-    public function getResultsForAward(Award $award, array $votePreferences)
+    public function getResultsForAward(Award $award, array $votePreferences): ResultCache
     {
         $nominees = [];
         foreach ($award->getNominees() as $nominee) {

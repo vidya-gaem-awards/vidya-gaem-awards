@@ -30,12 +30,12 @@ abstract class AbstractResultCalculator
     /**
      * @return array
      */
-    abstract function calculateResults();
+    abstract function calculateResults(): array;
 
     /**
      * @return array
      */
-    public function getWarnings()
+    public function getWarnings(): array
     {
         return $this->warnings;
     }
@@ -43,7 +43,7 @@ abstract class AbstractResultCalculator
     /**
      * @return array
      */
-    public function getSteps()
+    public function getSteps(): array
     {
         return $this->steps;
     }

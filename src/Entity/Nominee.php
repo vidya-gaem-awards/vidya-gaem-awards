@@ -82,7 +82,7 @@ class Nominee implements JsonSerializable
     /**
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -91,7 +91,7 @@ class Nominee implements JsonSerializable
      * @param string $shortName
      * @return Nominee
      */
-    public function setShortName($shortName)
+    public function setShortName($shortName): Nominee
     {
         $this->shortName = $shortName;
         return $this;
@@ -100,7 +100,7 @@ class Nominee implements JsonSerializable
     /**
      * @return string
      */
-    public function getShortName()
+    public function getShortName(): string
     {
         return $this->shortName;
     }
@@ -109,7 +109,7 @@ class Nominee implements JsonSerializable
      * @param string $name
      * @return Nominee
      */
-    public function setName($name)
+    public function setName($name): Nominee
     {
         $this->name = trim($name);
         return $this;
@@ -118,7 +118,7 @@ class Nominee implements JsonSerializable
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -127,7 +127,7 @@ class Nominee implements JsonSerializable
      * @param string $subtitle
      * @return Nominee
      */
-    public function setSubtitle($subtitle)
+    public function setSubtitle($subtitle): Nominee
     {
         $this->subtitle = trim($subtitle);
         return $this;
@@ -138,7 +138,7 @@ class Nominee implements JsonSerializable
      *
      * @return string
      */
-    public function getSubtitle()
+    public function getSubtitle(): string
     {
         return $this->subtitle;
     }
@@ -147,7 +147,7 @@ class Nominee implements JsonSerializable
      * @param File|null $image
      * @return Nominee
      */
-    public function setImage(?File $image)
+    public function setImage(?File $image): Nominee
     {
         $this->image = $image;
         return $this;
@@ -165,7 +165,7 @@ class Nominee implements JsonSerializable
      * @param string $flavorText
      * @return Nominee
      */
-    public function setFlavorText($flavorText)
+    public function setFlavorText($flavorText): Nominee
     {
         $this->flavorText = trim($flavorText);
         return $this;
@@ -174,7 +174,7 @@ class Nominee implements JsonSerializable
     /**
      * @return string
      */
-    public function getFlavorText()
+    public function getFlavorText(): string
     {
         return $this->flavorText;
     }
@@ -183,7 +183,7 @@ class Nominee implements JsonSerializable
      * @param Award $award
      * @return Nominee
      */
-    public function setAward(Award $award = null)
+    public function setAward(Award $award = null): Nominee
     {
         $this->award = $award;
         return $this;
@@ -192,7 +192,7 @@ class Nominee implements JsonSerializable
     /**
      * @return Award
      */
-    public function getAward()
+    public function getAward(): Award
     {
         return $this->award;
     }
@@ -200,7 +200,7 @@ class Nominee implements JsonSerializable
     /**
      * @return FantasyPrediction[]|ArrayCollection
      */
-    public function getFantasyPredictions()
+    public function getFantasyPredictions(): array|ArrayCollection
     {
         return $this->fantasyPredictions;
     }

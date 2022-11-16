@@ -107,7 +107,7 @@ class Access
     /**
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -116,7 +116,7 @@ class Access
      * @param string $cookieID
      * @return Access
      */
-    public function setCookieID($cookieID)
+    public function setCookieID($cookieID): Access
     {
         $this->cookieID = $cookieID;
 
@@ -126,7 +126,7 @@ class Access
     /**
      * @return string
      */
-    public function getCookieID()
+    public function getCookieID(): string
     {
         return $this->cookieID;
     }
@@ -135,7 +135,7 @@ class Access
      * @param DateTime $timestamp
      * @return Access
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): Access
     {
         $this->timestamp = $timestamp;
 
@@ -145,7 +145,7 @@ class Access
     /**
      * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
@@ -154,7 +154,7 @@ class Access
      * @param string $route
      * @return Access
      */
-    public function setRoute($route)
+    public function setRoute($route): Access
     {
         $this->route = $route;
 
@@ -164,7 +164,7 @@ class Access
     /**
      * @return string
      */
-    public function getRoute()
+    public function getRoute(): string
     {
         return $this->route;
     }
@@ -173,7 +173,7 @@ class Access
      * @param string $controller
      * @return Access
      */
-    public function setController($controller)
+    public function setController($controller): Access
     {
         $this->controller = $controller;
 
@@ -183,7 +183,7 @@ class Access
     /**
      * @return string
      */
-    public function getController()
+    public function getController(): string
     {
         return $this->controller;
     }
@@ -192,7 +192,7 @@ class Access
      * @param string $requestString
      * @return Access
      */
-    public function setRequestString($requestString)
+    public function setRequestString($requestString): Access
     {
         $this->requestString = substr($requestString, 0, 255);
         return $this;
@@ -201,7 +201,7 @@ class Access
     /**
      * @return string
      */
-    public function getRequestString()
+    public function getRequestString(): string
     {
         return $this->requestString;
     }
@@ -210,7 +210,7 @@ class Access
      * @param string $requestMethod
      * @return Access
      */
-    public function setRequestMethod($requestMethod)
+    public function setRequestMethod($requestMethod): Access
     {
         $this->requestMethod = $requestMethod;
 
@@ -220,7 +220,7 @@ class Access
     /**
      * @return string
      */
-    public function getRequestMethod()
+    public function getRequestMethod(): string
     {
         return $this->requestMethod;
     }
@@ -229,7 +229,7 @@ class Access
      * @param string $ip
      * @return Access
      */
-    public function setIp($ip)
+    public function setIp($ip): Access
     {
         $this->ip = $ip;
         return $this;
@@ -238,7 +238,7 @@ class Access
     /**
      * @return string
      */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
@@ -247,7 +247,7 @@ class Access
      * @param string $userAgent
      * @return Access
      */
-    public function setUserAgent($userAgent)
+    public function setUserAgent($userAgent): Access
     {
         $this->userAgent = $userAgent;
         return $this;
@@ -256,7 +256,7 @@ class Access
     /**
      * @return string
      */
-    public function getUserAgent()
+    public function getUserAgent(): string
     {
         return $this->userAgent;
     }
@@ -265,7 +265,7 @@ class Access
      * @param string $filename
      * @return Access
      */
-    public function setFilename($filename)
+    public function setFilename($filename): Access
     {
         $this->filename = $filename;
         return $this;
@@ -274,7 +274,7 @@ class Access
     /**
      * @return string
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename;
     }
@@ -283,7 +283,7 @@ class Access
      * @param string $referer
      * @return Access
      */
-    public function setReferer($referer)
+    public function setReferer($referer): Access
     {
         $this->referer = mb_substr($referer, 0, 190);
         return $this;
@@ -292,7 +292,7 @@ class Access
     /**
      * @return string
      */
-    public function getReferer()
+    public function getReferer(): string
     {
         return $this->referer;
     }
@@ -301,7 +301,7 @@ class Access
      * @param User $user
      * @return Access
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): Access
     {
         $this->user = $user;
         return $this;
@@ -310,7 +310,7 @@ class Access
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }

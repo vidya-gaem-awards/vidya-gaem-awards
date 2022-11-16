@@ -152,7 +152,7 @@ class FantasyUser
     }
 
     /**
-     * @return Collection|FantasyPrediction[]
+     * @return Collection<FantasyPrediction>
      */
     public function getPredictions(): Collection
     {

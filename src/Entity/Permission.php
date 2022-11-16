@@ -116,7 +116,7 @@ class Permission
      *
      * @return Permission
      */
-    public function setId($id)
+    public function setId($id): Permission
     {
         $this->id = $id;
 
@@ -128,7 +128,7 @@ class Permission
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -140,7 +140,7 @@ class Permission
      *
      * @return Permission
      */
-    public function setDescription($description)
+    public function setDescription($description): Permission
     {
         $this->description = $description;
 
@@ -152,7 +152,7 @@ class Permission
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -164,7 +164,7 @@ class Permission
      *
      * @return Permission
      */
-    public function addChild(Permission $child)
+    public function addChild(Permission $child): Permission
     {
         $this->children[] = $child;
 
@@ -185,7 +185,7 @@ class Permission
      * To avoid unnecessary database calls, we assume a permission can only have children if it's a LEVEL permission.
      * @return ArrayCollection|Permission[]
      */
-    public function getChildren()
+    public function getChildren(): ArrayCollection|array
     {
         if (substr($this->getId(), 0, 5) !== 'LEVEL') {
             return new ArrayCollection();
@@ -196,7 +196,7 @@ class Permission
     /**
      * @return ArrayCollection|Permission[]
      */
-    public function getChildrenRecurvise()
+    public function getChildrenRecurvise(): ArrayCollection|array
     {
         $permissions = new ArrayCollection();
 
@@ -217,7 +217,7 @@ class Permission
      *
      * @return Permission
      */
-    public function addUser(User $user)
+    public function addUser(User $user): Permission
     {
         $this->users[] = $user;
 
@@ -239,7 +239,7 @@ class Permission
      *
      * @return Collection
      */
-    public function getUsers()
+    public function getUsers(): Collection
     {
         return $this->users;
     }
@@ -247,7 +247,7 @@ class Permission
     /**
      * @return ArrayCollection|Permission[]
      */
-    public function getParents()
+    public function getParents(): ArrayCollection|array
     {
         return $this->parents;
     }

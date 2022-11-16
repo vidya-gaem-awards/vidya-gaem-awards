@@ -8,7 +8,7 @@ class InstantRunoff extends AbstractResultCalculator
     /**
      * @return array
      */
-    public function calculateResults()
+    public function calculateResults(): array
     {
         $candidates = $this->candidates;
         $votes = $this->votes;

@@ -162,7 +162,7 @@ class Award implements JsonSerializable
      * @return Award
      * @throws Exception
      */
-    public function setId($id)
+    public function setId($id): Award
     {
         if (!preg_match('/^[A-Za-z0-9-]+$/', $id)) {
             throw new Exception('Invalid ID provided: award IDs can only consist of numbers, letters, and dashes.');
@@ -177,7 +177,7 @@ class Award implements JsonSerializable
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -189,7 +189,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function setName($name)
+    public function setName($name): Award
     {
         $this->name = $name;
 
@@ -201,7 +201,7 @@ class Award implements JsonSerializable
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -213,7 +213,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function setSubtitle($subtitle)
+    public function setSubtitle($subtitle): Award
     {
         $this->subtitle = $subtitle;
 
@@ -225,7 +225,7 @@ class Award implements JsonSerializable
      *
      * @return string
      */
-    public function getSubtitle()
+    public function getSubtitle(): string
     {
         return $this->subtitle;
     }
@@ -237,7 +237,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function setOrder($order)
+    public function setOrder($order): Award
     {
         $this->order = $order;
 
@@ -249,7 +249,7 @@ class Award implements JsonSerializable
      *
      * @return integer
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return $this->order;
     }
@@ -261,7 +261,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function setComments($comments)
+    public function setComments($comments): Award
     {
         $this->comments = $comments;
 
@@ -273,7 +273,7 @@ class Award implements JsonSerializable
      *
      * @return string
      */
-    public function getComments()
+    public function getComments(): string
     {
         return $this->comments;
     }
@@ -285,7 +285,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): Award
     {
         $this->enabled = $enabled;
 
@@ -295,7 +295,7 @@ class Award implements JsonSerializable
     /**
      * @return boolean
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -307,7 +307,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function setNominationsEnabled($nominationsEnabled)
+    public function setNominationsEnabled($nominationsEnabled): Award
     {
         $this->nominationsEnabled = $nominationsEnabled;
 
@@ -317,7 +317,7 @@ class Award implements JsonSerializable
     /**
      * @return boolean
      */
-    public function areNominationsEnabled()
+    public function areNominationsEnabled(): bool
     {
         return $this->nominationsEnabled;
     }
@@ -329,7 +329,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function setSecret($secret)
+    public function setSecret($secret): Award
     {
         $this->secret = $secret;
 
@@ -341,7 +341,7 @@ class Award implements JsonSerializable
      *
      * @return boolean
      */
-    public function isSecret()
+    public function isSecret(): bool
     {
         return $this->secret;
     }
@@ -353,7 +353,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function addFeedback(AwardFeedback $feedback)
+    public function addFeedback(AwardFeedback $feedback): Award
     {
         $this->feedback[] = $feedback;
 
@@ -375,7 +375,7 @@ class Award implements JsonSerializable
      *
      * @return ArrayCollection
      */
-    public function getFeedback()
+    public function getFeedback(): ArrayCollection
     {
         return $this->feedback;
     }
@@ -387,7 +387,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function addNominee(Nominee $nominee)
+    public function addNominee(Nominee $nominee): Award
     {
         $this->nominees[] = $nominee;
 
@@ -409,7 +409,7 @@ class Award implements JsonSerializable
      *
      * @return arrayCollection|Nominee[]
      */
-    public function getNominees()
+    public function getNominees(): arrayCollection|array
     {
         return $this->nominees;
     }
@@ -418,7 +418,7 @@ class Award implements JsonSerializable
      * @param string $shortName
      * @return Nominee
      */
-    public function getNominee($shortName)
+    public function getNominee($shortName): Nominee
     {
         return $this->getNominees()->filter(function (Nominee $nominee) use ($shortName) {
             return $nominee->getShortName() === $shortName;
@@ -432,7 +432,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function addUserNomination(UserNomination $userNomination)
+    public function addUserNomination(UserNomination $userNomination): Award
     {
         $this->userNominations[] = $userNomination;
 
@@ -452,7 +452,7 @@ class Award implements JsonSerializable
     /**
      * @return ArrayCollection
      */
-    public function getRawUserNominations()
+    public function getRawUserNominations(): ArrayCollection
     {
         return $this->userNominations;
     }
@@ -461,7 +461,7 @@ class Award implements JsonSerializable
      * @param bool $sortAlphabetically
      * @return array
      */
-    public function getUserNominations($sortAlphabetically = false)
+    public function getUserNominations($sortAlphabetically = false): array
     {
         $nominations = [];
 
@@ -500,7 +500,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function addVote(Vote $vote)
+    public function addVote(Vote $vote): Award
     {
         $this->votes[] = $vote;
 
@@ -522,7 +522,7 @@ class Award implements JsonSerializable
      *
      * @return arrayCollection
      */
-    public function getVotes()
+    public function getVotes(): arrayCollection
     {
         return $this->votes;
     }
@@ -534,7 +534,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function addResultCache(ResultCache $resultCache)
+    public function addResultCache(ResultCache $resultCache): Award
     {
         $this->resultCache[] = $resultCache;
 
@@ -556,7 +556,7 @@ class Award implements JsonSerializable
      *
      * @return arrayCollection|ResultCache[]
      */
-    public function getResultCache()
+    public function getResultCache(): arrayCollection|array
     {
         return $this->resultCache;
     }
@@ -564,7 +564,7 @@ class Award implements JsonSerializable
     /**
      * @return ResultCache|null
      */
-    public function getOfficialResults()
+    public function getOfficialResults(): ?ResultCache
     {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('filter', ResultCache::OFFICIAL_FILTER));
@@ -579,7 +579,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function setAutocompleter(Autocompleter $autocompleter = null)
+    public function setAutocompleter(Autocompleter $autocompleter = null): Award
     {
         $this->autocompleter = $autocompleter;
 
@@ -591,7 +591,7 @@ class Award implements JsonSerializable
      *
      * @return Autocompleter
      */
-    public function getAutocompleter()
+    public function getAutocompleter(): Autocompleter
     {
         return $this->autocompleter;
     }
@@ -653,7 +653,7 @@ class Award implements JsonSerializable
      *
      * @return Award
      */
-    public function addSuggestion(AwardSuggestion $suggestion)
+    public function addSuggestion(AwardSuggestion $suggestion): Award
     {
         $this->suggestions[] = $suggestion;
 
@@ -675,7 +675,7 @@ class Award implements JsonSerializable
      *
      * @return ArrayCollection
      */
-    public function getRawSuggestions()
+    public function getRawSuggestions(): ArrayCollection
     {
         return $this->suggestions;
     }
@@ -684,7 +684,7 @@ class Award implements JsonSerializable
      * @param bool $sortAlphabetically
      * @return array
      */
-    public function getNameSuggestions($sortAlphabetically = false)
+    public function getNameSuggestions($sortAlphabetically = false): array
     {
         $suggestions = [];
 
@@ -719,7 +719,7 @@ class Award implements JsonSerializable
     /**
      * @return FantasyPrediction[]|ArrayCollection
      */
-    public function getFantasyPredictions()
+    public function getFantasyPredictions(): array|ArrayCollection
     {
         return $this->fantasyPredictions;
     }

@@ -71,7 +71,7 @@ class TableHistory
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -83,7 +83,7 @@ class TableHistory
      *
      * @return TableHistory
      */
-    public function setTable($table)
+    public function setTable($table): TableHistory
     {
         $this->table = $table;
 
@@ -95,7 +95,7 @@ class TableHistory
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return $this->table;
     }
@@ -107,7 +107,7 @@ class TableHistory
      *
      * @return TableHistory
      */
-    public function setEntry($entry)
+    public function setEntry($entry): TableHistory
     {
         $this->entry = $entry;
 
@@ -119,7 +119,7 @@ class TableHistory
      *
      * @return string
      */
-    public function getEntry()
+    public function getEntry(): string
     {
         return $this->entry;
     }
@@ -131,7 +131,7 @@ class TableHistory
      *
      * @return TableHistory
      */
-    public function setValues($values)
+    public function setValues($values): TableHistory
     {
         $this->values = $values;
 
@@ -143,7 +143,7 @@ class TableHistory
      *
      * @return array
      */
-    public function getValues()
+    public function getValues(): array
     {
         return $this->values;
     }
@@ -155,7 +155,7 @@ class TableHistory
      *
      * @return TableHistory
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp): TableHistory
     {
         $this->timestamp = $timestamp;
 
@@ -167,7 +167,7 @@ class TableHistory
      *
      * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
@@ -179,7 +179,7 @@ class TableHistory
      *
      * @return TableHistory
      */
-    public function setUser(User $user)
+    public function setUser(User $user): TableHistory
     {
         $this->user = $user;
 
@@ -191,7 +191,7 @@ class TableHistory
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }

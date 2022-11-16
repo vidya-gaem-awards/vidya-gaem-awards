@@ -55,7 +55,7 @@ class Filter
      *
      * @return Filter
      */
-    public function setId($id)
+    public function setId($id): Filter
     {
         $this->id = $id;
 
@@ -67,7 +67,7 @@ class Filter
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -79,7 +79,7 @@ class Filter
      *
      * @return Filter
      */
-    public function setRegex($regex)
+    public function setRegex($regex): Filter
     {
         $this->regex = $regex;
 
@@ -91,7 +91,7 @@ class Filter
      *
      * @return string
      */
-    public function getRegex()
+    public function getRegex(): string
     {
         return $this->regex;
     }
@@ -103,7 +103,7 @@ class Filter
      *
      * @return Filter
      */
-    public function setValue($value)
+    public function setValue($value): Filter
     {
         $this->value = $value;
 
@@ -115,7 +115,7 @@ class Filter
      *
      * @return integer
      */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }
@@ -127,7 +127,7 @@ class Filter
      *
      * @return Filter
      */
-    public function addResultCache(ResultCache $resultCache)
+    public function addResultCache(ResultCache $resultCache): Filter
     {
         $this->resultCache[] = $resultCache;
 
@@ -149,7 +149,7 @@ class Filter
      *
      * @return Collection
      */
-    public function getResultCache()
+    public function getResultCache(): Collection
     {
         return $this->resultCache;
     }

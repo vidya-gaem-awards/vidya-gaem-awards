@@ -190,7 +190,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setName($name)
+    public function setName($name): User
     {
         $this->name = $name;
 
@@ -202,7 +202,7 @@ class User implements UserInterface
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -214,7 +214,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setSpecial($special)
+    public function setSpecial($special): User
     {
         $this->special = $special;
 
@@ -226,7 +226,7 @@ class User implements UserInterface
      *
      * @return boolean
      */
-    public function isSpecial()
+    public function isSpecial(): bool
     {
         return $this->special;
     }
@@ -238,7 +238,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setFirstLogin($firstLogin)
+    public function setFirstLogin($firstLogin): User
     {
         $this->firstLogin = $firstLogin;
 
@@ -250,7 +250,7 @@ class User implements UserInterface
      *
      * @return DateTime
      */
-    public function getFirstLogin()
+    public function getFirstLogin(): DateTime
     {
         return $this->firstLogin;
     }
@@ -262,7 +262,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setLastLogin($lastLogin)
+    public function setLastLogin($lastLogin): User
     {
         $this->lastLogin = $lastLogin;
 
@@ -274,7 +274,7 @@ class User implements UserInterface
      *
      * @return DateTime
      */
-    public function getLastLogin()
+    public function getLastLogin(): DateTime
     {
         return $this->lastLogin;
     }
@@ -286,7 +286,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setPrimaryRole($primaryRole)
+    public function setPrimaryRole($primaryRole): User
     {
         $this->primaryRole = $primaryRole;
 
@@ -298,7 +298,7 @@ class User implements UserInterface
      *
      * @return string
      */
-    public function getPrimaryRole()
+    public function getPrimaryRole(): string
     {
         return $this->primaryRole;
     }
@@ -310,7 +310,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail($email): User
     {
         $this->email = $email;
 
@@ -322,7 +322,7 @@ class User implements UserInterface
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -334,7 +334,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setNotes($notes)
+    public function setNotes($notes): User
     {
         $this->notes = $notes;
 
@@ -346,7 +346,7 @@ class User implements UserInterface
      *
      * @return string
      */
-    public function getNotes()
+    public function getNotes(): string
     {
         return $this->notes;
     }
@@ -358,7 +358,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setWebsite($website)
+    public function setWebsite($website): User
     {
         $this->website = $website;
 
@@ -370,7 +370,7 @@ class User implements UserInterface
      *
      * @return string
      */
-    public function getWebsite()
+    public function getWebsite(): string
     {
         return $this->website;
     }
@@ -382,7 +382,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function setAvatar(string $avatar)
+    public function setAvatar(string $avatar): User
     {
         $this->avatar = $avatar;
 
@@ -406,7 +406,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function addVote(Vote $vote)
+    public function addVote(Vote $vote): User
     {
         $this->votes[] = $vote;
 
@@ -428,7 +428,7 @@ class User implements UserInterface
      *
      * @return Collection
      */
-    public function getVotes()
+    public function getVotes(): Collection
     {
         return $this->votes;
     }
@@ -440,7 +440,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function addPermission(Permission $permission)
+    public function addPermission(Permission $permission): User
     {
         $this->permissions[] = $permission;
 
@@ -462,7 +462,7 @@ class User implements UserInterface
      *
      * @return Collection|Permission[]
      */
-    public function getPermissions()
+    public function getPermissions(): Collection|array
     {
         return $this->permissions;
     }
@@ -494,7 +494,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isLoggedIn()
+    public function isLoggedIn(): bool
     {
         return true;
     }
@@ -503,7 +503,7 @@ class User implements UserInterface
      * @param string $ipAddress
      * @return User
      */
-    public function setIP($ipAddress)
+    public function setIP($ipAddress): User
     {
         $this->ipAddress = $ipAddress;
         return $this;
@@ -512,7 +512,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getIP()
+    public function getIP(): string
     {
         return $this->ipAddress;
     }
@@ -521,7 +521,7 @@ class User implements UserInterface
      * @param string $randomID
      * @return User
      */
-    public function setRandomID($randomID)
+    public function setRandomID($randomID): User
     {
         $this->randomID = $randomID;
         return $this;
@@ -530,7 +530,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getRandomID()
+    public function getRandomID(): string
     {
         return $this->randomID;
     }
@@ -542,7 +542,7 @@ class User implements UserInterface
      *
      * @return User
      */
-    public function addLogin(Login $login)
+    public function addLogin(Login $login): User
     {
         $login->setUser($this);
         $this->logins[] = $login;
@@ -565,7 +565,7 @@ class User implements UserInterface
      *
      * @return Collection
      */
-    public function getLogins()
+    public function getLogins(): Collection
     {
         return $this->logins;
     }
@@ -574,7 +574,7 @@ class User implements UserInterface
      * A fuzzy ID will be either a user ID (for logged in users) or an IP address (for anonymous users).
      * @return string
      */
-    public function getFuzzyID()
+    public function getFuzzyID(): string
     {
         return $this->isLoggedIn() ? $this->getSteamIdString() : $this->getIP();
     }
@@ -582,7 +582,7 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getVotingCode()
+    public function getVotingCode(): mixed
     {
         return $this->votingCode;
     }
@@ -591,7 +591,7 @@ class User implements UserInterface
      * @param mixed $votingCode
      * @return User
      */
-    public function setVotingCode($votingCode)
+    public function setVotingCode($votingCode): User
     {
         $this->votingCode = $votingCode;
         return $this;
@@ -602,7 +602,7 @@ class User implements UserInterface
      *
      * @return string The current nickname
      */
-    public function getNickname()
+    public function getNickname(): string
     {
         return $this->getName();
     }
@@ -681,7 +681,7 @@ class User implements UserInterface
      *
      * @return string The password
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return '';
     }
@@ -693,7 +693,7 @@ class User implements UserInterface
      *
      * @return string|null The salt
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -703,7 +703,7 @@ class User implements UserInterface
      *
      * @return string The username
      */
-    public function getUsername()
+    public function getUserIdentifier(): string
     {
         return $this->getSteamIdString();
     }
@@ -722,7 +722,7 @@ class User implements UserInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
