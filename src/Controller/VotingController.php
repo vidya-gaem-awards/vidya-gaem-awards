@@ -11,12 +11,16 @@ use App\Service\ConfigService;
 use App\Service\PredictionService;
 use DateInterval;
 use DatePeriod;
+use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use App\Entity\Action;
@@ -40,7 +44,8 @@ class VotingController extends AbstractController
         UserInterface $user,
         SessionInterface $session,
         PredictionService $predictionService
-    ) {
+    ): RedirectResponse|Response
+    {
         /** @var User $user */
 
         /** @var Award[] $awards */
@@ -267,7 +272,8 @@ class VotingController extends AbstractController
         Request $request,
         UserInterface $user,
         AuditService $auditService
-    ) {
+    ): JsonResponse
+    {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'Voting has closed.']);
         }
@@ -340,7 +346,7 @@ class VotingController extends AbstractController
 
         $vote
             ->setPreferences($preferences)
-            ->setTimestamp(new \DateTime())
+            ->setTimestamp(new DateTime())
             ->setUser($user)
             ->setIp($user->getIP())
             ->setVotingCode($user->getVotingCode());
@@ -354,14 +360,8 @@ class VotingController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function codeEntryAction(
-        $code,
-        ConfigService $configService,
-        Request $request,
-        EntityManagerInterface $em,
-        UserInterface $user,
-        SessionInterface $session
-    ) {
+    public function codeEntryAction(string $code, ConfigService $configService, Request $request, EntityManagerInterface $em, UserInterface $user, SessionInterface $session): RedirectResponse
+    {
         $session->set('votingCode', $code);
 
         if (!$configService->isReadOnly()) {
@@ -370,7 +370,7 @@ class VotingController extends AbstractController
                 ->setUser($user)
                 ->setCode($code)
                 ->setReferer($request->server->get('HTTP_REFERER'))
-                ->setTimestamp(new \DateTime());
+                ->setTimestamp(new DateTime());
 
             $em->persist($log);
             $em->flush();
@@ -380,14 +380,14 @@ class VotingController extends AbstractController
         $response->headers->setCookie(new Cookie(
             'votingCode',
             $code,
-            new \DateTime('+90 days'),
+            new DateTime('+90 days'),
             '/',
             $request->getHost()
         ));
         return $response;
     }
 
-    public function codeViewerAction(RouterInterface $router, EntityManagerInterface $em, ConfigService $configService)
+    public function codeViewerAction(RouterInterface $router, EntityManagerInterface $em, ConfigService $configService): Response
     {
         $currentDate= new DateTimeImmutable(date('Y-m-d H:00'));
         $currentCode = $this->getCode($currentDate);

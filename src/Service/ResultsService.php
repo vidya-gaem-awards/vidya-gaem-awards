@@ -9,9 +9,9 @@ use Psr\Log\LoggerInterface;
 
 class ResultsService
 {
-    private $em;
-    private $configService;
-    private $logger;
+    private EntityManagerInterface $em;
+    private ConfigService $configService;
+    private LoggerInterface $logger;
 
     public function __construct(EntityManagerInterface $em, ConfigService $configService, LoggerInterface $logger)
     {

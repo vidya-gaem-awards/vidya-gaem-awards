@@ -9,13 +9,16 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\WikipediaService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class AutocompleterController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em): Response
     {
         $autocompleters = $em->getRepository(Autocompleter::class)->findAll();
         $gameReleases = $em->getRepository( GameRelease::class)->findAll();
@@ -36,7 +39,7 @@ class AutocompleterController extends AbstractController
         ]);
     }
 
-    public function ajax(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService)
+    public function ajax(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -76,7 +79,7 @@ class AutocompleterController extends AbstractController
                 $autocompleter = new Autocompleter();
                 try {
                     $autocompleter->setId($id);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     return $this->json(['error' => 'Invalid autocompleter ID provided.']);
                 }
             }
@@ -103,13 +106,13 @@ class AutocompleterController extends AbstractController
         }
     }
 
-    public function wikipedia(WikipediaService $wikipedia, Request $request)
+    public function wikipedia(WikipediaService $wikipedia, Request $request): JsonResponse
     {
         $year = $request->query->get('year');
 
         try {
             $games = $wikipedia->getGames((int)$year);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->json(['error' => $e->getMessage()]);
         }
         $suggestions = $wikipedia->getStringListForAutocompleter($games);

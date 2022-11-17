@@ -3,40 +3,41 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use RandomLib\Factory;
 
 /**
  * @ORM\Table(name="files")
  * @ORM\Entity
  */
-class File implements \JsonSerializable
+class File implements JsonSerializable
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $subdirectory;
+    private ?string $subdirectory;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $filename;
+    private ?string $filename;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $extension;
+    private ?string $extension;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $entity;
+    private ?string $entity;
 
     public function getId(): ?int
     {
@@ -102,15 +103,14 @@ class File implements \JsonSerializable
     }
 
     /**
-     * Returns the path of the file relative to the uploads directory.
-     * @return string
+     * @return string Returns the path of the file relative to the uploads directory.
      */
     public function getRelativePath(): string
     {
         return $this->getSubdirectory() . '/' . $this->getFullFilename();
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return [
             'fullFilename' => $this->getFullFilename(),

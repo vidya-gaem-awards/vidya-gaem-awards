@@ -8,11 +8,12 @@ use App\Service\ConfigService;
 use App\Service\LootboxService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class InventoryController extends AbstractController
 {
-    public function purchaseLootbox(ConfigService $configService, LootboxService $lootboxService, UserInterface $user, EntityManagerInterface $em)
+    public function purchaseLootbox(ConfigService $configService, LootboxService $lootboxService, UserInterface $user, EntityManagerInterface $em): JsonResponse
     {
         /** @var User $user */
 

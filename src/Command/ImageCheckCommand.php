@@ -16,17 +16,10 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class ImageCheckCommand extends Command
 {
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /** @var KernelInterface */
-    private $kernel;
-
-    public function __construct(EntityManagerInterface $em, KernelInterface $kernel)
-    {
-        $this->em = $em;
-        $this->kernel = $kernel;
-
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly KernelInterface $kernel,
+    ) {
         parent::__construct();
     }
 

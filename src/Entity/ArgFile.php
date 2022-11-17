@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ArgFileRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,32 +17,32 @@ class ArgFile
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $link;
+    private ?string $link;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $thumbnail;
+    private ?string $thumbnail;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $size;
+    private ?string $size;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $dateVisible;
+    private ?DateTimeImmutable $dateVisible;
 
     public function getId(): ?int
     {
@@ -84,12 +85,12 @@ class ArgFile
         return $this;
     }
 
-    public function getDateVisible(): ?\DateTimeImmutable
+    public function getDateVisible(): ?DateTimeImmutable
     {
         return $this->dateVisible;
     }
 
-    public function setDateVisible(?\DateTimeImmutable $dateVisible): self
+    public function setDateVisible(?DateTimeImmutable $dateVisible): self
     {
         $this->dateVisible = $dateVisible;
 

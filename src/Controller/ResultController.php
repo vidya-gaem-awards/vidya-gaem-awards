@@ -8,15 +8,18 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Award;
 use App\Entity\TableHistory;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ResultController extends AbstractController
 {
-    public function simpleAction(EntityManagerInterface $em)
+    public function simpleAction(EntityManagerInterface $em): Response
     {
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
@@ -78,7 +81,7 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function detailedAction(?string $all, EntityManagerInterface $em, Request $request, AuthorizationCheckerInterface $authChecker)
+    public function detailedAction(?string $all, EntityManagerInterface $em, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
@@ -155,7 +158,7 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function pairwiseAction(EntityManagerInterface $em)
+    public function pairwiseAction(EntityManagerInterface $em): Response
     {
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
@@ -178,7 +181,7 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function winnerImageUploadAction(EntityManagerInterface $em, Request $request, AuditService $auditService, ConfigService $configService, FileService $fileService)
+    public function winnerImageUploadAction(EntityManagerInterface $em, Request $request, AuditService $auditService, ConfigService $configService, FileService $fileService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -200,7 +203,7 @@ class ResultController extends AbstractController
                 'winners',
                 $award->getId()
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->json(['error' => $e->getMessage()]);
         }
 

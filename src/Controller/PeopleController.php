@@ -11,12 +11,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use SteamCondenser\Community\SteamId;
 use SteamCondenser\Exceptions\SteamCondenserException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class PeopleController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em): Response
     {
         $users = $em->getRepository(User::class)->findBy(
             ['special' => true], ['name' => 'ASC']
@@ -28,7 +31,7 @@ class PeopleController extends AbstractController
         ]);
     }
 
-    public function viewAction($steamID, EntityManagerInterface $em)
+    public function viewAction($steamID, EntityManagerInterface $em): Response
     {
         /** @var User $user */
         $user = $em->getRepository(User::class)->findOneBy(['steamId' => $steamID]);
@@ -47,7 +50,7 @@ class PeopleController extends AbstractController
         ]);
     }
 
-    public function editAction($steamID, EntityManagerInterface $em)
+    public function editAction($steamID, EntityManagerInterface $em): Response
     {
         /** @var User $user */
         $user = $em->getRepository(User::class)->findOneBy(['steamId' => $steamID]);
@@ -63,7 +66,7 @@ class PeopleController extends AbstractController
         ]);
     }
 
-    public function postAction($steamID, ConfigService $configService, EntityManagerInterface $em, Request $request, AuthorizationCheckerInterface $authChecker, AuditService $auditService)
+    public function postAction($steamID, ConfigService $configService, EntityManagerInterface $em, Request $request, AuthorizationCheckerInterface $authChecker, AuditService $auditService): RedirectResponse
     {
         if ($configService->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
@@ -150,12 +153,12 @@ class PeopleController extends AbstractController
         return $this->redirectToRoute('viewPerson', ['steamID' => $steamID]);
     }
 
-    public function permissionsAction()
+    public function permissionsAction(): Response
     {
         return $this->render('permissions.html.twig');
     }
 
-    public function newAction(EntityManagerInterface $em)
+    public function newAction(EntityManagerInterface $em): Response
     {
         $permissions = $em->getRepository(Permission::class)->findAll();
         return $this->render('addPerson.html.twig', [
@@ -163,7 +166,7 @@ class PeopleController extends AbstractController
         ]);
     }
 
-    public function searchAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService)
+    public function searchAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService): JsonResponse
     {
         $post = $request->request;
 

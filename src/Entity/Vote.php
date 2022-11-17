@@ -12,50 +12,37 @@ use Doctrine\ORM\Mapping as ORM;
 class Vote
 {
     /**
-     * @var string
-     *
      * @ORM\Column(name="cookie_id", type="string", length=191)
      * @ORM\Id
      */
-    private $cookieID;
+    private string $cookieID;
 
     /**
-     * @var array
-     *
      * @ORM\Column(name="preferences", type="json", nullable=false)
      */
-    private $preferences;
+    private array $preferences;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
-    private $timestamp;
+    private DateTime $timestamp;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="ip", type="string", length=45, nullable=false)
      */
-    private $ip;
+    private string $ip;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="voting_code", type="string", length=20, nullable=true)
      */
-    private $votingCode;
+    private ?string $votingCode;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="number", type="integer", nullable=true)
      */
-    private $number;
+    private ?int $number;
 
     /**
-     * @var Award
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="votes")
@@ -63,169 +50,88 @@ class Vote
      *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
      * })
      */
-    private $award;
+    private Award $award;
 
     /**
-     * @var User
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="votes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="userID", referencedColumnName="id")
      * })
      */
-    private $user;
+    private ?User $user;
 
-    /**
-     * Set cookieID
-     *
-     * @param string $cookieID
-     *
-     * @return Vote
-     */
-    public function setCookieID($cookieID): Vote
+    public function setCookieID(string $cookieID): Vote
     {
         $this->cookieID = $cookieID;
 
         return $this;
     }
 
-    /**
-     * Get cookieID
-     *
-     * @return string
-     */
     public function getCookieID(): string
     {
         return $this->cookieID;
     }
 
-    /**
-     * Set preferences
-     *
-     * @param array $preferences
-     *
-     * @return Vote
-     */
-    public function setPreferences($preferences): Vote
+    public function setPreferences(array $preferences): Vote
     {
         $this->preferences = $preferences;
 
         return $this;
     }
 
-    /**
-     * Get preferences
-     *
-     * @return array
-     */
     public function getPreferences(): array
     {
         return $this->preferences;
     }
 
-    /**
-     * Set timestamp
-     *
-     * @param DateTime $timestamp
-     *
-     * @return Vote
-     */
-    public function setTimestamp($timestamp): Vote
+    public function setTimestamp(DateTime $timestamp): Vote
     {
         $this->timestamp = $timestamp;
 
         return $this;
     }
 
-    /**
-     * Get timestamp
-     *
-     * @return DateTime
-     */
     public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
 
-    /**
-     * Set ip
-     *
-     * @param string $ip
-     *
-     * @return Vote
-     */
-    public function setIp($ip): Vote
+    public function setIp(string $ip): Vote
     {
         $this->ip = $ip;
 
         return $this;
     }
 
-    /**
-     * Get ip
-     *
-     * @return string
-     */
     public function getIp(): string
     {
         return $this->ip;
     }
 
-    /**
-     * Set votingCode
-     *
-     * @param string $votingCode
-     *
-     * @return Vote
-     */
-    public function setVotingCode($votingCode): Vote
+    public function setVotingCode(string $votingCode): Vote
     {
         $this->votingCode = $votingCode;
 
         return $this;
     }
 
-    /**
-     * Get votingCode
-     *
-     * @return string
-     */
     public function getVotingCode(): string
     {
         return $this->votingCode;
     }
 
-    /**
-     * Set number
-     *
-     * @param integer $number
-     *
-     * @return Vote
-     */
-    public function setNumber($number): Vote
+    public function setNumber(int $number): Vote
     {
         $this->number = $number;
 
         return $this;
     }
 
-    /**
-     * Get number
-     *
-     * @return integer
-     */
     public function getNumber(): int
     {
         return $this->number;
     }
 
-    /**
-     * Set award
-     *
-     * @param Award $award
-     *
-     * @return Vote
-     */
     public function setAward(Award $award): Vote
     {
         $this->award = $award;
@@ -233,25 +139,12 @@ class Vote
         return $this;
     }
 
-    /**
-     * Get award
-     *
-     * @return Award
-     */
     public function getAward(): Award
     {
         return $this->award;
     }
 
-    /**
-     * Set user
-     *
-     * @param User $user
-     *
-     *
-     * @return Vote
-     */
-    public function setUser(User $user = null): Vote
+    public function setUser(User|AnonymousUser|null $user = null): Vote
     {
         if ($user->isLoggedIn()) {
             $this->user = $user;
@@ -259,12 +152,7 @@ class Vote
         return $this;
     }
 
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }

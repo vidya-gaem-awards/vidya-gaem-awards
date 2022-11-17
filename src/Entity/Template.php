@@ -11,146 +11,96 @@ use Doctrine\ORM\Mapping as ORM;
 class Template
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="filename", type="string", length=100, nullable=false)
      */
-    private $filename;
+    private string $filename;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="details", type="text", nullable=true)
      */
-    private $details;
+    private ?string $details;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="source", type="text", nullable=false)
      */
-    private $source = '';
+    private string $source = '';
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(name="last_updated", type="datetime", nullable=false)
      */
-    private $lastUpdated;
+    private DateTime $lastUpdated;
 
     public function __construct()
     {
         $this->lastUpdated = new DateTime();
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getFilename(): string
     {
         return $this->filename;
     }
 
-    /**
-     * @param string $filename
-     * @return Template
-     */
     public function setFilename(string $filename): Template
     {
         $this->filename = $filename;
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return Template
-     */
     public function setName(string $name): Template
     {
         $this->name = $name;
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDetails(): ?string
     {
         return $this->details;
     }
 
-    /**
-     * @param string|null $details
-     * @return Template
-     */
     public function setDetails(?string $details): Template
     {
         $this->details = $details;
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getSource(): string
     {
         return $this->source;
     }
 
-    /**
-     * @param string $source
-     * @return Template
-     */
     public function setSource(string $source): Template
     {
         $this->source = $source;
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getLastUpdated(): DateTime
     {
         return $this->lastUpdated;
     }
 
-    /**
-     * @param DateTime $lastUpdated
-     * @return Template
-     */
     public function setLastUpdated(DateTime $lastUpdated): Template
     {
         $this->lastUpdated = $lastUpdated;

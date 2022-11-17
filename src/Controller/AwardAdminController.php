@@ -9,13 +9,17 @@ use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class AwardAdminController extends AbstractController
 {
-    public function managerListAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authCheck, Request $request)
+    public function managerListAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authCheck, Request $request): Response
     {
         $query = $em->createQueryBuilder()
             ->select('a')
@@ -39,7 +43,7 @@ class AwardAdminController extends AbstractController
                 return $b->getGroupedFeedback()['net'] <=> $a->getGroupedFeedback()['net'];
             });
         }
-        
+
         $autocompleters = $em->getRepository(Autocompleter::class)->findAll();
 
         $awardSuggestions = $em->getRepository(AwardSuggestion::class)->findBy(['award' => null], ['suggestion' => 'ASC']);
@@ -52,7 +56,7 @@ class AwardAdminController extends AbstractController
         ]);
     }
 
-    public function managerPostAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService)
+    public function managerPostAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuditService $auditService): RedirectResponse
     {
         $post = $request->request;
 
@@ -91,14 +95,14 @@ class AwardAdminController extends AbstractController
         return $this->redirectToRoute('awardManager');
     }
 
-    public function managerPostAjaxAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuthorizationCheckerInterface $authChecker, AuditService $auditService)
+    public function managerPostAjaxAction(EntityManagerInterface $em, Request $request, ConfigService $configService, AuthorizationCheckerInterface $authChecker, AuditService $auditService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
         }
 
         $post = $request->request;
-        
+
         $id = strtolower($post->get('id'));
 
         if (strlen($id) == 0) {
@@ -130,7 +134,7 @@ class AwardAdminController extends AbstractController
                 $award = new Award();
                 try {
                     $award->setId($id);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     return $this->json(['error' => 'Invalid award ID provided.']);
                 }
             }

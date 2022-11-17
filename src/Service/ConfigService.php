@@ -4,17 +4,12 @@ namespace App\Service;
 use App\Entity\Config;
 use App\Entity\ConfigKeyValue;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class ConfigService
 {
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /** @var Config */
-    private $config;
-
-    /** @var PredictionService */
-    private $predictionService;
+    private EntityManagerInterface $em;
+    private Config $config;
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -23,7 +18,7 @@ class ConfigService
 
     /**
      * @return Config
-     * @throws \Exception
+     * @throws Exception
      */
     public function getConfig(): Config
     {
@@ -32,7 +27,7 @@ class ConfigService
         }
 
         if (!$this->config) {
-            throw new \Exception('The configuration couldn\'t be loaded from the database.');
+            throw new Exception('The configuration couldn\'t be loaded from the database.');
         }
 
         return $this->config;
@@ -53,7 +48,7 @@ class ConfigService
         return $keyValue ? $keyValue->getValue() : $default;
     }
 
-    public function set(string $key, $value)
+    public function set(string $key, $value): void
     {
         $keyValue = $this->em->getRepository(ConfigKeyValue::class)->find($key);
         if (!$keyValue) {

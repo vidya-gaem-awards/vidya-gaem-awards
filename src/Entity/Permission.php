@@ -59,22 +59,18 @@ class Permission
     ];
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="id", type="string", length=40)
      * @ORM\Id
      */
-    private $id;
+    private string $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
-    private $description;
+    private string $description;
 
     /**
-     * @var Collection
+     * @var Collection<Permission>
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Permission", inversedBy="parents")
      * @ORM\JoinTable(name="permission_children",
@@ -86,21 +82,21 @@ class Permission
      *   }
      * )
      */
-    private $children;
+    private Collection $children;
 
     /**
-     * @var Collection
+     * @var Collection<Permission>
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Permission", mappedBy="children")
      */
-    private $parents;
+    private Collection $parents;
 
     /**
-     * @var Collection
+     * @var Collection<User>
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="permissions")
      */
-    private $users;
+    private Collection $users;
 
     public function __construct()
     {
@@ -109,61 +105,30 @@ class Permission
         $this->users = new ArrayCollection();
     }
 
-    /**
-     * Set id
-     *
-     * @param string $id
-     *
-     * @return Permission
-     */
-    public function setId($id): Permission
+    public function setId(string $id): Permission
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get id
-     *
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Permission
-     */
-    public function setDescription($description): Permission
+    public function setDescription(string $description): Permission
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Add child
-     *
-     * @param Permission $child
-     *
-     * @return Permission
-     */
     public function addChild(Permission $child): Permission
     {
         $this->children[] = $child;
@@ -171,21 +136,16 @@ class Permission
         return $this;
     }
 
-    /**
-     * Remove child
-     *
-     * @param Permission $child
-     */
-    public function removeChild(Permission $child)
+    public function removeChild(Permission $child): void
     {
         $this->children->removeElement($child);
     }
 
     /**
      * To avoid unnecessary database calls, we assume a permission can only have children if it's a LEVEL permission.
-     * @return ArrayCollection|Permission[]
+     * @return Collection<Permission>
      */
-    public function getChildren(): ArrayCollection|array
+    public function getChildren(): Collection
     {
         if (substr($this->getId(), 0, 5) !== 'LEVEL') {
             return new ArrayCollection();
@@ -194,9 +154,9 @@ class Permission
     }
 
     /**
-     * @return ArrayCollection|Permission[]
+     * @return Collection<Permission>
      */
-    public function getChildrenRecurvise(): ArrayCollection|array
+    public function getChildrenRecurvise(): Collection
     {
         $permissions = new ArrayCollection();
 
@@ -210,13 +170,6 @@ class Permission
         return $permissions;
     }
 
-    /**
-     * Add user
-     *
-     * @param User $user
-     *
-     * @return Permission
-     */
     public function addUser(User $user): Permission
     {
         $this->users[] = $user;
@@ -224,30 +177,20 @@ class Permission
         return $this;
     }
 
-    /**
-     * Remove user
-     *
-     * @param User $user
-     */
-    public function removeUser(User $user)
+    public function removeUser(User $user): void
     {
         $this->users->removeElement($user);
     }
 
-    /**
-     * Get users
-     *
-     * @return Collection
-     */
     public function getUsers(): Collection
     {
         return $this->users;
     }
 
     /**
-     * @return ArrayCollection|Permission[]
+     * @return Collection<Permission>
      */
-    public function getParents(): ArrayCollection|array
+    public function getParents(): Collection
     {
         return $this->parents;
     }

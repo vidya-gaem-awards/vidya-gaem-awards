@@ -1,14 +1,16 @@
 <?php
 namespace App\Controller;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Access;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ReferrerController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em, Request $request)
+    public function indexAction(EntityManagerInterface $em, Request $request): Response
     {
         $days = $request->query->get('days');
         if ($days !== 'all' && !ctype_digit($days)) {
@@ -26,7 +28,7 @@ class ReferrerController extends AbstractController
             ->setParameter('regexp2', '^https:\/\/steamcommunity\.com\/openid\/');
 
         if ($days !== 'all') {
-            $date = new \DateTime('-' . $days . ' days');
+            $date = new DateTime('-' . $days . ' days');
             $query
                 ->andWhere('a.timestamp > :timeLimit')
                 ->setParameter('timeLimit', $date->format('Y-m-d H:i:s'));
@@ -45,7 +47,7 @@ class ReferrerController extends AbstractController
         // Due to the magic of the internet, multiple URLs can resolve to one website.
         // Here we try and combine those URLs as much as possible to get more accurate data.
         foreach ($result as $referer) {
-            $referer['latest'] = new \DateTime($referer['latest']);
+            $referer['latest'] = new DateTime($referer['latest']);
             $referer['referer'] = $this->cleanUrlPreDisplay($referer['referer']);
             $referer['type'] = false;
             $key = $this->cleanUrlPreCompare($referer['referer']);
@@ -135,7 +137,7 @@ class ReferrerController extends AbstractController
         return $referrer;
     }
 
-    private function cleanUrlPreCompare($referrer)
+    private function cleanUrlPreCompare($referrer): string
     {
         // Remove the http and www prefixes, as well as the trailing slash
         $referrer = rtrim(preg_replace('{https?://(www\.)?}', '', $referrer), '/');

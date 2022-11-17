@@ -5,9 +5,6 @@ use App\VGA\AbstractResultCalculator;
 
 class InstantRunoff extends AbstractResultCalculator
 {
-    /**
-     * @return array
-     */
     public function calculateResults(): array
     {
         $candidates = $this->candidates;

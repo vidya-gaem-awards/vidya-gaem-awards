@@ -12,7 +12,10 @@ use App\Service\ConfigService;
 use App\Service\CronJobService;
 use App\VGA\ResultCalculator\Schulze;
 use App\VGA\Timer;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -48,27 +51,14 @@ class ResultsCommand extends Command
         '22-4chan-ads' => 'BIT_AND(v.number, 16384) > 0',
     ];
 
-    /** @var EntityManagerInterface */
-    private $em;
+    private Timer $timer;
+    private OutputInterface $output;
 
-    /** @var ConfigService */
-    private $configService;
-
-    /** @var CronJobService */
-    private $cron;
-
-    /** @var Timer */
-    private $timer;
-
-    /** @var OutputInterface */
-    private $output;
-
-    public function __construct(EntityManagerInterface $em, ConfigService $configService, CronJobService $cron)
-    {
-        $this->em = $em;
-        $this->configService = $configService;
-        $this->cron = $cron;
-
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly ConfigService $configService,
+        private readonly CronJobService $cron,
+    ) {
         parent::__construct();
     }
 
@@ -83,7 +73,7 @@ class ResultsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->configService->isReadOnly()) {
-            throw new \RuntimeException('Database is in read-only mode. Read-only mode must be disabled to run this script.');
+            throw new RuntimeException('Database is in read-only mode. Read-only mode must be disabled to run this script.');
         }
 
         $this->output = $output;
@@ -371,9 +361,8 @@ class ResultsCommand extends Command
             return;
         }
 
-        $votingEnd = \DateTimeImmutable::createFromMutable($votingEnd);
-        $votingEnd->modify('+1 day');
-        if ($votingEnd < new \DateTime() && $this->cron->isCronJobEnabled()) {
+        $votingEnd = DateTimeImmutable::createFromMutable($votingEnd)->modify('+1 day');
+        if ($votingEnd < new DateTime() && $this->cron->isCronJobEnabled()) {
             $this->cron->disableCronJob();
             $this->writeln('Voting has been closed for more than one day - disabling cron job.');
         }
@@ -390,7 +379,7 @@ class ResultsCommand extends Command
         );
     }
 
-    private static function startsWith($haystack, $needle)
+    private static function startsWith($haystack, $needle): bool
     {
         return substr($haystack, 0, strlen($needle)) === $needle;
     }

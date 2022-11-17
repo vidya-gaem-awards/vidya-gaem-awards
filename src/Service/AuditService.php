@@ -9,11 +9,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AuditService
 {
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
+    private EntityManagerInterface $em;
+    private TokenStorageInterface $tokenStorage;
 
     public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
     {
@@ -21,7 +18,7 @@ class AuditService
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function add(Action $action, ?TableHistory $history = null)
+    public function add(Action $action, ?TableHistory $history = null): void
     {
         $user = $this->tokenStorage->getToken()->getUser();
 

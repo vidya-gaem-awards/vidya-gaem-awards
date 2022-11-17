@@ -3,14 +3,16 @@ namespace App\Controller;
 
 use App\Entity\Advertisement;
 use App\Service\ConfigService;
+use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class LauncherController extends AbstractController
 {
-    public function countdownAction(ConfigService $configService, EntityManagerInterface $em)
+    public function countdownAction(ConfigService $configService, EntityManagerInterface $em): Response
     {
         $timezone = new DateTimeZone($configService->getConfig()->getTimezone());
 
@@ -59,14 +61,14 @@ class LauncherController extends AbstractController
         ]);
     }
 
-    public function streamAction(ConfigService $configService, EntityManagerInterface $em)
+    public function streamAction(ConfigService $configService, EntityManagerInterface $em): Response
     {
         $timezone = new DateTimeZone($configService->getConfig()->getTimezone());
 
         $streamDate = DateTimeImmutable::createFromMutable($configService->getConfig()->getStreamTime());
         $streamDate = $streamDate->setTimezone($timezone);
 
-        $showCountdown = ($streamDate > new \DateTime('now', $timezone));
+        $showCountdown = ($streamDate > new DateTime('now', $timezone));
 
         // Fake ads
         $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
@@ -86,7 +88,7 @@ class LauncherController extends AbstractController
         ]);
     }
 
-    public function finishedAction(EntityManagerInterface $em)
+    public function finishedAction(EntityManagerInterface $em): Response
     {
         // Fake ads
         $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);

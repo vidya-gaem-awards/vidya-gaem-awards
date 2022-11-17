@@ -15,18 +15,22 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ArgController extends AbstractController
 {
-    public function landingPage()
+    public function landingPage(): Response
     {
         return $this->render('argLandingPage.html.twig');
     }
 
-    public function main(ArgFileRepository $repo, ArgConfigRepository $configRepo)
+    public function main(ArgFileRepository $repo, ArgConfigRepository $configRepo): Response
     {
         $files = $repo->findBy([], ['dateVisible' => 'ASC']);
         $now = new DateTimeImmutable();
@@ -59,7 +63,7 @@ class ArgController extends AbstractController
         ]);
     }
 
-    public function codeInput(Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user, ArgConfigRepository $configRepo)
+    public function codeInput(Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user, ArgConfigRepository $configRepo): JsonResponse
     {
         $config = $configRepo->find(1);
         if (!$config) {
@@ -139,7 +143,7 @@ class ArgController extends AbstractController
         return $this->json(['response' => 'This should never happen. Contact a developer. (This error is not part of the ARG)']);
     }
 
-    public function backend(ArgCodeInputRepository $repo, ArgFileRepository $fileRepo, ArgConfigRepository $configRepo)
+    public function backend(ArgCodeInputRepository $repo, ArgFileRepository $fileRepo, ArgConfigRepository $configRepo): Response
     {
         $codes = $repo->findBy([], ['timestamp' => 'DESC']);
 
@@ -167,7 +171,7 @@ class ArgController extends AbstractController
         ]);
     }
 
-    public function backendSaveTimes(ArgFileRepository $fileRepo, Request $request, ConfigService $configService, EntityManagerInterface $em, AuditService $auditService)
+    public function backendSaveTimes(ArgFileRepository $fileRepo, Request $request, ConfigService $configService, EntityManagerInterface $em, AuditService $auditService): RedirectResponse
     {
         if ($configService->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
@@ -192,7 +196,7 @@ class ArgController extends AbstractController
 
             try {
                 $datetime = new DateTimeImmutable($time);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'Invalid date specified for file ' . $count . '.');
                 return $this->redirectToRoute('argBackend');
             }
@@ -213,7 +217,7 @@ class ArgController extends AbstractController
         return $this->redirectToRoute('argBackend');
     }
 
-    public function backendSaveConfig(ArgConfigRepository $repo, Request $request, ConfigService $configService, EntityManagerInterface $em, AuditService $auditService)
+    public function backendSaveConfig(ArgConfigRepository $repo, Request $request, ConfigService $configService, EntityManagerInterface $em, AuditService $auditService): RedirectResponse
     {
         if ($configService->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');

@@ -11,12 +11,12 @@ use Symfony\Component\Security\Http\AccessMapInterface;
 
 class NavbarService
 {
-    private $configService;
-    private $router;
-    private $accessMap;
-    private $authChecker;
-    private $tokenStorage;
-    private $requestStack;
+    private ConfigService $configService;
+    private RouterInterface $router;
+    private AccessMapInterface $accessMap;
+    private AuthorizationCheckerInterface $authChecker;
+    private TokenStorageInterface $tokenStorage;
+    private RequestStack $requestStack;
 
     public function __construct(ConfigService $configService, RouterInterface $router, AccessMapInterface $accessMap, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage, RequestStack $requestStack)
     {
@@ -28,7 +28,7 @@ class NavbarService
         $this->requestStack = $requestStack;    // Used to show an error to privileged users if the navbar config is broken
     }
 
-    public function getItems()
+    public function getItems(): array
     {
         /** @var NavbarItem[] $navbar */
         $navbar = [];
@@ -67,7 +67,7 @@ class NavbarService
         return $navbar;
     }
 
-    public function canAccessRoute($routeName)
+    public function canAccessRoute($routeName): bool
     {
         $route = $this->router->getRouteCollection()->get($routeName);
         $roles = $this->getRoles($route->getPath());

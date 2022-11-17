@@ -6,6 +6,7 @@ use App\Entity\TableHistory;
 use App\Entity\Template;
 use App\Service\AuditService;
 use App\Service\ConfigService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Environment;
 use Twig\Error\SyntaxError;
@@ -20,7 +22,7 @@ use Twig\Source;
 
 class EditorController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em, Request $request)
+    public function indexAction(EntityManagerInterface $em, Request $request): Response
     {
         $templateId = $request->query->get('template');
 
@@ -44,7 +46,7 @@ class EditorController extends AbstractController
         ]);
     }
 
-    public function postAction(EntityManagerInterface $em, ConfigService $config, Request $request, AuditService $auditService, Environment $twig, KernelInterface $kernel)
+    public function postAction(EntityManagerInterface $em, ConfigService $config, Request $request, AuditService $auditService, Environment $twig, KernelInterface $kernel): Response
     {
         $post = $request->request;
         $templateName = $post->get('template');
@@ -82,7 +84,7 @@ class EditorController extends AbstractController
 
         if ($content !== $template->getSource()) {
             $template->setSource($content);
-            $template->setLastUpdated(new \DateTime());
+            $template->setLastUpdated(new DateTime());
             $em->persist($template);
             $em->flush();
 

@@ -13,83 +13,62 @@ use Doctrine\ORM\Mapping as ORM;
 class AwardFeedback
 {
     /**
-     * @var string
-     *
      * @ORM\Column(name="user", type="string", length=45)
      * @ORM\Id
      */
-    private $user;
+    private string $user;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="opinion", type="smallint", nullable=false)
      */
-    private $opinion;
+    private int $opinion;
 
     /**
-     * @var Award
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="feedback")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
      * })
      */
-    private $award;
+    private Award $award;
 
     /**
      * @param Award $award
-     * @param User|UserInterface $user
+     * @param User|AnonymousUser $user
      */
-    public function __construct(Award $award, User $user)
+    public function __construct(Award $award, User|AnonymousUser $user)
     {
         $this->award = $award;
         $this->user = $user->getFuzzyID();
     }
 
     /**
-     * @param string $user
      * @return AwardFeedback
      */
-    public function setUser($user): AwardFeedback
+    public function setUser(string $user): AwardFeedback
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getUser(): string
     {
         return $this->user;
     }
 
-    /**
-     * @param integer $opinion
-     * @return AwardFeedback
-     */
-    public function setOpinion($opinion): AwardFeedback
+    public function setOpinion(int $opinion): AwardFeedback
     {
         $this->opinion = $opinion;
 
         return $this;
     }
 
-    /**
-     * @return integer
-     */
     public function getOpinion(): int
     {
         return $this->opinion;
     }
 
-    /**
-     * @param Award $award
-     * @return AwardFeedback
-     */
     public function setAward(Award $award): AwardFeedback
     {
         $this->award = $award;
@@ -97,9 +76,6 @@ class AwardFeedback
         return $this;
     }
 
-    /**
-     * @return Award
-     */
     public function getAward(): Award
     {
         return $this->award;

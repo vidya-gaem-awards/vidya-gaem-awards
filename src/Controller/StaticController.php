@@ -3,11 +3,12 @@ namespace App\Controller;
 
 use App\Service\ConfigService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
 class StaticController extends AbstractController
 {
-    public function indexAction(RouterInterface $router, ConfigService $configService)
+    public function indexAction(RouterInterface $router, ConfigService $configService): Response
     {
         $defaultPage = $configService->getConfig()->getDefaultPage();
         $defaultRoute = $router->getRouteCollection()->get($defaultPage);
@@ -15,12 +16,12 @@ class StaticController extends AbstractController
         return $this->forward($defaultRoute->getDefault('_controller'), $defaultRoute->getDefaults());
     }
 
-    public function videosAction()
+    public function videosAction(): Response
     {
         return $this->render('videos.html.twig');
     }
 
-    public function soundtrackAction()
+    public function soundtrackAction(): Response
     {
         $preshow = [
             ['vgas2021 mix', 'beat_shobon', 'Preshow'],
@@ -109,12 +110,12 @@ class StaticController extends AbstractController
         ]);
     }
 
-    public function creditsAction()
+    public function creditsAction(): Response
     {
         return $this->render('credits.html.twig');
     }
 
-    public function trailersAction()
+    public function trailersAction(): Response
     {
         return $this->render('trailers.html.twig');
     }

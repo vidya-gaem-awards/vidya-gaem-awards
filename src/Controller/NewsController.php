@@ -2,16 +2,20 @@
 namespace App\Controller;
 
 use App\Service\ConfigService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\News;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class NewsController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker)
+    public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker): Response
     {
         $query = $em->createQueryBuilder()
             ->select('n, u')
@@ -32,7 +36,7 @@ class NewsController extends AbstractController
         ]);
     }
 
-    public function addAction(EntityManagerInterface $em, ConfigService $configService, Request $request, UserInterface $user)
+    public function addAction(EntityManagerInterface $em, ConfigService $configService, Request $request, UserInterface $user): RedirectResponse
     {
         if ($configService->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');
@@ -46,8 +50,8 @@ class NewsController extends AbstractController
             return $this->redirectToRoute('news');
         } else {
             try {
-                $date = new \DateTime($post->get('date'));
-            } catch (\Exception $e) {
+                $date = new DateTime($post->get('date'));
+            } catch (Exception $e) {
                 $this->addFlash('error', 'Invalid date provided.');
                 return $this->redirectToRoute('news');
             }
@@ -66,7 +70,7 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('news');
     }
 
-    public function deleteAction(int $id, EntityManagerInterface $em, UserInterface $user)
+    public function deleteAction(int $id, EntityManagerInterface $em, UserInterface $user): RedirectResponse
     {
         /** @var News $news */
         $news = $em->getRepository(News::class)->find($id);

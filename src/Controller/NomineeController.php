@@ -5,9 +5,12 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use League\Csv\Writer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Action;
 use App\Entity\Award;
@@ -18,7 +21,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class NomineeController extends AbstractController
 {
-    public function indexAction(?string $awardID, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request)
+    public function indexAction(?string $awardID, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request): Response
     {
         $query = $em->createQueryBuilder()
             ->select('a')
@@ -77,7 +80,7 @@ class NomineeController extends AbstractController
         ], $awardVariables));
     }
 
-    public function postAction(string $awardID, ConfigService $configService, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, AuditService $auditService, FileService $fileService)
+    public function postAction(string $awardID, ConfigService $configService, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, Request $request, AuditService $auditService, FileService $fileService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -141,7 +144,7 @@ class NomineeController extends AbstractController
                     'nominees',
                     $award->getId() . '--' . $nominee->getShortName()
                 );
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return $this->json(['error' => $e->getMessage()]);
             }
 
@@ -169,7 +172,7 @@ class NomineeController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function exportNomineesAction(EntityManagerInterface $em)
+    public function exportNomineesAction(EntityManagerInterface $em): Response
     {
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
@@ -213,7 +216,7 @@ class NomineeController extends AbstractController
         return $response;
     }
 
-    public function exportUserNominationsAction(EntityManagerInterface $em)
+    public function exportUserNominationsAction(EntityManagerInterface $em): Response
     {
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()

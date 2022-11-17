@@ -43,8 +43,8 @@ class Schulze extends AbstractResultCalculator
                 // Iterate through iterate through each voter
                 foreach ($votes as $key => $vote) {
                     // Check if the user voted for the candidates we're comparing
-                    $noVoteForX = (array_search($candidateX, $vote) === false);
-                    $noVoteForY = (array_search($candidateY, $vote) === false);
+                    $noVoteForX = !in_array($candidateX, $vote);
+                    $noVoteForY = !in_array($candidateY, $vote);
 
                     /*
                      * If the user didn't vote for either of the candidates we are comparing, we can assume that they

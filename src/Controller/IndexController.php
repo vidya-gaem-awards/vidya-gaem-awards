@@ -5,11 +5,12 @@ use App\Entity\Award;
 use App\Entity\News;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class IndexController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em): Response
     {
         $query = $em->createQueryBuilder();
         $query->select('n')
@@ -27,7 +28,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    public function promoAction(EntityManagerInterface $em, SessionInterface $session)
+    public function promoAction(EntityManagerInterface $em, SessionInterface $session): Response
     {
         $awards = $em->createQueryBuilder()
             ->select('a')

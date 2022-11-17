@@ -13,53 +13,41 @@ use Doctrine\ORM\Mapping as ORM;
 class Advertisement implements JsonSerializable
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="link", type="string", nullable=true)
      */
-    private $link;
+    private ?string $link;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private $image;
+    private ?File $image;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="token", type="string", nullable=false)
      */
-    private $token;
+    private string $token;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="special", type="boolean", nullable=false)
      */
-    private $special;
+    private bool $special;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="clicks", type="integer", nullable=false)
      */
-    private $clicks = 0;
+    private int $clicks = 0;
 
     public function __construct()
     {
@@ -73,50 +61,26 @@ class Advertisement implements JsonSerializable
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Advertisement
-     */
-    public function setName($name): Advertisement
+    public function setName(string $name): Advertisement
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set link
-     *
-     * @param string $link
-     *
-     * @return Advertisement
-     */
-    public function setLink($link): Advertisement
+    public function setLink(?string $link): Advertisement
     {
         $this->link = $link;
 
         return $this;
     }
 
-    /**
-     * Get link
-     *
-     * @return string
-     */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
@@ -133,83 +97,47 @@ class Advertisement implements JsonSerializable
         return $this->image;
     }
 
-    /**
-     * Set special
-     *
-     * @param boolean $special
-     *
-     * @return Advertisement
-     */
-    public function setSpecial($special): Advertisement
+    public function setSpecial(bool $special): Advertisement
     {
         $this->special = $special;
 
         return $this;
     }
 
-    /**
-     * Get special
-     *
-     * @return boolean
-     */
     public function isSpecial(): bool
     {
         return $this->special;
     }
 
-    /**
-     * @return string
-     */
     public function getToken(): string
     {
         return $this->token;
     }
 
-    /**
-     * @param string $token
-     * @return Advertisement
-     */
     public function setToken(string $token): Advertisement
     {
         $this->token = $token;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getClicks(): mixed
+    public function getClicks(): int
     {
         return $this->clicks;
     }
 
-    /**
-     * @param int $clicks
-     * @return Advertisement
-     */
     public function setClicks(int $clicks): Advertisement
     {
         $this->clicks = $clicks;
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function incrementClicks(): static
     {
         $this->clicks++;
         return $this;
     }
 
-    /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->getId(),

@@ -19,10 +19,10 @@ class FileSystem
      * Converts a number of bytes into a human-readable filesize.
      * This implementation is efficient, but will sometimes return a value that's less than one due
      * to the differences between 1000 and 1024 (for example, 0.98 GB)
-     * @param  int $bytes File size in bytes.
+     * @param int $bytes File size in bytes.
      * @return string     The human-readable string, to two decimal places.
      */
-    public static function humanFilesize($bytes): string
+    public static function humanFilesize(int $bytes): string
     {
         $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         // Determine the magnitude of the size from the length of the string.

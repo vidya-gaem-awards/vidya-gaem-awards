@@ -6,6 +6,7 @@ use App\Entity\Config;
 use App\Entity\Login;
 use App\Entity\User;
 use App\Service\ConfigService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knojector\SteamAuthenticationBundle\Event\AuthenticateUserEvent;
 use Knojector\SteamAuthenticationBundle\Event\FirstLoginEvent;
@@ -16,13 +17,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class LoginSubscriber implements EventSubscriberInterface
 {
     /** @var EntityManagerInterface */
-    private $em;
+    private EntityManagerInterface $em;
 
     /** @var Config */
-    private $config;
+    private Config $config;
 
     /** @var EventDispatcherInterface */
-    private $dispatcher;
+    private EventDispatcherInterface $dispatcher;
 
     public function __construct(EntityManagerInterface $em, ConfigService $config, EventDispatcherInterface $dispatcher)
     {
@@ -58,10 +59,10 @@ class LoginSubscriber implements EventSubscriberInterface
         $login = new Login();
         $user
             ->addLogin($login)
-            ->setLastLogin(new \DateTime());
+            ->setLastLogin(new DateTime());
 
         if (!$user->getFirstLogin()) {
-            $user->setFirstLogin(new \DateTime());
+            $user->setFirstLogin(new DateTime());
         }
 
         /** @var SteamId $steam */

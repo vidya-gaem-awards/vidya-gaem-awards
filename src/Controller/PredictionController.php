@@ -12,10 +12,13 @@ use App\Service\ConfigService;
 use App\Service\FileService;
 use App\Service\PredictionService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use RandomLib\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -33,14 +36,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class PredictionController extends AbstractController
 {
-    public function index(
-        ?FantasyUser $fantasyUser,
-        EntityManagerInterface $em,
-        PredictionService $predictionService,
-        SessionInterface $session,
-        Request $request,
-        ConfigService $configService,
-        AuthorizationCheckerInterface $authChecker)
+    public function index(?FantasyUser $fantasyUser, EntityManagerInterface $em, PredictionService $predictionService, SessionInterface $session, ConfigService $configService, AuthorizationCheckerInterface $authChecker): Response
     {
         $nonce = $session->get('nonce');
         if (!$nonce) {
@@ -99,14 +95,14 @@ class PredictionController extends AbstractController
         ]);
     }
 
-    public function rules(EntityManagerInterface $em)
+    public function rules(EntityManagerInterface $em): Response
     {
         return $this->render('predictionRules.twig', [
             'page' => 'rules'
         ]);
     }
 
-    public function join(EntityManagerInterface $em, Request $request, SessionInterface $session, AuditService $auditService, ConfigService $configService)
+    public function join(EntityManagerInterface $em, Request $request, SessionInterface $session, AuditService $auditService, ConfigService $configService): RedirectResponse
     {
         if ($configService->getConfig()->isPagePublic('results')) {
             return $this->redirectToRoute('predictionLeaderboard');
@@ -133,7 +129,7 @@ class PredictionController extends AbstractController
         return $this->redirectToRoute('predictions');
     }
 
-    public function updatePick(Award $award, EntityManagerInterface $em, PredictionService $predictionService, AuditService $auditService, Request $request)
+    public function updatePick(Award $award, EntityManagerInterface $em, PredictionService $predictionService, AuditService $auditService, Request $request): JsonResponse
     {
         if (!$award->isEnabled()) {
             throw new NotFoundHttpException();
@@ -182,7 +178,7 @@ class PredictionController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function updateDetails(Request $request, EntityManagerInterface $em, PredictionService $predictionService, AuditService $auditService, FileService $fileService)
+    public function updateDetails(Request $request, EntityManagerInterface $em, PredictionService $predictionService, AuditService $auditService, FileService $fileService): RedirectResponse
     {
         if ($predictionService->arePredictionsLocked()) {
             $this->addFlash('formError', 'The 2022 Fantasy League has closed. You can no longer make changes to your details.');
@@ -232,7 +228,7 @@ class PredictionController extends AbstractController
         return $this->redirectToRoute('predictions');
     }
 
-    private function processAvatar(UploadedFile $file, Request $request, PredictionService $predictionService, FileService $fileService)
+    private function processAvatar(UploadedFile $file, Request $request, PredictionService $predictionService, FileService $fileService): RedirectResponse|bool
     {
         if ($predictionService->arePredictionsLocked()) {
             $this->addFlash('formError', 'The 2022 Fantasy League has closed. You can no longer make changes to your details.');
@@ -283,7 +279,7 @@ class PredictionController extends AbstractController
                     imagegif($image, $filepath);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('formError', $e->getMessage());
             return false;
         }
@@ -297,7 +293,7 @@ class PredictionController extends AbstractController
         return true;
     }
 
-    public function leaderboard(EntityManagerInterface $em)
+    public function leaderboard(EntityManagerInterface $em): Response
     {
         $fantasyUsers = $em->createQueryBuilder()
             ->select('fu')

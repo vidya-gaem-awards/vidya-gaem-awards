@@ -22,7 +22,7 @@ class LootboxService {
         $this->tierRepo = $tierRepo;
     }
 
-    public function getItemArray(?LootboxItem $itemToAdd = null, ?LootboxItem $itemToRemove = null)
+    public function getItemArray(?LootboxItem $itemToAdd = null, ?LootboxItem $itemToRemove = null): array
     {
         /** @var LootboxTier[] $tiers */
         $tiers = $this->tierRepo->createQueryBuilder('t', 't.id')->getQuery()->getResult();

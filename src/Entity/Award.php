@@ -17,135 +17,116 @@ use JsonSerializable;
 class Award implements JsonSerializable
 {
     /**
-     * @var string
-     *
      * @ORM\Column(name="id", type="string", length=30)
      * @ORM\Id
      */
-    private $id;
+    private string $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="subtitle", type="string", length=200, nullable=false)
      */
-    private $subtitle;
+    private string $subtitle;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="`order`",  type="integer", nullable=false)
      */
-    private $order;
+    private int $order;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="comments", type="text", nullable=true)
      */
-    private $comments;
+    private ?string $comments;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="enabled", type="boolean", nullable=false)
      */
-    private $enabled;
+    private bool $enabled;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="nominations_enabled", type="boolean", nullable=false)
      */
-    private $nominationsEnabled;
+    private bool $nominationsEnabled;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="secret", type="boolean", nullable=false, options={"comment"="Secret awards only show up during voting"})
      */
-    private $secret;
+    private bool $secret;
 
     /**
-     * @var Collection
+     * @var Collection<AwardFeedback>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\AwardFeedback", mappedBy="award", cascade={"remove"})
      */
-    private $feedback;
+    private Collection $feedback;
 
     /**
-     * @var Collection
+     * @var Collection<AwardSuggestion>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\AwardSuggestion", mappedBy="award", cascade={"remove"})
      * @ORM\OrderBy({
      *     "suggestion"="ASC"
      * })
      */
-    private $suggestions;
+    private Collection $suggestions;
 
     /**
-     * @var Collection
+     * @var Collection<Nominee>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Nominee", mappedBy="award", cascade={"remove"})
      * @ORM\OrderBy({
      *     "name"="ASC"
      * })
      */
-    private $nominees;
+    private Collection $nominees;
 
     /**
-     * @var Collection
+     * @var Collection<UserNomination>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserNomination", mappedBy="award", cascade={"remove"})
      */
-    private $userNominations;
+    private Collection $userNominations;
 
     /**
-     * @var Collection
+     * @var Collection<Vote>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="award", cascade={"remove"})
      */
-    private $votes;
+    private Collection $votes;
 
     /**
-     * @var Collection
+     * @var Collection<ResultCache>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\ResultCache", mappedBy="award", cascade={"remove"})
      */
-    private $resultCache;
+    private Collection $resultCache;
 
     /**
-     * @var Collection
+     * @var Collection<FantasyPrediction>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="award", cascade={"remove"})
      */
-    private $fantasyPredictions;
+    private Collection $fantasyPredictions;
 
     /**
-     * @var Autocompleter
+     * @var Autocompleter|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Autocompleter", inversedBy="awards")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="autocompleteID", referencedColumnName="id", nullable=true)
      * })
      */
-    private $autocompleter;
+    private ?Autocompleter $autocompleter;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private $winnerImage;
+    private ?File $winnerImage;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
@@ -158,11 +139,9 @@ class Award implements JsonSerializable
     }
 
     /**
-     * @param string $id
-     * @return Award
      * @throws Exception
      */
-    public function setId($id): Award
+    public function setId(string $id): Award
     {
         if (!preg_match('/^[A-Za-z0-9-]+$/', $id)) {
             throw new Exception('Invalid ID provided: award IDs can only consist of numbers, letters, and dashes.');
@@ -172,187 +151,95 @@ class Award implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Get id
-     *
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Award
-     */
-    public function setName($name): Award
+    public function setName(string $name): Award
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set subtitle
-     *
-     * @param string $subtitle
-     *
-     * @return Award
-     */
-    public function setSubtitle($subtitle): Award
+    public function setSubtitle(string $subtitle): Award
     {
         $this->subtitle = $subtitle;
 
         return $this;
     }
 
-    /**
-     * Get subtitle
-     *
-     * @return string
-     */
     public function getSubtitle(): string
     {
         return $this->subtitle;
     }
 
-    /**
-     * Set order
-     *
-     * @param integer $order
-     *
-     * @return Award
-     */
-    public function setOrder($order): Award
+    public function setOrder(int $order): Award
     {
         $this->order = $order;
 
         return $this;
     }
 
-    /**
-     * Get order
-     *
-     * @return integer
-     */
     public function getOrder(): int
     {
         return $this->order;
     }
 
-    /**
-     * Set comments
-     *
-     * @param string $comments
-     *
-     * @return Award
-     */
-    public function setComments($comments): Award
+    public function setComments(string $comments): Award
     {
         $this->comments = $comments;
 
         return $this;
     }
 
-    /**
-     * Get comments
-     *
-     * @return string
-     */
     public function getComments(): string
     {
         return $this->comments;
     }
 
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     *
-     * @return Award
-     */
-    public function setEnabled($enabled): Award
+    public function setEnabled(bool $enabled): Award
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * Set nominationsEnabled
-     *
-     * @param boolean $nominationsEnabled
-     *
-     * @return Award
-     */
-    public function setNominationsEnabled($nominationsEnabled): Award
+    public function setNominationsEnabled(bool $nominationsEnabled): Award
     {
         $this->nominationsEnabled = $nominationsEnabled;
 
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
     public function areNominationsEnabled(): bool
     {
         return $this->nominationsEnabled;
     }
 
-    /**
-     * Set secret
-     *
-     * @param boolean $secret
-     *
-     * @return Award
-     */
-    public function setSecret($secret): Award
+    public function setSecret(bool $secret): Award
     {
         $this->secret = $secret;
 
         return $this;
     }
 
-    /**
-     * Get secret
-     *
-     * @return boolean
-     */
     public function isSecret(): bool
     {
         return $this->secret;
     }
 
-    /**
-     * Add feedback
-     *
-     * @param AwardFeedback $feedback
-     *
-     * @return Award
-     */
     public function addFeedback(AwardFeedback $feedback): Award
     {
         $this->feedback[] = $feedback;
@@ -360,33 +247,16 @@ class Award implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Remove feedback
-     *
-     * @param AwardFeedback $feedback
-     */
     public function removeFeedback(AwardFeedback $feedback)
     {
         $this->feedback->removeElement($feedback);
     }
 
-    /**
-     * Get feedback
-     *
-     * @return ArrayCollection
-     */
-    public function getFeedback(): ArrayCollection
+    public function getFeedback(): Collection
     {
         return $this->feedback;
     }
 
-    /**
-     * Add nominee
-     *
-     * @param Nominee $nominee
-     *
-     * @return Award
-     */
     public function addNominee(Nominee $nominee): Award
     {
         $this->nominees[] = $nominee;
@@ -394,44 +264,23 @@ class Award implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Remove nominee
-     *
-     * @param Nominee $nominee
-     */
     public function removeNominee(Nominee $nominee)
     {
         $this->nominees->removeElement($nominee);
     }
 
-    /**
-     * Get nominees
-     *
-     * @return arrayCollection|Nominee[]
-     */
-    public function getNominees(): arrayCollection|array
+    public function getNominees(): Collection
     {
         return $this->nominees;
     }
 
-    /**
-     * @param string $shortName
-     * @return Nominee
-     */
-    public function getNominee($shortName): Nominee
+    public function getNominee(string $shortName): ?Nominee
     {
         return $this->getNominees()->filter(function (Nominee $nominee) use ($shortName) {
             return $nominee->getShortName() === $shortName;
         })->first() ?: null;
     }
 
-    /**
-     * Add userNomination
-     *
-     * @param UserNomination $userNomination
-     *
-     * @return Award
-     */
     public function addUserNomination(UserNomination $userNomination): Award
     {
         $this->userNominations[] = $userNomination;
@@ -439,29 +288,17 @@ class Award implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Remove userNomination
-     *
-     * @param UserNomination $userNomination
-     */
     public function removeUserNomination(UserNomination $userNomination)
     {
         $this->userNominations->removeElement($userNomination);
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getRawUserNominations(): ArrayCollection
+    public function getRawUserNominations(): Collection
     {
         return $this->userNominations;
     }
 
-    /**
-     * @param bool $sortAlphabetically
-     * @return array
-     */
-    public function getUserNominations($sortAlphabetically = false): array
+    public function getUserNominations(bool $sortAlphabetically = false): array
     {
         $nominations = [];
 
@@ -493,13 +330,6 @@ class Award implements JsonSerializable
         return $nominations;
     }
 
-    /**
-     * Add vote
-     *
-     * @param Vote $vote
-     *
-     * @return Award
-     */
     public function addVote(Vote $vote): Award
     {
         $this->votes[] = $vote;
@@ -507,33 +337,16 @@ class Award implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Remove vote
-     *
-     * @param Vote $vote
-     */
     public function removeVote(Vote $vote)
     {
         $this->votes->removeElement($vote);
     }
 
-    /**
-     * Get votes
-     *
-     * @return arrayCollection
-     */
     public function getVotes(): arrayCollection
     {
         return $this->votes;
     }
 
-    /**
-     * Add resultCache
-     *
-     * @param ResultCache $resultCache
-     *
-     * @return Award
-     */
     public function addResultCache(ResultCache $resultCache): Award
     {
         $this->resultCache[] = $resultCache;
@@ -541,29 +354,16 @@ class Award implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Remove resultCache
-     *
-     * @param ResultCache $resultCache
-     */
     public function removeResultCache(ResultCache $resultCache)
     {
         $this->resultCache->removeElement($resultCache);
     }
 
-    /**
-     * Get resultCache
-     *
-     * @return arrayCollection|ResultCache[]
-     */
     public function getResultCache(): arrayCollection|array
     {
         return $this->resultCache;
     }
 
-    /**
-     * @return ResultCache|null
-     */
     public function getOfficialResults(): ?ResultCache
     {
         $criteria = Criteria::create()
@@ -572,31 +372,19 @@ class Award implements JsonSerializable
         return $this->getResultCache()->matching($criteria)->first() ?: null;
     }
 
-    /**
-     * Set autocompleter
-     *
-     * @param Autocompleter $autocompleter
-     *
-     * @return Award
-     */
-    public function setAutocompleter(Autocompleter $autocompleter = null): Award
+    public function setAutocompleter(?Autocompleter $autocompleter = null): Award
     {
         $this->autocompleter = $autocompleter;
 
         return $this;
     }
 
-    /**
-     * Get autocompleter
-     *
-     * @return Autocompleter
-     */
-    public function getAutocompleter(): Autocompleter
+    public function getAutocompleter(): ?Autocompleter
     {
         return $this->autocompleter;
     }
 
-    public function getGroupedFeedback()
+    public function getGroupedFeedback(): array
     {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('opinion', 1));
@@ -614,7 +402,7 @@ class Award implements JsonSerializable
         ];
     }
 
-    public function getFeedbackPercent()
+    public function getFeedbackPercent(): array
     {
         $feedback = $this->getGroupedFeedback();
 
@@ -631,7 +419,7 @@ class Award implements JsonSerializable
         ];
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->getId(),
@@ -646,13 +434,6 @@ class Award implements JsonSerializable
         ];
     }
 
-    /**
-     * Add suggestion
-     *
-     * @param AwardSuggestion $suggestion
-     *
-     * @return Award
-     */
     public function addSuggestion(AwardSuggestion $suggestion): Award
     {
         $this->suggestions[] = $suggestion;
@@ -660,31 +441,17 @@ class Award implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Remove suggestion
-     *
-     * @param AwardSuggestion $suggestion
-     */
     public function removeSuggestion(AwardSuggestion $suggestion)
     {
         $this->suggestions->removeElement($suggestion);
     }
 
-    /**
-     * Get suggestions
-     *
-     * @return ArrayCollection
-     */
-    public function getRawSuggestions(): ArrayCollection
+    public function getRawSuggestions(): Collection
     {
         return $this->suggestions;
     }
 
-    /**
-     * @param bool $sortAlphabetically
-     * @return array
-     */
-    public function getNameSuggestions($sortAlphabetically = false): array
+    public function getNameSuggestions(bool $sortAlphabetically = false): array
     {
         $suggestions = [];
 
@@ -716,10 +483,7 @@ class Award implements JsonSerializable
         return $suggestions;
     }
 
-    /**
-     * @return FantasyPrediction[]|ArrayCollection
-     */
-    public function getFantasyPredictions(): array|ArrayCollection
+    public function getFantasyPredictions(): Collection
     {
         return $this->fantasyPredictions;
     }

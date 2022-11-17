@@ -4,6 +4,7 @@ namespace App\Command;
 use App\Entity\GameRelease;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,14 +13,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportGamesCommand extends Command
 {
-    private $em;
-    private $configService;
-
-    public function __construct(EntityManagerInterface $em, ConfigService $configService)
-    {
-        $this->em = $em;
-        $this->configService = $configService;
-
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly ConfigService $configService,
+    ) {
         parent::__construct();
     }
 
@@ -40,11 +37,11 @@ class ImportGamesCommand extends Command
         $filename = $input->getArgument('file');
 
         if ($this->configService->isReadOnly()) {
-            throw new \RuntimeException('Database is in read-only mode. Read-only mode must be disabled to run this script.');
+            throw new RuntimeException('Database is in read-only mode. Read-only mode must be disabled to run this script.');
         }
 
         if (!file_exists($filename)) {
-            throw new \RuntimeException('File \'' . $filename . '\' does not exist.');
+            throw new RuntimeException('File \'' . $filename . '\' does not exist.');
         }
 
         if (!$input->getOption('no-clear')) {

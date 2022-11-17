@@ -6,16 +6,13 @@ use App\Entity\Nominee;
 abstract class AbstractResultCalculator
 {
     /** @var Nominee[]  */
-    protected $candidates = [];
+    protected array $candidates = [];
 
-    /** @var array */
-    protected $votes = [];
+    protected array $votes = [];
 
-    /** @var array */
-    protected $warnings = [];
+    protected array $warnings = [];
 
-    /** @var array */
-    protected $steps = [];
+    protected array $steps = [];
 
     /**
      * @param Nominee[] $candidates
@@ -27,22 +24,13 @@ abstract class AbstractResultCalculator
         $this->votes = $votes;
     }
 
-    /**
-     * @return array
-     */
     abstract function calculateResults(): array;
 
-    /**
-     * @return array
-     */
     public function getWarnings(): array
     {
         return $this->warnings;
     }
 
-    /**
-     * @return array
-     */
     public function getSteps(): array
     {
         return $this->steps;

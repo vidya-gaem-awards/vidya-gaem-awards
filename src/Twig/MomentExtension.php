@@ -1,6 +1,7 @@
 <?php
 namespace App\Twig;
 
+use DateTime;
 use Moment\Moment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -14,8 +15,8 @@ class MomentExtension extends AbstractExtension
         ];
     }
 
-    public function momentfilter(\DateTime $dateTime): Moment
+    public function momentfilter(DateTime $dateTime): Moment
     {
-        return new Moment($dateTime->format(\DateTime::ATOM));
+        return new Moment($dateTime->format(DateTime::ATOM));
     }
 }

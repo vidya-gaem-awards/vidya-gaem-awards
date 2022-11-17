@@ -8,11 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PredictionService
 {
-    /** @var EntityManagerInterface */
-    private $em;
-
-    /** @var ConfigService */
-    private $configService;
+    private EntityManagerInterface $em;
+    private ConfigService $configService;
 
     public function __construct(EntityManagerInterface $em, ConfigService $configService)
     {
@@ -20,7 +17,7 @@ class PredictionService
         $this->configService = $configService;
     }
 
-    public function arePredictionsLocked()
+    public function arePredictionsLocked(): bool
     {
         if ($this->configService->getConfig()->isReadOnly()) {
             return true;
@@ -33,12 +30,12 @@ class PredictionService
         return new DateTime('+14 days') > $this->configService->getConfig()->getStreamTime();
     }
 
-    public function areResultsAvailable()
+    public function areResultsAvailable(): bool
     {
         return $this->configService->getConfig()->isPagePublic('results');
     }
 
-    public function isAwardResultAvailable(Award $award)
+    public function isAwardResultAvailable(Award $award): bool
     {
         return $this->areResultsAvailable();
     }

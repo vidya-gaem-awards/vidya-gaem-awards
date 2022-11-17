@@ -8,17 +8,10 @@ use TiBeN\CrontabManager\CrontabRepository;
 
 class CronJobService
 {
-    /** @var string */
-    private $commandLine;
-
-    /** @var CrontabRepository */
-    private $crontab;
-
-    /** @var CrontabJob */
-    private $job;
-
-    /** @var boolean */
-    private $available;
+    private string $commandLine;
+    private CrontabRepository $crontab;
+    private CrontabJob $job;
+    private bool $available;
 
     public function __construct(string $projectDir, bool $enabled)
     {
@@ -41,12 +34,12 @@ class CronJobService
         }
     }
 
-    public function isCronJobAvailable()
+    public function isCronJobAvailable(): bool
     {
         return $this->available;
     }
 
-    public function isCronJobEnabled()
+    public function isCronJobEnabled(): bool
     {
         return $this->job && $this->job->enabled;
     }
@@ -54,7 +47,7 @@ class CronJobService
     /**
      * Enable the cron job. If it doesn't already exist, it will be added to the crontab.
      */
-    public function enableCronJob()
+    public function enableCronJob(): void
     {
         if ($this->job) {
             $this->job->enabled = true;
@@ -73,7 +66,7 @@ class CronJobService
         $this->job = $job;
     }
 
-    public function disableCronJob()
+    public function disableCronJob(): void
     {
         if (!$this->job) {
             return;
@@ -86,7 +79,7 @@ class CronJobService
     /**
      * Remove the cron job completely from the cron tab.
      */
-    public function removeCronJob()
+    public function removeCronJob(): void
     {
         if (!$this->job) {
             return;

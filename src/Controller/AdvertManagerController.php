@@ -9,14 +9,17 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdvertManagerController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em): Response
     {
         $query = $em->createQueryBuilder();
         $adverts = $query
@@ -32,7 +35,7 @@ class AdvertManagerController extends AbstractController
         ]);
     }
 
-    public function postAction(ConfigService $configService, Request $request, EntityManagerInterface $em, AuditService $auditService, FileService $fileService)
+    public function postAction(ConfigService $configService, Request $request, EntityManagerInterface $em, AuditService $auditService, FileService $fileService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -81,7 +84,7 @@ class AdvertManagerController extends AbstractController
                     'memes',
                     null
                 );
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return $this->json(['error' => $e->getMessage()]);
             }
 
@@ -105,7 +108,7 @@ class AdvertManagerController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function redirectAction(string $advertToken, EntityManagerInterface $em, UserInterface $user)
+    public function redirectAction(string $advertToken, EntityManagerInterface $em, UserInterface $user): RedirectResponse
     {
         $advert = $em->getRepository(Advertisement::class)->findOneBy(['token' => $advertToken]);
         if (!$advert) {

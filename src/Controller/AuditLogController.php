@@ -5,10 +5,11 @@ use App\Entity\Action;
 use App\Service\AuditService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuditLogController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em, AuditService $auditService)
+    public function indexAction(EntityManagerInterface $em, AuditService $auditService): Response
     {
         $actions = [
             'profile-group-added' => 'Added a permission to a user',

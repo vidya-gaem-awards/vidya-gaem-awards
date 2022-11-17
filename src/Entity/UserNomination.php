@@ -13,51 +13,36 @@ use Doctrine\ORM\Mapping as ORM;
 class UserNomination
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="user", type="string", length=45, nullable=false)
      */
-    private $user;
+    private string $user;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="nomination", type="string", length=255, nullable=false)
      */
-    private $nomination;
+    private string $nomination;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(name="timestamp", type="datetime", nullable=false)
      */
-    private $timestamp;
+    private DateTime $timestamp;
 
     /**
-     * @var Award
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="userNominations")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
      * })
      */
-    private $award;
+    private Award $award;
 
-    /**
-     * @param Award $award
-     * @param User|UserInterface $user
-     * @param string $nomination
-     */
-    public function __construct(Award $award, User $user, string $nomination)
+    public function __construct(Award $award, User|AnonymousUser $user, string $nomination)
     {
         $this->award = $award;
         $this->user = $user->getFuzzyID();
@@ -65,95 +50,47 @@ class UserNomination
         $this->timestamp = new DateTime();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set user
-     *
-     * @param string $user
-     *
-     * @return UserNomination
-     */
-    public function setUser($user): UserNomination
+    public function setUser(string $user): UserNomination
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Get user
-     *
-     * @return string
-     */
     public function getUser(): string
     {
         return $this->user;
     }
 
-    /**
-     * Set nomination
-     *
-     * @param string $nomination
-     *
-     * @return UserNomination
-     */
-    public function setNomination($nomination): UserNomination
+    public function setNomination(string $nomination): UserNomination
     {
         $this->nomination = $nomination;
 
         return $this;
     }
 
-    /**
-     * Get nomination
-     *
-     * @return string
-     */
     public function getNomination(): string
     {
         return $this->nomination;
     }
 
-    /**
-     * Set timestamp
-     *
-     * @param DateTime $timestamp
-     *
-     * @return UserNomination
-     */
-    public function setTimestamp($timestamp): UserNomination
+    public function setTimestamp(DateTime $timestamp): UserNomination
     {
         $this->timestamp = $timestamp;
 
         return $this;
     }
 
-    /**
-     * Get timestamp
-     *
-     * @return DateTime
-     */
     public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
 
-    /**
-     * Set award
-     *
-     * @param Award $award
-     *
-     * @return UserNomination
-     */
     public function setAward(Award $award = null): UserNomination
     {
         $this->award = $award;
@@ -161,11 +98,6 @@ class UserNomination
         return $this;
     }
 
-    /**
-     * Get award
-     *
-     * @return Award
-     */
     public function getAward(): Award
     {
         return $this->award;

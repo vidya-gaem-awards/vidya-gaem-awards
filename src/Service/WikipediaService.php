@@ -3,12 +3,15 @@ namespace App\Service;
 
 use App\Entity\GameRelease;
 use Doctrine\ORM\EntityManagerInterface;
+use DOMElement;
+use Exception;
+use RuntimeException;
 use Symfony\Component\DomCrawler\Crawler;
 
 class WikipediaService
 {
-    private $em;
-    private $output = [];
+    private EntityManagerInterface $em;
+    private array $output = [];
 
     /*
      * The keys of this array correspond to the names of articles on Wikipedia (converted to lowercase).
@@ -167,25 +170,25 @@ class WikipediaService
      * @return array Returns an array where the key is the title of the game, and the values are an array of platforms
      *               the game was released on in that year.
      *
-     * @throws \Exception Throws an Exception if an unsupported year is specified, or when Wikipedia returns an error.
+     * @throws Exception Throws an Exception if an unsupported year is specified, or when Wikipedia returns an error.
      */
     public function getGames(int $year): array
     {
         if ($year < 1995) {
-            throw new \Exception('Years before 1995 are not supported.');
+            throw new Exception('Years before 1995 are not supported.');
         }
         if ($year >= 1997 && $year <= 2001) {
             $this->output[] = '<bg=red>Warning:</> articles between 1997 and 2001 contain a small number of games with incorrect platform data (the release date for some platforms is outside of ' . $year . ')';
         }
         if ($year > (int)date('Y')) {
-            throw new \Exception('Future years are not supported.');
+            throw new Exception('Future years are not supported.');
         }
 
         $url = "https://en.wikipedia.org/w/api.php?action=parse&page={$year}_in_video_games&prop=text&format=json";
         $result = json_decode(file_get_contents($url), true);
 
         if (isset($result['error'])) {
-            throw new \Exception('Wikipedia returned an error: ' . $result['error']['info']);
+            throw new Exception('Wikipedia returned an error: ' . $result['error']['info']);
         }
 
         $html = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>' . $result['parse']['text']['*'] . '</body></html>';
@@ -199,7 +202,7 @@ class WikipediaService
         }
 
         if (empty($games)) {
-            throw new \Exception('Unable to parse the list of games for ' . $year . '. This may be due to formatting changes in the Wikipeda article.');
+            throw new Exception('Unable to parse the list of games for ' . $year . '. This may be due to formatting changes in the Wikipeda article.');
         }
 
         return $games;
@@ -238,13 +241,13 @@ class WikipediaService
         }
 
         if ($tables->count() > $expectedTableCount) {
-            throw new \RuntimeException('Unexpected table count: ' . $tables->count());
+            throw new RuntimeException('Unexpected table count: ' . $tables->count());
         }
 
         $games = [];
 
         $rows = $tables->first()->filter('tr');
-        /** @var \DOMElement $row */
+        /** @var DOMElement $row */
         foreach ($rows as $row) {
             $cells = $row->getElementsByTagName('td');
 
@@ -344,7 +347,7 @@ class WikipediaService
 
         $games = [];
 
-        /** @var \DOMElement $row */
+        /** @var DOMElement $row */
         foreach ($rows as $row) {
             $cells = $row->getElementsByTagName('td');
 
@@ -383,7 +386,7 @@ class WikipediaService
             }
 
             $platforms = iterator_to_array($cells->item($gameCell + 1)->getElementsByTagName('a'));
-            $platforms = array_map(function (\DOMElement $e) {
+            $platforms = array_map(function (DOMElement $e) {
                 return str_replace('/wiki/', '', $e->getAttribute('href'));
             }, $platforms);
 

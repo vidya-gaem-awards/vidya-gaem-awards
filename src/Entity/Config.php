@@ -27,107 +27,73 @@ class Config
     const DEFAULT_TIMEZONE = 'America/New_York';
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="id", type="string", length=30)
      * @ORM\Id
      */
-    private $id = 1;
+    private int $id = 1;
 
     /**
-     * @var DateTime|null
-     *
      * @ORM\Column(name="voting_start", type="datetime", nullable=true)
      */
-    private $votingStart;
+    private ?DateTime $votingStart;
 
     /**
-     * @var DateTime|null
-     *
      * @ORM\Column(name="voting_end", type="datetime", nullable=true)
      */
-    private $votingEnd;
+    private ?DateTime $votingEnd;
 
     /**
-     * @var DateTime|null
-     *
      * @ORM\Column(name="stream_time", type="datetime", nullable=true)
      */
-    private $streamTime;
+    private ?DateTime $streamTime;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="default_page", type="string", length=30, nullable=false)
      */
-    private $defaultPage = 'home';
+    private string $defaultPage = 'home';
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="award_suggestions", type="boolean", nullable=false)
      */
-    private $awardSuggestions = true;
+    private bool $awardSuggestions = true;
 
     /**
-     * @var array
-     *
      * @ORM\Column(name="public_pages", type="json", nullable=false)
      */
-    private $publicPages = [];
+    private array $publicPages = [];
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="read_only", type="boolean", nullable=false)
      */
-    private $readOnly = false;
+    private bool $readOnly = false;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="timezone", type="string", length=50, nullable=false)
      */
-    private $timezone = self::DEFAULT_TIMEZONE;
+    private string $timezone = self::DEFAULT_TIMEZONE;
 
     /**
-     * @var array
-     *
      * @ORM\Column(name="navbar_items", type="json", nullable=false)
      */
-    private $navbarItems = ['config' => ['label' => 'Config', 'order' => 1]];
+    private array $navbarItems = ['config' => ['label' => 'Config', 'order' => 1]];
 
-    /**
-     * @return DateTime
-     */
     public function getVotingStart(): DateTime
     {
         return $this->votingStart;
     }
 
-    /**
-     * @param DateTime $votingStart
-     * @return Config
-     */
-    public function setVotingStart($votingStart): Config
+    public function setVotingStart(DateTime $votingStart): Config
     {
         $this->votingStart = $votingStart;
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getVotingEnd(): DateTime
     {
         return $this->votingEnd;
     }
 
-    /**
-     * @param DateTime $votingEnd
-     * @return Config
-     */
-    public function setVotingEnd($votingEnd): Config
+    public function setVotingEnd(DateTime $votingEnd): Config
     {
         $this->votingEnd = $votingEnd;
         return $this;
@@ -179,7 +145,7 @@ class Config
         return false;
     }
 
-    public static function getRelativeTimeString(DateTime $date)
+    public static function getRelativeTimeString(DateTime $date): string
     {
         $moment = new Moment($date->format('c'));
         $diff = $moment->fromNow()->setDirection('+');
@@ -195,37 +161,23 @@ class Config
         }
     }
 
-    /**
-     * @return DateTime
-     */
     public function getStreamTime(): DateTime
     {
         return $this->streamTime;
     }
 
-    /**
-     * @param DateTime $streamTime
-     * @return Config
-     */
-    public function setStreamTime($streamTime): Config
+    public function setStreamTime(DateTime $streamTime): Config
     {
         $this->streamTime = $streamTime;
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultPage(): string
     {
         return $this->defaultPage;
     }
 
-    /**
-     * @param string $defaultPage
-     * @return Config
-     */
-    public function setDefaultPage($defaultPage): Config
+    public function setDefaultPage(string $defaultPage): Config
     {
         if (self::ALLOWED_DEFAULT_PAGES[$defaultPage] ?? false) {
             $this->defaultPage = $defaultPage;
@@ -233,36 +185,22 @@ class Config
         return $this;
     }
 
-    /**
-     * @return string[]
-     */
     public function getAllowedDefaultPages(): array
     {
         return self::ALLOWED_DEFAULT_PAGES;
     }
 
-    /**
-     * @param boolean $readOnly
-     * @return Config
-     */
     public function setReadOnly(bool $readOnly): Config
     {
         $this->readOnly = $readOnly;
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
     public function isReadOnly(): bool
     {
         return $this->readOnly;
     }
 
-    /**
-     * @param string $page
-     * @return bool
-     */
     public function isPagePublic(string $page): bool
     {
         if ($page === 'home' || $page === 'promo') {
@@ -303,7 +241,6 @@ class Config
 
     /**
      * @param string[] $publicPages
-     * @return Config
      */
     public function setPublicPages(array $publicPages): Config
     {
@@ -311,9 +248,6 @@ class Config
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getTimezone(): string
     {
         return $this->timezone;
@@ -321,8 +255,6 @@ class Config
 
     /**
      * @param string $timezone Must be a valid timezone identifier
-     * @return Config
-     * @throws Exception
      */
     public function setTimezone(string $timezone): Config
     {
@@ -333,17 +265,11 @@ class Config
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return array
-     */
     public function getNavbarItems(): array
     {
         uasort($this->navbarItems, function ($a, $b) {
@@ -352,28 +278,17 @@ class Config
         return $this->navbarItems;
     }
 
-    /**
-     * @param array $navbarItems
-     * @return Config
-     */
     public function setNavbarItems(array $navbarItems): Config
     {
         $this->navbarItems = $navbarItems;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getAwardSuggestions(): bool
     {
         return $this->awardSuggestions;
     }
 
-    /**
-     * @param bool $awardSuggestions
-     * @return Config
-     */
     public function setAwardSuggestions(bool $awardSuggestions): Config
     {
         $this->awardSuggestions = $awardSuggestions;

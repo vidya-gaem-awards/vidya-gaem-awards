@@ -3,17 +3,14 @@ namespace App\VGA;
 
 class NavbarItem
 {
-    /** @var string */
-    public $title;
+    public string $title;
 
-    /** @var integer */
-    public $order;
+    public int $order;
 
-    /** @var string */
-    public $route;
+    public ?string $route;
 
     /** @var NavbarItem[] */
-    public $children = [];
+    public array $children = [];
 
     public function __construct(array $details, ?string $route = null)
     {
@@ -32,7 +29,7 @@ class NavbarItem
         return $this->order;
     }
 
-    public function getRoute(): string
+    public function getRoute(): ?string
     {
         return $this->route;
     }

@@ -13,145 +13,114 @@ use JsonSerializable;
 class LootboxItem implements JsonSerializable, DropChance
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="short_name", type="string", length=50, nullable=false)
      */
-    private $shortName;
+    private string $shortName;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private $image;
+    private ?File $image;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="css", type="boolean", nullable=false)
      */
-    private $css = false;
+    private bool $css = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="buddie", type="boolean", nullable=false)
      */
-    private $buddie = true;
+    private bool $buddie = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="music", type="boolean", nullable=false)
      */
-    private $music = false;
+    private bool $music = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private $musicFile;
+    private ?File $musicFile;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="css_contents", type="text", nullable=true)
      */
-    private $cssContents;
+    private ?string $cssContents;
 
     /**
-     * @var Collection
+     * @var Collection<UserInventoryItem>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserInventoryItem", mappedBy="item")
      */
-    private $userItems;
+    private Collection $userItems;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $year = '2022';
+    private string $year = '2022';
 
     /**
      * @ORM\ManyToOne(targetEntity=LootboxTier::class, inversedBy="items")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $tier;
+    private ?LootboxTier $tier;
 
     /**
      * @ORM\Column(name="drop_chance", type="decimal", precision=10, scale=5, nullable=true)
      */
-    private $dropChance;
+    private ?string $dropChance;
 
     /**
      * @ORM\Column(name="absolute_drop_chance", type="decimal", precision=10, scale=5, nullable=true)
      */
-    private $absoluteDropChance;
+    private ?string $absoluteDropChance;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=5, nullable=true)
      */
-    private $cachedDropValueStart;
+    private ?string $cachedDropValueStart;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=5, nullable=true)
      */
-    private $cachedDropValueEnd;
+    private ?string $cachedDropValueEnd;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $extra;
+    private ?string $extra;
 
-    public function setId($id)
+    public function setId($id): static
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return LootboxItem
-     */
-    public function setName($name): LootboxItem
+    public function setName(string $name): LootboxItem
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -169,76 +138,44 @@ class LootboxItem implements JsonSerializable, DropChance
         return $this->image;
     }
 
-    /**
-     * @return string
-     */
     public function getShortName(): string
     {
         return $this->shortName;
     }
 
-    /**
-     * @param string $shortName
-     *
-     * @return LootboxItem
-     */
     public function setShortName(string $shortName ): LootboxItem
     {
         $this->shortName = $shortName;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function hasCss(): bool
     {
         return $this->css;
     }
 
-    /**
-     * @param bool $css
-     *
-     * @return LootboxItem
-     */
     public function setCss( bool $css): LootboxItem
     {
         $this->css = $css;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isBuddie(): bool
     {
         return $this->buddie;
     }
 
-    /**
-     * @param bool $buddie
-     *
-     * @return LootboxItem
-     */
     public function setBuddie( bool $buddie): LootboxItem
     {
         $this->buddie = $buddie;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function hasMusic(): bool
     {
         return $this->music;
     }
 
-    /**
-     * @param bool $music
-     *
-     * @return LootboxItem
-     */
     public function setMusic(bool $music): LootboxItem
     {
         $this->music = $music;
@@ -256,14 +193,7 @@ class LootboxItem implements JsonSerializable, DropChance
         return $this;
     }
 
-    /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->getId(),
@@ -291,19 +221,11 @@ class LootboxItem implements JsonSerializable, DropChance
         return $this->userItems;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCssContents(): ?string
     {
         return $this->cssContents;
     }
 
-    /**
-     * @param string|null $cssContents
-     *
-     * @return LootboxItem
-     */
     public function setCssContents(?string $cssContents): LootboxItem
     {
         $this->cssContents = $cssContents;

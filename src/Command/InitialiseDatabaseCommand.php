@@ -7,6 +7,7 @@ use App\Entity\Permission;
 use App\Entity\Template;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use SteamCondenser\Community\SteamId;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -16,16 +17,10 @@ use Symfony\Component\Console\Question\Question;
 
 class InitialiseDatabaseCommand extends Command
 {
-    private $em;
-
-    /** @var string */
-    private $projectDir;
-
-    public function __construct(string $projectDir, EntityManagerInterface $em)
-    {
-        $this->projectDir = $projectDir;
-        $this->em = $em;
-
+    public function __construct(
+        private readonly string $projectDir,
+        private readonly EntityManagerInterface $em,
+    ) {
         parent::__construct();
     }
 
@@ -47,7 +42,7 @@ class InitialiseDatabaseCommand extends Command
         $config = $repo->findOneBy([]);
 
         if ($config) {
-            throw new \Exception('The database already appears to be initalized.');
+            throw new Exception('The database already appears to be initalized.');
         }
 
         // Add the default config

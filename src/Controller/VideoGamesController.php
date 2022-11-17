@@ -6,15 +6,18 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\WikipediaService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Action;
 use App\Entity\GameRelease;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class VideoGamesController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em)
+    public function indexAction(EntityManagerInterface $em): Response
     {
         $query = $em->createQueryBuilder()
             ->from(GameRelease::class, 'gr')
@@ -29,7 +32,7 @@ class VideoGamesController extends AbstractController
         ]);
     }
 
-    public function add(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService)
+    public function add(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -69,7 +72,7 @@ class VideoGamesController extends AbstractController
         return $this->json(['success' => $game->getName()]);
     }
 
-    public function remove(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService)
+    public function remove(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -92,7 +95,7 @@ class VideoGamesController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function reload(EntityManagerInterface $em, WikipediaService $wikpedia, ConfigService $configService, AuditService $auditService, Session $session)
+    public function reload(EntityManagerInterface $em, WikipediaService $wikpedia, ConfigService $configService, AuditService $auditService, Session $session): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -100,7 +103,7 @@ class VideoGamesController extends AbstractController
 
         try {
             $games = $wikpedia->getGames(2022);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->json(['error' => $e->getMessage()]);
         }
 

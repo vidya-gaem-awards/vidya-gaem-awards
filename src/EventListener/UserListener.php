@@ -5,6 +5,7 @@ namespace App\EventListener;
 use App\Entity\Access;
 use App\Entity\User;
 use App\Service\ConfigService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use RandomLib\Factory;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -32,7 +33,7 @@ class UserListener
         $this->configService = $configService;
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         $session = $this->requestStack->getSession();
         $request = $event->getRequest();
@@ -89,7 +90,7 @@ class UserListener
         return $request->server->get('HTTP_CF_CONNECTING_IP', $request->server->get('REMOTE_ADDR'));
     }
 
-    public function onKernelResponse(ResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         $session = $this->requestStack->getSession();
         $request = $event->getRequest();
@@ -112,7 +113,7 @@ class UserListener
             $event->getResponse()->headers->setCookie(new Cookie(
                 'access',
                 $randomIDSession,
-                new \DateTime('+90 days'),
+                new DateTime('+90 days'),
                 '/',
                 $request->getHost()
             ));
@@ -145,7 +146,7 @@ class UserListener
         }
     }
 
-    private function shouldLogRequest(Request $request)
+    private function shouldLogRequest(Request $request): bool
     {
         // A request that is forwarded internally (such as what we do for the index route) triggers the listener
         // twice, so only log the initial request.

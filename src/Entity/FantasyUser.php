@@ -20,77 +20,61 @@ class FantasyUser
     const MAX_AVATAR_SIZE = 1024 * 1024 * 2; // 2 megabytes
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=100)
      */
-    private $name = 'Anonymous';
+    private string $name = 'Anonymous';
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private $avatar;
+    private ?File $avatar;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="image_token", type="string", nullable=true)
      */
-    private $imageToken;
+    private ?string $imageToken;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="victory_message", type="text", nullable=true)
      */
-    private $victoryMessage;
+    private ?string $victoryMessage;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="score", type="integer", nullable=true)
      */
-    private $score;
+    private ?int $score;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="`rank`", type="integer", nullable=true)
      */
-    private $rank;
+    private ?int $rank;
 
     /**
-     * @var DateTimeImmutable
-     *
      * @ORM\Column(name="last_updated", type="datetime_immutable")
      */
-    private $lastUpdated;
+    private DateTimeImmutable $lastUpdated;
 
     /**
-     * @var User
-     *
      * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="fantasyUser")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true)
      * })
      */
-    private $user;
+    private User $user;
 
     /**
-     * @var Collection
+     * @var Collection<FantasyPrediction>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="fantasyUser")
      */
-    private $predictions;
+    private Collection $predictions;
 
     public function __construct()
     {

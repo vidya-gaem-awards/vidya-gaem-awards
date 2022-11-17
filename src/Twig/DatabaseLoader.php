@@ -3,16 +3,17 @@ namespace App\Twig;
 
 use App\Entity\Template;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Twig\Error\LoaderError;
 use Twig\Loader\LoaderInterface;
 use Twig\Source;
 
 class DatabaseLoader implements LoaderInterface
 {
-    protected $repo;
+    protected EntityRepository $repo;
 
     /** @var bool */
-    protected $enabled;
+    protected bool $enabled;
 
     public function __construct(bool $enabled, EntityManagerInterface $em)
     {

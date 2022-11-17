@@ -8,6 +8,7 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Action;
 use App\Entity\Autocompleter;
@@ -15,11 +16,12 @@ use App\Entity\Award;
 use App\Entity\AwardFeedback;
 use App\Entity\GameRelease;
 use App\Entity\UserNomination;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class AwardController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em, UserInterface $user)
+    public function indexAction(EntityManagerInterface $em, UserInterface $user): Response
     {
         /** @var User $user */
 
@@ -143,7 +145,7 @@ class AwardController extends AbstractController
         ]);
     }
 
-    public function postAction(Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user, AuditService $auditService)
+    public function postAction(Request $request, EntityManagerInterface $em, ConfigService $configService, UserInterface $user, AuditService $auditService): JsonResponse
     {
         /** @var User $user */
 

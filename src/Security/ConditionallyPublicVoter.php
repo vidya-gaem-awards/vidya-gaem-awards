@@ -14,8 +14,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
  */
 class ConditionallyPublicVoter implements VoterInterface
 {
-    private $configService;
-    private $logger;
+    private ConfigService $configService;
+    private LoggerInterface $logger;
 
     public function __construct(ConfigService $configService, LoggerInterface $logger)
     {
@@ -35,7 +35,7 @@ class ConditionallyPublicVoter implements VoterInterface
      *
      * @return int either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
      */
-    public function vote(TokenInterface $token, $subject, array $attributes): int
+    public function vote(TokenInterface $token, mixed $subject, array $attributes): int
     {
         if (!in_array('CONDITIONALLY_PUBLIC', $attributes)) {
             $this->logger->debug('Route doesn\'t have CONDITIONALLY_PUBLIC', $attributes);

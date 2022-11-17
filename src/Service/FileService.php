@@ -3,6 +3,7 @@ namespace App\Service;
 
 use App\Entity\File;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use RandomLib\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -20,10 +21,10 @@ class FileService
     ];
 
     /** @var string */
-    private $uploadDirectory;
+    private string $uploadDirectory;
 
     /** @var EntityManagerInterface */
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(string $projectDir, EntityManagerInterface $em)
     {
@@ -33,25 +34,17 @@ class FileService
 
     /**
      * This function does not adhere to security best practices (maybe?)
-     *
-     * @param UploadedFile $file
-     * @param string $entityType
-     * @param string $directory
-     * @param string|null $filename
-     * @return string
-     * @throws \Exception
-     * @internal param $file_data
      */
-    public function handleUploadedFile(UploadedFile $file, string $entityType, string $directory, ?string $filename): string
+    public function handleUploadedFile(?UploadedFile $file, string $entityType, string $directory, ?string $filename): File
     {
         if ($file === null) {
-            throw new \Exception('No file was uploaded');
+            throw new Exception('No file was uploaded');
         } elseif (!$file->isValid()) {
-            throw new \Exception($file->getErrorMessage());
+            throw new Exception($file->getErrorMessage());
         } elseif (!in_array($file->getClientMimeType(), array_keys(self::EXTENSION_MAPPING), true)) {
-            throw new \Exception('Invalid MIME type (' . $file->getClientMimeType() . ')');
+            throw new Exception('Invalid MIME type (' . $file->getClientMimeType() . ')');
         } elseif ($file->getSize() > self::FILESIZE_LIMIT) {
-            throw new \Exception('Filesize of ' . self::humanFilesize($file->getSize()) . ' exceeds limit of ' . self::humanFilesize(self::FILESIZE_LIMIT));
+            throw new Exception('Filesize of ' . self::humanFilesize($file->getSize()) . ' exceeds limit of ' . self::humanFilesize(self::FILESIZE_LIMIT));
         }
 
         if (!file_exists($this->uploadDirectory . $directory)) {
@@ -79,7 +72,7 @@ class FileService
         return $fileEntity;
     }
 
-    public function deleteFile(File $file)
+    public function deleteFile(File $file): void
     {
         unlink($this->uploadDirectory . $file->getRelativePath());
         $this->em->remove($file);
@@ -89,10 +82,10 @@ class FileService
      * Converts a number of bytes into a human-readable filesize.
      * This implementation is efficient, but will sometimes return a value that's less than one due
      * to the differences between 1000 and 1024 (for example, 0.98 GB)
-     * @param  int $bytes File size in bytes.
+     * @param int $bytes File size in bytes.
      * @return string     The human-readable string, to two decimal places.
      */
-    public static function humanFilesize($bytes): string
+    public static function humanFilesize(int $bytes): string
     {
         $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         // Determine the magnitude of the size from the length of the string.

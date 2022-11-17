@@ -18,27 +18,27 @@ class LootboxTier implements JsonSerializable, DropChance
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $color;
+    private ?string $color;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=5)
      */
-    private $drop_chance;
+    private ?string $drop_chance;
 
     /**
      * @ORM\OneToMany(targetEntity=LootboxItem::class, mappedBy="tier")
      */
-    private $items;
+    private ArrayCollection $items;
 
     public function __construct()
     {

@@ -3,16 +3,13 @@ namespace App\VGA;
 
 class Timer
 {
-    private $startTime;
+    private float $startTime;
 
     public function __construct()
     {
         $this->startTime = microtime(true);
     }
 
-    /**
-     * @return float
-     */
     public function time(): float
     {
         $time = microtime(true);

@@ -11,8 +11,8 @@ use Twig\Environment;
 
 class SteamEntryPoint implements AuthenticationEntryPointInterface
 {
-    private $router;
-    private $twig;
+    private RouterInterface $router;
+    private Environment $twig;
 
     public function __construct(RouterInterface $router, Environment $twig)
     {

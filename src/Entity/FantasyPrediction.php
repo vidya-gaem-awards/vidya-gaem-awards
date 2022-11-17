@@ -15,50 +15,40 @@ use Doctrine\ORM\Mapping as ORM;
 class FantasyPrediction
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var DateTimeImmutable
-     *
      * @ORM\Column(name="last_updated", type="datetime_immutable")
      */
-    private $lastUpdated;
+    private DateTimeImmutable $lastUpdated;
 
     /**
-     * @var Award
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="fantasyPredictions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="award_id", referencedColumnName="id")
      * })
      */
-    private $award;
+    private Award $award;
 
     /**
-     * @var Nominee
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Nominee", inversedBy="fantasyPredictions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="nominee_id", referencedColumnName="id")
      * })
      */
-    private $nominee;
+    private Nominee $nominee;
 
     /**
-     * @var FantasyUser
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\FantasyUser", inversedBy="predictions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fantasy_user_id", referencedColumnName="id")
      * })
      */
-    private $fantasyUser;
+    private FantasyUser $fantasyUser;
 
     public function __construct()
     {

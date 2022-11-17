@@ -6,6 +6,7 @@ use App\Entity\GameRelease;
 use App\Service\ConfigService;
 use App\Service\WikipediaService;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,18 +16,11 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class WikipediaCommand extends Command
 {
-    private $em;
-    private $configService;
-    private $wikipedia;
-
-    private $year;
-
-    public function __construct(EntityManagerInterface $em, ConfigService $configService, WikipediaService $wikipedia)
-    {
-        $this->em = $em;
-        $this->configService = $configService;
-        $this->wikipedia = $wikipedia;
-
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly ConfigService $configService,
+        private readonly WikipediaService $wikipedia
+    ) {
         parent::__construct();
     }
 
@@ -43,7 +37,7 @@ class WikipediaCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->configService->isReadOnly()) {
-            throw new \RuntimeException('Database is in read-only mode. Read-only mode must be disabled to run this script.');
+            throw new RuntimeException('Database is in read-only mode. Read-only mode must be disabled to run this script.');
         }
 
         $year = $input->getArgument('year');

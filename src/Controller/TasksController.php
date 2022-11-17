@@ -9,17 +9,20 @@ use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class TasksController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker)
+    public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker): Response
     {
         $query = $em->createQueryBuilder()
             ->select('n')
@@ -108,7 +111,7 @@ class TasksController extends AbstractController
         ]);
     }
 
-    public function postAction(ConfigService $configService, AuthorizationCheckerInterface $authChecker, Request $request, EntityManagerInterface $em, AuditService $auditService, FileService $fileService)
+    public function postAction(ConfigService $configService, AuthorizationCheckerInterface $authChecker, Request $request, EntityManagerInterface $em, AuditService $auditService, FileService $fileService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -155,7 +158,7 @@ class TasksController extends AbstractController
                     'nominees',
                     $nominee->getAward()->getId() . '--' . $nominee->getShortName()
                 );
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return $this->json(['error' => $e->getMessage()]);
             }
 
@@ -177,7 +180,7 @@ class TasksController extends AbstractController
         return $this->json(['success' => true, 'nominee' => $nominee]);
     }
 
-    public function imageCheckAction(KernelInterface $kernel, EntityManagerInterface $em)
+    public function imageCheckAction(KernelInterface $kernel, EntityManagerInterface $em): Response
     {
         $input = new ArrayInput([]);
         $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true);

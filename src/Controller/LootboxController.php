@@ -13,14 +13,18 @@ use App\Service\ConfigService;
 use App\Service\FileService;
 use App\Service\LootboxService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\News;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class LootboxController extends AbstractController
 {
-    public function items(EntityManagerInterface $em)
+    public function items(EntityManagerInterface $em): Response
     {
         $query = $em->createQueryBuilder();
         $items = $query
@@ -44,7 +48,7 @@ class LootboxController extends AbstractController
         ]);
     }
 
-    public function itemPost(ConfigService $configService, Request $request, LootboxService $lootboxService, EntityManagerInterface $em, AuditService $auditService, FileService $fileService)
+    public function itemPost(ConfigService $configService, Request $request, LootboxService $lootboxService, EntityManagerInterface $em, AuditService $auditService, FileService $fileService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -152,7 +156,7 @@ class LootboxController extends AbstractController
                     'rewards',
                     $item->getID()
                 );
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return $this->json(['error' => $e->getMessage()]);
             }
 
@@ -173,7 +177,7 @@ class LootboxController extends AbstractController
                     'music',
                     $item->getID()
                 );
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return $this->json(['error' => $e->getMessage()]);
             }
 
@@ -198,7 +202,7 @@ class LootboxController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function itemCalculation(LootboxItemRepository $itemRepo, LootboxTierRepository $tierRepo, LootboxService $lootboxService, Request $request)
+    public function itemCalculation(LootboxItemRepository $itemRepo, LootboxTierRepository $tierRepo, LootboxService $lootboxService, Request $request): JsonResponse
     {
         $post = $request->request;
 
@@ -242,7 +246,7 @@ class LootboxController extends AbstractController
         ]);
     }
 
-    public function tiers(EntityManagerInterface $em)
+    public function tiers(EntityManagerInterface $em): Response
     {
         $query = $em->createQueryBuilder();
         $tiers = $query
@@ -258,7 +262,7 @@ class LootboxController extends AbstractController
         ]);
     }
 
-    public function tierPost(ConfigService $configService, LootboxService $lootboxService, Request $request, EntityManagerInterface $em, AuditService $auditService)
+    public function tierPost(ConfigService $configService, LootboxService $lootboxService, Request $request, EntityManagerInterface $em, AuditService $auditService): JsonResponse
     {
         if ($configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
@@ -330,7 +334,7 @@ class LootboxController extends AbstractController
         return $this->json(['success' => true]);
     }
 
-    public function tierCalculation(LootboxTierRepository $repo, LootboxService $lootboxService, Request $request)
+    public function tierCalculation(LootboxTierRepository $repo, LootboxService $lootboxService, Request $request): JsonResponse
     {
         $post = $request->request;
 
@@ -353,7 +357,7 @@ class LootboxController extends AbstractController
         ]);
     }
 
-    public function settings(ConfigService $configService)
+    public function settings(ConfigService $configService): Response
     {
         $settings = [
             'cost' => $configService->get('lootbox-cost', '')
@@ -364,7 +368,7 @@ class LootboxController extends AbstractController
         ]);
     }
 
-    public function settingsSave(Request $request, ConfigService $configService, EntityManagerInterface $em, AuditService $auditService)
+    public function settingsSave(Request $request, ConfigService $configService, EntityManagerInterface $em, AuditService $auditService): RedirectResponse
     {
         if ($configService->isReadOnly()) {
             $this->addFlash('error', 'The site is currently in read-only mode. No changes can be made.');

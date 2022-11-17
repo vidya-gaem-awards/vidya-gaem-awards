@@ -37,5 +37,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
             );
             return new RedirectResponse($redirect);
         }
+
+        return null;
     }
 }

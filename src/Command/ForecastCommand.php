@@ -49,34 +49,19 @@ class ForecastCommand extends Command
         '22-4chan-ads' => 'BIT_AND(v.number, 16384) > 0',
     ];
 
-    /** @var EntityManagerInterface */
-    private $em;
+    private Timer $timer;
+    private OutputInterface $output;
 
-    /** @var ConfigService */
-    private $configService;
-
-    /** @var ResultsService */
-    private $resultsService;
-
-    /** @var Timer */
-    private $timer;
-
-    /** @var OutputInterface */
-    private $output;
-
-    public function __construct(EntityManagerInterface $em, ConfigService $configService, ResultsService $resultsService)
-    {
-        $this->em = $em;
-        $this->configService = $configService;
-        $this->resultsService = $resultsService;
-
+    public function __construct(
+        private EntityManagerInterface $em,
+        private ResultsService $resultsService
+    ) {
         parent::__construct();
     }
 
     protected function configure()
     {
-        $this
-            ->setName(self::COMMAND_NAME);
+        $this->setName(self::COMMAND_NAME);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -169,7 +154,6 @@ class ForecastCommand extends Command
 
     /**
      * Convenience function to write a line with the timer value.
-     * @param string $line
      */
     private function writeln(string $line)
     {

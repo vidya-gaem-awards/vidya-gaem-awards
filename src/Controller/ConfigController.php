@@ -7,16 +7,20 @@ use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\CronJobService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 class ConfigController extends AbstractController
 {
-    public function indexAction(ConfigService $configService, CronJobService $cron, RouterInterface $router)
+    public function indexAction(ConfigService $configService, CronJobService $cron, RouterInterface $router): Response
     {
         $config = $configService->getConfig();
 
@@ -28,7 +32,7 @@ class ConfigController extends AbstractController
         // Ultra alerts are very important and appear with a blinding red background to encourage you to fix the issue ASAP
         $ultraAlerts = [];
         if ($config->getStreamTime()) {
-            if (new \DateTime() < $config->getStreamTime() && $config->isPagePublic('results')) {
+            if (new DateTime() < $config->getStreamTime() && $config->isPagePublic('results')) {
                 $ultraAlerts[] = 'The results page is public, but the stream date hasn\'t passed yet.';
             }
             if (!$cron->isCronJobEnabled() && $config->isVotingOpen()) {
@@ -49,7 +53,7 @@ class ConfigController extends AbstractController
         ]);
     }
 
-    public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService, RouterInterface $router, CronJobService $cron)
+    public function postAction(EntityManagerInterface $em, ConfigService $configService, Request $request, AuditService $auditService, RouterInterface $router, CronJobService $cron): RedirectResponse
     {
         $config = $configService->getConfig();
 
@@ -86,8 +90,8 @@ class ConfigController extends AbstractController
             $config->setVotingStart(null);
         } else {
             try {
-                $config->setVotingStart(new \DateTime($post->get('votingStart')));
-            } catch (\Exception $e) {
+                $config->setVotingStart(new DateTime($post->get('votingStart')));
+            } catch (Exception $e) {
                 $this->addFlash('error', 'Invalid date provided for voting start.');
                 $error = true;
             }
@@ -97,8 +101,8 @@ class ConfigController extends AbstractController
             $config->setVotingEnd(null);
         } else {
             try {
-                $config->setVotingEnd(new \DateTime($post->get('votingEnd')));
-            } catch (\Exception $e) {
+                $config->setVotingEnd(new DateTime($post->get('votingEnd')));
+            } catch (Exception $e) {
                 $this->addFlash('error', 'Invalid date provided for voting end.');
                 $error = true;
             }
@@ -108,8 +112,8 @@ class ConfigController extends AbstractController
             $config->setStreamTime(null);
         } else {
             try {
-                $config->setStreamTime(new \DateTime($post->get('streamTime')));
-            } catch (\Exception $e) {
+                $config->setStreamTime(new DateTime($post->get('streamTime')));
+            } catch (Exception $e) {
                 $this->addFlash('error', 'Invalid date provided for stream time.');
                 $error = true;
             }
@@ -216,7 +220,7 @@ class ConfigController extends AbstractController
         return $routes;
     }
 
-    public function cronAction(CronJobService $cron)
+    public function cronAction(CronJobService $cron): Response
     {
         return $this->render('cron.html.twig', [
             'enabled' => $cron->isCronJobEnabled(),
@@ -224,7 +228,7 @@ class ConfigController extends AbstractController
         ]);
     }
 
-    public function cronPostAction(Request $request, CronJobService $cron, ConfigService $configService, AuditService $auditService)
+    public function cronPostAction(Request $request, CronJobService $cron, ConfigService $configService, AuditService $auditService): RedirectResponse
     {
         $config = $configService->getConfig();
         $post = $request->request;
