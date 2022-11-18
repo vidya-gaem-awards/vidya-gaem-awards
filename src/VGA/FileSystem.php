@@ -1,8 +1,6 @@
 <?php
 namespace App\VGA;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 class FileSystem
 {
     const FILESIZE_LIMIT = 1024 * 1024 * 10;

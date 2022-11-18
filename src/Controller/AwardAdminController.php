@@ -134,7 +134,7 @@ class AwardAdminController extends AbstractController
                 $award = new Award();
                 try {
                     $award->setId($id);
-                } catch (Exception $e) {
+                } catch (Exception) {
                     return $this->json(['error' => 'Invalid award ID provided.']);
                 }
             }

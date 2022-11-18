@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Action;
 use App\Entity\ArgCodeInput;
 use App\Entity\ArgConfig;
-use App\Entity\Autocompleter;
 use App\Entity\TableHistory;
 use App\Entity\User;
 use App\Repository\ArgCodeInputRepository;
@@ -196,7 +195,7 @@ class ArgController extends AbstractController
 
             try {
                 $datetime = new DateTimeImmutable($time);
-            } catch (Exception $e) {
+            } catch (Exception) {
                 $this->addFlash('error', 'Invalid date specified for file ' . $count . '.');
                 return $this->redirectToRoute('argBackend');
             }

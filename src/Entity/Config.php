@@ -3,7 +3,6 @@ namespace App\Entity;
 
 use DateTime;
 use DateTimeZone;
-use Exception;
 use Moment\Moment;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -77,23 +76,23 @@ class Config
      */
     private array $navbarItems = ['config' => ['label' => 'Config', 'order' => 1]];
 
-    public function getVotingStart(): DateTime
+    public function getVotingStart(): ?DateTime
     {
         return $this->votingStart;
     }
 
-    public function setVotingStart(DateTime $votingStart): Config
+    public function setVotingStart(?DateTime $votingStart): Config
     {
         $this->votingStart = $votingStart;
         return $this;
     }
 
-    public function getVotingEnd(): DateTime
+    public function getVotingEnd(): ?DateTime
     {
         return $this->votingEnd;
     }
 
-    public function setVotingEnd(DateTime $votingEnd): Config
+    public function setVotingEnd(?DateTime $votingEnd): Config
     {
         $this->votingEnd = $votingEnd;
         return $this;
@@ -151,7 +150,7 @@ class Config
         $diff = $moment->fromNow()->setDirection('+');
 
         if ($diff->getSeconds() <= 120) {
-            return (int)$diff->getSeconds() . ' second' . ((int)$diff->getSeconds() === 1 ? '' : 's');
+            return $diff->getSeconds() . ' second' . ($diff->getSeconds() === 1 ? '' : 's');
         } elseif ($diff->getMinutes() <= 120) {
             return (int)$diff->getMinutes() . ' minutes';
         } elseif ($diff->getHours() <= 48) {
@@ -161,12 +160,12 @@ class Config
         }
     }
 
-    public function getStreamTime(): DateTime
+    public function getStreamTime(): ?DateTime
     {
         return $this->streamTime;
     }
 
-    public function setStreamTime(DateTime $streamTime): Config
+    public function setStreamTime(?DateTime $streamTime): Config
     {
         $this->streamTime = $streamTime;
         return $this;

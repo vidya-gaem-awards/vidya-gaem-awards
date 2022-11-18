@@ -5,7 +5,6 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\Common\Collections;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,10 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="steam_id", columns={"steam_id"})})
  * @ORM\Entity
  */
-class User implements UserInterface
+class User extends BaseUser
 {
-    const EVERYONE = '*';
-    const LOGGED_IN = 'logged-in';
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -109,16 +106,10 @@ class User implements UserInterface
      */
     private Collection $permissions;
 
-    private string $ipAddress;
-
-    private string $randomID;
-
     /**
      * @var Collection<Permission>|null
      */
     private ?Collection $permissionCache = null;
-
-    private ?string $votingCode;
 
     public function __construct()
     {
@@ -129,12 +120,12 @@ class User implements UserInterface
 
     public function getSteamId(): string
     {
-        return $this->getSteamIdString();
+        return $this->steamId;
     }
 
     /**
      * The getSteamId function provided by the AbstractSteamUser class returns the steam ID as an integer.
-     * This can result in a loss of precision if you're using a system or language that doesn't support 64 bit integers
+     * This can result in a loss of precision if you're using a system or language that doesn't support 64-bit integers
      * (as a Steam ID takes up a bit more than 56 bits). Unfortunately, one of these languages happens to be JavaScript,
      * which only supports 53 bits of precision. Given that we use JavaScript extensively, we need a function that
      * returns the steam ID as a string instead, which completely bypasses the issue.
@@ -301,7 +292,7 @@ class User implements UserInterface
         foreach ($this->getPermissions() as $permission) {
             $permissions->add($permission);
             foreach ($permission->getChildrenRecurvise() as $child) {
-                if (substr($child->getId(), 0, 5) !== 'LEVEL') {
+                if (!str_starts_with($child->getId(), 'LEVEL')) {
                     $permissions->add($child);
                 }
             }
@@ -322,28 +313,6 @@ class User implements UserInterface
     public function isLoggedIn(): bool
     {
         return true;
-    }
-
-    public function setIP(string $ipAddress): User
-    {
-        $this->ipAddress = $ipAddress;
-        return $this;
-    }
-
-    public function getIP(): string
-    {
-        return $this->ipAddress;
-    }
-
-    public function setRandomID(string $randomID): User
-    {
-        $this->randomID = $randomID;
-        return $this;
-    }
-
-    public function getRandomID(): ?string
-    {
-        return $this->randomID;
     }
 
     public function addLogin(Login $login): User
@@ -368,48 +337,11 @@ class User implements UserInterface
     }
 
     /**
-     * A fuzzy ID will be either a user ID (for logged in users) or an IP address (for anonymous users).
+     * A fuzzy ID will be either a user ID (for logged-in users) or an IP address (for anonymous users).
      */
     public function getFuzzyID(): string
     {
-        return $this->isLoggedIn() ? $this->getSteamIdString() : $this->getIP();
-    }
-
-    public function getVotingCode(): ?string
-    {
-        return $this->votingCode;
-    }
-
-    public function setVotingCode(?string $votingCode): User
-    {
-        $this->votingCode = $votingCode;
-        return $this;
-    }
-
-    /**
-     * @return string The current Steam nickname of the user.
-     */
-    public function getNickname(): string
-    {
-        return $this->getName();
-    }
-
-    public function setNickname(string $nickname)
-    {
-        $this->setName($nickname);
-    }
-
-    /**
-     * The username represents the unique SteamID.
-     */
-    public function setUsername(string $username)
-    {
-        $this->setSteamId($username);
-    }
-
-    public function setPassword(string $password)
-    {
-        // Do nothing
+        return $this->getSteamId();
     }
 
     /**
@@ -447,49 +379,13 @@ class User implements UserInterface
     }
 
     /**
-     * Returns the password used to authenticate the user.
-     *
-     * This should be the encoded password. On authentication, a plain-text
-     * password will be salted, encoded, and then compared to this value.
-     *
-     * @return string The password
-     */
-    public function getPassword(): string
-    {
-        return '';
-    }
-
-    /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
-     *
-     * @return string|null The salt
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
      * Returns the username used to authenticate the user.
      *
      * @return string The username
      */
     public function getUserIdentifier(): string
     {
-        return $this->getSteamIdString();
-    }
-
-    /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
-     */
-    public function eraseCredentials()
-    {
-        // Do nothing
+        return $this->getSteamId();
     }
 
     public function getId(): int

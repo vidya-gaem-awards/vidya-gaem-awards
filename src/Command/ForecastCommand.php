@@ -1,22 +1,14 @@
 <?php
 namespace App\Command;
 
-use App\Entity\Access;
 use App\Entity\Award;
-use App\Entity\FantasyPrediction;
-use App\Entity\FantasyUser;
 use App\Entity\ResultCache;
 use App\Entity\Vote;
-use App\Entity\VotingCodeLog;
-use App\Service\ConfigService;
-use App\Service\CronJobService;
 use App\Service\ResultsService;
-use App\VGA\ResultCalculator\Schulze;
 use App\VGA\Timer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ForecastCommand extends Command
@@ -53,8 +45,8 @@ class ForecastCommand extends Command
     private OutputInterface $output;
 
     public function __construct(
-        private EntityManagerInterface $em,
-        private ResultsService $resultsService
+        private readonly EntityManagerInterface $em,
+        private readonly ResultsService $resultsService
     ) {
         parent::__construct();
     }

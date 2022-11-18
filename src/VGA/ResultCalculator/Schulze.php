@@ -40,8 +40,8 @@ class Schulze extends AbstractResultCalculator
                 // Set initial matrix value
                 $pairwise[$candidateX][$candidateY] = 0;
 
-                // Iterate through iterate through each voter
-                foreach ($votes as $key => $vote) {
+                // Iterate through each voter
+                foreach ($votes as $vote) {
                     // Check if the user voted for the candidates we're comparing
                     $noVoteForX = !in_array($candidateX, $vote);
                     $noVoteForY = !in_array($candidateY, $vote);
@@ -51,7 +51,7 @@ class Schulze extends AbstractResultCalculator
                      * dislike them equally. As such, we don't make any change to the pairwise matrix.
                      *
                      * If the user only voted for one of the candidates, we put the other one at index 1000 to indicate
-                     * that they liked them less than all of the other candidates they voted for.
+                     * that they liked them less than all the other candidates they voted for.
                      */
                     if ($noVoteForX && $noVoteForY) {
                         continue;

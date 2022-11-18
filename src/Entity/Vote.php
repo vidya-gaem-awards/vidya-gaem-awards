@@ -144,7 +144,7 @@ class Vote
         return $this->award;
     }
 
-    public function setUser(User|AnonymousUser|null $user = null): Vote
+    public function setUser(?BaseUser $user = null): Vote
     {
         if ($user->isLoggedIn()) {
             $this->user = $user;

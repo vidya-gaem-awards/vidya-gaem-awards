@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use DateTime;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 

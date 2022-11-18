@@ -172,13 +172,13 @@ class PeopleController extends AbstractController
 
         // Perform basic profile URL parsing by only keeping the characters after the last slash.
         $id = trim($post->get('id'), '/ ');
-        if (strpos($id, '/') !== false) {
+        if (str_contains($id, '/')) {
             $id = substr($id, strrpos($id, '/') + 1);
         }
 
         try {
             $steam = SteamId::create($id);
-        } catch (SteamCondenserException $e) {
+        } catch (SteamCondenserException) {
             return $this->json(['error' => 'no matches']);
         }
 
@@ -241,7 +241,7 @@ class PeopleController extends AbstractController
             'success' => true,
             'name' => $user->getName(),
             'avatar' => $user->getAvatar(),
-            'steamID' => $user->getSteamIdString()
+            'steamID' => $user->getSteamId()
         ]);
     }
 }

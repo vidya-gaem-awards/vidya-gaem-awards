@@ -2,7 +2,6 @@
 namespace App\Entity;
 
 use DateTime;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,7 +41,7 @@ class UserNomination
      */
     private Award $award;
 
-    public function __construct(Award $award, User|AnonymousUser $user, string $nomination)
+    public function __construct(Award $award, BaseUser $user, string $nomination)
     {
         $this->award = $award;
         $this->user = $user->getFuzzyID();

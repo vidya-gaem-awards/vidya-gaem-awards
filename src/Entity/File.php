@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
-use RandomLib\Factory;
 
 /**
  * @ORM\Table(name="files")
@@ -103,7 +102,7 @@ class File implements JsonSerializable
     }
 
     /**
-     * @return string Returns the path of the file relative to the uploads directory.
+     * @return string Returns the path of the file relative to the upload directory.
      */
     public function getRelativePath(): string
     {

@@ -2,16 +2,11 @@
 namespace App\Command;
 
 use App\Entity\Award;
-use App\Entity\ResultCache;
-use App\Entity\Vote;
-use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\VGA\ResultCalculator\Schulze;
-use App\VGA\Timer;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class ImageCheckCommand extends Command

@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,19 +30,12 @@ class AwardFeedback
      */
     private Award $award;
 
-    /**
-     * @param Award $award
-     * @param User|AnonymousUser $user
-     */
-    public function __construct(Award $award, User|AnonymousUser $user)
+    public function __construct(Award $award, BaseUser $user)
     {
         $this->award = $award;
         $this->user = $user->getFuzzyID();
     }
 
-    /**
-     * @return AwardFeedback
-     */
     public function setUser(string $user): AwardFeedback
     {
         $this->user = $user;

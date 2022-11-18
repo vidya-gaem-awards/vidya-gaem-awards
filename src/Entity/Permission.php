@@ -147,7 +147,7 @@ class Permission
      */
     public function getChildren(): Collection
     {
-        if (substr($this->getId(), 0, 5) !== 'LEVEL') {
+        if (!str_starts_with($this->getId(), 'LEVEL')) {
             return new ArrayCollection();
         }
         return $this->children;

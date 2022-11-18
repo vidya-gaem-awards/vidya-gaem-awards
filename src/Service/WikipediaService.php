@@ -286,7 +286,7 @@ class WikipediaService
                 // TODO: detect whether there's a year in parentheses that doesn't match the current year
                 $text = preg_replace('/\(.*?\)/', '', $text);
                 // Removes citation markers
-                $text = preg_replace('/\[\d+\]/', '', $text);
+                $text = preg_replace('/\[\d+]/', '', $text);
                 $platforms = explode(', ', $text);
 
                 foreach ($platforms as $platform) {
@@ -300,7 +300,7 @@ class WikipediaService
     }
 
     /**
-     * This function supports the table style used from 2007 onwards (with the exception of 2011).
+     * This function supports the table style used from 2007 onwards (except for 2011).
      * @param Crawler $crawler
      * @param int $year
      * @return array
@@ -322,7 +322,7 @@ class WikipediaService
             $modifier = 3;
         }
 
-        $tables = $crawler->filter('.wikitable')->reduce(function (Crawler $node, $i) use ($year) {
+        $tables = $crawler->filter('.wikitable')->reduce(function (Crawler $node) use ($year) {
             $cells = $node->filter('th');
             if ($cells->count() === 0) {
                 $cells = $node->filter('tr:first-child td');
@@ -409,7 +409,7 @@ class WikipediaService
             $this->em->flush();
         }
 
-        array_walk($games, function (&$value, $key) {
+        array_walk($games, function (&$value) {
             $value = $this->normalisePlatforms($value, $this->getGameReleasePlatformMap());
         });
         ksort($games);
@@ -436,7 +436,7 @@ class WikipediaService
      */
     public function getStringListForAutocompleter(array $games): array
     {
-        array_walk($games, function (&$value, $key) {
+        array_walk($games, function (&$value) {
             $value = $this->normalisePlatforms($value, $this->getUserReadablePlatformMap());
         });
 

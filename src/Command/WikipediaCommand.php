@@ -2,7 +2,6 @@
 namespace App\Command;
 
 use App\Entity\Autocompleter;
-use App\Entity\GameRelease;
 use App\Service\ConfigService;
 use App\Service\WikipediaService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,7 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DomCrawler\Crawler;
 
 class WikipediaCommand extends Command
 {

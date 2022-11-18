@@ -2,7 +2,6 @@
 namespace App\Entity;
 
 use DateTime;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -62,9 +61,9 @@ class VotingCodeLog
         return $this->user;
     }
 
-    public function setUser(User|AnonymousUser $user): VotingCodeLog
+    public function setUser(BaseUser $user): VotingCodeLog
     {
-        if ($user->isLoggedIn()) {
+        if ($user instanceof User) {
             $this->user = $user;
         }
         $this->ip = $user->getIP();

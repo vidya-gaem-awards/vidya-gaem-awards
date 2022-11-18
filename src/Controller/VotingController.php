@@ -464,7 +464,7 @@ class VotingController extends AbstractController
         //hash the seed to ensure enough random(ish) characters each time
         $hash = sha1($seed);
 
-        //use the first x characters, and convert from hex to base 10 (this is where the random number is obtain)
+        //use the first x characters, and convert from hex to base 10 (this is where the random number is obtained)
         $rand = base_convert(substr($hash, 0, 6), 16, 10);
 
         //as a decimal percentage (ensures between 0 and max number)

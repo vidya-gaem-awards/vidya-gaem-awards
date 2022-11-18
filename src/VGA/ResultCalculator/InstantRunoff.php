@@ -15,7 +15,7 @@ class InstantRunoff extends AbstractResultCalculator
         $roundsRequired = count($candidates) - 1;
         $currentRound = 0;
 
-        foreach ($votes as $key => $vote) {
+        foreach ($votes as $vote) {
             $firstPref[$vote[1]]++;
         }
 
@@ -52,7 +52,7 @@ class InstantRunoff extends AbstractResultCalculator
                 $lowestKey = $preferencesLeft[0];
                 if ($vote[$lowestKey] == $lowest) {
 
-                    // Find the second lowest preference still available
+                    // Find the second-lowest preference still available
                     if (isset($preferencesLeft[1])) {
                         $secondLowestKey = $preferencesLeft[1];
                         $firstPref[$vote[$secondLowestKey]]++;

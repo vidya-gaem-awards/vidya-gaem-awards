@@ -10,7 +10,7 @@ class CronJobService
 {
     private string $commandLine;
     private CrontabRepository $crontab;
-    private CrontabJob $job;
+    private ?CrontabJob $job = null;
     private bool $available;
 
     public function __construct(string $projectDir, bool $enabled)

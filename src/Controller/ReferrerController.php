@@ -52,21 +52,21 @@ class ReferrerController extends AbstractController
             $referer['type'] = false;
             $key = $this->cleanUrlPreCompare($referer['referer']);
 
-            if (substr($key, 0, 14) === 'android-app://') {
+            if (str_starts_with($key, 'android-app://')) {
                 $class = 'info';
                 $referer['referer'] = str_replace('android-app://', '', $referer['referer']);
                 $referer['type'] = 'android';
-            } elseif (strpos($key, '4chan.org') !== false || strpos($key, '4channel.org') !== false) {
+            } elseif (str_contains($key, '4chan.org') || str_contains($key, '4channel.org')) {
                 $class = 'success';
-            } elseif (substr($key, 0, 10) === 'reddit.com') {
+            } elseif (str_starts_with($key, 'reddit.com')) {
                 $class = 'danger';
             } else {
                 $class = 'warning';
             }
 
-            if (substr($key, 0, 5) === 't.co/') {
+            if (str_starts_with($key, 't.co/')) {
                 $referer['type'] = 'twitter';
-            } elseif (substr($key, 0, 15) === 'discordapp.com/') {
+            } elseif (str_starts_with($key, 'discordapp.com/')) {
                 $referer['type'] = 'discord';
             }
 
@@ -80,7 +80,7 @@ class ReferrerController extends AbstractController
             }
         }
 
-        // We may have to redo the sort after combining some of the referers
+        // We may have to redo the sort after combining some referers
         usort($referrers, function ($a, $b) {
             $total = $b['total'] <=> $a['total'];
             if ($total !== 0) {
@@ -156,7 +156,7 @@ class ReferrerController extends AbstractController
         }
 
         // Remove links to individual posts from the end of Knockout URLs
-        if (preg_match('{knockout\.chat\/thread\/}', $referrer)) {
+        if (preg_match('{knockout\.chat/thread/}', $referrer)) {
             $referrer = preg_replace('{#post-.+}', '', $referrer);
         }
 

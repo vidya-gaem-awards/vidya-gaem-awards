@@ -3,11 +3,9 @@
 namespace App\Security;
 
 use App\Entity\AnonymousUser;
-use App\Entity\User;
 use RandomLib\Factory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
@@ -18,7 +16,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class AnonymousAuthenticator extends AbstractAuthenticator
 {
-    public function __construct(private string $secret, private Security $security)
+    public function __construct(
+        private readonly string $secret,
+        private readonly Security $security)
     {
     }
 

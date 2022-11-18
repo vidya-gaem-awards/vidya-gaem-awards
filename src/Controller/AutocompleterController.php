@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class AutocompleterController extends AbstractController
 {
@@ -79,7 +78,7 @@ class AutocompleterController extends AbstractController
                 $autocompleter = new Autocompleter();
                 try {
                     $autocompleter->setId($id);
-                } catch (Exception $e) {
+                } catch (Exception) {
                     return $this->json(['error' => 'Invalid autocompleter ID provided.']);
                 }
             }

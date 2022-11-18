@@ -35,7 +35,7 @@ class NavbarService
 
         $items = $this->configService->getConfig()->getNavbarItems();
         foreach ($items as $routeName => $details) {
-            if (substr($routeName, 0, 8) === 'dropdown') {
+            if (str_starts_with($routeName, 'dropdown')) {
                 $navbar[$routeName] = new NavbarItem($details);
                 continue;
             }
@@ -49,7 +49,7 @@ class NavbarService
                 $title = $title[0];
             }
 
-            if ($route = $this->router->getRouteCollection()->get($routeName)) {
+            if ($this->router->getRouteCollection()->get($routeName)) {
                 if ($this->canAccessRoute($routeName)) {
                     $item = new NavbarItem(['label' => $title, 'order' => $details['order']], $routeName);
                     if ($dropdown) {

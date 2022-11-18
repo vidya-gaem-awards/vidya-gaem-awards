@@ -99,8 +99,7 @@ class InitialiseDatabaseCommand extends Command
                 return false;
             }
 
-            $steam = SteamId::create($answer);
-            return $steam;
+            return SteamId::create($answer);
         });
 
         $steam = $helper->ask($input, $output, $question);

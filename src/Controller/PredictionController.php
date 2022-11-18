@@ -1,10 +1,8 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Advertisement;
 use App\Entity\FantasyPrediction;
 use App\Entity\FantasyUser;
-use App\Entity\LootboxItem;
 use App\Entity\TableHistory;
 use App\Entity\User;
 use App\Service\AuditService;
@@ -13,9 +11,7 @@ use App\Service\FileService;
 use App\Service\PredictionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use RandomLib\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,16 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use App\Entity\Action;
 use App\Entity\Award;
-use App\Entity\Config;
 use App\Entity\Nominee;
-use App\Entity\Vote;
-use App\Entity\VotingCodeLog;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class PredictionController extends AbstractController
 {
@@ -95,7 +85,7 @@ class PredictionController extends AbstractController
         ]);
     }
 
-    public function rules(EntityManagerInterface $em): Response
+    public function rules(): Response
     {
         return $this->render('predictionRules.twig', [
             'page' => 'rules'

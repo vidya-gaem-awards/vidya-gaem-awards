@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Entity\Action;
-use App\Entity\Award;
 use App\Entity\LootboxItem;
 use App\Entity\LootboxTier;
 use App\Entity\TableHistory;
@@ -15,12 +14,10 @@ use App\Service\LootboxService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\News;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class LootboxController extends AbstractController
 {

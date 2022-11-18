@@ -91,7 +91,7 @@ class ConfigController extends AbstractController
         } else {
             try {
                 $config->setVotingStart(new DateTime($post->get('votingStart')));
-            } catch (Exception $e) {
+            } catch (Exception) {
                 $this->addFlash('error', 'Invalid date provided for voting start.');
                 $error = true;
             }
@@ -102,7 +102,7 @@ class ConfigController extends AbstractController
         } else {
             try {
                 $config->setVotingEnd(new DateTime($post->get('votingEnd')));
-            } catch (Exception $e) {
+            } catch (Exception) {
                 $this->addFlash('error', 'Invalid date provided for voting end.');
                 $error = true;
             }
@@ -113,7 +113,7 @@ class ConfigController extends AbstractController
         } else {
             try {
                 $config->setStreamTime(new DateTime($post->get('streamTime')));
-            } catch (Exception $e) {
+            } catch (Exception) {
                 $this->addFlash('error', 'Invalid date provided for stream time.');
                 $error = true;
             }
@@ -146,7 +146,7 @@ class ConfigController extends AbstractController
         $navbarError = false;
         $validRoutes = $this->getValidNavbarRoutes($router->getRouteCollection());
         foreach ($navbarItemsOrdered as $routeName => $details) {
-            if (substr($routeName, 0, 8) === 'dropdown') {
+            if (str_starts_with($routeName, 'dropdown')) {
                 continue;
             }
             if (!isset($validRoutes[$routeName])) {

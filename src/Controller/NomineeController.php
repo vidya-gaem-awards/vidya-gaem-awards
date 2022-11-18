@@ -10,7 +10,6 @@ use League\Csv\Writer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Action;
 use App\Entity\Award;
@@ -206,7 +205,7 @@ class NomineeController extends AbstractController
             }
         }
 
-        $response = new Response($csv->getContent());
+        $response = new Response($csv->toString());
         $disposition = HeaderUtils::makeDisposition(
             HeaderUtils::DISPOSITION_ATTACHMENT,
             'vga-2022-award-nominees.csv'
@@ -247,7 +246,7 @@ class NomineeController extends AbstractController
             }
         }
 
-        $response = new Response($csv->getContent());
+        $response = new Response($csv->toString());
         $disposition = HeaderUtils::makeDisposition(
             HeaderUtils::DISPOSITION_ATTACHMENT,
             'vga-2022-user-nominations.csv'

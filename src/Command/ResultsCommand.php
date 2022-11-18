@@ -3,7 +3,6 @@ namespace App\Command;
 
 use App\Entity\Access;
 use App\Entity\Award;
-use App\Entity\FantasyPrediction;
 use App\Entity\FantasyUser;
 use App\Entity\ResultCache;
 use App\Entity\Vote;
@@ -172,7 +171,7 @@ class ResultsCommand extends Command
             'kiwifarms.net' => 2 ** 13,
         ];
 
-        foreach ($voters as $id => &$info) {
+        foreach ($voters as &$info) {
             $number = 0;
 
             // If user has a voting code
@@ -210,6 +209,8 @@ class ResultsCommand extends Command
 
             $info['number'] = $number;
         }
+
+        unset($info);
 
         $numberTotals = [];
         foreach ($voters as $info) {
@@ -381,6 +382,6 @@ class ResultsCommand extends Command
 
     private static function startsWith($haystack, $needle): bool
     {
-        return substr($haystack, 0, strlen($needle)) === $needle;
+        return str_starts_with($haystack, $needle);
     }
 }

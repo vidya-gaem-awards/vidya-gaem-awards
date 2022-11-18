@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Entity\AwardSuggestion;
-use App\Entity\TableHistory;
 use App\Entity\User;
 use App\Service\AuditService;
 use App\Service\ConfigService;

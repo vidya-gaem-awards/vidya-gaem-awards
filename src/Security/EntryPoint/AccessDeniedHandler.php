@@ -14,7 +14,10 @@ use Twig\Environment;
 
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
-    public function __construct(private Security $security, private RouterInterface $router, private Environment $twig)
+    public function __construct(
+        private readonly Security $security,
+        private readonly RouterInterface $router,
+        private readonly Environment $twig)
     {
     }
 

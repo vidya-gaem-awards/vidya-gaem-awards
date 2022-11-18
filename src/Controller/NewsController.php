@@ -51,7 +51,7 @@ class NewsController extends AbstractController
         } else {
             try {
                 $date = new DateTime($post->get('date'));
-            } catch (Exception $e) {
+            } catch (Exception) {
                 $this->addFlash('error', 'Invalid date provided.');
                 return $this->redirectToRoute('news');
             }
