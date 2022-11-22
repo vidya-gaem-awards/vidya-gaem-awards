@@ -6,8 +6,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class BaseUser implements UserInterface
 {
-    protected ?string $ipAddress;
-    protected ?string $randomID;
+    protected ?string $ipAddress = null;
+    protected ?string $randomID = null;
     protected ?string $votingCode = null;
 
     public function setIP(?string $ipAddress): self
