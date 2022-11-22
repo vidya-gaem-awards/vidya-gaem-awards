@@ -127,7 +127,7 @@ class ConfigController extends AbstractController
 //        }
 
         $config->setDefaultPage($post->get('defaultPage'));
-        $config->setPublicPages(array_keys($post->get('publicPages', [])));
+        $config->setPublicPages(array_keys($post->all('publicPages') ?: []));
 
         $navbarItems = explode("\n", $post->get('navigationMenu'));
         $navbarItems = array_map(function ($line) {

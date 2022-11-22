@@ -26,7 +26,7 @@ class ConfigService
             $this->config = $this->em->getRepository(Config::class)->findOneBy([]);
         }
 
-        if ($this->config) {
+        if (!$this->config) {
             throw new Exception('The configuration couldn\'t be loaded from the database.');
         }
 

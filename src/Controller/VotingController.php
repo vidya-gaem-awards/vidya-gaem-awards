@@ -293,7 +293,7 @@ class VotingController extends AbstractController
             return $this->json(['error' => 'Invalid award specified.']);
         }
 
-        $preferences = $request->request->get('preferences', ['']);
+        $preferences = $request->request->all('preferences') ?: [''];
 
         // Remove blank preferences and recreate the key ordering.
         $preferences = array_values(array_filter($preferences));
