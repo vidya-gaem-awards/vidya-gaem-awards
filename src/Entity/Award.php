@@ -342,7 +342,7 @@ class Award implements JsonSerializable
         $this->votes->removeElement($vote);
     }
 
-    public function getVotes(): arrayCollection
+    public function getVotes(): Collection
     {
         return $this->votes;
     }
@@ -359,7 +359,7 @@ class Award implements JsonSerializable
         $this->resultCache->removeElement($resultCache);
     }
 
-    public function getResultCache(): arrayCollection|array
+    public function getResultCache(): Collection
     {
         return $this->resultCache;
     }

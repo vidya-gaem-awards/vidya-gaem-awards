@@ -38,7 +38,7 @@ class LootboxTier implements JsonSerializable, DropChance
     /**
      * @ORM\OneToMany(targetEntity=LootboxItem::class, mappedBy="tier")
      */
-    private ArrayCollection $items;
+    private Collection $items;
 
     public function __construct()
     {
