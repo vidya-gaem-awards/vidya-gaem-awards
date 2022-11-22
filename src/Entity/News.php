@@ -61,14 +61,14 @@ class News
         return $this->id;
     }
 
-    public function setHeadline(string $headline): News
+    public function setHeadline(?string $headline): News
     {
         $this->headline = $headline;
 
         return $this;
     }
 
-    public function getHeadline(): string
+    public function getHeadline(): ?string
     {
         return $this->headline;
     }

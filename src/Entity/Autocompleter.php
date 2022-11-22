@@ -31,7 +31,7 @@ class Autocompleter
     private array $strings = [];
 
     /**
-     * @var Collection<Award>
+     * @var Collection<array-key, Award>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Award", mappedBy="autocompleter")
      */
@@ -87,7 +87,7 @@ class Autocompleter
     }
 
     /**
-     * @return Collection<Award>
+     * @return Collection<array-key, Award>
      */
     public function getAwards(): Collection
     {

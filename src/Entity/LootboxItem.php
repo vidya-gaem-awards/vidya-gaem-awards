@@ -60,7 +60,7 @@ class LootboxItem implements JsonSerializable, DropChance
     private ?string $cssContents;
 
     /**
-     * @var Collection<UserInventoryItem>
+     * @var Collection<array-key, UserInventoryItem>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserInventoryItem", mappedBy="item")
      */
@@ -214,7 +214,7 @@ class LootboxItem implements JsonSerializable, DropChance
     }
 
     /**
-     * @return Collection<UserInventoryItem>
+     * @return Collection<array-key, UserInventoryItem>
      */
     public function getUserItems(): Collection
     {

@@ -87,7 +87,7 @@ class LootboxTier implements JsonSerializable, DropChance
     }
 
     /**
-     * @return Collection<LootboxItem>
+     * @return Collection<array-key, LootboxItem>
      */
     public function getItems(): Collection
     {

@@ -30,7 +30,7 @@ class Filter
     private int $value;
 
     /**
-     * @var Collection<ResultCache>
+     * @var Collection<array-key, ResultCache>
      */
     private Collection $resultCache;
 

@@ -45,6 +45,8 @@ abstract class BaseUser implements UserInterface
 
     abstract public function getFuzzyID(): string;
 
+    abstract public function isLoggedIn(): bool;
+
     public function eraseCredentials() {
         // do nothing
     }

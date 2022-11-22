@@ -108,26 +108,26 @@ class Vote
         return $this->ip;
     }
 
-    public function setVotingCode(string $votingCode): Vote
+    public function setVotingCode(?string $votingCode): Vote
     {
         $this->votingCode = $votingCode;
 
         return $this;
     }
 
-    public function getVotingCode(): string
+    public function getVotingCode(): ?string
     {
         return $this->votingCode;
     }
 
-    public function setNumber(int $number): Vote
+    public function setNumber(?int $number): Vote
     {
         $this->number = $number;
 
         return $this;
     }
 
-    public function getNumber(): int
+    public function getNumber(): ?int
     {
         return $this->number;
     }

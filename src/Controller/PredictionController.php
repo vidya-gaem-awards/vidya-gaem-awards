@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\BaseUser;
 use App\Entity\FantasyPrediction;
 use App\Entity\FantasyUser;
 use App\Entity\TableHistory;
@@ -98,13 +99,14 @@ class PredictionController extends AbstractController
             return $this->redirectToRoute('predictionLeaderboard');
         }
 
-        /** @var User $user */
+        /** @var BaseUser $user */
         $user = $this->getUser();
         if (!$user->isLoggedIn() || !$request->get('nonce') || $request->get('nonce') !== $session->get('nonce')) {
             return $this->redirectToRoute('predictions');
         }
 
-        if (!$this->getUser()->getFantasyUser()) {
+        /** @var User $user */
+        if (!$user->getFantasyUser()) {
             $fantasyUser = new FantasyUser();
             $fantasyUser->setUser($user);
             $em->persist($fantasyUser);

@@ -58,14 +58,14 @@ class Award implements JsonSerializable
     private bool $secret;
 
     /**
-     * @var Collection<AwardFeedback>
+     * @var Collection<array-key, AwardFeedback>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\AwardFeedback", mappedBy="award", cascade={"remove"})
      */
     private Collection $feedback;
 
     /**
-     * @var Collection<AwardSuggestion>
+     * @var Collection<array-key, AwardSuggestion>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\AwardSuggestion", mappedBy="award", cascade={"remove"})
      * @ORM\OrderBy({
@@ -75,7 +75,7 @@ class Award implements JsonSerializable
     private Collection $suggestions;
 
     /**
-     * @var Collection<Nominee>
+     * @var Collection<array-key, Nominee>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Nominee", mappedBy="award", cascade={"remove"})
      * @ORM\OrderBy({
@@ -85,28 +85,28 @@ class Award implements JsonSerializable
     private Collection $nominees;
 
     /**
-     * @var Collection<UserNomination>
+     * @var Collection<array-key, UserNomination>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserNomination", mappedBy="award", cascade={"remove"})
      */
     private Collection $userNominations;
 
     /**
-     * @var Collection<Vote>
+     * @var Collection<array-key, Vote>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="award", cascade={"remove"})
      */
     private Collection $votes;
 
     /**
-     * @var Collection<ResultCache>
+     * @var Collection<array-key, ResultCache>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\ResultCache", mappedBy="award", cascade={"remove"})
      */
     private Collection $resultCache;
 
     /**
-     * @var Collection<FantasyPrediction>
+     * @var Collection<array-key, FantasyPrediction>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="award", cascade={"remove"})
      */
@@ -192,14 +192,14 @@ class Award implements JsonSerializable
         return $this->order;
     }
 
-    public function setComments(string $comments): Award
+    public function setComments(?string $comments): Award
     {
         $this->comments = $comments;
 
         return $this;
     }
 
-    public function getComments(): string
+    public function getComments(): ?string
     {
         return $this->comments;
     }

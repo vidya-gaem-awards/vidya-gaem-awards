@@ -93,14 +93,14 @@ class VotingCodeLog
         return $this;
     }
 
-    public function getReferer(): string
+    public function getReferer(): ?string
     {
         return $this->referer;
     }
 
-    public function setReferer(string $referer): VotingCodeLog
+    public function setReferer(?string $referer): VotingCodeLog
     {
-        $this->referer = mb_substr($referer, 0, 190);
+        $this->referer = ($referer !== null ? mb_substr($referer, 0, 190) : null);
         return $this;
     }
 

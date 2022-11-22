@@ -48,7 +48,7 @@ class Nominee implements JsonSerializable
     private string $flavorText;
 
     /**
-     * @var Collection<FantasyPrediction>
+     * @var Collection<array-key, FantasyPrediction>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="nominee")
      */
@@ -141,7 +141,7 @@ class Nominee implements JsonSerializable
     }
 
     /**
-     * @return Collection<FantasyPrediction>
+     * @return Collection<array-key, FantasyPrediction>
      */
     public function getFantasyPredictions(): Collection
     {

@@ -70,7 +70,7 @@ class FantasyUser
     private User $user;
 
     /**
-     * @var Collection<FantasyPrediction>
+     * @var Collection<array-key, FantasyPrediction>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="fantasyUser")
      */
@@ -136,7 +136,7 @@ class FantasyUser
     }
 
     /**
-     * @return Collection<FantasyPrediction>
+     * @return Collection<array-key, FantasyPrediction>
      */
     public function getPredictions(): Collection
     {
@@ -196,7 +196,7 @@ class FantasyUser
         return $this;
     }
 
-    public function getImageToken(): string
+    public function getImageToken(): ?string
     {
         return $this->imageToken;
     }

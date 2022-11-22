@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -78,21 +79,21 @@ class User extends BaseUser
     private ?FantasyUser $fantasyUser;
 
     /**
-     * @var Collection<Vote>
+     * @var Collection<array-key, Vote>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="user")
      */
     private Collection $votes;
 
     /**
-     * @var Collection<Login>
+     * @var Collection<array-key, Login>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Login", mappedBy="user")
      */
     private Collection $logins;
 
     /**
-     * @var Collection<Permission>
+     * @var Collection<array-key, Permission>
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Permission", inversedBy="users")
      * @ORM\JoinTable(name="user_permissions",
@@ -107,7 +108,7 @@ class User extends BaseUser
     private Collection $permissions;
 
     /**
-     * @var Collection<Permission>|null
+     * @var Collection<array-key, Permission>|null
      */
     private ?Collection $permissionCache = null;
 
@@ -189,62 +190,62 @@ class User extends BaseUser
         return $this->lastLogin;
     }
 
-    public function setPrimaryRole(string $primaryRole): User
+    public function setPrimaryRole(?string $primaryRole): User
     {
         $this->primaryRole = $primaryRole;
 
         return $this;
     }
 
-    public function getPrimaryRole(): string
+    public function getPrimaryRole(): ?string
     {
         return $this->primaryRole;
     }
 
-    public function setEmail(string $email): User
+    public function setEmail(?string $email): User
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setNotes(string $notes): User
+    public function setNotes(?string $notes): User
     {
         $this->notes = $notes;
 
         return $this;
     }
 
-    public function getNotes(): string
+    public function getNotes(): ?string
     {
         return $this->notes;
     }
 
-    public function setWebsite(string $website): User
+    public function setWebsite(?string $website): User
     {
         $this->website = $website;
 
         return $this;
     }
 
-    public function getWebsite(): string
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
 
-    public function setAvatar(string $avatar): User
+    public function setAvatar(?string $avatar): User
     {
         $this->avatar = $avatar;
 
         return $this;
     }
 
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
@@ -279,7 +280,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return Collection<Permission>
+     * @return Collection<array-key, Permission>
      */
     public function getPermissions(): Collection
     {
@@ -288,7 +289,8 @@ class User extends BaseUser
 
     private function populatePermissionCache()
     {
-        $permissions = new Collections\ArrayCollection();
+        /** @var Collection<array-key, Permission> $permissions */
+        $permissions = new ArrayCollection();
         foreach ($this->getPermissions() as $permission) {
             $permissions->add($permission);
             foreach ($permission->getChildrenRecurvise() as $child) {
@@ -329,7 +331,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return Collection<Login>
+     * @return Collection<array-key, Login>
      */
     public function getLogins(): Collection
     {

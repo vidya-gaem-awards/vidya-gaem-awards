@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ArgCodeInputRepository::class)
+ * @ORM\Entity
  */
 class ArgCodeInput
 {

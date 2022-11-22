@@ -6,7 +6,7 @@ use App\Repository\ArgConfigRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ArgConfigRepository::class)
+ * @ORM\Entity
  */
 class ArgConfig
 {

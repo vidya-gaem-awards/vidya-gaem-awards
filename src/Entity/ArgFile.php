@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ArgFileRepository::class)`
+ * @ORM\Entity
  * @ORM\Table(name="arg_files")
  */
 class ArgFile

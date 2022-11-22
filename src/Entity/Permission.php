@@ -70,7 +70,7 @@ class Permission
     private string $description;
 
     /**
-     * @var Collection<Permission>
+     * @var Collection<array-key, Permission>
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Permission", inversedBy="parents")
      * @ORM\JoinTable(name="permission_children",
@@ -85,14 +85,14 @@ class Permission
     private Collection $children;
 
     /**
-     * @var Collection<Permission>
+     * @var Collection<array-key, Permission>
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Permission", mappedBy="children")
      */
     private Collection $parents;
 
     /**
-     * @var Collection<User>
+     * @var Collection<array-key, User>
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="permissions")
      */
@@ -143,7 +143,7 @@ class Permission
 
     /**
      * To avoid unnecessary database calls, we assume a permission can only have children if it's a LEVEL permission.
-     * @return Collection<Permission>
+     * @return Collection<array-key, Permission>
      */
     public function getChildren(): Collection
     {
@@ -154,10 +154,11 @@ class Permission
     }
 
     /**
-     * @return Collection<Permission>
+     * @return Collection<array-key, Permission>
      */
     public function getChildrenRecurvise(): Collection
     {
+        /** @var Collection<array-key, Permission> $permissions */
         $permissions = new ArrayCollection();
 
         foreach ($this->getChildren() as $child) {
@@ -188,7 +189,7 @@ class Permission
     }
 
     /**
-     * @return Collection<Permission>
+     * @return Collection<array-key, Permission>
      */
     public function getParents(): Collection
     {

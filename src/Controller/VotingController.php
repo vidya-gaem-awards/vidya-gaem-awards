@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Advertisement;
+use App\Entity\BaseUser;
 use App\Entity\LootboxItem;
 use App\Entity\LootboxTier;
 use App\Entity\User;
@@ -46,7 +47,7 @@ class VotingController extends AbstractController
         PredictionService $predictionService
     ): RedirectResponse|Response
     {
-        /** @var User $user */
+        /** @var BaseUser $user */
 
         /** @var Award[] $awards */
         $awards = $em->createQueryBuilder()
@@ -316,7 +317,7 @@ class VotingController extends AbstractController
             );
         }
 
-        /** @var User $user */
+        /** @var BaseUser $user */
 
         $query = $em->createQueryBuilder()
             ->select('v')
