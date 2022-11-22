@@ -165,26 +165,26 @@ class User extends BaseUser
         return $this->special;
     }
 
-    public function setFirstLogin(DateTime $firstLogin): User
+    public function setFirstLogin(?DateTime $firstLogin): User
     {
         $this->firstLogin = $firstLogin;
 
         return $this;
     }
 
-    public function getFirstLogin(): DateTime
+    public function getFirstLogin(): ?DateTime
     {
         return $this->firstLogin;
     }
 
-    public function setLastLogin(DateTime $lastLogin): User
+    public function setLastLogin(?DateTime $lastLogin): User
     {
         $this->lastLogin = $lastLogin;
 
         return $this;
     }
 
-    public function getLastLogin(): DateTime
+    public function getLastLogin(): ?DateTime
     {
         return $this->lastLogin;
     }
