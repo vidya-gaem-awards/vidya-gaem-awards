@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Service\ConfigService;
 use DateTime;
+use DateTimeImmutable;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class NewsController extends AbstractController
 {
-    public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker): Response
+    public function indexAction(EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker, ConfigService $config): Response
     {
         $query = $em->createQueryBuilder()
             ->select('n, u')
@@ -32,7 +34,8 @@ class NewsController extends AbstractController
 
         return $this->render('news.html.twig', [
             'title' => 'News',
-            'news' => $news
+            'news' => $news,
+            'now' => new DateTimeImmutable('now', new DateTimeZone($config->getConfig()->getTimezone()))
         ]);
     }
 
