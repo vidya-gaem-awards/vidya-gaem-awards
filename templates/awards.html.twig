@@ -40,7 +40,6 @@
       font-size: 35px;
       color: white;
       padding: 0 10px;
-      max-width: 555px;
       text-shadow: 0 2px 0 black;
     }
 
@@ -265,11 +264,7 @@
         <a href="{{ path('videoGames') }}" target="_blank">
           <div id="video-game-collage">
             <div class="top">Forgotten what vidya you played earlier this year?</div>
-              {% if is_granted('ROLE_LEVEL_5') %}
-                <img class="img-responsive" src="{{ asset('img/blinding-collage.png') }}">
-              {% else %}
-                <img class="img-responsive" src="{{ asset('img/collage.jpg') }}">
-              {% endif %}
+              <img class="img-responsive" src="{{ asset('img/collage.png') }}">
             <div class="bottom">Click here for a list of video&nbsp;games from 2022.</div>
           </div>
         </a>
