@@ -40,7 +40,7 @@ class AwardSuggestion
         return $this->id;
     }
 
-    public function setUser(User $user): AwardSuggestion
+    public function setUser(BaseUser $user): AwardSuggestion
     {
         $this->user = $user->getFuzzyID();
 
