@@ -5,3 +5,12 @@ config:
   php: '8.1'
   via: apache:2.4
   database: mysql:8.0
+  xdebug: true
+
+services:
+  appserver:
+    overrides:
+      environment:
+        # Support debugging CLI with XDEBUG.
+        PHP_IDE_CONFIG: "serverName=lando"
+        XDEBUG_SESSION_START: lando
