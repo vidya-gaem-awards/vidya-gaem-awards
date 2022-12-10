@@ -41,42 +41,42 @@ class User extends BaseUser
     /**
      * @ORM\Column(name="firstLogin", type="datetime", nullable=true)
      */
-    private ?DateTime $firstLogin;
+    private ?DateTime $firstLogin = null;
 
     /**
      * @ORM\Column(name="lastLogin", type="datetime", nullable=true)
      */
-    private ?DateTime $lastLogin;
+    private ?DateTime $lastLogin = null;
 
     /**
      * @ORM\Column(name="primaryRole", type="string", length=255, nullable=true)
      */
-    private ?string $primaryRole;
+    private ?string $primaryRole = null;
 
     /**
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
-    private ?string $email;
+    private ?string $email = null;
 
     /**
      * @ORM\Column(name="notes", type="text", nullable=true)
      */
-    private ?string $notes;
+    private ?string $notes = null;
 
     /**
      * @ORM\Column(name="website", type="string", length=40, nullable=true)
      */
-    private ?string $website;
+    private ?string $website = null;
 
     /**
      * @ORM\Column(name="avatar", type="text", nullable=true)
      */
-    protected ?string $avatar;
+    protected ?string $avatar = null;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\FantasyUser", mappedBy="user")
      */
-    private ?FantasyUser $fantasyUser;
+    private ?FantasyUser $fantasyUser = null;
 
     /**
      * @var Collection<array-key, Vote>
