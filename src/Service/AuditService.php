@@ -33,9 +33,7 @@ class AuditService
             $action->setTableHistory($history);
         }
 
-        if ($user instanceof User) {
-            $action->setUser($user);
-        }
+        $action->setUser($user);
         $this->em->persist($action);
         $this->em->flush();
     }

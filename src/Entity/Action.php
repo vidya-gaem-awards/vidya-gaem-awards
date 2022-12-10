@@ -80,10 +80,10 @@ class Action
         return $this->id;
     }
 
-    public function setUser(User $user): Action
+    public function setUser(BaseUser $user): Action
     {
         $this->ip = $user->getIP();
-        if ($user->isLoggedIn()) {
+        if ($user instanceof User) {
             $this->user = $user;
         }
         return $this;
