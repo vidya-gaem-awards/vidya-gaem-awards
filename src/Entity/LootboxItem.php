@@ -17,7 +17,7 @@ class LootboxItem implements JsonSerializable, DropChance
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private int $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(name="short_name", type="string", length=50, nullable=false)
@@ -109,7 +109,7 @@ class LootboxItem implements JsonSerializable, DropChance
         return $this;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
