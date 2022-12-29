@@ -32,7 +32,7 @@ class LootboxItem implements JsonSerializable, DropChance
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private ?File $image;
+    private ?File $image = null;
 
     /**
      * @ORM\Column(name="css", type="boolean", nullable=false)
@@ -52,12 +52,12 @@ class LootboxItem implements JsonSerializable, DropChance
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private ?File $musicFile;
+    private ?File $musicFile = null;
 
     /**
      * @ORM\Column(name="css_contents", type="text", nullable=true)
      */
-    private ?string $cssContents;
+    private ?string $cssContents = null;
 
     /**
      * @var Collection<array-key, UserInventoryItem>
@@ -75,32 +75,32 @@ class LootboxItem implements JsonSerializable, DropChance
      * @ORM\ManyToOne(targetEntity=LootboxTier::class, inversedBy="items")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?LootboxTier $tier;
+    private ?LootboxTier $tier = null;
 
     /**
      * @ORM\Column(name="drop_chance", type="decimal", precision=10, scale=5, nullable=true)
      */
-    private ?string $dropChance;
+    private ?string $dropChance = null;
 
     /**
      * @ORM\Column(name="absolute_drop_chance", type="decimal", precision=10, scale=5, nullable=true)
      */
-    private ?string $absoluteDropChance;
+    private ?string $absoluteDropChance = null;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=5, nullable=true)
      */
-    private ?string $cachedDropValueStart;
+    private ?string $cachedDropValueStart = null;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=5, nullable=true)
      */
-    private ?string $cachedDropValueEnd;
+    private ?string $cachedDropValueEnd = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $extra;
+    private ?string $extra = null;
 
     public function setId($id): static
     {
