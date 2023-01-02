@@ -68,6 +68,11 @@ class Access
     private ?string $referer;
 
     /**
+     * @ORM\Column(name="strings", type="json", nullable=true)
+     */
+    private ?array $headers = null;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="userID", referencedColumnName="id", nullable=true)
@@ -209,6 +214,17 @@ class Access
     public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function setHeaders(array $headers): Access
+    {
+        $this->headers = $headers;
+        return $this;
+    }
+
+    public function getHeaders(): ?array
+    {
+        return $this->headers;
     }
 }
 
