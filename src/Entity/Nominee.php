@@ -40,7 +40,7 @@ class Nominee implements JsonSerializable
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private ?File $image;
+    private ?File $image = null;
 
     /**
      * @ORM\Column(name="flavor_text", type="text", nullable=false)
