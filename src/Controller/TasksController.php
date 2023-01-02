@@ -72,7 +72,7 @@ class TasksController extends AbstractController
                 'count' => $raw[1] - count($raw[0]),
                 'total' => $raw[1]
             ];
-            $data['percent'] = $data['count'] / $data['total'] * 100;
+            $data['percent'] = $data['total'] > 0 ? ($data['count'] / $data['total'] * 100) : 100;
 
             if ($data['percent'] > 90) {
                 $data['class'] = 'success';
