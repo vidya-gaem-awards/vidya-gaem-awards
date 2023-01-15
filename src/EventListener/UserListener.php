@@ -134,7 +134,8 @@ class UserListener
                 ->setIp($user->getIP() ?: self::getIpAddress($request))
                 ->setUserAgent(substr($request->server->get('HTTP_USER_AGENT', ''), 0, 255))
                 ->setFilename($request->server->get('SCRIPT_FILENAME'))
-                ->setReferer($request->server->get('HTTP_REFERER'));
+                ->setReferer($request->server->get('HTTP_REFERER'))
+                ->setHeaders($request->headers->all());
 
             if ($user->isLoggedIn()) {
                 $access->setUser($user);
