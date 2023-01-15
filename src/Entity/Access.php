@@ -68,7 +68,7 @@ class Access
     private ?string $referer;
 
     /**
-     * @ORM\Column(name="strings", type="json", nullable=true)
+     * @ORM\Column(name="headers", type="json", nullable=true)
      */
     private ?array $headers = null;
 
