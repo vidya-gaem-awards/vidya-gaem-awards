@@ -27,12 +27,12 @@ class Advertisement implements JsonSerializable
     /**
      * @ORM\Column(name="link", type="string", nullable=true)
      */
-    private ?string $link;
+    private ?string $link = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\File")
      */
-    private ?File $image;
+    private ?File $image = null;
 
     /**
      * @ORM\Column(name="token", type="string", nullable=false)

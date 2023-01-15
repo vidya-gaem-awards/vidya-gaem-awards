@@ -8,14 +8,17 @@ html {
 
 body {
   overflow-x: hidden;
+  color: white;
 }
 
 .center-container {
-  width: 1480px;
-  margin: 10px auto;
+  width: 1420px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
   z-index: 20;
+  margin: 0 auto;
 
-  @media screen and (max-width: 1480px) {
+  @media screen and (max-width: 1400px) {
     width: 100%;
   }
 }
@@ -35,9 +38,9 @@ header {
   }
 
   .logo {
-    height: 100px;
+    height: 70px;
     display: block;
-    margin-right: 80px;
+    margin-right: 40px;
 
     @media screen and (max-width: 1000px) {
       margin-right: 20px;
@@ -54,13 +57,23 @@ header {
   }
 
   .title-text {
-    color: black;
-    font-size: 30px;
+    font-family: "Fresh Marker";
+    color: #F0961F;
+    text-shadow: 1px 1px #CF282F, -1px -1px #CF282F;
+    font-size: 40px;
+    line-height: 1.2;
     //transform: rotateZ(-1.8deg);
-    text-align: right;
+    //text-align: right;
+    position: relative;
+    z-index: 0;
 
     .line-1 {
-      text-transform: uppercase;
+      //text-transform: uppercase;
+    }
+
+    .line-2 {
+      font-size: 24px;
+      //color: #CF282F;
     }
 
     @media screen and (max-width: 800px) {
@@ -82,7 +95,7 @@ header {
   left: -250px;
 }
 
-/* Award Header (including left/right navigation buttons) */
+/* Award` Header (including left/right navigation buttons) */
 .award-header {
   display: flex;
   justify-content: center;
@@ -91,6 +104,8 @@ header {
   max-width: 1100px;
   align-items: center;
   margin: 0 auto 20px;
+  font-family: "There Brat", sans-serif;
+
   //background-image: url(/2020images/tape.png);
   //background-size: 790px;
   //background-position: center top;
@@ -101,11 +116,15 @@ header {
   }
 
   .award-name-container {
-    background: #fff;
-    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    //background: #fff;
     margin: 0 12px;
     padding: 12px 8px;
     max-width: 700px;
+
+    color: white;
+
+    //-webkit-mask-image: url(/2022images/mask.png);
+    //-webkit-mask-size: cover;
 
     flex-grow: 1;
     order: 2;
@@ -122,9 +141,34 @@ header {
 
   .award-name {
     text-transform: uppercase;
-    font-size: 2.5em;
+    font-size: 2.7em;
     line-height: 100%;
     margin-top: 10px;
+
+
+    text-shadow:
+            1px -1px #4EA24A,
+            2px -2px #4EA24A,
+            3px -3px #4EA24A,
+            -1px 1px #DA505F,
+            -2px 2px #4EA24A,
+            -3px 3px #4EA24A,
+            1px 1px #DA505F,
+            2px 2px #061019,
+            3px 3px #061019,
+            -4px 4px #061019;
+    //5px 5px #4EA24A,
+    //6px 6px #E5E37C,
+    //7px 7px #061019,
+    //-8px 8px #467B81,
+    //-9px 9px #467B81,
+    //-10px 10px #467B81,
+    //11px 11px #E5E37C,
+    //12px 12px #E5E37C,
+    //-13px 13px #AB1119,
+    //-14px 14px #AB1119,
+    //-15px 15px #AB1119;
+
 
     @media screen and (max-width: 800px) {
       font-size: 2em;
@@ -132,28 +176,35 @@ header {
   }
 
   .award-subtitle {
-    font-size: 1.1em;
+    font-size: 2em;
+    color: #0EBF8C;
+
+    text-shadow:
+            1px 1px #DA505F,
+            2px 2px #061019,
+            3px 3px #061019,
+            -4px 4px #061019;
   }
 
   .navigation {
-  //  width: 140px;
-  //  height: 65px;
-  //  cursor: pointer;
-  //  display: block;
-  //  background-size: contain;
-  //  flex-shrink: 0;
-  //
-  //  &:hover {
-  //    transform: translateY(3px);
-  //  }
+    width: 140px;
+    height: 65px;
+    cursor: pointer;
+    display: block;
+    background-size: contain;
+    flex-shrink: 0;
+
+    &:hover {
+      transform: translateY(3px);
+    }
 
     &.left {
-  //    background-image: url("/2020images/backarrow.png");
+      background-image: url("/2022images/back.png");
       order: 1;
     }
 
     &.right {
-  //    background-image: url("/2020images/nextarrow.png");
+      background-image: url("/2022images/next.png");
       order: 3;
     }
   }
@@ -169,7 +220,9 @@ header {
   }
 
   .awards {
+    font-family: "Jet Set", sans-serif;
     column-count: 2;
+    list-style: none;
     //position: relative;
     //display: grid;
     //grid-template-columns: repeat(2, 1fr);
@@ -182,18 +235,16 @@ header {
   }
 
   .award {
-    color: black;
+    color: #6EE4C3;
     text-shadow: none;
+    text-decoration: none;
 
     &.complete {
-      background: #D4D0C8;
-      color: #808080;
-      //text-decoration: line-through double black;
+      color: #85b2a5;
     }
 
     &.active {
-      background-color: navy;
-      color: #fff;
+      color: #18FFFC;
     }
   }
 
@@ -211,9 +262,14 @@ header {
 }
 
 .your-votes {
+  font-family: "There Brat", sans-serif;
   text-align: center;
-  font-size: 30px;
-  text-decoration: underline;
+  font-size: 40px;
+}
+
+#submitReminder {
+  font-family: "Jet Set", sans-serif;
+  color: white;
 }
 // END NEW SCSS
 
@@ -388,13 +444,13 @@ header {
 }
 
 .lootbox-image {
-  width: 100%;
+  width: 100px;
 }
 
 .lootbox {
   //width: 30%;
   margin: 10px;
-  //padding: 10px;
+  padding: 10px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -510,8 +566,8 @@ header {
 $card-width: 100px;
 
 .inventory-container {
-  background: #fff;
-  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  font-family: "Jet Set", sans-serif;
+  background: rgba(255, 255, 255, 0.5);
   margin: 0;
   padding: 12px 8px;
 
@@ -583,6 +639,7 @@ $card-width: 100px;
 }
 
 .item-name {
+  font-family: "Jet Set", sans-serif;
   margin-top: 10px;
   margin-bottom: 3px;
   padding-left: 3px;
@@ -666,7 +723,7 @@ $card-width: 100px;
 
 
 body {
-  padding-bottom: 100px;
+  //padding-bottom: 100px;
 }
 
 .verified {
@@ -780,12 +837,11 @@ body {
 
 .hoverOverlay {
   width: 100%;
-  height: 40px;
+  //height: 40px;
   z-index: 301;
   position: absolute;
-  background-color: #F9FDDD;
-  border: 1px solid black;
-  color: black;
+  background-color: #CF282F;
+  color: white;
   /*transition: 200ms linear all;*/
   display: none;
   align-items: center;
@@ -793,8 +849,8 @@ body {
   text-align: center;
   bottom: 0;
   //font-size: 0.9em;
-  line-height: 16px;
-  padding: 3px;
+  line-height: 20px;
+  padding: 3px 8px 8px 8px;
 }
 
 .hoverOverlay.adjustForLink {
@@ -868,24 +924,19 @@ body {
   background: url('https://vignette.wikia.nocookie.net/memory-gamma/images/1/17/Static.gif') center #37255c;
 }
 
-//.voteGroup .number {
-//  background: #DED1BA;
-//  color: black;
-//  width: 210px;
-//  height: 20px;
-//  padding-left: 20px;
-//  line-height: 20px;
-//  font-weight: normal;
-//  //font-size: 12px;
-//  position: absolute;
-//  top: -20px;
-//  border-top-left-radius: 20px;
-//  border-top-right-radius: 20px;
-//
-//  @media screen and (max-width: 768px) {
-//    width: 95%;
-//  }
-//}
+.voteGroup .number {
+  color: black;
+  width: 210px;
+  height: 20px;
+  line-height: 20px;
+  font-weight: normal;
+  font-family: "Jet Set", sans-serif;
+  font-size: 13px;
+
+  @media screen and (max-width: 768px) {
+    width: 95%;
+  }
+}
 
 .sortable-ghost .number, .sortable-chosen .number, .sortable-drag .number, .locked .number {
   //background: black;
@@ -1016,10 +1067,11 @@ body {
                                             }
 
 #voteDropAreaBottom {
-  background: #fff;
-  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  background: rgb(255, 255, 255, 0.5);
   margin: 0;
   padding: 12px 8px;
+
+  gap-y: 5px;
 
   //border: 2px dashed #c2c5b5;
   //background: rgba(255, 255, 255, 0.5);
@@ -1028,7 +1080,11 @@ body {
 }
 
 #voteDropAreaBottom.locked {
-  background: silver;
+  background: rgba(255, 255, 255, 0);
+
+  .number {
+    color: white;
+  }
   //border-style: solid;
   //border-color: #4a4848;
 }
@@ -1074,6 +1130,7 @@ body {
   display: flex;
   justify-content: center;
   position: relative;
+  align-items: center;
 }
 
 .buttons .navigation {
@@ -1088,39 +1145,37 @@ body {
 }
 
 #btnResetVotes {
-  width: 180px;
-  height: 40px;
+  width: 150px;
+  height: 65px;
   font-weight: bold;
   font-size: 16px;
-  //background-image: url("/2020images/resetvotes.png");
-  //background-size: 180px;
+  background-image: url("/2022images/reset.png");
+  background-size: 150px;
 }
 
 #btnResetVotes:hover {
   //background-image: url("/2020images/resetvotes-hover.png");
+  filter: hue-rotate(30deg);
 }
 
 #btnLockVotes {
   width: 180px;
-  height: 40px;
+  height: 79px;
   font-weight: bold;
   font-size: 16px;
-  background: green;
   color: white;
-  //background-image: url("/2020images/submitvotes.png");
-  //background-size: 180px;
+  background-image: url("/2022images/submit.png");
+  background-size: 180px;
   margin-left: 20px;
 }
 
 #btnLockVotes:hover {
   //background-image: url("/2020images/submitvotes-hover.png");
+  filter: hue-rotate(30deg);
 }
 
 #btnLockVotes.iVoted {
-  text-shadow: 1px 1px 0 #fff;
-  color: grey;
-  background: silver;
-  cursor: default;
+  display: none;
 }
 
 /* Awards List */
@@ -1145,6 +1200,8 @@ body {
   //font-size: 20px;
 
   a {
+    font-family: "Jet Set", sans-serif;
+    color: white;
     &:hover {
       text-decoration: underline;
     }
@@ -1528,7 +1585,7 @@ a:hover {
 #reward-buddie {
   position: fixed;
   right: 5px;
-  bottom: 31px;
+  bottom: 0;
   z-index: 1000;
   pointer-events: none;
   transition: .5s ease-in;
@@ -1818,4 +1875,15 @@ input[type=range]::-webkit-slider-thumb {
   justify-content: start;
 
   cursor: pointer;
+}
+
+.background-decorations {
+  z-index: -1;
+
+  .decoration {
+    position: absolute;
+    opacity: 0.5;
+    max-width: 400px;
+    max-height: 400px;
+  }
 }

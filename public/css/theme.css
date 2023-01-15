@@ -1,3 +1,38 @@
+@font-face {
+  font-family: 'Attack Graffiti';
+  src: url('/2022images/fonts/aAttackGraffiti.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fresh Marker';
+  src: url('/2022images/fonts/freshmarker.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jet Set';
+  src: url('/2022images/fonts/Jet Set.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rofaela';
+  src: url('/2022images/fonts/Rofaela.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'There Brat';
+  src: url('/2022images/fonts/ThereBrat-3zJlL.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /*
 @font-face {
     font-family: 'Trajan Pro 3';
@@ -53,7 +88,7 @@
 /*}*/
 
 html {
-  background: #00807F;
+  background:  url('/2022images/bg.png') repeat;
 }
 
 body {
@@ -100,11 +135,12 @@ h2 {
 }
 
 h3 {
-    color: black;
-    text-decoration: none;
-    font-size: 1em;
-    line-height: 0.95em;
-    padding: 0;
+  font-family: "There Brat", sans-serif;
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  line-height: 0.95em;
+  padding: 0;
 }
 
 /* Navbar */
@@ -224,20 +260,27 @@ a:hover {
 
 /** Bootstrap button **/
 .btn {
-  background: rgba(255, 255, 255, 0.6);
-  /*font-family: 'Dot Matrix', monospace;*/
-  border: 1px dashed #c2c5b5;
-  color: #0056be;
+  background: #F0961F;
+  font-family: 'Jet Set', sans-serif;
+  color: white;
+  box-shadow: 2px 2px #D3362C, 3px 3px 1px rgba(0, 0, 0, 0.5);
+  margin-right: 1px;
 }
 
 .btn:hover {
-  text-decoration: underline;
+  color: black;
+  background: white;
+  box-shadow: 2px 2px #0EBF8C, 3px 3px 1px rgba(0, 0, 0, 0.5);
 }
 
 .btn-themed {
-  color: #212529;
-  background-color: #fec544;
-  border-color: #feb91e
+  background: #F0961F;
+  font-family: 'Jet Set', sans-serif;
+  color: white;
+  font-size: 12px;
+  box-shadow: 2px 2px #D3362C, 3px 3px black;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 .btn-themed:hover {

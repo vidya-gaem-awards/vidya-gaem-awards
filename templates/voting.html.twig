@@ -18,7 +18,7 @@
 {#  {{ parent() }}#}
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/twemoji/11.1.0/2/twemoji.min.js'></script>
-  <script src="https://unpkg.com/webamp"></script>
+{#  <script src="https://unpkg.com/webamp"></script>#}
 
   {{ encore_entry_script_tags('voting') }}
 
@@ -63,73 +63,13 @@
 {% endblock %}
 
 {% block body %}
-  <p class="shit">Created and Directed by<br><span style="font-size:100px">Hideo Kojima</span></p>
-
-  <div id="winamp" style="position: absolute; left: 150px; bottom: 235px;"></div>
-
-  <header>
-    <a class="logo" href="{{ path('index') }}">
-      <img src="{{ asset('2021images/logo.png') }}">
-    </a>
-    <div class="title-text">
-      <div class="line-1">The 2022 Vidya Gaem Awards</div>
-      <div class="line-2">{{ voteText }}</div>
-    </div>
-  </header>
-
-  <div class="center-container" id="desktop-icons" style="display: none;">
-    <div class="desktop-icon pixel-font" style="display: inline-flex;" data-open-window="game-rigged">
-      <img src="{{ asset('2021images/html-3.png') }}">
-      <div class="item-name" style="margin-top: 2px; color: white;">game1.swf</div>
-    </div>
-    <div class="desktop-icon pixel-font" style="display: inline-flex;" data-open-window="game-skyrim">
-      <img src="{{ asset('2021images/html-3.png') }}">
-      <div class="item-name" style="margin-top: 2px; color: white;">game2.swf</div>
-    </div>
+  <div class="background-decorations">
+    {% for decoration in decorations %}
+      <img src="{{ decoration.decoration.image.url }}" class="decoration" style="rotate: {{ decoration.angle }}deg; {{ decoration.direction }}: {{ decoration.x }}px; top: {{ decoration.y }}px">
+    {% endfor %}
   </div>
 
-  {% if award %}
-    <div style="text-align: center;">
-      <div class="window functional-window game-window" style="display: none;" id="game-skyrim">
-        <div class="title-bar">
-          <div class="title-bar-text">
-            <img src="{{ asset('2021images/executable-1.png') }}"> The Elder Scrolls
-          </div>
-          <div class="title-bar-controls">
-            <button aria-label="Minimize" class="window-minimize"></button>
-            <button aria-label="Close" class="window-close"></button>
-          </div>
-        </div>
-        <iframe data-src="/2021images/games/VotingGame/index.html"></iframe>
-      </div>
-      <div class="window functional-window game-window" style="display: none;" id="game-rigged">
-        <div class="title-bar">
-          <div class="title-bar-text">
-            <img src="{{ asset('2021images/executable-1.png') }}"> RIG THE VOTE!
-          </div>
-          <div class="title-bar-controls">
-            <button aria-label="Minimize" class="window-minimize"></button>
-            <button aria-label="Close" class="window-close"></button>
-          </div>
-        </div>
-        <iframe data-src="/2021images/games/4chanVoting/index.html"></iframe>
-      </div>
-    </div>
-  {% endif %}
-
-  <div class="center-container window functional-window" id="window-vga">
-    <div class="title-bar">
-      <div class="title-bar-text">
-        <img src="{{ asset('2021images/favicon.png') }}" style="height: 16px; margin-right: 2px;">
-        2022 Vidya Gaem Awards
-      </div>
-      <div class="title-bar-controls">
-        <button aria-label="Minimize" class="window-minimize"></button>
-        <button aria-label="Close" class="turn-off-computer"></button>
-      </div>
-    </div>
-
-    <div class="window-body">
+  <div class="center-container">
 
     {#<div class="pageHeader" style="text-align: center; height: 110px;">#}
     {#<label>Width <input type="number" value="350" id="debugWidth"></label>#}
@@ -138,22 +78,24 @@
     {#<label>Subtitle <input type="number" value="12" id="debugSubtitle"></label>#}
     {#</div>#}
 
-    {% if award %}
-      {% if random(10) == 10 %}
-        <button class="based">Based</button>
-      {% endif %}
+    <header>
+      <a class="logo" href="{{ path('index') }}">
+        <img src="{{ asset('2022images/logo.png') }}">
+      </a>
+      <div class="title-text">
+        <div class="line-1 stroke-me">The 2022 Vidya Gaem Awards</div>
+        <div class="line-2 stroke-me">{{ voteText }}</div>
+      </div>
+    </header>
 
+    {% if award %}
       <div class="award-header">
-        <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left">
-          <button><< {{ prevAward.name }}</button>
-        </a>
+        <a href="{{ path('voting', {'awardID': prevAward.id}) }}" class="navigation left"></a>
         <div class="award-name-container">
           <div class="award-name">{{ award.name }}</div>
           <div class="award-subtitle">{{ award.subtitle }}</div>
         </div>
-        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right">
-          <button>{{ nextAward.name }} >></button>
-        </a>
+        <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation right"></a>
       </div>
     {% endif %}
 
@@ -228,54 +170,38 @@
                     {#<button id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceButton"}">+</button>#}
                     {#<input type="number" id="voteBox{{ loop.index }}" name="{{ nominee.shortName }}" class="preferenceInput" min="1" max="{{ award.nominees | length }}">#}
                     {#<label for="voteBox{{ loop.index }}">#}
-                    <div class="voteBox window">
-                      <div class="number title-bar" style="display: none;">
-                        <div class="title-bar-text">{{ loop.index }}</div>
-                        <div class="title-bar-controls">
-                          <button aria-label="Close"></button>
-                        </div>
-                      </div>
-                      <div class="window-body">
-                        <div class="nominee" style="background-image: url('{{ nominee.image ? nominee.image.url : asset('img/no-image-available.png') }}'); background-size: cover">
-                          <div class="fakeElement"></div>
-                          <div class="handle fakeHandle"></div>
-                          {% if votingOpen %}
-                            <div class="hoverOverlay overlayWhenTop {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
+                    <div class="voteBox">
+                      <div class="number" style="display: none;">{{ loop.index }}</div>
+                      <div class="nominee" style="background-image: url('{{ nominee.image ? nominee.image.url : asset('img/no-image-available.png') }}'); background-size: cover">
+                        <div class="fakeElement"></div>
+                        <div class="handle fakeHandle"></div>
+                        {% if votingOpen %}
+                          <div class="hoverOverlay overlayWhenTop {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
                                                   <span>
                                                     Click to make <strong>{{ nominee.name }}</strong>
                                                     your&nbsp;<span class="nextPreference">1st</span>&nbsp;preference
                                                   </span>
-                            </div>
-                            <div class="hoverOverlay overlayWhenBottom {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
+                          </div>
+                          <div class="hoverOverlay overlayWhenBottom {{ 'href=' in nominee.subtitle ? 'adjustForLink' : '' }}">
                                                     <span>
                                                       Click to remove <strong>{{ nominee.name }}</strong>
                                                       from your votes
                                                     </span>
-                            </div>
-                          {% endif %}
-                          {% if nominee.flavorText %}
-                            <div class="flavorText">
-                              <img src="{{ asset('2021images/msg_information-2.png') }}">
-                              <div class="flavorText__text">
-                                {{ nominee.flavorText | nl2br }}
-                              </div>
-                            </div>
-                          {% endif %}
-{#                          <div class="nomineeInfo">#}
-{#                            <div class="nomineeName">{{ nominee.name }}</div>#}
-{#                            <div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>#}
-{#                          </div>#}
-                          <div class="handle realHandle">
-                            <i class="fas fa-bars"></i>
                           </div>
+                        {% endif %}
+                        {% if nominee.flavorText %}
+                          <div class="flavorText">
+                              {{ nominee.flavorText | nl2br }}
+                          </div>
+                        {% endif %}
+                        <div class="nomineeInfo">
+                          <div class="nomineeName">{{ nominee.name }}</div>
+                          <div class="nomineeSubtitle">{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</div>
+                        </div>
+                        <div class="handle realHandle">
+                          <i class="fas fa-bars"></i>
                         </div>
                       </div>
-                      <div class="status-bar">
-                        <p class="status-bar-field"><strong>{{ nominee.name }}</strong><br>{{ nominee.subtitle | replace({'href=': 'target="_blank" href='}) | raw }}</p>
-                      </div>
-{#                      <div class="status-bar">#}
-{#                        <p class="status-bar-field">{{ nominee.subtitle }}</p>#}
-{#                      </div>#}
                     </div>
                     {#</label>#}
                   </div>
@@ -289,7 +215,7 @@
 
 
               <div class="your-votes">
-                Votes
+                Your Votes
               </div>
 
               <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
@@ -307,10 +233,10 @@
 
         {% if votingOpen %}
           <div class="buttons" style="margin-top: 10px;">
-            <button id="btnResetVotes" class="btnSubmit">Reset Votes</button>
-            <button id="btnLockVotes" class="btnSubmit">Submit Votes</button>
-{#            <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>#}
-{#            <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>#}
+{#            <button id="btnResetVotes" class="btnSubmit">Reset Votes</button>#}
+{#            <button id="btnLockVotes" class="btnSubmit">Submit Votes</button>#}
+            <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
+            <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
           </div>
 
           <div class="buttons" style="margin-top: 10px;">
@@ -358,7 +284,7 @@
             </p>
 
             <a href="{{ path('voting', {'awardID': (awards|first).id}) }}">
-              <button id="btnStart" class="btnSubmit">Start Voting</button>
+              <button id="btnStart" class="btnSubmit btn">Start Voting</button>
             </a>
           {% endif %}
 
@@ -373,11 +299,13 @@
     </div>
 
     <div id="containerAwards" class="awards-list" style="margin-top: 10px;">
-      <ul class="tree-view">
-        <li>
-          The Awards
-          <ul class="awards">
-          {% for _award in awards %}
+
+      <div class="your-votes" style="margin-bottom: 10px;">
+        Awards
+      </div>
+
+      <ul class="awards">
+        {% for _award in awards %}
           <li>
             <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
                class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
@@ -385,9 +313,7 @@
               <span class="award-subtitle">{{ _award.subtitle }}</span>
             </a>
           </li>
-          {% endfor %}
-          </ul>
-        </li>
+        {% endfor %}
       </ul>
 
       {% if app.user.loggedIn %}
@@ -402,53 +328,43 @@
 
       <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
         <div class="modal-dialog" role="document">
-          <div class="window">
-            <div class="title-bar">
-              <div class="title-bar-text">
-                <img src="{{ asset('2021images/network_internet_pcs_installer-1.png') }}">
-                <span>Usenet connection established</span>
+          <div class="modal-content">
+            <div class="modal-body" style="text-align: center;">
+              <img src="{{ asset('2020images/your-rewards.png') }}" id="youre" style="max-width: 90%;">
+              <div class="lootboxbox">
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+
+                  <div class="inventory-item" style="display: none;">
+                    <div class="item-tier"></div>
+                    <img>
+                    <div class="item-name"></div>
+                  </div>
+                </div>
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+                  <div class="inventory-item" style="display: none;">
+                    <div class="item-tier"></div>
+                    <img>
+                    <div class="item-name"></div>
+                  </div>
+                </div>
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+                  <div class="inventory-item" style="display: none;">
+                    <div class="item-tier"></div>
+                    <img>
+                    <div class="item-name"></div>
+                  </div>
+                </div>
               </div>
-              <div class="title-bar-controls">
-                <button aria-label="Close" id="closeRewardsModal"></button>
-              </div>
+
             </div>
-            <div class="modal-content">
-              <div class="modal-body" style="text-align: center;">
-                <div class="lootboxbox">
-                  <div class="lootbox">
-                    <img src="" class="lootbox-image">
-
-                    <div class="inventory-item" style="display: none;">
-                      <div class="item-tier"></div>
-                      <img>
-                      <div class="item-name"></div>
-                    </div>
-                  </div>
-                  <div class="lootbox">
-                    <img src="" class="lootbox-image">
-                    <div class="inventory-item" style="display: none;">
-                      <div class="item-tier"></div>
-                      <img>
-                      <div class="item-name"></div>
-                    </div>
-                  </div>
-                  <div class="lootbox">
-                    <img src="" class="lootbox-image">
-                    <div class="inventory-item" style="display: none;">
-                      <div class="item-tier"></div>
-                      <img>
-                      <div class="item-name"></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <div class="modal-footer" style="text-align: center;">
-                <button type="button" class="btn-lootbox" id="unboxButton">Start download</button>
-                <div id="closeRewards" style="display: none;">
-                  <button type="button" class="btn-lootbox" data-bs-dismiss="modal">Save to C:\My Documents\Downloads</button>
-                  <button type="button" class="btn-lootbox" id="neverShowAgain" style="margin-top: 5px;">Don't show this again</button>
-                </div>
+            <div class="modal-footer" style="text-align: center;">
+              <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot!</button>
+              <div id="closeRewards" style="display: none;">
+                <button type="button" class="btn btn-lg btn-default" data-bs-dismiss="modal">Claim rewards</button><br>
+                <button type="button" class="btn btn-default" id="neverShowAgain" style="margin-top: 5px;">Don't show this again</button>
               </div>
             </div>
           </div>
@@ -475,34 +391,16 @@
   </div>
   {% endif %}
 
-    </div>
 </div>
 
   {% if award %}
-  <div class="center-container window functional-window" style="margin-bottom: 40px;" id="window-downloads">
-    <div class="title-bar">
-      <div class="title-bar-text">
-        <img class="title-bar-icon" src="{{ asset('2021images/directory_open_cool-4.png') }}">
-        Downloads
-      </div>
-      <div class="title-bar-controls">
-        <button aria-label="Minimize" class="window-minimize"></button>
-        <button aria-label="Close" class="window-close"></button>
-      </div>
-    </div>
-
-    <div class="status-bar">
-      <div class="status-bar-field" style="margin-top: 2px; display: flex; align-items: center; height: 24px;">
-        <span style="margin-right: 4px; margin-left: 4px;">Address</span>
-        <div class="white-box" style="flex-grow: 1; height: 24px; display: flex; align-items: center; padding-left: 4px; background-color: silver; -webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none; color: grey;">
-          <img src="{{ asset('2021images/directory_closed-1.png') }}" style="margin-right: 6px;">
-          C:\My Documents\Downloads
-        </div>
-      </div>
-    </div>
+  <div class="center-container">
 
 {#    <div class="window-body">#}
       <div id="containerInventory">
+        <div class="your-votes" style="margin-bottom: 10px;">
+          Your Rewards
+        </div>
 
         <div id="inventory">
           <div class="inventory-container">
@@ -516,41 +414,34 @@
               <img>
               <div class="item-name"></div>
               <div class="item-button-container">
-                <button class="item-button item-buddie" data-type="buddie"><i class="far fa-fw fa-dog"></i></button>
-                <button class="item-button item-music" data-type="music"><i class="far fa-fw fa-music"></i></button>
-                <button class="item-button item-css" data-type="css"><i class="far fa-fw fa-palette"></i></button>
+                <button class="btn item-button item-buddie" data-type="buddie"><i class="far fa-fw fa-dog"></i></button>
+                <button class="btn item-button item-music" data-type="music"><i class="far fa-fw fa-music"></i></button>
+                <button class="btn item-button item-css" data-type="css"><i class="far fa-fw fa-palette"></i></button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-    <div class="window-body" style="text-align: center;">
-      <button id="buy-lootbox">Pay Usenet bill (<span id="lootboxCostText"></span> shekels)</button>
-      <button id="unequipAll">Unequip all items</button>
-      <button id="restoreDrops" disabled>Restore file drops</button>
-      <button id="uninstallWinamp">Uninstall Winamp 2.91</button>
+    <div class="window-body" style="text-align: center; margin-top: 10px;">
+      <button class="btn btn-default btn-lootbox" id="buy-lootbox">Buy lootbox (<span id="lootboxCostText"></span> shekels)</button>
+      <button class="btn btn-default btn-lootbox" id="unequipAll">Unequip all items</button>
+      <button class="btn btn-default btn-lootbox" id="restoreDrops" disabled>Restore drops</button>
+      <button class="btn btn-default btn-lootbox" id="resetRewardsButton">Mute music</button>
     </div>
+
+
+    <form id="cheat-code" style="margin-bottom: 10px; margin-top: 20px; display: none;">
+      <div class="your-votes" style="margin-bottom: 10px;">Enter cheat code</div>
+      <div style="width: 400px; text-align: center; display: flex; margin: 0 auto;">
+        <input type="text" class="form-control" id="cheat-code-input">
+        <button type="submit" class="btn btn-default btn-lootbox" style="margin-left: 5px;">Activate</button>
+      </div>
+    </form>
+
 {#    </div>#}
   </div>
 
-    <div class="start-bar">
-      <button title="Start Menu" class="button start-button-wrapper js-start-button based">
-        <img src="{{ asset('2021images/windows-4.png') }}"> Start
-      </button>
-      <button class="start-bar-window" data-window="window-vga">
-        <img src="/2021images/favicon.png">
-        <span class="start-bar-text">2022 Vidya Gaem Awards</span>
-      </button>
-      <button class="start-bar-window" data-window="window-downloads">
-        <img src="/2021images/directory_open_cool-4.png">
-        <span class="start-bar-text">Downloads</span>
-      </button>
-      <button class="start-bar-window" id="start-bar-template" style="display: none;">
-        <img src="/2021images/favicon.png">
-        <span class="start-bar-text"></span>
-      </button>
-      <span class="made-by">{{ date().format('h:i A') }}</span>
-    </div>
+
   {% endif %}
 {% endblock %}

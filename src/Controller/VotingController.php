@@ -179,12 +179,29 @@ class VotingController extends AbstractController
         // Fake ads
         $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
 
-        if (empty($adverts)) {
-            $ad1 = $ad2 = false;
-        } else {
-            $ad1 = $adverts[array_rand($adverts)];
-            $ad2 = $adverts[array_rand($adverts)];
+        $decorations = [];
+
+        if (!empty($adverts)) {
+            for ($i = 0; $i < 6; $i++) {
+                $index = array_rand($adverts);
+                $decoration = array_splice($adverts, $index, 1)[0];
+
+                $direction = $i % 2 === 0 ? 'left' : 'right';
+                $angle = random_int(-15, 15);
+                $x = random_int(-10, 50);
+                $y = 20 + floor($i / 2) * 350 + random_int(-50, 50);
+
+                $decorations[] = [
+                    'decoration' => $decoration,
+                    'direction' => $direction,
+                    'angle' => $angle,
+                    'x' => $x,
+                    'y' => $y,
+                ];
+            }
         }
+
+        dump($decorations);
 
         // Lootbox items
         $items = $em->createQueryBuilder()
@@ -253,8 +270,7 @@ class VotingController extends AbstractController
             'allVotes' => $simpleVotes,
             'voteButtonSizeMap' => $voteDialogMapping,
             'votingStyle' => $session->get('legacyVotingPage', false) ? 'legacy' : 'new',
-            'ad1' => $ad1,
-            'ad2' => $ad2,
+            'decorations' => $decorations,
             'items' => $items,
 //            'itemChoiceArray' => $itemChoiceArray,
             'lootboxSettings' => $lootboxSettings,

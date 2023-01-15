@@ -21,7 +21,7 @@ let toddDialog: any;
 let showRewardsOnSubmit: boolean = false;
 let music: HTMLAudioElement;
 let canPlayAudio: boolean;
-let usingWinamp: boolean = true;
+let usingWinamp: boolean = false;
 
 for (const item of knownItems) {
     rewards[item.shortName] = item;
@@ -61,12 +61,7 @@ function onDumbShit(cb) {
 
 // OwO what's this?
 onDumbShit(function () {
-    $(".shit").show();
-    $("html").css({
-        'background-image': 'url(/img/bg2.gif)',
-        'background-repeat': 'repeat'
-    });
-    var audio = new Audio('/img/woah.mp3');
+    var audio = new Audio('/ogg/tf2.ogg');
     audio.play();
 
     $('#cheat-code').show();
@@ -239,98 +234,7 @@ jQuery(function () {
         return;
     }
 
-    function openWindow(id) {
-        if (windows[id].open) {
-            return;
-        }
-
-        const window = $('#' + id).show();
-        windows[id].open = true;
-        windows[id].minimized = false;
-
-        const iframe = window.find('iframe');
-        iframe.attr('src', iframe.attr('data-src'));
-
-        const startBar = $('#start-bar-template').clone();
-
-        startBar.find('img').attr('src', window.find('.title-bar-text img').attr('src'));
-        startBar.find('.start-bar-text').text(window.find('.title-bar-text').text());
-        startBar.attr('data-window', id);
-
-        startBar.show();
-        startBar.insertBefore($('#start-bar-template'));
-    }
-
-    $('[data-open-window]').on('click', function () {
-        openWindow($(this).attr('data-open-window'));
-    });
-
-    function closeWindow(id) {
-        if (!windows[id].open) {
-            return;
-        }
-
-        const window = $('#' + id);
-        windows[id].open = false;
-        windows[id].minimized = true;
-
-        window.find('iframe').removeAttr('src');
-        window.hide();
-
-        if (windows['window-vga'].minimized && windows['window-downloads'].minimized) {
-            $('#desktop-icons').show();
-        }
-
-        $('.start-bar').find('[data-window="' + id + '"]').remove();
-    }
-
-    function minimizeWindow(id) {
-        if (!windows[id].open || windows[id].minimized) {
-            return;
-        }
-
-        const window = $('#' + id);
-        windows[id].minimized = true;
-
-        window.hide();
-
-        if (windows['window-vga'].minimized && windows['window-downloads'].minimized) {
-            $('#desktop-icons').show();
-        }
-
-        $('.start-bar').find('[data-window="' + id + '"]').addClass('minimized');
-    }
-
-    function unminimizeWindow(id) {
-        if (!windows[id].open || !windows[id].minimized) {
-            return;
-        }
-
-        const window = $('#' + id);
-        windows[id].minimized = false;
-
-        window.show();
-        window[0].scrollIntoView();
-
-        $('.start-bar').find('[data-window="' + id + '"]').removeClass('minimized');
-    }
-
     canPlayAudio = new Audio().canPlayType('audio/ogg') !== '';
-    usingWinamp = !localStorage.getItem('disableWinamp');
-
-    function initWebamp() {
-        webamp = new Webamp({});
-        webamp.renderWhenReady(document.getElementById('winamp')).then(() => {
-            webamp.pause();
-        });
-    }
-
-    if (usingWinamp) {
-        initWebamp();
-        $('#uninstallWinamp').text('Uninstall Winamp 2.91');
-    } else {
-        $('#uninstallWinamp').text('Install Winamp 2.91');
-    }
 
     toddDialog = $('#todd');
     toddDialog.modal({
@@ -389,7 +293,7 @@ jQuery(function () {
         // }
 
         localStorage.setItem('inventory', JSON.stringify(inventory));
-        $('#shekelCount').find('.item-name').text(inventory['shekels'] + '-shekels.dat');
+        $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' shekels');
 
         if (inventory['shekels'] >= lootboxCost) {
             $('#buy-lootbox').removeAttr('disabled');
@@ -409,13 +313,13 @@ jQuery(function () {
             var element = $('#item-template').clone();
             element.addClass('kebab');
             element.find('img').attr('src', reward.image.url).attr('id', 'reward-image-' + reward.shortName);
-            element.find('.item-name').text(reward.name + '.exe');
+            element.find('.item-name').text(reward.name);
             element.find('.item-quantity').text('x ' + quantity);
             element.find('.item-year').text(reward.year + ' item');
             element.find('.item-button').show().attr('data-id', reward.shortName);
 
             if (reward.shortName === 'nothing') {
-                element.find('.item-buddie').text('Unequip All');
+                element.find('.item-buddie').text('Equip');
             }
 
             if (!reward.music) {
@@ -441,7 +345,7 @@ jQuery(function () {
             var tier = lootboxTiers[reward.tier];
             element.css('borderColor', tier.color);
             if (reward.shortName === 'nothing') {
-                element.find('.item-buddie').text('Unequip All');
+                element.find('.item-buddie').text('Equip');
                 element.find('.item-tier').css('backgroundColor', 'black');
             } else {
                 element.find('.item-tier').css('backgroundColor', tier.color);
@@ -594,16 +498,7 @@ jQuery(function () {
     });
 
     $('#resetRewardsButton').click(function () {
-        if (music) {
-            music.pause();
-            music.currentTime = 0;
-        }
-
-        if (localStorage.getItem('activeCSS') === 'straya') {
-            resetRewards();
-        } else {
-            localStorage.setItem('muteMusic', '1');
-        }
+        resetMusic();
 
         $(this).hide();
     });
@@ -701,14 +596,7 @@ jQuery(function () {
             }
 
             if (showButton) {
-                var text;
-                if (id === 'straya') {
-                    text = 'Ban Australians';
-                } else {
-                    text = 'Mute music'
-                }
-
-                $('#resetRewardsButton').show().find('span').text(text);
+                $('#resetRewardsButton').show();
             }
 
             music = new Audio(reward.musicFile.url);
@@ -717,29 +605,6 @@ jQuery(function () {
             return music.play();
         }
     }
-
-    $('#uninstallWinamp').on('click', function () {
-        resetMusic();
-
-        localStorage.setItem('disableWinamp', usingWinamp ? '1': '');
-
-        usingWinamp = !usingWinamp;
-
-        if (!usingWinamp && webamp) {
-            webamp.stop();
-            webamp.close();
-        }
-
-        if (usingWinamp) {
-            if (webamp) {
-                webamp.reopen();
-            } else {
-                initWebamp();
-            }
-        }
-
-        $(this).text(usingWinamp ? 'Uninstall Winamp 2.91' : 'Install Winamp 2.91');
-    });
 
     function activateBuddie(id) {
         $('#reward-buddie').attr('src', rewards[id].image.url);
@@ -782,9 +647,9 @@ jQuery(function () {
     var spookyLootboxSound = new Audio("/2020images/spooky.ogg");
 
     var showNewLoot = function showNewLoot(i) {
-        var lootbox = $($('.lootbox').get(i));
-        // lootbox.removeClass('animate').addClass('animate-back');
-        // lootbox.find('.lootbox-image').remove();
+        var lootbox = $($('#rewards .lootbox').get(i));
+        lootbox.removeClass('animate').addClass('animate-back');
+        lootbox.find('.lootbox-image').remove();
 
         const $item = lootbox.find('.inventory-item');
         $item.show();
@@ -807,7 +672,7 @@ jQuery(function () {
             var tier = lootboxTiers[item.tier];
             addRewardToInventory(item.shortName);
             image.attr('src', item.image.url);
-            title.text(item.name + '.exe');
+            title.text(item.name);
             $tier.show();
             $tier.text(tier.name);
             $tier.css('color', 'black');
@@ -816,7 +681,7 @@ jQuery(function () {
             var shekelCount = reward.amount;
             inventory['shekels'] += shekelCount;
             image.attr('src', '/img/dosh.png');
-            title.text(shekelCount + "-shekels.dat");
+            title.text(shekelCount + " shekels");
             $tier.show();
             $tier.text('Special');
             $tier.css('color', 'white');
@@ -837,34 +702,24 @@ jQuery(function () {
     }
 
     $('#unboxButton').click(function () {
-        const spookyItems = pendingItems.filter(reward => reward.item && reward.item.extra);
+        lootboxSound.volume = 0.25;
+        lootboxSound.play();
 
-        if (spookyItems.length > 0) {
-            setTimeout(() => {
-                spookyLootboxSound.volume = 0.5;
-                spookyLootboxSound.play();
-            }, 1000);
-        } else {
-            lootboxSound.volume = 0.25;
-            lootboxSound.play();
-        }
-
-        // $('.lootbox').addClass('animate');
+        $('.lootbox').addClass('animate');
 
         $(this).hide();
 
-        // setTimeout(function () {
-        //     $('.lootbox').find('img').removeAttr('src');
-        // }, 1100);
-
+        setTimeout(function () {
+            $('.lootbox').find('img').removeAttr('src');
+        }, 1100);
 
         for (var i = 0; i < 3; i++) {
-            setTimeout(showNewLoot, 1000 + i * 300, i);
+            setTimeout(showNewLoot, 2000 + i * 300, i);
         }
 
         setTimeout(function () {
             $('#closeRewards').show();
-        }, 2000);
+        }, 3600);
     });
 
     $('#neverShowAgain').click(function () {
@@ -891,11 +746,11 @@ jQuery(function () {
         $('.lootbox-title').text('');
         $('.lootbox-tier').hide();
 
-        // var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa'];
+        var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa'];
 
-        // $('.lootbox-image').each(function () {
-        //     $(this).attr('src', '/img/lootbox-' + lootboxes[getRandomInt(0, lootboxes.length)] + '.png');
-        // });
+        $('.lootbox-image').each(function () {
+            $(this).attr('src', '/img/lootbox-' + lootboxes[getRandomInt(0, lootboxes.length)] + '.png');
+        });
 
         if (getRandomInt(1,7) === 6) {
             $('#youre').attr('src', '/2020images/youre-rewards.png');
@@ -921,8 +776,6 @@ jQuery(function () {
                     rewards[reward.item.shortName] = reward.item;
                 }
             }
-
-            console.log(rewards);
         }).always(() => {
             $('#unboxButton').removeAttr('disabled');
         });
@@ -1086,7 +939,7 @@ jQuery(function () {
             $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn);
 
             //empty the number
-            dropped.find(".number .title-bar-text").html("");
+            dropped.find(".number").html("");
         }
     });
 
@@ -1154,7 +1007,7 @@ jQuery(function () {
         bottomArea.find(".voteGroup").each(function (index) {
             index = index + 1;
             var text = 'Your ' + getOrdinal(index) + ' preference';
-            $(this).find(".number").show().find(".title-bar-text").html(text);
+            $(this).find(".number").show().html(text);
         });
 
         var boxesInBottom = bottomArea.find(".voteGroup").length;
@@ -1162,7 +1015,7 @@ jQuery(function () {
 
         voteColumnBoxes.each(function () {
             var onlyTheNumber = $(this).attr("id").replace(/[^0-9]/g, '');
-            $(this).find(".number .title-bar-text").html("#" + onlyTheNumber);
+            $(this).find(".number").html("#" + onlyTheNumber);
         });
 
         topArea.find(".number").hide();
@@ -1383,30 +1236,5 @@ jQuery(function () {
         }, 'json');
 
         openLootboxRewards(false);
-    });
-
-    $('.turn-off-computer').on('click',() => {
-        const body = $('body');
-        body.empty();
-        body.append('<div class="its-now-safe"></div>');
-
-        const random = Math.floor(Math.random() * 100);
-        if (random === 0) {
-            setTimeout(function () {
-                $('.its-now-safe').addClass('it-was-never-safe')
-            }, 3000);
-        }
-    });
-
-    $('.functional-window .window-close').on('click', function (event) {
-        closeWindow($(this).closest('.window').attr('id'));
-    });
-
-    $('.functional-window .window-minimize').on('click', function () {
-        minimizeWindow($(this).closest('.window').attr('id'));
-    });
-
-    $('.start-bar').on('click', '.minimized', function (event) {
-       unminimizeWindow($(this).attr('data-window'));
     });
 });

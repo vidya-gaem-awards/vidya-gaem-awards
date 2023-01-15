@@ -6,32 +6,29 @@
   /*height: 150px;*/
   transition: 0.3s linear all;
   background-position: center;
+
+  -webkit-mask-image: url(/2022images/mask.png);
+  -webkit-mask-size: cover;
+
+  font-family: "Jet Set", sans-serif;
+  rotate: -1deg;
 }
 
 .flavorText {
   display: none;
-  background-color: #F9FDDD;
-  border: 1px solid black;
+  background-color: #F0961F;
   position: absolute;
   top: 0;
   left: 0;
-  padding: 3px;
+  padding: 10px 15px 10px 15px;
   width: calc(100% - 0px);
   height: auto;
-  /*font-size: 0.81em;*/
-  line-height: 13px;
+  font-size: 0.8em;
+  line-height: 15px;
   color: black;
   z-index: 40;
   user-select: all;
-}
-
-.flavorText img {
-  margin-right: 5px;
-  align-self: start;
-}
-
-.flavorText__text {
-  margin-top: 2px;
+  text-align: center;
 }
 
 .aNominee .flavorText {
@@ -45,7 +42,7 @@
 }
 
 .nominee:hover .flavorText, .voteBox:hover .flavorText {
-  display: flex;
+  display: block;
 }
 
 .nominee img.locked {
@@ -62,8 +59,8 @@
   left: 0;
   width: 100%;
   z-index: 300;
-  background: rgba(50, 50, 50, 0.4);
-  padding-top: 3px;
+  background: rgba(50, 50, 50, 0.5);
+  padding: 0 3px 5px 3px;
   /*border-top: 1px dotted #c2c5b5;*/
 }
 
@@ -78,8 +75,8 @@
 .nomineeSubtitle {
   /*font-family: 'Dot Matrix', sans-serif;*/
   text-align: center;
-  margin-top: -5px;
-  /*font-size: 10px;*/
+  margin-top: 0px;
+  font-size: 10px;
   text-shadow: 1px 1px black;
   color: white;
 }
