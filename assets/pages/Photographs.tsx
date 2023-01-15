@@ -168,12 +168,12 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
 
     return (
       <div className="col">
-        <h1 className="page-header board-header">Voting Page Photographs</h1>
+        <h1 className="page-header board-header">Voting Page Decorations</h1>
 
         <div className="text-center">
           <button className="btn btn-sm btn-primary" id="new-award" type="button" data-bs-toggle="modal"
                   data-bs-target="#dialog-edit" onClick={this.openNewPhotoDialog.bind(this)}>
-            <i className="fal fa-fw fa-plus"/> Add a new photo
+            <i className="fal fa-fw fa-plus"/> Add a new decoration
           </button>
         </div>
 
@@ -186,7 +186,7 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
         <Modal id="dialog-edit" show={this.state.showDialog} onHide={this.handleClose.bind(this)}>
           <form className="form-horizontal" id="dialog-edit-form" encType="multipart/form-data" onSubmit={this.submitForm.bind(this)}>
             <Modal.Header closeButton>
-              { this.state.dialogAction === 'new' ? 'Add a new photograph' : 'Edit photograph' }
+              { this.state.dialogAction === 'new' ? 'Add a new decoration' : 'Edit decoration' }
             </Modal.Header>
 
             <Modal.Body>
@@ -212,7 +212,7 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
                   </div>
 
                   <div className="form-group row">
-                    <label className="col-sm-3 col-form-label" htmlFor="info-name">Caption</label>
+                    <label className="col-sm-3 col-form-label" htmlFor="info-name">Name</label>
                     <div className="col-sm-9">
                       <input className="form-control" type="text" id="info-name"
                              placeholder="The Power of Shitposting" required
@@ -226,7 +226,7 @@ class Photographs extends React.Component<PhotographsProps, PhotographsState> {
                       <div className="form-check">
                         <input className="form-check-input" type="checkbox" id="info-special" name="dialogSpecial" checked={this.state.dialogSpecial} onChange={this.handleInputChange} />
                         <label className="form-check-label" htmlFor="info-special">Special</label>
-                        <small className="form-text d-block">Special photos won't show up in the normal rotation.</small>
+                        <small className="form-text d-block">Special decorations won't show up in the normal rotation.</small>
                       </div>
                     </div>
                   </div>
