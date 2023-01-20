@@ -1,9 +1,9 @@
 <?php
 namespace App\Entity;
 
+use Carbon\CarbonImmutable;
 use DateTime;
 use DateTimeZone;
-use Moment\Moment;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -146,17 +146,17 @@ class Config
 
     public static function getRelativeTimeString(DateTime $date): string
     {
-        $moment = new Moment($date->format('c'));
-        $diff = $moment->fromNow()->setDirection('+');
+        $carbon = new CarbonImmutable($date);
+        $diff = $carbon->diffAsCarbonInterval();
 
-        if ($diff->getSeconds() <= 120) {
-            return $diff->getSeconds() . ' second' . ($diff->getSeconds() === 1 ? '' : 's');
-        } elseif ($diff->getMinutes() <= 120) {
-            return (int)$diff->getMinutes() . ' minutes';
-        } elseif ($diff->getHours() <= 48) {
-            return (int)$diff->getHours() . ' hours';
+        if ($diff->totalSeconds <= 120) {
+            return (int)$diff->totalSeconds . ' second' . ((int)$diff->totalSeconds === 1 ? '' : 's');
+        } elseif ($diff->totalMinutes <= 120) {
+            return (int)$diff->totalMinutes . ' minutes';
+        } elseif ($diff->totalHours <= 48) {
+            return (int)$diff->totalHours . ' hours';
         } else {
-            return (int)$diff->getDays() . ' days';
+            return (int)$diff->totalDays . ' days';
         }
     }
 

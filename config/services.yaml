@@ -63,7 +63,7 @@ services:
         tags:
         - { name: twig.extension }
 
-    App\Twig\MomentExtension:
+    App\Twig\CarbonExtension:
         tags:
         - { name: twig.extension }
 

@@ -39,7 +39,7 @@
     {% for referrer in referrers %}
       <tr class="{{ referrer.class }}">
         <td><strong>{{ referrer.total }}</strong></td>
-        <td><abbr title="{{ referrer.latest | date('D d/m/Y - H:i:s') }}">{{ (referrer.latest | moment).fromNow.relative }}</abbr></td>
+        <td><abbr title="{{ referrer.latest | date('D d/m/Y - H:i:s') }}">{{ (referrer.latest | carbon).fromNow }}</abbr></td>
         <td>
           {% if referrer.type == 'android' %}
             <a href="https://play.google.com/store/apps/details?id={{ referrer.referer | escape('html_attr') }}">Play Store</a>

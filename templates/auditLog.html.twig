@@ -20,7 +20,7 @@
     <tr>
       <td>
         <abbr title="{{ action.timestamp.format('Y-m-d H:i:s') }}">
-          {{ (action.timestamp | moment).fromNow.relative }}
+          {{ (action.timestamp | carbon).fromNow }}
         </abbr>
          &nbsp; <small class="text-muted">{{ action.timestamp.format('H:i') }}</small>
       </td>
