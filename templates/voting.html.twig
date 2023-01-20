@@ -326,51 +326,6 @@
     {% if award %}
       <img id="reward-buddie">
 
-      <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body" style="text-align: center;">
-              <img src="{{ asset('2020images/your-rewards.png') }}" id="youre" style="max-width: 90%;">
-              <div class="lootboxbox">
-                <div class="lootbox">
-                  <img src="" class="lootbox-image">
-
-                  <div class="inventory-item" style="display: none;">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
-                  </div>
-                </div>
-                <div class="lootbox">
-                  <img src="" class="lootbox-image">
-                  <div class="inventory-item" style="display: none;">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
-                  </div>
-                </div>
-                <div class="lootbox">
-                  <img src="" class="lootbox-image">
-                  <div class="inventory-item" style="display: none;">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="modal-footer" style="text-align: center;">
-              <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot!</button>
-              <div id="closeRewards" style="display: none;">
-                <button type="button" class="btn btn-lg btn-default" data-bs-dismiss="modal">Claim rewards</button><br>
-                <button type="button" class="btn btn-default" id="neverShowAgain" style="margin-top: 5px;">Don't show this again</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
   <div id="no-music" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
 
@@ -443,5 +398,53 @@
   </div>
 
 
+  {% endif %}
+
+
+  {% if award %}
+    <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body" style="text-align: center;">
+            <img src="{{ asset('2020images/your-rewards.png') }}" id="youre" style="max-width: 90%;">
+            <div class="lootboxbox">
+              <div class="lootbox">
+                <img src="" class="lootbox-image">
+
+                <div class="inventory-item" style="display: none;">
+                  <div class="item-tier"></div>
+                  <img>
+                  <div class="item-name"></div>
+                </div>
+              </div>
+              <div class="lootbox">
+                <img src="" class="lootbox-image">
+                <div class="inventory-item" style="display: none;">
+                  <div class="item-tier"></div>
+                  <img>
+                  <div class="item-name"></div>
+                </div>
+              </div>
+              <div class="lootbox">
+                <img src="" class="lootbox-image">
+                <div class="inventory-item" style="display: none;">
+                  <div class="item-tier"></div>
+                  <img>
+                  <div class="item-name"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer" style="text-align: center;">
+            <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot!</button>
+            <div id="closeRewards" style="display: none;">
+              <button type="button" class="btn btn-lg btn-default" data-bs-dismiss="modal">Claim rewards</button><br>
+              <button type="button" class="btn btn-default" id="neverShowAgain" style="margin-top: 5px;">Don't show this again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   {% endif %}
 {% endblock %}
