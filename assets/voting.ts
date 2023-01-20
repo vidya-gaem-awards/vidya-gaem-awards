@@ -490,26 +490,6 @@ jQuery(function () {
         $(this).hide();
     });
 
-    $('.based').on('click', function (event) {
-
-        let shekels = 100;
-        let bsodChance = 0.05;
-
-        if ($(this).hasClass('start-button-wrapper')) {
-            shekels = 10;
-            bsodChance = 0.005;
-        }
-
-        inventory['shekels'] += shekels;
-        updateInventory();
-
-        if (Math.random() <= bsodChance) {
-            const body = $('body');
-            body.empty();
-            body.append('<div class="bsod"></div>');
-        }
-    });
-
     $('#cheat-code').submit(function (event) {
         event.preventDefault();
         var code = String($('#cheat-code-input').val());
@@ -611,7 +591,6 @@ jQuery(function () {
     });
 
     var lootboxSound = new Audio("/ogg/open-box.ogg");
-    var spookyLootboxSound = new Audio("/2020images/spooky.ogg");
 
     var showNewLoot = function showNewLoot(i) {
         var lootbox = $($('#rewards .lootbox').get(i));
