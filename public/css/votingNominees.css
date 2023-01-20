@@ -37,6 +37,11 @@
 }
 
 @media (max-width: 768px) {
+  .voteGroup {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .flavorText {
     width: calc(100% - 25px);
   }

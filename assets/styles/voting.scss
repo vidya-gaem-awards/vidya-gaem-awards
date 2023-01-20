@@ -114,6 +114,7 @@ header {
 
   @media screen and (max-width: 1000px) {
     flex-wrap: wrap;
+    column-gap: 10px;
   }
 
   .award-name-container {
@@ -225,6 +226,8 @@ header {
     text-shadow: 1px 1px 2px #CF282F;
     column-count: 2;
     list-style: none;
+    padding-left: 10px;
+
     //position: relative;
     //display: grid;
     //grid-template-columns: repeat(2, 1fr);
@@ -987,10 +990,6 @@ body {
   left: 25px;
   top: 5px;
   z-index: 1;
-
-  //@media screen and (max-width: 768px) {
-  //  width: 95%;
-  //}
 }
 
 .voteGroup:hover .number {
@@ -1126,6 +1125,8 @@ body {
   border: 3px white ridge;
   border-left-style: none;
   border-right-style: none;
+  margin-left: -10px;
+  margin-right: -10px;
   margin-top: 20px;
   padding: 12px 8px;
 
@@ -1496,6 +1497,23 @@ a:hover {
   background: rgba(242, 152, 35, 0.2);
 }
 
+.background-decorations {
+  z-index: -1;
+
+  .decoration {
+    position: absolute;
+    opacity: 0.8;
+    max-width: 400px;
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 1800px) {
+  .background-decorations .decoration {
+    opacity: 0.4;
+  }
+}
+
 @media (max-width: 1400px) {
   .rightMeme {
     display: none;
@@ -1512,10 +1530,27 @@ a:hover {
   .voteGroup {
     width: calc(100% / 3 - 10px);
   }
+
+  .background-decorations .decoration{
+    opacity: 0.3;
+  }
 }
 
 /* Changes for mobile */
 @media (max-width: 768px) {
+  .background-decorations .decoration {
+    left: 20% !important;
+
+    &:nth-child(2) {
+      display: none;
+    }
+  }
+
+  #dragLimit {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
   .fakeElement {
     display: none;
   }
@@ -1534,6 +1569,8 @@ a:hover {
 
   .voteDropArea {
     min-height: 100px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .preferenceButton {
@@ -1570,7 +1607,7 @@ a:hover {
     position: absolute;
     right: 0;
     height: 100%;
-    background: #DED1BA;
+    background: #F0961F;
     padding: 5px;
     text-align: center;
     width: 25px;
@@ -1588,12 +1625,26 @@ a:hover {
     display: block;
   }
 
+  .voteGroup .number {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    letter-spacing: unset;
+    position: unset;
+    color: black;
+    text-shadow: unset;
+  }
+
+  .locked .voteGroup .number {
+    color: white;
+  }
+
   .voteGroup .number:after {
-    content: ' - tap to remove or drag to reorder';
+    content: ' - tap to remove or drag handle to reorder';
   }
 
   .locked .voteGroup .number:after {
-    content: ' - tap to remove or drag to reorder';
+    content: ' - tap to remove or drag handle to reorder';
   }
 
 
@@ -1611,6 +1662,36 @@ a:hover {
 
   #btnResetVotes {
     margin-right: 0;
+  }
+
+  .inventory-buttons {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  #rewards {
+    .modal-body {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .lootboxbox {
+      padding-left: 0;
+      padding-right: 0;
+      column-gap: 10px;
+    }
+
+    .lootbox {
+      padding: 0;
+      margin: 0;
+      flex-grow: 1;
+      flex-shrink: 0;
+      flex-basis: 0;
+    }
+
+    .inventory-item {
+      width: unset;
+    }
   }
 }
 
@@ -1755,79 +1836,4 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 input[type=range]::-webkit-slider-thumb {
   all: revert;
-}
-
-#webamp {
-  position: fixed !important;
-  z-index: 2000 !important;
-
-  #equalizer-button {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  #equalizer-window {
-    display: none !important;
-  }
-
-  #playlist-button {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  #playlist-window {
-    display: none !important;
-  }
-
-  .window {
-    box-shadow: none;
-    background: none;
-    padding: 0;
-  }
-
-  #equalizer-button, #playlist-button, #previous, #next, #eject, #stop {
-    pointer-events: none;
-  }
-}
-
-.functional-window {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.game-window {
-  max-width: 640px;
-
-  iframe {
-    width: 100%;
-    min-height: 200px;
-    aspect-ratio: 4/3;
-  }
-}
-
-.pixel-font {
-  font-family: "Pixelated MS Sans Serif", Arial;
-  -webkit-font-smoothing: none;
-  font-size: 11px;
-}
-
-.desktop-icon {
-  width: 80px;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-  justify-content: start;
-
-  cursor: pointer;
-}
-
-.background-decorations {
-  z-index: -1;
-
-  .decoration {
-    position: absolute;
-    opacity: 0.8;
-    max-width: 400px;
-    max-height: 400px;
-  }
 }
