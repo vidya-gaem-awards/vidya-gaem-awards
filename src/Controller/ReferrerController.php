@@ -12,7 +12,7 @@ class ReferrerController extends AbstractController
 {
     public function indexAction(EntityManagerInterface $em, Request $request): Response
     {
-        $days = $request->query->get('days');
+        $days = $request->query->get('days', '7');
         if ($days !== 'all' && !ctype_digit($days)) {
             $days = 7;
         }
