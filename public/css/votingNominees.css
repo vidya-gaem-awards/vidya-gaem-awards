@@ -5,6 +5,7 @@
   /*width: 350px;*/
   /*height: 150px;*/
   transition: 0.3s linear all;
+  background-color: #2C2B31;
   background-position: center;
 
   -webkit-mask-image: url(/2022images/mask.png);

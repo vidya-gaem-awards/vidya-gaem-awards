@@ -188,7 +188,7 @@ class VotingController extends AbstractController
 
                 $direction = $i % 2 === 0 ? 'left' : 'right';
                 $angle = random_int(-15, 15);
-                $x = random_int(-10, 50);
+                $x = random_int(-30, 0);
                 $y = 20 + floor($i / 2) * 350 + random_int(-50, 50);
 
                 $decorations[] = [

@@ -69,6 +69,10 @@
     {% endfor %}
   </div>
 
+  {% if award %}
+    <img id="reward-buddie">
+  {% endif %}
+
   <div class="center-container">
 
     {#<div class="pageHeader" style="text-align: center; height: 110px;">#}
@@ -213,12 +217,13 @@
                 <h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;" id="submitReminder">After voting, click on "Submit Votes" below! Otherwise they won't save!</h3>
               {% endif %}
 
-
-              <div class="your-votes">
-                Your Votes
+              <div class="your-votes-container">
+                <div class="your-votes">
+                  Your Votes
+                </div>
+                <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
               </div>
 
-              <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
             {% endapply %}
           </div>
 
@@ -298,34 +303,34 @@
       {% endif %}
     </div>
 
-    <div id="containerAwards" class="awards-list" style="margin-top: 10px;">
+  <div class="zig"></div>
 
-      <div class="your-votes" style="margin-bottom: 10px;">
-        Awards
-      </div>
+  <div id="containerAwards" class="awards-list" style="margin-top: 10px;">
 
-      <ul class="awards">
-        {% for _award in awards %}
-          <li>
-            <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
-               class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
-              <span class="award-name">{{ _award.name }}</span>
-              <span class="award-subtitle">{{ _award.subtitle }}</span>
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-
-      {% if app.user.loggedIn %}
-        <div class="goBackLink">
-          <a href="{{ path('home') }}">< Back to the main part of the site</a>
-        </div>
-      {% endif %}
+    <div class="your-votes" style="margin-bottom: 10px;">
+      Awards
     </div>
 
-    {% if award %}
-      <img id="reward-buddie">
+    <ul class="awards">
+      {% for _award in awards %}
+        <li>
+          <a href="{{ path('voting', {'awardID': _award.id}) }}" id="{{ _award.id }}"
+             class="award {{ award == _award ? 'active' : '' }} {{ allVotes[_award.id] ? 'complete' : '' }}">
+            <span class="award-name">{{ _award.name }}</span>
+            <span class="award-subtitle">{{ _award.subtitle }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
 
+    {% if app.user.loggedIn %}
+      <div class="goBackLink">
+        <a href="{{ path('home') }}">< Back to the main part of the site</a>
+      </div>
+    {% endif %}
+  </div>
+
+  {% if award %}
   <div id="no-music" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
 
@@ -351,40 +356,43 @@
   {% if award %}
   <div class="center-container">
 
-{#    <div class="window-body">#}
-      <div id="containerInventory">
-        <div class="your-votes" style="margin-bottom: 10px;">
-          Your Rewards
-        </div>
+    <div id="containerInventory">
+      <div class="your-votes" style="margin-bottom: 10px;">
+        Your Rewards
+      </div>
 
-        <div id="inventory">
-          <div class="inventory-container">
-            <div class="inventory-item" id="shekelCount" style="display: none;">
+      <div id="inventory">
+        <div class="inventory-container">
+          <div class="inventory-item" id="shekelCount" style="display: none;">
+            <div class="item-inner-wrapper">
               <div class="item-tier"></div>
               <img src="{{ asset('img/dosh.png') }}">
               <div class="item-name">-1 shekels</div>
             </div>
-            <div class="inventory-item" id="item-template" style="display: none;">
+          </div>
+          <div class="inventory-item" id="item-template" style="display: none;">
+            <div class="item-inner-wrapper">
               <div class="item-tier"></div>
               <img>
               <div class="item-name"></div>
               <div class="item-button-container">
-                <button class="btn item-button item-buddie" data-type="buddie"><i class="far fa-fw fa-dog"></i></button>
-                <button class="btn item-button item-music" data-type="music"><i class="far fa-fw fa-music"></i></button>
-                <button class="btn item-button item-css" data-type="css"><i class="far fa-fw fa-palette"></i></button>
+                <button class="item-button item-buddie" data-type="buddie"><i class="far fa-fw fa-dog"></i></button>
+                <button class="item-button item-music" data-type="music"><i class="far fa-fw fa-music"></i></button>
+                <button class="item-button item-css" data-type="css"><i class="far fa-fw fa-palette"></i></button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-    <div class="window-body" style="text-align: center; margin-top: 10px;">
-      <button class="btn btn-default btn-lootbox" id="buy-lootbox">Buy lootbox (<span id="lootboxCostText"></span> shekels)</button>
-      <button class="btn btn-default btn-lootbox" id="unequipAll">Unequip all items</button>
-      <button class="btn btn-default btn-lootbox" id="restoreDrops" disabled>Restore drops</button>
-      <button class="btn btn-default btn-lootbox" id="resetRewardsButton">Mute music</button>
-    </div>
+      <div class="window-body" style="text-align: center; margin-top: 10px; display: flex; justify-content: center; column-gap: 10px;">
+        <button class="btn btn-default btn-lootbox" id="buy-lootbox">Buy lootbox (<span id="lootboxCostText"></span> shekels)</button>
+        <button class="btn btn-default btn-lootbox" id="unequipAll">Unequip all items</button>
+        <button class="btn btn-default btn-lootbox" id="restoreDrops" disabled>Restore drops</button>
+        <button class="btn btn-default btn-lootbox" id="resetRewardsButton" style="display: none;">Mute music</button>
+      </div>
 
+    </div>
 
     <form id="cheat-code" style="margin-bottom: 10px; margin-top: 20px; display: none;">
       <div class="your-votes" style="margin-bottom: 10px;">Enter cheat code</div>
@@ -406,31 +414,37 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body" style="text-align: center;">
-            <img src="{{ asset('2020images/your-rewards.png') }}" id="youre" style="max-width: 90%;">
+            <img src="{{ asset('2022images/your-rewards.png') }}" id="youre" style="max-width: 90%;">
             <div class="lootboxbox">
               <div class="lootbox">
                 <img src="" class="lootbox-image">
 
                 <div class="inventory-item" style="display: none;">
-                  <div class="item-tier"></div>
-                  <img>
-                  <div class="item-name"></div>
+                  <div class="item-inner-wrapper">
+                    <div class="item-tier"></div>
+                    <img>
+                    <div class="item-name"></div>
+                  </div>
                 </div>
               </div>
               <div class="lootbox">
                 <img src="" class="lootbox-image">
                 <div class="inventory-item" style="display: none;">
-                  <div class="item-tier"></div>
-                  <img>
-                  <div class="item-name"></div>
+                  <div class="item-inner-wrapper">
+                    <div class="item-tier"></div>
+                    <img>
+                    <div class="item-name"></div>
+                  </div>
                 </div>
               </div>
               <div class="lootbox">
                 <img src="" class="lootbox-image">
                 <div class="inventory-item" style="display: none;">
-                  <div class="item-tier"></div>
-                  <img>
-                  <div class="item-name"></div>
+                    <div class="item-inner-wrapper">
+                    <div class="item-tier"></div>
+                    <img>
+                    <div class="item-name"></div>
+                  </div>
                 </div>
               </div>
             </div>

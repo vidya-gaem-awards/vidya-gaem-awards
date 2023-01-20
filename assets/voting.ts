@@ -267,19 +267,6 @@ jQuery(function () {
 
     var inventory;
 
-    const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const symbols = "!@#$%^&*()|_-+=\\";
-
-    setInterval(() => {
-        const elements = $('.inventory-item.encrypted .item-button');
-        for (const element of elements) {
-            const $el = $(elements);
-            const alphabet = $el.is(':hover') ? symbols : alpha;
-            const randomText = [...Array(12)].reduce(a=>a+alphabet[~~(Math.random()*alphabet.length)],'');
-            $el.text(randomText);
-        }
-    }, 100);
-
     function updateInventory() {
         // if (inventory.version === undefined) {
         //     inventory.version = 2;
@@ -343,7 +330,7 @@ jQuery(function () {
             }
 
             var tier = lootboxTiers[reward.tier];
-            element.css('borderColor', tier.color);
+            // element.css('borderColor', tier.color);
             if (reward.shortName === 'nothing') {
                 element.find('.item-buddie').text('Equip');
                 element.find('.item-tier').css('backgroundColor', 'black');
@@ -571,39 +558,19 @@ jQuery(function () {
             return;
         }
 
-        if (usingWinamp) {
-            webamp.setTracksToPlay([
-                {
-                    url: reward.musicFile.url,
-                    metaData: {
-                        title: reward.shortName + ".mp3",
-                        artist: null
-                    }
-                }
-            ]);
-            webamp.reopen();
-            webamp.play();
-
-            if (webamp.media._context.state === 'suspended') {
-                return Promise.reject('Media context failed to start');
-            }
-
-            return Promise.resolve();
-        } else {
-            if (music) {
-                music.pause();
-                music.currentTime = 0;
-            }
-
-            if (showButton) {
-                $('#resetRewardsButton').show();
-            }
-
-            music = new Audio(reward.musicFile.url);
-            music.volume = 0.5;
-
-            return music.play();
+        if (music) {
+            music.pause();
+            music.currentTime = 0;
         }
+
+        if (showButton) {
+            $('#resetRewardsButton').show();
+        }
+
+        music = new Audio(reward.musicFile.url);
+        music.volume = 0.5;
+
+        return music.play();
     }
 
     function activateBuddie(id) {
@@ -753,7 +720,9 @@ jQuery(function () {
         });
 
         if (getRandomInt(1,7) === 6) {
-            $('#youre').attr('src', '/2020images/youre-rewards.png');
+            $('#youre').attr('src', '/2022images/youre-rewards.png');
+        } else {
+            $('#youre').attr('src', '/2022images/your-rewards.png');
         }
 
         $('#rewards').modal('show');
@@ -798,6 +767,7 @@ jQuery(function () {
     // Only used in the "drag from top to bottom" layout
     var topArea = $('#voteDropAreaTop');
     var bottomArea = $('#voteDropAreaBottom');
+    var bottomAreaContainer = $('.your-votes-container');
 
     // Only used in the "click to choose number" layout
     var numberPopup = $('#numberPopup');
@@ -950,7 +920,9 @@ jQuery(function () {
         $(".voteBox").addClass("locked");
         $(".aNominee").addClass("locked");
 
-        bottomArea.addClass("locked");
+
+        bottomAreaContainer.addClass("locked");
+        bottomAreaContainer.find('.your-votes').text("Your Votes");
         submitButton.addClass('iVoted').attr('title', 'Saved!');
         $('#submitReminder').text('Your votes have been submitted.');
 
@@ -965,7 +937,8 @@ jQuery(function () {
         $(".aNominee").removeClass("locked");
         $('#submitReminder').text('Don\'t forget to click on "Submit Votes" below to save your votes!');
 
-        bottomArea.removeClass("locked");
+        bottomAreaContainer.removeClass("locked");
+        bottomAreaContainer.find('.your-votes').text("Your Votes (unsaved)");
         submitButton.removeClass('iVoted').attr('title', 'Submit Votes');
         votesChanged = true;
     }
@@ -1006,7 +979,7 @@ jQuery(function () {
     function updateNumbers() {
         bottomArea.find(".voteGroup").each(function (index) {
             index = index + 1;
-            var text = 'Your ' + getOrdinal(index) + ' preference';
+            var text = '#' + index;
             $(this).find(".number").show().html(text);
         });
 

@@ -33,6 +33,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Highway Gothic';
+  src: url('/2022images/fonts/HWYGNRRW.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /*
 @font-face {
     font-family: 'Trajan Pro 3';
@@ -88,7 +95,7 @@
 /*}*/
 
 html {
-  background:  url('/2022images/bg.png') repeat;
+  background: #71431C url('/2022images/bg.png') repeat;
 }
 
 body {
@@ -260,17 +267,19 @@ a:hover {
 
 /** Bootstrap button **/
 .btn {
-  background: #F0961F;
+  border: 2px outset black;
+  background: white url('/2022images/sign.png');
   font-family: 'Jet Set', sans-serif;
-  color: white;
-  box-shadow: 2px 2px #D3362C, 3px 3px 1px rgba(0, 0, 0, 0.5);
+  color: black;
+  box-shadow: 2px 2px #EB1C26, 3px 3px 1px rgba(0, 0, 0, 0.5);
   margin-right: 1px;
 }
 
 .btn:hover {
-  color: black;
-  background: white;
-  box-shadow: 2px 2px #0EBF8C, 3px 3px 1px rgba(0, 0, 0, 0.5);
+  border-color: #EB1C26;
+  color: #EB1C26;
+  /*background: white;*/
+  /*box-shadow: 2px 2px #0EBF8C, 3px 3px 1px rgba(0, 0, 0, 0.5);*/
 }
 
 .btn-themed {
