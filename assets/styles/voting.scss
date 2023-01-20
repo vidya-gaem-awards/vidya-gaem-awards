@@ -577,12 +577,34 @@ $card-width: 150px;
   color: black;
   margin-left: -10px;
   margin-right: -10px;
-  padding-bottom: 10px;
 
   .your-votes {
     color: black;
     text-shadow: none;
   }
+}
+
+.inventory-item-outer-wrapper {
+  display: flex;
+  position: relative;
+
+  .pole {
+    position: absolute;
+    width: 15px;
+    background: #868A8B url('/2022images/pole.png') repeat-y;
+    background-size: 100%;
+    top: -5px;
+    bottom: -500px;
+    left: 68px;
+    z-index: 1;
+  }
+}
+
+
+.inventory-container-container {
+  padding-bottom: 20px;
+  position: relative;
+  overflow-y: hidden;
 }
 
 .inventory-container {
@@ -595,6 +617,16 @@ $card-width: 150px;
   column-gap: 10px;
 }
 
+.inventory-buttons {
+  text-align: center;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  z-index: 20;
+  position: relative;
+}
+
 .inventory-item img {
   max-width: 100%;
   height: 80px;
@@ -604,6 +636,7 @@ $card-width: 150px;
   font-family: "Highway Gothic", sans-serif;
   width: $card-width;
   min-height: calc($card-width * 7 / 5);
+  z-index: 2;
 
   border: 2px solid black;
 
@@ -625,16 +658,22 @@ $card-width: 150px;
   //font-weight: bold;
   //border: 2px dotted black;
 
-  background: white url('/2022images/sign.png');
+  //background: white url('/2022images/sign.png');
+  background: #F0961F url('/2022images/orangebg.png') center top;
   padding: 5px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+
+#rewards .inventory-item {
+  background-image: url('/2022images/orangebg-no-rivet.png');
 }
 
 .item-inner-wrapper {
   border: 4px solid #EB1C26;
   border-radius: 15px;
 
-  padding: 5px;
+  padding: 15px 5px 5px 5px;
 
   display: flex;
   flex-direction: column;
@@ -1017,7 +1056,7 @@ body {
 .numberButton {
   width: 100px;
   height: 100px;
-  background: rgb(251, 68, 7);
+  background: #fb4407;
   color: white;
   border-radius: 100%;
   border: none;

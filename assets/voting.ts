@@ -343,7 +343,7 @@ jQuery(function () {
             }
 
             element.show();
-            element.appendTo('.inventory-container');
+            element.appendTo('#inventory .inventory-container');
         }
     }
 
