@@ -196,7 +196,7 @@ class Access
 
     public function setReferer(?string $referer): Access
     {
-        $this->referer = mb_substr($referer, 0, 190);
+        $this->referer = ($referer !== null ? mb_substr($referer, 0, 190) : null);
         return $this;
     }
 
