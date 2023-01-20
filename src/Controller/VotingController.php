@@ -201,8 +201,6 @@ class VotingController extends AbstractController
             }
         }
 
-        dump($decorations);
-
         // Lootbox items
         $items = $em->createQueryBuilder()
             ->select('i')
