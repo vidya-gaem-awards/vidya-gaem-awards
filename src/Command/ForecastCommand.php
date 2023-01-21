@@ -39,6 +39,7 @@ class ForecastCommand extends Command
         '20-yandex' => 'BIT_AND(v.number, 4096) > 0',
         '21-kiwifarms' => 'BIT_AND(v.number, 8192) > 0',
         '22-4chan-ads' => 'BIT_AND(v.number, 16384) > 0',
+        '23-youtube' => 'BIT_AND(v.number, 32768) > 0',
     ];
 
     private Timer $timer;

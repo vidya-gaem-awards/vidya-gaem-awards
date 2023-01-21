@@ -116,6 +116,7 @@ class ResultController extends AbstractController
             '14-neogaf' => 'NeoGAF',
             '13-something-awful' => 'Something Awful',
             '20-yandex' => 'Yandex',
+            '23-youtube' => 'YouTube',
         ];
 
         if ($authChecker->isGranted('ROLE_VOTING_CODE')) {
