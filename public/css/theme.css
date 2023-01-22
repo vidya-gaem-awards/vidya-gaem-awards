@@ -145,17 +145,19 @@ h3 {
   font-family: "There Brat", sans-serif;
   color: white;
   text-decoration: none;
-  font-size: 1em;
+  font-size: 40px;
   line-height: 0.95em;
   padding: 0;
 }
 
 /* Navbar */
 .navbar {
-  background-color: silver;
-  border-bottom: 1px solid #4e4e4e;
-  border-top: 1px solid #f4f4f4;
-  box-shadow: inset 1px 0 #fff;
+  background: url(/2022images/bgwhite.jpg) repeat,#dedede;
+  border-bottom-color: #fff;
+  border-bottom-style: ridge;
+  border-bottom-width: 3px;
+  font-family: Jet Set,sans-serif;
+  text-shadow: 0 0 2px #F0961F;
 }
 
 .navbar, .navbar .navbar-inner {
@@ -165,14 +167,15 @@ h3 {
 
 .navbar .nav-item .nav-link {
   color: black !important;
+  transition: none;
   /*background: none;*/
   /*text-shadow: black 1px 1px;*/
   /*font-family: "OratorStd", Arial, sans-serif;*/
 }
 
 .navbar .nav-item .nav-link:hover {
-  color: black !important;
-  font-weight: bold;
+  color: white !important;
+  text-shadow: 0 0 4px black, -1px -1px #CF282F, 2px 2px #CF282F;
   /*color: #fde942 !important;*/
   /*text-shadow: #fde942 0px 0px 3px;*/
   /*background: rgba(242, 152, 35, 0.2) !important;*/
@@ -196,10 +199,9 @@ h3 {
   /*border: 1px solid #f81317;*/
   /*background: rgba(0, 0, 0, 0.6);*/
 
-  background-color: silver;
-  border-bottom: 1px solid #4e4e4e;
-  border-top: 1px solid #f4f4f4;
-  box-shadow: inset 1px 0 #fff;
+
+  background: url(/2022images/bgwhite.jpg) repeat,#dedede;
+  border: 3px ridge white;
 }
 
 .navbar .dropdown-item {
@@ -209,6 +211,10 @@ h3 {
 }
 
 .navbar .dropdown-item:hover {
+  color: white;
+  text-shadow: 0 0 4px black, -1px -1px #CF282F, 2px 2px #CF282F;
+  background: none;
+
   /*color: #fde942;*/
   /*text-shadow: #fde942 0px 0px 3px;*/
   /*background: rgba(242, 152, 35, 0.2);*/
