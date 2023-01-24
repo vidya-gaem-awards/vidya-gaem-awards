@@ -142,7 +142,7 @@ class ResultsCommand extends Command
                 continue;
             }
 
-            $referer = preg_replace('{https?://(www\.)?}', '', $access->getReferer());
+            $referer = preg_replace('{https?://(www\.)?}', '', $access->getReferer() ?: '');
             $voters[$access->getCookieID()]['referrers'][] = $referer;
         }
 
