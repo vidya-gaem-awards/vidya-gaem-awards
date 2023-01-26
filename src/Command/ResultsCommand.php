@@ -4,9 +4,11 @@ namespace App\Command;
 use App\Entity\Access;
 use App\Entity\Award;
 use App\Entity\FantasyUser;
+use App\Entity\IpAddress;
 use App\Entity\ResultCache;
 use App\Entity\Vote;
 use App\Entity\VotingCodeLog;
+use App\Service\AbuseIpdbService;
 use App\Service\ConfigService;
 use App\Service\CronJobService;
 use App\VGA\ResultCalculator\Schulze;
@@ -58,6 +60,7 @@ class ResultsCommand extends Command
         private readonly EntityManagerInterface $em,
         private readonly ConfigService $configService,
         private readonly CronJobService $cron,
+        private readonly AbuseIpdbService $abuseIpdb,
     ) {
         parent::__construct();
     }
@@ -80,6 +83,7 @@ class ResultsCommand extends Command
         $this->timer = new Timer();
 
         if (!$input->getOption('predictions-only')) {
+            $this->updateIpAddresses();
             $this->updateVoteReferrers();
             $this->updateResultCache();
         }
@@ -90,6 +94,34 @@ class ResultsCommand extends Command
         }
 
         return 0;
+    }
+
+    private function updateIpAddresses()
+    {
+        $this->writeLn('Updating IP addresses');
+
+        $ips = $this->em->createQueryBuilder()
+            ->select('DISTINCT (v.ip) as ip')
+            ->from(Vote::class, 'v')
+            ->getQuery()
+            ->getResult();
+
+        $this->writeln(count($ips) . ' unique IP addresses on record');
+
+        $updated = 0;
+
+        foreach ($ips as $ip) {
+            $entity = $this->em->getRepository(IpAddress::class)->find($ip['ip']);
+
+            if (!$entity) {
+                $this->abuseIpdb->updateIpInformation($ip['ip']);
+                $updated++;
+            }
+        }
+
+        $this->em->flush();
+
+        $this->writeln($updated . ' IP addresses updated');
     }
 
     private function updateVoteReferrers()

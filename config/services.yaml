@@ -90,3 +90,6 @@ services:
 
     Symfony\Component\Security\Core\User\UserProviderInterface:
         alias: 'security.user.provider.concrete.users'
+
+    App\Service\AbuseIpdbService:
+        arguments: ['%env(ABUSEIPDB_API_KEY)%']
