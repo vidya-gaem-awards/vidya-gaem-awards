@@ -215,7 +215,7 @@ class ResultsCommand extends Command
                 $info['notes'][] = "Has voting code";
             }
 
-            foreach (['BGmo', 'BGds', 'BGm2'] as $ad_voting_code) {
+            foreach (['dbMO'] as $ad_voting_code) {
                 if (in_array($ad_voting_code, $info['codes'])) {
                     $number += 2 ** 14;
                     break;
