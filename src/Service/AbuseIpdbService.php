@@ -46,6 +46,7 @@ class AbuseIpdbService
         $ip->setUsageType($info['usageType']);
         $ip->setIsp($info['isp']);
         $ip->setReportCount($info['totalReports']);
+        $ip->setDomain($info['domain']);
 
         $this->repo->save($ip);
     }

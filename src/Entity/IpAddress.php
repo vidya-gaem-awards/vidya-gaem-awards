@@ -16,7 +16,7 @@ class IpAddress
     #[ORM\Column]
     private DateTimeImmutable $lastUpdated;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private bool $whitelisted;
 
     #[ORM\Column]
@@ -24,6 +24,9 @@ class IpAddress
 
     #[ORM\Column(nullable: true)]
     private ?string $countryCode;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $domain;
 
     #[ORM\Column(nullable: true)]
     private ?string $usageType;
@@ -56,12 +59,12 @@ class IpAddress
         return $this;
     }
 
-    public function isWhitelisted(): bool
+    public function isWhitelisted(): ?bool
     {
         return $this->whitelisted;
     }
 
-    public function setWhitelisted(bool $whitelisted): IpAddress
+    public function setWhitelisted(?bool $whitelisted): IpAddress
     {
         $this->whitelisted = $whitelisted;
         return $this;
@@ -119,6 +122,17 @@ class IpAddress
     public function setReportCount(int $reportCount): IpAddress
     {
         $this->reportCount = $reportCount;
+        return $this;
+    }
+
+    public function getDomain(): ?string
+    {
+        return $this->domain;
+    }
+
+    public function setDomain(?string $domain): IpAddress
+    {
+        $this->domain = $domain;
         return $this;
     }
 }
