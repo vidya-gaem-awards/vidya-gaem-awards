@@ -48,6 +48,6 @@ class AbuseIpdbService
         $ip->setReportCount($info['totalReports']);
         $ip->setDomain($info['domain']);
 
-        $this->repo->save($ip);
+        $this->repo->save($ip, true);
     }
 }
