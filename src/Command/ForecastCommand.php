@@ -6,9 +6,11 @@ use App\Entity\ResultCache;
 use App\Entity\Vote;
 use App\Service\ResultsService;
 use App\VGA\Timer;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ForecastCommand extends Command
@@ -55,12 +57,19 @@ class ForecastCommand extends Command
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
+        $this->addOption('not-after', null, InputOption::VALUE_OPTIONAL);
+        $this->addOption('format', null, InputOption::VALUE_OPTIONAL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
         $this->timer = new Timer();
+
+        $format = $input->getOption('format');
+        if ($format !== 'tsv') {
+            $format = 'human';
+        }
 
         $awards = $this->em->createQueryBuilder()
             ->select('a')
@@ -74,15 +83,27 @@ class ForecastCommand extends Command
 
         /** @var Award $award */
         foreach ($awards as $award) {
-            $this->writeln($award->getName());
+            if ($format === 'human') {
+                $this->writeln($award->getName());
+            }
 
-            $preferences = $this->em->createQueryBuilder()
+            $query = $this->em->createQueryBuilder()
                 ->select('v.preferences')
                 ->from(Vote::class, 'v')
                 ->join('v.award', 'c')
                 ->where('c.id = :award')
                 ->setParameter('award', $award->getId())
-                ->andWhere(ResultsCommand::FILTERS[ResultCache::OFFICIAL_FILTER])
+                ->andWhere(ResultsCommand::FILTERS[ResultCache::OFFICIAL_FILTER]);
+
+            if ($input->getOption('not-after')) {
+                $date = new DateTimeImmutable($input->getOption('not-after'));
+
+                $query
+                    ->andWhere('v.timestamp <= :notAfter')
+                    ->setParameter('notAfter', $date);
+            }
+
+            $preferences = $query
                 ->getQuery()
                 ->getResult();
 
@@ -131,13 +152,23 @@ class ForecastCommand extends Command
                 $totalIterations++;
             }
 
-            $this->writeln('  1st: ' . $nominees[$first]->getName());
-            $this->writeln('  2nd: ' . $nominees[$second]->getName());
-            $this->writeln('  Votes required to overtake: ' . $count . ' (' . sprintf('%.2f', $count / $originalVoteCount * 100) . '%)');
-
             $sweepPoints = $originalResults->getSteps()['sweepPoints'];
-            $this->writeln('  Sweep point diff: ' . round($sweepPoints[$first] - $sweepPoints[$second]));
-            $this->writeln( '  Iterations: ' . $iterations);
+
+            if ($format === 'human') {
+                $this->writeln('  1st: ' . $nominees[$first]->getName());
+                $this->writeln('  2nd: ' . $nominees[$second]->getName());
+                $this->writeln('  Votes required to overtake: ' . $count . ' (' . sprintf('%.2f', $count / $originalVoteCount * 100) . '%)');
+                $this->writeln('  Sweep point diff: ' . round($sweepPoints[$first] - $sweepPoints[$second]));
+                $this->writeln( '  Iterations: ' . $iterations);
+            } elseif ($format === 'tsv') {
+                $this->output->writeln(implode("|", [
+                    $award->getName(),
+                    $nominees[$first]->getName(),
+                    $nominees[$second]->getName(),
+                    $count,
+                    $originalVoteCount,
+                ]));
+            }
         }
 
         $this->writeln('Iterations required: ' . $totalIterations);
