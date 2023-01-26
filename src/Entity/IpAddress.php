@@ -17,7 +17,7 @@ class IpAddress
     private DateTimeImmutable $lastUpdated;
 
     #[ORM\Column(nullable: true)]
-    private bool $whitelisted;
+    private ?bool $whitelisted;
 
     #[ORM\Column]
     private int $abuseScore;
