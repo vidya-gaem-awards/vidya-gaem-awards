@@ -7,10 +7,8 @@ use DateTimeZone;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="config", options={"collate"="utf8mb4_unicode_ci","charset"="utf8mb4"})
- * @ORM\Entity
- */
+#[ORM\Table(name: 'config', options: ['collate' => 'utf8mb4_unicode_ci', 'charset' => 'utf8mb4'])]
+#[ORM\Entity]
 class Config
 {
     const ALLOWED_DEFAULT_PAGES = [
@@ -25,55 +23,35 @@ class Config
 
     const DEFAULT_TIMEZONE = 'America/New_York';
 
-    /**
-     * @ORM\Column(name="id", type="string", length=30)
-     * @ORM\Id
-     */
+    #[ORM\Column(name: 'id', type: 'string', length: 30)]
+    #[ORM\Id]
     private int $id = 1;
 
-    /**
-     * @ORM\Column(name="voting_start", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'voting_start', type: 'datetime', nullable: true)]
     private ?DateTime $votingStart;
 
-    /**
-     * @ORM\Column(name="voting_end", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'voting_end', type: 'datetime', nullable: true)]
     private ?DateTime $votingEnd;
 
-    /**
-     * @ORM\Column(name="stream_time", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'stream_time', type: 'datetime', nullable: true)]
     private ?DateTime $streamTime;
 
-    /**
-     * @ORM\Column(name="default_page", type="string", length=30, nullable=false)
-     */
+    #[ORM\Column(name: 'default_page', type: 'string', length: 30, nullable: false)]
     private string $defaultPage = 'home';
 
-    /**
-     * @ORM\Column(name="award_suggestions", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'award_suggestions', type: 'boolean', nullable: false)]
     private bool $awardSuggestions = true;
 
-    /**
-     * @ORM\Column(name="public_pages", type="json", nullable=false)
-     */
+    #[ORM\Column(name: 'public_pages', type: 'json', nullable: false)]
     private array $publicPages = [];
 
-    /**
-     * @ORM\Column(name="read_only", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'read_only', type: 'boolean', nullable: false)]
     private bool $readOnly = false;
 
-    /**
-     * @ORM\Column(name="timezone", type="string", length=50, nullable=false)
-     */
+    #[ORM\Column(name: 'timezone', type: 'string', length: 50, nullable: false)]
     private string $timezone = self::DEFAULT_TIMEZONE;
 
-    /**
-     * @ORM\Column(name="navbar_items", type="json", nullable=false)
-     */
+    #[ORM\Column(name: 'navbar_items', type: 'json', nullable: false)]
     private array $navbarItems = ['config' => ['label' => 'Config', 'order' => 1]];
 
     public function getVotingStart(): ?DateTime

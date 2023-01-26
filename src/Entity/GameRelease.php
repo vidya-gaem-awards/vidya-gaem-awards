@@ -4,10 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="game_releases")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'game_releases')]
+#[ORM\Entity]
 class GameRelease
 {
     public const PLATFORMS = [
@@ -30,111 +28,69 @@ class GameRelease
         'mobile' => 'Mobile'
     ];
 
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=100)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 100)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="notable", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'notable', type: 'boolean', nullable: false)]
     private bool $notable = false;
 
-    /**
-     * @ORM\Column(name="manually_added", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'manually_added', type: 'boolean', nullable: false)]
     private bool $manuallyAdded = false;
 
-    /**
-     * @ORM\Column(name="pc", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'pc', type: 'boolean', nullable: false)]
     private bool $pc = false;
 
-    /**
-     * @ORM\Column(name="ps3", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'ps3', type: 'boolean', nullable: false)]
     private bool $ps3 = false;
 
-    /**
-     * @ORM\Column(name="ps4", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'ps4', type: 'boolean', nullable: false)]
     private bool $ps4 = false;
 
-    /**
-     * @ORM\Column(name="ps5", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'ps5', type: 'boolean', nullable: false)]
     private bool $ps5 = false;
 
-    /**
-     * @ORM\Column(name="vita", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'vita', type: 'boolean', nullable: false)]
     private bool $vita = false;
 
-    /**
-     * @ORM\Column(name="psn", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'psn', type: 'boolean', nullable: false)]
     private bool $psn = false;
 
-    /**
-     * @ORM\Column(name="x360", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'x360', type: 'boolean', nullable: false)]
     private bool $x360 = false;
 
-    /**
-     * @ORM\Column(name="xb1", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'xb1', type: 'boolean', nullable: false)]
     private bool $xb1 = false;
 
-    /**
-     * @ORM\Column(name="xbla", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'xbla', type: 'boolean', nullable: false)]
     private bool $xbla = false;
 
-    /**
-     * @ORM\Column(name="xsx", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'xsx', type: 'boolean', nullable: false)]
     private bool $xsx = false;
 
-    /**
-     * @ORM\Column(name="wii", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'wii', type: 'boolean', nullable: false)]
     private bool $wii = false;
 
-    /**
-     * @ORM\Column(name="wiiu", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'wiiu', type: 'boolean', nullable: false)]
     private bool $wiiu = false;
 
-    /**
-     * @ORM\Column(name="wiiware", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'wiiware', type: 'boolean', nullable: false)]
     private bool $wiiware = false;
 
-    /**
-     * @ORM\Column(name="switch", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'switch', type: 'boolean', nullable: false)]
     private bool $switch = false;
 
-    /**
-     * @ORM\Column(name="n3ds", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'n3ds', type: 'boolean', nullable: false)]
     private bool $n3ds = false;
 
-    /**
-     * @ORM\Column(name="vr", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'vr', type: 'boolean', nullable: false)]
     private bool $vr = false;
 
-    /**
-     * @ORM\Column(name="mobile", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'mobile', type: 'boolean', nullable: false)]
     private bool $mobile = false;
 
     public function __construct(string $name)

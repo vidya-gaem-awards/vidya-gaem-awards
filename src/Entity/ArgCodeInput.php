@@ -6,31 +6,21 @@ use App\Repository\ArgCodeInputRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class ArgCodeInput
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=45)
-     */
+    #[ORM\Column(type: 'string', length: 45)]
     private string $user;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
+    #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $timestamp;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
+    #[ORM\Column(type: 'string', length: 20)]
     private string $code;
 
     public function __construct()

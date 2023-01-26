@@ -6,53 +6,33 @@ use DateTime;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="news")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'news')]
+#[ORM\Entity]
 class News
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="headline", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'headline', type: 'string', length: 255, nullable: true)]
     private ?string $headline;
 
-    /**
-     * @ORM\Column(name="text", type="text", nullable=false)
-     */
+    #[ORM\Column(name: 'text', type: 'text', nullable: false)]
     private string $text;
 
-    /**
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'timestamp', type: 'datetime', nullable: false)]
     private DateTime $timestamp;
 
-    /**
-     * @ORM\Column(name="visible", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
     private bool $visible = true;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userID", referencedColumnName="id", nullable=false)
-     * })
-     */
+    #[ORM\JoinColumn(name: 'userID', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     private User $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="deletedBy", referencedColumnName="id", nullable=true)
-     * })
-     */
+    #[ORM\JoinColumn(name: 'deletedBy', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     private ?User $deletedBy;
 
 

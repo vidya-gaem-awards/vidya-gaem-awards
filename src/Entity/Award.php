@@ -10,121 +10,87 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use JsonSerializable;
 
-/**
- * @ORM\Table(name="awards")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'awards')]
+#[ORM\Entity]
 class Award implements JsonSerializable
 {
-    /**
-     * @ORM\Column(name="id", type="string", length=30)
-     * @ORM\Id
-     */
+    #[ORM\Column(name: 'id', type: 'string', length: 30)]
+    #[ORM\Id]
     private string $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="subtitle", type="string", length=200, nullable=false)
-     */
+    #[ORM\Column(name: 'subtitle', type: 'string', length: 200, nullable: false)]
     private string $subtitle;
 
-    /**
-     * @ORM\Column(name="`order`",  type="integer", nullable=false)
-     */
+    #[ORM\Column(name: '`order`', type: 'integer', nullable: false)]
     private int $order;
 
-    /**
-     * @ORM\Column(name="comments", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'comments', type: 'text', nullable: true)]
     private ?string $comments;
 
-    /**
-     * @ORM\Column(name="enabled", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'enabled', type: 'boolean', nullable: false)]
     private bool $enabled;
 
-    /**
-     * @ORM\Column(name="nominations_enabled", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'nominations_enabled', type: 'boolean', nullable: false)]
     private bool $nominationsEnabled;
 
-    /**
-     * @ORM\Column(name="secret", type="boolean", nullable=false, options={"comment"="Secret awards only show up during voting"})
-     */
+    #[ORM\Column(name: 'secret', type: 'boolean', nullable: false, options: ['comment' => 'Secret awards only show up during voting'])]
     private bool $secret;
 
     /**
      * @var Collection<array-key, AwardFeedback>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\AwardFeedback", mappedBy="award", cascade={"remove"})
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\AwardFeedback', mappedBy: 'award', cascade: ['remove'])]
     private Collection $feedback;
 
     /**
      * @var Collection<array-key, AwardSuggestion>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\AwardSuggestion", mappedBy="award", cascade={"remove"})
-     * @ORM\OrderBy({
-     *     "suggestion"="ASC"
-     * })
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\AwardSuggestion', mappedBy: 'award', cascade: ['remove'])]
+    #[ORM\OrderBy(['suggestion' => 'ASC'])]
     private Collection $suggestions;
 
     /**
      * @var Collection<array-key, Nominee>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Nominee", mappedBy="award", cascade={"remove"})
-     * @ORM\OrderBy({
-     *     "name"="ASC"
-     * })
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Nominee', mappedBy: 'award', cascade: ['remove'])]
+    #[ORM\OrderBy(['name' => 'ASC'])]
     private Collection $nominees;
 
     /**
      * @var Collection<array-key, UserNomination>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\UserNomination", mappedBy="award", cascade={"remove"})
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\UserNomination', mappedBy: 'award', cascade: ['remove'])]
     private Collection $userNominations;
 
     /**
      * @var Collection<array-key, Vote>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="award", cascade={"remove"})
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Vote', mappedBy: 'award', cascade: ['remove'])]
     private Collection $votes;
 
     /**
      * @var Collection<array-key, ResultCache>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\ResultCache", mappedBy="award", cascade={"remove"})
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\ResultCache', mappedBy: 'award', cascade: ['remove'])]
     private Collection $resultCache;
 
     /**
      * @var Collection<array-key, FantasyPrediction>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="award", cascade={"remove"})
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\FantasyPrediction', mappedBy: 'award', cascade: ['remove'])]
     private Collection $fantasyPredictions;
 
     /**
      * @var Autocompleter|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Autocompleter", inversedBy="awards")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="autocompleteID", referencedColumnName="id", nullable=true)
-     * })
      */
+    #[ORM\JoinColumn(name: 'autocompleteID', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Autocompleter', inversedBy: 'awards')]
     private ?Autocompleter $autocompleter;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\File")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\File')]
     private ?File $winnerImage;
 
     public function __construct()

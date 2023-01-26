@@ -9,71 +9,47 @@ use RandomLib\Factory;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="fantasy_users")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'fantasy_users')]
+#[ORM\Entity]
 class FantasyUser
 {
     const NAME_LIMIT = 50;
     const VICTORY_MESSAGE_LIMIT = 140;
     const MAX_AVATAR_SIZE = 1024 * 1024 * 2; // 2 megabytes
-
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=100)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 100)]
     private string $name = 'Anonymous';
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\File")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\File')]
     private ?File $avatar;
 
-    /**
-     * @ORM\Column(name="image_token", type="string", nullable=true)
-     */
+    #[ORM\Column(name: 'image_token', type: 'string', nullable: true)]
     private ?string $imageToken;
 
-    /**
-     * @ORM\Column(name="victory_message", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'victory_message', type: 'text', nullable: true)]
     private ?string $victoryMessage;
 
-    /**
-     * @ORM\Column(name="score", type="integer", nullable=true)
-     */
+    #[ORM\Column(name: 'score', type: 'integer', nullable: true)]
     private ?int $score;
 
-    /**
-     * @ORM\Column(name="`rank`", type="integer", nullable=true)
-     */
+    #[ORM\Column(name: '`rank`', type: 'integer', nullable: true)]
     private ?int $rank;
 
-    /**
-     * @ORM\Column(name="last_updated", type="datetime_immutable")
-     */
+    #[ORM\Column(name: 'last_updated', type: 'datetime_immutable')]
     private DateTimeImmutable $lastUpdated;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="fantasyUser")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true)
-     * })
-     */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', unique: true)]
+    #[ORM\OneToOne(targetEntity: 'App\Entity\User', inversedBy: 'fantasyUser')]
     private User $user;
 
     /**
      * @var Collection<array-key, FantasyPrediction>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="fantasyUser")
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\FantasyPrediction', mappedBy: 'fantasyUser')]
     private Collection $predictions;
 
     public function __construct()

@@ -5,37 +5,25 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/**
- * @ORM\Table(name="files")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'files')]
+#[ORM\Entity]
 class File implements JsonSerializable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $subdirectory;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $filename;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
+    #[ORM\Column(type: 'string', length: 10)]
     private ?string $extension;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: 'string', length: 50)]
     private ?string $entity;
 
     public function getId(): ?int

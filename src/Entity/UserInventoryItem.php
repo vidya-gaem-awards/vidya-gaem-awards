@@ -5,35 +5,23 @@ namespace App\Entity;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="user_inventory_items")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'user_inventory_items')]
+#[ORM\Entity]
 class UserInventoryItem
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="user", type="string", length=45, nullable=false)
-     */
+    #[ORM\Column(name: 'user', type: 'string', length: 45, nullable: false)]
     private string $user;
 
-    /**
-     * @ORM\Column(name="timestamp", type="datetime_immutable", nullable=false)
-     */
+    #[ORM\Column(name: 'timestamp', type: 'datetime_immutable', nullable: false)]
     private DateTimeImmutable $dateReceived;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="LootboxItem", inversedBy="userItems")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="itemID", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'itemID', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: 'LootboxItem', inversedBy: 'userItems')]
     private LootboxItem $item;
 
     public function __construct()

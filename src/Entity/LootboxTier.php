@@ -7,37 +7,25 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/**
- * @ORM\Table(name="lootbox_tiers")
- * @ORM\Entity(repositoryClass="App\Repository\LootboxTierRepository")
- */
+#[ORM\Table(name: 'lootbox_tiers')]
+#[ORM\Entity(repositoryClass: 'App\Repository\LootboxTierRepository')]
 class LootboxTier implements JsonSerializable, DropChance
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $color;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=5)
-     */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 5)]
     private ?string $drop_chance;
 
-    /**
-     * @ORM\OneToMany(targetEntity=LootboxItem::class, mappedBy="tier")
-     */
+    #[ORM\OneToMany(targetEntity: LootboxItem::class, mappedBy: 'tier')]
     private Collection $items;
 
     public function __construct()

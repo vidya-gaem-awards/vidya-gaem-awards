@@ -6,46 +6,28 @@ use DateTimeImmutable;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="fantasy_predictions")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'fantasy_predictions')]
+#[ORM\Entity]
 class FantasyPrediction
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="last_updated", type="datetime_immutable")
-     */
+    #[ORM\Column(name: 'last_updated', type: 'datetime_immutable')]
     private DateTimeImmutable $lastUpdated;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="fantasyPredictions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="award_id", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'award_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Award', inversedBy: 'fantasyPredictions')]
     private Award $award;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Nominee", inversedBy="fantasyPredictions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="nominee_id", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'nominee_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Nominee', inversedBy: 'fantasyPredictions')]
     private Nominee $nominee;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\FantasyUser", inversedBy="predictions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fantasy_user_id", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'fantasy_user_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\FantasyUser', inversedBy: 'predictions')]
     private FantasyUser $fantasyUser;
 
     public function __construct()

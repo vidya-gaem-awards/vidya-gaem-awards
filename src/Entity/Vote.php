@@ -5,59 +5,36 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="votes")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'votes')]
+#[ORM\Entity]
 class Vote
 {
-    /**
-     * @ORM\Column(name="cookie_id", type="string", length=191)
-     * @ORM\Id
-     */
+    #[ORM\Column(name: 'cookie_id', type: 'string', length: 191)]
+    #[ORM\Id]
     private string $cookieID;
 
-    /**
-     * @ORM\Column(name="preferences", type="json", nullable=false)
-     */
+    #[ORM\Column(name: 'preferences', type: 'json', nullable: false)]
     private array $preferences;
 
-    /**
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'timestamp', type: 'datetime', nullable: false)]
     private DateTime $timestamp;
 
-    /**
-     * @ORM\Column(name="ip", type="string", length=45, nullable=false)
-     */
+    #[ORM\Column(name: 'ip', type: 'string', length: 45, nullable: false)]
     private string $ip;
 
-    /**
-     * @ORM\Column(name="voting_code", type="string", length=20, nullable=true)
-     */
+    #[ORM\Column(name: 'voting_code', type: 'string', length: 20, nullable: true)]
     private ?string $votingCode;
 
-    /**
-     * @ORM\Column(name="number", type="integer", nullable=true)
-     */
+    #[ORM\Column(name: 'number', type: 'integer', nullable: true)]
     private ?int $number;
 
-    /**
-     *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="votes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'awardID', referencedColumnName: 'id')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Award', inversedBy: 'votes')]
     private Award $award;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="votes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userID", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'userID', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'votes')]
     private ?User $user;
 
     public function setCookieID(string $cookieID): Vote

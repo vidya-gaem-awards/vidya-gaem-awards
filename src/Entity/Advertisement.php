@@ -6,47 +6,31 @@ use RandomLib\Factory;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="advertisements")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'advertisements')]
+#[ORM\Entity]
 class Advertisement implements JsonSerializable
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", nullable=false)
-     */
+    #[ORM\Column(name: 'name', type: 'string', nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="link", type="string", nullable=true)
-     */
+    #[ORM\Column(name: 'link', type: 'string', nullable: true)]
     private ?string $link = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\File")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\File')]
     private ?File $image = null;
 
-    /**
-     * @ORM\Column(name="token", type="string", nullable=false)
-     */
+    #[ORM\Column(name: 'token', type: 'string', nullable: false)]
     private string $token;
 
-    /**
-     * @ORM\Column(name="special", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'special', type: 'boolean', nullable: false)]
     private bool $special;
 
-    /**
-     * @ORM\Column(name="clicks", type="integer", nullable=false)
-     */
+    #[ORM\Column(name: 'clicks', type: 'integer', nullable: false)]
     private int $clicks = 0;
 
     public function __construct()

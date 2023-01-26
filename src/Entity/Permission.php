@@ -7,10 +7,8 @@ use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="permissions", options={"collate"="utf8mb4_unicode_ci","charset"="utf8mb4"})
- * @ORM\Entity
- */
+#[ORM\Table(name: 'permissions', options: ['collate' => 'utf8mb4_unicode_ci', 'charset' => 'utf8mb4'])]
+#[ORM\Entity]
 class Permission
 {
     const STANDARD_PERMISSIONS = [
@@ -58,44 +56,32 @@ class Permission
         'LEVEL_5' => ['LEVEL_4', 'awards_delete', 'edit_config', 'template_edit', 'profile_edit_groups']
     ];
 
-    /**
-     * @ORM\Column(name="id", type="string", length=40)
-     * @ORM\Id
-     */
+    #[ORM\Column(name: 'id', type: 'string', length: 40)]
+    #[ORM\Id]
     private string $id;
 
-    /**
-     * @ORM\Column(name="description", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'description', type: 'string', length: 255, nullable: false)]
     private string $description;
 
     /**
      * @var Collection<array-key, Permission>
-     *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Permission", inversedBy="parents")
-     * @ORM\JoinTable(name="permission_children",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="parentID", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="childID", referencedColumnName="id")
-     *   }
-     * )
      */
+    #[ORM\JoinTable(name: 'permission_children')]
+    #[ORM\JoinColumn(name: 'parentID', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'childID', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Permission', inversedBy: 'parents')]
     private Collection $children;
 
     /**
      * @var Collection<array-key, Permission>
-     *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Permission", mappedBy="children")
      */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Permission', mappedBy: 'children')]
     private Collection $parents;
 
     /**
      * @var Collection<array-key, User>
-     *
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="permissions")
      */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\User', mappedBy: 'permissions')]
     private Collection $users;
 
     public function __construct()

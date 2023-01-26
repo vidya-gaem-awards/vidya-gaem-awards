@@ -5,40 +5,26 @@ use DateTime;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="user_nominations")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'user_nominations')]
+#[ORM\Entity]
 class UserNomination
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="user", type="string", length=45, nullable=false)
-     */
+    #[ORM\Column(name: 'user', type: 'string', length: 45, nullable: false)]
     private string $user;
 
-    /**
-     * @ORM\Column(name="nomination", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'nomination', type: 'string', length: 255, nullable: false)]
     private string $nomination;
 
-    /**
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'timestamp', type: 'datetime', nullable: false)]
     private DateTime $timestamp;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="userNominations")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'awardID', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Award', inversedBy: 'userNominations')]
     private Award $award;
 
     public function __construct(Award $award, BaseUser $user, string $nomination)

@@ -6,100 +6,65 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/**
- * @ORM\Table(name="lootbox_items")
- * @ORM\Entity(repositoryClass="App\Repository\LootboxItemRepository")
- */
+#[ORM\Table(name: 'lootbox_items')]
+#[ORM\Entity(repositoryClass: 'App\Repository\LootboxItemRepository')]
 class LootboxItem implements JsonSerializable, DropChance
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(name="short_name", type="string", length=50, nullable=false)
-     */
+    #[ORM\Column(name: 'short_name', type: 'string', length: 50, nullable: false)]
     private string $shortName;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\File")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\File')]
     private ?File $image = null;
 
-    /**
-     * @ORM\Column(name="css", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'css', type: 'boolean', nullable: false)]
     private bool $css = false;
 
-    /**
-     * @ORM\Column(name="buddie", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'buddie', type: 'boolean', nullable: false)]
     private bool $buddie = true;
 
-    /**
-     * @ORM\Column(name="music", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'music', type: 'boolean', nullable: false)]
     private bool $music = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\File")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\File')]
     private ?File $musicFile = null;
 
-    /**
-     * @ORM\Column(name="css_contents", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'css_contents', type: 'text', nullable: true)]
     private ?string $cssContents = null;
 
     /**
      * @var Collection<array-key, UserInventoryItem>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\UserInventoryItem", mappedBy="item")
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\UserInventoryItem', mappedBy: 'item')]
     private Collection $userItems;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
+    #[ORM\Column(type: 'string', length: 10)]
     private string $year = '2022';
 
-    /**
-     * @ORM\ManyToOne(targetEntity=LootboxTier::class, inversedBy="items")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: LootboxTier::class, inversedBy: 'items')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?LootboxTier $tier = null;
 
-    /**
-     * @ORM\Column(name="drop_chance", type="decimal", precision=10, scale=5, nullable=true)
-     */
+    #[ORM\Column(name: 'drop_chance', type: 'decimal', precision: 10, scale: 5, nullable: true)]
     private ?string $dropChance = null;
 
-    /**
-     * @ORM\Column(name="absolute_drop_chance", type="decimal", precision=10, scale=5, nullable=true)
-     */
+    #[ORM\Column(name: 'absolute_drop_chance', type: 'decimal', precision: 10, scale: 5, nullable: true)]
     private ?string $absoluteDropChance = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=5, nullable=true)
-     */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 5, nullable: true)]
     private ?string $cachedDropValueStart = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=5, nullable=true)
-     */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 5, nullable: true)]
     private ?string $cachedDropValueEnd = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $extra = null;
 
     public function setId($id): static

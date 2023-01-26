@@ -4,30 +4,20 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="award_feedback")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'award_feedback')]
+#[ORM\Entity]
 class AwardFeedback
 {
-    /**
-     * @ORM\Column(name="user", type="string", length=45)
-     * @ORM\Id
-     */
+    #[ORM\Column(name: 'user', type: 'string', length: 45)]
+    #[ORM\Id]
     private string $user;
 
-    /**
-     * @ORM\Column(name="opinion", type="smallint", nullable=false)
-     */
+    #[ORM\Column(name: 'opinion', type: 'smallint', nullable: false)]
     private int $opinion;
 
-    /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="feedback")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'awardID', referencedColumnName: 'id')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Award', inversedBy: 'feedback')]
     private Award $award;
 
     public function __construct(Award $award, BaseUser $user)

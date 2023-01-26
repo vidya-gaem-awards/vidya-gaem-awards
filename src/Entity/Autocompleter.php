@@ -6,35 +6,26 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
-/**
- * @ORM\Table(name="autocompleters", options={"collate"="utf8mb4_unicode_ci","charset"="utf8mb4"})
- * @ORM\Entity
- */
+#[ORM\Table(name: 'autocompleters', options: ['collate' => 'utf8mb4_unicode_ci', 'charset' => 'utf8mb4'])]
+#[ORM\Entity]
 class Autocompleter
 {
     const VIDEO_GAMES = 'video-games';
 
-    /**
-     * @ORM\Column(name="id", type="string", length=30)
-     * @ORM\Id
-     */
+    #[ORM\Column(name: 'id', type: 'string', length: 30)]
+    #[ORM\Id]
     private string $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="strings", type="json", nullable=false)
-     */
+    #[ORM\Column(name: 'strings', type: 'json', nullable: false)]
     private array $strings = [];
 
     /**
      * @var Collection<array-key, Award>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Award", mappedBy="autocompleter")
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Award', mappedBy: 'autocompleter')]
     private Collection $awards;
 
     /**

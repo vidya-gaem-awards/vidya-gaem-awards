@@ -5,50 +5,32 @@ use DateTime;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="voting_code_logs")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'voting_code_logs')]
+#[ORM\Entity]
 class VotingCodeLog
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="cookie_id", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'cookie_id', type: 'string', length: 255, nullable: false)]
     private string $cookieID;
 
-    /**
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'timestamp', type: 'datetime', nullable: false)]
     private DateTime $timestamp;
 
-    /**
-     * @ORM\Column(name="ip", type="string", length=45, nullable=false)
-     */
+    #[ORM\Column(name: 'ip', type: 'string', length: 45, nullable: false)]
     private string $ip;
 
-    /**
-     * @ORM\Column(name="code", type="string", length=20, nullable=false)
-     */
+    #[ORM\Column(name: 'code', type: 'string', length: 20, nullable: false)]
     private string $code;
 
-    /**
-     * @ORM\Column(name="referer", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'referer', type: 'string', length: 255, nullable: true)]
     private ?string $referer;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="votes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userID", referencedColumnName="id")
-     * })
-     */
+    #[ORM\JoinColumn(name: 'userID', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'votes')]
     private ?User $user;
 
     public function construct(): void

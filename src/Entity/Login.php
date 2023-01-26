@@ -4,30 +4,20 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="logins")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'logins')]
+#[ORM\Entity]
 class Login
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'timestamp', type: 'datetime', nullable: false)]
     private DateTime $timestamp;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="logins")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userID", referencedColumnName="id", nullable=false)
-     * })
-     */
+    #[ORM\JoinColumn(name: 'userID', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'logins')]
     private User $user;
 
     public function __construct()

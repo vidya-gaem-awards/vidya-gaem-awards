@@ -4,80 +4,50 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="access")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'access')]
+#[ORM\Entity]
 class Access
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="cookie_id", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'cookie_id', type: 'string', length: 255, nullable: false)]
     private string $cookieID;
 
-    /**
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'timestamp', type: 'datetime', nullable: false)]
     private DateTime $timestamp;
 
-    /**
-     * @ORM\Column(name="route", type="string", length=30, nullable=false)
-     */
+    #[ORM\Column(name: 'route', type: 'string', length: 30, nullable: false)]
     private string $route;
 
-    /**
-     * @ORM\Column(name="controller", type="string", nullable=false)
-     */
+    #[ORM\Column(name: 'controller', type: 'string', nullable: false)]
     private string $controller;
 
-    /**
-     * @ORM\Column(name="request_string", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'request_string', type: 'string', length: 255, nullable: false)]
     private string $requestString;
 
-    /**
-     * @ORM\Column(name="request_method", type="string", length=4, nullable=false)
-     */
+    #[ORM\Column(name: 'request_method', type: 'string', length: 4, nullable: false)]
     private string $requestMethod;
 
-    /**
-     * @ORM\Column(name="ip", type="string", length=45, nullable=false)
-     */
+    #[ORM\Column(name: 'ip', type: 'string', length: 45, nullable: false)]
     private string $ip;
 
-    /**
-     * @ORM\Column(name="user_agent", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'user_agent', type: 'string', length: 255, nullable: false)]
     private string $userAgent;
 
-    /**
-     * @ORM\Column(name="filename", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'filename', type: 'string', length: 255, nullable: false)]
     private string $filename;
 
-    /**
-     * @ORM\Column(name="referer", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'referer', type: 'string', length: 255, nullable: true)]
     private ?string $referer;
 
-    /**
-     * @ORM\Column(name="headers", type="json", nullable=true)
-     */
+    #[ORM\Column(name: 'headers', type: 'json', nullable: true)]
     private ?array $headers = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userID", referencedColumnName="id", nullable=true)
-     * })
-     */
+    #[ORM\JoinColumn(name: 'userID', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     private ?User $user;
 
     public function __construct()

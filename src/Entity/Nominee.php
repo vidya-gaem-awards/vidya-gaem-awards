@@ -7,61 +7,43 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
-/**
- * @ORM\Table(name="nominees", options={"collate"="utf8mb4_unicode_ci","charset"="utf8mb4"})
- * @ORM\Entity
- */
+#[ORM\Table(name: 'nominees', options: ['collate' => 'utf8mb4_unicode_ci', 'charset' => 'utf8mb4'])]
+#[ORM\Entity]
 class Nominee implements JsonSerializable
 {
     const DEFAULT_IMAGE_DIRECTORY = '/img/nominees/';
 
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="short_name", type="string", length=45, nullable=false)
-     */
+    #[ORM\Column(name: 'short_name', type: 'string', length: 45, nullable: false)]
     private string $shortName;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="subtitle", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'subtitle', type: 'string', length: 255, nullable: false)]
     private string $subtitle;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\File")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\File')]
     private ?File $image = null;
 
-    /**
-     * @ORM\Column(name="flavor_text", type="text", nullable=false)
-     */
+    #[ORM\Column(name: 'flavor_text', type: 'text', nullable: false)]
     private string $flavorText;
 
     /**
      * @var Collection<array-key, FantasyPrediction>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\FantasyPrediction", mappedBy="nominee")
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\FantasyPrediction', mappedBy: 'nominee')]
     private Collection $fantasyPredictions;
 
     /**
      * @var Award
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="nominees")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id")
-     * })
      */
+    #[ORM\JoinColumn(name: 'awardID', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Award', inversedBy: 'nominees')]
     private Award $award;
 
     public function __construct()

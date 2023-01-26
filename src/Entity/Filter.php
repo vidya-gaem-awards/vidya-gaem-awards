@@ -7,26 +7,18 @@ use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="filters")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'filters')]
+#[ORM\Entity]
 class Filter
 {
-    /**
-     * @ORM\Column(name="id", type="string", length=40)
-     * @ORM\Id
-     */
+    #[ORM\Column(name: 'id', type: 'string', length: 40)]
+    #[ORM\Id]
     private string $id;
 
-    /**
-     * @ORM\Column(name="regex", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'regex', type: 'string', length: 255, nullable: false)]
     private string $regex;
 
-    /**
-     * @ORM\Column(name="value", type="integer", nullable=false)
-     */
+    #[ORM\Column(name: 'value', type: 'integer', nullable: false)]
     private int $value;
 
     /**

@@ -9,102 +9,69 @@ use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="steam_id", columns={"steam_id"})})
- * @ORM\Entity
- */
+#[ORM\Table(name: 'users')]
+#[ORM\UniqueConstraint(name: 'steam_id', columns: ['steam_id'])]
+#[ORM\Entity]
 class User extends BaseUser
 {
 
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="steam_id", type="string", length=17)
-     */
+    #[ORM\Column(name: 'steam_id', type: 'string', length: 17)]
     protected string $steamId;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="special", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'special', type: 'boolean', nullable: false)]
     private bool $special = false;
 
-    /**
-     * @ORM\Column(name="firstLogin", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'firstLogin', type: 'datetime', nullable: true)]
     private ?DateTime $firstLogin = null;
 
-    /**
-     * @ORM\Column(name="lastLogin", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'lastLogin', type: 'datetime', nullable: true)]
     private ?DateTime $lastLogin = null;
 
-    /**
-     * @ORM\Column(name="primaryRole", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'primaryRole', type: 'string', length: 255, nullable: true)]
     private ?string $primaryRole = null;
 
-    /**
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'email', type: 'string', length: 255, nullable: true)]
     private ?string $email = null;
 
-    /**
-     * @ORM\Column(name="notes", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'notes', type: 'text', nullable: true)]
     private ?string $notes = null;
 
-    /**
-     * @ORM\Column(name="website", type="string", length=40, nullable=true)
-     */
+    #[ORM\Column(name: 'website', type: 'string', length: 40, nullable: true)]
     private ?string $website = null;
 
-    /**
-     * @ORM\Column(name="avatar", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'avatar', type: 'text', nullable: true)]
     protected ?string $avatar = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\FantasyUser", mappedBy="user")
-     */
+    #[ORM\OneToOne(targetEntity: 'App\Entity\FantasyUser', mappedBy: 'user')]
     private ?FantasyUser $fantasyUser = null;
 
     /**
      * @var Collection<array-key, Vote>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="user")
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Vote', mappedBy: 'user')]
     private Collection $votes;
 
     /**
      * @var Collection<array-key, Login>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Login", mappedBy="user")
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Login', mappedBy: 'user')]
     private Collection $logins;
 
     /**
      * @var Collection<array-key, Permission>
-     *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Permission", inversedBy="users")
-     * @ORM\JoinTable(name="user_permissions",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="userID", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="permissionID", referencedColumnName="id")
-     *   }
-     * )
      */
+    #[ORM\JoinTable(name: 'user_permissions')]
+    #[ORM\JoinColumn(name: 'userID', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'permissionID', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Permission', inversedBy: 'users')]
     private Collection $permissions;
 
     /**

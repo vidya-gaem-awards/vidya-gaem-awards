@@ -4,21 +4,15 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="config_key_value")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'config_key_value')]
+#[ORM\Entity]
 class ConfigKeyValue
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $name;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private $value = null;
 
     public function __construct(string $name)

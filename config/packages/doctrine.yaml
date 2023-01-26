@@ -15,7 +15,8 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
-                
+                type: attribute
+
         dql:
             datetime_functions:
                 convert_tz: DoctrineExtensions\Query\Mysql\ConvertTz

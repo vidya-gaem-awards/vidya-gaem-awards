@@ -4,35 +4,23 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="award_suggestions")
- * @ORM\Entity
- */
+#[ORM\Table(name: 'award_suggestions')]
+#[ORM\Entity]
 class AwardSuggestion
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="user", type="string", length=45, nullable=false)
-     */
+    #[ORM\Column(name: 'user', type: 'string', length: 45, nullable: false)]
     private string $user;
 
-    /**
-     * @ORM\Column(name="suggestion", type="string", nullable=false)
-     */
+    #[ORM\Column(name: 'suggestion', type: 'string', nullable: false)]
     private string $suggestion;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Award", inversedBy="suggestions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="awardID", referencedColumnName="id", nullable=true)
-     * })
-     */
+    #[ORM\JoinColumn(name: 'awardID', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Award', inversedBy: 'suggestions')]
     private ?Award $award;
 
     public function getId(): int

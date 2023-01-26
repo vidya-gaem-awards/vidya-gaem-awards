@@ -5,45 +5,29 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="table_history", options={"collate"="utf8mb4_unicode_ci","charset"="utf8mb4"})
- * @ORM\Entity
- */
+#[ORM\Table(name: 'table_history', options: ['collate' => 'utf8mb4_unicode_ci', 'charset' => 'utf8mb4'])]
+#[ORM\Entity]
 class TableHistory
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="`table`", type="string", length=100, nullable=false)
-     */
+    #[ORM\Column(name: '`table`', type: 'string', length: 100, nullable: false)]
     private string $table;
 
-    /**
-     * @ORM\Column(name="entry", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'entry', type: 'string', length: 255, nullable: false)]
     private string $entry;
 
-    /**
-     * @ORM\Column(name="`values`", type="json", nullable=false)
-     */
+    #[ORM\Column(name: '`values`', type: 'json', nullable: false)]
     private array $values;
 
-    /**
-     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'timestamp', type: 'datetime', nullable: false)]
     private DateTime $timestamp;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="userID", referencedColumnName="id", nullable=false)
-     * })
-     */
+    #[ORM\JoinColumn(name: 'userID', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     private User $user;
 
     public function __construct(string $entityClass, $entityID, array $values)
