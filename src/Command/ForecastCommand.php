@@ -40,7 +40,7 @@ class ForecastCommand extends Command
         $this->timer = new Timer();
 
         $format = $input->getOption('format');
-        if ($format !== 'tsv') {
+        if (!in_array($format, ['tsv', 'tsv2', 'human'])) {
             $format = 'human';
         }
 
@@ -136,6 +136,13 @@ class ForecastCommand extends Command
             } elseif ($format === 'tsv') {
                 $this->output->writeln(implode("|", [
                     $award->getName(),
+                    $nominees[$first]->getName(),
+                    $nominees[$second]->getName(),
+                    $count,
+                    $originalVoteCount,
+                ]));
+            } elseif ($format === 'tsv2') {
+                $this->output->writeln(implode("|", [
                     $nominees[$first]->getName(),
                     $nominees[$second]->getName(),
                     $count,
