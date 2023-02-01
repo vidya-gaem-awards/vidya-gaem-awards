@@ -51,6 +51,7 @@ class ResultsCommand extends Command
         '21-kiwifarms' => 'BIT_AND(v.number, 8192) > 0',
         '22-4chan-ads' => 'BIT_AND(v.number, 16384) > 0',
         '23-youtube' => 'BIT_AND(v.number, 32768) > 0',
+        '24-4chan-no-vpns' => '(BIT_AND(v.number, 4) > 0 OR (BIT_AND(v.number, 2048) > 0 AND BIT_AND(v.number, 1024) > 0)) AND BIT_AND(v.number, 65536) = 0'
     ];
 
     private Timer $timer;
@@ -138,7 +139,8 @@ class ResultsCommand extends Command
         $voters = array_fill_keys(array_column($result, 'id'), [
             'codes' => [],
             'notes' => [],
-            'referrers' => []
+            'referrers' => [],
+            'vpn' => false,
         ]);
 
         $this->writeln("Step 1 (create array) complete");
@@ -158,6 +160,17 @@ class ResultsCommand extends Command
         $this->writeln("Step 2 (get voting codes) complete");
 
         // Step 3. Check referrers
+        $suspiciousIps = $this->em->createQueryBuilder()
+            ->select('i.ip')
+            ->from(IpAddress::class, 'i')
+            ->where("i.usageType = 'Data Center/Web Hosting/Transit'")
+            ->orWhere('i.abuseScore > 0')
+            ->orWhere('i.reportCount > 0')
+            ->getQuery()
+            ->getResult();
+
+        $suspiciousIps = array_column($suspiciousIps, 'ip');
+
         $result = $this->em->createQueryBuilder()
             ->select('a')
             ->from(Access::class, 'a')
@@ -176,6 +189,7 @@ class ResultsCommand extends Command
 
             $referer = preg_replace('{https?://(www\.)?}', '', $access->getReferer() ?: '');
             $voters[$access->getCookieID()]['referrers'][] = $referer;
+            $voters[$access->getCookieID()]['vpn'] = in_array($access->getIp(), $suspiciousIps);
         }
 
         $this->writeln("Step 3 (get referrers) complete");
@@ -220,6 +234,10 @@ class ResultsCommand extends Command
                     $number += 2 ** 14;
                     break;
                 }
+            }
+
+            if ($info['vpn']) {
+                $number += 2 ** 16;
             }
 
             $referers = array_unique($info['referrers']);

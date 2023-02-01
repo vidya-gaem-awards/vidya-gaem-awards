@@ -123,6 +123,10 @@ class ResultController extends AbstractController
             $filters['22-4chan-ads'] = '4chan Ads';
         }
 
+        if ($authChecker->isGranted('ROLE_VOTING_RESULTS')) {
+            $filters['24-4chan-no-vpns'] = '4chan (VPNs excluded)';
+        }
+
         $nominees = [];
 
         foreach ($awards as $award) {

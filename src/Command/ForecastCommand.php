@@ -17,33 +17,6 @@ class ForecastCommand extends Command
 {
     const COMMAND_NAME = 'app:forecast';
 
-    const FILTERS = [
-        '01-all' => false, // no filtering
-        '04-4chan' => 'BIT_AND(v.number, 4) > 0',  // 4chan
-        '05-4chan-and-voting-code' => 'BIT_AND(v.number, 4) > 0 AND BIT_AND(v.number, 1024) > 0', // 4chan AND voting code
-        '06-4chan-without-voting-code' => 'BIT_AND(v.number, 4) > 0 AND NOT BIT_AND(v.number, 1024) > 0', // 4chan AND NOT voting code
-        '07-4chan-or-null' => 'BIT_AND(v.number, 4) > 0 OR BIT_AND(v.number, 2048) > 0', // 4chan OR null
-        '08-4chan-or-null-with-voting-code' => 'BIT_AND(v.number, 4) > 0 OR (BIT_AND(v.number, 2048) > 0 AND BIT_AND(v.number, 1024) > 0)', // 4chan OR (null AND voting code)
-        '09-null-and-voting-code' => 'BIT_AND(v.number, 2048) > 0 AND BIT_AND(v.number, 1024) > 0', // null AND voting code
-        '10-null-without-voting-code' => 'BIT_AND(v.number, 2048) > 0 AND NOT BIT_AND(v.number, 1024) > 0',  // null AND NOT voting code
-        '11-reddit' => 'BIT_AND(v.number, 1) > 0',
-        '12-twitter' => 'BIT_AND(v.number, 2) > 0',
-        // 4chan: 4
-        '13-something-awful' => 'BIT_AND(v.number, 8) > 0',
-        '14-neogaf' => 'BIT_AND(v.number, 16) > 0',
-        '15-knockout' => 'BIT_AND(v.number, 32) > 0',
-        '16-8chan' => 'BIT_AND(v.number, 64) > 0',
-        '17-twitch' => 'BIT_AND(v.number, 128) > 0',
-        '18-facebook' => 'BIT_AND(v.number, 256) > 0',
-        '19-google' => 'BIT_AND(v.number, 512) > 0',
-        '02-voting-code' => 'BIT_AND(v.number, 1024) > 0',
-        '03-null' => 'BIT_AND(v.number, 2048) > 0',
-        '20-yandex' => 'BIT_AND(v.number, 4096) > 0',
-        '21-kiwifarms' => 'BIT_AND(v.number, 8192) > 0',
-        '22-4chan-ads' => 'BIT_AND(v.number, 16384) > 0',
-        '23-youtube' => 'BIT_AND(v.number, 32768) > 0',
-    ];
-
     private Timer $timer;
     private OutputInterface $output;
 
