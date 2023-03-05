@@ -14,7 +14,7 @@
 
     body {
         height: 100%;
-        background-image: url("/2021images/clouds.png");
+        background-image: url("/2022images/bg.png");
         background-position: center;
         background-size: cover;
     }
@@ -81,27 +81,36 @@
 <div class="center-container">
 
   <header>
-    <div class="logo" href="{{ path('index') }}">
-      <img src="{{ asset('2021images/logohd.png') }}">
-      <img src="/2021images/textlogo.png" class="logo-text">
+    <div class="logo">
+      <img src="{{ asset('2022images/logo.png') }}">
+    </div>
+    <div class="title-text">
+      <div class="line-1 stroke-me">The 2022 Vidya Gaem Awards</div>
     </div>
   </header>
 
-  <div class="col-12 text-center">
-    <h1 class="my-3" style="filter: blur(0.5px)">Streaming Live on Three Platforms</h1>
+  <div class="award-header">
+    <div class="award-name-container">
+      <div class="award-name">Streaming live on four platforms</div>
+    </div>
+  </div>
 
+  <div class="col-12 text-center">
     <p class="links">
       <a href="https://twitch.tv/vidyagaemawards" target="_blank">
-        <button>Twitch</button>
+        <button class="btn btn-default">Twitch</button>
       </a>
       <a href="https://www.youtube.com/vidyagaemawards" target="_blank">
-        <button>YouTube</button>
+        <button class="btn btn-default">YouTube</button>
       </a>
       <a href="https://dlive.tv/vidyagaemawards" target="_blank">
-        <button>DLive</button>
+        <button class="btn btn-default">DLive</button>
+      </a>
+      <a href="https://twitter.com/vidyagaemawards" target="_blank">
+        <button class="btn btn-default">Twitter</button>
       </a>
       <a href="https://discord.gg/4e8JQB4" target="_blank">
-        <button>Chat on Discord</button>
+        <button class="btn btn-default">Chat on Discord</button>
       </a>
     </p>
 
