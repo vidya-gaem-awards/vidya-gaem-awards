@@ -3,21 +3,21 @@
 {% block fullTitle %}2022 Vidya Gaem Awards{% endblock %}
 
 {% block css %}
-  {{ encore_entry_link_tags('voting') }}
-
   {{ parent() }}
+
+  {{ encore_entry_link_tags('voting') }}
 
   <style type="text/css">
     html {
       height: 100%;
     }
 
-    body {
-      height: 100%;
-      background-image: url("/2021images/clouds.png");
-      background-position: center;
-      background-size: cover;
-    }
+    /*body {*/
+    /*  height: 100%;*/
+      /*background-image: url("/2022images/clouds.png");*/
+      /*background-position: center;*/
+      /*background-size: cover;*/
+    /*}*/
 
     .meme {
       width: 160px;
@@ -98,6 +98,15 @@
       margin-top: 5px;
     }
 
+    .embed-container {
+        background: #dedede url(/2022images/bgwhite.jpg) repeat;
+        border: 2px ridge #fff;
+        color: #000;
+        margin-left: -10px;
+        margin-right: -10px;
+        padding: 5px;
+        line-height: 0;
+    }
 
     .flex-container {
         display: flex;
@@ -122,9 +131,9 @@
         filter: grayscale(100%);
     }
 
-    .logo {
-        width: 100%;
-    }
+    /*.logo {*/
+    /*    width: 100%;*/
+    /*}*/
 
     .loading-bar {
       position: absolute;
@@ -149,10 +158,11 @@
 
 
     .text {
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: 900;
+        font-family: Fresh Marker;
+        /*font-family: Arial, Helvetica, sans-serif;*/
+        /*font-weight: 900;*/
         font-size: 48px;
-        filter: blur(1px);
+        /*filter: blur(1px);*/
         text-align: center;
     }
 
@@ -160,35 +170,39 @@
         max-width: 100%;
     }
 
-    .logo-text {
-        width: 1200px;
-        margin-bottom: 20px;
-    }
+    /*.logo-text {*/
+    /*    width: 1200px;*/
+    /*    margin-bottom: 20px;*/
+    /*}*/
 
-    @media only screen and (max-width: 1400px) {
-        .text {
-            font-size: 36px;
-            filter: blur(0.5px);
-        }
+    /*@media only screen and (max-width: 1400px) {*/
+    /*    .text {*/
+    /*        font-size: 36px;*/
+    /*        filter: blur(0.5px);*/
+    /*    }*/
+    /**/
+    /*    .logo-text {*/
+    /*        width: 800px;*/
+    /*    }*/
+    /**/
+    /*    .logo-link {*/
+    /*        width: 600px;*/
+    /*    }*/
+    /*}*/
 
-        .logo-text {
-            width: 800px;
-        }
+    /*@media only screen and (max-width: 600px) {*/
+    /*    .text {*/
+    /*        font-size: 24px;*/
+    /*        filter: blur(0.5px);*/
+    /*    }*/
 
-        .logo-link {
-            width: 600px;
-        }
-    }
+        /*.logo-link {*/
+        /*    margin-bottom: 20px;*/
+        /*}*/
+    /*}*/
 
-    @media only screen and (max-width: 600px) {
-        .text {
-            font-size: 24px;
-            filter: blur(0.5px);
-        }
-
-        .logo-link {
-            margin-bottom: 20px;
-        }
+    #local-time {
+        margin-top: 20px;
     }
   </style>
 {% endblock %}
@@ -216,21 +230,22 @@
 {% endblock %}
 
 {% block body %}
+  <div class="center-container">
 
-  <div class="flex-container">
+    <header>
+      <a class="logo" href="/">
+        <img src="/2022images/logo.png">
+      </a>
+      <div class="title-text">
+        <div class="line-1 stroke-me">The 2022 Vidya Gaem Awards</div>
+      </div>
+    </header>
 
-    <a href="https://www.youtube.com/watch?v=cg0WawO03x8" class="logo-link">
-      <img src="{{ asset('2021images/logohd.png') }}" class="logo">
-    </a>
-
-    <img src="{{ asset('2021images/textlogo.png') }}" class="logo-text">
+    <div class="embed-container" style="margin-top: 20px;">
+      <iframe width="100%" height="600" src="https://www.youtube.com/embed/RgkbkyWM2Hc" frameborder="0" allowfullscreen=""></iframe>
+    </div>
 
     <div id="local-time" class="text"></div>
     <div id="countdown" class="text"></div>
-    <div class="text"><a href="https://www.youtube.com/watch?v=cg0WawO03x8">View trailer</a></div>
-  </div>
-
-  <div class="loading-bar">
-
   </div>
 {% endblock %}

@@ -12,12 +12,12 @@
       min-height: 100%;
     }
 
-    body {
-        height: 100%;
-        background-image: url("/2021images/clouds.png");
-        background-position: center;
-        background-size: cover;
-    }
+    /*body {*/
+    /*    height: 100%;*/
+    /*    background-image: url("/2021images/clouds.png");*/
+    /*    background-position: center;*/
+    /*    background-size: cover;*/
+    /*}*/
 
     /*.logo {*/
     /*  background-color: black;*/
@@ -29,10 +29,13 @@
 
     .title {
       text-align: center;
+      color: white;
+      font-family: There Brat,sans-serif;
     }
 
     h1 {
       font-size: 60px;
+      color: #fff;
     }
 
     h2 {
@@ -40,7 +43,13 @@
       font-size: 30px;
     }
 
-    /*.title h1 {*/
+    .title h1 {
+        font-size: 2.7em;
+        line-height: 100%;
+        margin-top: 10px;
+        text-shadow: 1px -1px #4ea24a, 2px -2px #4ea24a, 3px -3px #4ea24a, -1px 1px #da505f, -2px 2px #4ea24a, -3px 3px #4ea24a, 1px 1px #da505f, 2px 2px #061019, 3px 3px #061019, -4px 4px #061019;
+        text-transform: uppercase;
+        font-weight: normal;
       /*font-weight: normal;*/
       /*font-size: 55px;*/
       /*line-height: 1em;*/
@@ -49,9 +58,12 @@
       {#background: url('{{ asset('2016images/title_bg.png') }}') center center no-repeat;#}
       /*margin-bottom: 0;*/
       /*padding: 20px 0 10px 0;*/
-    /*}*/
+    }
 
-    /*.title h2 {*/
+    .title h2 {
+        color: white;
+        font-weight: normal;
+    }
       /*font-family: "Annapolis", Tahoma, sans-serif;*/
       /*color: #f7d059;*/
       /*font-size: 38px;*/
@@ -85,25 +97,32 @@
     .links.bottom {
       margin-top: 15px;
       font-size: 16px;
+
+        font-family: Jet Set,sans-serif;
+        text-shadow: 1px 1px 2px #cf282f;
+    }
+
+    .links.bottom a {
+        color: white;
     }
 
     .link {
       margin: 6px;
     }
 
-    .link.disabled {
-      background: #686868;
-      border-radius: 15px;
-      color: #dedede;
-      padding: 5px 15px;
-      font-size: 18px;
-      display: inline-block;
-      width: 270px;
-      transform: translate(1px, 1px);
-    }
+    /*.link.disabled {*/
+    /*  background: #686868;*/
+    /*  border-radius: 15px;*/
+    /*  color: #dedede;*/
+    /*  padding: 5px 15px;*/
+    /*  font-size: 18px;*/
+    /*  display: inline-block;*/
+    /*  width: 270px;*/
+    /*  transform: translate(1px, 1px);*/
+    /*}*/
 
     .link .btn {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     /*.link a {*/
@@ -153,39 +172,43 @@
     }
 
     .embed-container {
-      border: 2px dashed #c2c5b5;
-      background: rgba(255, 255, 255, 0.5);
-      padding: 5px;
+        background: #dedede url(/2022images/bgwhite.jpg) repeat;
+        border: 2px ridge #fff;
+        color: #000;
+        margin-left: -10px;
+        margin-right: -10px;
+        padding: 5px;
+        line-height: 0;
     }
 
     .center-container {
         min-height: 100vh;
     }
 
-    .title h1 {
-        filter: blur(1px);
-    }
+    /*.title h1 {*/
+    /*    filter: blur(1px);*/
+    /*}*/
+    /**/
+    /*#countdown {*/
+    /*    filter: blur(0.75px);*/
+    /*}*/
 
-    #countdown {
-        filter: blur(0.75px);
-    }
-
-    header .logo {
-        margin-right: 0;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        height: auto;
-    }
-
-    header .logo img {
-        max-height: 100px;
-    }
+    /*header .logo {*/
+    /*    margin-right: 0;*/
+    /*    display: flex;*/
+    /*    justify-content: center;*/
+    /*    flex-wrap: wrap;*/
+    /*    height: auto;*/
+    /*}*/
+    /**/
+    /*header .logo img {*/
+    /*    max-height: 100px;*/
+    /*}*/
 
     button {
-        font-size: 16px;
-        font-weight: bold;
-        height: 40px;
+        /*font-size: 16px;*/
+    /*    font-weight: bold;*/
+    /*    height: 40px;*/
         width: 200px;
     }
   </style>
@@ -196,22 +219,19 @@
 <div class="center-container">
 
   <header>
-    <div class="logo" href="{{ path('index') }}">
-      <img src="{{ asset('2021images/logohd.png') }}">
-      <img src="/2021images/textlogo.png" class="logo-text">
+    <div class="logo">
+      <img src="{{ asset('2022images/logo.png') }}">
+    </div>
+    <div class="title-text">
+      <div class="line-1 stroke-me">The 2022 Vidya Gaem Awards</div>
     </div>
   </header>
 
-{#  <div class="embed-container" style="margin-top: 20px;">#}
-
-    <div class="window" style="margin-top: 20px;">
-      <div class="window-body">
-        <iframe width="100%" height="600" src="https://www.youtube.com/embed/7yLPkl6TNh4" frameborder="0"
-                allowfullscreen=""></iframe>
-      </div>
+  {% apply spaceless %}
+    <div class="embed-container" style="margin-top: 20px;">
+      <iframe width="100%" height="600" src="https://www.youtube.com/embed/st1BYbNO67Q" frameborder="0" allowfullscreen=""></iframe>
     </div>
-{#    <img src="{{ asset('2020images/arg-landing-page.jpg') }}" style="max-width: 100%;">#}
-{#  </div>#}
+  {% endapply %}
 
     <div class="title" style="margin-top: 20px;">
       <h1>The 2022 Vidya Gaem Awards</h1>
@@ -221,13 +241,13 @@
     </div>
     <div class="links main">
       <div class="link special">
-        <a href="https://www.twitch.tv/videos/1417036125">
-          <button>Watch on Twitch</button>
-        </a>
+{#        <a href="https://www.twitch.tv/videos/1417036125">#}
+          <button class="btn btn-default" disabled>Watch on Twitch</button>
+{#        </a>#}
       </div>
       <div class="link special">
-        <a href="https://www.youtube.com/watch?v=7yLPkl6TNh4">
-          <button>Watch on YouTube</button>
+        <a href="https://www.youtube.com/watch?v=st1BYbNO67Q">
+          <button class="btn btn-default">Watch on YouTube</button>
         </a>
       </div>
       {#<div class="link special">#}
@@ -235,17 +255,17 @@
       {#</div>#}
       <div class="link">
         <a href="{{ path('winners') }}">
-          <button>Results</button>
+          <button class="btn btn-default">Results</button>
         </a>
       </div>
       <div class="link">
         <a href="{{ path('credits') }}">
-          <button>Credits and /agdg/</button>
+          <button class="btn btn-default">Credits and /agdg/</button>
         </a>
       </div>
       <div class="link">
         <a href="{{ path('soundtrack') }}">
-          <button>Soundtrack</button>
+          <button class="btn btn-default">Soundtrack</button>
         </a>
       </div>
       {#          <div class="link">#}
