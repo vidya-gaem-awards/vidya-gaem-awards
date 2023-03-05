@@ -36,12 +36,19 @@
           /*font-family: "Dot Matrix", sans-serif;*/
           /*font-size: 14px;*/
 
-          background: none;
-
           /*background-image: url(/2020images/cardbg.png);*/
           /*box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);*/
           /*border-radius: 5px;*/
           /*padding: 10px;*/
+
+          background: url(/2022images/bgwhite.jpg) repeat,#dedede;
+          border-color: #fff;
+          border-style: ridge;
+          border-width: 3px;
+          padding: 12px 8px;
+          color: black;
+          font-family: jet set, sans-serif;
+          font-size: 16px;
       }
 
       #track-list td {
@@ -82,9 +89,10 @@
           padding-top: 15px;
       }
 
-      .artist {
+      .track-title {
           transition: all 0.2s ease-in-out;
-          color: #a8a8a8;
+          color: #cf282f;
+          text-shadow: 1px 1px 2px #f0961f;
           /*font-family: "OratorStd", "Courier New", serif;*/
           margin-left: 10px;
       }
@@ -114,53 +122,31 @@
 
   <div class="center-container">
 
-    <div style="text-align: center;">
-{#      <div class="window" style="display: inline-block; margin-left: auto; margin-right: auto;">#}
-{#        <div class="title-bar">#}
-{#          <div class="title-bar-text">#}
-{#            2021-soundtrack-cover.jpg#}
-{#          </div>#}
-{#        </div>#}
-{#        <div class="window-body">#}
-{#          <div style="background: #059798; padding: 5px; text-align: center;">#}
-            <img src="{{ asset('2021images/album.jpg') }}" alt="Album art" class="img-responsive album-art">
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-    </div>
+{#    <div style="text-align: center;">#}
+{#        <img src="{{ asset('2021images/album.jpg') }}" alt="Album art" class="img-responsive album-art">#}
+{#    </div>#}
 
     {#    <p class="text-center preshow-download" style="">#}
 {#      <a href="https://vidyagaemawards.com/music/2020-vga-preshow-mixes.zip" class="btn">Download preshow music (105 MB)</a>#}
 {#    </p>#}
 
-    <div class="zig"></div>
-
 {#    <p class="text-center soon">Full tracklist coming soon</p>#}
 
-    <div class="window">
-      <div class="title-bar">
-        <div class="title-bar-text">
-          Track List
-        </div>
-      </div>
-      <div class="window-body">
-        <table class="table" id="track-list">
-          {% for track in preshow %}
-            <tr class="{{ loop.index == 1 ? 'line-before' }}">
-              <td></td>
-              <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
-              <td>{{ track[2] }}</td>
-            </tr>
-          {% endfor %}
-          {% for track in tracks %}
-            <tr class="{{ loop.index == 1 ? 'line-before' }}">
-              <td>#{{ loop.index }}</td>
-              <td>{{ track[0] }} <span class="artist">{{ track[1] }}</span></td>
-              <td>{{ track[2] }}</td>
-            </tr>
-          {% endfor %}
-        </table>
-      </div>
-    </div>
+    <table class="table" id="track-list">
+      {% for track in preshow %}
+        <tr class="{{ loop.index == 1 ? 'line-before' }}">
+          <td></td>
+          <td><span class="track-title">{{ track[0] }}</span> <span class="artist">{{ track[1] }}</span></td>
+          <td>{{ track[2] }}</td>
+        </tr>
+      {% endfor %}
+      {% for track in tracks %}
+        <tr class="{{ loop.index == 1 ? 'line-before' }}">
+          <td>#{{ loop.index }}</td>
+          <td><span class="track-title">{{ track[0] }}</span> <span class="artist">{{ track[1] }}</span></td>
+          <td>{{ track[2] }}</td>
+        </tr>
+      {% endfor %}
+    </table>
   </div>
 {% endblock %}
