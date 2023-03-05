@@ -44,7 +44,7 @@ class ResultController extends AbstractController
 
             foreach ($rankings as $key => &$value) {
                 $nominee = $award->getNominee($value);
-                $output = '<strong>' . $ranks[$key] . '</strong> ';
+                $output = '<span class="rank">#' . ($key + 1) . '</span>&nbsp;';
 
                 if ($nominee) {
                     $output .= str_replace(' ', '&nbsp;', $nominee->getName());

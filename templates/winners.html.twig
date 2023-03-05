@@ -98,6 +98,9 @@
     .winner {
       /*border: 2px dashed #c2c5b5;*/
       background: rgba(255, 255, 255, 0.5);
+
+      -webkit-mask-image: url(/2022images/mask-tall.png);
+      -webkit-mask-size: contain;
       /*padding: 5px;*/
     }
 
@@ -120,36 +123,59 @@
       /*line-height: 1.5em;*/
     }
 
+    .winner-name-container {
+        font-family: "Jet Set", sans-serif;
+        background-color: #f0961f;
+        padding: 10px 15px;
+        height: auto;
+        font-size: .8em;
+        line-height: 15px;
+        color: #000;
+        z-index: 40;
+        user-select: all;
+        text-align: center;
+        margin-top: 5px;
+
+        -webkit-mask-image: url(/2022images/mask-short.png);
+        -webkit-mask-size: cover;
+
+        transform: rotate(-1deg);
+    }
+
     .winner-name {
-      font-size: 30px;
+        font-size: 18px;
+        line-height: 1.2;
+        margin-bottom: 5px;
+      /*font-size: 30px;*/
       /*color: white;*/
       /*font-family: "Trajan Pro 3", serif;*/
       /*text-shadow: #00000080 2px 2px 2px;*/
 
-      line-height: 1em;
+      /*line-height: 1em;*/
       /*margin-bottom: 15px;*/
-      margin-top: 5px;
+      /*margin-top: 5px;*/
 
-      color: #fec544;
-      font-family: "OratorStd", "Courier New", serif;
-      text-transform: uppercase;
+      /*color: #fec544;*/
+      /*font-family: "OratorStd", "Courier New", serif;*/
+      /*text-transform: uppercase;*/
       /*font-size: 14px;*/
       /*line-height: 100%;*/
-      display: inline-block;
-      padding: 4px 25px 11px 5px;
+      /*display: inline-block;*/
+      /*padding: 4px 25px 11px 5px;*/
       /*position: absolute;*/
       /*bottom: -1px;*/
       /*right: -1px;*/
-      text-shadow: #f29823 0px 0px 3px;
-      text-align: right;
-      background: url(/2019images/nom_namebg.png) repeat-x bottom left, black;
-      border: 1px solid #f29823;
+      /*text-shadow: #f29823 0px 0px 3px;*/
+      /*text-align: right;*/
+      /*background: url(/2019images/nom_namebg.png) repeat-x bottom left, black;*/
+      /*border: 1px solid #f29823;*/
     }
 
     .rank {
-      font-size: 120%;
+      font-size: 18px;
       font-weight: bold;
       color: black;
+        margin-right: 4px;
     }
 
     .award ul li {
@@ -175,16 +201,16 @@
     }
 
     .winner-subtitle {
-      color: #f29823;
-      font-family: Arial, sans-serif;
-      font-size: 11px;
-      line-height: 10px;
-      padding: 1px 7px;
-      z-index: 300;
-      background: #000;
-      border: 1px solid #f29823;
-      position: absolute;
-      bottom: 15px;
+      /*color: #f29823;*/
+      /*font-family: Arial, sans-serif;*/
+      /*font-size: 11px;*/
+      /*line-height: 10px;*/
+      /*padding: 1px 7px;*/
+      /*z-index: 300;*/
+      /*background: #000;*/
+      /*border: 1px solid #f29823;*/
+      /*position: absolute;*/
+      /*bottom: 15px;*/
     }
 
     .bottom-text {
@@ -314,23 +340,20 @@
   }
 
   .second-placers-container {
-      width: calc(100% - 300px);
+      background: url(/2022images/bgwhite.jpg) repeat,#dedede;
+      border-color: #fff;
+      border-style: ridge;
+      border-width: 3px;
+      padding: 12px 8px;
+      color: black;
+      font-family: jet set, sans-serif;
+      font-size: 16px;
   }
 
-  @media (max-width: 800px) {
-      .award .photo-container {
-          width: 100%;
-          text-align: center;
-      }
-
-      .award .photograph {
-          transform: rotateZ(-5deg) translate(0, -10px);
-      }
-
-      .second-placers-container {
-          width: 100%;
-      }
+  .award-header {
+      margin-bottom: 20px !important;
   }
+
   </style>
 {% endblock %}
 
@@ -450,17 +473,10 @@
                 <div class="award-subtitle">{{ award.subtitle }}</div>
               </div>
             </div>
-            <div class="zig"></div>
             <div class="award">
               <div class="row">
                 <div class="col-sm-3">
-                <div class="window">
-                  <div class="title-bar">
-                    <div class="title-bar-text">
-                      Winner
-                    </div>
-                  </div>
-                  <div class="window-body">
+
                   {% if award.winnerImage or is_granted('ROLE_AWARDS_EDIT') %}
                     <div class="winner {{ is_granted('ROLE_AWARDS_EDIT') ? 'uploadable' : '' }}"
                          title="{{ is_granted('ROLE_AWARDS_EDIT') ? 'Click here to upload an image for this award winner' : '' }}"
@@ -480,26 +496,18 @@
                       {% endif %}
                     </div>
                   {% endif %}
+
+                  <div class="winner-name-container">
+                    <div class="winner-name">{{ winners[award.id].name | raw }}</div>
+                    <div class="winner-subtitle">{{ winners[award.id].subtitle | raw }}</div>
                   </div>
-                  <div class="status-bar">
-                    <p class="status-bar-field">
-                      <strong>{{ winners[award.id].name | raw }}</strong><br>
-                      {{ winners[award.id].subtitle }}
-                    </p>
-                  </div>
-                </div>
                 </div>
                 <div class="col-sm-9">
-                  <ul class="tree-view">
-                    <li><strong>Results</strong></li>
-                    <li>
-                      <ul>
-                        {% for result in results[award.id] %}
-                          <li>{{ result | raw }}</li>
-                        {% endfor %}
-                      </ul>
-                    </li>
-                  </ul>
+                  <div class="second-placers-container">
+                      {% for result in results[award.id] %}
+                        <div class="second-placer">{{ result | raw }}</div>
+                      {% endfor %}
+                  </div>
                 </div>
               </div>
             </div>
