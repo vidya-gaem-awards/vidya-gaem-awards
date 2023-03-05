@@ -139,7 +139,7 @@ class Schulze extends AbstractResultCalculator
 
         // Now we have the raw sweep points, but we only want the first five (which we then want to scale accordingly)
         // We take 6 instead of 5, because the 6th is going to be our baseline (it will be set to zero)
-        $sweepPoints = array_slice($sweepPoints, -6);
+        $sweepPoints = array_slice($sweepPoints, -7);
 
         $min = min($sweepPoints);
         $max = max($sweepPoints);
