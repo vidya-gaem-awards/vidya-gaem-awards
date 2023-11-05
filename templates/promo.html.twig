@@ -4,19 +4,26 @@
 
 {% block head %}
   <style type="text/css">
+    @font-face {
+        font-family: 'ChronoType';
+        src: url('/2023images/fonts/ChronoType.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
     body {
-      background: #CF282F;
-      font-family: 'Sedgwick Ave', sans-serif;
-      color: black;
+      background: black;
+      font-family: 'ChronoType', monospace;
+      color: white;
       font-weight: 300;
     }
 
     a {
-      color: #F0961F;
+      color: white;
     }
 
     a:hover {
-      color: #F2B561;
+      color: whitesmoke;
     }
 
     @keyframes title {
@@ -53,7 +60,7 @@
     #title {
       opacity: 0;
       animation: {{ fastAnimations ? '2s' : '2s' }} ease-out forwards title;
-      font-family: "Sedgwick Ave Display", sans-serif;
+      font-family: "ChronoType", sans-serif;
     }
 
     #awardList .award {
@@ -94,17 +101,18 @@
     <div class="row">
       <div class="col-12" style="text-align: center;">
 
-        <img src="{{ asset('2022images/logo.png') }}" style="width: 600px; margin: 0 auto; max-width: 100%;" class="mb-4">
+        <img src="{{ asset('2023images/logo.png') }}" style="width: 600px; margin: 0 auto; max-width: 100%;" class="mb-4">
+        <img src="{{ asset('2023images/logo-wide.png') }}" style="width: 800px; margin: 0 auto; margin-top: 50px; max-width: 100%;" class="mb-4">
 
-        <div style="font-size: 80px; line-height: 77px; margin-top: 40px;" id="title">
-          <div style="margin-bottom: 30px;">
+        <div style="font-size: 80px; line-height: 80px; margin-top: 60px;" id="title">
+          <div>
             The 2023 /v/GAs
           </div>
-          <div style="font-size: 50px; margin-top: 30px;" class="animate-in">
-            Coming soon to a wall near you
+          <div style="font-size: 50px;" class="animate-in">
+            Nominations opening Dec. 8th
           </div>
         </div>
-        <div style="font-size: 30px; margin-top: 60px;" class="animate-in">
+        <div style="font-size: 30px;" class="animate-in">
           <a href="http://discord.gg/4e8JQB4">http://discord.gg/4e8JQB4</a>
         </div>
       </div>
