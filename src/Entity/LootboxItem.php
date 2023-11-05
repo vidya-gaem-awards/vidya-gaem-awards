@@ -46,7 +46,7 @@ class LootboxItem implements JsonSerializable, DropChance
     private Collection $userItems;
 
     #[ORM\Column(type: 'string', length: 10)]
-    private string $year = '2022';
+    private string $year = '2023';
 
     #[ORM\ManyToOne(targetEntity: LootboxTier::class, inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]

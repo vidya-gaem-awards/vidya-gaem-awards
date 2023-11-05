@@ -265,7 +265,7 @@
           <div id="video-game-collage">
             <div class="top">Forgotten what vidya you played earlier this year?</div>
               <img class="img-responsive" src="{{ asset('img/collage.png') }}">
-            <div class="bottom">Click here for a list of video&nbsp;games from 2022.</div>
+            <div class="bottom">Click here for a list of video&nbsp;games from 2023.</div>
           </div>
         </a>
       </div>
@@ -491,7 +491,7 @@
         var autocompleteCat = awards[award]['autocompleter'];
         if (autocompleteCat === "{{ constant('App\\Entity\\Autocompleter::VIDEO_GAMES') }}") {
           $('#autocomplete').html(
-              "This award provides suggestions using a list of <a href='{{ path('videoGames') }}' target='_blank'>video games released in 2022</a>."
+              "This award provides suggestions using a list of <a href='{{ path('videoGames') }}' target='_blank'>video games released in 2023</a>."
           );
         } else if (autocompleteCat === award) {
           $('#autocomplete').html("This award provides suggestions based on nominations from other users.");

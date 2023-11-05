@@ -208,7 +208,7 @@ class NomineeController extends AbstractController
         $response = new Response($csv->toString());
         $disposition = HeaderUtils::makeDisposition(
             HeaderUtils::DISPOSITION_ATTACHMENT,
-            'vga-2022-award-nominees.csv'
+            'vga-2023-award-nominees.csv'
         );
 
         $response->headers->set('Content-Disposition', $disposition);
@@ -249,7 +249,7 @@ class NomineeController extends AbstractController
         $response = new Response($csv->toString());
         $disposition = HeaderUtils::makeDisposition(
             HeaderUtils::DISPOSITION_ATTACHMENT,
-            'vga-2022-user-nominations.csv'
+            'vga-2023-user-nominations.csv'
         );
 
         $response->headers->set('Content-Disposition', $disposition);
