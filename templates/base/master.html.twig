@@ -29,24 +29,24 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.2/js/bootstrap.bundle.min.js'></script>
-    <script src='https://twemoji.maxcdn.com/v/14.0.2/twemoji.min.js'></script>
+{#    <script src='https://twemoji.maxcdn.com/v/14.0.2/twemoji.min.js'></script>#}
   {% endblock %}
 
-  <script type="text/javascript">
-      window.addEventListener('load', function () {
-          twemoji.parse(document.body, {
-              callback: function(icon, options, variant) {
-                  switch ( icon ) {
-                      case 'a9':      // © copyright
-                      case 'ae':      // ® registered trademark
-                      case '2122':    // ™ trademark
-                          return false;
-                  }
-                  return ''.concat(options.base, options.size, '/', icon, options.ext);
-              }
-          });
-      });
-  </script>
+{#  <script type="text/javascript">#}
+{#      window.addEventListener('load', function () {#}
+{#          twemoji.parse(document.body, {#}
+{#              callback: function(icon, options, variant) {#}
+{#                  switch ( icon ) {#}
+{#                      case 'a9':      // © copyright#}
+{#                      case 'ae':      // ® registered trademark#}
+{#                      case '2122':    // ™ trademark#}
+{#                          return false;#}
+{#                  }#}
+{#                  return ''.concat(options.base, options.size, '/', icon, options.ext);#}
+{#              }#}
+{#          });#}
+{#      });#}
+{#  </script>#}
 </body>
 
 </html>
