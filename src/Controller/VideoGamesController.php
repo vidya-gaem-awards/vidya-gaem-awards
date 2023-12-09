@@ -49,7 +49,7 @@ class VideoGamesController extends AbstractController
         $game = new GameRelease($game);
         $game->setManuallyAdded(true);
 
-        $platforms = ['pc', 'vr', 'ps3', 'ps4', 'vita', 'x360', 'xb1', 'wiiu', 'switch', 'n3ds', 'mobile'];
+        $platforms = ['pc', 'ps3', 'ps4', 'ps5', 'vita', 'psn', 'x360', 'xb1', 'xbla', 'xsx', 'wii', 'wiiu', 'wiiware', 'switch', 'n3ds', 'vr', 'mobile'];
         foreach ($platforms as $platform) {
             if ($post->get($platform)) {
                 $game->{'set'.$platform}(true);
