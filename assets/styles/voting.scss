@@ -57,15 +57,16 @@ header {
   }
 
   .title-text {
-    font-family: "Fresh Marker";
-    color: #F0961F;
-    text-shadow: 1px 1px #CF282F, -1px -1px #CF282F;
-    font-size: 40px;
+    font-family: "FFTitle";
+    color: black;
+    font-size: 60px;
     line-height: 1.2;
     //transform: rotateZ(-1.8deg);
     //text-align: right;
     position: relative;
     z-index: 0;
+    text-transform: uppercase;
+    top: -10px;
 
     .line-1 {
       //text-transform: uppercase;

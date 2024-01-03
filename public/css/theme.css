@@ -1,4 +1,11 @@
 @font-face {
+  font-family: 'FFTitle';
+  src: url('/2023images/fonts/OPTIEngeEtienne.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Attack Graffiti';
   src: url('/2022images/fonts/aAttackGraffiti.otf') format('opentype');
   font-weight: normal;
