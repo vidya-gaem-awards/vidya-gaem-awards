@@ -63,6 +63,7 @@
 {% endblock %}
 
 {% block body %}
+  <div class="top-decoration"></div>
   <div class="background-decorations">
     {% for decoration in decorations %}
       <img src="{{ decoration.decoration.image.url }}" class="decoration" style="rotate: {{ decoration.angle }}deg; {{ decoration.direction }}: {{ decoration.x }}px; top: {{ decoration.y }}px">
@@ -87,8 +88,7 @@
         <img src="{{ asset('2023images/logo-ff.png') }}">
       </a>
       <div class="title-text">
-        <div class="line-1 stroke-me">The 2023 Vidya Gaem Awards</div>
-        <div class="line-2 stroke-me">{{ voteText }}</div>
+        <div class="line-1 stroke-me">{{ voteText }}</div>
       </div>
     </header>
 
@@ -471,4 +471,6 @@
       </div>
     </div>
   {% endif %}
+
+  <div class="bottom-decoration"></div>
 {% endblock %}

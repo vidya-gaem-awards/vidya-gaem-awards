@@ -14,7 +14,6 @@ body {
 .center-container {
   width: 1300px;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.2);
   z-index: 20;
   margin: 0 auto;
   position: relative;
@@ -53,7 +52,7 @@ header {
 
     img {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 80%;
     }
   }
 
@@ -1506,6 +1505,24 @@ a:hover {
     max-width: 400px;
     max-height: 400px;
   }
+}
+
+.top-decoration {
+  position: absolute;
+  background-image: url('/2023images/background-pattern-upper.png');
+  width: 100vw;
+  height: 106px;
+  opacity: 0.2;
+  background-size: contain;
+}
+
+.bottom-decoration {
+  position: absolute;
+  background-image: url('/2023images/background-pattern-lower.png');
+  width: 100vw;
+  height: 106px;
+  opacity: 0.2;
+  background-size: contain;
 }
 
 @media (max-width: 1800px) {
