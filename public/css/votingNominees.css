@@ -8,11 +8,10 @@
   background-color: #2C2B31;
   background-position: center;
 
-  -webkit-mask-image: url(/2022images/mask.png);
+  -webkit-mask-image: url(/2023images/mask.png);
   -webkit-mask-size: cover;
 
   font-family: "Jet Set", sans-serif;
-  rotate: -1deg;
 }
 
 .flavorText {
@@ -100,7 +99,7 @@
 .fakeElement {
   /* This line is magic CSS which keeps the voting box at a fixed aspect ratio, even when the width changes. */
   /* This works because the percentage for the padding-top is a percentage of width. */
-  padding-top: calc(150 / 274 * 100%);
+  padding-top: calc(300 / 542 * 100%);
 }
 
 
@@ -135,11 +134,11 @@
 .voteGroup {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-bottom: 7px;
+  margin-left: 6px;
+  margin-right: 6px;
   justify-content: center;
-  width: calc(25% - 10px);
+  width: calc(25% - 12px);
   position: relative;
   user-select: none;
 }
