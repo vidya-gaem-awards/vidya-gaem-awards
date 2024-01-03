@@ -1508,22 +1508,24 @@ a:hover {
   }
 }
 
-.top-decoration {
+.top-trim {
   position: absolute;
   background-image: url('/2023images/background-pattern-upper.png');
   width: 100vw;
   height: 106px;
-  opacity: 0.2;
+  opacity: 0.6;
   background-size: contain;
+  mix-blend-mode: color-burn;
 }
 
-.bottom-decoration {
+.bottom-trim {
   position: absolute;
   background-image: url('/2023images/background-pattern-lower.png');
   width: 100vw;
   height: 106px;
-  opacity: 0.2;
+  opacity: 0.6;
   background-size: contain;
+  mix-blend-mode: color-burn;
 }
 
 @media (max-width: 1800px) {

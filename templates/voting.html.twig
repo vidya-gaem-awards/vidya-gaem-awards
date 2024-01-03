@@ -63,7 +63,7 @@
 {% endblock %}
 
 {% block body %}
-  <div class="top-decoration"></div>
+  <div class="top-trim"></div>
   <div class="background-decorations">
     {% for decoration in decorations %}
       <img src="{{ decoration.decoration.image.url }}" class="decoration" style="rotate: {{ decoration.angle }}deg; {{ decoration.direction }}: {{ decoration.x }}px; top: {{ decoration.y }}px">
@@ -472,5 +472,5 @@
     </div>
   {% endif %}
 
-  <div class="bottom-decoration"></div>
+  <div class="bottom-trim"></div>
 {% endblock %}
