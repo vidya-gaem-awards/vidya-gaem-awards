@@ -198,10 +198,11 @@ header {
 
   .navigation {
     width: 140px;
-    height: 65px;
+    height: 98px;
     cursor: pointer;
     display: block;
     background-size: contain;
+    background-repeat: no-repeat;
     flex-shrink: 0;
 
     &:hover {
@@ -209,13 +210,18 @@ header {
     }
 
     &.left {
-      background-image: url("/2022images/back.png");
+      background-image: url("/2023images/arrow-left.png");
       order: 1;
     }
 
     &.right {
-      background-image: url("/2022images/next.png");
+      background-image: url("/2023images/arrow-left.png");
       order: 3;
+      transform: scaleX(-1);
+
+      &:hover {
+        transform:translateY(3px) scaleX(-1) ;
+      }
     }
   }
 }
@@ -1521,7 +1527,7 @@ a:hover {
   background-image: url('/2023images/background-pattern-upper.png');
   width: 100vw;
   height: 106px;
-  opacity: 0.6;
+  opacity: 0.8;
   background-size: contain;
   mix-blend-mode: color-burn;
 }
@@ -1531,7 +1537,7 @@ a:hover {
   background-image: url('/2023images/background-pattern-lower.png');
   width: 100vw;
   height: 106px;
-  opacity: 0.6;
+  opacity: 0.8;
   background-size: contain;
   mix-blend-mode: color-burn;
 }
