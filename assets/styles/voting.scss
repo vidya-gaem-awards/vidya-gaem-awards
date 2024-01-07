@@ -1135,17 +1135,16 @@ body {
                                             }
 
 .your-votes-container {
-  background: url('/2022images/bgwhite.jpg') repeat, rgb(222, 222, 222);
-  border: 3px white ridge;
-  border-left-style: none;
-  border-right-style: none;
+  background: linear-gradient(352deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 50%, rgba(7,0,255,1) 100%);
+  border: 4px white ridge;
+  border-radius: 8px;
   margin-left: -10px;
   margin-right: -10px;
   margin-top: 20px;
   padding: 12px 8px;
 
   .your-votes {
-    color: black;
+    color: white;
     text-shadow: none;
   }
 
