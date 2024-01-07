@@ -280,7 +280,7 @@ header {
 }
 
 .your-votes {
-  font-family: "There Brat", sans-serif;
+  font-family: "Jet set", sans-serif;
   text-shadow: 2px 2px black;
   color: white;
   text-align: center;
@@ -589,16 +589,12 @@ header {
 $card-width: 150px;
 
 #containerInventory {
-  background: rgb(222, 222, 222) url('/2022images/bgwhite.jpg') repeat;
-  border: 2px white ridge;
-  color: black;
+  background: black;
+  border: 4px white ridge;
+  border-radius: 8px;
+  color: white;
   margin-left: -10px;
   margin-right: -10px;
-
-  .your-votes {
-    color: black;
-    text-shadow: none;
-  }
 }
 
 .inventory-item-outer-wrapper {
@@ -1135,7 +1131,7 @@ body {
                                             }
 
 .your-votes-container {
-  background: linear-gradient(352deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 50%, rgba(7,0,255,1) 100%);
+  background: black;
   border: 4px white ridge;
   border-radius: 8px;
   margin-left: -10px;
