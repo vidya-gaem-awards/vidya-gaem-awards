@@ -280,8 +280,6 @@ header {
 }
 
 .your-votes {
-  font-family: "Jet set", sans-serif;
-  text-shadow: 2px 2px black;
   color: white;
   text-align: center;
   font-size: 40px;
@@ -1132,16 +1130,32 @@ body {
 
 .your-votes-container {
   background: black;
-  border: 4px white ridge;
+  border: 20px white ridge;
   border-radius: 8px;
   margin-left: -10px;
   margin-right: -10px;
   margin-top: 20px;
   padding: 12px 8px;
 
-  .your-votes {
+  .your-votes-title-area {
     color: white;
     text-shadow: none;
+    height: 0px;
+    width: 100%;
+    text-transform: uppercase;
+
+    .your-votes {
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+      font-size: 23px;
+      line-height: 23px;
+      padding: 0 20px;
+      background-color: black;
+      top: -32.5px;
+      position: relative;
+      font-family: 'NES Pixel', sans-serif;
+    }
   }
 
   &.locked {
