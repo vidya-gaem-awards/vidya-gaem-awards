@@ -1204,12 +1204,12 @@ body {
       top: -32.5px;
       position: relative;
       font-family: 'NES Pixel', sans-serif;
+      height: 20px;
     }
   }
 
   &.locked {
-    background: url('/2022images/bgblack.jpg') repeat, #1c1b1e;
-    border-color: #121114;
+    background: rgb(50,50,50);
 
     .your-votes {
       color: white;
