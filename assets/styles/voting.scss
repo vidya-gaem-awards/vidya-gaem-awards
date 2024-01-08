@@ -1240,6 +1240,8 @@ body {
   justify-content: center;
   position: relative;
   align-items: center;
+  font-family: 'NES Pixel', sans-serif;
+  font-size: 24px;
 }
 
 .buttons .navigation {
@@ -1251,40 +1253,43 @@ body {
   cursor: pointer;
   height: 49px;
   position: relative;
+  
+  div {
+    display: inline;
+  }
 }
 
 #btnResetVotes {
-  width: 150px;
-  height: 65px;
   font-weight: bold;
-  font-size: 16px;
-  background-image: url("/2022images/reset.png");
-  background-size: 150px;
 }
 
 #btnResetVotes:hover {
   //background-image: url("/2020images/resetvotes-hover.png");
-  filter: hue-rotate(30deg);
+  //filter: hue-rotate(30deg);
+  .hoverArrow{
+    visibility: visible;
+  }
 }
 
 #btnLockVotes {
-  width: 180px;
-  height: 79px;
-  font-weight: bold;
-  font-size: 16px;
   color: white;
-  background-image: url("/2022images/submit.png");
-  background-size: 180px;
-  margin-left: 20px;
+  margin-left: 80px;
 }
 
 #btnLockVotes:hover {
   //background-image: url("/2020images/submitvotes-hover.png");
-  filter: hue-rotate(30deg);
+  //filter: hue-rotate(30deg);
+  .hoverArrow{
+    visibility: visible;
+  }
 }
 
 #btnLockVotes.iVoted {
   display: none;
+}
+
+.hoverArrow {
+  visibility: hidden;
 }
 
 /* Awards List */
