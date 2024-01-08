@@ -13,6 +13,20 @@
 }
 
 @font-face {
+  font-family: 'Olde Serif';
+  src: url('/2023images/fonts/Fondamento-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Olde Sans';
+  src: url('/2023images/fonts/Macondo-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'NES Pixel';
   src: url('/2023images/fonts/PressStart2P-Regular.ttf') format('truetype');
   font-weight: normal;
