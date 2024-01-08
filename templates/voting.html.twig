@@ -236,15 +236,17 @@
                       <div>SUBMIT</div>
                     </div>
                   </div>
-
-                  <div class="buttons" style="margin-top: 10px;">
-                    <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award">
-                      <button class="btn btn-default">{{ nextAward.name }} >></button>
-                    </a>
-                  </div>
                 {% endif %}
 
               </div>
+
+              {% if votingOpen %}
+                <div class="buttons" style="margin-top: 10px;">
+                  <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award">
+                    <button class="btn btn-default">{{ nextAward.name }} >></button>
+                  </a>
+                </div>
+              {% endif %}
 
             {% endapply %}
           </div>
