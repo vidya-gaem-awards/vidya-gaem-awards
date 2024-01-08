@@ -503,10 +503,26 @@ header {
 
 #rewards {
   .modal-content {
-    min-height: 200px;
-    background: url('/2022images/bgwhite.jpg');
-    border: 2px white ridge;
-    border-radius: 0;
+    min-width: 200px;
+    background: url('/2023images/battle-bg.png');
+    background-size: cover;
+    image-rendering: pixelated;
+    border: 20px white ridge;
+    border-radius: 8px;
+  }
+
+  .modal-title-container {
+    font-family: "NES Pixel";
+    background: black;
+    color: white;
+    width: fit-content;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 20px;
+    height: 20px;
+    z-index: 1;
   }
 
   .modal-dialog {
@@ -517,6 +533,18 @@ header {
     border-top: none;
     padding-top: 0;
     display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+  }
+
+  .modal-body {
+    position: absolute;
+    bottom: 20%;
+  }
+
+  .loot-ratio-fixer {
+    padding-top: calc(79 / 110  * 100%);
   }
 }
 
