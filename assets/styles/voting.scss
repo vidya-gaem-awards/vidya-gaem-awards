@@ -14,7 +14,6 @@ body {
 .center-container {
   width: 1300px;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.2);
   z-index: 20;
   margin: 0 auto;
   position: relative;
@@ -28,7 +27,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 36px;
 
   @media screen and (max-width: 1000px) {
     justify-content: space-between;
@@ -41,7 +40,7 @@ header {
   .logo {
     height: 70px;
     display: block;
-    margin-right: 40px;
+    margin-right: auto;
 
     @media screen and (max-width: 1000px) {
       margin-right: 20px;
@@ -53,20 +52,21 @@ header {
 
     img {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 80%;
     }
   }
 
   .title-text {
-    font-family: "Fresh Marker";
-    color: #F0961F;
-    text-shadow: 1px 1px #CF282F, -1px -1px #CF282F;
-    font-size: 40px;
+    font-family: "FFTitle";
+    color: black;
+    font-size: 60px;
     line-height: 1.2;
     //transform: rotateZ(-1.8deg);
     //text-align: right;
     position: relative;
     z-index: 0;
+    text-transform: uppercase;
+    top: -10px;
 
     .line-1 {
       //text-transform: uppercase;
@@ -105,7 +105,7 @@ header {
   max-width: 1100px;
   align-items: center;
   margin: 0 auto 20px;
-  font-family: "There Brat", sans-serif;
+  font-family: "Olde Title", sans-serif;
 
   //background-image: url(/2020images/tape.png);
   //background-size: 790px;
@@ -123,7 +123,11 @@ header {
     padding: 12px 8px;
     max-width: 700px;
 
-    color: white;
+    color: rgba(180,80,22,0.8);
+    text-shadow: 
+        0px 0px 2px rgba(0,0,0,0.3), 
+        0px 0px 100px rgba(0,0,0,1), 
+        0px 0px 20px rgba(255,255,255,1);
 
     //-webkit-mask-image: url(/2022images/mask.png);
     //-webkit-mask-size: cover;
@@ -147,7 +151,7 @@ header {
     line-height: 100%;
     margin-top: 10px;
 
-
+    /*
     text-shadow:
             1px -1px #4EA24A,
             2px -2px #4EA24A,
@@ -159,6 +163,7 @@ header {
             2px 2px #061019,
             3px 3px #061019,
             -4px 4px #061019;
+    */
     //5px 5px #4EA24A,
     //6px 6px #E5E37C,
     //7px 7px #061019,
@@ -178,7 +183,9 @@ header {
   }
 
   .award-subtitle {
-    font-size: 2em;
+    font-size: 1.2em;
+
+    /*
     color: #0EBF8C;
 
     text-shadow:
@@ -186,14 +193,16 @@ header {
             2px 2px #061019,
             3px 3px #061019,
             -4px 4px #061019;
+    */
   }
 
   .navigation {
     width: 140px;
-    height: 65px;
+    height: 98px;
     cursor: pointer;
     display: block;
     background-size: contain;
+    background-repeat: no-repeat;
     flex-shrink: 0;
 
     &:hover {
@@ -201,19 +210,31 @@ header {
     }
 
     &.left {
-      background-image: url("/2022images/back.png");
+      background-image: url("/2023images/arrow-left.png");
       order: 1;
     }
 
     &.right {
-      background-image: url("/2022images/next.png");
+      background-image: url("/2023images/arrow-left.png");
       order: 3;
+      transform: scaleX(-1);
+
+      &:hover {
+        transform:translateY(3px) scaleX(-1) ;
+      }
     }
   }
 }
 
 .awards-list {
   text-align: left;
+
+  .your-votes {
+    font-family: "Olde Serif", serif;
+    color: rgba(180, 80, 22, 0.8);
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3), 0px 0px 100px rgb(0, 0, 0), 0px 0px 20px rgb(255, 255, 255);
+    mix-blend-mode: color-burn;
+  }
 
   h2 {
     font-weight: bold;
@@ -266,16 +287,16 @@ header {
 }
 
 .your-votes {
-  font-family: "There Brat", sans-serif;
-  text-shadow: 2px 2px black;
   color: white;
   text-align: center;
   font-size: 40px;
 }
 
 #submitReminder {
-  font-family: "Jet Set", sans-serif;
-  color: white;
+  font-family: "Olde Serif", serif;
+  color: rgba(180, 80, 22, 0.8);
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3), 0px 0px 100px rgb(0, 0, 0), 0px 0px 20px rgb(255, 255, 255);
+  mix-blend-mode: color-burn;
 }
 // END NEW SCSS
 
@@ -491,10 +512,26 @@ header {
 
 #rewards {
   .modal-content {
-    min-height: 200px;
-    background: url('/2022images/bgwhite.jpg');
-    border: 2px white ridge;
-    border-radius: 0;
+    min-width: 200px;
+    background: url('/2023images/battle-bg.png');
+    background-size: cover;
+    image-rendering: pixelated;
+    border: 20px white ridge;
+    border-radius: 8px;
+  }
+
+  .modal-title-container {
+    font-family: "NES Pixel";
+    background: black;
+    color: white;
+    width: fit-content;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 20px;
+    height: 20px;
+    z-index: 1;
   }
 
   .modal-dialog {
@@ -505,6 +542,19 @@ header {
     border-top: none;
     padding-top: 0;
     display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+  }
+
+  .modal-body {
+    position: absolute;
+    bottom: 20%;
+    width: 100%;
+  }
+
+  .loot-ratio-fixer {
+    padding-top: calc(79 / 110  * 100%);
   }
 }
 
@@ -575,15 +625,32 @@ header {
 $card-width: 150px;
 
 #containerInventory {
-  background: rgb(222, 222, 222) url('/2022images/bgwhite.jpg') repeat;
-  border: 2px white ridge;
-  color: black;
+  background: black;
+  border: 20px white ridge;
+  border-radius: 8px;
+  color: white;
   margin-left: -10px;
   margin-right: -10px;
 
-  .your-votes {
-    color: black;
+  .inventory-title-area {
+    color: white;
     text-shadow: none;
+    height: 0px;
+    width: 100%;
+    text-transform: uppercase;
+
+    .title-text {
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+      font-size: 23px;
+      line-height: 23px;
+      padding: 0 20px;
+      background-color: black;
+      top: -20px;
+      position: relative;
+      font-family: 'NES Pixel', sans-serif;
+    }
   }
 }
 
@@ -1121,23 +1188,38 @@ body {
                                             }
 
 .your-votes-container {
-  background: url('/2022images/bgwhite.jpg') repeat, rgb(222, 222, 222);
-  border: 3px white ridge;
-  border-left-style: none;
-  border-right-style: none;
+  background: black;
+  border: 20px white ridge;
+  border-radius: 8px;
   margin-left: -10px;
   margin-right: -10px;
   margin-top: 20px;
   padding: 12px 8px;
 
-  .your-votes {
-    color: black;
+  .your-votes-title-area {
+    color: white;
     text-shadow: none;
+    height: 0px;
+    width: 100%;
+    text-transform: uppercase;
+
+    .your-votes {
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+      font-size: 23px;
+      line-height: 23px;
+      padding: 0 20px;
+      background-color: black;
+      top: -32.5px;
+      position: relative;
+      font-family: 'NES Pixel', sans-serif;
+      height: 20px;
+    }
   }
 
   &.locked {
-    background: url('/2022images/bgblack.jpg') repeat, #1c1b1e;
-    border-color: #121114;
+    background: rgb(50,50,50);
 
     .your-votes {
       color: white;
@@ -1196,6 +1278,8 @@ body {
   justify-content: center;
   position: relative;
   align-items: center;
+  font-family: 'NES Pixel', sans-serif;
+  font-size: 24px;
 }
 
 .buttons .navigation {
@@ -1207,40 +1291,43 @@ body {
   cursor: pointer;
   height: 49px;
   position: relative;
+  
+  div {
+    display: inline;
+  }
 }
 
 #btnResetVotes {
-  width: 150px;
-  height: 65px;
   font-weight: bold;
-  font-size: 16px;
-  background-image: url("/2022images/reset.png");
-  background-size: 150px;
 }
 
 #btnResetVotes:hover {
   //background-image: url("/2020images/resetvotes-hover.png");
-  filter: hue-rotate(30deg);
+  //filter: hue-rotate(30deg);
+  .hoverArrow{
+    visibility: visible;
+  }
 }
 
 #btnLockVotes {
-  width: 180px;
-  height: 79px;
-  font-weight: bold;
-  font-size: 16px;
   color: white;
-  background-image: url("/2022images/submit.png");
-  background-size: 180px;
-  margin-left: 20px;
+  margin-left: 80px;
 }
 
 #btnLockVotes:hover {
   //background-image: url("/2020images/submitvotes-hover.png");
-  filter: hue-rotate(30deg);
+  //filter: hue-rotate(30deg);
+  .hoverArrow{
+    visibility: visible;
+  }
 }
 
 #btnLockVotes.iVoted {
   display: none;
+}
+
+.hoverArrow {
+  visibility: hidden;
 }
 
 /* Awards List */
@@ -1506,6 +1593,26 @@ a:hover {
     max-width: 400px;
     max-height: 400px;
   }
+}
+
+.top-trim {
+  position: absolute;
+  background-image: url('/2023images/background-pattern-upper.png');
+  width: 100vw;
+  height: 106px;
+  opacity: 0.8;
+  background-size: contain;
+  mix-blend-mode: color-burn;
+}
+
+.bottom-trim {
+  position: absolute;
+  background-image: url('/2023images/background-pattern-lower.png');
+  width: 100vw;
+  height: 106px;
+  opacity: 0.8;
+  background-size: contain;
+  mix-blend-mode: color-burn;
 }
 
 @media (max-width: 1800px) {

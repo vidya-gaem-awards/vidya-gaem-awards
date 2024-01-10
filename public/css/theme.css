@@ -1,4 +1,39 @@
 @font-face {
+  font-family: 'FFTitle';
+  src: url('/2023images/fonts/OPTIEngeEtienne.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Olde Title';
+  src: url('/2023images/fonts/Zilluncial.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Olde Serif';
+  src: url('/2023images/fonts/Fondamento-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Olde Sans';
+  src: url('/2023images/fonts/Macondo-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NES Pixel';
+  src: url('/2023images/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Attack Graffiti';
   src: url('/2022images/fonts/aAttackGraffiti.otf') format('opentype');
   font-weight: normal;
@@ -95,7 +130,7 @@
 /*}*/
 
 html {
-  background: #71431C url('/2022images/bg.png') repeat;
+  background: #71431C url('/2023images/background.png') repeat;
 }
 
 body {

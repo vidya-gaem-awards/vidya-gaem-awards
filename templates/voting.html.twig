@@ -63,6 +63,7 @@
 {% endblock %}
 
 {% block body %}
+  <div class="top-trim"></div>
   <div class="background-decorations">
     {% for decoration in decorations %}
       <img src="{{ decoration.decoration.image.url }}" class="decoration" style="rotate: {{ decoration.angle }}deg; {{ decoration.direction }}: {{ decoration.x }}px; top: {{ decoration.y }}px">
@@ -84,11 +85,10 @@
 
     <header>
       <a class="logo" href="{{ path('index') }}">
-        <img src="{{ asset('2022images/logo.png') }}">
+        <img src="{{ asset('2023images/logo-ff.png') }}">
       </a>
       <div class="title-text">
-        <div class="line-1 stroke-me">The 2023 Vidya Gaem Awards</div>
-        <div class="line-2 stroke-me">{{ voteText }}</div>
+        {{ voteText }}
       </div>
     </header>
 
@@ -218,11 +218,35 @@
               {% endif %}
 
               <div class="your-votes-container">
-                <div class="your-votes">
-                  Your Votes
+                <div class="your-votes-title-area">
+                  <div class="your-votes">
+                    Your Votes
+                  </div>
                 </div>
                 <div class="flexContainer voteDropArea" id="voteDropAreaBottom"></div>
+
+                {% if votingOpen %}
+                  <div class="buttons" style="margin-top: 10px;">
+                    <div id="btnResetVotes" class="btnSubmit" title="Reset Votes">
+                      <div class="hoverArrow">&gt;</div>
+                      <div>RESET</div>
+                    </div>
+                    <div id="btnLockVotes" class="btnSubmit" title="Submit Votes">
+                      <div class="hoverArrow">&gt;</div>
+                      <div>SUBMIT</div>
+                    </div>
+                  </div>
+                {% endif %}
+
               </div>
+
+              {% if votingOpen %}
+                <div class="buttons" style="margin-top: 10px;">
+                  <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award">
+                    <button class="btn btn-default">{{ nextAward.name }} >></button>
+                  </a>
+                </div>
+              {% endif %}
 
             {% endapply %}
           </div>
@@ -234,22 +258,6 @@
               </div>
             </div>
           </div>
-        {% endif %}
-
-        {% if votingOpen %}
-          <div class="buttons" style="margin-top: 10px;">
-{#            <button id="btnResetVotes" class="btnSubmit">Reset Votes</button>#}
-{#            <button id="btnLockVotes" class="btnSubmit">Submit Votes</button>#}
-            <div id="btnResetVotes" class="btnSubmit" title="Reset Votes"></div>
-            <div id="btnLockVotes" class="btnSubmit" title="Submit Votes"></div>
-          </div>
-
-          <div class="buttons" style="margin-top: 10px;">
-            <a href="{{ path('voting', {'awardID': nextAward.id}) }}" class="navigation next" title="Next award">
-              <button class="btn btn-default">{{ nextAward.name }} >></button>
-            </a>
-          </div>
-
         {% endif %}
 
         {# {% if showFantasyPromo %}
@@ -357,8 +365,10 @@
   <div class="center-container">
 
     <div id="containerInventory">
-      <div class="your-votes" style="margin-bottom: 10px;">
-        Your Rewards
+      <div class="inventory-title-area" style="margin-bottom: 10px;">
+        <div class="title-text">
+          Your Rewards
+        </div>
       </div>
 
       <div class="inventory-container-container">
@@ -422,53 +432,61 @@
   {% if award %}
     <div id="rewards" class="modal fade" role="dialog" data-backdrop="static">
       <div class="modal-dialog" role="document">
+        <div class="modal-title-container">
+          LOOT GET
+        </div>
         <div class="modal-content">
-          <div class="modal-body" style="text-align: center;">
-            <img src="{{ asset('2022images/your-rewards.png') }}" id="youre" style="max-width: 90%;">
-            <div class="lootboxbox">
-              <div class="lootbox">
-                <img src="" class="lootbox-image">
+          <div class="loot-ratio-fixer"></div>
+          <div style="position: absolute; top: 0px; width: 100%; height: 100%;">
 
-                <div class="inventory-item" style="display: none;">
-                  <div class="item-inner-wrapper">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="lootbox">
-                <img src="" class="lootbox-image">
-                <div class="inventory-item" style="display: none;">
-                  <div class="item-inner-wrapper">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="lootbox">
-                <img src="" class="lootbox-image">
-                <div class="inventory-item" style="display: none;">
+            <div class="modal-body" style="text-align: center;">
+              <div class="lootboxbox">
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+
+                  <div class="inventory-item" style="display: none;">
                     <div class="item-inner-wrapper">
-                    <div class="item-tier"></div>
-                    <img>
-                    <div class="item-name"></div>
+                      <div class="item-tier"></div>
+                      <img>
+                      <div class="item-name"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+                  <div class="inventory-item" style="display: none;">
+                    <div class="item-inner-wrapper">
+                      <div class="item-tier"></div>
+                      <img>
+                      <div class="item-name"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="lootbox">
+                  <img src="" class="lootbox-image">
+                  <div class="inventory-item" style="display: none;">
+                      <div class="item-inner-wrapper">
+                      <div class="item-tier"></div>
+                      <img>
+                      <div class="item-name"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-          </div>
-          <div class="modal-footer" style="text-align: center;">
-            <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot!</button>
-            <div id="closeRewards" style="display: none;">
-              <button type="button" class="btn btn-lg btn-default" data-bs-dismiss="modal">Claim rewards</button><br>
-              <button type="button" class="btn btn-default" id="neverShowAgain" style="margin-top: 5px;">Don't show this again</button>
+            <div class="modal-footer" style="text-align: center;">
+              <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot!</button>
+              <div id="closeRewards" style="display: none;">
+                <button type="button" class="btn btn-lg btn-default" data-bs-dismiss="modal">Claim rewards</button><br>
+                <button type="button" class="btn btn-default" id="neverShowAgain" style="margin-top: 5px;">Don't show this again</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   {% endif %}
+
+  <div class="bottom-trim"></div>
 {% endblock %}
