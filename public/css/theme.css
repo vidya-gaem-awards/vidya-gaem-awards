@@ -20,6 +20,13 @@
   size-adjust: 135%;
 }
 
+@font-face {
+  font-family: 'Sleek Header';
+  src: url('/2023images/fonts/sofachrome rg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /*
 @font-face {
   font-family: 'Olde Serif';
