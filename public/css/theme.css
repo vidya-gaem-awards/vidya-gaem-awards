@@ -12,6 +12,14 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'ChronoType';
+  src: url('/2023images/fonts/ChronoType.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  size-adjust: 135%;
+}
+
 /*
 @font-face {
   font-family: 'Olde Serif';
