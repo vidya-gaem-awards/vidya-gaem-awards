@@ -66,7 +66,7 @@
   <div class="top-trim"></div>
   <div class="background-decorations">
     {% for decoration in decorations %}
-      <img src="{{ decoration.decoration.image.url }}" class="decoration" style="rotate: {{ decoration.angle }}deg; {{ decoration.direction }}: {{ decoration.x }}px; top: {{ decoration.y }}px">
+      <img src="{{ decoration.decoration.image.url }}" class="decoration" style="rotate: {{ decoration.angle }}deg; {{ decoration.direction }}: {{ decoration.x }}px; top: {{ decoration.y }}px; mask-image: linear-gradient(to {{decoration.direction}}, #0000, #FFF 80%);">
     {% endfor %}
   </div>
 
