@@ -182,7 +182,9 @@ class VotingController extends AbstractController
         $decorations = [];
 
         if (!empty($adverts)) {
-            for ($i = 0; $i < 6; $i++) {
+            $adCount = count($adverts);
+            $iterations = ($adCount > 6) ? 6 : $adCount;
+            for ($i = 0; $i < $iterations; $i++) {
                 $index = array_rand($adverts);
                 $decoration = array_splice($adverts, $index, 1)[0];
 
