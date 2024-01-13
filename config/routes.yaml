@@ -472,3 +472,23 @@ advertRedirect:
     controller: App\Controller\AdvertManagerController::redirectAction
     requirements:
         advertToken: '^[0-9a-f]+$'
+
+captchaManager:
+    path:       /captchas
+    methods:    [GET]
+    controller: App\Controller\CaptchaController::indexAction
+
+captchaPost:
+    path:       /captchas
+    methods:    [POST]
+    controller: App\Controller\CaptchaController::postAction
+
+captchaBulkImageUploader:
+    path:       /captchas/bulk-image-uploader
+    methods:    [GET]
+    controller: App\Controller\CaptchaController::bulkImageAction
+
+captchaBulkImageUploaderSubmit:
+    path:       /captchas/bulk-image-uploader
+    methods:    [POST]
+    controller: App\Controller\CaptchaController::bulkImageSubmitAction

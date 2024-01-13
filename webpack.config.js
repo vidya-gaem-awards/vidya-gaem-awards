@@ -25,6 +25,7 @@ Encore
      */
     .addEntry('voting', './assets/voting.ts')
     .addEntry('photographs', './assets/photographs.tsx')
+    .addEntry('captchas', './assets/captchas.tsx')
     //.addEntry('page2', './assets/page2.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
@@ -54,7 +55,7 @@ Encore
     .configureBabel((config) => {
         config.plugins.push('@babel/plugin-proposal-class-properties');
     })
-    
+
     // enables and configure @babel/preset-env polyfills
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
@@ -69,7 +70,7 @@ Encore
 
     // uncomment if you use React
     .enableReactPreset()
-    
+
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())

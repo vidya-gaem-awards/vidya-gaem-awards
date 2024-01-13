@@ -8,6 +8,14 @@ export interface Advertisement {
     special: boolean
 }
 
+export interface CaptchaGame {
+    id: number|null,
+    title: string,
+    first: string,
+    second: string,
+    image: File|null
+}
+
 export interface File {
     fullFilename: string,
     relativePath: string,

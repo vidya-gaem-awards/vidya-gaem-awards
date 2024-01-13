@@ -1,0 +1,34 @@
+.captcha-table {
+  td {
+    width: 128px;
+    height: 128px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  img {
+    width: 128px;
+    height: 128px;
+  }
+
+  th {
+    text-align: center;
+  }
+
+  tbody th {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  & > tbody > tr:nth-of-type(odd) {
+    :nth-child(2n) {
+      --bs-table-accent-bg: var(--bs-table-striped-bg);
+    }
+  }
+
+  & > tbody > tr:nth-of-type(even) {
+    :nth-child(2n+1) {
+      --bs-table-accent-bg: var(--bs-table-striped-bg);
+    }
+  }
+}

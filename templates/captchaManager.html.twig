@@ -1,0 +1,79 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block title %}Voting Page Captcha Games{% endblock %}
+
+{% block css %}
+  {{ parent() }}
+
+  {{ encore_entry_link_tags('captchas') }}
+
+  <style type="text/css">
+      #dialog-edit {
+          max-width: 730px;
+      }
+
+      #dialog-edit .photograph {
+          width: 300px;
+          height: 365px;
+      }
+
+      #dialog-edit .photograph .photo-text {
+          font-size: 17.2px;
+      }
+
+      #dialog-edit-delete {
+          position: relative;
+          padding-left: 46px;
+      }
+
+      img.delete-this {
+          height: calc(100% + 2px);
+          top: -1px;
+          left: -1px;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          position: absolute;
+      }
+
+      .decoration-container {
+          margin-top: 15px;
+          margin-bottom: 10px;
+
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          row-gap: 10px;
+          column-gap: 10px;
+      }
+
+      .decoration-container > .photograph {
+          cursor: pointer;
+          transition: ease-in-out .2s;
+          width: 200px;
+          height: 243px;
+      }
+
+      .decoration-container > .photograph:hover {
+          transform: translateY(-10px);
+      }
+
+      .decoration-container > .photograph .photo-text {
+          font-size: 11.5px;
+      }
+  </style>
+{% endblock %}
+
+{% block js %}
+  {{ encore_entry_script_tags('captchas') }}
+{% endblock %}
+
+{% block content %}
+  <div class="row" id="react-captcha-manager"></div>
+
+  <script type="text/javascript">
+      const ajaxUrl = {{ path('captchaPost') | json_encode | raw }};
+      const bulkImageUploaderUrl = {{ path('captchaBulkImageUploader') | json_encode | raw }};
+      const games = {{ games | json_encode | raw }};
+      const rows = {{ rows | json_encode | raw }};
+      const columns = {{ columns | json_encode | raw }};
+  </script>
+{% endblock %}

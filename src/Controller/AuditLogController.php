@@ -49,6 +49,10 @@ class AuditLogController extends AbstractController
 //            'fantasy-updated-details' => 'Updated their details in the Fantasy League',
             'arg-times-updated' => 'Updated file unlock times for the ARG',
             'arg-config-updated' => 'Updated the ARG settings',
+            'captcha-game-new' => 'Added a game to the captcha',
+            'captcha-game-edit' => 'Edited a game in the captcha',
+            'captcha-game-delete' => 'Removed a game from the captcha',
+            'captcha-game-bulk-upload' => 'Bulk uploaded images for the captcha',
         ];
 
         $result = $em->createQueryBuilder()

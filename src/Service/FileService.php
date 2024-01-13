@@ -18,6 +18,7 @@ class FileService
         'audio/ogg' => 'ogg',
         'video/ogg' => 'ogg',
         'application/ogg' => 'ogg',
+        'application/x-zip-compressed' => 'zip',
     ];
 
     /** @var string */
@@ -32,10 +33,7 @@ class FileService
         $this->em = $em;
     }
 
-    /**
-     * This function does not adhere to security best practices (maybe?)
-     */
-    public function handleUploadedFile(?UploadedFile $file, string $entityType, string $directory, ?string $filename): File
+    public function validateUploadedFile(?UploadedFile $file): void
     {
         if ($file === null) {
             throw new Exception('No file was uploaded');
@@ -46,6 +44,14 @@ class FileService
         } elseif ($file->getSize() > self::FILESIZE_LIMIT) {
             throw new Exception('Filesize of ' . self::humanFilesize($file->getSize()) . ' exceeds limit of ' . self::humanFilesize(self::FILESIZE_LIMIT));
         }
+    }
+
+    /**
+     * This function does not adhere to security best practices (maybe?)
+     */
+    public function handleUploadedFile(?UploadedFile $file, string $entityType, string $directory, ?string $filename): File
+    {
+        $this->validateUploadedFile($file);
 
         if (!file_exists($this->uploadDirectory . $directory)) {
             mkdir($this->uploadDirectory . $directory, 0777, true);
@@ -68,6 +74,33 @@ class FileService
         $this->em->flush();
 
         $file->move($this->uploadDirectory . $directory . '/', $fileEntity->getFullFilename());
+
+        return $fileEntity;
+    }
+
+    public function createFileFromString(string $contents, string $extension, string $entityType, string $directory, ?string $filename): File
+    {
+        if (!file_exists($this->uploadDirectory . $directory)) {
+            mkdir($this->uploadDirectory . $directory, 0777, true);
+        }
+
+        if ($filename === null) {
+            $factory = new Factory;
+            $generator = $factory->getLowStrengthGenerator();
+            $token = hash('sha1', $generator->generate(64));
+            $filename = substr($token, 0, 8);
+        }
+
+        $fileEntity = new File();
+        $fileEntity->setSubdirectory($directory);
+        $fileEntity->setFilename($filename . '-' . time());
+        $fileEntity->setExtension($extension);
+        $fileEntity->setEntity($entityType);
+
+        $this->em->persist($fileEntity);
+        $this->em->flush();
+
+        file_put_contents($this->uploadDirectory . $directory . '/' . $fileEntity->getFullFilename(), $contents);
 
         return $fileEntity;
     }

@@ -1,0 +1,43 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block title %}Voting Page Captcha Games{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <h1 class="page-header board-header">Voting Page Captcha Games</h1>
+
+      <p class="board-subheader">
+        Bulk Image Uploader
+      </p>
+
+      <div class="row">
+        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+          <div class="mb-4">
+            Upload images for multiple captcha games at once. Games must already exist in the database. The uploaded
+            file must be a .zip. The expected filenames within the zip are "artificial 1.png", "artificial 2.png",
+            "fake 1.png", etc. Files without these names will be ignored.
+          </div>
+
+          <form method="post" enctype="multipart/form-data" action="{{ path('captchaBulkImageUploaderSubmit') }}">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label" for="info-images">Images</label>
+                  <div class="col-sm-9">
+                    <input type="file" id="info-images" name="images" class="form-control" multiple accept=".zip">
+                    <small class="form-text d-block">Required image dimensions: <strong>128 x 128</strong></small>
+                    <small class="form-text d-block">Supported file types: <strong>.zip</strong></small>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
