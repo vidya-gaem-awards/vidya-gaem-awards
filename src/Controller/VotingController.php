@@ -182,14 +182,16 @@ class VotingController extends AbstractController
         $decorations = [];
 
         if (!empty($adverts)) {
-            for ($i = 0; $i < 6; $i++) {
+            $adCount = count($adverts);
+            $iterations = ($adCount > 6) ? 6 : $adCount;
+            for ($i = 0; $i < $iterations; $i++) {
                 $index = array_rand($adverts);
                 $decoration = array_splice($adverts, $index, 1)[0];
 
                 $direction = $i % 2 === 0 ? 'left' : 'right';
-                $angle = random_int(-15, 15);
+                $angle = random_int(-5, 5);
                 $x = random_int(-30, 0);
-                $y = 20 + floor($i / 2) * 350 + random_int(-50, 50);
+                $y = 300 + floor($i / 2) * 800 + random_int(-200, 200);
 
                 $decorations[] = [
                     'decoration' => $decoration,
