@@ -53,20 +53,24 @@ header {
     img {
       max-width: 100%;
       max-height: 80%;
+      filter: invert(100%);
     }
   }
 
   .title-text {
-    font-family: "FFTitle";
+    font-family: "Sleek Header";
     color: black;
-    font-size: 60px;
-    line-height: 1.2;
+    font-size: 19px;
+    line-height: 0.75;
     //transform: rotateZ(-1.8deg);
     //text-align: right;
     position: relative;
     z-index: 0;
     text-transform: uppercase;
+    transform: scaleY(3);
     top: -10px;
+    max-width: 50%;
+    text-align: right;
 
     .line-1 {
       //text-transform: uppercase;
@@ -77,8 +81,9 @@ header {
       //color: #CF282F;
     }
 
-    @media screen and (max-width: 800px) {
-      font-size: 24px;
+    // when we move to two lines of header text
+    @media screen and (max-width: 1200px) {
+      font-size: 16px;
     }
 
 
@@ -106,6 +111,7 @@ header {
   align-items: center;
   margin: 0 auto 20px;
   font-family: "Olde Title", sans-serif;
+  text-transform: capitalize;
 
   //background-image: url(/2020images/tape.png);
   //background-size: 790px;
@@ -146,7 +152,6 @@ header {
   }
 
   .award-name {
-    text-transform: uppercase;
     font-size: 2.7em;
     line-height: 100%;
     margin-top: 10px;
@@ -230,7 +235,7 @@ header {
   text-align: left;
 
   .your-votes {
-    font-family: "Olde Serif", serif;
+    font-family: "Olde Title", serif;
     color: rgba(180, 80, 22, 0.8);
     text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3), 0px 0px 100px rgb(0, 0, 0), 0px 0px 20px rgb(255, 255, 255);
     mix-blend-mode: color-burn;
@@ -243,7 +248,7 @@ header {
   }
 
   .awards {
-    font-family: "Jet Set", sans-serif;
+    font-family: "ChronoType", sans-serif;
     text-shadow: 1px 1px 2px #CF282F;
     column-count: 2;
     list-style: none;
@@ -262,14 +267,15 @@ header {
 
   .award {
     color: white;
+    text-shadow: 0 0 30px rgba(0,0,0,0.5), 0 0 6px rgba(180,80,0, 9.5);
     text-decoration: none;
 
     &.complete {
-      color: #6EE4C3;
+      color: rgba(98, 63, 37, 0.77);
     }
 
     &.active {
-      color: #F0961F;
+      text-shadow: 0 0 20px rgba(98, 33, 11, 0.94), 0 0 20px rgba(180,60,20,0.8), 0 0 20px rgba(180,60,20,0.8), 0 0 20px rgba(180,60,20,0.8), 0 0 20px rgba(180,60,20,0.8);
     }
   }
 
@@ -293,7 +299,7 @@ header {
 }
 
 #submitReminder {
-  font-family: "Olde Serif", serif;
+  font-family: "Olde Title", serif;
   color: rgba(180, 80, 22, 0.8);
   text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3), 0px 0px 100px rgb(0, 0, 0), 0px 0px 20px rgb(255, 255, 255);
   mix-blend-mode: color-burn;
@@ -1050,11 +1056,10 @@ body {
   //height: 20px;
   //line-height: 20px;
   //font-weight: normal;
-  font-family: "Attack Graffiti", sans-serif;
+  font-family: "Olde Title", sans-serif;
   font-size: 30px;
-  letter-spacing: 14px;
   position: absolute;
-  left: 25px;
+  left: 18px;
   top: 5px;
   z-index: 1;
 }
@@ -1211,7 +1216,7 @@ body {
       line-height: 23px;
       padding: 0 20px;
       background-color: black;
-      top: -32.5px;
+      top: -32px;
       position: relative;
       font-family: 'NES Pixel', sans-serif;
       height: 20px;
@@ -1352,7 +1357,7 @@ body {
   //font-size: 20px;
 
   a {
-    font-family: "Jet Set", sans-serif;
+    font-family: "ChronoType", sans-serif;
     color: white;
     &:hover {
       text-decoration: underline;

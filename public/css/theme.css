@@ -13,6 +13,22 @@
 }
 
 @font-face {
+  font-family: 'ChronoType';
+  src: url('/2023images/fonts/ChronoType.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  size-adjust: 135%;
+}
+
+@font-face {
+  font-family: 'Sleek Header';
+  src: url('/2023images/fonts/sofachrome rg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*
+@font-face {
   font-family: 'Olde Serif';
   src: url('/2023images/fonts/Fondamento-Regular.ttf') format('truetype');
   font-weight: normal;
@@ -24,7 +40,8 @@
   src: url('/2023images/fonts/Macondo-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-}
+} 
+*/
 
 @font-face {
   font-family: 'NES Pixel';
@@ -33,6 +50,7 @@
   font-style: normal;
 }
 
+/*
 @font-face {
   font-family: 'Attack Graffiti';
   src: url('/2022images/fonts/aAttackGraffiti.otf') format('opentype');
@@ -74,6 +92,7 @@
   font-weight: normal;
   font-style: normal;
 }
+*/
 
 /*
 @font-face {
@@ -130,7 +149,7 @@
 /*}*/
 
 html {
-  background: #71431C url('/2023images/background.png') repeat;
+  background: #71431C url('/2023images/background5.png') repeat;
 }
 
 body {
