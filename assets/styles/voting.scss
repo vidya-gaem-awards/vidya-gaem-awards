@@ -61,7 +61,7 @@ header {
     font-family: "Sleek Header";
     color: black;
     font-size: 19px;
-    line-height: 1.2;
+    line-height: 0.75;
     //transform: rotateZ(-1.8deg);
     //text-align: right;
     position: relative;
@@ -81,8 +81,9 @@ header {
       //color: #CF282F;
     }
 
-    @media screen and (max-width: 800px) {
-      font-size: 24px;
+    // when we move to two lines of header text
+    @media screen and (max-width: 1200px) {
+      font-size: 16px;
     }
 
 
