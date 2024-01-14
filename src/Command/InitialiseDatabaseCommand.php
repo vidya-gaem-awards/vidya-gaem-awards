@@ -50,10 +50,14 @@ class InitialiseDatabaseCommand extends Command
         $this->em->persist($config);
 
         // Add the special-case autocompleter
-        $autocompleter = new Autocompleter();
-        $autocompleter->setId(Autocompleter::VIDEO_GAMES);
-        $autocompleter->setName('Video games in ' . date('Y'));
-        $this->em->persist($autocompleter);
+        $existing = $this->em->getRepository(Autocompleter::class)->find(Autocompleter::VIDEO_GAMES);
+
+        if (!$existing) {
+            $autocompleter = new Autocompleter();
+            $autocompleter->setId(Autocompleter::VIDEO_GAMES);
+            $autocompleter->setName('Video games in ' . date('Y'));
+            $this->em->persist($autocompleter);
+        }
 
         // Add the standard permissions
         foreach (Permission::STANDARD_PERMISSIONS as $id => $description) {
