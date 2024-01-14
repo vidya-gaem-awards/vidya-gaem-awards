@@ -367,7 +367,7 @@
     <div id="containerInventory">
       <div class="inventory-title-area" style="margin-bottom: 10px;">
         <div class="title-text">
-          Your Rewards
+          Your Inventory
         </div>
       </div>
 
@@ -380,8 +380,8 @@
               <div class="inventory-item">
                 <div class="item-inner-wrapper">
                   <div class="item-tier"></div>
-                  <img src="{{ asset('img/dosh.png') }}">
-                  <div class="item-name">-1 shekels</div>
+                  <img src="{{ asset('2023images/gold-bars.png') }}">
+                  <div class="item-name">-1 gold</div>
                 </div>
               </div>
               <div class="pole"></div>
@@ -406,7 +406,7 @@
         </div>
 
         <div class="inventory-buttons">
-          <button class="btn btn-default btn-lootbox" id="buy-lootbox">Buy lootbox (<span id="lootboxCostText"></span> shekels)</button>
+          <button class="btn btn-default btn-lootbox" id="buy-lootbox">Force encounter (<span id="lootboxCostText"></span> gold)</button>
           <button class="btn btn-default btn-lootbox" id="unequipAll">Unequip all items</button>
           <button class="btn btn-default btn-lootbox" id="restoreDrops" disabled>Restore drops</button>
           <button class="btn btn-default btn-lootbox" id="resetRewardsButton" style="display: none;">Mute music</button>
@@ -476,9 +476,9 @@
             </div>
 
             <div class="modal-footer" style="text-align: center;">
-              <button type="button" class="btn btn-lootbox btn-lg" id="unboxButton">Unbox your loot!</button>
+              <button type="button" class="btn btn-show-sword-always btn-lootbox btn-lg" id="unboxButton">Attack!</button>
               <div id="closeRewards" style="display: none;">
-                <button type="button" class="btn btn-lg btn-default" data-bs-dismiss="modal">Claim rewards</button><br>
+                <button type="button" class="btn btn-lg btn-default" data-bs-dismiss="modal">Collect drops</button><br>
                 <button type="button" class="btn btn-default" id="neverShowAgain" style="margin-top: 5px;">Don't show this again</button>
               </div>
             </div>

@@ -130,9 +130,9 @@ header {
     max-width: 700px;
 
     color: rgba(180,80,22,0.8);
-    text-shadow: 
-        0px 0px 2px rgba(0,0,0,0.3), 
-        0px 0px 100px rgba(0,0,0,1), 
+    text-shadow:
+        0px 0px 2px rgba(0,0,0,0.3),
+        0px 0px 100px rgba(0,0,0,1),
         0px 0px 20px rgba(255,255,255,1);
 
     //-webkit-mask-image: url(/2022images/mask.png);
@@ -477,7 +477,8 @@ header {
 }
 
 .lootbox-image {
-  width: 100px;
+  position: relative;
+  top: 40px;
 }
 
 .lootbox {
@@ -488,6 +489,7 @@ header {
   align-items: center;
   flex-wrap: wrap;
   text-align: center;
+  flex-basis: 100%;
 
   .inventory-item {
     .item-tier {
@@ -521,7 +523,7 @@ header {
     min-width: 200px;
     background: url('/2023images/battle-bg.png');
     background-size: cover;
-    image-rendering: pixelated;
+    //image-rendering: pixelated;
     border: 20px white ridge;
     border-radius: 8px;
   }
@@ -555,7 +557,7 @@ header {
 
   .modal-body {
     position: absolute;
-    bottom: 20%;
+    bottom: 28%;
     width: 100%;
   }
 
@@ -628,7 +630,7 @@ header {
   color: #333;
 }
 
-$card-width: 150px;
+$card-width: 350px;
 
 #containerInventory {
   background: black;
@@ -664,16 +666,16 @@ $card-width: 150px;
   display: flex;
   position: relative;
 
-  .pole {
-    position: absolute;
-    width: 15px;
-    background: #868A8B url('/2022images/pole.png') repeat-y;
-    background-size: 100%;
-    top: -5px;
-    bottom: -500px;
-    left: 68px;
-    z-index: 1;
-  }
+  //.pole {
+  //  position: absolute;
+  //  width: 15px;
+  //  background: #868A8B url('/2022images/pole.png') repeat-y;
+  //  background-size: 100%;
+  //  top: -5px;
+  //  bottom: -500px;
+  //  left: 68px;
+  //  z-index: 1;
+  //}
 }
 
 
@@ -685,12 +687,12 @@ $card-width: 150px;
 
 .inventory-container {
   margin: 0;
-  padding: 12px 24px;
+  padding: 12px 12px;
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax($card-width, 1fr));
-  row-gap: 10px;
-  column-gap: 10px;
+  row-gap: 5px;
+  column-gap: 5px;
 }
 
 .inventory-buttons {
@@ -705,18 +707,26 @@ $card-width: 150px;
 
 .inventory-item img {
   max-width: 100%;
-  height: 80px;
+  width: 50px;
+  height: 50px;
+  background: rgba(110,79,37,0.6);
+  border-radius: 10px;
+  flex-shrink: 0;
+  margin-inline-end: 5px;
+  padding: 5px;
+  display: block;
+  object-fit: contain;
 }
 
 .inventory-item {
-  font-family: "Highway Gothic", sans-serif;
-  width: $card-width;
-  min-height: calc($card-width * 7 / 5);
+  font-family: "Garrick", sans-serif;
+  //width: $card-width;
+  //min-height: calc($card-width * 7 / 5);
   z-index: 2;
 
-  border: 2px solid black;
+  //border: 2px solid #42302E;
 
-  border-radius: 20px;
+  //border-radius: 20px;
   //margin: 10px;
   //padding-top: 10px;
   //padding: 10px 10px 0 10px;
@@ -729,44 +739,69 @@ $card-width: 150px;
   align-items: stretch;
   justify-content: stretch;
   //flex-wrap: wrap;
-  text-align: center;
+  //text-align: center;
   //flex-direction: column;
   //font-weight: bold;
   //border: 2px dotted black;
 
   //background: white url('/2022images/sign.png');
-  background: #F0961F url('/2022images/orangebg.png') center top;
-  padding: 5px;
+  //background: #F0961F url('/2022images/orangebg.png') center top;
+  background: #D6BD97 url('/2023images/parchment.jpg') center top;
+  padding: 5px 15px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  flex-basis: 100%;
+
+  -webkit-mask-image: url(/2023images/mask.png);
+  -webkit-mask-size: 100% 100%;
 }
 
 
+#rewards .item-inner-wrapper {
+  flex-direction: column;
+  //background-image: url('/2022images/orangebg-no-rivet.png');
+}
+
 #rewards .inventory-item {
-  background-image: url('/2022images/orangebg-no-rivet.png');
+  padding: 10px;
+  min-height: 150px;
+
+  img {
+    margin-bottom: 5px;
+  }
+
+  .item-name {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .item-inner-wrapper {
-  border: 4px solid #EB1C26;
-  border-radius: 15px;
+  //border: 4px solid #EB1C26;
+  //border-radius: 15px;
 
-  padding: 15px 5px 5px 5px;
+  //padding: 15px 5px 5px 5px;
 
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;
   align-items: center;
-  justify-content: start;
+  //justify-content: start;
   width: 100%;
 }
 
 .item-name {
   //font-family: "Jet Set", sans-serif;
-  margin-top: 10px;
-  margin-bottom: 3px;
+  //margin-top: 10px;
+  //margin-bottom: 3px;
   padding-left: 3px;
   padding-right: 3px;
-  text-align: center;
+  //text-align: center;
   //font-size: 18px;
   width: 100%;
+
+  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black;
+  color: white;
 }
 
 .item-quantity {
@@ -795,12 +830,14 @@ $card-width: 150px;
 }
 
 .item-button-container {
-  margin-top: auto;
+  //margin-top: auto;
   display: flex;
-  width: 100%;
+  width: 125px;
   justify-content: center;
-  margin-bottom: 5px;
+  align-items: center;
+  //margin-bottom: 5px;
   column-gap: 3px;
+  flex-shrink: 0;
 
   button {
     min-width: 0;
@@ -808,10 +845,15 @@ $card-width: 150px;
 }
 
 .item-button {
-  border-radius: 35px;
+  border-radius: 10px;
   height: 35px;
   min-width: 35px;
-  box-shadow: 1px 1px #EB1C26;
+
+  border: 2px solid #160B09;
+  background: #42302E;
+  color: white;
+  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black;
+  box-shadow: inset 0 0 0 2px #7A5C49;
 
 //  width: 100%;
 //  border-top: 1px dashed #c2c5b5;
@@ -831,13 +873,13 @@ $card-width: 150px;
 //  }
 //
   &:hover {
-    border-color: #EB1C26;
-    color: #EB1C26;
+    background-color: #7A5C49;
   }
 //
   &.active {
-    background: #EB1C26;
-    color: white;
+    background: #F8E98E;
+    color: black;
+    text-shadow: none;
   }
 }
 
@@ -1296,7 +1338,7 @@ body {
   cursor: pointer;
   height: 49px;
   position: relative;
-  
+
   div {
     display: inline;
   }

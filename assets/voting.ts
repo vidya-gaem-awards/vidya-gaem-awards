@@ -214,20 +214,6 @@ declare global {
     }
 }
 
-interface WindowsWindow {
-    id: string,
-    open: boolean,
-    minimized: boolean,
-    draggable: boolean,
-}
-
-const windows: Record<string, WindowsWindow> = {
-    'window-vga': {id: 'window-vga', open: true, minimized: false, draggable: false},
-    'window-downloads': {id: 'window-downloads', open: true, minimized: false, draggable: false},
-    'game-skyrim': {id: 'game-skyrim', open: false, minimized: false, draggable: true},
-    'game-rigged': {id: 'game-rigged', open: false, minimized: false, draggable: true},
-}
-
 jQuery(function () {
     // If there's no award currently selected, none of this code is relevant.
     if (!currentAward) {
@@ -235,20 +221,6 @@ jQuery(function () {
     }
 
     canPlayAudio = new Audio().canPlayType('audio/ogg') !== '';
-
-    toddDialog = $('#todd');
-    toddDialog.modal({
-        show: false
-    });
-    toddDialog.find('.close').click(function () {
-        toddDialog.modal('hide');
-    });
-
-    // Rev up those Todds
-    (new Image()).src = '/img/todd1.jpg';
-    (new Image()).src = '/img/todd2.jpg';
-    (new Image()).src = '/img/todd3.jpg';
-    (new Image()).src = '/img/todd4.jpg';
 
     // Lootbox
     if (!localStorage.getItem('inventory')) {
@@ -280,7 +252,7 @@ jQuery(function () {
         // }
 
         localStorage.setItem('inventory', JSON.stringify(inventory));
-        $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' shekels');
+        $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' gold');
 
         if (inventory['shekels'] >= lootboxCost) {
             $('#buy-lootbox').removeAttr('disabled');
@@ -422,12 +394,6 @@ jQuery(function () {
 
             return;
         }
-
-        // if (id === 'half-life-three') {
-        //     $(this).text('NEVER EVER').attr('disabled', 'disabled');
-        //     $('#reward-image-half-life-three').attr('src', '/img/reward-half-life-three.png');
-        //     $(this).parent().find('.item-quantity').text('Chance: 0');
-        // }
 
         if (reward.css && button === 'css') {
             if (alreadyActive) {
@@ -589,7 +555,7 @@ jQuery(function () {
         if (lastVotes.length === 0) {
             showRewardsOnSubmit = true;
         }
-        alert('Transaction successful! You will now receive files when submitting votes.');
+        alert('Your drops have been restored.');
     });
 
     var lootboxSound = new Audio("/ogg/open-box.ogg");
@@ -628,8 +594,8 @@ jQuery(function () {
         } else if (reward.type === 'shekels') {
             var shekelCount = reward.amount;
             inventory['shekels'] += shekelCount;
-            image.attr('src', '/img/dosh.png');
-            title.text(shekelCount + " shekels");
+            image.attr('src', '/2023images/gold-bars.png');
+            title.text(shekelCount + " gold");
             $tier.show();
             $tier.text('Special');
             $tier.css('color', 'white');
@@ -694,10 +660,21 @@ jQuery(function () {
         $('.lootbox-title').text('');
         $('.lootbox-tier').hide();
 
-        var lootboxes = ['vga', 'pubg', 'ow', 'tf2', 'csgo', 'apex', 'fifa'];
+        var lootboxes = [
+          'chimera.png',
+          'drakee.png',
+          'droll.png',
+          'golem.png',
+          'knight.png',
+          'scorpion.png',
+          'skeleton.png',
+          'slime.png',
+          'spectre.png',
+          'warlock.png',
+        ];
 
         $('.lootbox-image').each(function () {
-            $(this).attr('src', '/img/lootbox-' + lootboxes[getRandomInt(0, lootboxes.length)] + '.png');
+            $(this).attr('src', '/2023images/lootbox_sprites/' + lootboxes[getRandomInt(0, lootboxes.length)]);
         });
 
         if (getRandomInt(1,7) === 6) {
