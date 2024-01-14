@@ -16,10 +16,7 @@ class RpgCharacter
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $cookie_id = null;
-
-    #[ORM\ManyToOne]
-    private ?User $user = null;
+    private string $user;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -32,28 +29,15 @@ class RpgCharacter
         return $this->id;
     }
 
-    public function getCookieId(): ?string
-    {
-        return $this->cookie_id;
-    }
-
-    public function setCookieId(string $cookie_id): static
-    {
-        $this->cookie_id = $cookie_id;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
+    public function getUser(): string
     {
         return $this->user;
     }
 
-    public function setUser(?BaseUser $user = null): static
+    public function setUser(string $user): static
     {
-        if ($user->isLoggedIn()) {
-            $this->user = $user;
-        }
+        $this->user = $user;
+
         return $this;
     }
 

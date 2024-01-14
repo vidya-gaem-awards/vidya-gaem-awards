@@ -49,8 +49,7 @@ class RpgController extends AbstractController
         $character
             ->setName($name)
             ->setTimestamp(new \DateTimeImmutable())
-            ->setUser($user)
-            ->setCookieID($user->getRandomID());
+            ->setUser($user->getFuzzyID());
 
         $em->persist($character);
 
