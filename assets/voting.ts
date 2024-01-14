@@ -77,6 +77,63 @@ if (localStorage.getItem('dragCounter')) {
     }
 }
 
+if (votingEnabled && !localStorage.getItem('characterName')) {
+    $('#character').modal('show');
+}
+
+function updateCharacterNameDisplay() {
+  let characterName = localStorage.getItem('characterName');
+  if (!characterName) {
+    characterName = 'Anon';
+  }
+  $('#containerInventory .title-text').text(characterName + "'s Inventory");
+}
+
+updateCharacterNameDisplay();
+
+$('#character-name-input')
+  .on('keyup', handleCharacterNameChange)
+  .on('change', handleCharacterNameChange);
+
+function handleCharacterNameChange(event: JQuery.ChangeEvent|JQuery.KeyUpEvent) {
+  const name = event.target.value.trim();
+  const submit = $('#character-form').find('[type=submit]');
+
+  let canSubmit = true;
+
+  if (name.length === 0) {
+    canSubmit = false;
+  }
+
+  if (name.toLowerCase() === 'changed later') {
+    $(event.target).addClass('is-invalid');
+    canSubmit = false;
+  } else if (name.toLowerCase() === 'wisely') {
+    $(event.target).addClass('is-valid');
+  } else {
+    $(event.target).removeClass('is-invalid');
+    $(event.target).removeClass('is-valid');
+  }
+
+  if (canSubmit) {
+    submit.removeAttr('disabled');
+  } else {
+    submit.attr('disabled', 'disabled');
+  }
+
+  $('#character-name-count').text(name.length + '/20');
+}
+
+$('#character-form').on('submit', (event: JQuery.Event) => {
+  event.preventDefault();
+  const name = $('#character-name-input').val();
+  localStorage.setItem('characterName', name);
+  updateCharacterNameDisplay();
+  $('#character').modal('hide');
+
+  $.post('/rpg/name', { name });
+});
+
 function incrementDragCounter() {
     dragCounter++;
 
@@ -563,7 +620,7 @@ jQuery(function () {
     var showNewLoot = function showNewLoot(i) {
         var lootbox = $($('#rewards .lootbox').get(i));
         lootbox.removeClass('animate').addClass('animate-back');
-        lootbox.find('.lootbox-image').remove();
+        lootbox.find('.lootbox-image').hide();
 
         const $item = lootbox.find('.inventory-item');
         $item.show();
@@ -659,6 +716,7 @@ jQuery(function () {
         $('.lootbox').find('.inventory-item').hide();
         $('.lootbox-title').text('');
         $('.lootbox-tier').hide();
+        $('.lootbox-image').show();
 
         var lootboxes = [
           'chimera.png',

@@ -488,5 +488,31 @@
     </div>
   {% endif %}
 
+  <div id="character" class="modal fade themed-modal themed-text" role="dialog" data-bs-backdrop="static">
+    <form id="character-form">
+      <div class="modal-dialog" role="document">
+        <div class="modal-title-container">
+          An ancient evil has awoken
+        </div>
+        <div class="modal-content">
+          <div class="modal-body" style="text-align: center;">
+            <div class="welcome-message">
+              Welcome to the Vidya Gaem Awards.<br>Please choose a name for your character.<br>
+              Choose wisely, as it can't be changed later.
+            </div>
+            <div class="d-flex justify-content-center position-relative">
+              <input class="form-control form-control-lg" id="character-name-input" type="text" maxlength="20" placeholder="Character name" name="character-name" required>
+              <div class="form-text" id="character-name-count">0/20</div>
+            </div>
+          </div>
+
+          <div class="modal-footer" style="text-align: center;">
+            <button type="submit" class="btn btn-lootbox btn-lg" disabled>Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
   <div class="bottom-trim"></div>
 {% endblock %}

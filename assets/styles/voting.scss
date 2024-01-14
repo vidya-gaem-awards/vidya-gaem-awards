@@ -518,7 +518,7 @@ header {
   transition: 500ms ease-in-out;
 }
 
-#rewards {
+#rewards, .themed-modal {
   .modal-content {
     min-width: 200px;
     background: url('/2023images/battle-bg.png');
@@ -529,7 +529,8 @@ header {
   }
 
   .modal-title-container {
-    font-family: "NES Pixel";
+    font-family: "NES Pixel", monospace;
+    text-transform: uppercase;
     background: black;
     color: white;
     width: fit-content;
@@ -550,14 +551,6 @@ header {
     border-top: none;
     padding-top: 0;
     display: block;
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-  }
-
-  .modal-body {
-    position: absolute;
-    bottom: 28%;
     width: 100%;
   }
 
@@ -565,6 +558,27 @@ header {
     padding-top: calc(79 / 110  * 100%);
   }
 }
+
+#rewards {
+  .modal-body {
+    position: absolute;
+    bottom: 28%;
+    width: 100%;
+  }
+
+  .modal-footer {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+.themed-modal {
+  .modal-content {
+    background: #DDCBA9 url('/2023images/background.png');
+  }
+}
+
+
 
 #no-music {
 
@@ -1990,4 +2004,46 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 input[type=range]::-webkit-slider-thumb {
   all: revert;
+}
+
+.themed-text {
+  font-family: "Garrick", sans-serif;
+  color: white;
+  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black;
+}
+
+#character {
+  .modal-content {
+    aspect-ratio: 1/0.71;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .welcome-message {
+    font-size: 24px;
+  }
+
+  .form-control {
+    border-width: 2px;
+  }
+
+  .form-control:not(.is-invalid):not(.is-valid) {
+    border-color: #160B09;
+  }
+
+  .form-text {
+    color: white;
+  }
+
+  #character-name-count {
+    position: absolute;
+    right: 0;
+    bottom: -20px;
+  }
 }
