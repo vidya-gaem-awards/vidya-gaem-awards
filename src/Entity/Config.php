@@ -25,7 +25,7 @@ class Config
 
     #[ORM\Column(name: 'id', type: 'string', length: 30)]
     #[ORM\Id]
-    private int $id = 1;
+    private string $id = '1';
 
     #[ORM\Column(name: 'voting_start', type: 'datetime', nullable: true)]
     private ?DateTime $votingStart;
@@ -242,7 +242,7 @@ class Config
         return $this;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
