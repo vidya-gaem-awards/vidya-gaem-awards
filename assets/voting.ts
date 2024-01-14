@@ -4,7 +4,8 @@ require('jquery-ui/ui/widgets/draggable');
 require('jquery-ui/ui/widgets/droppable');
 require('bootstrap');
 import Sortable from "sortablejs";
-import Webamp from "webamp";
+import './styles/captchas.scss';
+import Captcha, {CaptchaProps, CaptchaUserSettings, renderCaptcha} from "./components/Captcha";
 
 declare var votingEnabled: boolean;
 declare var lastVotes: any;
@@ -15,13 +16,17 @@ declare const lootboxSettings: any;
 declare const lootboxTiers: any;
 declare const rewards: any;
 declare const knownItems: any;
+declare const captchaSettings: CaptchaProps;
 
+let previousLockExists = lastVotes.length > 1;
 let dragCounter: any;
 let toddDialog: any;
 let showRewardsOnSubmit: boolean = false;
 let music: HTMLAudioElement;
 let canPlayAudio: boolean;
 let usingWinamp: boolean = false;
+let captchaPendingCallback: (() => void | undefined);
+let captchaShownThisLoad: boolean = false;
 
 for (const item of knownItems) {
     rewards[item.shortName] = item;
@@ -80,6 +85,16 @@ if (localStorage.getItem('dragCounter')) {
 if (votingEnabled && !localStorage.getItem('characterName')) {
     $('#character').modal('show');
 }
+
+const captchaUserSettings: CaptchaUserSettings = {
+  showTitles: localStorage.getItem('captcha-showTitles') === 'true',
+  maxThreeFailures: localStorage.getItem('captcha-maxThreeFailures') === 'true',
+  neverShowAgain: localStorage.getItem('captcha-neverShowAgain') === 'true',
+  allowPartialPass: localStorage.getItem('captcha-allowPartialPass') === 'true',
+  completions: localStorage.getItem('captcha-completions') ? JSON.parse(localStorage.getItem('captcha-completions')) : 0,
+};
+
+let showCaptcha = votingEnabled && !previousLockExists && !captchaUserSettings.neverShowAgain;
 
 function updateCharacterNameDisplay() {
   let characterName = localStorage.getItem('characterName');
@@ -268,7 +283,34 @@ let webamp;
 declare global {
     interface Window {
         cheat(code: string): void;
+        captchaReact: Captcha;
     }
+}
+
+function onCaptchaCompletion(score: number|null) {
+  if (captchaPendingCallback) {
+    captchaPendingCallback();
+    captchaPendingCallback = undefined;
+  }
+
+  if (score !== null) {
+    const completions = localStorage.getItem('captcha-completions');
+    if (completions) {
+      localStorage.setItem('captcha-completions', JSON.stringify(JSON.parse(completions) + 1));
+    } else {
+      localStorage.setItem('captcha-completions', JSON.stringify(1));
+    }
+
+    let scores: any = localStorage.getItem('captcha-scores');
+    if (scores) {
+      scores = JSON.parse(scores);
+    } else {
+      scores = [];
+    }
+
+    scores.push(score);
+    localStorage.setItem('captcha-scores', JSON.stringify(scores));
+  }
 }
 
 jQuery(function () {
@@ -615,6 +657,10 @@ jQuery(function () {
         alert('Your drops have been restored.');
     });
 
+    $('#viewBonusCaptcha').on('click', () => {
+      window.captchaReact.show(true);
+    })
+
     var lootboxSound = new Audio("/ogg/open-box.ogg");
 
     var showNewLoot = function showNewLoot(i) {
@@ -766,7 +812,6 @@ jQuery(function () {
         });
     }
 
-    var previousLockExists = lastVotes.length > 1;
     var votesChanged = false;
     var nomineeCount = $('.voteGroup').length;
 
@@ -1187,7 +1232,7 @@ jQuery(function () {
     });
 
     // Submit Votes
-    submitButton.click(function () {
+    submitButton.on('click', function () {
         if (!votesChanged) {
             return;
         }
@@ -1217,13 +1262,28 @@ jQuery(function () {
         lastVotes = preferences;
 
         $.post(postURL, {preferences: preferences}, function (data) {
-            if (data.error) {
-                alert("An error occurred:\n" + data.error + "\nYour vote has not been saved.");
-            } else {
-                $('#' + currentAward).addClass('complete');
-            }
+          if (data.error) {
+            alert("An error occurred:\n" + data.error + "\nYour vote has not been saved.");
+          } else {
+            $('#' + currentAward).addClass('complete');
+          }
         }, 'json');
 
-        openLootboxRewards(false);
+        if (showCaptcha && !captchaShownThisLoad) {
+          window.captchaReact.show();
+          captchaShownThisLoad = true;
+
+          captchaPendingCallback = () => {
+            openLootboxRewards(false);
+          };
+        } else {
+          openLootboxRewards(false);
+        }
+    });
+
+    renderCaptcha({
+      ...captchaSettings,
+      onCompletion: onCaptchaCompletion,
+      userSettings: captchaUserSettings,
     });
 });

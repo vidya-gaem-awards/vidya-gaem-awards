@@ -4,17 +4,22 @@ namespace App\Controller;
 
 use App\Entity\Action;
 use App\Entity\Advertisement;
+use App\Entity\BaseUser;
 use App\Entity\CaptchaGame;
+use App\Entity\CaptchaResponse;
 use App\Entity\TableHistory;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\FileService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use ZipArchive;
 
 class CaptchaController extends AbstractController
@@ -207,5 +212,47 @@ class CaptchaController extends AbstractController
 
         $this->addFlash('success', "{$processedFiles} file" . ($processedFiles === 1 ? '' : 's') . ' succesfully processed.');
         return $this->redirectToRoute('captchaManager');
+    }
+
+    public function resultAction(
+        ConfigService $configService,
+        AuthorizationCheckerInterface $authChecker,
+        EntityManagerInterface $em,
+        AuditService $auditService,
+        UserInterface $user,
+        Request $request,
+    ): JsonResponse {
+        if ($configService->isReadOnly()) {
+            return $this->json(['error' => 'Voting has closed.']);
+        }
+
+        if (!$authChecker->isGranted('ROLE_VOTING_VIEW')) {
+            if ($configService->getConfig()->isVotingNotYetOpen()) {
+                return $this->json(['error' => 'Voting hasn\'t started yet.']);
+            } elseif ($configService->getConfig()->hasVotingClosed()) {
+                return $this->json(['error' => 'Voting has closed.']);
+            }
+        }
+
+        /** @var BaseUser $user */
+
+        $response = new CaptchaResponse();
+        $response
+            ->setTimestamp(new DateTimeImmutable())
+            ->setUser($user->getFuzzyID())
+            ->setFirst($request->request->get('row'))
+            ->setSecond($request->request->get('column'))
+            ->setScore($request->request->get('score'))
+            ->setGames($request->request->all('games'))
+            ->setSelected($request->request->all('selected'));
+
+        $auditService->add(
+            new Action('captcha-game-result'),
+        );
+
+        $em->persist($response);
+        $em->flush();
+
+        return $this->json(['success' => true]);
     }
 }

@@ -672,6 +672,7 @@ $card-width: 350px;
       top: -20px;
       position: relative;
       font-family: 'NES Pixel', sans-serif;
+      text-align: center;
     }
   }
 }
@@ -767,6 +768,10 @@ $card-width: 350px;
 
   -webkit-mask-image: url(/2023images/mask.png);
   -webkit-mask-size: 100% 100%;
+}
+
+#shekelCount .inventory-item {
+  background-image: url(/2022images/orangebg-no-rivet.png);
 }
 
 

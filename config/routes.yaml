@@ -493,6 +493,11 @@ captchaBulkImageUploaderSubmit:
     methods:    [POST]
     controller: App\Controller\CaptchaController::bulkImageSubmitAction
 
+captchaResult:
+    path:       /captcha/result
+    methods:    [POST]
+    controller: App\Controller\CaptchaController::resultAction
+
 rpgName:
     path:       /rpg/name
     methods:    [POST]
