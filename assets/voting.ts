@@ -755,6 +755,10 @@ jQuery(function () {
     }
 
     $('#unboxButton').click(function () {
+        if (lootboxRevealAudio) {
+            lootboxRevealAudio.pause();
+            lootboxRevealAudio = null;
+        }
         lootboxSound.volume = 0.25;
         lootboxSound.play();
 
@@ -786,6 +790,8 @@ jQuery(function () {
     });
 
     var pendingItems = [];
+
+    let lootboxRevealAudio: HTMLAudioElement;
 
     function openLootboxRewards(force) {
         if (!force && !showRewardsOnSubmit) {
@@ -825,9 +831,9 @@ jQuery(function () {
 
         $('#rewards').modal('show');
 
-        var audio = new Audio('/ogg/tf2.ogg');
-        audio.volume = 0.10;
-        audio.play();
+        lootboxRevealAudio = new Audio('/ogg/tf2.ogg');
+        lootboxRevealAudio.volume = 0.10;
+        lootboxRevealAudio.play();
 
         showRewardsOnSubmit = false;
 
