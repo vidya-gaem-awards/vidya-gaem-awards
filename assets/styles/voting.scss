@@ -1680,6 +1680,10 @@ a:hover {
 .background-decorations {
   z-index: -1;
 
+  @media (max-width: 768px) {
+    transform: scale(0.75);
+  }
+
   .decoration {
     position: absolute;
     opacity: 0.8;

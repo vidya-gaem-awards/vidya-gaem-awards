@@ -432,11 +432,17 @@ jQuery(function () {
 
     function tryToPlayMusicAutomatically() {
         playMusic(localStorage.getItem('activeMusic'), true).catch(() => {
-            let clickHandler = () => {
+            let clickHandler = (event: JQuery.ClickEvent) => {
+                $(document).off('click', clickHandler);
+
+                const element = $(event.target);
+                if (element.hasClass('item-music') || element.parents('.item-music').length > 0) {
+                    return;
+                }
+
                 if (localStorage.getItem('activeMusic')) {
                     playMusic(localStorage.getItem('activeMusic'), true);
                 }
-                $(document).off('click', clickHandler);
             }
 
             $(document).on('click', clickHandler);

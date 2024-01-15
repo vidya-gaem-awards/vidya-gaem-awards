@@ -192,7 +192,7 @@ class VotingController extends AbstractController
                 $direction = $i % 2 === 0 ? 'left' : 'right';
                 $angle = random_int(-5, 5);
                 $x = random_int(-30, 0);
-                $y = 300 + floor($i / 2) * 800 + random_int(-200, 200);
+                $y = 300 + floor($i / 2) * 600 + random_int(-200, 200);
 
                 $decorations[] = [
                     'decoration' => $decoration,
