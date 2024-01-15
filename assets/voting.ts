@@ -95,7 +95,7 @@ const captchaUserSettings: CaptchaUserSettings = {
   completions: localStorage.getItem('captcha-completions') ? JSON.parse(localStorage.getItem('captcha-completions')) : 0,
 };
 
-let showCaptcha = votingEnabled && !previousLockExists && !captchaUserSettings.neverShowAgain;
+let showCaptcha = votingEnabled && !previousLockExists && !captchaUserSettings.neverShowAgain && lootboxSettings.captchaLimit > captchaUserSettings.completions;
 
 function updateCharacterNameDisplay() {
   let characterName = localStorage.getItem('characterName');

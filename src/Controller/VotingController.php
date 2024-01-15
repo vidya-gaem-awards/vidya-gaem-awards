@@ -237,7 +237,8 @@ class VotingController extends AbstractController
 //            array_fill(0, count($itemChoiceArray) * $shekelChance, 'shekels'));
 
         $lootboxSettings = [
-            'cost' => $configService->get('lootbox-cost')
+            'cost' => $configService->get('lootbox-cost'),
+            'captchaLimit' => $configService->get('captcha-limit'),
         ];
 
         $lootboxTiers = $em->createQueryBuilder()

@@ -357,7 +357,8 @@ class LootboxController extends AbstractController
     public function settings(ConfigService $configService): Response
     {
         $settings = [
-            'cost' => $configService->get('lootbox-cost', '')
+            'cost' => $configService->get('lootbox-cost', ''),
+            'captchaLimit' => $configService->get('captcha-limit', ''),
         ];
 
         return $this->render('lootboxSettings.html.twig', [
@@ -374,6 +375,7 @@ class LootboxController extends AbstractController
 
         $post = $request->request;
         $configService->set('lootbox-cost', $post->getInt('cost'));
+        $configService->set('captcha-limit', $post->getInt('captcha-limit'));
         $em->flush();
 
         $auditService->add(

@@ -19,6 +19,17 @@
           <span class="input-group-text">shekels</span>
         </div>
       </div>
+      <div class="form-group">
+        <label for="captcha-limit">Automatic CAPTCHA limit</label>
+
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" step="1" min="0" id="captcha-limit" name="captcha-limit" required value="{{ settings.captchaLimit | e('html_attr') }}">
+          <span class="input-group-text">completions</span>
+          <div class="form-text">The maximum number of times that a CAPTCHA will be shown to a user after submitting votes.</div>
+          <div class="form-text">Set this to 0 to disable automatic CAPTCHAs completely.</div>
+          <div class="form-text">Does not affect manually triggered CAPTCHAs.</div>
+        </div>
+      </div>
       <button type="submit" class="btn btn-primary w-100">Save Changes</button>
     </form>
   </div>
