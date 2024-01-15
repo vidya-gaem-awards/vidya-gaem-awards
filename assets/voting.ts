@@ -28,6 +28,7 @@ let canPlayAudio: boolean;
 let usingWinamp: boolean = false;
 let captchaPendingCallback: (() => void | undefined);
 let captchaShownThisLoad: boolean = false;
+let inventory;
 
 for (const item of knownItems) {
     rewards[item.shortName] = item;
@@ -73,20 +74,6 @@ onDumbShit(function () {
     $('#cheat-code').show();
 });
 
-if (localStorage.getItem('dragCounter')) {
-    dragCounter = localStorage.getItem('dragCounter');
-    if (isNaN(dragCounter)) {
-        localStorage.setItem('dragCounter', JSON.stringify(0));
-        dragCounter = 0;
-    } else {
-        dragCounter = JSON.parse(dragCounter);
-    }
-}
-
-if (votingEnabled && !localStorage.getItem('characterName')) {
-    $('#character').modal('show');
-}
-
 const captchaUserSettings: CaptchaUserSettings = {
   showTitles: localStorage.getItem('captcha-showTitles') === 'true',
   maxThreeFailures: localStorage.getItem('captcha-maxThreeFailures') === 'true',
@@ -104,12 +91,6 @@ function updateCharacterNameDisplay() {
   }
   $('#containerInventory .title-text').text(characterName + "'s Inventory");
 }
-
-updateCharacterNameDisplay();
-
-$('#character-name-input')
-  .on('keyup', handleCharacterNameChange)
-  .on('change', handleCharacterNameChange);
 
 function handleCharacterNameChange(event: JQuery.ChangeEvent|JQuery.KeyUpEvent) {
   const name = event.target.value.trim();
@@ -136,67 +117,6 @@ function handleCharacterNameChange(event: JQuery.ChangeEvent|JQuery.KeyUpEvent) 
   $('#character-name-count').text(name.length + '/20');
 }
 
-$('#character-form').on('submit', (event: JQuery.Event) => {
-  event.preventDefault();
-  let name = $('#character-name-input').val();
-  if (name.length === 0) {
-    name = 'Anonymous';
-  }
-
-  localStorage.setItem('characterName', name);
-  updateCharacterNameDisplay();
-  $('#character').modal('hide');
-
-  $.post('/rpg/name', { name });
-});
-
-function incrementDragCounter() {
-    dragCounter++;
-
-    localStorage.setItem('dragCounter', JSON.stringify(dragCounter));
-
-    if (dragCounter === 2) {
-        // showTodd(1);
-    } else if (dragCounter === 5) {
-        // showTodd(2);
-    } else if (dragCounter === 10) {
-        // showTodd(3);
-    } else if (dragCounter === 20) {
-        // showTodd(4);
-    }
-}
-
-function showTodd(toddCounter) {
-    window.navigator.vibrate(toddCounter * 500);
-
-    var text = [
-        'Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail.',
-        'What are doing, Anon? Buy my game.',
-        '<strong>JUST FUCKING BUY IT!</strong>',
-        '<em><strong>IT\'S NOT TOO LATE. PURCHASE CREATION CLUB CREDITS AND YOU WILL BE SPARED.</strong></em>'
-    ];
-
-    var prices = [
-        39.95,
-        59.95,
-        99.95,
-        299.95
-    ];
-
-    toddDialog.find('img').attr('src', '/img/todd' + toddCounter + '.jpg');
-    toddDialog.find('.theprice').text(prices[toddCounter - 1]);
-    toddDialog.find('.desc').html(text[toddCounter - 1]);
-
-    if (toddCounter === 3) {
-        toddDialog.find('.game_purchase_action').addClass('shake');
-    } else if (toddCounter === 4) {
-        toddDialog.find('.modal-content').addClass('shake');
-    }
-
-    toddDialog.modal('show');
-    return true;
-}
-
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -205,7 +125,6 @@ function getRandomInt(min, max) {
 
 function reset() {
     localStorage.removeItem('ignoreRewards');
-    localStorage.removeItem('dragCounter');
 }
 
 function resetCSS() {
@@ -224,11 +143,6 @@ function resetMusic() {
     }
     if (localStorage.getItem('activeMusic')) {
         localStorage.removeItem('activeMusic');
-    }
-
-    if (webamp) {
-        webamp.stop();
-        webamp.close();
     }
 
     $('.item-music').removeClass('active');
@@ -279,7 +193,29 @@ function shuffleTextNodes(el) {
     });
 }
 
-let webamp;
+function migrateInventory() {
+  let inventoryJson = localStorage.getItem('inventory');
+
+  if (inventoryJson) {
+    inventory = JSON.parse(inventoryJson);
+  }
+
+  if (inventory && inventory.version < 4) {
+    localStorage.clear();
+    inventory = null;
+  }
+
+  if (!inventory) {
+    inventory = {
+      'version': 4,
+      'shekels': 0,
+      'unlocks': [],
+      'unlockKeys': []
+    };
+
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+  }
+}
 
 declare global {
     interface Window {
@@ -294,37 +230,39 @@ jQuery(function () {
         return;
     }
 
+    updateCharacterNameDisplay();
+
+    $('#character-name-input')
+      .on('keyup', handleCharacterNameChange)
+      .on('change', handleCharacterNameChange);
+
+    $('#character-form').on('submit', (event: JQuery.Event) => {
+      event.preventDefault();
+      let name = $('#character-name-input').val();
+      if (name.length === 0) {
+        name = 'Anonymous';
+      }
+
+      localStorage.setItem('characterName', name);
+      updateCharacterNameDisplay();
+      $('#character').modal('hide');
+
+      $.post('/rpg/name', { name });
+    });
+
     canPlayAudio = new Audio().canPlayType('audio/ogg') !== '';
 
-    // Lootbox
-    if (!localStorage.getItem('inventory')) {
-        localStorage.setItem('inventory', JSON.stringify({
-            'version': 3,
-            'shekels': 0,
-            'unlocks': [],
-            'unlockKeys': []
-        }));
+    migrateInventory();
+
+    if (votingEnabled && !localStorage.getItem('characterName')) {
+        $('#character').modal('show');
     }
 
-    inventory = JSON.parse(localStorage.getItem('inventory'));
     var lootboxCost = lootboxSettings.cost;
 
     $('#lootboxCostText').text(lootboxCost);
 
-    var inventory;
-
     function updateInventory() {
-        // if (inventory.version === undefined) {
-        //     inventory.version = 2;
-        //     var temp = inventory.unlocks;
-        //     inventory.unlocks = {};
-        //     inventory.unlockKeys = [];
-        //     for (var i = 0; i < temp.length; i++) {
-        //         inventory.unlocks[temp[i].id] = 1;
-        //         inventory.unlockKeys.push(temp[i].id);
-        //     }
-        // }
-
         localStorage.setItem('inventory', JSON.stringify(inventory));
         $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' gold');
 
@@ -420,9 +358,6 @@ jQuery(function () {
         }
     }
 
-    // if (rewards['nothing']) {
-    //     addRewardToInventory('nothing');
-    // }
     updateInventory();
 
     $('#shekelCount').show();
@@ -483,10 +418,6 @@ jQuery(function () {
 
     if (localStorage.getItem('activeMusic') && !localStorage.getItem('muteMusic')) {
         tryToPlayMusicAutomatically();
-    } else {
-        if (webamp) {
-            webamp.close();
-        }
     }
 
     if (localStorage.getItem('activeBuddie')) {
@@ -892,7 +823,6 @@ jQuery(function () {
             $("#dragLimit").addClass("dragActive");
             $(event.item).find('.number').hide();
             // $(event.item).find('.number').show().text('Drop this nominee in your preferred position');
-            setTimeout(incrementDragCounter, 100);
         },
         onEnd: function (event) {
             $("#dragLimit").removeClass("dragActive");
@@ -929,7 +859,6 @@ jQuery(function () {
 
             updateNumbers();
             unlockVotes();
-            setTimeout(incrementDragCounter, 100);
         });
     }
 
@@ -949,7 +878,6 @@ jQuery(function () {
         revertDuration: 200,
         start: function (event, ui) {
             voteColumnBoxes.addClass("dragging");
-            setTimeout(incrementDragCounter, 100);
         },
         stop: function (event, ui) {
             voteColumnBoxes.removeClass("dragging");
