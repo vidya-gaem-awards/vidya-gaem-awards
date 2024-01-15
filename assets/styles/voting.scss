@@ -253,6 +253,8 @@ header {
     column-count: 2;
     list-style: none;
     padding-left: 10px;
+    font-size: 22px;
+    line-height: 1;
 
     //position: relative;
     //display: grid;
@@ -1050,6 +1052,7 @@ body {
   //font-size: 0.9em;
   line-height: 20px;
   padding: 3px 8px 8px 8px;
+  font-size: 22px;
 }
 
 .hoverOverlay.adjustForLink {
@@ -2043,7 +2046,11 @@ input[type=range]::-webkit-slider-thumb {
 
 #character {
   .modal-content {
-    //aspect-ratio: 1/0.71;
+    aspect-ratio: 1/0.71;
+
+    @media (max-width: 768px) {
+      aspect-ratio: unset;
+    }
   }
 
   .modal-body {
@@ -2077,6 +2084,6 @@ input[type=range]::-webkit-slider-thumb {
   #character-name-count {
     position: absolute;
     right: 0;
-    bottom: -20px;
+    bottom: -16px;
   }
 }

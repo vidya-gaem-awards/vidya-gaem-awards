@@ -17,7 +17,7 @@
   src: url('/2023images/fonts/ChronoType.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-  size-adjust: 135%;
+  /*size-adjust: 135%;*/
 }
 
 @font-face {

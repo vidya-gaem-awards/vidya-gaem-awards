@@ -23,7 +23,7 @@
   padding: 10px 15px 10px 15px;
   width: calc(100% - 0px);
   height: auto;
-  font-size: 0.8em;
+  font-size: 1.08em;
   line-height: 15px;
   color: black;
   z-index: 40;
@@ -75,13 +75,16 @@
   font-weight: normal;
   text-shadow: 1px 1px black;
   color: white;
+  font-size: 22px;
+  line-height: 1.1;
   /*font-size: 13px;*/
 }
 .nomineeSubtitle {
   /*font-family: 'Dot Matrix', sans-serif;*/
   text-align: center;
   margin-top: 0px;
-  font-size: 10px;
+  font-size: 14px;
+  line-height: 1.1;
   text-shadow: 1px 1px black;
   color: white;
 }
