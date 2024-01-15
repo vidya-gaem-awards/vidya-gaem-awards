@@ -209,6 +209,10 @@ h3 {
   font-size: 40px;
   line-height: 0.95em;
   padding: 0;
+
+  @media (max-width: 768px) {
+    font-size: 25px;
+  }
 }
 
 /* Navbar */

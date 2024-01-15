@@ -253,7 +253,7 @@ class Captcha extends React.Component<CaptchaProps, CaptchaState> {
     }
 
     return (
-      <Modal show={this.state.visible} onHide={this.hide} dialogClassName="captcha-modal">
+      <Modal show={this.state.visible} onHide={this.hide} dialogClassName="captcha-modal" fullscreen="sm-down" scrollable={true}>
         <Modal.Body>
           <div className="captcha-box"> {/* rc-imageselect */}
             <div className="rc-imageselect-payload">
@@ -266,6 +266,7 @@ class Captcha extends React.Component<CaptchaProps, CaptchaState> {
                     </div>
                   </div>
                 </div>
+                <button type="button" className="btn-close btn-close-white" aria-label="Close" onClick={this.hide}></button>
               </div>
               {
                 this.state.showHelp

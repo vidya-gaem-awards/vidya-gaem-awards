@@ -2,6 +2,12 @@
   width: 128px;
   height: 128px;
   position: relative;
+  aspect-ratio: 1/1;
+
+  @media (max-width: 768px) {
+    width: auto;
+    height: auto;
+  }
 
   &.selected .captcha-game-inner {
     transform: scale(0.8);
@@ -30,6 +36,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-size: contain;
 }
 
 .captcha-modal {
@@ -43,6 +50,10 @@
 .captcha-box {
   width: 408px;
   //height: 588px;
+
+  @media (max-width: 575.98px) {
+    width: 100%;
+  }
 
   font-family: Roboto,helvetica,arial,sans-serif;
   //color: #ffffff;
@@ -82,6 +93,13 @@
   width: 100%;
   margin-bottom: 7px;
   position: relative;
+
+  .btn-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    opacity: 1;
+  }
 }
 
 .rc-imageselect-desc-wrapper {

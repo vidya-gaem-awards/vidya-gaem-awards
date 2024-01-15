@@ -296,6 +296,10 @@ header {
   color: white;
   text-align: center;
   font-size: 40px;
+
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
 }
 
 #submitReminder {
@@ -538,9 +542,14 @@ header {
     margin-left: auto;
     margin-right: auto;
     position: relative;
+    text-align: center;
     top: 20px;
-    height: 20px;
+    min-height: 20px;
     z-index: 1;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
   }
 
   .modal-dialog {
@@ -655,13 +664,13 @@ $card-width: 350px;
   margin-right: -10px;
 
   .inventory-title-area {
-    color: white;
     text-shadow: none;
-    height: 0px;
+    //height: 0px;
     width: 100%;
-    text-transform: uppercase;
 
     .title-text {
+      color: white;
+      text-transform: uppercase;
       margin-left: auto;
       margin-right: auto;
       width: fit-content;
@@ -708,6 +717,10 @@ $card-width: 350px;
   grid-template-columns: repeat(auto-fill, minmax($card-width, 1fr));
   row-gap: 5px;
   column-gap: 5px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .inventory-buttons {
@@ -1280,7 +1293,8 @@ body {
       top: -32px;
       position: relative;
       font-family: 'NES Pixel', sans-serif;
-      height: 20px;
+      min-height: 20px;
+      text-align: center;
     }
   }
 
@@ -1346,6 +1360,10 @@ body {
   align-items: center;
   font-family: 'NES Pixel', sans-serif;
   font-size: 24px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .buttons .navigation {
@@ -1364,7 +1382,7 @@ body {
 }
 
 #btnResetVotes {
-  font-weight: bold;
+  //font-weight: bold;
 }
 
 #btnResetVotes:hover {
@@ -1378,6 +1396,10 @@ body {
 #btnLockVotes {
   color: white;
   margin-left: 80px;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
 }
 
 #btnLockVotes:hover {
@@ -1394,6 +1416,8 @@ body {
 
 .hoverArrow {
   visibility: hidden;
+  position: absolute;
+  left: -30px;
 }
 
 /* Awards List */
@@ -2019,7 +2043,7 @@ input[type=range]::-webkit-slider-thumb {
 
 #character {
   .modal-content {
-    aspect-ratio: 1/0.71;
+    //aspect-ratio: 1/0.71;
   }
 
   .modal-body {
@@ -2032,6 +2056,10 @@ input[type=range]::-webkit-slider-thumb {
 
   .welcome-message {
     font-size: 24px;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
   }
 
   .form-control {
