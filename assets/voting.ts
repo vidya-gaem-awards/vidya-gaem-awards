@@ -6,6 +6,7 @@ require('bootstrap');
 import Sortable from "sortablejs";
 import './styles/captchas.scss';
 import Captcha, {CaptchaProps, CaptchaUserSettings, renderCaptcha} from "./components/Captcha";
+import captcha from "./components/Captcha";
 
 declare var votingEnabled: boolean;
 declare var lastVotes: any;
@@ -287,32 +288,6 @@ declare global {
     }
 }
 
-function onCaptchaCompletion(score: number|null) {
-  if (captchaPendingCallback) {
-    captchaPendingCallback();
-    captchaPendingCallback = undefined;
-  }
-
-  if (score !== null) {
-    const completions = localStorage.getItem('captcha-completions');
-    if (completions) {
-      localStorage.setItem('captcha-completions', JSON.stringify(JSON.parse(completions) + 1));
-    } else {
-      localStorage.setItem('captcha-completions', JSON.stringify(1));
-    }
-
-    let scores: any = localStorage.getItem('captcha-scores');
-    if (scores) {
-      scores = JSON.parse(scores);
-    } else {
-      scores = [];
-    }
-
-    scores.push(score);
-    localStorage.setItem('captcha-scores', JSON.stringify(scores));
-  }
-}
-
 jQuery(function () {
     // If there's no award currently selected, none of this code is relevant.
     if (!currentAward) {
@@ -352,6 +327,33 @@ jQuery(function () {
 
         localStorage.setItem('inventory', JSON.stringify(inventory));
         $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' gold');
+
+        let captchaScoresJson = localStorage.getItem('captcha-scores');
+        let captchaScores: number[];
+        if (captchaScoresJson) {
+          captchaScores = JSON.parse(captchaScoresJson);
+        } else {
+          captchaScores = [];
+        }
+
+        const total = captchaScores.reduce((carry, score) => {
+          let xp = 1;
+          if (score === 1) {
+            xp += 3;
+          } else if (score === 2) {
+            xp += 5;
+          } else if (score === 3) {
+            xp += 7;
+          }
+          return carry + xp;
+        }, 0);
+
+        const totalScore = captchaScores.reduce((a, b) => a + b, 0);
+        const average = captchaScores.length > 0 ? totalScore / captchaScores.length : 0;
+
+        $('#captchaCount').toggle(captchaScores.length > 0);
+        $('#captcha-xp').text(total);
+        $('#captcha-xp-score').text(average.toFixed(2));
 
         if (inventory['shekels'] >= lootboxCost) {
             $('#buy-lootbox').removeAttr('disabled');
@@ -424,6 +426,34 @@ jQuery(function () {
     updateInventory();
 
     $('#shekelCount').show();
+
+    function onCaptchaCompletion(score: number|null) {
+        if (captchaPendingCallback) {
+            captchaPendingCallback();
+            captchaPendingCallback = undefined;
+        }
+
+        if (score !== null) {
+            const completions = localStorage.getItem('captcha-completions');
+            if (completions) {
+              localStorage.setItem('captcha-completions', JSON.stringify(JSON.parse(completions) + 1));
+            } else {
+              localStorage.setItem('captcha-completions', JSON.stringify(1));
+            }
+
+            let scores: any = localStorage.getItem('captcha-scores');
+            if (scores) {
+                scores = JSON.parse(scores);
+            } else {
+                scores = [];
+            }
+
+            scores.push(score);
+            localStorage.setItem('captcha-scores', JSON.stringify(scores));
+
+            updateInventory();
+        }
+    }
 
     if (localStorage.getItem('activeCSS')) {
         $('html').addClass('reward-' + localStorage.getItem('activeCSS'));
