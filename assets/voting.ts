@@ -99,7 +99,7 @@ let showCaptcha = votingEnabled && !previousLockExists && !captchaUserSettings.n
 function updateCharacterNameDisplay() {
   let characterName = localStorage.getItem('characterName');
   if (!characterName) {
-    characterName = 'Anon';
+    characterName = 'Anonymous';
   }
   $('#containerInventory .title-text').text(characterName + "'s Inventory");
 }
@@ -115,10 +115,6 @@ function handleCharacterNameChange(event: JQuery.ChangeEvent|JQuery.KeyUpEvent) 
   const submit = $('#character-form').find('[type=submit]');
 
   let canSubmit = true;
-
-  if (name.length === 0) {
-    canSubmit = false;
-  }
 
   if (name.toLowerCase() === 'changed later') {
     $(event.target).addClass('is-invalid');
@@ -141,7 +137,11 @@ function handleCharacterNameChange(event: JQuery.ChangeEvent|JQuery.KeyUpEvent) 
 
 $('#character-form').on('submit', (event: JQuery.Event) => {
   event.preventDefault();
-  const name = $('#character-name-input').val();
+  let name = $('#character-name-input').val();
+  if (name.length === 0) {
+    name = 'Anonymous';
+  }
+
   localStorage.setItem('characterName', name);
   updateCharacterNameDisplay();
   $('#character').modal('hide');
