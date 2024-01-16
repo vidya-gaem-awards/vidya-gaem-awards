@@ -260,7 +260,7 @@ class Captcha extends React.Component<CaptchaProps, CaptchaState> {
               <div className="rc-imageselect-instructions">
                 <div className="rc-imageselect-desc-wrapper">
                   <div className="rc-imageselect-desc-no-canonical">
-                    Select all games that are
+                    Select three games that are either
                     <div className="captcha-box-focus">
                       <strong>{this.state.row}</strong> or <strong>{this.state.column}</strong>
                     </div>
