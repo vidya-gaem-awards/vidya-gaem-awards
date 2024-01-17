@@ -27,7 +27,7 @@ class ForecastCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(self::COMMAND_NAME);
         $this->addOption('not-after', null, InputOption::VALUE_OPTIONAL);

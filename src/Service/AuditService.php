@@ -6,7 +6,7 @@ use App\Entity\BaseUser;
 use App\Entity\TableHistory;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class AuditService
 {
