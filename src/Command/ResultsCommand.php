@@ -304,7 +304,7 @@ class ResultsCommand extends Command
         $this->writeln('Updating result cache');
 
         // Remove all existing data
-        $this->em->createQueryBuilder()->delete(ResultCache::class)->getQuery()->execute();
+        $this->em->createQueryBuilder()->delete(ResultCache::class, 'rc')->getQuery()->execute();
 
         // Start by getting a list of awards and all the nominees.
         $awards = $this->em->createQueryBuilder()
