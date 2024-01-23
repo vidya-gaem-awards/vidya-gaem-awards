@@ -8,6 +8,8 @@ use App\Entity\BaseUser;
 use App\Entity\CaptchaGame;
 use App\Entity\CaptchaResponse;
 use App\Entity\TableHistory;
+use App\Repository\CaptchaGameRepository;
+use App\Repository\CaptchaResponseRepository;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\FileService;
@@ -40,6 +42,40 @@ class CaptchaController extends AbstractController
             'games' => $games,
             'rows' => CaptchaGame::ROWS,
             'columns' => CaptchaGame::COLUMNS,
+        ]);
+    }
+
+    public function statsAction(CaptchaGameRepository $repo, CaptchaResponseRepository $responseRepo)
+    {
+        $games = $repo->getGames();
+
+        $gameData = [];
+
+        foreach ($games as $game) {
+            $responses = $responseRepo
+                ->createQueryBuilder('cr')
+                ->where('cr.first = :first')
+                ->andWhere('cr.second = :second')
+                ->setParameter('first', $game->getFirst())
+                ->setParameter('second', $game->getSecond())
+                ->getQuery()
+                ->getResult();
+
+            $correct = count(array_filter($responses, fn (CaptchaResponse $response) => in_array($game->getId(), $response->getSelected())));
+
+            $gameData[] = [
+                'game' => $game,
+                'completions' => count($responses),
+                'correct' => $correct,
+                'incorrect' => count($responses) - $correct,
+                'percent' => round($correct / count($responses) * 100, 2),
+            ];
+        }
+
+        usort($gameData, fn ($a, $b) => $b['percent'] <=> $a['percent']);
+
+        return $this->render('captchaStats.html.twig', [
+            'gameData' => $gameData
         ]);
     }
 

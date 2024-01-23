@@ -1,0 +1,41 @@
+{% extends 'base/standard.html.twig' %}
+
+{% block title %}Voting Page Captcha Games{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <h1 class="page-header board-header">Voting Page Captcha Games</h1>
+
+      <p class="board-subheader">
+        Statistics
+      </p>
+
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Game</th>
+          <th>Attributes</th>
+          <th>Successes</th>
+          <th>Percentage</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in gameData %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td style="padding: 0; vertical-align: middle;">
+              <img src="{{ data.game.image.url }}" style="height: 40px;">
+              {{ data.game.title }}
+            </td>
+            <td>{{ data.game.first }} {{ data.game.second }}</td>
+            <td>{{ data.correct }} / {{ data.completions }}</td>
+            <td>{{ data.percent | number_format(2) }}%</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

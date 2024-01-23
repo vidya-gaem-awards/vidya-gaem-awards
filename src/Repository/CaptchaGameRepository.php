@@ -21,6 +21,16 @@ class CaptchaGameRepository extends ServiceEntityRepository
         parent::__construct($registry, CaptchaGame::class);
     }
 
+    public function getGames(): array
+    {
+        return $this->createQueryBuilder('cg')
+            ->indexBy('cg', 'cg.id')
+            ->orderBy('cg.first', 'ASC')
+            ->addOrderBy('cg.second', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return CaptchaGame[] Returns an array of CaptchaGame objects
 //     */
