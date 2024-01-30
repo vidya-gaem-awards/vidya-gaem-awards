@@ -55,6 +55,15 @@
           <a href="https://youtu.be/i_UG-IKNzIQ" target="_blank">Watch the tutorial <i class="fas fa-external-link-alt fa-xs"></i></a>
           <small class="text-muted">a sweep point is a sweep point, you can't say it's only half</small>
         </div>
+        {% if is_granted('ROLE_VOTING_RESULTS') %}
+          <div class="card-footer bg-dark">
+            {% if sweepPoints %}
+              <a href="{{ path('results') }}" class="text-white">Show standard list</a>
+            {% else %}
+              <a href="{{ path('results', {sweepPoints: 1}) }}" class="text-white">Show complete sweep point list</a>
+            {% endif %}
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -83,7 +92,7 @@
             <th>Rank</th>
             <th>Nominee</th>
             <th>Sweep Points</th>
-            <th>Prediction Stats</th>
+{#            <th>Prediction Stats</th>#}
           </tr>
           </thead>
           <tbody>
@@ -97,13 +106,13 @@
                   {{ result.steps['sweepPoints'][nominee] | round(0, 'floor') }}
                 {% endif %}
               </td>
-              <td style="width: 200px;">
-                {% set predictionCount = nominees[award.id][nominee].fantasyPredictions | length %}
-                {{ predictionCount }} {{ predictionCount != 1 ? 'predictions' : 'prediction' }}
-                {% if award.fantasyPredictions | length > 0 %}
-                  ({{ ((predictionCount / award.fantasyPredictions | length) * 100) | round(0) }}%)
-                {% endif %}
-              </td>
+{#              <td style="width: 200px;">#}
+{#                {% set predictionCount = nominees[award.id][nominee].fantasyPredictions | length %}#}
+{#                {{ predictionCount }} {{ predictionCount != 1 ? 'predictions' : 'prediction' }}#}
+{#                {% if award.fantasyPredictions | length > 0 %}#}
+{#                  ({{ ((predictionCount / award.fantasyPredictions | length) * 100) | round(0) }}%)#}
+{#                {% endif %}#}
+{#              </td>#}
             </tr>
           {% endfor %}
           </tbody>
