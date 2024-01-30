@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ResultCache
 {
     const OFFICIAL_FILTER = '08-4chan-or-null-with-voting-code';
+    const OFFICIAL_ALGORITHM = 'schulze';
 
     #[ORM\Column(name: 'filter', type: 'string', length: 40)]
     #[ORM\Id]
@@ -30,6 +31,10 @@ class ResultCache
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Award', inversedBy: 'resultCache')]
     private Award $award;
+
+    #[ORM\Column(length: 40)]
+    #[ORM\Id]
+    private ?string $algorithm = null;
 
 
     public function setResults(array $results): ResultCache
@@ -103,5 +108,16 @@ class ResultCache
     {
         return $this->filter;
     }
-}
 
+    public function getAlgorithm(): ?string
+    {
+        return $this->algorithm;
+    }
+
+    public function setAlgorithm(string $algorithm): static
+    {
+        $this->algorithm = $algorithm;
+
+        return $this;
+    }
+}

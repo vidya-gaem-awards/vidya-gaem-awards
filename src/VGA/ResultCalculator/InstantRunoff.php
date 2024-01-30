@@ -5,6 +5,11 @@ use App\VGA\AbstractResultCalculator;
 
 class InstantRunoff extends AbstractResultCalculator
 {
+    public function getAlgorithmId(): string
+    {
+        return 'irv';
+    }
+
     public function calculateResults(): array
     {
         $candidates = $this->candidates;
@@ -38,7 +43,7 @@ class InstantRunoff extends AbstractResultCalculator
 
             $thisRound = array("VoteCount" => $voteCount, "Ranking" => array());
             foreach ($firstPref as $candidate => $muhVotes) {
-                $thisRound["Ranking"][] = $candidates[$candidate]->getName() . ": $muhVotes (".round($muhVotes/$voteCount*100, 2)."%)";
+                $thisRound["Ranking"][] = $candidates[$candidate]->getName() . ": $muhVotes (".round($voteCount > 0 ? ($muhVotes/$voteCount*100) : 0, 2)."%)";
             }
             $thisRound["Eliminated"] = $candidates[$lowest]->getName();
 
@@ -75,13 +80,13 @@ class InstantRunoff extends AbstractResultCalculator
 
         $winner = array_keys($firstPref, max($firstPref));
         $winner = $winner[0];
-        if (count($winner) > 1) {
+        if (is_array($winner) && count($winner) > 1) {
             $warnings[] = "Warning: tie in round $currentRound";
         }
 
         $thisRound = array("VoteCount" => $voteCount, "Ranking" => array());
         foreach ($firstPref as $candidate => $votes) {
-            $thisRound["Ranking"][] = $candidates[$candidate]->getName() . ": $votes (".round($votes/$voteCount*100, 2)."%)";
+            $thisRound["Ranking"][] = $candidates[$candidate]->getName() . ": $votes (".round($voteCount > 0 ? ($votes/$voteCount*100) : 0, 2)."%)";
         }
         $steps[] = $thisRound;
 

@@ -11,6 +11,9 @@ use App\Entity\VotingCodeLog;
 use App\Service\AbuseIpdbService;
 use App\Service\ConfigService;
 use App\Service\CronJobService;
+use App\VGA\AbstractResultCalculator;
+use App\VGA\ResultCalculator\InstantRunoff;
+use App\VGA\ResultCalculator\SchulzeLegacy;
 use App\VGA\ResultCalculator\Schulze;
 use App\VGA\Timer;
 use DateTime;
@@ -71,7 +74,9 @@ class ResultsCommand extends Command
         $this
             ->setName(self::COMMAND_NAME)
             ->setDescription('Calculates and stores the results for each award.')
-            ->addOption('predictions-only', null, InputOption::VALUE_NONE);
+            ->addOption('predictions-only', null, InputOption::VALUE_NONE)
+            ->addOption('filter', null, InputOption::VALUE_REQUIRED)
+            ->addOption('award', null, InputOption::VALUE_REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -86,7 +91,10 @@ class ResultsCommand extends Command
         if (!$input->getOption('predictions-only')) {
             $this->updateIpAddresses();
             $this->updateVoteReferrers();
-            $this->updateResultCache();
+            $this->updateResultCache(
+                $input->getOption('filter'),
+                $input->getOption('award')
+            );
         }
         $this->updatePredictionScores();
 
@@ -299,8 +307,12 @@ class ResultsCommand extends Command
         $this->writeln("Step 5 (update database) complete");
     }
 
-    private function updateResultCache()
+    private function updateResultCache(?string $filter = null, ?string $awardId = null)
     {
+        if ($filter && !isset(self::FILTERS[$filter])) {
+            throw new RuntimeException("Invalid filter specified: $filter");
+        }
+
         $this->writeln('Updating result cache');
 
         // Remove all existing data
@@ -317,10 +329,19 @@ class ResultsCommand extends Command
 
         $this->writeln("Awards loaded.");
 
+        if ($filter) {
+            $filters = [$filter => self::FILTERS[$filter]];
+        } else {
+            $filters = self::FILTERS;
+        }
+
         // Now we can start grabbing votes.
-        foreach (self::FILTERS as $filterName => $condition) {
+        foreach ($filters as $filterName => $condition) {
             /** @var Award $award */
             foreach ($awards as $award) {
+                if ($awardId && $award->getId() != $awardId) {
+                    continue;
+                }
 
                 $query = $this->em->createQueryBuilder()
                     ->select('v.preferences')
@@ -341,18 +362,30 @@ class ResultsCommand extends Command
                     $nominees[$nominee->getShortName()] = $nominee;
                 }
 
-                $resultCalculator = new Schulze($nominees, $votes);
-                $result = $resultCalculator->calculateResults();
+                $calculators = [
+                    Schulze::class,
+                    SchulzeLegacy::class,
+//                    InstantRunoff::class,
+                ];
 
-                $resultObject = new ResultCache();
-                $resultObject
-                    ->setAward($award)
-                    ->setFilter($filterName)
-                    ->setResults($result)
-                    ->setSteps($resultCalculator->getSteps())
-                    ->setWarnings($resultCalculator->getWarnings())
-                    ->setVotes(count($votes));
-                $this->em->persist($resultObject);
+                /**
+                 * @var class-string<AbstractResultCalculator> $calculator
+                 */
+                foreach ($calculators as $calculator) {
+                    $resultCalculator = new $calculator($nominees, $votes);
+                    $result = $resultCalculator->calculateResults();
+
+                    $resultObject = new ResultCache();
+                    $resultObject
+                        ->setAlgorithm($resultCalculator->getAlgorithmId())
+                        ->setAward($award)
+                        ->setFilter($filterName)
+                        ->setResults($result)
+                        ->setSteps($resultCalculator->getSteps())
+                        ->setWarnings($resultCalculator->getWarnings())
+                        ->setVotes(count($votes));
+                    $this->em->persist($resultObject);
+                }
 
                 $this->writeln("[$filterName] Award complete: " . $award->getId());
             }

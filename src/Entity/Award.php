@@ -333,7 +333,8 @@ class Award implements JsonSerializable
     public function getOfficialResults(): ?ResultCache
     {
         $criteria = Criteria::create()
-            ->where(Criteria::expr()->eq('filter', ResultCache::OFFICIAL_FILTER));
+            ->where(Criteria::expr()->eq('filter', ResultCache::OFFICIAL_FILTER))
+            ->andWhere(Criteria::expr()->eq('algorithm', ResultCache::OFFICIAL_ALGORITHM));
 
         return $this->getResultCache()->matching($criteria)->first() ?: null;
     }
@@ -466,4 +467,3 @@ class Award implements JsonSerializable
         return $this;
     }
 }
-

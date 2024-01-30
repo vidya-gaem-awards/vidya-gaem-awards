@@ -35,4 +35,6 @@ abstract class AbstractResultCalculator
     {
         return $this->steps;
     }
+
+    abstract public function getAlgorithmId(): string;
 }
