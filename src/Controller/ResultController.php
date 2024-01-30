@@ -134,6 +134,9 @@ class ResultController extends AbstractController
                 $nominees[$award->getId()][$nominee->getShortName()] = $nominee;
             }
             foreach ($award->getResultCache() as $result) {
+                if ($result->getAlgorithm() !== ResultCache::OFFICIAL_ALGORITHM) {
+                    continue;
+                }
                 if (isset($filters[$result->getFilter()]) && $result->getVotes() >= 5) {
                     $results[$award->getId()][$result->getFilter()] = $result;
                 }
