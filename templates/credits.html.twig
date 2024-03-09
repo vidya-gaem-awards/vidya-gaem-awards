@@ -8,7 +8,7 @@
   <style type="text/css">
       p {
       /*    font-family: "Corbel", Arial, sans-serif;*/
-          font-size: 16px;
+          font-size: 20px;
           line-height: 1.3em;
       }
 
@@ -39,19 +39,9 @@
 
       .credits .award-name {
           font-size: 2.7em;
-          letter-spacing: 6px;
           text-transform: unset;
-          text-shadow:
-              1px -1px #CF282F,
-              2px -2px #4EA24A,
-              3px -3px #4EA24A,
-              -1px 1px #DA505F,
-              -2px 2px #F0961F,
-              -3px 3px #F0961F,
-              1px 1px #DA505F,
-              2px 2px #061019,
-              3px 3px #061019,
-              -4px 4px #061019;
+          font-family: "Olde title";
+          color: rgba(180, 80, 22, 0.8);
       }
 
       .credits {
@@ -64,8 +54,13 @@
       }
 
       .credits-section {
-          margin-bottom: 30px;
-          font-family: Jet Set,sans-serif;
+        font-family: Chronotype,sans-serif;
+        font-size: 30px;
+        color: #fff;
+        background: #000;
+        border: 20px ridge #fff;
+        border-radius: 8px;
+        padding: 5px 20px;
       }
 
       .credits-section.condensed p {
@@ -77,14 +72,13 @@
       }
 
       .name {
-          color: white;
+          color: yellow;
           font-weight: bold;
-          text-shadow: 1px 1px 2px #cf282f;
 
           /*text-decoration: none;*/
           /*font-family: "OratorStd", "Courier New", serif;*/
           /*text-shadow: #00000080 3px 3px 3px;*/
-          font-size: 20px;
+          font-size: 22px;
           line-height: 1.2em;
           padding: 0;
 
@@ -131,11 +125,38 @@
           color: lime;
       }
 
+      .top-trim {
+        position: relative;
+        mix-blend-mode: color-burn;
+        height: 0px;
+      }
+      .top-trim > div {
+        position: absolute;
+        background-image: url('/2023images/background-pattern-upper.png');
+        width: 100vw;
+        height: 106px;
+        top: 59px;
+        opacity: 0.8;
+        background-size: contain;
+      }
+
+      .bottom-trim {
+        position: relative;
+        mix-blend-mode: color-burn;
+        background-image: url('/2023images/background-pattern-lower.png');
+        width: 100vw;
+        height: 106px;
+        opacity: 0.8;
+        background-size: contain;
+        mix-blend-mode: color-burn;
+      }
+
   </style>
 {% endblock %}
 
 {% block content %}
-  <div class="center-container">
+  <div class="top-trim"><div></div></div>
+  <div class="center-container" style="padding-top: 68px;">
     <header>
       <div class="logo" href="{{ path('index') }}">
         <img src="{{ asset('2023images/logo.png') }}">
@@ -367,4 +388,5 @@
       </div>
     </div>
   </div>
+  <div class="bottom-trim"></div>
 {% endblock %}
