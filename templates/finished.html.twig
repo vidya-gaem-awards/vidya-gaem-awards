@@ -27,15 +27,16 @@
     /*  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.32), 0 0 0 1px rgba(0,0,0,0.16);*/
     /*}*/
 
-    .title {
+    .title {        
+      font-family: Chronotype, serif;
+      mix-blend-mode: color-burn;
+      text-shadow: 0 0 2px rgba(0,0,0,.3), 0 0 100px #000, 0 0 20px #fff;
       text-align: center;
-      color: white;
-      font-family: There Brat,sans-serif;
+      font-size: 60px;
     }
 
     h1 {
       font-size: 60px;
-      color: #fff;
     }
 
     h2 {
@@ -44,25 +45,15 @@
     }
 
     .title h1 {
-        font-size: 2.7em;
         line-height: 100%;
         margin-top: 10px;
-        text-shadow: 1px -1px #4ea24a, 2px -2px #4ea24a, 3px -3px #4ea24a, -1px 1px #da505f, -2px 2px #4ea24a, -3px 3px #4ea24a, 1px 1px #da505f, 2px 2px #061019, 3px 3px #061019, -4px 4px #061019;
         text-transform: uppercase;
-        font-weight: normal;
-      /*font-weight: normal;*/
-      /*font-size: 55px;*/
-      /*line-height: 1em;*/
-      /*color: #00ebdb;*/
-      /*text-shadow: 0 0 10px #00ebdb;*/
-      {#background: url('{{ asset('2016images/title_bg.png') }}') center center no-repeat;#}
-      /*margin-bottom: 0;*/
-      /*padding: 20px 0 10px 0;*/
+        color: rgba(180, 80, 22, .8);
     }
 
     .title h2 {
-        color: white;
         font-weight: normal;
+        color: rgba(180, 80, 22, .8);
     }
       /*font-family: "Annapolis", Tahoma, sans-serif;*/
       /*color: #f7d059;*/
@@ -96,14 +87,15 @@
 
     .links.bottom {
       margin-top: 15px;
-      font-size: 16px;
+      font-size: 25px;
 
-        font-family: Jet Set,sans-serif;
-        text-shadow: 1px 1px 2px #cf282f;
+      font-family: Chronotype,sans-serif;
+      mix-blend-mode: color-burn;
+      text-shadow: 0 0 5px rgba(162, 49, 5, 0.33), 0 0 100px #753d02, 0 0 20px #573007, 0 0 20px #573007;
     }
 
     .links.bottom a {
-        color: white;
+        color: #ffb72f;
     }
 
     .link {
@@ -175,10 +167,49 @@
         background: #dedede url(/2022images/bgwhite.jpg) repeat;
         border: 2px ridge #fff;
         color: #000;
+        background: #000;
+        border: 20px ridge #fff;
+        border-radius: 8px;
         margin-left: -10px;
         margin-right: -10px;
         padding: 5px;
         line-height: 0;
+        margin-top: 20px;
+        padding: 0px;
+    }
+    .embed-container .legend {
+        background-color: #000;
+        text-transform: uppercase;
+        font-family: NES Pixel, sans-serif;
+        font-size: 23px;
+        line-height: 23px;
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 20px;
+        padding: 0 20px;
+        position: relative;
+        text-align: center;
+        top: -32px;
+        width: fit-content;
+    }
+    .top-trim {
+      position: absolute;
+      background-image: url('/2023images/background-pattern-upper.png');
+      width: 100vw;
+      height: 106px;
+      opacity: 0.8;
+      background-size: contain;
+      mix-blend-mode: color-burn;
+    }
+
+    .bottom-trim {
+      position: absolute;
+      background-image: url('/2023images/background-pattern-lower.png');
+      width: 100vw;
+      height: 106px;
+      opacity: 0.8;
+      background-size: contain;
+      mix-blend-mode: color-burn;
     }
 
     .center-container {
@@ -215,12 +246,12 @@
 {% endblock %}
 
 {% block body %}
-
+<div class="top-trim"></div>
 <div class="center-container">
 
   <header>
     <div class="logo">
-      <img src="{{ asset('2022images/logo.png') }}">
+      <img src="{{ asset('2023images/logo.png') }}">
     </div>
     <div class="title-text">
       <div class="line-1 stroke-me">The 2023 Vidya Gaem Awards</div>
@@ -279,4 +310,5 @@
       </div>
     </div>
   </div>
+  <div class="bottom-trim"></div>
 {% endblock %}
