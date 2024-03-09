@@ -217,12 +217,9 @@ h3 {
 
 /* Navbar */
 .navbar {
-  background: url(/2022images/bgwhite.jpg) repeat,#dedede;
   border-bottom-color: #fff;
   border-bottom-style: ridge;
   border-bottom-width: 3px;
-  font-family: Jet Set,sans-serif;
-  text-shadow: 0 0 2px #F0961F;
 }
 
 .navbar, .navbar .navbar-inner {
