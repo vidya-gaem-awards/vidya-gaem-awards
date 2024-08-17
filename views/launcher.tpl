@@ -1,4 +1,4 @@
-<script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
 <script type="text/javascript" src="/assets/jquery/jquery.marquee.js"></script>
 
 <!-- <audio autoplay loop>
