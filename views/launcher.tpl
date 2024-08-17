@@ -1,11 +1,11 @@
-    
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>The Vidya Gaem Awards</title>
 <link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="/assets/bootstrap-2.1.0/css/bootstrap-responsive.min.css">
-<script type="text/javascript" src="https://www.modernizr.com/downloads/modernizr-2.0.6.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
 <style type="text/css">
 @font-face {
   font-family: "ArtBrush";
