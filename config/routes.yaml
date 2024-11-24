@@ -13,9 +13,9 @@ login:
 #loginCheck:
 #    path:       /login/check
 
-loginRedirect:
-    path:       /login/success
-    controller: App\Controller\AuthController::loginRedirectAction
+loginReturn:
+    path:       /login/return
+    controller: App\Controller\AuthController::loginReturnAction
 
 logout:
     path:       /logout

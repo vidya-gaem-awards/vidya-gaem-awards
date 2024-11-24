@@ -108,7 +108,7 @@ class AnonymousUser implements UserInterface
         return null;
     }
 
-    public function getUserIdentifier()
+    public function getUserIdentifier(): string
     {
         return $this->getRandomID();
     }
