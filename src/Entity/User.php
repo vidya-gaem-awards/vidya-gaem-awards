@@ -703,7 +703,7 @@ class User implements UserInterface
      *
      * @return string The username
      */
-    public function getUsername()
+    public function getUserIdentifier(): string
     {
         return $this->getSteamIdString();
     }
@@ -745,4 +745,3 @@ class User implements UserInterface
         return $this;
     }
 }
-
