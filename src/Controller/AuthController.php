@@ -1,15 +1,17 @@
 <?php
 namespace App\Controller;
 
-use Ehesp\SteamLogin\SteamLogin;
+use Knojector\SteamAuthenticationBundle\Event\PayloadValidEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use xPaw\Steam\SteamOpenID;
 
 class AuthController extends AbstractController
 {
@@ -22,18 +24,28 @@ class AuthController extends AbstractController
 
         $session->set('_security.main.target_path', $request->query->get('redirect'));
 
-        $returnLink = $router->generate(
-            'steam_authentication_callback',
-            [],
-            UrlGenerator::ABSOLUTE_URL
-        );
+        $steam = new SteamOpenID($router->generate('loginReturn', [], UrlGeneratorInterface::ABSOLUTE_URL));
 
-        $steam = new SteamLogin();
-        return new RedirectResponse($steam->url($returnLink));
+        return new RedirectResponse($steam->GetAuthUrl());
     }
 
-    public function loginRedirectAction(SessionInterface $session, UrlGeneratorInterface $urlGenerator): RedirectResponse
+    public function loginReturnAction(RouterInterface $router, EventDispatcherInterface $eventDispatcher, SessionInterface $session, UrlGeneratorInterface $urlGenerator): RedirectResponse
     {
+        $steam = new SteamOpenID($router->generate('loginReturn', [], UrlGeneratorInterface::ABSOLUTE_URL));
+
+        if ($steam->ShouldValidate()) {
+            $communityId = $steam->Validate();
+        } else {
+            return $this->redirectToRoute('loginFailure');
+        }
+
+        $eventDispatcher->dispatch(new PayloadValidEvent($communityId), PayloadValidEvent::NAME);
+
         return new RedirectResponse($session->get('_security.main.target_path') ?: $urlGenerator->generate('home'));
+    }
+
+    public function loginFailureAction(): Response
+    {
+        return $this->render('loginFailure.html.twig');
     }
 }

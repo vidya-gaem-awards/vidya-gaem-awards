@@ -2,7 +2,7 @@ name: vidya-gaem-awards
 recipe: symfony
 config:
   webroot: public
-  php: '8.1'
+  php: '8.3'
   via: apache:2.4
   database: mysql:8.0
   xdebug: true
