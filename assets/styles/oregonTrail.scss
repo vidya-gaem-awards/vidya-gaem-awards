@@ -1,0 +1,28 @@
+.oregon-trail {
+  .console-window {
+    background: black;
+    padding: 10px;
+  }
+
+  .bar {
+    background: #1AAF07;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .bar-element {
+    flex: 1 1 0;
+    text-align: center;
+
+    &:last-child {
+      text-align: right;
+    }
+
+    &:first-child {
+      text-align: left;
+    }
+  }
+}

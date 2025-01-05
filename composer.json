@@ -31,6 +31,7 @@
         "symfony/form": "6.4.*",
         "symfony/framework-bundle": "6.4.*",
         "symfony/http-client": "6.4.*",
+        "symfony/mercure-bundle": "^0.3.9",
         "symfony/monolog-bundle": "^3.3",
         "symfony/polyfill-apcu": "^1.0",
         "symfony/runtime": "6.4.*",

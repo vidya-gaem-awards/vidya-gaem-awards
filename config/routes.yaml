@@ -25,6 +25,10 @@ home:
     path:       /home
     controller: App\Controller\IndexController::indexAction
 
+mercure:
+    path:       /mercure
+    controller: App\Controller\IndexController::mercureAction
+
 promo:
     path:       /promo
     controller: App\Controller\IndexController::promoAction
@@ -505,3 +509,8 @@ rpgName:
     path:       /rpg/name
     methods:    [POST]
     controller: App\Controller\RpgController::nameAction
+
+oregonGameData:
+    path:       /oregon
+    methods:    [GET]
+    controller: App\Controller\OregonTrailController::gameDataAction

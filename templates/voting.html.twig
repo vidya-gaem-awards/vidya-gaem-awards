@@ -6,6 +6,7 @@
   {{ parent() }}
 
   {{ encore_entry_link_tags('voting') }}
+  {{ encore_entry_link_tags('oregonTrail') }}
 
   <link rel="stylesheet" href="{{ asset('css/votingNominees.css') }}">
 
@@ -21,6 +22,7 @@
 {#  <script src="https://unpkg.com/webamp"></script>#}
 
   {{ encore_entry_script_tags('voting') }}
+  {{ encore_entry_script_tags('oregonTrail') }}
 
 {#  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>#}
 {% endblock %}
@@ -45,6 +47,13 @@
       const knownItems = {{ knownItems | json_encode | raw }};
       {% if award %}
       var currentAward = "{{ award.id }}";
+      window.gameConfig = {
+          urls: {
+              mercure: {{ mercure('game')|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }},
+              gameData: {{ path('oregonGameData') | json_encode | raw }},
+          },
+      };
+  </script>
       {% else %}
       var currentAward;
       {% endif %}
@@ -377,6 +386,12 @@
 </div>
 
   {% if award %}
+  <div id="oregonTrail"></div>
+
+  <script type="application/json" id="mercure-url">
+    {{ mercure('https://example.com/books/1')|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}
+  </script>
+
   <div class="center-container">
 
     <div id="containerInventory">

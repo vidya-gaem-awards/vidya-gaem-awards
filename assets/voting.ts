@@ -171,6 +171,9 @@ function migrateInventory() {
 declare global {
     interface Window {
         cheat(code: string): void;
+        gameConfig?: {
+            urls: Record<string, string>;
+        }
     }
 }
 

@@ -7,6 +7,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 
 class IndexController extends AbstractController
 {
@@ -52,5 +54,17 @@ class IndexController extends AbstractController
             'awards' => $awards,
             'fastAnimations' => $fastAnimations,
         ]);
+    }
+
+    public function mercureAction(HubInterface $hub)
+    {
+        $update = new Update(
+            'game',
+            json_encode(['status' => 'Hello, Mercure!'])
+        );
+
+        $hub->publish($update);
+
+        return new Response('published!');
     }
 }
