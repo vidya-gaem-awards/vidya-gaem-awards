@@ -8,7 +8,7 @@
   background-color: #2C2B31;
   background-position: center;
 
-  font-family: "Young Heart", sans-serif;
+  font-family: "Western Body";
 }
 
 .flavorText {
@@ -29,8 +29,8 @@
 }
 
 .flavorText.longFlavorText{
-    font-size: 0.85em;
-    line-height: 13px;
+    font-size: 0.75em;
+    line-height: 0.9em;
 }
 
 .aNominee .flavorText {
@@ -77,15 +77,14 @@
   text-align: center;
   font-weight: normal;
   color: white;
-  font-size: 22px;
+  font-size: 1.1em;
   line-height: 1.1;
-  /*font-size: 13px;*/
 }
 .nomineeSubtitle {
   /*font-family: 'Dot Matrix', sans-serif;*/
   text-align: center;
   margin-top: 0px;
-  font-size: 14px;
+  font-size: 0.7em;
   line-height: 1.1;
   color: white;
 }

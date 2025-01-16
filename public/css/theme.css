@@ -55,6 +55,14 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Western Body';
+  src: url('/2024images/fonts/Wantedo.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 /*
 @font-face {
   font-family: 'Olde Serif';
