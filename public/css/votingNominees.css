@@ -28,7 +28,22 @@
   text-align: center;
 }
 
+.flavorText.shortFlavorText{
+    font-size: 1.1em;
+    line-height: 1em;
+}
+
+.flavorText.mediumFlavorText{
+    font-size: 0.9em;
+    line-height: 0.9em;
+}
+
 .flavorText.longFlavorText{
+    font-size: 0.82em;
+    line-height: 0.9em;
+}
+
+.flavorText.extraLongFlavorText{
     font-size: 0.75em;
     line-height: 0.9em;
 }

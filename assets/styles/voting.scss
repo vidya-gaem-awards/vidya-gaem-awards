@@ -1782,6 +1782,9 @@ a:hover {
       font-size: 7em;
       font-weight: initial;
       line-height: 1em;
+      @media (max-width: 768px) {
+          font-size: 4.8em;
+      }
     }
   }
 

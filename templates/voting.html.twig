@@ -208,7 +208,12 @@
                         </div>
                       {% endif %}
                       {% if nominee.flavorText %}
-                        <div class="flavorText {{ nominee.flavorText|length > 200 ? 'longFlavorText' }}">
+                        <div class="flavorText
+                          {{ nominee.flavorText|length < 50 ? ' shortFlavorText' }}
+                          {{ nominee.flavorText|length >= 50 and nominee.flavorText|length < 170 ? ' mediumFlavorText' }}
+                          {{ nominee.flavorText|length >= 170 and nominee.flavorText|length < 200 ? ' longFlavorText' }}
+                          {{ nominee.flavorText|length >= 200 ? ' extraLongFlavorText' }}
+                        ">
                             {{ nominee.flavorText | nl2br }}
                         </div>
                       {% endif %}
