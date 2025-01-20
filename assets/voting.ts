@@ -106,11 +106,11 @@ function reset() {
 }
 
 function resetCSS() {
-    if (localStorage.getItem('activeCSS')) {
-        $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
-        localStorageRemove('activeCSS');
+    const $html = $('html');
+    if ($html.attr('data-css')) {
+        $html.removeClass('reward-' + $html.attr('data-css'));
+        $html.removeAttr('data-css');
     }
-
     $('.item-css').removeClass('active');
 }
 
@@ -127,7 +127,7 @@ function resetMusic() {
 }
 
 function resetBuddie() {
-    $('#reward-buddie').hide();
+    $('#reward-buddie').hide().removeAttr('src');
     if (localStorage.getItem('activeBuddie')) {
         localStorageRemove('activeBuddie');
     }
@@ -288,6 +288,8 @@ jQuery(function () {
             var quantity = inventory.unlocks[reward.shortName];
             var element = $('#item-template').clone();
             element.addClass('kebab');
+            element.attr('data-id', reward.id);
+            element.attr('data-short-name', reward.shortName);
             element.find('img').attr('src', reward.image.url).attr('id', 'reward-image-' + reward.shortName);
             element.find('.item-name').text(reward.name);
             element.find('.item-quantity').text('x ' + quantity);
@@ -343,8 +345,7 @@ jQuery(function () {
     $('#shekelCount').show();
 
     if (!lootboxTest && localStorage.getItem('activeCSS')) {
-        $('html').addClass('reward-' + localStorage.getItem('activeCSS'));
-        $('.item-css[data-id=' + localStorage.getItem('activeCSS') + ']').addClass('active');
+        activateCss(localStorage.getItem('activeCSS'));
     }
 
     function tryToPlayMusicAutomatically() {
@@ -376,12 +377,7 @@ jQuery(function () {
         activateBuddie(lootboxTestShortName);
     } else if (localStorage.getItem('activeBuddie')) {
         activateBuddie(localStorage.getItem('activeBuddie'));
-        $('.item-buddie[data-id=' + localStorage.getItem('activeBuddie') + ']').addClass('active');
     }
-
-    // if (localStorage.getItem('casual')) {
-    //     $('#inventory').find('h1').text('Filthy casual detected');
-    // }
 
     $('#inventory').on('click', '.item-button', function () {
         var id = $(this).attr('data-id');
@@ -419,14 +415,8 @@ jQuery(function () {
             if (alreadyActive) {
                 resetCSS();
             } else {
-                if (localStorage.getItem('activeCSS')) {
-                    $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
-                }
+                activateCss(id);
                 localStorageSet('activeCSS', id);
-                $('html').addClass('reward-' + id);
-
-                $('.item-css').removeClass('active');
-                $('.item-css[data-id=' + id + ']').addClass('active');
             }
         }
 
@@ -436,9 +426,6 @@ jQuery(function () {
             } else {
                 activateBuddie(id);
                 localStorageSet('activeBuddie', id);
-
-                $('.item-buddie').removeClass('active');
-                $('.item-buddie[data-id=' + id + ']').addClass('active');
             }
         }
 
@@ -448,18 +435,9 @@ jQuery(function () {
             } else if (!canPlayAudio) {
                 $('#no-music').modal('show');
             } else {
-                playMusic(id, true).catch(e => {
-                    console.log(e.name);
-                });
-                if (id === 'whirr') {
-                    localStorageRemove('activeMusic');
-                } else {
-                    localStorageSet('activeMusic', id);
-                    localStorageRemove('muteMusic');
-                }
-
-                $('.item-music').removeClass('active');
-                $('.item-music[data-id=' + id + ']').addClass('active');
+                activateMusic(id);
+                localStorageSet('activeMusic', id);
+                localStorageRemove('muteMusic');
             }
         }
     });
@@ -541,9 +519,35 @@ jQuery(function () {
         return music.play();
     }
 
-    function activateBuddie(id) {
-        $('#reward-buddie').attr('src', rewards[id].image.url);
-        $('#reward-buddie').show();
+    function activateBuddie(shortName: string) {
+      const $buddie = $('#reward-buddie');
+        $buddie.attr('src', rewards[shortName].image.url);
+        $buddie.show();
+
+        $('.item-buddie').removeClass('active');
+        $('.item-buddie[data-id=' + shortName + ']').addClass('active');
+    }
+
+    function activateMusic(shortName: string) {
+        playMusic(shortName, true).then(() => {
+            $('.item-music').removeClass('active');
+            $('.item-music[data-id=' + shortName + ']').addClass('active');
+        }).catch(e => {
+            alert('Failed to play music: ' + e.name);
+            console.log('Failed to play music', e.name);
+        });
+    }
+
+    function activateCss(shortName: string) {
+        const $html = $('html');
+        if ($html.attr('data-css')) {
+            $html.removeClass('reward-' + $html.attr('data-css'));
+        }
+        $html.attr('data-css', shortName);
+        $html.addClass('reward-' + shortName);
+
+        $('.item-css').removeClass('active');
+        $('.item-css[data-id=' + shortName + ']').addClass('active');
     }
 
     $('#buy-lootbox').click(function () {
@@ -1207,4 +1211,54 @@ jQuery(function () {
 
         openLootboxRewards(false);
     });
+
+    if (lootboxTest) {
+      document.addEventListener('keydown', function (e) {
+        if (e.code === 'Escape') {
+          if (e.target instanceof HTMLElement) {
+            e.target.blur();
+            return;
+          }
+        }
+
+        if (e.target instanceof HTMLInputElement) {
+          return;
+        }
+
+        // Toggle buddie
+        if (e.code === 'KeyB') {
+          if ($('#reward-buddie').attr('src')) {
+            resetBuddie();
+          } else {
+            activateBuddie(lootboxTestShortName);
+          }
+        }
+
+        // Toggle music
+        if (e.code === 'KeyM') {
+          if (music && !music.paused) {
+            resetMusic();
+          } else if (rewards[lootboxTestShortName].music) {
+            activateMusic(lootboxTestShortName);
+          }
+          return;
+        }
+
+        // Toggle CSS
+        if (e.code === 'KeyC') {
+          if ($('html').attr('data-css')) {
+            resetCSS();
+          } else {
+            activateCss(lootboxTestShortName);
+          }
+          return;
+        }
+
+        // Reset all
+        if (e.code === 'KeyR') {
+          resetRewards();
+          return;
+        }
+      }, false);
+    }
 });
