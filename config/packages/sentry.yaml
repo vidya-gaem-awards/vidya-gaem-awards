@@ -6,6 +6,7 @@ when@prod:
                 - 'Doctrine\ORM\Exception\EntityManagerClosed'
                 - 'Symfony\Component\Debug\Exception\FatalErrorException'
                 - 'Symfony\Component\ErrorHandler\Error\FatalError'
+                - 'Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException'
                 - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
                 - 'Symfony\Component\Security\Core\Exception\AccessDeniedException'
 
