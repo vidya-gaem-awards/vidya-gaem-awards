@@ -898,7 +898,8 @@ $card-width: 350px;
   -webkit-mask-size: 100% 100%;
 }
 
-#shekelCount .inventory-item {
+#shekelCount .inventory-item,
+.inventory-highlight .inventory-item {
   background-image: url(/2022images/orangebg-no-rivet.png);
   background-size: 100% 100%;
 }
@@ -1768,7 +1769,7 @@ a:hover {
       display: inline-block;
       filter: sepia();
       mix-blend-mode: color-burn;
-      width: 80px; 
+      width: 80px;
       margin-right: 5px
     }
   }

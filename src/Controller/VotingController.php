@@ -71,6 +71,8 @@ class VotingController extends AbstractController
         $votingClosed = $config->hasVotingClosed();
         $votingOpen = $config->isVotingOpen();
 
+        $lootboxTest = null;
+
         if ($votingNotYetOpen) {
             if (!$start) {
                 $voteText = 'Voting will open soon.';
@@ -103,6 +105,22 @@ class VotingController extends AbstractController
                 $votingNotYetOpen = $votingClosed = false;
                 $voteText = 'Voting is now open!';
             }
+        }
+
+        if ($request->query->getInt('lootbox') && $this->isGranted('ROLE_ITEMS_MANAGE')) {
+            $lootboxEditing = $em->getRepository(LootboxItem::class)->find($request->query->getInt('lootbox'));
+            if (!$lootboxEditing) {
+                $this->addFlash('error', 'Invalid lootbox item specified.');
+                return $this->redirectToRoute('lootboxItems');
+            }
+
+            if (empty($time)) {
+                $votingOpen = true;
+                $votingNotYetOpen = $votingClosed = false;
+                $voteText = 'Voting is now open!';
+            }
+
+            $lootboxTest = $request->query->getInt('lootbox');
         }
 
         /** @var Vote[] $votes */
@@ -275,6 +293,7 @@ class VotingController extends AbstractController
 //            'itemChoiceArray' => $itemChoiceArray,
             'lootboxSettings' => $lootboxSettings,
             'lootboxTiers' => $lootboxTiers,
+            'lootboxTest' => $lootboxTest,
             'knownItems' => $knownItems,
             'rewardCSS' => $customCss,
             'showFantasyPromo' => !$predictionService->arePredictionsLocked(),

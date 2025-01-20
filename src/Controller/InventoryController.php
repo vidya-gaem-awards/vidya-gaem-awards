@@ -9,11 +9,12 @@ use App\Service\LootboxService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class InventoryController extends AbstractController
 {
-    public function purchaseLootbox(ConfigService $configService, LootboxService $lootboxService, UserInterface $user, EntityManagerInterface $em): JsonResponse
+    public function purchaseLootbox(ConfigService $configService, LootboxService $lootboxService, UserInterface $user, EntityManagerInterface $em, Request $request): JsonResponse
     {
         /** @var User $user */
 
@@ -28,10 +29,12 @@ class InventoryController extends AbstractController
             } elseif ($item = $lootboxService->getRandomItem()) {
                 $rewards[] = ['type' => 'item', 'item' => $item];
 
-                $userItem = new UserInventoryItem();
-                $userItem->setUser($user->getFuzzyID());
-                $userItem->setItem($item);
-                $em->persist($userItem);
+                if (!$request->query->get('test')) {
+                    $userItem = new UserInventoryItem();
+                    $userItem->setUser($user->getFuzzyID());
+                    $userItem->setItem($item);
+                    $em->persist($userItem);
+                }
             } else {
                 // Failsafe for if no lootbox items are available
                 $rewards[] = ['type' => 'shekels', 'amount' => 1];

@@ -12,8 +12,34 @@ declare var postURL: string;
 declare var votingStyle: any;
 declare const lootboxSettings: any;
 declare const lootboxTiers: any;
-declare const rewards: any;
+declare const rewards: Record<string, Item>;
 declare const knownItems: any;
+declare const lootboxTest: null | number;
+
+interface File {
+  fullFilename: string;
+  id: number;
+  relativePath: string;
+  url: string;
+}
+
+interface Item {
+  absoluteDropChance: any;
+  additionalFiles: File[];
+  buddie: boolean;
+  css: boolean;
+  cssContents: string | null;
+  dropChance: any;
+  extra: any;
+  id: number;
+  image: File;
+  music: boolean;
+  musicFile: File | null;
+  name: string;
+  shortName: string;
+  tier: number;
+  year: string;
+}
 
 let previousLockExists = lastVotes.length > 1;
 let dragCounter: any;
@@ -23,6 +49,7 @@ let music: HTMLAudioElement;
 let canPlayAudio: boolean;
 let usingWinamp: boolean = false;
 let inventory;
+let lootboxTestShortName: string | null = null;
 
 for (const item of knownItems) {
     rewards[item.shortName] = item;
@@ -75,13 +102,13 @@ function getRandomInt(min, max) {
 }
 
 function reset() {
-    localStorage.removeItem('ignoreRewards');
+    localStorageRemove('ignoreRewards');
 }
 
 function resetCSS() {
     if (localStorage.getItem('activeCSS')) {
         $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
-        localStorage.removeItem('activeCSS');
+        localStorageRemove('activeCSS');
     }
 
     $('.item-css').removeClass('active');
@@ -93,7 +120,7 @@ function resetMusic() {
         music.currentTime = 0;
     }
     if (localStorage.getItem('activeMusic')) {
-        localStorage.removeItem('activeMusic');
+        localStorageRemove('activeMusic');
     }
 
     $('.item-music').removeClass('active');
@@ -102,7 +129,7 @@ function resetMusic() {
 function resetBuddie() {
     $('#reward-buddie').hide();
     if (localStorage.getItem('activeBuddie')) {
-        localStorage.removeItem('activeBuddie');
+        localStorageRemove('activeBuddie');
     }
 
     $('.item-buddie').removeClass('active');
@@ -144,8 +171,24 @@ function shuffleTextNodes(el) {
     });
 }
 
+function localStorageSet(key: string, value: string) {
+  if (lootboxTest) {
+    return;
+  }
+
+  localStorage.setItem(key, value);
+}
+
+function localStorageRemove(key: string) {
+  if (lootboxTest) {
+    return;
+  }
+
+  localStorage.removeItem(key);
+}
+
 function migrateInventory() {
-  let inventoryJson = localStorage.getItem('inventory');
+  let inventoryJson = lootboxTest ? null : localStorage.getItem('inventory');
 
   if (inventoryJson) {
     inventory = JSON.parse(inventoryJson);
@@ -164,7 +207,7 @@ function migrateInventory() {
       'unlockKeys': []
     };
 
-    localStorage.setItem('inventory', JSON.stringify(inventory));
+    localStorageSet('inventory', JSON.stringify(inventory));
   }
 }
 
@@ -195,7 +238,7 @@ jQuery(function () {
         name = 'Anonymous';
       }
 
-      localStorage.setItem('characterName', name);
+      localStorageSet('characterName', name);
       updateCharacterNameDisplay();
       $('#character').modal('hide');
 
@@ -207,19 +250,28 @@ jQuery(function () {
 
     migrateInventory();
 
+    if (lootboxTest) {
+        lootboxTestShortName = Object.values(rewards).find(r => r.id === lootboxTest).shortName;
+        addRewardToInventory(lootboxTestShortName);
+        inventory['shekels'] = 1000;
+        // for (const reward of Object.keys(rewards)) {
+        //     addRewardToInventory(reward);
+        // }
+    }
+
     if (votingEnabled && !localStorage.getItem('characterName')) {
         $('#character').modal('show');
     }
 
-    var lootboxCost = lootboxSettings.cost;
+    const lootboxCost = lootboxTest ? 1 : lootboxSettings.cost;
 
     $('#lootboxCostText').text(lootboxCost);
 
     function updateInventory() {
-        localStorage.setItem('inventory', JSON.stringify(inventory));
+        localStorageSet('inventory', JSON.stringify(inventory));
         $('#shekelCount').find('.item-name').text(inventory['shekels'] + ' gold');
 
-        if (inventory['shekels'] >= lootboxCost) {
+        if (lootboxTest || inventory['shekels'] >= lootboxCost) {
             $('#buy-lootbox').removeAttr('disabled');
         } else {
             $('#buy-lootbox').attr('disabled', 'disabled');
@@ -262,7 +314,9 @@ jQuery(function () {
                 element.find('.item-music').addClass('active');
             }
 
-            if (localStorage.getItem('activeBuddie') === reward.shortName) {
+            if (lootboxTest) {
+                element.find('.item-buddie').toggleClass('active', lootboxTest === reward.id);
+            } else if (localStorage.getItem('activeBuddie') === reward.shortName) {
                 element.find('.item-buddie').addClass('active');
             }
 
@@ -288,7 +342,7 @@ jQuery(function () {
 
     $('#shekelCount').show();
 
-    if (localStorage.getItem('activeCSS')) {
+    if (!lootboxTest && localStorage.getItem('activeCSS')) {
         $('html').addClass('reward-' + localStorage.getItem('activeCSS'));
         $('.item-css[data-id=' + localStorage.getItem('activeCSS') + ']').addClass('active');
     }
@@ -314,11 +368,13 @@ jQuery(function () {
         $('.item-music[data-id=' + localStorage.getItem('activeMusic') + ']').addClass('active');
     }
 
-    if (localStorage.getItem('activeMusic') && !localStorage.getItem('muteMusic')) {
+    if (localStorage.getItem('activeMusic') && !localStorage.getItem('muteMusic') && !lootboxTest) {
         tryToPlayMusicAutomatically();
     }
 
-    if (localStorage.getItem('activeBuddie')) {
+    if (lootboxTest) {
+        activateBuddie(lootboxTestShortName);
+    } else if (localStorage.getItem('activeBuddie')) {
         activateBuddie(localStorage.getItem('activeBuddie'));
         $('.item-buddie[data-id=' + localStorage.getItem('activeBuddie') + ']').addClass('active');
     }
@@ -366,7 +422,7 @@ jQuery(function () {
                 if (localStorage.getItem('activeCSS')) {
                     $('html').removeClass('reward-' + localStorage.getItem('activeCSS'));
                 }
-                localStorage.setItem('activeCSS', id);
+                localStorageSet('activeCSS', id);
                 $('html').addClass('reward-' + id);
 
                 $('.item-css').removeClass('active');
@@ -379,7 +435,7 @@ jQuery(function () {
                 resetBuddie();
             } else {
                 activateBuddie(id);
-                localStorage.setItem('activeBuddie', id);
+                localStorageSet('activeBuddie', id);
 
                 $('.item-buddie').removeClass('active');
                 $('.item-buddie[data-id=' + id + ']').addClass('active');
@@ -396,10 +452,10 @@ jQuery(function () {
                     console.log(e.name);
                 });
                 if (id === 'whirr') {
-                    localStorage.removeItem('activeMusic');
+                    localStorageRemove('activeMusic');
                 } else {
-                    localStorage.setItem('activeMusic', id);
-                    localStorage.removeItem('muteMusic');
+                    localStorageSet('activeMusic', id);
+                    localStorageRemove('muteMusic');
                 }
 
                 $('.item-music').removeClass('active');
@@ -459,7 +515,7 @@ jQuery(function () {
         sound.play();
 
         if (markAsCheater) {
-            localStorage.setItem('casual', '1');
+            localStorageSet('casual', '1');
             // $('#inventory').find('h1').text('Filthy casual detected');
         }
     }
@@ -500,11 +556,11 @@ jQuery(function () {
         updateInventory();
     });
 
-    if (localStorage.getItem('ignoreRewards')) {
+    if (localStorage.getItem('ignoreRewards') && !lootboxTest) {
         $('#restoreDrops').removeAttr('disabled');
     }
 
-    if (!localStorage.getItem('ignoreRewards') && lastVotes.length === 0) {
+    if ((!localStorage.getItem('ignoreRewards') && lastVotes.length === 0) || lootboxTest) {
         showRewardsOnSubmit = true;
     }
 
@@ -515,7 +571,7 @@ jQuery(function () {
     $('#restoreDrops').click(function (event) {
         event.preventDefault();
         $(this).attr('disabled', 'disabled');
-        localStorage.removeItem('ignoreRewards');
+        localStorageRemove('ignoreRewards');
         if (lastVotes.length === 0) {
             showRewardsOnSubmit = true;
         }
@@ -605,7 +661,7 @@ jQuery(function () {
     });
 
     $('#neverShowAgain').click(function () {
-        localStorage.setItem('ignoreRewards', 'true');
+        localStorageSet('ignoreRewards', 'true');
         $('#rewards').modal('hide');
         $('#restoreDrops').removeAttr('disabled');
     })
@@ -674,7 +730,9 @@ jQuery(function () {
 
         $('#unboxButton').attr('disabled', 'disabled');
 
-        $.post('/inventory/purchase-lootbox').then(data => {
+        const url = lootboxTest ? '/inventory/purchase-lootbox?test=1' : '/inventory/purchase-lootbox';
+
+        $.post(url).then(data => {
             pendingItems = data.rewards;
             for (const reward of pendingItems) {
                 if (reward.type !== 'item') {
@@ -1135,13 +1193,17 @@ jQuery(function () {
 
         lastVotes = preferences;
 
-        $.post(postURL, {preferences: preferences}, function (data) {
-          if (data.error) {
-            alert("An error occurred:\n" + data.error + "\nYour vote has not been saved.");
-          } else {
-            $('#' + currentAward).addClass('complete');
-          }
-        }, 'json');
+        if (lootboxTest) {
+          $('#' + currentAward).addClass('complete');
+        } else {
+          $.post(postURL, {preferences: preferences}, function (data) {
+            if (data.error) {
+              alert("An error occurred:\n" + data.error + "\nYour vote has not been saved.");
+            } else {
+              $('#' + currentAward).addClass('complete');
+            }
+          }, 'json');
+        }
 
         openLootboxRewards(false);
     });

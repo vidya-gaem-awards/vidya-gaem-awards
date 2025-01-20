@@ -170,6 +170,7 @@
                   $("#info-cssContents-container").hide();
                   $("#info-additionalFiles-container").hide();
                   $("#info-drop-chance-override").hide();
+                  $('#info-editOnVotingPage').hide();
 
               } else {
                   // Editing an existing advert
@@ -199,6 +200,10 @@
                   $("#info-cssContents-container").toggle(item.css || item.additionalFiles.length > 0);
                   $("#info-drop-chance-override").toggle(item.dropChance !== null || item.absoluteDropChance !== null);
                   $("#info-additionalFiles-container").toggle(item.additionalFiles.length > 0);
+                  $('#info-editOnVotingPage').show();
+
+                  const editOnVotingPage = $('#info-editOnVotingPage a');
+                  editOnVotingPage.attr('href', editOnVotingPage.data('base-href').replace('xxx', item.id));
 
                   for (const file of item.additionalFiles) {
                       const row = $(".additionalFile-existing-row").first()
@@ -409,6 +414,15 @@
           <div class="modal-body">
             <input type="hidden" id="info-action" name="action">
             <input type="hidden" id="info-id" name="id">
+
+            {% if is_granted('ROLE_VOTING_VIEW') and firstAward %}
+              <div class="form-group row" id="info-editOnVotingPage">
+                <div class="offset-sm-3 col-sm-9">
+                  <div><a href="#" class="btn btn-outline-primary btn-sm" data-base-href="{{ path('voting', {awardID: firstAward.id, lootbox: 'xxx'}) }}" target="_blank">Preview on voting page <i class="fa-regular fa-external-link ms-1"></i></a></div>
+                  <small class="form-text">Unsaved changes will not appear.</small>
+                </div>
+              </div>
+            {% endif %}
 
             <div class="form-group row">
               <label class="col-sm-3 col-form-label" for="info-short-name">

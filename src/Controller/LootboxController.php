@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Action;
+use App\Entity\Award;
 use App\Entity\File;
 use App\Entity\LootboxItem;
 use App\Entity\LootboxTier;
@@ -40,9 +41,18 @@ class LootboxController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        $firstAward = $em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a')
+            ->orderBy('a.order', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
         return $this->render( 'lootboxItems.html.twig', [
             'items' => $items,
-            'tiers' => $tiers
+            'tiers' => $tiers,
+            'firstAward' => $firstAward,
         ]);
     }
 
