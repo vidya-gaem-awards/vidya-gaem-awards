@@ -2196,13 +2196,13 @@ a:hover {
 
 }
 
-input[type="range"]::-webkit-slider-runnable-track {
-  all: revert;
-}
+//input[type="range"]::-webkit-slider-runnable-track {
+//  all: revert;
+//}
 
-input[type=range]::-webkit-slider-thumb {
-  all: revert;
-}
+//input[type=range]::-webkit-slider-thumb {
+//  all: revert;
+//}
 
 .themed-text {
   font-family: "Garrick", sans-serif;
@@ -2251,5 +2251,39 @@ input[type=range]::-webkit-slider-thumb {
     position: absolute;
     right: 0;
     bottom: -16px;
+  }
+}
+
+#lootbox-editor {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 2000;
+
+  textarea {
+    resize: both;
+    min-width: 300px;
+  }
+
+  .card-header {
+    cursor: grab;
+    div {
+      max-width: 300px;
+    }
+  }
+
+  #lootbox-editor-collapse {
+    max-width: 300px;
+  }
+
+  #lootbox-editor-css-codemirror {
+    width: 300px;
+    font-size: 10px;
+    border: 1px solid #ced4da;
+    resize: both;
+  }
+
+  #lootbox-editor-css-status {
+    cursor: pointer;
   }
 }

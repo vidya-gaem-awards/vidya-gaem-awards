@@ -12,6 +12,12 @@
   <style type="text/css">
 {{ rewardCSS | raw }}
   </style>
+
+    {% if lootboxTest %}
+        <style id="lootbox-editor-style">
+            {{ lootboxTest.cssContents | raw }}
+        </style>
+    {% endif %}
 {% endblock %}
 
 {% block js %}
@@ -39,7 +45,7 @@
   {% endif %}
 
   <script type="text/javascript">
-      const lootboxTest = {{ lootboxTest | json_encode | raw }};
+      const lootboxTest = {{ lootboxTest.id | json_encode | raw }};
       const lootboxSettings = {{ lootboxSettings | json_encode | raw }};
       const lootboxTiers = {{ lootboxTiers | json_encode | raw }};
       const rewards = {{ items | json_encode | raw }};
@@ -535,6 +541,61 @@
         </div>
       </div>
     </div>
+  {% endif %}
+
+  {% if lootboxTest %}
+      <div id="lootbox-editor" class="form-horizontal card bg-white text-black">
+          <form enctype="multipart/form-data">
+              <div class="card-header">
+                  <div>Editing <em>{{ lootboxTest.name }}</em></div>
+              </div>
+
+              <div class="card-body">
+                  <div id="info-cssContents-container">
+                      <div class="d-flex justify-content-between">
+                          <label class="form-label" for="lootbox-editor-css-input">
+                              CSS
+                          </label>
+                          <span class="badge bg-secondary align-self-center" id="lootbox-editor-css-status">Inactive</span>
+                      </div>
+                      <div id="lootbox-editor-css-codemirror"></div>
+                  </div>
+
+                  <div class="collapse" id="lootbox-editor-collapse">
+                      <small class="form-text">When this reward is equipped, the class <code id="code-id">reward-{{ lootboxTest.shortName }}</code> will be added to the root HTML element.</small>
+                      <div class="mt-3">
+                          <div>Keyboard shortcuts</div>
+                          <div style="font-size: smaller;">
+                              <kbd>Esc</kbd> - unfocus input field<br>
+                              <kbd>Ctrl+E</kbd> - toggle [<strong>E</strong>]ditor<br>
+                              <kbd>Ctrl+C</kbd> - toggle [<strong>C</strong>]SS<br>
+                              <kbd>Ctrl+R</kbd> - [<strong>R</strong>]eset all
+                          </div>
+                          <small class="form-text">Shortcuts can be used without Ctrl when outside an input field.</small>
+                      </div>
+
+                      <div class="mt-3">
+                          <label class="form-label" for="lootbox-editor-opacity">Editor opacity</label>
+                          <input type="range" class="form-range" id="lootbox-editor-opacity" min="0.3" max="1" step="0.1" value="1">
+                          <small class="form-text d-flex justify-content-between">
+                              <span>30%</span>
+                              <span>100%</span>
+                          </small>
+                      </div>
+                  </div>
+
+                  <div class="alert alert-dismissible alert-danger" style="display: none;">
+                      <span id="dialog-edit-error"></span>
+                      <button type="button" class="btn-close"></button>
+                  </div>
+              </div>
+
+              <div class="card-footer d-flex justify-content-between">
+                  <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#lootbox-editor-collapse" id="lootbox-editor-collapse-toggle"><i class="fa-solid fa-chevrons-down"></i></button>
+                  <button class="btn btn-primary" id="dialog-edit-submit" type="submit">Save</button>
+              </div>
+          </form>
+      </div>
   {% endif %}
 
 {% endblock %}

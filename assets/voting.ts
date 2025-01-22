@@ -5,6 +5,9 @@ require('jquery-ui/ui/widgets/droppable');
 require('bootstrap');
 import Sortable from "sortablejs";
 
+import {EditorView, basicSetup, minimalSetup} from "codemirror";
+import {css} from "@codemirror/lang-css"
+
 declare var votingEnabled: boolean;
 declare var lastVotes: any;
 declare var currentAward: string;
@@ -15,6 +18,18 @@ declare const lootboxTiers: any;
 declare const rewards: Record<string, Item>;
 declare const knownItems: any;
 declare const lootboxTest: null | number;
+
+if (lootboxTest) {
+    let editor = new EditorView({
+        doc: $('#lootbox-editor-style').text().trim(),
+        extensions: [
+            basicSetup,
+            css(),
+            EditorView.lineWrapping,
+        ],
+        parent: document.querySelector("#lootbox-editor-css-codemirror"),
+    });
+}
 
 interface File {
   fullFilename: string;
@@ -112,6 +127,7 @@ function resetCSS() {
         $html.removeAttr('data-css');
     }
     $('.item-css').removeClass('active');
+    $('#lootbox-editor-css-status').addClass('bg-secondary').removeClass('bg-success').text('Inactive');
 }
 
 function resetMusic() {
@@ -548,6 +564,10 @@ jQuery(function () {
 
         $('.item-css').removeClass('active');
         $('.item-css[data-id=' + shortName + ']').addClass('active');
+
+        if (shortName === lootboxTestShortName) {
+            $('#lootbox-editor-css-status').addClass('bg-success').removeClass('bg-secondary').text('Active');
+        }
     }
 
     $('#buy-lootbox').click(function () {
@@ -1213,6 +1233,42 @@ jQuery(function () {
     });
 
     if (lootboxTest) {
+      $('#lootbox-editor-css-input').on('change', function () {
+        $('#lootbox-editor-style').text($(this).val());
+      });
+
+      $('#lootbox-editor-css-input').on('keyup', function () {
+        $('#lootbox-editor-style').text($(this).val());
+      });
+
+      $('#lootbox-editor-hide').on('click', function () {
+        $('#lootbox-editor').addClass('d-none');
+      });
+
+      $('#lootbox-editor-opacity').on('change', function () {
+        $('#lootbox-editor').css('opacity', $(this).val());
+      });
+
+      $('#lootbox-editor-collapse').on('show.bs.collapse', function () {
+        $('#lootbox-editor-collapse-toggle i').removeClass('fa-chevrons-down').addClass('fa-chevrons-up');
+      });
+
+      $('#lootbox-editor-collapse').on('hide.bs.collapse', function () {
+        $('#lootbox-editor-collapse-toggle i').removeClass('fa-chevrons-up').addClass('fa-chevrons-down');
+      });
+
+      $('#lootbox-editor').draggable({
+          handle: '.card-header',
+      });
+
+      $('#lootbox-editor-css-status').on('click', function () {
+          if ($('html').attr('data-css')) {
+              resetCSS();
+          } else {
+              activateCss(lootboxTestShortName);
+          }
+      });
+
       document.addEventListener('keydown', function (e) {
         if (e.code === 'Escape') {
           if (e.target instanceof HTMLElement) {
@@ -1221,7 +1277,7 @@ jQuery(function () {
           }
         }
 
-        if (e.target instanceof HTMLInputElement) {
+        if ((e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) && !e.ctrlKey) {
           return;
         }
 
@@ -1254,9 +1310,20 @@ jQuery(function () {
           return;
         }
 
+        // Toggle editor
+        if (e.code === 'KeyE') {
+            $('#lootbox-editor').toggleClass('d-none');
+            return;
+        }
+
         // Reset all
         if (e.code === 'KeyR') {
           resetRewards();
+          $('#lootbox-editor')
+              .removeClass('d-none')
+              .css('opacity', 1)
+              .css('left', '5px')
+              .css('top', '5px');
           return;
         }
       }, false);

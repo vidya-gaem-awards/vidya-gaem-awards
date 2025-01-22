@@ -108,8 +108,8 @@ class VotingController extends AbstractController
         }
 
         if ($request->query->getInt('lootbox') && $this->isGranted('ROLE_ITEMS_MANAGE')) {
-            $lootboxEditing = $em->getRepository(LootboxItem::class)->find($request->query->getInt('lootbox'));
-            if (!$lootboxEditing) {
+            $lootboxTest = $em->getRepository(LootboxItem::class)->find($request->query->getInt('lootbox'));
+            if (!$lootboxTest) {
                 $this->addFlash('error', 'Invalid lootbox item specified.');
                 return $this->redirectToRoute('lootboxItems');
             }
@@ -119,8 +119,6 @@ class VotingController extends AbstractController
                 $votingNotYetOpen = $votingClosed = false;
                 $voteText = 'Voting is now open!';
             }
-
-            $lootboxTest = $request->query->getInt('lootbox');
         }
 
         /** @var Vote[] $votes */
@@ -242,6 +240,9 @@ class VotingController extends AbstractController
 
         $customCss = '';
         foreach ($itemsWithCss as $item) {
+            if ($lootboxTest === $item) {
+                continue;
+            }
             $customCss .= "/* Start CSS for {$item->getShortName()} */\n";
             $customCss .= $item->getCssContents() . "\n";
             $customCss .= "/* End CSS for {$item->getShortName()} */\n\n";
