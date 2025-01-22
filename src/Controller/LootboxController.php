@@ -245,6 +245,34 @@ class LootboxController extends AbstractController
         return $this->json(['success' => true]);
     }
 
+    public function itemUpdateCss(ConfigService $configService, Request $request, EntityManagerInterface $em, AuditService $auditService): JsonResponse
+    {
+        if ($configService->isReadOnly()) {
+            return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
+        }
+
+        $post = $request->request;
+
+        $item = $em->getRepository(LootboxItem::class)->find($post->getInt('id'));
+        if (!$item) {
+            return $this->json(['error' => 'Invalid item specified.']);
+        }
+
+        $item->setCssContents($post->get('cssContents'));
+
+        $em->persist($item);
+        $em->flush();
+
+        $auditService->add(
+            new Action('item-edit', $item->getId()),
+            new TableHistory(LootboxItem::class, $item->getId(), $post->all())
+        );
+
+        $em->flush();
+
+        return $this->json(['success' => true]);
+    }
+
     public function itemCalculation(LootboxItemRepository $itemRepo, LootboxTierRepository $tierRepo, LootboxService $lootboxService, Request $request): JsonResponse
     {
         $post = $request->request;

@@ -18,14 +18,23 @@ declare const lootboxTiers: any;
 declare const rewards: Record<string, Item>;
 declare const knownItems: any;
 declare const lootboxTest: null | number;
+declare const lootboxItemUpdateUrl: string | undefined;
 
 if (lootboxTest) {
+    const updateListenerExtension = EditorView.updateListener.of((update) => {
+      if (update.docChanged) {
+        $('#lootbox-editor-css-input').val(update.state.doc.toString());
+        $('#lootbox-editor-style').text(update.state.doc.toString());
+      }
+    });
+
     let editor = new EditorView({
         doc: $('#lootbox-editor-style').text().trim(),
         extensions: [
             basicSetup,
             css(),
             EditorView.lineWrapping,
+            updateListenerExtension
         ],
         parent: document.querySelector("#lootbox-editor-css-codemirror"),
     });
@@ -127,7 +136,9 @@ function resetCSS() {
         $html.removeAttr('data-css');
     }
     $('.item-css').removeClass('active');
-    $('#lootbox-editor-css-status').addClass('bg-secondary').removeClass('bg-success').text('Inactive');
+    $('#lootbox-editor-css-status').addClass('bg-secondary').removeClass('bg-success');
+    $('#lootbox-editor-css-status input[type=checkbox]').prop('checked', false);
+    $('#lootbox-editor-css-status .label').text('Inactive');
 }
 
 function resetMusic() {
@@ -566,7 +577,9 @@ jQuery(function () {
         $('.item-css[data-id=' + shortName + ']').addClass('active');
 
         if (shortName === lootboxTestShortName) {
-            $('#lootbox-editor-css-status').addClass('bg-success').removeClass('bg-secondary').text('Active');
+            $('#lootbox-editor-css-status').addClass('bg-success').removeClass('bg-secondary');
+            $('#lootbox-editor-css-status input[type=checkbox]').prop('checked', true);
+            $('#lootbox-editor-css-status .label').text('Active');
         }
     }
 
@@ -1233,14 +1246,6 @@ jQuery(function () {
     });
 
     if (lootboxTest) {
-      $('#lootbox-editor-css-input').on('change', function () {
-        $('#lootbox-editor-style').text($(this).val());
-      });
-
-      $('#lootbox-editor-css-input').on('keyup', function () {
-        $('#lootbox-editor-style').text($(this).val());
-      });
-
       $('#lootbox-editor-hide').on('click', function () {
         $('#lootbox-editor').addClass('d-none');
       });
@@ -1261,13 +1266,46 @@ jQuery(function () {
           handle: '.card-header',
       });
 
-      $('#lootbox-editor-css-status').on('click', function () {
-          if ($('html').attr('data-css')) {
+      $('#lootbox-editor-css-status input[type=checkbox]').on('change', function () {
+          if (!$(this).is(':checked')) {
               resetCSS();
           } else {
               activateCss(lootboxTestShortName);
           }
       });
+
+      let currentlySubmitting = false;
+
+      $('#lootbox-editor form').on('submit', function (event) {
+        event.preventDefault();
+
+        if (currentlySubmitting) {
+          return;
+        }
+        currentlySubmitting = true;
+
+        // Show the "please wait" message and disable the submit button
+        $('#lootbox-editor').find("button[type=submit]").attr("disabled", "disabled");
+        // $("#dialog-edit-error").parent().slideUp()
+
+        var formData = new FormData(this);
+        $.ajax({
+          url: lootboxItemUpdateUrl,
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false
+        }).done(function (response) {
+          if (response.success) {
+            $('#lootbox-editor-submit-icon').show().fadeOut(5000);
+          } else {
+            alert('Error: ' + response.error);
+          }
+        }, "json").always(() => {
+          $('#lootbox-editor').find("button[type=submit]").removeAttr("disabled");
+          currentlySubmitting = false;
+        });
+      })
 
       document.addEventListener('keydown', function (e) {
         if (e.code === 'Escape') {
@@ -1277,7 +1315,7 @@ jQuery(function () {
           }
         }
 
-        if ((e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) && !e.ctrlKey) {
+        if ((e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || $(e.target).attr('role') === 'textbox') && !e.ctrlKey) {
           return;
         }
 

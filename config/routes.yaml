@@ -442,6 +442,11 @@ lootboxItemPost:
     methods:    [POST]
     controller: App\Controller\LootboxController::itemPost
 
+lootboxItemUpdateCss:
+    path:       /lootboxes/items/css
+    methods:    [POST]
+    controller: App\Controller\LootboxController::itemUpdateCss
+
 lootboxItemCalculation:
     path:       /lootboxes/items/calculation
     methods:    [POST]

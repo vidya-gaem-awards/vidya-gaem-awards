@@ -2281,6 +2281,8 @@ a:hover {
     font-size: 10px;
     border: 1px solid #ced4da;
     resize: both;
+    max-height: 80vh;
+    overflow-y: auto;
   }
 
   #lootbox-editor-css-status {
