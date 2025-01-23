@@ -399,6 +399,8 @@ class VotingController extends AbstractController
 
     public function codeEntryAction(string $code, ConfigService $configService, Request $request, EntityManagerInterface $em, UserInterface $user, SessionInterface $session): RedirectResponse
     {
+        $code = substr($code, 0, 20);
+
         $session->set('votingCode', $code);
 
         if (!$configService->isReadOnly()) {
