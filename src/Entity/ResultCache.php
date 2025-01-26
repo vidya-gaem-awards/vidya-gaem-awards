@@ -6,13 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'result_cache', options: ['collate' => 'utf8mb4_unicode_ci', 'charset' => 'utf8mb4'])]
 #[ORM\Entity]
+#[ORM\UniqueConstraint(columns: ['awardID', 'filter', 'algorithm', 'time_key'])]
 class ResultCache
 {
     const OFFICIAL_FILTER = '08-4chan-or-null-with-voting-code';
     const OFFICIAL_ALGORITHM = 'schulze';
 
-    #[ORM\Column(name: 'filter', type: 'string', length: 40)]
+    #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
+    #[ORM\GeneratedValue]
+    private int $id;
+
+    #[ORM\Column(name: 'filter', type: 'string', length: 40)]
     private string $filter;
 
     #[ORM\Column(name: 'results', type: 'json', nullable: false)]
@@ -28,14 +33,14 @@ class ResultCache
     private int $votes;
 
     #[ORM\JoinColumn(name: 'awardID', referencedColumnName: 'id')]
-    #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Award', inversedBy: 'resultCache')]
     private Award $award;
 
     #[ORM\Column(length: 40)]
-    #[ORM\Id]
     private ?string $algorithm = null;
 
+    #[ORM\Column(type: 'string')]
+    private string $timeKey;
 
     public function setResults(array $results): ResultCache
     {
@@ -117,6 +122,18 @@ class ResultCache
     public function setAlgorithm(string $algorithm): static
     {
         $this->algorithm = $algorithm;
+
+        return $this;
+    }
+
+    public function getTimeKey(): string
+    {
+        return $this->timeKey;
+    }
+
+    public function setTimeKey(string $timeKey): ResultCache
+    {
+        $this->timeKey = $timeKey;
 
         return $this;
     }

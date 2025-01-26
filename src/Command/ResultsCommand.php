@@ -16,6 +16,10 @@ use App\VGA\ResultCalculator\InstantRunoff;
 use App\VGA\ResultCalculator\SchulzeLegacy;
 use App\VGA\ResultCalculator\Schulze;
 use App\VGA\Timer;
+use Carbon\CarbonImmutable;
+use Carbon\CarbonInterval;
+use Carbon\CarbonPeriod;
+use Carbon\CarbonPeriodImmutable;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -74,7 +78,8 @@ class ResultsCommand extends Command
         $this
             ->setName(self::COMMAND_NAME)
             ->setDescription('Calculates and stores the results for each award.')
-            ->addOption('predictions-only', null, InputOption::VALUE_NONE)
+            ->addOption('process', null, InputOption::VALUE_REQUIRED, 'Run only a single part of the process')
+            ->addOption('backfill', null, InputOption::VALUE_NONE, 'Backfills earlier timekeys')
             ->addOption('filter', null, InputOption::VALUE_REQUIRED)
             ->addOption('award', null, InputOption::VALUE_REQUIRED);
     }
@@ -88,24 +93,37 @@ class ResultsCommand extends Command
         $this->output = $output;
         $this->timer = new Timer();
 
-        if (!$input->getOption('predictions-only')) {
-            $this->updateIpAddresses();
-            $this->updateVoteReferrers();
-            $this->updateResultCache(
-                $input->getOption('filter'),
-                $input->getOption('award')
-            );
-        }
-        $this->updatePredictionScores();
+        $processes = [
+            'ipAddresses' => $this->updateIpAddresses(...),
+            'voteReferrers' => $this->updateVoteReferrers(...),
+            'resultCache' => fn () => $this->updateResultCache($input->getOption('filter'), $input->getOption('award')),
+            'predictionScores' => $this->updatePredictionScores(...),
+            'disableCronJob' => $this->disableCronJobIfNeeded(...),
+        ];
 
-        if (!$input->getOption('predictions-only')) {
-            $this->disableCronJobIfNeeded();
+        if ($input->getOption('backfill')) {
+            $this->backfillTimeKeys();
+            return 0;
+        }
+
+        if ($input->getOption('process')) {
+            $process = $input->getOption('process');
+            if (!isset($processes[$process])) {
+                throw new RuntimeException("Invalid process specified: $process. Valid options are: " . implode(', ', array_keys($processes)));
+            }
+
+            $processes[$process]();
+            return 0;
+        }
+
+        foreach ($processes as $callable) {
+            $callable();
         }
 
         return 0;
     }
 
-    private function updateIpAddresses()
+    private function updateIpAddresses(): void
     {
         $this->writeLn('Updating IP addresses');
 
@@ -133,7 +151,7 @@ class ResultsCommand extends Command
         $this->writeln($updated . ' IP addresses updated');
     }
 
-    private function updateVoteReferrers()
+    private function updateVoteReferrers(): void
     {
         $this->writeln('Updating vote referrers');
 
@@ -256,7 +274,7 @@ class ResultsCommand extends Command
 
             foreach ($referers as $referer) {
                 foreach ($sites as $site => $value) {
-                    if (self::startsWith($referer, $site) && !in_array($value, $used_bits, true)) {
+                    if (str_starts_with($referer, $site) && !in_array($value, $used_bits, true)) {
                         $info['notes'][] = $site;
                         $used_bits[] = $value;
                         $number += $value;
@@ -307,16 +325,39 @@ class ResultsCommand extends Command
         $this->writeln("Step 5 (update database) complete");
     }
 
-    private function updateResultCache(?string $filter = null, ?string $awardId = null)
+    private function updateResultCache(?string $filter = null, ?string $awardId = null, ?CarbonImmutable $maxDate = null): void
     {
         if ($filter && !isset(self::FILTERS[$filter])) {
             throw new RuntimeException("Invalid filter specified: $filter");
         }
 
-        $this->writeln('Updating result cache');
+        // Timekey
+        if ($maxDate) {
+            $timeKey = $maxDate->format('Y-m-d H:00:00');
+            $this->writeln('Updating result cache (time key: ' . $timeKey . ')');
+            if (!$filter) {
+                $filter = ResultCache::OFFICIAL_FILTER;
+            }
 
-        // Remove all existing data
-        $this->em->createQueryBuilder()->delete(ResultCache::class, 'rc')->getQuery()->execute();
+            $this->em->createQueryBuilder()
+                ->delete(ResultCache::class, 'rc')
+                ->where('rc.timeKey = :timeKey')
+                ->setParameter('timeKey', $timeKey)
+                ->getQuery()
+                ->execute();
+        } else {
+            $timeKey = CarbonImmutable::now()->format('Y-m-d H:00:00');
+            $this->writeln('Updating result cache (time key: latest)');
+
+            // Remove all existing data (except old timekeys)
+            $this->em->createQueryBuilder()
+                ->delete(ResultCache::class, 'rc')
+                ->where('rc.timeKey IN (:latest, :timeKey)')
+                ->setParameter('latest', 'latest')
+                ->setParameter('timeKey', $timeKey)
+                ->getQuery()
+                ->execute();
+        }
 
         // Start by getting a list of awards and all the nominees.
         $awards = $this->em->createQueryBuilder()
@@ -354,6 +395,12 @@ class ResultsCommand extends Command
                     $query->andWhere($condition);
                 }
 
+                if ($maxDate) {
+                    $query
+                        ->andWhere('v.timestamp <= :maxDate')
+                        ->setParameter('maxDate', $maxDate->format('Y-m-d H:i:s'));
+                }
+
                 $result = $query->getQuery()->getResult();
                 $votes = array_filter(array_column($result, 'preferences'));
 
@@ -364,7 +411,7 @@ class ResultsCommand extends Command
 
                 $calculators = [
                     Schulze::class,
-                    SchulzeLegacy::class,
+//                    SchulzeLegacy::class,
 //                    InstantRunoff::class,
                 ];
 
@@ -383,8 +430,21 @@ class ResultsCommand extends Command
                         ->setResults($result)
                         ->setSteps($resultCalculator->getSteps())
                         ->setWarnings($resultCalculator->getWarnings())
-                        ->setVotes(count($votes));
-                    $this->em->persist($resultObject);
+                        ->setVotes(count($votes))
+                        ->setTimeKey('latest');
+
+                    if (!$maxDate) {
+                        $this->em->persist($resultObject);
+                    }
+
+                    // To save space, only create the time-keyed entries for the offical results
+                    if ($resultObject->getAlgorithm() === ResultCache::OFFICIAL_ALGORITHM
+                        && $resultObject->getFilter() === ResultCache::OFFICIAL_FILTER) {
+                        $resultObject2 = clone $resultObject;
+                        $resultObject2->setTimeKey($timeKey);
+
+                        $this->em->persist($resultObject2);
+                    }
                 }
 
                 $this->writeln("[$filterName] Award complete: " . $award->getId());
@@ -397,7 +457,7 @@ class ResultsCommand extends Command
         $this->writeln("Done.");
     }
 
-    private function updatePredictionScores()
+    private function updatePredictionScores(): void
     {
         $this->writeln('Updating prediction scores');
 
@@ -439,7 +499,7 @@ class ResultsCommand extends Command
         $this->em->flush();
     }
 
-    private function disableCronJobIfNeeded()
+    private function disableCronJobIfNeeded(): void
     {
         $this->writeln('Check if cron job needs to be disabled');
 
@@ -459,15 +519,23 @@ class ResultsCommand extends Command
      * Convenience function to write a line with the timer value.
      * @param string $line
      */
-    private function writeln(string $line)
+    private function writeln(string $line): void
     {
         $this->output->writeln(
             sprintf('%5.2f: %s', $this->timer->time(), $line)
         );
     }
 
-    private static function startsWith($haystack, $needle): bool
+    private function backfillTimeKeys(): void
     {
-        return str_starts_with($haystack, $needle);
+        $start = $this->configService->getConfig()->getVotingStart();
+        if (!$start) {
+            throw new RuntimeException("Can't backfill without a voting start date.");
+        }
+
+        $period = CarbonPeriodImmutable::create($start, '1 hour', CarbonImmutable::now());
+        foreach ($period as $date) {
+            $this->updateResultCache(maxDate: $date);
+        }
     }
 }

@@ -7,6 +7,8 @@ use App\Entity\ResultCache;
 use App\Service\AuditService;
 use App\Service\ConfigService;
 use App\Service\FileService;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +21,16 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ResultController extends AbstractController
 {
-    public function simpleAction(EntityManagerInterface $em): Response
+    public function __construct(
+        private EntityManagerInterface $em,
+        private ConfigService $configService,
+    ) {
+    }
+
+    public function simpleAction(): Response
     {
         /** @var Award[] $awards */
-        $awards = $em->createQueryBuilder()
+        $awards = $this->em->createQueryBuilder()
             ->select('a')
             ->from(Award::class, 'a')
             ->where('a.enabled = true')
@@ -68,7 +76,7 @@ class ResultController extends AbstractController
 
 
         // Fake ads
-        $adverts = $em->getRepository(Advertisement::class)->findBy(['special' => 0]);
+        $adverts = $this->em->getRepository(Advertisement::class)->findBy(['special' => 0]);
 
         if (empty($adverts)) {
             $ad1 = $ad2 = false;
@@ -86,10 +94,10 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function detailedAction(?string $all, EntityManagerInterface $em, Request $request, AuthorizationCheckerInterface $authChecker): Response
+    public function detailedAction(?string $all, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
         /** @var Award[] $awards */
-        $awards = $em->createQueryBuilder()
+        $awards = $this->em->createQueryBuilder()
             ->select('a')
             ->from(Award::class, 'a')
             ->where('a.enabled = true')
@@ -139,6 +147,9 @@ class ResultController extends AbstractController
                 $nominees[$award->getId()][$nominee->getShortName()] = $nominee;
             }
             foreach ($award->getResultCache() as $result) {
+                if ($result->getTimeKey() !== 'latest') {
+                    continue;
+                }
                 if ($result->getAlgorithm() !== ResultCache::OFFICIAL_ALGORITHM) {
                     continue;
                 }
@@ -171,10 +182,10 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function pairwiseAction(EntityManagerInterface $em): Response
+    public function pairwiseAction(): Response
     {
         /** @var Award[] $awards */
-        $awards = $em->createQueryBuilder()
+        $awards = $this->em->createQueryBuilder()
             ->select('a')
             ->from(Award::class, 'a')
             ->where('a.enabled = true')
@@ -194,16 +205,16 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function winnerImageUploadAction(EntityManagerInterface $em, Request $request, AuditService $auditService, ConfigService $configService, FileService $fileService): JsonResponse
+    public function winnerImageUploadAction(Request $request, AuditService $auditService, FileService $fileService): JsonResponse
     {
-        if ($configService->isReadOnly()) {
+        if ($this->configService->isReadOnly()) {
             return $this->json(['error' => 'The site is currently in read-only mode. No changes can be made.']);
         }
 
         $id = $request->request->get('id') ?? false;
 
         /** @var Award $award */
-        $award = $em->getRepository(Award::class)->find($id);
+        $award = $this->em->getRepository(Award::class)->find($id);
 
         if (!$award) {
             return $this->json(['error' => 'Invalid award specified.']);
@@ -225,14 +236,70 @@ class ResultController extends AbstractController
         }
 
         $award->setWinnerImage($file);
-        $em->persist($award);
+        $this->em->persist($award);
 
         $auditService->add(
             new Action('winner-image-updated', $award->getId()),
             new TableHistory(Award::class, $award->getId(), ['image' => $file->getId()])
         );
-        $em->flush();
+        $this->em->flush();
 
         return $this->json(['success' => true, 'filePath' => $file->getURL()]);
+    }
+
+    public function awardResults(string $awardID)
+    {
+        /** @var Award[] $awards */
+        $awards = $this->em->createQueryBuilder()
+            ->select('a')
+            ->from(Award::class, 'a')
+            ->where('a.enabled = true')
+            ->orderBy('a.order', 'ASC')
+            ->indexBy('a', 'a.id')
+            ->getQuery()
+            ->getResult();
+
+        if (!$awards[$awardID]) {
+            throw $this->createNotFoundException('Award not found');
+        }
+
+        $award = $awards[$awardID];
+
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('filter', ResultCache::OFFICIAL_FILTER))
+            ->andWhere(Criteria::expr()->eq('algorithm', ResultCache::OFFICIAL_ALGORITHM))
+            ->andWhere(Criteria::expr()->neq('timeKey', 'latest'))
+            ->andWhere(Criteria::expr()->gt('votes', 0))
+            ->orderBy(['timeKey' => Order::Descending]);
+
+        $resultHistory = $award->getResultCache()->matching($criteria);
+
+        $colours = [
+            '#00008b', // dark blue
+            '#008000', // green
+            '#7f0000', // maroon
+            '#ff8c00', // orange
+            '#8b008b', // dark magenta
+            '#556b2f', // dark olive green
+            '#008b8b', // dark cyan
+        ];
+
+        $firstHistory = $resultHistory->first();
+
+        $nomineeColours = [];
+
+        $index = 0;
+        foreach ($firstHistory->getResults() as $nominee) {
+            $nomineeColours[$nominee] = $colours[$index] ?? '#000000';
+            $index++;
+        }
+
+        return $this->render('resultsAward.html.twig', [
+            'title' => 'Results - ' . $award->getName(),
+            'awards' => $awards,
+            'award' => $award,
+            'resultHistory' => $resultHistory,
+            'nomineeColours' => $nomineeColours,
+        ]);
     }
 }

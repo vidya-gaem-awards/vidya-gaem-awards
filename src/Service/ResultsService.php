@@ -35,9 +35,9 @@ class ResultsService
             $nominees[$nominee->getShortName()] = $nominee;
         }
 
-        if (!$calculator instanceof AbstractResultCalculator) {
-            throw new InvalidArgumentException('Invalid result calculator class provided: ' . $calculator);
-        }
+//        if (!$calculator instanceof AbstractResultCalculator) {
+//            throw new InvalidArgumentException('Invalid result calculator class provided: ' . $calculator);
+//        }
 
         $resultCalculator = new $calculator($nominees, $votePreferences);
 

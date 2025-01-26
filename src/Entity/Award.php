@@ -332,6 +332,9 @@ class Award implements JsonSerializable
         $this->resultCache->removeElement($resultCache);
     }
 
+    /**
+     * @return Collection<array-key, ResultCache>
+     */
     public function getResultCache(): Collection
     {
         return $this->resultCache;
@@ -341,7 +344,8 @@ class Award implements JsonSerializable
     {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('filter', ResultCache::OFFICIAL_FILTER))
-            ->andWhere(Criteria::expr()->eq('algorithm', ResultCache::OFFICIAL_ALGORITHM));
+            ->andWhere(Criteria::expr()->eq('algorithm', ResultCache::OFFICIAL_ALGORITHM))
+            ->andWhere(Criteria::expr()->eq('timeKey', 'latest'));
 
         return $this->getResultCache()->matching($criteria)->first() ?: null;
     }
