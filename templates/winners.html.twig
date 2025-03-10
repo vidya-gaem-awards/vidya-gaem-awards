@@ -72,7 +72,6 @@
     }
 
     .award {
-      margin-bottom: 35px;
 
       min-height: 300px;
 
@@ -90,6 +89,11 @@
         padding: 10px;
     }
 
+    .second-placer {
+      mix-blend-mode: color-burn;
+      color: #371a1a;
+    }
+
     .zig {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -98,9 +102,8 @@
     .winner {
       /*border: 2px dashed #c2c5b5;*/
       background: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 15px rgb(11, 9, 9);
 
-      -webkit-mask-image: url(/2023images/mask-tall.png);
-      -webkit-mask-size: contain;
       /*padding: 5px;*/
     }
 
@@ -124,22 +127,17 @@
     }
 
     .winner-name-container {
-        font-family: "Olde title", sans-serif;
+        font-family: "Western Title", serif;
+        text-transform: uppercase;
         padding: 10px 15px;
         height: auto;
         min-height: 120px;
         font-size: .8em;
-        line-height: 15px;
         color: rgba(100, 43, 10, 0.8);
         z-index: 40;
         user-select: all;
         text-align: center;
         margin-top: 5px;
-
-        background-image: url(/2023images/parchment-container.png);
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3), 0px 0px 100px rgb(0, 0, 0), 0px 0px 20px rgb(255, 255, 255);
 
         position: relative;
     }
@@ -154,9 +152,9 @@
     }
 
     .winner-name {
-        font-size: 18px;
-        line-height: 1.2;
+        font-size: 30px;
         margin-bottom: 5px;
+        color: rgb(206, 191, 156);
       /*font-size: 30px;*/
       /*color: white;*/
       /*font-family: "Trajan Pro 3", serif;*/
@@ -183,12 +181,13 @@
     }
 
     .rank {
-      font-size: 18px;
+      font-size: 15px;
+      color: #8c5338;
       font-weight: bold;
-      color: yellow;
         margin-right: 4px;
       position: relative;
       top: -4px;
+      left: -10px;
     }
 
     .award ul li {
@@ -359,21 +358,24 @@
   }
 
   .second-placers-container {
-    font-family: Chronotype,sans-serif;
+    font-family: "Handwritten",sans-serif;
     font-size: 24px;
     color: #fff;
-    background: #000;
-    border: 20px ridge #fff;
-    border-radius: 8px;
-    margin-left: -10px;
-    margin-right: -10px;
-    padding: 5px 20px;
+    padding: 20px 40px;
+    height: 100%;
   }
 
   .award-header {
       margin-bottom: 20px !important;
-      color: rgba(180, 80, 22, 0.8);
-      text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3), 0px 0px 100px rgb(0, 0, 0), 0px 0px 20px rgb(255, 255, 255);
+      font-family: "Western Title", sans-serif;
+      text-transform: uppercase;
+      color: rgba(153, 153, 153, 0.9607843137);
+      mix-blend-mode: color-dodge;
+  }
+
+  .window-body {
+    position: relative;
+    padding: 20px;
   }
   </style>
 {% endblock %}
@@ -475,11 +477,18 @@
 
 <div class="center-container" style="padding-top: 68px;">
   <header>
-    <a class="logo" href="{{ path('index') }}">
-      <img src="{{ asset('2023images/logo.png') }}">
+    <a class="logo" href="/">
+      <img src="/2024images/logo1-long.png">
     </a>
-    <div class="title-text">
-      <div class="line-1">The 2024 Vidya Gaem Awards</div>
+
+    <div class="right-container">
+      <div class="title-text">
+        2024 Vidya Game Awards
+      </div>
+
+      <div class="plank-background">
+        <div class="plank-inner-border"></div>
+      </div>
     </div>
   </header>
 
@@ -488,6 +497,10 @@
       <div class="col-12">
         <div class="window">
           <div class="window-body">
+          <div class="plank-background">
+            <div class="plank-inner-border"></div>
+          </div>
+
             <div class="award-header mb-0">
               <div class="flex">
                 <div class="award-name">{{ award.name }}</div>
@@ -530,7 +543,7 @@
                   </div>
                 </div>
                 <div class="col-sm-9">
-                  <div class="second-placers-container">
+                  <div class="second-placers-container poster-background">
                       {% for result in results[award.id] %}
                         <div class="second-placer">{{ result | raw }}</div>
                       {% else %}
