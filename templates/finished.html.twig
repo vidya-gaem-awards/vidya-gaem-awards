@@ -28,32 +28,29 @@
     /*}*/
 
     .title {
-      font-family: Chronotype, serif;
+      font-family: "Young heart", serif;
       mix-blend-mode: color-burn;
-      text-shadow: 0 0 2px rgba(0,0,0,.3), 0 0 100px #000, 0 0 20px #fff;
       text-align: center;
       font-size: 60px;
     }
 
     h1 {
-      font-size: 60px;
+      font-size: 70px;
+      font-weight: normal;
     }
 
     h2 {
       margin-top: 10px;
-      font-size: 30px;
+      font-size: 40px;
     }
 
     .title h1 {
         line-height: 100%;
         margin-top: 10px;
-        text-transform: uppercase;
-        color: rgba(180, 80, 22, .8);
     }
 
     .title h2 {
         font-weight: normal;
-        color: rgba(180, 80, 22, .8);
     }
       /*font-family: "Annapolis", Tahoma, sans-serif;*/
       /*color: #f7d059;*/
@@ -87,15 +84,15 @@
 
     .links.bottom {
       margin-top: 15px;
+      margin-bottom: 30px;
       font-size: 25px;
 
-      font-family: Chronotype,sans-serif;
+      font-family: "Handwritten",sans-serif;
       mix-blend-mode: color-burn;
-      text-shadow: 0 0 5px rgba(162, 49, 5, 0.33), 0 0 100px #753d02, 0 0 20px #573007, 0 0 20px #573007;
     }
 
     .links.bottom a {
-        color: #ffb72f;
+        color: rgba(180, 80, 22, 0.8);
     }
 
     .link {
@@ -165,17 +162,11 @@
 
     .embed-container {
         background: #dedede url(/2022images/bgwhite.jpg) repeat;
-        border: 2px ridge #fff;
         color: #000;
         background: #000;
-        border: 20px ridge #fff;
-        border-radius: 8px;
-        margin-left: -10px;
-        margin-right: -10px;
-        padding: 5px;
         line-height: 0;
         margin-top: 20px;
-        padding: 0px;
+        margin: 0px 40px;
     }
     .embed-container .legend {
         background-color: #000;
@@ -230,63 +221,72 @@
 <div class="center-container">
 
   <header>
-    <div class="logo">
-      <img src="{{ asset('2023images/logo.png') }}">
-    </div>
-    <div class="title-text">
-      <div class="line-1 stroke-me">The 2024 Vidya Gaem Awards</div>
+    <a class="logo" href="/">
+      <img src="/2024images/logo1-long.png">
+    </a>
+
+    <div class="right-container">
+      <div class="title-text">
+        2024 Vidya Game Awards
+      </div>
+
+      <div class="plank-background">
+        <div class="plank-inner-border"></div>
+      </div>
     </div>
   </header>
 
-  {% apply spaceless %}
-    <div class="embed-container" style="margin-top: 20px;">
-      <iframe width="100%" height="600" src="https://www.youtube.com/embed/bwsPWp3aAxo" frameborder="0" allowfullscreen=""></iframe>
-    </div>
-  {% endapply %}
+  <div class="poster-background">
+    {% apply spaceless %}
+      <div class="embed-container" style="margin-top: 20px;">
+        <iframe width="100%" height="600" src="https://www.youtube.com/embed/bwsPWp3aAxo" frameborder="0" allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+    {% endapply %}
 
-    <div class="title" style="margin-top: 20px;">
-      <h1>The 2024 Vidya Gaem Awards</h1>
-      <h2 id="countdown">
-        Thanks for watching!
-      </h2>
-    </div>
-    <div class="links main">
-      <div class="link special">
-{#        <a href="https://www.twitch.tv/videos/1756835911">#}
-{#          <button class="btn btn-default">Watch on Twitch</button>#}
-{#        </a>#}
+      <div class="title" style="margin-top: 20px;">
+        <h1>The 2024 Vidya Gaem Awards</h1>
+        <h2 id="countdown">
+          Thanks for watching!
+        </h2>
       </div>
-      <div class="link special">
-        <a href="https://www.youtube.com/watch?v=bwsPWp3aAxo">
-          <button class="btn btn-default">Watch on YouTube</button>
-        </a>
+      <div class="links main">
+        <div class="link special">
+  {#        <a href="https://www.twitch.tv/videos/1756835911">#}
+  {#          <button class="btn btn-default">Watch on Twitch</button>#}
+  {#        </a>#}
+        </div>
+        <div class="link special">
+          <a href="https://www.youtube.com/watch?v=bwsPWp3aAxo">
+            <button class="btn btn-default">Watch on YouTube</button>
+          </a>
+        </div>
+        {#<div class="link special">#}
+        {#<a href="#">Direct download</a>#}
+        {#</div>#}
+        <div class="link">
+          <a href="{{ path('winners') }}">
+            <button class="btn btn-default">Results</button>
+          </a>
+        </div>
+        <div class="link">
+          <a href="{{ path('credits') }}">
+            <button class="btn btn-default">Credits and /agdg/</button>
+          </a>
+        </div>
+        <div class="link">
+          <a href="{{ path('soundtrack') }}">
+            <button class="btn btn-default">Soundtrack</button>
+          </a>
+        </div>
+        {#          <div class="link">#}
+        {#            <a href="{{ path('predictionLeaderboard') }}">Fantasy league results</a>#}
+        {#          </div>#}
       </div>
-      {#<div class="link special">#}
-      {#<a href="#">Direct download</a>#}
-      {#</div>#}
-      <div class="link">
-        <a href="{{ path('winners') }}">
-          <button class="btn btn-default">Results</button>
-        </a>
-      </div>
-      <div class="link">
-        <a href="{{ path('credits') }}">
-          <button class="btn btn-default">Credits and /agdg/</button>
-        </a>
-      </div>
-      <div class="link">
-        <a href="{{ path('soundtrack') }}">
-          <button class="btn btn-default">Soundtrack</button>
-        </a>
-      </div>
-      {#          <div class="link">#}
-      {#            <a href="{{ path('predictionLeaderboard') }}">Fantasy league results</a>#}
-      {#          </div>#}
-    </div>
 
-    <div class="links bottom">
-      <div class="link">
-        <a href="https://vidyagaemawards.com/previous-years">View previous /v/GAs</a>
+      <div class="links bottom">
+        <div class="link">
+          <a href="https://vidyagaemawards.com/previous-years">View previous /v/GAs</a>
+        </div>
       </div>
     </div>
   </div>

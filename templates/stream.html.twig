@@ -74,12 +74,9 @@
 
     .embed-container {
         color: #000;
-        background: #000;
-        border: 20px ridge #fff;
-        border-radius: 8px;
         margin-left: -10px;
         margin-right: -10px;
-        padding: 5px;
+        padding: 20px;
         line-height: 0;
         margin-top: 20px;
     }
@@ -91,6 +88,15 @@
         text-shadow: 1px -1px #4ea24a, 2px -2px #4ea24a, 3px -3px #4ea24a, -1px 1px #da505f, -2px 2px #4ea24a, -3px 3px #4ea24a, 1px 1px #da505f, 2px 2px #061019, 3px 3px #061019, -4px 4px #061019;
         text-transform: uppercase;
     }
+
+    /* spacing tweaks due to shared css */
+    .award-header {
+      margin-bottom: 0px;
+    }
+    .poster-background {
+      padding: 30px;
+    }
+
   </style>
 {% endblock %}
 
@@ -98,55 +104,64 @@
 <div class="center-container">
 
   <header>
-    <div class="logo">
-      <img src="{{ asset('2023images/logo.png') }}">
-    </div>
-    <div class="title-text">
-      <div class="line-1 stroke-me">The 2024 Vidya Gaem Awards</div>
-    </div>
-  </header>
+      <a class="logo" href="/">
+        <img src="/2024images/logo1-long.png">
+      </a>
 
-  <div class="award-header">
-    <div class="award-name-container">
-      <div class="award-name">Streaming live on four platforms</div>
-    </div>
-  </div>
+      <div class="right-container">
+        <div class="title-text">
+          2024 Vidya Game Awards
+        </div>
 
-  <div class="col-12 text-center">
-    <p class="links">
-      <a href="https://twitch.tv/vidyagaemawards" target="_blank">
-        <button class="btn btn-default">Twitch</button>
-      </a>
-      <a href="https://www.youtube.com/vidyagaemawards" target="_blank">
-        <button class="btn btn-default">YouTube</button>
-      </a>
-      <a href="https://kick.com/vidyagaemawards" target="_blank">
-        <button class="btn btn-default">Kick</button>
-      </a>
-      <a href="https://twitter.com/vidyagaemawards" target="_blank">
-        <button class="btn btn-default">Twitter</button>
-      </a>
-      <a href="https://discord.gg/4e8JQB4" target="_blank">
-        <button class="btn btn-default">Chat on Discord</button>
-      </a>
-    </p>
+        <div class="plank-background">
+          <div class="plank-inner-border"></div>
+        </div>
+      </div>
+    </header>
 
-    <div class="embed-container">
-      <div id="twitch-embed"></div>
+  <div class="poster-background">
+    <div class="award-header">
+      <div class="award-name-container">
+        <div class="award-name">Live on four platforms</div>
+      </div>
     </div>
 
-    <!-- Load the Twitch embed script -->
-    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <div class="col-12 text-center">
+      <p class="links">
+        <a href="https://twitch.tv/vidyagaemawards" target="_blank">
+          <button class="btn btn-default">Twitch</button>
+        </a>
+        <a href="https://www.youtube.com/vidyagaemawards" target="_blank">
+          <button class="btn btn-default">YouTube</button>
+        </a>
+        <a href="https://kick.com/vidyagaemawards" target="_blank">
+          <button class="btn btn-default">Kick</button>
+        </a>
+        <a href="https://twitter.com/vidyagaemawards" target="_blank">
+          <button class="btn btn-default">Twitter</button>
+        </a>
+        <a href="https://discord.gg/4e8JQB4" target="_blank">
+          <button class="btn btn-default">Chat on Discord</button>
+        </a>
+      </p>
 
-    <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
-    <script type="text/javascript">
-        new Twitch.Embed("twitch-embed", {
-            width: '100%',
-            height: 480,
-            channel: "vidyagaemawards",
-            theme: 'dark'
-        });
-    </script>
+      <div class="embed-container">
+        <div id="twitch-embed"></div>
+      </div>
+
+      <!-- Load the Twitch embed script -->
+      <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+      <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
+      <script type="text/javascript">
+          new Twitch.Embed("twitch-embed", {
+              width: '100%',
+              height: 480,
+              channel: "vidyagaemawards",
+              theme: 'dark'
+          });
+      </script>
+    </div>
   </div>
 </div>
 {% endblock %}
