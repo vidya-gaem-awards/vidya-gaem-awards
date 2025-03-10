@@ -116,7 +116,7 @@ header {
 
 .plank-background {
   &::before {
-    background-image: url("/2024images/planks-seamless.png");
+    background-image: url("/2024images/planks-seamless-dark.png");
     position: absolute;
     height: 100%;
     width: 100%;
@@ -124,7 +124,6 @@ header {
     z-index: -1;
     left: 0px;
     transform: rotate(1deg) scaleY(1.5) scaleX(1.1);
-    filter: brightness(0.7) saturate(0.6);
     content: "";
   }
 
