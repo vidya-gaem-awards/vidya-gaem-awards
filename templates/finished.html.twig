@@ -214,6 +214,20 @@
     /*    height: 40px;*/
         width: 200px;
     }
+
+    .under-construction {
+      filter: grayscale();
+    }
+
+    .under-construction::after{
+      content: "Under Construction";
+      position: absolute;
+      width: 200px;
+      rotate: -30deg;
+      left: 53px;
+      top: 8px;
+    }
+
   </style>
 {% endblock %}
 
@@ -274,8 +288,8 @@
           </a>
         </div>
         <div class="link">
-          <a href="{{ path('soundtrack') }}">
-            <button class="btn btn-default">Soundtrack</button>
+          <a {#href="{{ path('soundtrack') }}"#} >
+            <button class="btn btn-default under-construction">Soundtrack</button>
           </a>
         </div>
         {#          <div class="link">#}
