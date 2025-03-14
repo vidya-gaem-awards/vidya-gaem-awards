@@ -36,7 +36,7 @@ class StaticController extends AbstractController
             ['Misc. Voice Clips (and unintended background noise)', 'Banzai (TV series) (a.k.a. "Banzai! Place Your Bets Now!")', 'F2P Award'],
             ['Blue Dragon - Eternity Cover', 'CJ Vidal, Felp Bagatin & Allan Lobo (Original by Nobuo Uematsu, sung by Ian Gillan)', 'F2P Award', 'https://www.youtube.com/watch?v=R8egCfOvbRE'],
             ['Donkey Kong Country 2 - Enchanted Wood', 'Cover by Tendo, Original "Forest Interlud" by David Wise', 'F2P Award', 'https://www.youtube.com/watch?v=ZHZQSSXf_0Q'],
-            ['FINAL FANTASY IV MAIN THEME 1st-FIELD BGM - WESTERN Arrange- style -> WILD ARMS','Lenneth\'s Music', 'F2P Award', 'https://www.youtube.com/watch?v=uOjGLftHitQ'],
+            ['「FF4」フィールドBGMがワイルドアームズ風だったら編 「アレンジ」','Lenneth\'s Music CH', 'F2P Award', 'https://www.youtube.com/watch?v=uOjGLftHitQ'],
             ['Red Dead Redemption', 'Woody Jackson', 'Least Worst Award'],
             ['Hurt (Instrumental)', 'Johnny Cash', 'Most Hated Award'],
             ['Unknown Banjo Song used from 2014', ' ', 'Deja Vu Award'],

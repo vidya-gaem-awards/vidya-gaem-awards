@@ -34,13 +34,9 @@
           margin: 25px auto 0;
           
           padding: 12px 8px;
-          color: white;
-          font-family: Chronotype, sans-serif;
+          font-family: "Handwritten", sans-serif;
           font-size: 22px;
 
-          background: #000;
-          border: 20px ridge #fff;
-          border-radius: 8px;
           margin-top: 20px;
           border-collapse: initial;
       }
@@ -84,7 +80,7 @@
 
       .track-title {
           transition: all 0.2s ease-in-out;
-          color: yellow;
+          color: #bf0000;
           /*font-family: "OratorStd", "Courier New", serif;*/
           margin-left: 10px;
       }
@@ -107,12 +103,26 @@
           font-weight: bold;
           font-size: 30px;
       }
+
+      .center-container { /*just to make the planks fit the content*/
+        width: fit-content;
+        margin-top: 80px;
+        margin-bottom: 80px;
+        padding: 30px 30px;
+        mask-image: url(/2024images/paper-edge-mask-tall.png);
+        -webkit-mask-image: url(/2024images/paper-edge-mask-tall.png);
+      }
+
+      .table {
+        background: initial;
+      }
+
   </style>
 {% endblock %}
 
 {% block content %}
 
-  <div class="center-container">
+  <div class="center-container poster-background">
 
 {#    <div style="text-align: center;">#}
 {#        <img src="{{ asset('2021images/album.jpg') }}" alt="Album art" class="img-responsive album-art">#}
