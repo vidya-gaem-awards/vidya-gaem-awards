@@ -39,9 +39,10 @@
 
       .credits .award-name {
           font-size: 2.7em;
-          text-transform: unset;
-          font-family: "Olde title";
-          color: rgba(180, 80, 22, 0.8);
+          text-transform: uppercase;
+          font-family: "Western title";
+          color: rgba(153, 153, 153, 0.9607843137);
+          mix-blend-mode: color-dodge;
       }
 
       .credits {
@@ -54,13 +55,12 @@
       }
 
       .credits-section {
-        font-family: Chronotype,sans-serif;
+        font-family: "Handwritten",sans-serif;
         font-size: 30px;
-        color: #fff;
-        background: #000;
-        border: 20px ridge #fff;
-        border-radius: 8px;
-        padding: 5px 20px;
+        color: #5e1313;
+        padding: 20px;
+        position: relative;
+        margin-bottom: 20px;
       }
 
       .credits-section.condensed p {
@@ -68,11 +68,11 @@
       }
 
       .credits-section a {
-          color: #f0961f;
+          color: #f40000;
       }
 
       .name {
-          color: yellow;
+          color: #c44000;
           font-weight: bold;
 
           /*text-decoration: none;*/
@@ -88,7 +88,6 @@
           /*text-shadow: 1px 1px black;*/
           margin-left: 3px;
           /*margin-right: 3px;*/
-          white-space: nowrap;
       }
 
       .FLAOT {
@@ -125,220 +124,255 @@
           color: lime;
       }
 
+      .poster-background {
+        padding: 30px;
+      }
+
   </style>
 {% endblock %}
 
 {% block content %}
   <div class="center-container" style="padding-top: 68px;">
     <header>
-      <div class="logo" href="{{ path('index') }}">
-        <img src="{{ asset('2023images/logo.png') }}">
-      </div>
-      <div class="title-text">
-        The 2024 Vidya Gaem Awards
+      <a class="logo" href="/">
+        <img src="/2024images/logo1-long.png">
+      </a>
+
+      <div class="right-container">
+        <div class="title-text">
+          2024 Vidya Game Awards
+        </div>
+
+        <div class="plank-background">
+          <div class="plank-inner-border"></div>
+        </div>
       </div>
     </header>
 
     <div class="credits">
       <div class="row">
         <div class="col-md-6">
-          <div class="award-header">
-            <div class="award-name-container">
-              <h3 class="award-name">Production Team</h3>
-            </div>
-          </div>
 
           <div class="credits-section">
-            <p>
-              Directed by <span class="name">Donny Q</span>
-            </p>
-
-            <p>
-              Produced by
-              <span class="name">Counter</span>,
-              <span class="name">db</span> &
-              <span class="name">shuttah</span>
-            </p>
-
-            <p>
-            Writing and research by
-              <span class="name">beatstar</span>,
-              <span class="name">Cee</span>,
-              <span class="name">cormano</span>,
-              <span class="name">CrazedJew</span>,
-              <span class="name">db</span>,
-              <span class="name">Dr. J</span>,
-              <span class="name">hg80</span>,
-              <span class="name">Hoffman</span>,
-              <span class="name">Importuno</span>,
-              <span class="name">Lamer Gamer</span>,
-              <span class="name">metoxys</span>,
-              <span class="name">Raccoons</span>,
-              <span class="name">StephanosRex</span> &
-              <span class="name">Anonymous</span>
-            </p>
-
-            <p>
-              Website by
-              <span class="name">ZedZagg</span>,
-              <span class="name">Clamburger</span>,
-              <span class="name">Lamer Gamer</span> &
-              <span class="name">Anonymous</span>
-            </p>
-
-            <p>
-              Developer outreach handled by
-              <span class="name">beatstar</span>,
-              <span class="name">Dr. J</span> &
-              <span class="name">Anonymous</span>
-            </p>
-          </div>
-
-          <div class="award-header">
-            <div class="award-name-container">
-              <h3 class="award-name">Video Team</h3>
+            <div class="plank-background">
+              <div class="plank-inner-border"></div>
             </div>
-          </div>
+            <div class="award-header">
+              <div class="award-name-container">
+                <h3 class="award-name">Production Team</h3>
+              </div>
+            </div>
 
-          <div class="credits-section">
-            <p>
-              Video production and editing by
+            <div class="poster-background">
+              <p>
+                Directed by <span class="name">Counter</span>
+              </p>
+
+              <p>
+                Produced by
+                <span class="name">Crazed</span> &amp;
+                <span class="name">Anonymous</span>
+              </p>
+
+              <p>
+              Writing and research by
                 <span class="name">beatstar</span>,
-                <span class="name">CrazedJew</span>,
-                <span class="name">Counter</span>,
-                <span class="name">db</span>,
-                <span class="name">Dr. J</span>,
+                <span class="name">The Crazed Impromptu Producer</span>,
+                <span class="name">Degen</span>,
+                <span class="name">Donny Q</span>,
+                <span class="name">Dr.J</span>,
+                <span class="name">The most important guy on the show literally could not do it without him</span>,
+                <span class="name">Hoffmann</span>,
+                <span class="name">Importuno</span>,
+                <span class="name">Nine_Ten</span>,
                 <span class="name">Raccoons</span>,
-                <span class="name">shuttah</span> &
+                <span class="name">PhoneEatingBear</span> &amp;
                 <span class="name">Anonymous</span>
-            </p>
+              </p>
 
-            <p>
-              Art and graphics by
-                <span class="name">Iman</span>,
-                <span class="name">Lamer Gamer</span>,
-                <span class="name">PixelAnon</span> &
-                <span class="name">Anonymous</span>
-            </p>
-          </div>
+              <p>
+                Website by
+                <span class="name">Clamburger</span>,
+                <span class="name">Lamer Gamer</span> &amp;
+                <span class="name">ZedZagg</span>
+              </p>
 
-          <div class="award-header">
-            <div class="award-name-container">
-              <h3 class="award-name">Audio Team</h3>
+              <p>
+                Developer outreach handled by
+                <span class="name">beatstar</span> &amp;
+                <span class="name">Dr. J</span>
+              </p>
             </div>
           </div>
 
           <div class="credits-section">
-            <p>
-              Voiced by
-                <span class="name">Cee</span>,
-                <span class="name">cormano</span>,
-                <span class="name">CrazedJew</span>,
-                <span class="name">Counter</span>,
-                <span class="name">Gherrit White</span>,
-                <span class="name">Imakuni</span>,
-                <span class="name">Nine Ten</span>,
-                <span class="name">PixelAnon</span>,
-                <span class="name">Phaseroll</span>,
-                <span class="name">Raccoons</span>,
-                <span class="name">StephanosRex</span> &
-                <span class="name">Anonymous</span>
-            </p>
-            <p>
-              Music and audio by
-                <span class="name">beat_shobon</span>,
-                <span class="name">fv.exe</span>,
-                <span class="name">jab50yen</span>,
-                <span class="name">nostalgia junkie</span> &
-                <span class="name">W.T. Snacks</span>
-            </p>
-          </div>
+            <div class="plank-background">
+              <div class="plank-inner-border"></div>
+            </div>
 
-          <div class="award-header">
-            <div class="award-name-container">
-              <h3 class="award-name">/agdg/ Trailers</h3>
+            <div class="award-header">
+              <div class="award-name-container">
+                <h3 class="award-name">Video Team</h3>
+              </div>
+            </div>
+
+            <div class="poster-background">
+              <p>
+                Video production and editing by
+                  <span class="name">beatstar</span>,
+                  <span class="name">CrazedJew</span>,
+                  <span class="name">Counter</span>,
+                  <span class="name">db</span>,
+                  <span class="name">Donny Q</span>,
+                  <span class="name">Dr.J</span>,
+                  <span class="name">draguO doT</span>,
+                  <span class="name">Raccoons</span>,
+                  <span class="name">shuttah</span> &amp;
+                  <span class="name">Anonymous</span>
+              </p>
+
+              <p>
+                Art and graphics by
+                  <span class="name">That guy who did the less cool logo</span>,
+                  <span class="name">Lamer Gamer</span> &amp;
+                  <span class="name">draguO doT</span> 
+              </p>
             </div>
           </div>
 
-          <div class="credits-section condensed">
-            <p><em><a target="_blank" href="https://getbonus.itch.io">Citizen Kane 64</a></em> &ndash; <span class="name">Branden Upchurch</span></p>
-            <p><em><a target="_blank" href="https://store.steampowered.com/app/2641500/Lil_Red">Li'l Red</a></em> &ndash; <span class="name">velveteen</span></p>
-            <p><em><a target="_blank" href="https://bydarkcrusader.itch.io/the-dark-future-of-agrippa">The Dark Future of Agrippa</a></em> &ndash; <span class="name">darkcrusader</span></p>
-            <p><em><a target="_blank" href="https://store.steampowered.com/app/2801620/Look_Inside">Look Inside</a></em> &ndash; <span class="name">Bitwise Games</span></p>
-            <p><em><a target="_blank" href="https://magentasoft.itch.io">Torsion</a></em> &ndash; <span class="name">Magenta Soft</span></p>
-            <p><em><a target="_blank" href="https://store.steampowered.com/app/1886210/Mirrored_Soul">Mirrored Soul</a></em> &ndash; <span class="name">mammothplant</span></p>
+          <div class="credits-section">
+            <div class="plank-background">
+              <div class="plank-inner-border"></div>
             </div>
+
+            <div class="award-header">
+              <div class="award-name-container">
+                <h3 class="award-name">Audio Team</h3>
+              </div>
+            </div>
+
+            <div class="poster-background">
+              <p>
+                Voiced by
+                  <span class="name">Cormano Wild</span>,
+                  <span class="name">The Crazed Impromptu Producer</span>,
+                  <span class="name">Counter</span>,
+                  <span class="name">Donny Q</span>,
+                  <span class="name">Imakuni</span>,
+                  <span class="name">Iman</span>,
+                  <span class="name">John C</span>,
+                  <span class="name">Gherrit W</span>,
+                  <span class="name">Nine_Ten</span>,
+                  <span class="name">Phaseroll</span>,
+                  <span class="name">SomebodyStopMii</span>,
+                  <span class="name">StephanosRex</span>,
+                  <span class="name">ZaccActs</span> &amp;
+                  <span class="name">Anonymous</span>
+              </p>
+              <p>
+                Music and audio by
+                  <span class="name">beat_shobon</span>,
+                  <span class="name">fv.exe</span>,
+                  <span class="name">jab50yen</span>,
+                  <span class="name">nostalgia_junkie</span> &amp;
+                  <span class="name">W.T.Snacks</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="credits-section">
+            <div class="plank-background">
+              <div class="plank-inner-border"></div>
+            </div>
+
+            <div class="award-header">
+              <div class="award-name-container">
+                <h3 class="award-name">/agdg/ Trailers</h3>
+              </div>
+            </div>
+              
+            <div class="poster-background condensed">
+              <p><em><a target="_blank" href="https://store.steampowered.com/app/2765490/Healed_To_Death">Healed to Death</a></em> &ndash; <span class="name">Branno</span></p>
+              <p><em><a target="_blank" href="https://federx.itch.io/awoken">(a)woken</a></em> &ndash; <span class="name">Federx</span></p>
+              <p><em><a target="_blank" href="https://games.phijkchu.com">Toushin Gent</a></em> &ndash; <span class="name">PhijkchuGames</span></p>
+              <p><em><a target="_blank" href="https://store.steampowered.com/app/2824880/SHRIMP_GAME/">SHRIMP GAME</a></em> &ndash; <span class="name">Gas God</span></p>
+            </div>
+          </div>
 
         </div>
 
         <div class="col-md-6">
 
-          <div class="award-header">
-            <div class="award-name-container">
-              <h3 class="award-name">Skits</h3>
+          <div class="credits-section">
+            <div class="plank-background">
+              <div class="plank-inner-border"></div>
+            </div>
+            <div class="award-header">
+              <div class="award-name-container">
+                <h3 class="award-name">Skits</h3>
+              </div>
+            </div>
+
+            <div class="poster-background condensed">
+              <p><em>The Valve Development Trail</em> &ndash; <span class="name">/v/3 team</span></p>
+              <p><em>TORtan Submersible Incident</em> &ndash; <span class="name">asperagus</span></p>
+              <p><em>Legacy of Kain sitcom episode: Raziel keeps ruining the dessert</em> &ndash; <span class="name">Lo-Ping</span></p>
+              <p><em>Freak With a Beak</em> &ndash; <span class="name">Anonymous</span></p>
+              <p><em>OBJECTS THAT I HAVE SHOVED UP MY ARSE (A Bruno Powroznik Cowboy Classic)</em> &ndash; <span class="name">SillySkippy</span></p>
+              <p><em>First Access Game Service</em> &ndash; <span class="name">Deadman Pro</span></p>
+              <p><em>In Memoriam - 2024 in Gaming</em> &ndash; <span class="name">Alci Polance</span></p>
+              <p><em>Bury Me BMJ</em> &ndash; <span class="name">Counter</span></p>
+              <p><em>Wild Gunman 2024</em> &ndash; <span class="name">PyoroX</span></p>
+              <p><em>Hamtaro MGS Battleground</em> &ndash; <span class="name">Neatoburrito Productions</span></p>
+              <p><em>Sunset Shoot-Out</em> &ndash; <span class="name">Nine_Ten</span></p>
+              <p><em>Sonic x Shadow Generations</em> &ndash; <span class="name">Xx_CrazyShadicLover_2002_xX</span></p>
             </div>
           </div>
 
-          <div class="credits-section condensed">
-            <p><em>Company Presentation</em> &ndash; <span class="name">/v/ga team</span></p>
-            <p><em>VGA Collection Volume 1</em> &ndash; <span class="name">/v/ga team</span></p>
-            <p><em>E3 In One Minute</em> &ndash; <span class="name">asperagus</span></p>
-            <p><em>VGA Indie Montage</em> &ndash; <span class="name">CrazedJew</span></p>
-            <p><em>Why don't you touch some grass?</em> &ndash; <span class="name">CrazedJew</span></p>
-            <p><em>Be Gay: Replay</em> &ndash; <span class="name">Deadman Pro (NecroAnon)</span></p>
-            <p><em>Fate and 4chan</em> &ndash; <span class="name">Degen</span>, <span class="name">Counter</span> & <span class="name">Donny Q</span></p>
-            <p><em>Lame List - RPG Edition</em> &ndash; <span class="name">Donny Q</span></p>
-            <p><em>Rise of the Triad</em> &ndash; <span class="name">eightbit</span></p>
-            <p><em>Raziel Making Chocolate Pudding at 4AM</em> &ndash; <span class="name">Lo Ping</span></p>
-            <p><em>Raziel Explains LoK Lore</em> &ndash; <span class="name">Lo Ping</span></p>
-            <p><em>womenRgay</em> &ndash; <span class="name">Nine Ten</span></p>
-            <p><em>spider fridge</em> &ndash; <span class="name">Salted</span></p>
-            <p><em>In Memoriam</em> &ndash; <span class="name">CrazedJew</span></p>
-          </div>
-
-          <div class="award-header">
-            <div class="award-name-container">
-              <h3 class="award-name">Bumpers</h3>
-            </div>
-          </div>
-
-          <div class="credits-section condensed">
-            <p><em>Best Soundtrack Render Bumper</em> &ndash; <span class="name">/v/GA Team</span></p>
-            <p><em>Least Worst Render Bumper</em> &ndash; <span class="name">/v/GA Team</span></p>
-            <p><em>Time Travel Bumper</em> &ndash; <span class="name">/v/GA Team</span></p>
-            <p><em>Wow, this is shit</em> &ndash; <span class="name">Akronymous</span></p>
-            <p><em>GVH Bumper</em> &ndash; <span class="name">Anonymous</span></p>
-          </div>
-
-          <div class="award-header">
-            <div class="award-name-container">
-              <h3 class="award-name">Acknowledgements</h3>
-            </div>
-          </div>
 
           <div class="credits-section">
-            <p>Guest &ndash; Condorcet the Slug Girl (voiced by Imakuni)</p>
-            <p>Exclusive Premiere bumper animated by <a href="https://twitter.com/snakesandrews">Blake Andrews</a></p>
-            <p>This work depicts the character "Hatsune Miku" of Crypton Future Media Co., Ltd. based on the <a href="https://piapro.jp/license/pcl/summary">Piapro Character License</a>.</p>
-            <p>This show contains AI-generated content from ElevenLabs, VoiceMod and Midjourney.</p>
-            <p>Some images and music are (c) Square Enix</p>
+            <div class="plank-background">
+              <div class="plank-inner-border"></div>
+            </div>
+            <div class="award-header">
+              <div class="award-name-container">
+                <h3 class="award-name">Bumpers</h3>
+              </div>
+            </div>
+
+            <div class="poster-background condensed">
+              <p><em>Real Awards</em> &ndash; <span class="name">Anonymous</span></p>
+              <p><em>Untitled</em> &ndash; <span class="name">Dr. Zyz</span></p>
+              <p><em>Bazzduel</em> &ndash; <span class="name">Anonymous</span></p>
+              <p><em>Typing30</em> &ndash; <span class="name">Anonymous</span></p>
+              <p><em>Compact Desert</em> &ndash; <span class="name">asperagus</span></p>
+              <p><em>What's Up Balrog</em> &ndash; <span class="name">asperagus</span></p>
+              <p><em>Howdy Partner Bumper</em> &ndash; <span class="name">Anonymous</span></p>
+              <p><em>Outlaws</em> &ndash; <span class="name">Anonymous</span></p>
+            </div>
           </div>
         </div>
 
-        <div class="award-header">
-          <div class="award-name-container">
-            <h3 class="award-name">Special Thanks</h3>
+        <div class="credits-section">
+          <div class="plank-background">
+            <div class="plank-inner-border"></div>
           </div>
-        </div>
+          <div class="award-header">
+            <div class="award-name-container">
+              <h3 class="award-name">Special Thanks</h3>
+            </div>
+          </div>
 
-        <div class="credits-section condensed">
-          <p><span class="name">Astrid</span></p>
-          <p><span class="name">N.A</span></p>
-          <p><span class="name">Pokemon Clover Team</span></p>
-          <p><span class="name">Supremax</span></p>
-          <p><span class="name">Yonas</span></p>
-          <p><span class="name">/v/</span></p>
-          <p><span class="name">...and most importantly, <strong>(You)!</strong></span></p>
+          <div class="poster-background condensed">
+            <p><span class="name">India</span></p>
+            <p><span class="name">Jonatan "Cactus" Söderström</span></p>
+            <p><span class="name">N.A</span></p>
+            <p><span class="name">Supremax</span></p>
+            <p><span class="name">Cobalt.Tools</span></p>
+            <p><span class="name">yt-dlp</span></p>
+            <p><span class="name">/v/</span></p>
+            <p><span class="name">...and <strong>(You)!</strong></span></p>
+          </div>
         </div>
 
         <div class="col">
@@ -351,7 +385,7 @@
             <p class="implying">&gt;they take their jobs very seriously</p>
             <p class="implying">&gt;they do it for free</p>
 
-            <img src="{{ asset('img/for-free.jpg') }}" style="width: 200px; -webkit-mask-image: url(/2022images/mask.png); -webkit-mask-size: cover;">
+            <img src="{{ asset('img/for-free.jpg') }}" style="width: 200px; -webkit-mask-image: url(/2024images/paper-edge-mask.png); -webkit-mask-size: 100% 100%;">
           </div>
         </div>
       </div>

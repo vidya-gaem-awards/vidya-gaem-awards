@@ -123,7 +123,8 @@ header {
     top: 0px;
     z-index: -1;
     left: 0px;
-    transform: rotate(1deg) scaleY(1.5) scaleX(1.1);
+    transform: rotate(1deg) scaleY(1.5) scaleX(1.1) translateY(-20px);
+    transform-origin: 0 0;
     content: "";
   }
 

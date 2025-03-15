@@ -133,11 +133,13 @@
         height: auto;
         min-height: 120px;
         font-size: .8em;
-        color: rgba(100, 43, 10, 0.8);
+        color: rgba(153, 153, 153, 0.9607843137);
+        mix-blend-mode: color-dodge;
         z-index: 40;
         user-select: all;
         text-align: center;
-        margin-top: 5px;
+        margin-top: 20px;
+        line-height: 1.2;
 
         position: relative;
     }
@@ -154,7 +156,6 @@
     .winner-name {
         font-size: 30px;
         margin-bottom: 5px;
-        color: rgb(206, 191, 156);
       /*font-size: 30px;*/
       /*color: white;*/
       /*font-family: "Trajan Pro 3", serif;*/
@@ -214,8 +215,7 @@
 
     .winner-subtitle {
       /*color: #f29823;*/
-      font-family: "Garrick", sans-serif;
-      /*font-size: 11px;*/
+      font-size: 20px;
       /*line-height: 10px;*/
       /*padding: 1px 7px;*/
       /*z-index: 300;*/
@@ -225,15 +225,22 @@
       /*bottom: 15px;*/
     }
 
+    .end-note {
+      font-family: "Handwritten", sans-serif;
+      color: black;
+      padding: 30px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 460px;
+    }
+
     .bottom-text {
-      margin-top: 50px;
+      margin-top: 20px;
       margin-bottom: 20px;
-      font-family: "Garrick", sans-serif;
     }
 
     .detailed-results-text {
-      font-family: "Garrick", sans-serif;
-      color: black;
+      font-family: "Handwritten", sans-serif;
     }
 
     @keyframes flareAnim {
@@ -532,14 +539,12 @@
                   {% endif %}
 
                   <div class="winner-name-container">
-                    <div class="winner-text-vertical-center">
-                      {% if winners[award.id] is defined %}
-                        <div class="winner-name">{{ winners[award.id].name | raw }}</div>
-                        <div class="winner-subtitle">{{ winners[award.id].subtitle | raw }}</div>
-                      {% else %}
-                        <div class="winner-name">No winner yet</div>
-                      {% endif %}
-                    </div>
+                    {% if winners[award.id] is defined %}
+                      <div class="winner-name">{{ winners[award.id].name | raw }}</div>
+                      <div class="winner-subtitle">{{ winners[award.id].subtitle | raw }}</div>
+                    {% else %}
+                      <div class="winner-name">No winner yet</div>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-sm-9">
@@ -559,16 +564,18 @@
     </div>
   {% endfor %}
 
-  <div class="text-center bottom-text">
-    <h1>Would you like to know more?</h1>
-  </div>
+  <div class="poster-background end-note">
+    <div class="text-center bottom-text">
+      <h1>Would you like to know more?</h1>
+    </div>
 
-  <div class="row">
-    <div class="col-12">
-      <p class="text-center detailed-results-text">
-        What's shown above are the official results as seen during the show. If you'd like to see more details,
-        including how sites other than /v/ voted, visit the <a class="btn" href="{{ path('results') }}">Detailed&nbsp;Results</a> page.
-      </p>
+    <div class="row">
+      <div class="col-12">
+        <p class="text-center detailed-results-text">
+          What's shown above are the official results as seen during the show. If you'd like to see more details,
+          including how sites other than /v/ voted, visit the <a class="btn" href="{{ path('results') }}">Detailed&nbsp;Results</a> page.
+        </p>
+      </div>
     </div>
   </div>
 </div>
