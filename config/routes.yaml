@@ -305,13 +305,13 @@ results:
     path:       /results
     controller: App\Controller\ResultController::detailedAction
 
-resultsAward:
-    path:       /results/{awardID}
-    controller: App\Controller\ResultController::awardResults
-
 pairwiseResults:
     path:       /results/pairwise
     controller: App\Controller\ResultController::pairwiseAction
+
+resultsAward:
+    path:       /results/{awardID}
+    controller: App\Controller\ResultController::awardResults
 
 #
 # REFERRERS
